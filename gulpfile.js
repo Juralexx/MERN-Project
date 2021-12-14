@@ -19,7 +19,6 @@ var paths = {
         }
     };
 
-
 function styleCompiler() {
     return src(paths.styles.src)
     .pipe(sass().on('error', sass.logError))
