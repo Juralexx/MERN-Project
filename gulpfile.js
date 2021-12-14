@@ -10,12 +10,12 @@ const browserSync = require('browser-sync').create();
 
 var paths = {
         styles: {
-            src: './views/src/scss/**/**/*.scss',
-            dest: './views/src/dist/css/'
+            src: './views/public/src/styles/scss/**/**/*.scss',
+            dest: './views/public/src/styles/dist/'
         },
         scripts: {
-            src: './views/src/js/*.js',
-            dest: './views/src/dist/js/'
+            src: './views/public/src/scripts/*.js',
+            dest: './views/public/src/script/dist/'
         }
     };
 
