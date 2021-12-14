@@ -6,7 +6,7 @@ import './styles/dist/style.css'
 import './scripts/dist/script.js'
 
 ReactDOM.render(
-    <App />,
+  <App />,
   document.getElementById('root')
 );
 
