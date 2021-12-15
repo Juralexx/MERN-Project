@@ -19,28 +19,28 @@ const SignInForm = () => {
                 password,
             },
         })
-        .then((res) => {
-            if(res.data.errors) {
-                emailError.innerHTML = res.data.errors.email
-                passwordError.innerHTML = res.data.errors.password
-            } else {
-                window.location = '/'
-            }
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then((res) => {
+                if(res.data.errors) {
+                    emailError.innerHTML = res.data.errors.email
+                    passwordError.innerHTML = res.data.errors.password
+                } else {
+                    window.location = '/'
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
-        <form action="" onSubmit={ handleLogin } id="sign-in-form">
+        <form action="" onSubmit={ handleLogin } id="signin-form">
             <label htmlFor="email">Email</label><br />
             <input 
                 type="text" 
                 name="email" 
                 id="email" 
-                onChange={ (e) => setEmail(e.target.value) } 
                 value={ email } 
+                onChange={ (e) => setEmail(e.target.value) } 
             />
             
             <div className="email error"></div>
@@ -50,8 +50,8 @@ const SignInForm = () => {
                 type="password" 
                 name="password" 
                 id="password" 
-                onChange={ (e) => setPassword(e.target.value) } 
                 value={ password } 
+                onChange={ (e) => setPassword(e.target.value) } 
             />
 
             <div className="password error"></div>
