@@ -5,7 +5,7 @@ const Profil = () => {
   return (
     <div classNome="profil-page">
       <div className="profil-container">
-        <Log signup="{ true }" signup="{ false }"/>
+        <Log signup="{ true }" signin="{ false }"/>
       </div>
     </div>
   );

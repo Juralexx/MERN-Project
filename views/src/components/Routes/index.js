@@ -1,24 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
-import Home from '../../pages/Home';
-import Trending from '../../pages/Trending';
-import Profil from '../../pages/Profil';
-import Dashboard from '../../pages/Dashboard';
-import Project from '../../pages/Project';
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import Home from '../../pages/Home'
+import Trending from '../../pages/Trending'
+import Profil from '../../pages/Profil'
+import Dashboard from '../../pages/Dashboard'
+import Project from '../../pages/Project'
 
-const index = () => {
-  return ( 
+function Index() {
+  return (
     <Router>
-        <Routes>
-            <Route path="/" exact component={ Home } />
-            <Route path="/trending" exact component={ Trending } />
-            <Route path="/profil" exact component={ Profil } />
-            <Route path="/dashboard" exact component={ Dashboard } />
-            <Route path="/project" exact component={ Project } />
-            <Navigate to="/" />
-        </Routes>
+      <Routes>
+        <Route path="/" element={ <Home /> } />
+          <Route path="trending" element={ <Trending /> } />
+          <Route path="profil" element={ <Profil /> } />
+          <Route path="dashboard" element={ <Dashboard /> } />
+          <Route path="project" element={ <Project /> } />
+        <Route path="*" element={ <Navigate to="/" /> } />
+      </Routes>
     </Router>
-   );
+  );
 }
 
-export default index;
+export default Index;

@@ -6,7 +6,9 @@ import './styles/dist/style.css'
 import './scripts/dist/script.js'
 
 ReactDOM.render(
-  <App />,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
