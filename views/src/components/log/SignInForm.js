@@ -12,24 +12,25 @@ const SignInForm = () => {
 
         axios({
             method: "post",
-            url: `${ process.env.REACT_APP_API_URL }api/user/login`,
-            widthCredentials: true,
+            url: `${process.env.REACT_APP_API_URL}api/user/login`,
+            withCredentials: true,
             data: {
-                email: email,
+                email,
                 password,
             },
         })
-            .then((res) => {
-                if(res.data.errors) {
-                    emailError.innerHTML = res.data.errors.email
-                    passwordError.innerHTML = res.data.errors.password
-                } else {
-                    window.location = '/'
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        .then((res) => {
+            console.log(res)
+            if(res.data.errors) {
+                emailError.innerHTML = res.data.errors.email
+                passwordError.innerHTML = res.data.errors.password
+            } else {
+                window.location = '/'
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     return (
@@ -39,8 +40,8 @@ const SignInForm = () => {
                 type="text" 
                 name="email" 
                 id="email" 
-                value={ email } 
                 onChange={ (e) => setEmail(e.target.value) } 
+                defaultValue={email} 
             />
             
             <div className="email error"></div>
@@ -49,14 +50,16 @@ const SignInForm = () => {
             <input 
                 type="password" 
                 name="password" 
-                id="password" 
-                value={ password } 
+                id="password"  
                 onChange={ (e) => setPassword(e.target.value) } 
+                defaultValue={password}
             />
 
             <div className="password error"></div>
 
-            <input type="Submit" value="Se connecter" />
+            <button type="Submit">Se connecter</button>
+
+            <p>Par encore compte ? <a href="/register">Créer mon compte</a></p>
         </form>
     );
 }

@@ -23,6 +23,7 @@ const SignUpForm = () => {
             },
         })
             .then((res) => {
+                console.log(res)
                 if(res.data.errors) {
                     pseudoError.innerHTML = res.data.errors.pseudo
                     emailError.innerHTML = res.data.errors.email
@@ -43,7 +44,7 @@ const SignUpForm = () => {
                 type="text" 
                 name="pseudo" 
                 id="pseudo" 
-                value={ pseudo } 
+                defaultValue={ pseudo } 
                 onChange={ (e) => setPseudo(e.target.value) } 
             />
             
@@ -54,7 +55,7 @@ const SignUpForm = () => {
                 type="text" 
                 name="email" 
                 id="email" 
-                value={ email } 
+                defaultValue={ email } 
                 onChange={ (e) => setEmail(e.target.value) } 
             />
             
@@ -65,13 +66,15 @@ const SignUpForm = () => {
                 type="password" 
                 name="password" 
                 id="password" 
-                value={ password } 
+                defaultValue={ password } 
                 onChange={ (e) => setPassword(e.target.value) } 
             />
 
                 <div className="password error"></div>
 
-            <input type="Submit" value="Se connecter" />
+                <button type="Submit">S'inscrire</button>
+
+            <p>Vous avez déjà un compte ? <a href="/login">Me connecter</a></p>
         </form>
     );
 }

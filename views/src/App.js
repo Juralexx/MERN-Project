@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Index from './components/Routes/index';
+import { UidContext } from "./components/AppContext"
 
 function App() {
+  const [uid, setUid] = useState(null)
   return (
-    <div>
+    <UidContext.Provider value={uid}>
       <Index />
-    </div>
+    </UidContext.Provider>
   );
 }
 

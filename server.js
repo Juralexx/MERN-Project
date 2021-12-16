@@ -3,6 +3,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const userRoutes = require('./routes/user.routes')
 const projectRoutes = require('./routes/project.routes')
 require('dotenv').config({ path: './config/.env' })
@@ -11,11 +12,12 @@ require('./config/db.js')
 
 const app = express();
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 
-    extended: true 
+    extended: false 
 }));
+app.use(bodyParser.json());
 app.use(cookieParser())
+app.use(cors({credentials: true, origin :process.env.FRONT_URL}))
 
 app.get('*', checkUser)
 app.get('/jwtid', requireAuth, (req, res) => {
