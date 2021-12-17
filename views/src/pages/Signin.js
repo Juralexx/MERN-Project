@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SignInForm from '../components/log/SignInForm';
+import { UidContext } from '../components/AppContext'
 
 const Login = () => {
-  return (
+  const uid = useContext(UidContext)
+
+  if(uid) {
+    window.location = '/'
+  } else return (
     <div className="signin-page">
       <div className="signin-container">
         <SignInForm />
