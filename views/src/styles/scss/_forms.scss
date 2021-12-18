@@ -1,0 +1,103 @@
+.header-login, .header-register {
+    padding    : 30px 0 10px;
+    text-align : center;
+
+    img {
+        width  : 60px;
+        height : 60px;
+        margin : 0 auto;
+    }
+}
+
+.auth-form, .register-form {
+    width   : 340px;
+    margin  : 0 auto;
+    padding : 0 15px;
+
+    .auth-form-header, .register-form-header {
+        margin-bottom    : 15px;
+        color            : #c9d1d9;
+        text-align       : center;
+        text-shadow      : none;
+        background-color : transparent;
+        border           : 0;
+
+        h1 {
+            font-size      : 26px;
+            font-weight    : 300;
+            letter-spacing : 0.7px;
+        }
+    }
+
+    .auth-form-body, .register-form-body {
+        border-radius    : 6px;
+        padding          : 20px;
+        font-size        : 14px;
+        background-color : lighten(#0d1117, 3%);
+        border           : 1px solid lighten(#0d1117, 10%);
+        color            : #c9d1d9;
+
+        label {
+            display       : block;
+            margin-bottom : 7px;
+            font-weight   : 400;
+            text-align    : left;
+        }
+
+        input {
+            margin-top       : 5px;
+            margin-bottom    : 15px;
+            display          : block;
+            width            : 100%;
+            padding          : 5px 12px;
+            font-size        : 14px;
+            line-height      : 20px;
+            border           : 1px solid lighten(#0d1117, 10%);
+            background-color : #0d1117;
+            border-radius    : 6px;
+            color            : #c9d1d9;
+        }
+
+        .btn {
+            width      : 100%;
+            background : #6F37C2;
+            margin-top : 12px;
+        }
+
+        .terms-container {
+            display     : flex;
+            width       : 100%;
+            align-items : center;
+
+            #terms {
+                margin-top    : unset;
+                margin-bottom : unset;
+                display       : unset;
+                width         : unset;
+                padding       : unset;
+                margin-right  : 10px;
+            }
+
+            label {
+                margin : 0;
+
+                a {
+                    color : #9147ff;
+                }
+            }
+        }
+    }
+
+    .login-callout, .register-callout {
+        padding       : 15px 20px;
+        text-align    : center;
+        border        : 1px solid lighten(#0d1117, 10%);
+        border-radius : 6px;
+        margin-top    : 15px;
+        color         : #c9d1d9;
+
+        a {
+            color : #9147ff;
+        }
+    }
+}

@@ -1,2 +1,3 @@
 - Reprendre le pseudo, nom du projet dans URL, ex : nomdusite.fr/pseudo - nomdusite.fr/pseudo/nom-du-project - nomdusite.fr/nom-du-project
 - Redirection sur homepage si on tente de retourner sur /login sans s'être déconnecté
+- verifier existance adresse email

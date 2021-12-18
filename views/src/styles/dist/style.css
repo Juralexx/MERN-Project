@@ -1,0 +1,150 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-family: "Faktum", sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Faktum", sans-serif !important;
+  scroll-behavior: smooth;
+  overflow: hidden;
+  background: #0d1117;
+}
+body p {
+  font-size: 14px;
+}
+
+.header-login, .header-register {
+  padding: 30px 0 10px;
+  text-align: center;
+}
+.header-login img, .header-register img {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.auth-form, .register-form {
+  width: 340px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.auth-form .auth-form-header, .auth-form .register-form-header, .register-form .auth-form-header, .register-form .register-form-header {
+  margin-bottom: 15px;
+  color: #c9d1d9;
+  text-align: center;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.auth-form .auth-form-header h1, .auth-form .register-form-header h1, .register-form .auth-form-header h1, .register-form .register-form-header h1 {
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: 0.7px;
+}
+.auth-form .auth-form-body, .auth-form .register-form-body, .register-form .auth-form-body, .register-form .register-form-body {
+  border-radius: 6px;
+  padding: 20px;
+  font-size: 14px;
+  background-color: #131821;
+  border: 1px solid #1f2938;
+  color: #c9d1d9;
+}
+.auth-form .auth-form-body label, .auth-form .register-form-body label, .register-form .auth-form-body label, .register-form .register-form-body label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 400;
+  text-align: left;
+}
+.auth-form .auth-form-body input, .auth-form .register-form-body input, .register-form .auth-form-body input, .register-form .register-form-body input {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  display: block;
+  width: 100%;
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  border: 1px solid #1f2938;
+  background-color: #0d1117;
+  border-radius: 6px;
+  color: #c9d1d9;
+}
+.auth-form .auth-form-body .btn, .auth-form .register-form-body .btn, .register-form .auth-form-body .btn, .register-form .register-form-body .btn {
+  width: 100%;
+  background: #6F37C2;
+  margin-top: 12px;
+}
+.auth-form .auth-form-body .terms-container, .auth-form .register-form-body .terms-container, .register-form .auth-form-body .terms-container, .register-form .register-form-body .terms-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.auth-form .auth-form-body .terms-container #terms, .auth-form .register-form-body .terms-container #terms, .register-form .auth-form-body .terms-container #terms, .register-form .register-form-body .terms-container #terms {
+  margin-top: unset;
+  margin-bottom: unset;
+  display: unset;
+  width: unset;
+  padding: unset;
+  margin-right: 10px;
+}
+.auth-form .auth-form-body .terms-container label, .auth-form .register-form-body .terms-container label, .register-form .auth-form-body .terms-container label, .register-form .register-form-body .terms-container label {
+  margin: 0;
+}
+.auth-form .auth-form-body .terms-container label a, .auth-form .register-form-body .terms-container label a, .register-form .auth-form-body .terms-container label a, .register-form .register-form-body .terms-container label a {
+  color: #9147ff;
+}
+.auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout {
+  padding: 15px 20px;
+  text-align: center;
+  border: 1px solid #1f2938;
+  border-radius: 6px;
+  margin-top: 15px;
+  color: #c9d1d9;
+}
+.auth-form .login-callout a, .auth-form .register-callout a, .register-form .login-callout a, .register-form .register-callout a {
+  color: #9147ff;
+}
+
+.btn {
+  z-index: 1;
+  position: relative;
+  margin: 0;
+  padding: 10px;
+  border: none;
+  overflow: hidden;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+  background: none;
+}
+
+.error {
+  margin-bottom: 5px;
+  color: red;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.success {
+  color: green;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  text-align: center;
+}

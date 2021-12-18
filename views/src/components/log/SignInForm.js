@@ -35,7 +35,7 @@ const SignInForm = () => {
 
     return (
         <form action="" onSubmit={ handleLogin } id="signin-form">
-            <label htmlFor="email">Email</label><br />
+            <label htmlFor="email">Email</label>
             <input 
                 type="text" 
                 name="email" 
@@ -46,7 +46,7 @@ const SignInForm = () => {
             
             <div className="email error"></div>
 
-            <label htmlFor="password">Mot de passe</label><br />
+            <label htmlFor="password">Mot de passe</label>
             <input 
                 type="password" 
                 name="password" 
@@ -57,9 +57,7 @@ const SignInForm = () => {
 
             <div className="password error"></div>
 
-            <button type="Submit">Se connecter</button>
-
-            <p>Par encore compte ? <a href="/register">Créer mon compte</a></p>
+            <button class="btn btn-primary" type="submit">Se connecter</button>
         </form>
     );
 }

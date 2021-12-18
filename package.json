@@ -6,7 +6,8 @@
   "scripts": {
     "back": "nodemon server.js",
     "front": "npm start --prefix views",
-    "start": "concurrently \"npm run back\" \"npm run front\""
+    "start": "concurrently \"npm run back\" \"npm run front\"",
+    "gulp": "run gulpfile.js"
   },
   "repository": {
     "type": "git",
