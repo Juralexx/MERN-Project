@@ -31,8 +31,8 @@ body p {
   text-align: center;
 }
 .header-login img, .header-register img {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: auto;
   margin: 0 auto;
 }
 
@@ -83,7 +83,7 @@ body p {
 }
 .auth-form .auth-form-body .btn, .auth-form .register-form-body .btn, .register-form .auth-form-body .btn, .register-form .register-form-body .btn {
   width: 100%;
-  background: #61dafb;
+  background: #9147ff;
   margin-top: 12px;
 }
 .auth-form .auth-form-body .terms-container, .auth-form .register-form-body .terms-container, .register-form .auth-form-body .terms-container, .register-form .register-form-body .terms-container {
@@ -107,7 +107,7 @@ body p {
   margin: 0;
 }
 .auth-form .auth-form-body .terms-container label a, .auth-form .register-form-body .terms-container label a, .register-form .auth-form-body .terms-container label a, .register-form .register-form-body .terms-container label a {
-  color: #61dafb;
+  color: #9147ff;
 }
 .auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout {
   padding: 15px 20px;
@@ -118,7 +118,7 @@ body p {
   color: #c9d1d9;
 }
 .auth-form .login-callout a, .auth-form .register-callout a, .register-form .login-callout a, .register-form .register-callout a {
-  color: #61dafb;
+  color: #9147ff;
 }
 
 .btn {
@@ -157,7 +157,7 @@ nav {
   position: relative;
   height: 60px;
   width: 100%;
-  border-bottom: 1px solid #61dafb;
+  border-bottom: 1px solid #9147ff;
 }
 nav .container {
   position: relative;
@@ -183,7 +183,7 @@ nav .container .logo-container .logo {
 }
 nav .container .logo-container .logo img {
   height: 40px;
-  width: 40px;
+  width: auto;
   margin-right: 4px;
 }
 nav .container ul {
@@ -198,6 +198,7 @@ nav .container ul li {
   display: -ms-flexbox;
   display: flex;
   height: 100%;
+  min-width: 80px;
   text-align: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -208,17 +209,24 @@ nav .container ul li {
   padding: 0 7px;
   color: whitesmoke;
   border-bottom: 2px solid transparent;
+  cursor: pointer;
 }
 nav .container ul li p {
   margin: 0;
+  font-size: 16px;
+  line-height: 17px;
+}
+nav .container ul li .fas {
+  font-size: 22px;
 }
 nav .container ul li a {
   text-decoration: none;
   color: whitesmoke;
+  display: block;
 }
 nav .container ul li:hover {
-  border-bottom: 2px solid #61dafb;
+  border-bottom: 2px solid #9147ff;
 }
-nav .container ul li:hover a {
-  color: #61dafb;
+nav .container ul li:hover .fas {
+  color: #9147ff;
 }

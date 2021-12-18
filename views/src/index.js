@@ -2,12 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals'
-import './styles/dist/style.css'
-import './scripts/dist/script.js'
+import { Provider } from "react-redux"
+import { applyMiddleware, createStore } from "redux"
+import thunk from "redux-thunk"
+import rootReducer from './reducers'
+import '../src/styles/dist/style.min.css'
+import '../src/scripts/dist/script.min.js'
+
+// Outils uniquement en dev, à retirer en prod
+import { composeWithDevTools } from "redux-devtools-extension"
+import logger from "redux-logger"
+//
+
+const store = createStore(
+  rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))
+)
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('main')
 );

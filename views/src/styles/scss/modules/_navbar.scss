@@ -3,7 +3,7 @@ nav {
     position:relative;
     height:60px;
     width:100%;
-    border-bottom:1px solid #61dafb;
+    border-bottom:1px solid #9147ff;
 
     .container {
         position:relative;
@@ -22,7 +22,7 @@ nav {
 
                 img {
                     height:40px;
-                    width:40px;
+                    width:auto;
                     margin-right:4px;
                 }
             }
@@ -36,26 +36,35 @@ nav {
             li {
                 display:flex;
                 height:100%;
+                min-width:80px;
                 text-align: center;
                 justify-content: center;
                 align-items: center;
                 padding:0 7px;
                 color : whitesmoke;
                 border-bottom:2px solid transparent;
+                cursor: pointer;
 
                 p {
                     margin:0;
+                    font-size:16px;
+                    line-height:17px;
+                }
+
+                .fas {
+                    font-size:22px;
                 }
 
                 a {
                     text-decoration: none;
                     color : whitesmoke;
+                    display:block;
                 }
 
                 &:hover {
-                    border-bottom:2px solid #61dafb;
-                    a {
-                        color:#61dafb;
+                    border-bottom:2px solid #9147ff;
+                    .fas {
+                        color:#9147ff;
                     }
                 }
             }
