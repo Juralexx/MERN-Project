@@ -38,7 +38,7 @@ const projectSchema = new mongoose.Schema(
 
                         picture: {
                             type: String,
-                            default: "./uploads/profil/ramdom-contributor.png"
+                            default: "../views/public/img/random-user.png"
                         }
                     }
                 ]

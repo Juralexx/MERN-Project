@@ -17,10 +17,10 @@ const Login = () => {
       </div>
       <div className="container">
         <div className="auth-form">
-          <div class="auth-form-header">
+          <div className="auth-form-header">
             <h1>Se connecter</h1>
           </div>
-          <div class="auth-form-body">
+          <div className="auth-form-body">
             <SignInForm />
           </div>
           <p className="login-callout">

@@ -1,70 +1,115 @@
-nav {
-    display:flex;
-    position:relative;
-    height:60px;
-    width:100%;
-    border-bottom:1px solid #9147ff;
+header {
+    height   : 60px;
+    width    : 100%;
+    position : relative;
 
-    .container {
-        position:relative;
-        display:flex;
-        justify-content: space-between;
+    nav {
+        display       : flex;
+        position      : fixed;
+        height        : 60px;
+        width         : 100%;
+        border-bottom : 1px solid #9147ff;
 
-        .logo-container {
-            position: relative;
-            
-            .logo {
-                display: flex;
-                width:auto;
-                height:100%;
-                align-items:center;
+        .container {
+            position        : relative;
+            display         : flex;
+            justify-content : space-between;
+
+            .logo-container {
+                position : relative;
+                
+                .logo {
+                    display     : flex;
+                    width       : auto;
+                    height      : 100%;
+                    align-items : center;
 
 
-                img {
-                    height:40px;
-                    width:auto;
-                    margin-right:4px;
+                    img {
+                        height       : 40px;
+                        width        : auto;
+                        margin-right : 4px;
+                    }
                 }
             }
-        }
 
-        ul {
-            display:flex;
-            list-style: none;
-            margin:0;
+            ul {
+                position   : relative;
+                display    : flex;
+                list-style : none;
+                margin     : 0;
 
-            li {
-                display:flex;
-                height:100%;
-                min-width:80px;
-                text-align: center;
-                justify-content: center;
-                align-items: center;
-                padding:0 7px;
-                color : whitesmoke;
-                border-bottom:2px solid transparent;
-                cursor: pointer;
+                .add-project {
+                    position     : relative;
+                    display      : flex;
+                    align-items  : center;
+                    justify-self : left;
+                    margin-right : 40px;
 
-                p {
-                    margin:0;
-                    font-size:16px;
-                    line-height:17px;
+                    .btn {
+                        background : #9147ff;
+                        padding    : 5px 10px;
+
+                        .svg-icon {
+                            height       : 25px;
+                            width        : 25px;
+                            margin-right : 5px;
+                            stroke-width : 2px;
+
+                            path {
+                                fill         : whitesmoke;
+                                stroke-width : 2px;
+                            }
+                        }
+
+                    }
                 }
 
-                .fas {
-                    font-size:22px;
-                }
+                li {
+                    display         : flex;
+                    height          : 100%;
+                    min-width       : 80px;
+                    text-align      : center;
+                    justify-content : center;
+                    align-items     : center;
+                    padding         : 0 7px;
+                    color           : whitesmoke;
+                    border-bottom   : 2px solid transparent;
+                    cursor          : pointer;
 
-                a {
-                    text-decoration: none;
-                    color : whitesmoke;
-                    display:block;
-                }
+                    p {
+                        margin      : 0;
+                        line-height : 17px;
+                    }
 
-                &:hover {
-                    border-bottom:2px solid #9147ff;
+                    .svg-icon {
+                        width         : 1.8em;
+                        height        : 1.8em;
+                        margin-bottom : 2px;
+
+                        path {
+                            fill : whitesmoke;
+                        }
+                    }
+
                     .fas {
-                        color:#9147ff;
+                        font-size : 22px;
+                    }
+
+                    a {
+                        text-decoration : none;
+                        color           : whitesmoke;
+                        display         : block;
+                    }
+
+                    &:hover {
+                        border-bottom : 2px solid #9147ff;
+                        .svg-icon {
+
+                            path {
+                                fill : #9147ff;
+                            }
+                        }
                     }
                 }
             }

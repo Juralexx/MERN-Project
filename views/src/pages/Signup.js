@@ -11,10 +11,10 @@ const Register = () => {
       </div>
       <div className="container">
         <div className="register-form">
-          <div class="register-form-header">
+          <div className="register-form-header">
             <h1>S'inscrire</h1>
           </div>
-          <div class="register-form-body">
+          <div className="register-form-body">
             <SignUpForm />
           </div>
           <p className="register-callout">

@@ -61,7 +61,7 @@ const SignUpForm = () => {
     return (
         <> { submitted ? ( 
                 <> 
-                    <p class="success">Votre compte a bien été créé ! <br /> Veuillez vous connecter</p>
+                    <p className="success">Votre compte a bien été créé ! <br /> Veuillez vous connecter</p>
                     <SignInForm/>
                 </> 
             ) : (
@@ -112,7 +112,7 @@ const SignUpForm = () => {
                     </div>
                     <div className="terms error"></div>
 
-                    <button class="btn btn-primary" type="submit">S'inscrire</button>
+                    <button className="btn btn-primary" type="submit">S'inscrire</button>
                 </form>
             )}
         </>
