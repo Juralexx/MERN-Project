@@ -20,6 +20,7 @@ body {
   scroll-behavior: smooth;
   overflow: hidden;
   background: #0d1117;
+  color: whitesmoke;
 }
 body p {
   font-size: 14px;
@@ -82,7 +83,7 @@ body p {
 }
 .auth-form .auth-form-body .btn, .auth-form .register-form-body .btn, .register-form .auth-form-body .btn, .register-form .register-form-body .btn {
   width: 100%;
-  background: #6F37C2;
+  background: #61dafb;
   margin-top: 12px;
 }
 .auth-form .auth-form-body .terms-container, .auth-form .register-form-body .terms-container, .register-form .auth-form-body .terms-container, .register-form .register-form-body .terms-container {
@@ -106,7 +107,7 @@ body p {
   margin: 0;
 }
 .auth-form .auth-form-body .terms-container label a, .auth-form .register-form-body .terms-container label a, .register-form .auth-form-body .terms-container label a, .register-form .register-form-body .terms-container label a {
-  color: #9147ff;
+  color: #61dafb;
 }
 .auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout {
   padding: 15px 20px;
@@ -117,7 +118,7 @@ body p {
   color: #c9d1d9;
 }
 .auth-form .login-callout a, .auth-form .register-callout a, .register-form .login-callout a, .register-form .register-callout a {
-  color: #9147ff;
+  color: #61dafb;
 }
 
 .btn {
@@ -147,4 +148,77 @@ body p {
   margin-bottom: 5px;
   border-radius: 6px;
   text-align: center;
+}
+
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  height: 60px;
+  width: 100%;
+  border-bottom: 1px solid #61dafb;
+}
+nav .container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+nav .container .logo-container {
+  position: relative;
+}
+nav .container .logo-container .logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+nav .container .logo-container .logo img {
+  height: 40px;
+  width: 40px;
+  margin-right: 4px;
+}
+nav .container ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 0;
+}
+nav .container ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 7px;
+  color: whitesmoke;
+  border-bottom: 2px solid transparent;
+}
+nav .container ul li p {
+  margin: 0;
+}
+nav .container ul li a {
+  text-decoration: none;
+  color: whitesmoke;
+}
+nav .container ul li:hover {
+  border-bottom: 2px solid #61dafb;
+}
+nav .container ul li:hover a {
+  color: #61dafb;
 }

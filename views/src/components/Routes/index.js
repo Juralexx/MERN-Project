@@ -7,10 +7,12 @@ import Dashboard from '../../pages/Dashboard'
 import Project from '../../pages/Project'
 import Login from '../../pages/Signin'
 import Signup from '../../pages/Signup'
+import Navbar from '../Navbar'
 
 function Index() {
   return (
     <Router>
+      <Navbar/>
       <Routes>
         <Route path="/" element={ <Home /> } />
           <Route path="login" element={ <Login /> } />
