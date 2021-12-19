@@ -17,7 +17,7 @@ function App() {
       withCredentials: true,
     })
       .then((res) => { setUid(res.data) } )
-      .catch((err) => console.log('No token'))
+      .catch((err) => console.log(err))
     }
   fetchToken();
 

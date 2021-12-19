@@ -26,6 +26,12 @@ body p {
   font-size: 14px;
 }
 
+#main {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 .header-login, .header-register {
   padding: 30px 0 10px;
   text-align: center;
@@ -133,7 +139,7 @@ body p {
   font-weight: 300;
   font-size: 14px;
   line-height: 20px;
-  background: none;
+  background: #9147ff;
 }
 
 .error {
@@ -257,7 +263,8 @@ header nav .container ul li .svg-icon path {
 header nav .container ul li .avatar {
   width: 26px;
   height: 26px;
-  margin-bottom: 5px;
+  margin: 0 auto 5px;
+  border-radius: 15px;
 }
 header nav .container ul li a {
   text-decoration: none;
@@ -269,4 +276,53 @@ header nav .container ul li:hover {
 }
 header nav .container ul li:hover .svg-icon path {
   fill: #9147ff;
+}
+
+.profil-container {
+  position: relative;
+  height: auto;
+  width: 100%;
+  margin-top: 50px;
+}
+.profil-container .profil-top {
+  width: 100%;
+  height: auto;
+  border: 1px solid #9147ff;
+  padding: 15px 25px;
+}
+.profil-container .profil-top .infos {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.profil-container .profil-top .infos .left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 50%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.profil-container .profil-top .infos .left .upload-picture {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.profil-container .profil-top .infos .left .avatar {
+  width: 150px;
+  height: 140px;
+  border-radius: 70px;
+  margin-bottom: 20px;
 }

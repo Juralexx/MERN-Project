@@ -4,13 +4,20 @@ import UploadImg from "./UploadImg";
 
 const UpdateProfil = () => {
     const userData = useSelector((state) => state.userReducer)
+    const profilAvatar = {
+        backgroundImage: "url(" + userData.picture +")",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+    }
+
     return (
         <div className="container">
             <div className="profil-container">
                 <div className="profil-top">
                     <div className="infos">
                         <div className="left">
-                            <img src={userData.picture} alt="Photo de profil" />
+                            <div className="avatar" style={ profilAvatar }></div>
                             <UploadImg />
                         </div>
                         <div className="right">

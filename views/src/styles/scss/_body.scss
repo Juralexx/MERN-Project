@@ -19,9 +19,15 @@ body {
     scroll-behavior : smooth;
     overflow        : hidden;
     background      : #0d1117;
-    color:whitesmoke;
+    color           : whitesmoke;
 
     p {
         font-size : 14px;
     }
+}
+
+#main {
+    position : relative;
+    height   : 100%;
+    width    : 100%;
 }
