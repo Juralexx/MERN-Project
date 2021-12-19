@@ -254,8 +254,10 @@ header nav .container ul li .svg-icon {
 header nav .container ul li .svg-icon path {
   fill: whitesmoke;
 }
-header nav .container ul li .fas {
-  font-size: 22px;
+header nav .container ul li .avatar {
+  width: 26px;
+  height: 26px;
+  margin-bottom: 5px;
 }
 header nav .container ul li a {
   text-decoration: none;
