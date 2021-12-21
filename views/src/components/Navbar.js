@@ -64,7 +64,7 @@ const Navbar = () => {
                             </li>
                             <li className="to-profil">
                                 <NavLink to="/profil">
-                                    <div className="avatar" style={ avatar}></div>
+                                    <div className="avatar" style={ avatar }></div>
                                     <p>{ userData.pseudo }</p>
                                 </NavLink>
                             </li>

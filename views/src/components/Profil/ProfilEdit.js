@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
 
-const UpdateProfil = () => {
+const ProfilEdit = () => {
     const userData = useSelector((state) => state.userReducer)
     const profilAvatar = {
-        backgroundImage: "url(" + userData.picture +")",
+        backgroundImage: "url(" + userData.picture + ")",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
@@ -34,4 +34,4 @@ const UpdateProfil = () => {
     )
 }
 
-export default UpdateProfil
+export default ProfilEdit

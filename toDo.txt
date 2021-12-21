@@ -6,6 +6,8 @@
 
 - file d'ariane
 
+- Affichag erreurs upload images profil
+
 A mettre en place juste avant mise en prod :
     - Inscription avec Google et FB
     - Mot de passe oublié sur formulaire de connexion

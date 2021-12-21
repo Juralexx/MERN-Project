@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { isEmail } = require('validator')
+const { isEmail, isMobilePhone } = require('validator')
 const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema(
@@ -30,9 +30,30 @@ const userSchema = new mongoose.Schema(
             maxlength: 1024
         },
 
+        name: {
+            type: String,
+            trimp: true
+        },
+
+        lastname: {
+            type: String,
+            trimp: true
+        },
+
         picture: {
             type: String,
             default: "../views/public/img/random-user.png"
+        },
+
+        phone: {
+            type: String,
+            validate: [isMobilePhone],
+            trim: true
+        },
+
+        work: {
+            type: String,
+            trim: true
         },
 
         bio: {

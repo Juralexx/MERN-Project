@@ -1,10 +1,10 @@
 import React from 'react';
-import UpdateProfil from '../components/Profil/UpdateProfil';
+import Profil from '../components/Profil/Profil';
 
-const Profil = () => {
+const ProfilPage = () => {
     return (
-      <UpdateProfil />
+      <Profil />
     )
 }
 
-export default Profil;
+export default ProfilPage;
