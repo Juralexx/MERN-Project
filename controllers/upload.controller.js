@@ -18,7 +18,7 @@ module.exports.uploadProfil = async (req, res) => {
         return res.status(201).json({ message: errors });
     }
     
-    const fileName = req.body.name + ".jpg";
+    const fileName = req.body.userId + ".jpg";
 
     await pipeline(
         req.file.stream,

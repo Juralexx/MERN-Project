@@ -1,35 +1,35 @@
 .profil-container {
-    position:relative;
-    height:auto;
-    width:100%;
-    margin-top:50px;
+    position   : relative;
+    height     : auto;
+    width      : 100%;
+    margin-top : 50px;
 
     .profil-top {
-        width:100%;
-        height:auto;
-        border:1px solid #9147ff;
-        padding: 15px 25px;
+        width   : 100%;
+        height  : auto;
+        border  : 1px solid #9147ff;
+        padding : 15px 25px;
 
         .infos {
-            display:flex;
+            display : flex;
 
             .left {
-                display:flex;
-                flex-direction: column;
-                width:50%;
-                justify-content: center;
-                align-items: center;
+                display         : flex;
+                flex-direction  : column;
+                width           : 50%;
+                justify-content : center;
+                align-items     : center;
 
                 .upload-picture {
-                    display:flex;
-                    flex-direction: column;
+                    display        : flex;
+                    flex-direction : column;
                 }
 
                 .avatar {
-                    width:150px;
-                    height:140px;
-                    border-radius:70px;
-                    margin-bottom:20px;
+                    width         : 150px;
+                    height        : 140px;
+                    border-radius : 70px;
+                    margin-bottom : 20px;
                 }
             }
         }

@@ -1,3 +1,15 @@
 - Reprendre le pseudo, nom du projet dans URL, ex : nomdusite.fr/pseudo - nomdusite.fr/pseudo/nom-du-project - nomdusite.fr/nom-du-project
-- Redirection sur homepage si on tente de retourner sur /login sans s'être déconnecté
-- verifier existance adresse email
+
+- graphisme personnaliser lors du chargement de la page
+
+- Choisir ce qui sera visible entre utilisation du pseudo ou du prénom
+
+- file d'ariane
+
+A mettre en place juste avant mise en prod :
+    - Inscription avec Google et FB
+    - Mot de passe oublié sur formulaire de connexion
+    - Envoie d'un email : - confirmation lors de la création d'un compte
+                          - confirmation lors de la création d'un projet
+                          - confirmation lors de l'acceptation d'un projet
+                          - lors de la prise de contact avec quelqu'un
