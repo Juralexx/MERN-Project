@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Index from './components/Routes/index';
+import Loader from './pages/Loader';
 import { UidContext } from "./components/AppContext"
 import axios from 'axios';
 import { getUser } from './actions/user.action';
@@ -27,6 +28,7 @@ function App() {
 
   return (
     <UidContext.Provider value={uid}>
+      <Loader />
       <Index />
     </UidContext.Provider>
   );

@@ -8,6 +8,7 @@ import thunk from "redux-thunk"
 import rootReducer from './reducers'
 import '../src/styles/dist/style.min.css'
 import '../src/scripts/dist/script.min.js'
+import './scripts/script.js'
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"

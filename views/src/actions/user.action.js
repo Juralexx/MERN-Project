@@ -45,11 +45,14 @@ export const updateProfil = (userId, pseudo, email, name, lastname, work, phone)
             }
         })
         .then((res) => {
-            dispatch({ type: UPDATE_PROFIL, payload: { pseudo, email, 
+            dispatch({ type: UPDATE_PROFIL, payload: { 
+                pseudo, 
+                email, 
                 name, 
                 lastname, 
                 work, 
-                phone,}})
+                phone,
+            }})
         })
         .catch((err) => console.log(err))
     }

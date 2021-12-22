@@ -32,12 +32,20 @@ const userSchema = new mongoose.Schema(
 
         name: {
             type: String,
-            trimp: true
+            trimp: true,
+            validate: {
+                validator: val => validator.isAlpha(val, ["fr-FR"], { ignore: "-" }),
+                message: "A tour name must only contain characters between A-Z",
+            },
         },
 
         lastname: {
             type: String,
-            trimp: true
+            trimp: true,
+            validate: {
+                validator: val => validator.isAlpha(val, ["fr-FR"], { ignore: "-" }),
+                message: "A tour name must only contain characters between A-Z",
+            },
         },
 
         picture: {
@@ -53,7 +61,11 @@ const userSchema = new mongoose.Schema(
 
         work: {
             type: String,
-            trim: true
+            trim: true,
+            validate: {
+                validator: val => validator.isAlpha(val, ["fr-FR"], { ignore: "-" }),
+                message: "A tour name must only contain characters between A-Z",
+            },
         },
 
         bio: {

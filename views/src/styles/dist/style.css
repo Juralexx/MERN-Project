@@ -21,6 +21,8 @@ body {
   overflow: hidden;
   background: #0d1117;
   color: whitesmoke;
+  height: 100vh;
+  width: 100vw;
 }
 body p {
   font-size: 14px;
@@ -156,6 +158,87 @@ body p {
   text-align: center;
 }
 
+#loader {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: black;
+  z-index: 20;
+}
+#loader .loader-animation {
+  display: inline-block;
+  position: relative;
+  height: 70px;
+  width: 70px;
+  border-radius: 100px;
+  vertical-align: middle;
+  border: 3px solid transparent;
+  border-top-color: white;
+  -webkit-animation: spinClockwise 1s linear infinite;
+          animation: spinClockwise 1s linear infinite;
+}
+#loader .loader-animation:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  bottom: 5px;
+  right: 5px;
+  border: 3px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.8);
+  border-radius: 100px;
+  -webkit-animation: spinClockwise 5s linear infinite;
+          animation: spinClockwise 5s linear infinite;
+}
+#loader .loader-animation:before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  bottom: 12px;
+  right: 12px;
+  border: 3px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.6);
+  border-radius: 100px;
+  -webkit-animation: spinClockwise 10s linear infinite;
+          animation: spinClockwise 10s linear infinite;
+}
+#loader.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.8s ease-out;
+  transition: opacity 0.8s ease-out;
+}
+
+@-webkit-keyframes spinClockwise {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spinClockwise {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
 header {
   height: 60px;
   width: 100%;
