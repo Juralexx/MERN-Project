@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_USER = "GET_USER"
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE"
+export const UPDATE_PROFIL = "UPDATE_PROFIL"
 
 export const getUser = (uid) => {
     return (dispatch) => {
@@ -26,5 +27,30 @@ export const uploadPicture = (data, id) => {
                     })
             })
             .catch((err) => console.log(err))
+    }
+}
+
+export const updateProfil = (userId, pseudo, email, name, lastname, work, phone) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: {
+                pseudo,
+                email, 
+                name, 
+                lastname, 
+                work, 
+                phone,
+            }
+        })
+        .then((res) => {
+            dispatch({ type: UPDATE_PROFIL, payload: { pseudo, email, 
+                name, 
+                lastname, 
+                work, 
+                phone,}})
+        })
+        .catch((err) => console.log(err))
     }
 }
