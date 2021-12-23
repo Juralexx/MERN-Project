@@ -78,7 +78,7 @@ const SignUpForm = () => {
 
                     <label htmlFor="email">Email</label>
                     <input
-                        type="text"
+                        type="email"
                         name="email"
                         id="email"
                         onChange={(e) => setEmail(e.target.value)}
@@ -96,10 +96,10 @@ const SignUpForm = () => {
                     />
                     <div className="password error"></div>
 
-                    <label htmlFor="password-conf">Confirmer mot de passe</label>
+                    <label htmlFor="password-confirm">Confirmer mot de passe</label>
                     <input
                         type="password"
-                        name="password"
+                        name="password-confirm"
                         id="password-confirm"
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         value={confirmPassword}
@@ -112,7 +112,7 @@ const SignUpForm = () => {
                     </div>
                     <div className="terms error"></div>
 
-                    <button className="btn btn-primary" type="submit">S'inscrire</button>
+                    <button className="btn btn-primary" id="submitRegister" disabled type="submit">S'inscrire</button>
                 </form>
             )}
         </>

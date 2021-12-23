@@ -24,7 +24,7 @@ module.exports.updateUser = async (req, res) => {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
     try {
-        UserModel.findOneAndUpdate(
+        await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
                 $set: {
@@ -39,16 +39,16 @@ module.exports.updateUser = async (req, res) => {
             },
             { new: true, upsert: true, setDefaultsOnInsert: true },
             (err, docs) => {
-                if(!err) {
-                    return res.send(docs);
-                }
                 if(err) {
-                    return res.status(500).send({ message: err})
+                    return res.status(500).send({ message: err })
+                }
+                else {
+                    return res.status(200).send(docs);
                 }
             }
         )
-    } catch(err) {
-        return res.status(500).json({ message: err})
+    } catch (err) {
+        return res.status(500).json({ message: err })
     }
 };
 

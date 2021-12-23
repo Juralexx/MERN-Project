@@ -44,12 +44,12 @@ body p {
   margin: 0 auto;
 }
 
-.auth-form, .register-form {
+.auth-form, .register-form, .update-form {
   width: 340px;
   margin: 0 auto;
   padding: 0 15px;
 }
-.auth-form .auth-form-header, .auth-form .register-form-header, .register-form .auth-form-header, .register-form .register-form-header {
+.auth-form .auth-form-header, .auth-form .register-form-header, .auth-form .update-form-header, .register-form .auth-form-header, .register-form .register-form-header, .register-form .update-form-header, .update-form .auth-form-header, .update-form .register-form-header, .update-form .update-form-header {
   margin-bottom: 15px;
   color: #c9d1d9;
   text-align: center;
@@ -57,12 +57,12 @@ body p {
   background-color: transparent;
   border: 0;
 }
-.auth-form .auth-form-header h1, .auth-form .register-form-header h1, .register-form .auth-form-header h1, .register-form .register-form-header h1 {
+.auth-form .auth-form-header h1, .auth-form .register-form-header h1, .auth-form .update-form-header h1, .register-form .auth-form-header h1, .register-form .register-form-header h1, .register-form .update-form-header h1, .update-form .auth-form-header h1, .update-form .register-form-header h1, .update-form .update-form-header h1 {
   font-size: 26px;
   font-weight: 300;
   letter-spacing: 0.7px;
 }
-.auth-form .auth-form-body, .auth-form .register-form-body, .register-form .auth-form-body, .register-form .register-form-body {
+.auth-form .auth-form-body, .auth-form .register-form-body, .auth-form .update-form-body, .register-form .auth-form-body, .register-form .register-form-body, .register-form .update-form-body, .update-form .auth-form-body, .update-form .register-form-body, .update-form .update-form-body {
   border-radius: 6px;
   padding: 20px;
   font-size: 14px;
@@ -70,13 +70,13 @@ body p {
   border: 1px solid #1f2938;
   color: #c9d1d9;
 }
-.auth-form .auth-form-body label, .auth-form .register-form-body label, .register-form .auth-form-body label, .register-form .register-form-body label {
+.auth-form .auth-form-body label, .auth-form .register-form-body label, .auth-form .update-form-body label, .register-form .auth-form-body label, .register-form .register-form-body label, .register-form .update-form-body label, .update-form .auth-form-body label, .update-form .register-form-body label, .update-form .update-form-body label {
   display: block;
   margin-bottom: 7px;
   font-weight: 400;
   text-align: left;
 }
-.auth-form .auth-form-body input, .auth-form .register-form-body input, .register-form .auth-form-body input, .register-form .register-form-body input {
+.auth-form .auth-form-body input, .auth-form .register-form-body input, .auth-form .update-form-body input, .register-form .auth-form-body input, .register-form .register-form-body input, .register-form .update-form-body input, .update-form .auth-form-body input, .update-form .register-form-body input, .update-form .update-form-body input {
   margin-top: 5px;
   margin-bottom: 15px;
   display: block;
@@ -89,12 +89,12 @@ body p {
   border-radius: 6px;
   color: #c9d1d9;
 }
-.auth-form .auth-form-body .btn, .auth-form .register-form-body .btn, .register-form .auth-form-body .btn, .register-form .register-form-body .btn {
+.auth-form .auth-form-body .btn, .auth-form .register-form-body .btn, .auth-form .update-form-body .btn, .register-form .auth-form-body .btn, .register-form .register-form-body .btn, .register-form .update-form-body .btn, .update-form .auth-form-body .btn, .update-form .register-form-body .btn, .update-form .update-form-body .btn {
   width: 100%;
   background: #9147ff;
   margin-top: 12px;
 }
-.auth-form .auth-form-body .terms-container, .auth-form .register-form-body .terms-container, .register-form .auth-form-body .terms-container, .register-form .register-form-body .terms-container {
+.auth-form .auth-form-body .terms-container, .auth-form .register-form-body .terms-container, .auth-form .update-form-body .terms-container, .register-form .auth-form-body .terms-container, .register-form .register-form-body .terms-container, .register-form .update-form-body .terms-container, .update-form .auth-form-body .terms-container, .update-form .register-form-body .terms-container, .update-form .update-form-body .terms-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -103,7 +103,7 @@ body p {
       -ms-flex-align: center;
           align-items: center;
 }
-.auth-form .auth-form-body .terms-container #terms, .auth-form .register-form-body .terms-container #terms, .register-form .auth-form-body .terms-container #terms, .register-form .register-form-body .terms-container #terms {
+.auth-form .auth-form-body .terms-container #terms, .auth-form .register-form-body .terms-container #terms, .auth-form .update-form-body .terms-container #terms, .register-form .auth-form-body .terms-container #terms, .register-form .register-form-body .terms-container #terms, .register-form .update-form-body .terms-container #terms, .update-form .auth-form-body .terms-container #terms, .update-form .register-form-body .terms-container #terms, .update-form .update-form-body .terms-container #terms {
   margin-top: unset;
   margin-bottom: unset;
   display: unset;
@@ -111,13 +111,13 @@ body p {
   padding: unset;
   margin-right: 10px;
 }
-.auth-form .auth-form-body .terms-container label, .auth-form .register-form-body .terms-container label, .register-form .auth-form-body .terms-container label, .register-form .register-form-body .terms-container label {
+.auth-form .auth-form-body .terms-container label, .auth-form .register-form-body .terms-container label, .auth-form .update-form-body .terms-container label, .register-form .auth-form-body .terms-container label, .register-form .register-form-body .terms-container label, .register-form .update-form-body .terms-container label, .update-form .auth-form-body .terms-container label, .update-form .register-form-body .terms-container label, .update-form .update-form-body .terms-container label {
   margin: 0;
 }
-.auth-form .auth-form-body .terms-container label a, .auth-form .register-form-body .terms-container label a, .register-form .auth-form-body .terms-container label a, .register-form .register-form-body .terms-container label a {
+.auth-form .auth-form-body .terms-container label a, .auth-form .register-form-body .terms-container label a, .auth-form .update-form-body .terms-container label a, .register-form .auth-form-body .terms-container label a, .register-form .register-form-body .terms-container label a, .register-form .update-form-body .terms-container label a, .update-form .auth-form-body .terms-container label a, .update-form .register-form-body .terms-container label a, .update-form .update-form-body .terms-container label a {
   color: #9147ff;
 }
-.auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout {
+.auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout, .update-form .login-callout, .update-form .register-callout {
   padding: 15px 20px;
   text-align: center;
   border: 1px solid #1f2938;
@@ -125,8 +125,81 @@ body p {
   margin-top: 15px;
   color: #c9d1d9;
 }
-.auth-form .login-callout a, .auth-form .register-callout a, .register-form .login-callout a, .register-form .register-callout a {
+.auth-form .login-callout a, .auth-form .register-callout a, .register-form .login-callout a, .register-form .register-callout a, .update-form .login-callout a, .update-form .register-callout a {
   color: #9147ff;
+}
+
+.update-form {
+  width: 900px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.update-form .update-form-header {
+  margin-bottom: 15px;
+  color: #c9d1d9;
+  text-align: center;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.update-form .update-form-header h1 {
+  font-size: 26px;
+  font-weight: 300;
+  letter-spacing: 0.7px;
+}
+.update-form .update-form-body {
+  border-radius: 6px;
+  padding: 20px;
+  font-size: 14px;
+  background-color: #131821;
+  border: 1px solid #1f2938;
+  color: #c9d1d9;
+}
+.update-form .update-form-body #update-form, .update-form .update-form-body #update-email-form, .update-form .update-form-body #update-phone-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.update-form .update-form-body #update-form .top, .update-form .update-form-body #update-form .center, .update-form .update-form-body #update-form .bottom, .update-form .update-form-body #update-email-form .top, .update-form .update-form-body #update-email-form .center, .update-form .update-form-body #update-email-form .bottom, .update-form .update-form-body #update-phone-form .top, .update-form .update-form-body #update-phone-form .center, .update-form .update-form-body #update-phone-form .bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.update-form .update-form-body label {
+  display: block;
+  min-width: 120px;
+  padding: 0 20px;
+  font-weight: 400;
+  text-align: left;
+}
+.update-form .update-form-body input {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  display: block;
+  width: 300px;
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  border: 1px solid #1f2938;
+  background-color: #0d1117;
+  border-radius: 6px;
+  color: #c9d1d9;
+}
+.update-form .update-form-body .btn {
+  width: 300px;
+  background: #9147ff;
+  margin: 12px auto;
+}
+.update-form .update-form-body .btn:disabled {
+  background: #131821;
+  border: 1px solid #1f2938;
 }
 
 .btn {
@@ -213,6 +286,12 @@ body p {
           animation: spinClockwise 10s linear infinite;
 }
 #loader.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.8s ease-out;
+  transition: opacity 0.8s ease-out;
+}
+
+.fade {
   opacity: 0;
   -webkit-transition: opacity 0.8s ease-out;
   transition: opacity 0.8s ease-out;

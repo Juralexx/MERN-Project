@@ -2,9 +2,9 @@ import React from 'react';
 import Profil from '../components/Profil/Profil';
 
 const ProfilPage = () => {
-    return (
-      <Profil />
-    )
+  return (
+    <Profil />
+  )
 }
 
 export default ProfilPage;

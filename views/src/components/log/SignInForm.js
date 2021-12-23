@@ -37,7 +37,7 @@ const SignInForm = () => {
         <form action="" onSubmit={ handleLogin } id="signin-form">
             <label htmlFor="email">Email</label>
             <input 
-                type="text" 
+                type="email" 
                 name="email" 
                 id="email" 
                 onChange={ (e) => setEmail(e.target.value) } 
@@ -57,7 +57,7 @@ const SignInForm = () => {
 
             <div className="password error"></div>
 
-            <button className="btn btn-primary" type="submit">Se connecter</button>
+            <button className="btn btn-primary" id="submitLogin" type="submit">Se connecter</button>
         </form>
     );
 }

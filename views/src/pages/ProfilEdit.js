@@ -4,11 +4,11 @@ import ProfilEdit from '../components/Profil/ProfilEdit';
 const ProfilEditPage = () => {
     return (
       <div className="container">
-        <div className="register-form">
-          <div className="register-form-header">
+        <div className="update-form">
+          <div className="update-form-header">
             <h1>Modifier mon profil</h1>
           </div>
-          <div className="register-form-body">
+          <div className="update-form-body">
             <ProfilEdit />
           </div>
         </div>

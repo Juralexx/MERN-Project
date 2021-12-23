@@ -1,7 +1,13 @@
 const mongoose = require('mongoose')
-const { isEmail, isMobilePhone } = require('validator')
-const bcrypt = require('bcrypt')
-
+const validator = require('validator')
+const bcrypt = require('bcrypt');
+//const { isEmailValid } = require('../utils/validations.utils');
+const isEmailValid = function(email) {
+    const emailRegexp = new RegExp(
+       /^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i
+     )
+     return emailRegexp.test(email)
+ }
 const userSchema = new mongoose.Schema(
     {
         pseudo: {
@@ -16,11 +22,11 @@ const userSchema = new mongoose.Schema(
         email: {
             type: String,
             required: true,
-            validate: [isEmail],
-            lowercase: true,
             unique: true,
+            lowercase: true,
             trim: true,
-
+            validate: [isEmailValid],
+            match: [/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i, "Veuillez saisir une adresse email valide"],
         },
 
         password: {
@@ -33,19 +39,11 @@ const userSchema = new mongoose.Schema(
         name: {
             type: String,
             trimp: true,
-            validate: {
-                validator: val => validator.isAlpha(val, ["fr-FR"], { ignore: "-" }),
-                message: "A tour name must only contain characters between A-Z",
-            },
         },
 
         lastname: {
             type: String,
             trimp: true,
-            validate: {
-                validator: val => validator.isAlpha(val, ["fr-FR"], { ignore: "-" }),
-                message: "A tour name must only contain characters between A-Z",
-            },
         },
 
         picture: {
@@ -55,17 +53,12 @@ const userSchema = new mongoose.Schema(
 
         phone: {
             type: String,
-            validate: [isMobilePhone],
             trim: true
         },
 
         work: {
             type: String,
             trim: true,
-            validate: {
-                validator: val => validator.isAlpha(val, ["fr-FR"], { ignore: "-" }),
-                message: "A tour name must only contain characters between A-Z",
-            },
         },
 
         bio: {

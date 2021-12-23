@@ -8,6 +8,7 @@ const upload = multer()
 router.post('/register', authController.signUp)
 router.post('/login', authController.signIn)
 router.get('/logout', authController.logOut)
+router.put('/profil/edit', userController.updateUser)
 
 router.get('/', userController.getAllUsers)
 router.get('/:id', userController.userInfo)
