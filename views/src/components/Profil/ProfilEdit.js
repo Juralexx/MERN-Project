@@ -80,5 +80,5 @@ const ProfilEdit = () => {
         </>
     );
 };
-
+export const emailError = document.querySelector('.email.error');
 export default ProfilEdit;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { emailError } from "../components/Profil/ProfilEdit";
 
 export const GET_USER = "GET_USER"
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE"
@@ -54,16 +55,15 @@ export const updatePseudo = (userId, pseudo) => {
 }
 
 export const updateEmail = (userId, email) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: {
                 email,
             }
         })
-        .then((res) => {
-            dispatch({ type: UPDATE_EMAIL, payload: {
+        .then((res) => {dispatch({ type: UPDATE_EMAIL, payload: {
                 email,
             }})
         })
