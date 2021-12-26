@@ -1,4 +1,4 @@
-module.exports.signUpErrors = (err) => {
+export const signUpErrors = (err) => {
     let errors = { pseudo: "", email: "", password: "" };
 
     if (err.message.includes("pseudo"))
@@ -19,7 +19,7 @@ module.exports.signUpErrors = (err) => {
     return errors;
 };
 
-module.exports.signInErrors = (err) => {
+export const signInErrors = (err) => {
     let errors = { email: "", password: "" }
 
     if (err.message.includes("email"))
@@ -31,13 +31,13 @@ module.exports.signInErrors = (err) => {
     return errors
 }
 
-module.exports.uploadErrors = (err) => {
+export const uploadErrors = (err) => {
     let errors = { format: '', maxSize: '' }
 
     if (err.message.includes("invalid file"))
         return errors.format = "Format incompatible. Les extensions acceptées sont .jpg, .jpeg, .png"
 
-    if(err.message.includes("max size"))
+    if (err.message.includes("max size"))
         return errors.maxSize = "Le fichier dépasse 500ko"
 
     return errors

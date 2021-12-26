@@ -1,6 +1,6 @@
-const ProjectModel = require('../models/project.model')
+import ProjectModel from'../models/project.model.js'
 
-module.exports.createProject = async (req, res) => {
+export const createProject = async (req, res) => {
     const newProject = new ProjectModel({
         posterId: req.body.posterId,
         name: req.body.name,

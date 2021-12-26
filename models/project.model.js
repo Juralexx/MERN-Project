@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const projectSchema = new mongoose.Schema(
+import mongoose from 'mongoose'
+const ProjectModel = new mongoose.Schema(
     {
         posterId: {
             type: String,
@@ -78,5 +78,4 @@ const projectSchema = new mongoose.Schema(
     }
 )
 
-const ProjectModel = mongoose.model('project', projectSchema)
-module.exports = ProjectModel
+export default mongoose.model('project', ProjectModel)

@@ -1,22 +1,24 @@
-const router = require('express').Router()
-const authController = require('../controllers/auth.controller')
-const userController = require('../controllers/user.controller')
-const uploadController = require('../controllers/upload.controller')
-const multer = require('multer')
+import express from 'express'
+const userRoutes = express.Router()
+import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
+import { getAllUsers, userInfo, updateUser, deleteUser, follow, unfollow } from '../controllers/user.controller.js'
+import { deleteProfilImg, uploadProfil } from '../controllers/upload.controller.js'
+import multer from 'multer'
 const upload = multer()
 
-router.post('/register', authController.signUp)
-router.post('/login', authController.signIn)
-router.get('/logout', authController.logOut)
-router.put('/profil/edit', userController.updateUser)
+userRoutes.post('/register', signUp)
+userRoutes.post('/login', signIn)
+userRoutes.get('/logout', logOut)
+userRoutes.put('/profil/edit', updateUser)
 
-router.get('/', userController.getAllUsers)
-router.get('/:id', userController.userInfo)
-router.put('/:id', userController.updateUser)
-router.delete('/:id', userController.deleteUser)
-router.patch('/follow/:id', userController.follow)
-router.patch('/unfollow/:id', userController.unfollow)
+userRoutes.get('/', getAllUsers)
+userRoutes.get('/:id', userInfo)
+userRoutes.put('/:id', updateUser)
+userRoutes.delete('/:id', deleteUser)
+userRoutes.patch('/follow/:id', follow)
+userRoutes.patch('/unfollow/:id', unfollow)
 
-router.post('/upload', upload.single('file'), uploadController.uploadProfil)
+userRoutes.post('/upload', upload.single('file'), uploadProfil)
+userRoutes.delete('/upload/delete', deleteProfilImg)
 
-module.exports = router;
+export default userRoutes;

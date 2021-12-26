@@ -1,6 +1,6 @@
-const UserModel = require('../models/user.model')
-const jwt = require('jsonwebtoken')
-const { signUpErrors, signInErrors } = require('./../utils/error.utils')
+import UserModel from '../models/user.model.js'
+import jwt from 'jsonwebtoken'
+import { signUpErrors, signInErrors } from './../utils/error.utils.js'
 
 const maxAge = 3 * 24 * 60 * 60 * 1000
 const createToken = (id) => {
@@ -9,7 +9,7 @@ const createToken = (id) => {
     })
 }
 
-module.exports.signUp = async (req, res) => {
+export const signUp = async (req, res) => {
     const { pseudo, email, password } = req.body
   
     try {
@@ -22,7 +22,7 @@ module.exports.signUp = async (req, res) => {
     }
 }
 
-module.exports.signIn = async (req, res) => {
+export const signIn = async (req, res) => {
     const { email, password } = req.body
 
     try {
@@ -37,7 +37,7 @@ module.exports.signIn = async (req, res) => {
     }
 }
 
-module.exports.logOut = async (req, res) => {
+export const logOut = async (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 })
     res.redirect('/')
 }

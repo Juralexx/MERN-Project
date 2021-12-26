@@ -7,8 +7,10 @@
 - file d'ariane
 
 - Affichag erreurs upload images profil
+- suppression de l'image upload pour remttre img par default
 
 A mettre en place juste avant mise en prod :
+    - modification d'email possible si confirmation de la meme adresse avant
     - Inscription avec Google et FB
     - Mot de passe oublié sur formulaire de connexion
     - Envoie d'un email : - confirmation lors de la création d'un compte

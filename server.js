@@ -1,42 +1,43 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const cors = require('cors')
-const userRoutes = require('./routes/user.routes')
-const projectRoutes = require('./routes/project.routes')
-require('dotenv').config({ path: './config/.env' })
-const { checkUser, requireAuth } = require('./middleware/auth.middleware')
-require('./config/db.js')
+import express from 'express'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
+import userRoutes from './routes/user.routes.js'
+import projectRoutes from './routes/project.routes.js'
+import dotenv from 'dotenv'
+dotenv.config({ path: './config/config.env' })
+import { checkUser, requireAuth } from './middleware/auth.middleware.js'
+import './config/db.js'
 
 const app = express();
 
 app.use(cors({
-    credentials: true, 
-    origin :process.env.FRONT_URL,
-    'allowedHeaders': ['sessionId', 'Content-Type'],
-    'exposedHeaders': ['sessionId'],
-    'methods': 'GET, HEAD, PUT, PATCH, POST, DELETE',
-    'preflightContinue': false,
+  credentials: true,
+  origin: process.env.FRONT_URL,
+  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'exposedHeaders': ['sessionId'],
+  'methods': 'GET, HEAD, PUT, PATCH, POST, DELETE',
+  'preflightContinue': false,
 }))
-app.use(bodyParser.urlencoded({ 
-    extended: false 
-}));
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(bodyParser.json());
 app.use(cookieParser())
 
 app.get('*', checkUser)
 app.get('/jwtid', requireAuth, (req, res) => {
-    return res.status(200).send(res.locals.user._id)
+  return res.status(200).send(res.locals.user._id)
 })
 
 app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
 
-if(process.env.NODE_ENV !== 'production') {
-  process.once('uncaughtException', function(err) {
+if (process.env.NODE_ENV !== 'production') {
+  process.once('uncaughtException', function (err) {
     console.error('FATAL: Uncaught exception.');
     console.error(err.stack || err);
-    setTimeout(function(){
+    setTimeout(function () {
       process.exit(1);
     }, 100);
   });
@@ -45,5 +46,5 @@ if(process.env.NODE_ENV !== 'production') {
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
-    console.log(`Serveur démarré : http://localhost:${PORT}`);
+  console.log(`Serveur démarré : http://localhost:${PORT}`);
 })

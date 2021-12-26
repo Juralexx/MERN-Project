@@ -1,12 +1,13 @@
-const UserModel = require('../models/user.model')
-const ObjectID = require('mongoose').Types.ObjectId
+import UserModel from '../models/user.model.js'
+import mongoose from 'mongoose'
+const ObjectID = mongoose.Types.ObjectId
 
-module.exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
     const users = await UserModel.find().select('-password');
     res.status(200).json(users);
 }
 
-module.exports.userInfo = (req, res) => {
+export const userInfo = (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -19,7 +20,7 @@ module.exports.userInfo = (req, res) => {
     }).select('-password')
 };
 
-module.exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
     const { pseudo, email, name, lastname, work, phone } = req.body
 
     if (!ObjectID.isValid(req.params.id))
@@ -48,7 +49,7 @@ module.exports.updateUser = async (req, res) => {
     }
 };
 
-module.exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -61,7 +62,7 @@ module.exports.deleteUser = async (req, res) => {
     }
 }
 
-module.exports.follow = async (req, res) => {
+export const follow = async (req, res) => {
     if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToFollow)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -94,7 +95,7 @@ module.exports.follow = async (req, res) => {
     }
 }
 
-module.exports.unfollow = async (req, res) => {
+export const unfollow = async (req, res) => {
     if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToUnfollow)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }

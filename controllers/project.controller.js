@@ -1,8 +1,9 @@
-const ProjectModel = require('../models/project.model')
-const UserModel = require('../models/user.model')
-const ObjectID = require('mongoose').Types.ObjectId
+import ProjectModel from '../models/project.model.js'
+import UserModel from '../models/user.model.js'
+import mongoose from 'mongoose'
+const ObjectID = mongoose.Types.ObjectId
 
-module.exports.readProject = (req, res) => {
+export const readProject = (req, res) => {
     PostModel.find((err, docs) => {
         if(!err) {
             res.send(docs)
@@ -12,7 +13,7 @@ module.exports.readProject = (req, res) => {
     })
 }
 
-module.exports.projectInfo = (req, res) => {
+export const projectInfo = (req, res) => {
     if(!ObjectID.isValid(req.params.id)){
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -25,7 +26,7 @@ module.exports.projectInfo = (req, res) => {
     }).select()
 };
 
-module.exports.updateProject = async (req, res) => {
+export const updateProject = async (req, res) => {
     if(!ObjectID.isValid(req.params.id)){
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -52,7 +53,7 @@ module.exports.updateProject = async (req, res) => {
     }
 };
 
-module.exports.deleteProject = async (req, res) => {
+export const deleteProject = async (req, res) => {
     if(!ObjectID.isValid(req.params.id)){
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }

@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcrypt');
-const {isEmailValid} = require('../utils/validations.utils')
+import mongoose from 'mongoose'
+import validator from 'validator'
+import bcrypt from 'bcrypt'
+import { isEmailValid } from '../utils/validations.utils.js'
 
-const userSchema = new mongoose.Schema(
+const UserModel = new mongoose.Schema(
     {
         pseudo: {
             type: String,
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
             maxlength: 20,
             unique: true,
             validate: {
-                validator: (val) => validator.isAlphanumeric(val, [' '], { ignore: " -" }),
+                validator: (val) => validator.isAlphanumeric(val, ['fr-FR'], { ignore: " -" }),
                 message: 'Veuillez saisir un nom valide'
             },
             trim: true
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             trimp: true,
             validate: {
-                validator: (val) => validator.isAlpha(val, [' '], { ignore: " -" }),
+                validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
                 message: 'Veuillez saisir un nom valide'
             },
         },
@@ -51,14 +51,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             trimp: true,
             validate: {
-                validator: (val) => validator.isAlpha(val, [' '], { ignore: " -" }),
+                validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
                 message: 'Veuillez saisir un nom valide'
             },
         },
 
         picture: {
             type: String,
-            default: "../views/public/img/random-user.png"
+            default: "./img/random-user.png"
         },
 
         phone: {
@@ -74,7 +74,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true,
             validate: {
-                validator: (val) => validator.isAlpha(val, [' '], { ignore: " -" }),
+                validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
                 message: 'Veuillez saisir un nom valide'
             },
         },
@@ -97,13 +97,13 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-userSchema.pre("save", async function (next) {
+UserModel.pre("save", async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
 })
 
-userSchema.statics.login = async function (email, password) {
+UserModel.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
     if (user) {
         const auth = await bcrypt.compare(password, user.password);
@@ -116,5 +116,4 @@ userSchema.statics.login = async function (email, password) {
 };
 
 
-const UserModel = mongoose.model("user", userSchema)
-module.exports = UserModel;
+export default mongoose.model("user", UserModel)

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { emailError } from "../components/Profil/ProfilEdit";
 
 export const GET_USER = "GET_USER"
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE"
+export const DELETE_UPLOADED_PICTURE = "DELETE_UPLOADED_PICTURE"
 export const UPDATE_PSEUDO = "UPDATE_PSEUDO"
 export const UPDATE_NAME = "UPDATE_NAME"
 export const UPDATE_EMAIL = "UPDATE_EMAIL"
@@ -21,16 +21,43 @@ export const getUser = (uid) => {
     }
 }
 
-export const uploadPicture = (data, id) => {
+export const uploadProfilPicture = (data, id) => {
     return (dispatch) => {
         return axios
             .post(`${process.env.REACT_APP_API_URL}api/user/upload`, data)
             .then((res) => {
-                return axios 
+                return axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
                     .then((res) => {
-                        dispatch({type : UPLOAD_PICTURE, payload: res.data.picture})
+                        dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture })
+                        console.log(res)
                     })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+// export const deleteProfilPicture = (userId) => {
+//     return (dispatch) => {
+//         return axios
+//             .delete(`${process.env.REACT_APP_API_URL}api/user/upload/delete`, { data: { picture: `${userId}.jpg` } })
+//             .then((res) => {
+//                 dispatch({ type: DELETE_UPLOADED_PICTURE, payload: './img/random-user.png' })
+//                 console.log(res)
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
+
+export const deleteProfilPicture = (userId, picture) => {
+    return (dispatch) => {
+        return axios({
+            method: "delete",
+            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete`,
+            data: { picture },
+        })
+            .then((res) => {
+                dispatch({ type: DELETE_UPLOADED_PICTURE, payload: './img/random-user.png' })
             })
             .catch((err) => console.log(err))
     }
@@ -41,16 +68,12 @@ export const updatePseudo = (userId, pseudo) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: {
-                pseudo,
-            }
+            data: { pseudo }
         })
-        .then((res) => {
-            dispatch({ type: UPDATE_PSEUDO, payload: {
-                pseudo,
-            }})
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                dispatch({ type: UPDATE_PSEUDO, payload: { pseudo } })
+            })
+            .catch((err) => console.log(err))
     }
 }
 
@@ -59,15 +82,12 @@ export const updateEmail = (userId, email) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: {
-                email,
-            }
+            data: { email }
         })
-        .then((res) => {dispatch({ type: UPDATE_EMAIL, payload: {
-                email,
-            }})
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                dispatch({ type: UPDATE_EMAIL, payload: { email } })
+            })
+            .catch((err) => console.log(err))
     }
 }
 
@@ -76,16 +96,12 @@ export const updateName = (userId, name) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: {
-                name,
-            }
+            data: { name }
         })
-        .then((res) => {
-            dispatch({ type: UPDATE_NAME, payload: {
-                name,
-            }})
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                dispatch({ type: UPDATE_NAME, payload: { name } })
+            })
+            .catch((err) => console.log(err))
     }
 }
 
@@ -94,16 +110,12 @@ export const updateLastname = (userId, lastname) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: {
-                lastname,
-            }
+            data: { lastname }
         })
-        .then((res) => {
-            dispatch({ type: UPDATE_LASTNAME, payload: {
-                lastname,
-            }})
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                dispatch({ type: UPDATE_LASTNAME, payload: { lastname } })
+            })
+            .catch((err) => console.log(err))
     }
 }
 
@@ -112,16 +124,12 @@ export const updateWork = (userId, work) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: {
-                work,
-            }
+            data: { work }
         })
-        .then((res) => {
-            dispatch({ type: UPDATE_WORK, payload: {
-                work,
-            }})
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                dispatch({ type: UPDATE_WORK, payload: { work } })
+            })
+            .catch((err) => console.log(err))
     }
 }
 
@@ -130,15 +138,11 @@ export const updatePhone = (userId, phone) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: {
-                phone,
-            }
+            data: { phone }
         })
-        .then((res) => {
-            dispatch({ type: UPDATE_PHONE, payload: {
-                phone,
-            }})
-        })
-        .catch((err) => console.log(err))
+            .then((res) => {
+                dispatch({ type: UPDATE_PHONE, payload: { phone } })
+            })
+            .catch((err) => console.log(err))
     }
 }

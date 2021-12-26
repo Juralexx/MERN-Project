@@ -7,7 +7,7 @@ window.addEventListener('load', function () {
 $(function () {
     $('#submitRegister').attr('disabled', true);
     $('input').change(function () {
-        if ($('input[name="pseudo"]').val() != '' && $('input[name="email"]').val() != '' && $('input[name="password"]').val() != '' && $('input[name="pseudo"]').val() != '') {
+        if ($('input[name="pseudo"]').val() != '' && $('input[name="email"]').val() != '' && $('input[name="password"]').val() != '') {
             $('#submitRegister').attr('disabled', false);
         } else {
             $('#submitRegister').attr('disabled', true);
