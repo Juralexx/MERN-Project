@@ -10,7 +10,9 @@ const UploadImg = () => {
 
   const handlePicture = async (e) => {
     e.preventDefault()
+    
     const { value: file } = await Swal.fire({
+      html: '<div class="avatar" style="background:url(./img/random-user.png) no-repeat center / cover"></div>',
       title: 'Select image',
       input: 'file',
       showCancelButton: 'true',
@@ -42,11 +44,11 @@ const UploadImg = () => {
       reader.readAsDataURL(file);
     }
 
-    const data = new FormData();
-    data.append("name", userData.pseudo);
-    data.append("userId", userData._id);
-    data.append("file", file);
-    dispatch(uploadProfilPicture(data, userData._id));
+    const data = new FormData()
+    data.append("name", userData.pseudo)
+    data.append("userId", userData._id)
+    data.append("file", file)
+    dispatch(uploadProfilPicture(data, userData._id))
   };
 
   const deletePicture = (e) => {

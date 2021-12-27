@@ -488,3 +488,10 @@ header nav .container ul li:hover .svg-icon path {
   border-radius: 70px;
   margin-bottom: 20px;
 }
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 70px;
+  margin: 0 auto 20px;
+}

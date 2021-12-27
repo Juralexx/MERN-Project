@@ -1,12 +1,14 @@
 'use strict'
 
-const { src, dest, watch, series } = require('gulp');
-const sass = require('gulp-sass')(require('sass'));
-const prefix = require('gulp-autoprefixer');
-const minify = require('gulp-clean-css');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
-//const browserSync = require('browser-sync').create();
+import gulp from 'gulp'
+const { src, dest, watch, series } = gulp
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+const sass = gulpSass( dartSass );
+import prefix from 'gulp-autoprefixer'
+import minify from 'gulp-clean-css'
+import uglify from'gulp-uglify'
+import rename from 'gulp-rename'
 
 var paths = {
         styles: {
@@ -45,7 +47,7 @@ function watchTask() {
     //watch('./*.jsx').on('change', browserSync.reload);
 }
 
-exports.default = series(styleCompiler, watchTask);
+export default series(styleCompiler, watchTask);
  
 // function uglifyJs() {
 //   return src(paths.scripts.src)
