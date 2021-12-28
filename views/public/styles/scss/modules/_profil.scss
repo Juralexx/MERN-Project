@@ -32,20 +32,23 @@
 
                 .avatar {
                     position      : relative;
-                    width         : 140px;
-                    height        : 140px;
-                    border-radius : 70px;
+                    width         : 160px;
+                    height        : 160px;
+                    border-radius : 80px;
                     margin-bottom : 20px;
-                }
 
-                .btn-img-edit {
-                    width         : 40px;
-                    height        : 40px;
-                    border-radius : 20px;
-                    background    : #6366F1;
-                    color         : white;
-                    border        : none;
-                    outline       : none;
+                    .btn-img-edit {
+                        position      : absolute;
+                        width         : 35px;
+                        height        : 35px;
+                        border-radius : 20px;
+                        background    : #6366F1;
+                        color         : white;
+                        border        : none;
+                        outline       : none;
+                        right         : 5px;
+                        bottom        : 5px;
+                    }
                 }
             }
         }
@@ -62,8 +65,8 @@
 .fileUpload {
     position : relative;
     overflow : hidden;
-    margin:0;
-    bottom:0;
+    margin   : 0;
+    bottom   : 0;
 }
 .fileUpload input.upload {
     position  : absolute;

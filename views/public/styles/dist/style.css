@@ -217,6 +217,23 @@ body p {
   background: #6366F1;
 }
 
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+}
+
 .error {
   margin-bottom: 5px;
   color: red;
@@ -318,6 +335,98 @@ body p {
             transform: rotate(360deg);
   }
 }
+.modal-container {
+  z-index: 1050;
+  position: fixed;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  background: white;
+  width: 600px;
+  min-height: 300px;
+  left: 50%;
+  top: 20%;
+  margin-left: -300px;
+  display: none;
+}
+.modal-container.hide-modal {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s 0s, -webkit-transform 0.25s;
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, -webkit-transform 0.25s;
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s, -webkit-transform 0.25s;
+}
+.modal-container.modal-container-active {
+  display: block;
+}
+.modal-container.modal-container-active.show-modal {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: visibility 0s linear 0s, opacity 0.25s 0s, -webkit-transform 0.25s;
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, -webkit-transform 0.25s;
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s, -webkit-transform 0.25s;
+}
+.modal-container .modal-inner {
+  position: relative;
+  width: 600px;
+  min-height: 300px;
+  padding: 20px;
+}
+.modal-container .close-modal {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: black;
+  cursor: pointer;
+  font-size: 22px;
+}
+.modal-container .footer {
+  position: relative;
+  margin-top: auto;
+  bottom: 0;
+  width: 100%;
+}
+.modal-container .footer .modal-container-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+.modal-container .footer .modal-container-btn .btn {
+  min-width: 100px;
+}
+
+.modal-cover {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1040;
+  display: none;
+}
+.modal-cover.modal-cover-active {
+  display: block;
+}
+
 header {
   height: 60px;
   width: 100%;
@@ -484,19 +593,22 @@ header nav .container ul li:hover .svg-icon path {
 }
 .profil-container .profil-top .infos .left .avatar {
   position: relative;
-  width: 140px;
-  height: 140px;
-  border-radius: 70px;
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
   margin-bottom: 20px;
 }
-.profil-container .profil-top .infos .left .btn-img-edit {
-  width: 40px;
-  height: 40px;
+.profil-container .profil-top .infos .left .avatar .btn-img-edit {
+  position: absolute;
+  width: 35px;
+  height: 35px;
   border-radius: 20px;
   background: #6366F1;
   color: white;
   border: none;
   outline: none;
+  right: 5px;
+  bottom: 5px;
 }
 
 .avatar {

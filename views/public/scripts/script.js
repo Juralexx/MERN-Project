@@ -25,9 +25,3 @@ $(function () {
         }
     });
 });
-
-$(function () {
-    $('#update-form').on('input change', function () {
-        $('#checkout').attr('disabled', false);
-    });
-})
