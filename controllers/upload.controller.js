@@ -14,15 +14,15 @@ export const uploadProfil = async (req, res) => {
         if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") {
             throw Error("invalid file");
         }
-        if (req.file.size > 500000)  {
+        if (req.file.size > 5000000) {
             throw Error("max size");
         }
-    } 
+    }
     catch (err) {
         const errors = uploadErrors(err);
         return res.status(201).json({ message: errors });
     }
-    
+
     const fileName = req.body.userId + ".jpg";
 
     await pipeline(
@@ -52,21 +52,15 @@ export const uploadProfil = async (req, res) => {
 };
 
 export const deleteProfilImg = async (req, res) => {
-    console.log('bonjour')
-            
-    // fs.unlinkSync(`${__dirname}/../views/public/uploads/profil/${req.body.userId}` + ".jpg"),
-    // console.log(fileName)
+    req.params.id
 
     try {
         UserModel.findOneAndUpdate(
-            req.body.userId,
-            
+            { _id: req.params.id },
             { $set: { picture: "./img/random-user.png" } },
-            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
-            console.log(req.body.userId),
+            { new: true, upsert: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {
-                    console.log('image supprimée')
                     return res.send(docs);
                 }
                 else {
@@ -74,6 +68,10 @@ export const deleteProfilImg = async (req, res) => {
                 }
             }
         );
+
+        fs.unlinkSync(`${__dirname}/../views/public/uploads/profil/${req.params.id}.jpg`)
+        console.log('coucou')
+
     } catch (err) {
         return res.status(400).send({ message: err });
     }

@@ -91,7 +91,7 @@ body p {
 }
 .auth-form .auth-form-body .btn, .auth-form .register-form-body .btn, .auth-form .update-form-body .btn, .register-form .auth-form-body .btn, .register-form .register-form-body .btn, .register-form .update-form-body .btn, .update-form .auth-form-body .btn, .update-form .register-form-body .btn, .update-form .update-form-body .btn {
   width: 100%;
-  background: #9147ff;
+  background: #6366F1;
   margin-top: 12px;
 }
 .auth-form .auth-form-body .terms-container, .auth-form .register-form-body .terms-container, .auth-form .update-form-body .terms-container, .register-form .auth-form-body .terms-container, .register-form .register-form-body .terms-container, .register-form .update-form-body .terms-container, .update-form .auth-form-body .terms-container, .update-form .register-form-body .terms-container, .update-form .update-form-body .terms-container {
@@ -115,7 +115,7 @@ body p {
   margin: 0;
 }
 .auth-form .auth-form-body .terms-container label a, .auth-form .register-form-body .terms-container label a, .auth-form .update-form-body .terms-container label a, .register-form .auth-form-body .terms-container label a, .register-form .register-form-body .terms-container label a, .register-form .update-form-body .terms-container label a, .update-form .auth-form-body .terms-container label a, .update-form .register-form-body .terms-container label a, .update-form .update-form-body .terms-container label a {
-  color: #9147ff;
+  color: #6366F1;
 }
 .auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout, .update-form .login-callout, .update-form .register-callout {
   padding: 15px 20px;
@@ -126,7 +126,7 @@ body p {
   color: #c9d1d9;
 }
 .auth-form .login-callout a, .auth-form .register-callout a, .register-form .login-callout a, .register-form .register-callout a, .update-form .login-callout a, .update-form .register-callout a {
-  color: #9147ff;
+  color: #6366F1;
 }
 
 .update-form {
@@ -194,7 +194,7 @@ body p {
 }
 .update-form .update-form-body .btn {
   width: 300px;
-  background: #9147ff;
+  background: #6366F1;
   margin: 12px auto;
 }
 .update-form .update-form-body .btn:disabled {
@@ -214,7 +214,7 @@ body p {
   font-weight: 300;
   font-size: 14px;
   line-height: 20px;
-  background: #9147ff;
+  background: #6366F1;
 }
 
 .error {
@@ -330,7 +330,7 @@ header nav {
   position: fixed;
   height: 60px;
   width: 100%;
-  border-bottom: 1px solid #9147ff;
+  border-bottom: 1px solid #323232;
 }
 header nav .container {
   position: relative;
@@ -379,7 +379,7 @@ header nav .container ul .add-project {
   margin-right: 40px;
 }
 header nav .container ul .add-project .btn {
-  background: #9147ff;
+  background: #6366F1;
   padding: 5px 10px;
 }
 header nav .container ul .add-project .btn .svg-icon {
@@ -434,10 +434,10 @@ header nav .container ul li a {
   display: block;
 }
 header nav .container ul li:hover {
-  border-bottom: 2px solid #9147ff;
+  border-bottom: 2px solid #6366F1;
 }
 header nav .container ul li:hover .svg-icon path {
-  fill: #9147ff;
+  fill: #6366F1;
 }
 
 .profil-container {
@@ -449,7 +449,7 @@ header nav .container ul li:hover .svg-icon path {
 .profil-container .profil-top {
   width: 100%;
   height: auto;
-  border: 1px solid #9147ff;
+  border: 1px solid #323232;
   padding: 15px 25px;
 }
 .profil-container .profil-top .infos {
@@ -483,10 +483,20 @@ header nav .container ul li:hover .svg-icon path {
           flex-direction: column;
 }
 .profil-container .profil-top .infos .left .avatar {
-  width: 150px;
+  position: relative;
+  width: 140px;
   height: 140px;
   border-radius: 70px;
   margin-bottom: 20px;
+}
+.profil-container .profil-top .infos .left .btn-img-edit {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: #6366F1;
+  color: white;
+  border: none;
+  outline: none;
 }
 
 .avatar {
@@ -494,4 +504,22 @@ header nav .container ul li:hover .svg-icon path {
   height: 140px;
   border-radius: 70px;
   margin: 0 auto 20px;
+}
+
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  bottom: 0;
+}
+
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
 }

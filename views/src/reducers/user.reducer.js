@@ -15,7 +15,7 @@ export default function userReducer(state = initialState, action) {
         case DELETE_UPLOADED_PICTURE:
             return {
                 ...state,
-                picture: action.payload,
+                picture: action.payload
             }
         case UPDATE_PSEUDO:
             return {

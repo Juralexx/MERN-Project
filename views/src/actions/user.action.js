@@ -37,29 +37,21 @@ export const uploadProfilPicture = (data, id) => {
     }
 }
 
-// export const deleteProfilPicture = (userId) => {
-//     return (dispatch) => {
-//         return axios
-//             .delete(`${process.env.REACT_APP_API_URL}api/user/upload/delete`, { data: { picture: `${userId}.jpg` } })
-//             .then((res) => {
-//                 dispatch({ type: DELETE_UPLOADED_PICTURE, payload: './img/random-user.png' })
-//                 console.log(res)
-//             })
-//             .catch((err) => console.log(err))
-//     }
-// }
-
 export const deleteProfilPicture = (userId, picture) => {
     return (dispatch) => {
         return axios({
-            method: "delete",
-            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete`,
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/` + userId,
             data: { picture },
         })
             .then((res) => {
-                dispatch({ type: DELETE_UPLOADED_PICTURE, payload: './img/random-user.png' })
+                return axios
+                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
+                    .then((res) => {
+                dispatch({ type: DELETE_UPLOADED_PICTURE, payload: "./img/random-user.png" })
             })
-            .catch((err) => console.log(err))
+        })            
+        .catch((err) => console.log(err))
     }
 }
 

@@ -19,6 +19,6 @@ userRoutes.patch('/follow/:id', follow)
 userRoutes.patch('/unfollow/:id', unfollow)
 
 userRoutes.post('/upload', upload.single('file'), uploadProfil)
-userRoutes.delete('/upload/delete', deleteProfilImg)
+userRoutes.put('/upload/delete/:id', deleteProfilImg)
 
 export default userRoutes;
