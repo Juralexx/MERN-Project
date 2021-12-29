@@ -20,7 +20,7 @@ const Profil = () => {
                     <div className="infos">
                         <div className="left">
                             <div className="avatar" style={profilAvatar}>
-                                <Modal />
+                                <UploadImg />
                             </div>
                         </div>
                         <div className="right">

@@ -1,45 +1,52 @@
-import React, { useState } from "react"
-import { useSelector } from "react-redux"
-import UploadImg from "./UploadImg"
+import React from "react"
+import AvatarEditor, { allowZoomOut } from 'react-avatar-editor'
 
-
-const Modal = () => {
-    const userData = useSelector((state) => state.userReducer)
-    const [open, setOpen] = useState(false)
-
-    const modalOpen = () => { setOpen(true) }
-    const modalClose = () => { setOpen(false) }
-
-    const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
-    const containerClass = open ? 'modal-container modal-container-active show-modal' : 'modal-container hide-modal'
-
-    const profilAvatar = {
-        backgroundImage: "url(" + userData.picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
+class ReactAvatarEditor extends React.Component {
+    state = {
+        allowZoomOut: false,
+        position: { x: 0.5, y: 0.5 },
+        scale: 1,
+        rotate: 0,
+        color: [255, 255, 255, 0.6],
+        border: 50,
+        borderRadius: 200,
+        preview: null,
+        width: 200,
+        height: 200,
+        scale: 1.2,
+        rotate: 0
     }
 
-    return (
-        <div>
-            <button className="btn-img-edit" onClick={modalOpen}><i className="fas fa-pen"></i></button>
+    handleScale = (e) => {
+        const scale = parseFloat(e.target.value)
+        this.setState({ scale })
+    }
 
-            <div className={containerClass}>
-                <div className="modal-inner">
-                    <div className="close-modal" onClick={modalClose}><i className="fas fa-times"></i></div>
-                    <div className='header'></div>
-                    <div className='body'>
-                        <div className="avatar" style={profilAvatar}></div>
-                    </div>
-                    <div className='footer'>
-                        <UploadImg />
-                    </div>
-                </div>
-            </div>
-
-            <div className={coverClass} onClick={modalClose}></div>
-        </div>
-    )
+    render() {
+        return (
+            <>
+                <AvatarEditor
+                    width={this.state.width}
+                    height={this.state.height}
+                    border={this.state.border}
+                    color={this.state.color}
+                    borderRadius={this.state.borderRadius}
+                    scale={this.state.scale}
+                    rotate={this.state.rotate}
+                />
+                <input
+                    name="scale"
+                    type="range"
+                    onChange={this.handleScale}
+                    min={this.state.allowZoomOut ? '0.1' : '1'}
+                    max="2"
+                    step="0.01"
+                    defaultValue="1"
+                />
+            </>
+        )
+    }
 }
 
-export default Modal
+
+export default ReactAvatarEditor
