@@ -47,6 +47,20 @@
         font-size : 22px;
     }
 
+    .body {
+        display:flex;
+        flex-direction: column;
+
+        canvas {
+            margin : 20px auto;
+        }
+
+        input[type=range] {
+            width:200px;
+            margin:5px auto;
+        }
+    }
+
     .footer {
         position   : relative;;
         margin-top : auto;

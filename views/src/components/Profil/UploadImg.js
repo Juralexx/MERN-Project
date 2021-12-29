@@ -38,18 +38,24 @@ const UploadImg = () => {
   const [picture, setPicture] = useState({
     width: 200,
     height: 200,
-    border: 50,
+    border: 20,
     color: [0, 0, 0, 0.3],
     borderRadius: 200,
-    rotate: 0,
+    rotate: 1,
     zoom: 1.8,
     croppedImg: file
   });
 
-  const handleSlider = (event, value) => {
+  const handleZoom = (event, value) => {
     setPicture({
       ...picture,
       zoom: event.target.value,
+    });
+  };
+  const handleRotate = (event, value) => {
+    setPicture({
+      ...picture,
+      rotate: event.target.value,
     });
   };
 
@@ -96,11 +102,20 @@ const UploadImg = () => {
                   defaultValue={picture.zoom}
                   name="scale"
                   type="range"
-                  onChange={handleSlider}
+                  onChange={handleZoom}
                   min="1"
                   max="3"
                   step="0.01"
-                /></>
+                />
+                <input
+                  defaultValue={picture.rotate}
+                  name="rotate"
+                  type="range"
+                  onChange={handleRotate}
+                  max="360"
+                  step="0.01"
+                />
+              </>
             )}
           </div>
           <div className='footer'>
