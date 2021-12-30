@@ -1,26 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProfilPicture, uploadProfilPicture } from "../../actions/user.action";
-import AvatarEditor from 'react-avatar-editor'
+import AvatarEditor, { getImage } from 'react-avatar-editor'
+import Swal from "sweetalert2";
 
 const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
-
-  const handlePicture = (e) => {
-    e.preventDefault()
-    const data = new FormData()
-    data.append("name", userData.pseudo)
-    data.append("userId", userData._id)
-    data.append("file", file)
-    dispatch(uploadProfilPicture(data, userData._id))
-  };
-
-  const deletePicture = (e) => {
-    e.preventDefault()
-    dispatch(deleteProfilPicture(userData._id, userData.picture))
-  }
 
   const [open, setOpen] = useState(false)
   const modalOpen = () => { setOpen(true) }
@@ -59,20 +46,61 @@ const UploadImg = () => {
     });
   };
 
-  const setEditorRef = (ed) => { editor = ed; };
+  const setEditorRef = (ed) => { editor = ed };
 
   const handleSave = (e) => {
+    e.preventDefault();
     if (setEditorRef) {
       const canvasScaled = editor.getImageScaledToCanvas();
-      const croppedImg = canvasScaled.toDataURL();
-      handlePicture()
 
       setPicture({
         ...picture,
-        croppedImg: croppedImg
+        croppedImg: canvasScaled
       });
+
+      const data = new FormData()
+      data.append("userId", userData._id)
+      data.append("file", file)
+      dispatch(uploadProfilPicture(data, userData._id))
+
+      modalClose()
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Votre image a bien été ajoutée !',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      setFile(false)
+      e.stopPropagation();
     }
   };
+
+  const deletePicture = (e) => {
+    e.preventDefault()
+    Swal.fire({
+      title: "Etes-vous sur de vouloir supprimer votre photo de profil ?",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Annuler',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Supprimer'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteProfilPicture(userData._id, userData.picture))
+        modalClose()
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Votre photo a bien été supprimée !',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
+  }
 
   return (
     <div>
@@ -122,11 +150,20 @@ const UploadImg = () => {
             {!file ? (
               <form action="" encType="multipart/form-data" className="upload-picture">
                 <div className="modal-container-btn">
-                  <div className="fileUpload btn btn-primary">
-                    <span>Modifier ma photo</span>
-                    <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
-                  </div>
-                  {(userData.picture === './img/random-user.png') ? <></> : <button className="btn btn-primary" onClick={deletePicture} >Supprimer ma photo</button>}
+                  { (userData.picture === './img/random-user.png') ? (
+                    <div className="fileUpload btn btn-primary">
+                      <span>Ajouter une photo</span>
+                      <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
+                    </div>
+                  ) : (
+                    <>
+                      <div className="fileUpload btn btn-primary">
+                        <span>Modifier ma photo</span>
+                        <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
+                      </div>
+                      <button className="btn btn-primary" onClick={deletePicture} >Supprimer ma photo</button>
+                    </>
+                  )}
                 </div>
               </form>
             ) : (
@@ -136,7 +173,7 @@ const UploadImg = () => {
                     <span>Changer de photo</span>
                     <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
                   </div>
-                  <button className="btn btn-primary" onClick={handleSave} value={{ file }}>Valider</button>
+                  <button className="btn btn-primary" onClick={handleSave} type="button" value={{ file }}>Valider</button>
                 </div>
               </form>
             )}

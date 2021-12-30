@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { dateParser } from "../Utils";
 import UploadImg from "./UploadImg";
-import Modal, {modalToggle} from "./UploadImgModal";
+import Modal, { modalToggle } from "./UploadImgModal";
 
 const Profil = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -32,7 +32,47 @@ const Profil = () => {
                             {userData.work === '' ? (<p style={{ display: 'none' }}></p>) : (<p className="work-field">Métier : {userData.work}</p>)}
                             {userData.phone === '' ? (<p style={{ display: 'none' }}></p>) : (<p className="phone-field">Tél : {userData.phone}</p>)}
                             <p>Inscrit depuis le : {dateParser(userData.createdAt)}</p>
-                            <a href="/profil/edit" className="btn btn-primary">Modifier mon profil</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="/projects">
+                                <div class="profil-card">
+                                    <div class="top">
+                                        <i class="fas fa-project-diagram"></i>
+                                    </div>
+                                    <div class="bottom">
+                                        Mes projets
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/profil/edit">
+                                <div class="profil-card">
+                                    <div class="top">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <div class="bottom">
+                                        Modifier mon profil
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="/settings">
+                                <div class="profil-card">
+                                    <div class="top">
+                                        <i class="fas fa-sliders-h"></i>
+                                    </div>
+                                    <div class="bottom">
+                                        Paramètres
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
