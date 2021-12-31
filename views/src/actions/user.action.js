@@ -3,12 +3,15 @@ import axios from "axios";
 export const GET_USER = "GET_USER"
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE"
 export const DELETE_UPLOADED_PICTURE = "DELETE_UPLOADED_PICTURE"
+export const UPLOAD_COVER_PICTURE = "UPLOAD_COVER_PICTURE"
+export const DELETE_COVER_PICTURE = "DELETE_COVER_PICTURE"
 export const UPDATE_PSEUDO = "UPDATE_PSEUDO"
 export const UPDATE_NAME = "UPDATE_NAME"
 export const UPDATE_EMAIL = "UPDATE_EMAIL"
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME"
 export const UPDATE_WORK = "UPDATE_WORK"
 export const UPDATE_PHONE = "UPDATE_PHONE"
+export const UPDATE_BIO = "UPDATE_BIO"
 
 export const getUser = (uid) => {
     return (dispatch) => {
@@ -48,10 +51,44 @@ export const deleteProfilPicture = (userId, picture) => {
                 return axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                     .then((res) => {
-                dispatch({ type: DELETE_UPLOADED_PICTURE, payload: "./img/random-user.png" })
+                        dispatch({ type: DELETE_UPLOADED_PICTURE, payload: "./img/random-user.png" })
+                    })
             })
-        })            
-        .catch((err) => console.log(err))
+            .catch((err) => console.log(err))
+    }
+}
+
+export const uploadCoverPicture = (data, id) => {
+    return (dispatch) => {
+        return axios
+            .post(`${process.env.REACT_APP_API_URL}api/user/upload/cover`, data)
+            .then((res) => {
+                return axios
+                    .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
+                    .then((res) => {
+                        dispatch({ type: UPLOAD_COVER_PICTURE, payload: res.data.coverPicture })
+                        console.log(res)
+                    })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const deleteCoverPicture = (userId, coverPicture) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/cover/` + userId,
+            data: { coverPicture },
+        })
+            .then((res) => {
+                return axios
+                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
+                    .then((res) => {
+                        dispatch({ type: DELETE_COVER_PICTURE, payload: "./img/random-cover.jpg" })
+                    })
+            })
+            .catch((err) => console.log(err))
     }
 }
 
@@ -134,6 +171,20 @@ export const updatePhone = (userId, phone) => {
         })
             .then((res) => {
                 dispatch({ type: UPDATE_PHONE, payload: { phone } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateBio = (userId, bio) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { bio }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_BIO, payload: bio })
             })
             .catch((err) => console.log(err))
     }

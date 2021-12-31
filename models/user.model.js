@@ -61,6 +61,11 @@ const UserModel = new mongoose.Schema(
             default: "./img/random-user.png"
         },
 
+        coverPicture: {
+            type: String,
+            default: "./img/random-cover.jpg"
+        },
+
         phone: {
             type: String,
             trim: true,

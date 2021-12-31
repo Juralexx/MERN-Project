@@ -1,4 +1,4 @@
-import { DELETE_UPLOADED_PICTURE, GET_USER, UPDATE_EMAIL, UPDATE_LASTNAME, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_WORK, UPLOAD_PICTURE } from "../actions/user.action";
+import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, GET_USER, UPDATE_BIO, UPDATE_EMAIL, UPDATE_LASTNAME, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_WORK, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action";
 
 const initialState = {}
 
@@ -16,6 +16,16 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 picture: action.payload
+            }
+        case UPLOAD_COVER_PICTURE:
+            return {
+                ...state,
+                coverPicture: action.payload,
+            }
+        case DELETE_COVER_PICTURE:
+            return {
+                ...state,
+                coverPicture: action.payload
             }
         case UPDATE_PSEUDO:
             return {
@@ -46,6 +56,11 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 phone: action.payload,
+            }
+        case UPDATE_BIO:
+            return {
+                ...state,
+                bio: action.payload,
             }
 
         default:

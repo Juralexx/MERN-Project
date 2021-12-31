@@ -21,7 +21,7 @@ export const userInfo = (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    const { pseudo, email, name, lastname, work, phone } = req.body
+    const { pseudo, email, name, lastname, work, phone, bio } = req.body
 
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
@@ -37,7 +37,7 @@ export const updateUser = async (req, res) => {
                     lastname,
                     work,
                     phone,
-                    //bio: req.body.bio,
+                    bio,
                 },
             },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },

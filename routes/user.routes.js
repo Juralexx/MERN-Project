@@ -2,7 +2,7 @@ import express from 'express'
 const userRoutes = express.Router()
 import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
 import { getAllUsers, userInfo, updateUser, deleteUser, follow, unfollow } from '../controllers/user.controller.js'
-import { deleteProfilImg, uploadProfil } from '../controllers/upload.controller.js'
+import { deleteCoverPicture, deleteProfilPicture, uploadCoverPicture, uploadProfilPicture } from '../controllers/upload.controller.js'
 import multer from 'multer'
 const upload = multer()
 
@@ -18,7 +18,9 @@ userRoutes.delete('/:id', deleteUser)
 userRoutes.patch('/follow/:id', follow)
 userRoutes.patch('/unfollow/:id', unfollow)
 
-userRoutes.post('/upload', upload.single('file'), uploadProfil)
-userRoutes.put('/upload/delete/:id', deleteProfilImg)
+userRoutes.post('/upload', upload.single('file'), uploadProfilPicture)
+userRoutes.post('/upload/cover', upload.single('file'), uploadCoverPicture)
+userRoutes.put('/upload/delete/:id', deleteProfilPicture)
+userRoutes.put('/upload/delete/cover/:id', deleteCoverPicture)
 
 export default userRoutes;
