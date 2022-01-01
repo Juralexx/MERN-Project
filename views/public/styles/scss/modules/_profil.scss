@@ -1,30 +1,41 @@
 .profil-container {
-    position   : relative;
-    height     : auto;
-    width      : 100%;
+    position : relative;
+    height   : auto;
+    width    : 100%;
 
     .profil-top {
-        position : relative;
-        width   : 100%;
-        height  : 260px;
-        background : $bg-color;
-        border-radius: $radius;
+        position      : relative;
+        width         : 100%;
+        height        : 260px;
+        background    : $bg-color;
+        border-radius : $radius;
 
         .cover-img {
-            position:relative;
-            height:200px;
-            width:100%;
-            display:flex;
-            align-items: flex-end;
+            position        : relative;
+            height          : 200px;
+            width           : 100%;
+            display         : flex;
+            align-items     : flex-end;
+            justify-content : space-between;
 
             .btn-cover-edit {
-                position:relative;
-                margin-left:auto;
-                padding:10px;
+                position : relative;
+                padding  : 10px;
 
                 .btn {
-                    margin:0 5px;
+                    margin : 0 5px;
                 }
+            }
+
+            .pseudo-header {
+                margin-left : 220px;
+                p {
+                    font-size   : 32px;
+                    text-align  : center;
+                    margin-left : auto;
+                    color       : white;
+                }
+
             }
         }
 
@@ -39,11 +50,11 @@
             height        : 160px;
             border-radius : 80px;
             margin        : 0;
-            top:75px;
-            left:30px;
+            top           : 75px;
+            left          : 30px;
 
             &.-online-ring {
-                box-shadow: inset 0 0 0 3px $bg-color;
+                box-shadow : inset 0 0 0 3px $bg-color;
             }
 
             .btn-img-edit {
@@ -55,7 +66,7 @@
                 color         : white;
                 border        : none;
                 outline       : none;
-                right         : 10spx;
+                right         : 10px;
                 bottom        : 10px;
             }
         }
@@ -63,10 +74,6 @@
 
     .container {
         padding : 20px 0;
-
-        .col-md-4 {
-            padding : 10px;
-        }
 
         a {
             font-size       : 19px;
@@ -77,38 +84,43 @@
         }
 
         .profil-card {
-            height  : auto;
-            padding : 10px 20px;
-            border  : 1px solid rgb(50, 50, 50);
-            background : $bg-color; 
-            border-radius: $radius;
-    
-            .top {
-                width     : 100%;
-                padding   : 10px;
-                font-size : 35px;
+            height        : auto;
+            padding       : 20px;
+            background    : $bg-color;
+            border-radius : $radius;
+
+            .fas, .fa, .fab {
+                color        : white;
+                margin-right : 5px;
             }
 
-            .bottom {
-                padding : 10px;
+            h5 {
+                margin-bottom : 15px;
+            }
+
+            p {
+                margin : 10px 0;
             }
         }
 
         .bio {
+            height        : auto;
+            padding       : 20px;
+            background    : $bg-color;
+            border-radius : $radius;
 
             p{
-                padding:15px;
-                min-height: 30px;
-                width:100%;
-                border: 1px solid lighten($bg-color, 5%);
+                padding    : 15px;
+                min-height : 30px;
+                width      : 100%;
             }
 
             textarea {
-                padding:15px;
-                min-height: 100px;
-                width:100%;
-                background:lighten($bg-color, 5%);
-                color:white;
+                padding    : 15px;
+                min-height : 100px;
+                width      : 100%;
+                background : lighten($bg-color, 5%);
+                color      : white;
             }
         }
     }
@@ -127,6 +139,7 @@
     margin   : 0;
     bottom   : 0;
 }
+
 .fileUpload input.upload {
     position  : absolute;
     top       : 0;
@@ -136,4 +149,187 @@
     font-size : 20px;
     cursor    : pointer;
     opacity   : 0;
+}
+
+.profil-edit-container {
+    position      : relative;
+    display       : flex;
+    width         : 100%;
+    height        : auto;
+    margin        : 20px 0;
+    background    : $bg-color;
+    padding       : 20px 0;
+    border-radius : $radius;
+
+    .left {
+        width : 30%;
+
+        h4 {
+            padding : 0 0 10px 10px;
+        }
+    }
+
+    .right {
+        position    : relative;
+        width       : 100%;
+        padding     : 0 20px;
+        border-left : 1px solid $bg-body;
+
+        h5 {
+            padding : 0 0 10px 10px;
+        }
+
+        .user-info {
+            display         : flex;
+            align-items     : center;
+            justify-content : space-between;
+            padding         : 5px;
+
+            p {
+                margin    : 0;
+                font-size : 15px;
+
+                .fa, .fas, .fab {
+                    font-size    : 22px;
+                    margin-right : 10px;
+                }
+            }
+
+            .btn-edit {
+                width         : 32px;
+                height        : 32px;
+                padding       : 6px;
+                border-radius : 30px;
+            }
+
+            .add-btn {
+                background : transparent;
+                color      : $primary-color;
+                border     : none;
+                outline    : none;
+                padding    : 0;
+
+                &:hover {
+                    text-decoration : underline;
+                }
+
+                .svg-icon {
+                    path {
+                        fill : $primary-color;
+                    }
+                }
+            }
+            .btn-container {
+                display         : flex;
+                align-items     : center;
+                justify-content : flex-end;
+                padding         : 7px 0 5px;
+
+                .btn {
+                    margin : 0 5px;
+                }
+            }
+
+            .user-info-edit {
+                display        : flex;
+                flex-direction : column;
+                width          : 100%;
+                padding        : 10px;
+                margin         : 10px 0;
+                background     : lighten($bg-color, 2%);
+                border-radius  : $radius;
+
+                input {
+                    border        : 1px solid transparent;
+                    padding       : 10px;
+                    border-radius : $radius;
+                    color         : white;
+
+                    &:hover {
+                        border : 1px solid white;
+                    }
+                }
+
+                .btn-container {
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : flex-end;
+                    padding         : 7px 0 5px;
+
+                    .btn {
+                        margin : 0 5px;
+                    }
+                }
+            }
+        }
+
+        .user-info-name {
+            display        : flex;
+            flex-direction : column;
+
+            p{
+                display     : flex;
+                align-items : center;
+            }
+
+            > div {
+                width           : 100%;
+                display         : flex;
+                justify-content : space-between;
+
+                &:nth-child(2) {
+                    p{
+                        margin-left:25px;
+                    }
+                }
+            }
+        }
+
+        .bio {
+            display        : flex;
+            flex-direction : column;
+            width          : 100%;
+            padding        : 10px;
+            margin         : 10px 0;
+            border-radius  : $radius;
+            p {
+                padding       : 20px 10px;
+                background    : lighten($bg-color, 2%);
+                border-radius : $radius;
+            }
+            textarea {
+                border        : 1px solid transparent;
+                padding       : 10px;
+                border-radius : $radius;
+                color         : white;
+
+                &:hover {
+                    border : 1px solid white;
+                }
+            }
+            .btn-container {
+                display         : flex;
+                align-items     : center;
+                justify-content : flex-end;
+                padding         : 7px 0 5px;
+
+                .btn {
+                    margin : 0 5px;
+                }
+            }
+        }
+    }
+    
+
+    .svg-icon {
+        height       : 25px;
+        width        : 25px;
+        margin-right : 5px;
+        stroke-width : 2px;
+
+        path {
+            fill         : whitesmoke;
+            stroke-width : 2px;
+        }
+    }
 }

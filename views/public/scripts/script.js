@@ -1,10 +1,11 @@
 window.addEventListener('load', function () {
     const loader = document.getElementById('loader');
-    loader.classList.add('fade');
-    loader.style.zIndex = '-1';
+    const innerloader = document.getElementsByClassName('loader');
+    // loader.classList.add('fade');
+    loader.style.display = 'none';
 });
 
-$(function () {
+$(document).ready(function () {
     $('#submitRegister').attr('disabled', true);
     $('input').change(function () {
         if ($('input[name="pseudo"]').val() != '' && $('input[name="email"]').val() != '' && $('input[name="password"]').val() != '') {
@@ -15,7 +16,7 @@ $(function () {
     });
 });
 
-$(function () {
+$(document).ready(function () {
     $('#submitLogin').attr('disabled', true);
     $('input').change(function () {
         if ($('input[name="email"]').val() != '' && $('input[name="password"]').val() != '') {
@@ -25,3 +26,14 @@ $(function () {
         }
     });
 });
+
+// $(document).ready(function () {
+//     $('#checkwork').attr('disabled', true);
+//     $('input').change(function () {
+//         if ($('input[name="work"]').val() != '') {
+//             $('#checkwork').attr('disabled', false);
+//         } else {
+//             $('#checkwork').attr('disabled', true);
+//         }
+//     });
+// });

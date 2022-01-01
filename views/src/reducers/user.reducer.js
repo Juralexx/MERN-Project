@@ -1,4 +1,7 @@
-import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, GET_USER, UPDATE_BIO, UPDATE_EMAIL, UPDATE_LASTNAME, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_WORK, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action";
+import {
+    DELETE_BIO, DELETE_COVER_PICTURE, DELETE_LASTNAME, DELETE_NAME, DELETE_PHONE, DELETE_UPLOADED_PICTURE, DELETE_WORK, GET_USER, UPDATE_BIO, UPDATE_EMAIL, UPDATE_LASTNAME,
+    UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_WORK, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE
+} from "../actions/user.action";
 
 const initialState = {}
 
@@ -42,7 +45,17 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 name: action.payload,
             }
+        case DELETE_NAME:
+            return {
+                ...state,
+                name: action.payload,
+            }
         case UPDATE_LASTNAME:
+            return {
+                ...state,
+                lastname: action.payload,
+            }
+        case DELETE_LASTNAME:
             return {
                 ...state,
                 lastname: action.payload,
@@ -52,12 +65,27 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 work: action.payload,
             }
+        case DELETE_WORK:
+            return {
+                ...state,
+                work: action.payload,
+            }
         case UPDATE_PHONE:
             return {
                 ...state,
                 phone: action.payload,
             }
+        case DELETE_PHONE:
+            return {
+                ...state,
+                phone: action.payload,
+            }
         case UPDATE_BIO:
+            return {
+                ...state,
+                bio: action.payload,
+            }
+        case DELETE_BIO:
             return {
                 ...state,
                 bio: action.payload,

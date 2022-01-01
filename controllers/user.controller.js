@@ -49,6 +49,116 @@ export const updateUser = async (req, res) => {
     }
 };
 
+export const deleteUserName = async (req, res) => {
+
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+
+    try {
+        await UserModel.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    name: "",
+                },
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
+        )
+        .then((docs) => {return res.send(docs)})
+        .catch((err) => {return res.status(500).send({ message: err })})
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+};
+
+export const deleteUserLastname = async (req, res) => {
+
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+
+    try {
+        await UserModel.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    lastname: "",
+                },
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
+        )
+        .then((docs) => {return res.send(docs)})
+        .catch((err) => {return res.status(500).send({ message: err })})
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+};
+
+export const deleteUserWork = async (req, res) => {
+
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+
+    try {
+        await UserModel.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    work: "",
+                },
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
+        )
+        .then((docs) => {return res.send(docs)})
+        .catch((err) => {return res.status(500).send({ message: err })})
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+};
+
+export const deleteUserPhone = async (req, res) => {
+
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+
+    try {
+        await UserModel.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    phone: "",
+                },
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
+        )
+        .then((docs) => {return res.send(docs)})
+        .catch((err) => {return res.status(500).send({ message: err })})
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+};
+
+export const deleteUserBio = async (req, res) => {
+
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+
+    try {
+        await UserModel.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    bio: "",
+                },
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
+        )
+        .then((docs) => {return res.send(docs)})
+        .catch((err) => {return res.status(500).send({ message: err })})
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+};
+
 export const deleteUser = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)

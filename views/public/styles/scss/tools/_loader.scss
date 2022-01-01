@@ -1,49 +1,72 @@
 #loader {
-    position         : absolute;
-    height           : 100vh;
-    width            : 100vw;
-    display          : flex;
-    align-items      : center;
-    justify-content  : center;
-    background-color : black;
-    z-index          : 20;
+    position : absolute;
+    top:0;
+    width    : 100vw;
+    height   : 100vh;
 
-    .loader-animation {
-        display          : inline-block;
-        position         : relative;
-        height           : 70px;
-        width            : 70px;
-        border-radius    : 100px;
-        vertical-align   : middle;
-        border           : 3px solid transparent;
-        border-top-color : rgba(255, 255, 255, 1);
-        animation        : spinClockwise 1s linear infinite;
-
-        &:after {
-            content          : '';
-            position         : absolute;
-            top              : 5px;
-            left             : 5px;
-            bottom           : 5px;
-            right            : 5px;
-            border           : 3px solid transparent;
-            border-top-color : rgba(255, 255, 255, 0.8);
+    .loader-inner { 
+        position:absolute;
+        height           : 190px;
+        width            : 190px;
+        left             : 50%;
+        top              : 50%;
+        transform        : translate(-50%, -50%);
+        display          : flex;
+        align-items      : center;
+        justify-content  : center;
+        background-color : darken($bg-color, 3%);
+        border-radius    : 95px;
+        z-index          : 20;
+        border           : 2px solid $primary-color;
+        backdrop-filter: blur(6px);
+        
+        .loader-animation {
+            display          : inline-block;
+            position         : relative;
+            height           : 70px;
+            width            : 70px;
             border-radius    : 100px;
-            animation        : spinClockwise 5s linear infinite;
-        }
-
-        &:before {
-            content          : '';
-            position         : absolute;
-            top              : 12px;
-            left             : 12px;
-            bottom           : 12px;
-            right            : 12px;
+            vertical-align   : middle;
             border           : 3px solid transparent;
-            border-top-color : rgba(255, 255, 255, 0.6);
-            border-radius    : 100px;
-            animation        : spinClockwise 10s linear infinite;
+            border-top-color : rgba($primary-color, 1);
+            animation        : spinClockwise 1s linear infinite;
+            z-index          : 20;
+
+            &:after {
+                content          : '';
+                position         : absolute;
+                top              : 5px;
+                left             : 5px;
+                bottom           : 5px;
+                right            : 5px;
+                border           : 3px solid transparent;
+                border-top-color : rgba($primary-color, 0.8);
+                border-radius    : 100px;
+                animation        : spinClockwise 5s linear infinite;
+            }
+
+            &:before {
+                content          : '';
+                position         : absolute;
+                top              : 12px;
+                left             : 12px;
+                bottom           : 12px;
+                right            : 12px;
+                border           : 3px solid transparent;
+                border-top-color : rgba($primary-color, 0.6);
+                border-radius    : 100px;
+                animation        : spinClockwise 10s linear infinite;
+            }
         }
+    }
+
+    .loader-blurry {
+        position : absolute;
+        top:0;
+        width    : 100vw;
+        height   : 100vh;
+        backdrop-filter: blur(5px);
+        z-index:10;
     }
 
     &.fade {

@@ -1,19 +1,24 @@
-import React from 'react';
-import ProfilEdit from '../components/Profil/ProfilEdit';
+import React from "react";
+import ProfilHeader from "../components/Profil/ProfilHeader";
+import NavbarProfilEdit from "../components/Profil/update/NavbarProfilEdit";
+import { Outlet } from "react-router-dom";
 
-const ProfilEditPage = () => {
+const ProfilEdit = () => {
+
     return (
-      <div className="container">
-        <div className="update-form">
-          <div className="update-form-header">
-            <h1>Modifier mon profil</h1>
-          </div>
-          <div className="update-form-body">
-            <ProfilEdit />
-          </div>
-        </div>
-      </div>
-    )
-}
+        <div className="container">
+            <div className="profil-container">
+                <ProfilHeader />
+                <div className="profil-edit-container">
+                    <div className="left">
+                        <NavbarProfilEdit />
+                    </div>
 
-export default ProfilEditPage;
+                    <Outlet />
+                </div>
+            </div>
+        </div>
+    )
+};
+
+export default ProfilEdit;

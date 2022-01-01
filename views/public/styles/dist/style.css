@@ -8,8 +8,9 @@ html {
   padding: 0;
   position: relative;
   font-family: "Faktum", sans-serif;
-  overflow-x: hidden;
   scroll-behavior: smooth;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 body {
@@ -21,8 +22,9 @@ body {
   overflow: hidden;
   background: #262b3c;
   color: #aaaab8;
-  height: 100vh;
   width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 body p {
   font-size: 14px;
@@ -253,8 +255,18 @@ body input, body textarea {
 
 #loader {
   position: absolute;
-  height: 100vh;
+  top: 0;
   width: 100vw;
+  height: 100vh;
+}
+#loader .loader-inner {
+  position: absolute;
+  height: 190px;
+  width: 190px;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -264,10 +276,14 @@ body input, body textarea {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: black;
+  background-color: #11131f;
+  border-radius: 95px;
   z-index: 20;
+  border: 2px solid #6366f1;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
 }
-#loader .loader-animation {
+#loader .loader-inner .loader-animation {
   display: inline-block;
   position: relative;
   height: 70px;
@@ -275,11 +291,12 @@ body input, body textarea {
   border-radius: 100px;
   vertical-align: middle;
   border: 3px solid transparent;
-  border-top-color: white;
+  border-top-color: #6366f1;
   -webkit-animation: spinClockwise 1s linear infinite;
           animation: spinClockwise 1s linear infinite;
+  z-index: 20;
 }
-#loader .loader-animation:after {
+#loader .loader-inner .loader-animation:after {
   content: "";
   position: absolute;
   top: 5px;
@@ -287,12 +304,12 @@ body input, body textarea {
   bottom: 5px;
   right: 5px;
   border: 3px solid transparent;
-  border-top-color: rgba(255, 255, 255, 0.8);
+  border-top-color: rgba(99, 102, 241, 0.8);
   border-radius: 100px;
   -webkit-animation: spinClockwise 5s linear infinite;
           animation: spinClockwise 5s linear infinite;
 }
-#loader .loader-animation:before {
+#loader .loader-inner .loader-animation:before {
   content: "";
   position: absolute;
   top: 12px;
@@ -300,10 +317,19 @@ body input, body textarea {
   bottom: 12px;
   right: 12px;
   border: 3px solid transparent;
-  border-top-color: rgba(255, 255, 255, 0.6);
+  border-top-color: rgba(99, 102, 241, 0.6);
   border-radius: 100px;
   -webkit-animation: spinClockwise 10s linear infinite;
           animation: spinClockwise 10s linear infinite;
+}
+#loader .loader-blurry {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  z-index: 10;
 }
 #loader.fade {
   opacity: 0;
@@ -459,7 +485,6 @@ header nav {
   height: 60px;
   width: 100%;
   background: #161929;
-  border-bottom: 1px solid #323232;
 }
 header nav .container {
   position: relative;
@@ -534,9 +559,7 @@ header nav .container ul li {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 0 7px;
   color: whitesmoke;
-  border-bottom: 2px solid transparent;
   cursor: pointer;
 }
 header nav .container ul li p {
@@ -554,18 +577,42 @@ header nav .container ul li .svg-icon path {
 header nav .container ul li .avatar {
   width: 26px;
   height: 26px;
-  margin: 0 auto 5px;
   border-radius: 15px;
+  margin: 3px auto 5px;
 }
 header nav .container ul li a {
   text-decoration: none;
-  color: whitesmoke;
-  display: block;
+  height: 100%;
+  width: 100%;
+  color: #aaaab8;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 7px;
+  border-bottom: 3px solid transparent;
 }
-header nav .container ul li:hover {
-  border-bottom: 2px solid #6366f1;
+header nav .container ul li a:hover {
+  background: #1b1f33;
+  border-bottom: 3px solid #6366f1;
 }
-header nav .container ul li:hover .svg-icon path {
+header nav .container ul li a:hover .svg-icon path {
+  fill: #6366f1;
+}
+header nav .container ul li a.activeLink {
+  background: #1b1f33;
+  border-bottom: 3px solid #6366f1;
+}
+header nav .container ul li a.activeLink .svg-icon path {
   fill: #6366f1;
 }
 
@@ -591,14 +638,25 @@ header nav .container ul li:hover .svg-icon path {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .profil-container .profil-top .cover-img .btn-cover-edit {
   position: relative;
-  margin-left: auto;
   padding: 10px;
 }
 .profil-container .profil-top .cover-img .btn-cover-edit .btn {
   margin: 0 5px;
+}
+.profil-container .profil-top .cover-img .pseudo-header {
+  margin-left: 220px;
+}
+.profil-container .profil-top .cover-img .pseudo-header p {
+  font-size: 32px;
+  text-align: center;
+  margin-left: auto;
+  color: white;
 }
 .profil-container .profil-top .upload-picture {
   display: -webkit-box;
@@ -631,14 +689,11 @@ header nav .container ul li:hover .svg-icon path {
   color: white;
   border: none;
   outline: none;
-  right: 10spx;
+  right: 10px;
   bottom: 10px;
 }
 .profil-container .container {
   padding: 20px 0;
-}
-.profil-container .container .col-md-4 {
-  padding: 10px;
 }
 .profil-container .container a {
   font-size: 19px;
@@ -649,24 +704,30 @@ header nav .container ul li:hover .svg-icon path {
 }
 .profil-container .container .profil-card {
   height: auto;
-  padding: 10px 20px;
-  border: 1px solid #323232;
+  padding: 20px;
   background: #161929;
   border-radius: 5px;
 }
-.profil-container .container .profil-card .top {
-  width: 100%;
-  padding: 10px;
-  font-size: 35px;
+.profil-container .container .profil-card .fas, .profil-container .container .profil-card .fa, .profil-container .container .profil-card .fab {
+  color: white;
+  margin-right: 5px;
 }
-.profil-container .container .profil-card .bottom {
-  padding: 10px;
+.profil-container .container .profil-card h5 {
+  margin-bottom: 15px;
+}
+.profil-container .container .profil-card p {
+  margin: 10px 0;
+}
+.profil-container .container .bio {
+  height: auto;
+  padding: 20px;
+  background: #161929;
+  border-radius: 5px;
 }
 .profil-container .container .bio p {
   padding: 15px;
   min-height: 30px;
   width: 100%;
-  border: 1px solid #1f233a;
 }
 .profil-container .container .bio textarea {
   padding: 15px;
@@ -699,4 +760,351 @@ header nav .container ul li:hover .svg-icon path {
   font-size: 20px;
   cursor: pointer;
   opacity: 0;
+}
+
+.profil-edit-container {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+  background: #161929;
+  padding: 20px 0;
+  border-radius: 5px;
+}
+.profil-edit-container .left {
+  width: 30%;
+}
+.profil-edit-container .left h4 {
+  padding: 0 0 10px 10px;
+}
+.profil-edit-container .right {
+  position: relative;
+  width: 100%;
+  padding: 0 20px;
+  border-left: 1px solid #262b3c;
+}
+.profil-edit-container .right h5 {
+  padding: 0 0 10px 10px;
+}
+.profil-edit-container .right .user-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 5px;
+}
+.profil-edit-container .right .user-info p {
+  margin: 0;
+  font-size: 15px;
+}
+.profil-edit-container .right .user-info p .fa, .profil-edit-container .right .user-info p .fas, .profil-edit-container .right .user-info p .fab {
+  font-size: 22px;
+  margin-right: 10px;
+}
+.profil-edit-container .right .user-info .btn-edit {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border-radius: 30px;
+}
+.profil-edit-container .right .user-info .add-btn {
+  background: transparent;
+  color: #6366f1;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+.profil-edit-container .right .user-info .add-btn:hover {
+  text-decoration: underline;
+}
+.profil-edit-container .right .user-info .add-btn .svg-icon path {
+  fill: #6366f1;
+}
+.profil-edit-container .right .user-info .btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 7px 0 5px;
+}
+.profil-edit-container .right .user-info .btn-container .btn {
+  margin: 0 5px;
+}
+.profil-edit-container .right .user-info .user-info-edit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #1a1d30;
+  border-radius: 5px;
+}
+.profil-edit-container .right .user-info .user-info-edit input {
+  border: 1px solid transparent;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+.profil-edit-container .right .user-info .user-info-edit input:hover {
+  border: 1px solid white;
+}
+.profil-edit-container .right .user-info .user-info-edit .btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 7px 0 5px;
+}
+.profil-edit-container .right .user-info .user-info-edit .btn-container .btn {
+  margin: 0 5px;
+}
+.profil-edit-container .right .user-info-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.profil-edit-container .right .user-info-name p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.profil-edit-container .right .user-info-name > div {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.profil-edit-container .right .user-info-name > div:nth-child(2) p {
+  margin-left: 25px;
+}
+.profil-edit-container .right .bio {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+.profil-edit-container .right .bio p {
+  padding: 20px 10px;
+  background: #1a1d30;
+  border-radius: 5px;
+}
+.profil-edit-container .right .bio textarea {
+  border: 1px solid transparent;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+.profil-edit-container .right .bio textarea:hover {
+  border: 1px solid white;
+}
+.profil-edit-container .right .bio .btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 7px 0 5px;
+}
+.profil-edit-container .right .bio .btn-container .btn {
+  margin: 0 5px;
+}
+.profil-edit-container .svg-icon {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+  stroke-width: 2px;
+}
+.profil-edit-container .svg-icon path {
+  fill: whitesmoke;
+  stroke-width: 2px;
+}
+
+.profil-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 60px;
+  width: 100%;
+  background: #161929;
+  border-radius: 0 0 5px 5px;
+}
+.profil-nav ul {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 0;
+}
+.profil-nav ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  min-width: 80px;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+.profil-nav ul li p {
+  margin: 0;
+  line-height: 17px;
+}
+.profil-nav ul li a {
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  color: #aaaab8;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 7px;
+  border-bottom: 3px solid transparent;
+}
+.profil-nav ul li a:hover {
+  background: #1b1f33;
+  border-bottom: 3px solid #6366f1;
+  color: #6366f1;
+}
+.profil-nav ul li a:hover .svg-icon path {
+  fill: #6366f1;
+}
+.profil-nav ul li a.activeLink {
+  background: #1b1f33;
+  border-bottom: 3px solid #6366f1;
+}
+.profil-nav ul li a.activeLink .svg-icon path {
+  fill: #6366f1;
+}
+
+.profil-edit-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  height: 100%;
+  width: 100%;
+  background: #161929;
+}
+.profil-edit-nav ul {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.profil-edit-nav ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  min-width: 80px;
+  text-align: left;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+.profil-edit-nav ul li p {
+  margin: 0;
+  line-height: 17px;
+}
+.profil-edit-nav ul li a {
+  text-decoration: none;
+  height: 100%;
+  width: 100%;
+  color: #aaaab8;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  border-left: 3px solid transparent;
+}
+.profil-edit-nav ul li a:hover {
+  background: #1b1f33;
+  border-left: 3px solid #6366f1;
+  color: #6366f1;
+}
+.profil-edit-nav ul li a:hover .svg-icon path {
+  fill: #6366f1;
+}
+.profil-edit-nav ul li a.activeLink {
+  background: #1b1f33;
+  border-left: 3px solid #6366f1;
+}
+.profil-edit-nav ul li a.activeLink .svg-icon path {
+  fill: #6366f1;
 }

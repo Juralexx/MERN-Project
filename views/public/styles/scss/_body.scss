@@ -7,8 +7,9 @@ html{
     padding         : 0;
     position        : relative;
     font-family     : 'Faktum', sans-serif;
-    overflow-x      : hidden;
     scroll-behavior : smooth;
+    overflow-y      : auto;
+    overflow-x      : hidden;
 }
 
 body {
@@ -20,8 +21,9 @@ body {
     overflow        : hidden;
     background      : $bg-body;
     color           : $text-color;
-    height           : 100vh;
-    width            : 100vw; 
+    width           : 100vw;
+    overflow-y      : auto;
+    overflow-x      : hidden;
 
     p {
         font-size : 14px;
