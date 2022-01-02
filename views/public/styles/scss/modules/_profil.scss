@@ -263,28 +263,6 @@
             }
         }
 
-        .user-info-name {
-            display        : flex;
-            flex-direction : column;
-
-            p{
-                display     : flex;
-                align-items : center;
-            }
-
-            > div {
-                width           : 100%;
-                display         : flex;
-                justify-content : space-between;
-
-                &:nth-child(2) {
-                    p{
-                        margin-left:25px;
-                    }
-                }
-            }
-        }
-
         .bio {
             display        : flex;
             flex-direction : column;

@@ -9,7 +9,7 @@ const BioUpdater = () => {
     const [updateBioForm, setUpdateBioForm] = useState(false)
     const dispatch = useDispatch()
 
-    const hideEmailUpdater = () => {
+    const hideBioUpdater = () => {
         setUpdateBioForm(false)
     }
 
@@ -67,7 +67,7 @@ const BioUpdater = () => {
                 <>
                     <textarea type="text" defaultValue={userData.bio} onChange={(e) => setBio(e.target.value)}></textarea>
                     <div className="btn-container">
-                        <button className="btn btn-primary" onClick={hideEmailUpdater}>Annuler</button>
+                        <button className="btn btn-primary" onClick={hideBioUpdater}>Annuler</button>
                         <button className="btn btn-primary" onClick={handleBio}>Enregistrer</button>
                     </div>
                 </>

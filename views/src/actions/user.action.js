@@ -119,7 +119,7 @@ export const updateEmail = (userId, email) => {
             data: { email }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_EMAIL, payload: { email } })
+                dispatch({ type: UPDATE_EMAIL, payload: email })
             })
             .catch((err) => console.log(err))
     }
@@ -161,20 +161,6 @@ export const deleteName = (userId, name) => {
     }
 }
 
-// export const updateLastname = (userId, lastname) => {
-//     return (dispatch) => {
-//         return axios({
-//             method: "put",
-//             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-//             data: { lastname }
-//         })
-//             .then((res) => {
-//                 dispatch({ type: UPDATE_LASTNAME, payload: lastname })
-//             })
-//             .catch((err) => console.log(err))
-//     }
-// }
-
 export const updateLastname = (userId, lastname) => {
     return (dispatch) => {
         return axios({
@@ -213,15 +199,13 @@ export const deleteLastname = (userId, lastname) => {
 
 export const updateWork = (userId, work) => {
     return (dispatch) => {
-        return axios
-            .put(`${process.env.REACT_APP_API_URL}api/user/` + userId)
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { work }
+        })
             .then((res) => {
-                return axios
-                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
-                    .then((res) => {
-                        dispatch({ type: UPDATE_WORK, payload: work })
-                        console.log(res)
-                    })
+                dispatch({ type: UPDATE_WORK, payload: work })
             })
             .catch((err) => console.log(err))
     }
@@ -253,7 +237,7 @@ export const updatePhone = (userId, phone) => {
             data: { phone }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_PHONE, payload: { phone } })
+                dispatch({ type: UPDATE_PHONE, payload: phone })
             })
             .catch((err) => console.log(err))
     }

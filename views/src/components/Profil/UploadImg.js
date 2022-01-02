@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProfilPicture, uploadProfilPicture } from "../../actions/user.action";
-import AvatarEditor, { getImage } from 'react-avatar-editor'
+import AvatarEditor from 'react-avatar-editor'
 import Swal from "sweetalert2";
 
 const UploadImg = () => {
