@@ -7,6 +7,7 @@ const BioUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
     const [bio, setBio] = useState(userData.bio)
     const [updateBioForm, setUpdateBioForm] = useState(false)
+    const [value, setValue] = React.useState("");
     const dispatch = useDispatch()
 
     const hideBioUpdater = () => {
@@ -42,6 +43,10 @@ const BioUpdater = () => {
         })
     }
 
+    const handleChange = (e) => { 
+        setValue(e.target.value)
+    }
+
     return (
         <div className="bio">
             {updateBioForm === false ? (
@@ -65,10 +70,10 @@ const BioUpdater = () => {
                 </>
             ) : (
                 <>
-                    <textarea type="text" defaultValue={userData.bio} onChange={(e) => setBio(e.target.value)}></textarea>
+                    <textarea type="text" defaultValue={userData.bio} onInput={handleChange} onChange={(e) => setBio(e.target.value)}></textarea>
                     <div className="btn-container">
                         <button className="btn btn-primary" onClick={hideBioUpdater}>Annuler</button>
-                        <button className="btn btn-primary" onClick={handleBio}>Enregistrer</button>
+                        <button className="btn btn-primary" disabled={!value}  onClick={handleBio}>Enregistrer</button>
                     </div>
                 </>
             )}

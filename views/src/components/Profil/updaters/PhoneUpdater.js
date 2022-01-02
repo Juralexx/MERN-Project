@@ -58,7 +58,7 @@ const PhoneUpdater = () => {
                 <div className="phone error"></div>
                 <div className="btn-container">
                     <button className="btn btn-primary" onClick={() => setPhoneUpdater(false)}>Annuler</button>
-                    <button className="btn btn-primary" id="checkphone" disabled={!value} onClick={handlePhone}>Enregistrer</button>
+                    <button className="btn btn-primary" disabled={!value} onClick={handlePhone}>Enregistrer</button>
                 </div>
             </div>
         )
@@ -82,8 +82,8 @@ const PhoneUpdater = () => {
                     <div className="user-info">
                         <p style={{ display: phoneUpdater ? "none" : "block" }}><i className="fas fa-mobile"></i>{userData.phone}</p>
                         <div className="btn-container">
-                            <button className="btn btn-primary btn-edit" id="checkout" onClick={() => setPhoneUpdater(true)} style={{ display: phoneUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
-                            <button className="btn btn-primary btn-edit" id="checkout" onClick={handlePhoneDelete} style={{ display: phoneUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
+                            <button className="btn btn-primary btn-edit" onClick={() => setPhoneUpdater(true)} style={{ display: phoneUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
+                            <button className="btn btn-primary btn-edit" onClick={handlePhoneDelete} style={{ display: phoneUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
                         </div>
                         {phoneUpdater ? openPhoneUpdater() : null}
                     </div>

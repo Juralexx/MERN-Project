@@ -57,7 +57,7 @@ const WorkUpdater = () => {
                 <input type="text" name="work" id="work" onInput={handleChange} onChange={(e) => setWork(e.target.value)} defaultValue={userData.work} />
                 <div className="btn-container">
                     <button className="btn btn-primary" onClick={() => setWorkUpdater(false)}>Annuler</button>
-                    <button className="btn btn-primary" id="checkwork" disabled={!value} type="submit" onClick={handleWork}>Enregistrer</button>
+                    <button className="btn btn-primary" disabled={!value} onClick={handleWork}>Enregistrer</button>
                 </div>
             </div>
         )
@@ -78,8 +78,8 @@ const WorkUpdater = () => {
                 <div className="user-info">
                     <p style={{ display: workUpdater ? "none" : "block" }}><i className="fas fa-building"></i>{userData.work}</p>
                     <div className="btn-container">
-                        <button className="btn btn-primary btn-edit" id="checkout" onClick={() => setWorkUpdater(true)} style={{ display: workUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
-                        <button className="btn btn-primary btn-edit" id="checkout" onClick={handleWorkDelete} style={{ display: workUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
+                        <button className="btn btn-primary btn-edit" onClick={() => setWorkUpdater(true)} style={{ display: workUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
+                        <button className="btn btn-primary btn-edit" onClick={handleWorkDelete} style={{ display: workUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
                     </div>
                     {workUpdater ? openWorkUpdater() : null}
                 </div>

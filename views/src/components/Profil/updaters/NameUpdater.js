@@ -56,7 +56,7 @@ const NameUpdater = () => {
                 <div className="name error"></div>
                 <div className="btn-container">
                     <button className="btn btn-primary" onClick={() => setNameUpdater(false)}>Annuler</button>
-                    <button className="btn btn-primary" id="checkout" disabled={!nameValue} onClick={handleName}>Enregistrer</button>
+                    <button className="btn btn-primary" disabled={!nameValue} onClick={handleName}>Enregistrer</button>
                 </div>
             </div>
         )
@@ -84,8 +84,8 @@ const NameUpdater = () => {
                             <p style={{ display: nameUpdater ? "none" : "block" }}><i className="fas fa-user"></i>{userData.name}</p>
                         )}
                         <div className="btn-container">
-                            <button className="btn btn-primary btn-edit" id="checkout" onClick={() => setNameUpdater(true)} style={{ display: nameUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
-                            <button className="btn btn-primary btn-edit" id="checkout" onClick={handleNameDelete} style={{ display: nameUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
+                            <button className="btn btn-primary btn-edit" onClick={() => setNameUpdater(true)} style={{ display: nameUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
+                            <button className="btn btn-primary btn-edit" onClick={handleNameDelete} style={{ display: nameUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
                         </div>
                         {nameUpdater ? openNameUpdater() : null}
                     </div>

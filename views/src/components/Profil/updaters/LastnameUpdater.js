@@ -56,7 +56,7 @@ const LastnameUpdater = () => {
                 <div className="lastname error"></div>
                 <div className="btn-container">
                     <button className="btn btn-primary" onClick={() => setLastnameUpdater(false)}>Annuler</button>
-                    <button className="btn btn-primary" id="checkout" disabled={!value} onClick={handleLastname}>Enregistrer</button>
+                    <button className="btn btn-primary" disabled={!value} onClick={handleLastname}>Enregistrer</button>
                 </div>
             </div>
         )
@@ -84,8 +84,8 @@ const LastnameUpdater = () => {
                             <p style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fas"></i>{userData.lastname}</p>
                         )}
                         <div className="btn-container">
-                            <button className="btn btn-primary btn-edit" id="checkout" onClick={() => setLastnameUpdater(true)} style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
-                            <button className="btn btn-primary btn-edit" id="checkout" onClick={handleLastnameDelete} style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
+                            <button className="btn btn-primary btn-edit" onClick={() => setLastnameUpdater(true)} style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
+                            <button className="btn btn-primary btn-edit" onClick={handleLastnameDelete} style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
                         </div>
                         {lastnameUpdater ? openLastnameUpdater() : null}
                     </div>
