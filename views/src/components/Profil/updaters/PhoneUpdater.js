@@ -66,7 +66,7 @@ const PhoneUpdater = () => {
 
     return (
         <>
-            {(userData.phone === '' || userData.work === undefined) ? (
+            {(userData.phone === '' || userData.phone === undefined) ? (
                 <>
                     <div className="user-info">
                         <button className="add-btn" onClick={() => setPhoneUpdater(true)} style={{ display: phoneUpdater ? "none" : "block" }}>

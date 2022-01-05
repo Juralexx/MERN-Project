@@ -21,7 +21,7 @@ export const userInfo = (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    const { pseudo, email, name, lastname, work, phone, bio } = req.body
+    const { pseudo, email, name, lastname, location, work, phone, bio } = req.body
 
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
@@ -35,6 +35,7 @@ export const updateUser = async (req, res) => {
                     email,
                     name,
                     lastname,
+                    location,
                     work,
                     phone,
                     bio,
@@ -126,6 +127,28 @@ export const deleteUserPhone = async (req, res) => {
             {
                 $set: {
                     phone: "",
+                },
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
+        )
+        .then((docs) => {return res.send(docs)})
+        .catch((err) => {return res.status(500).send({ message: err })})
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+};
+
+export const deleteUserLocation = async (req, res) => {
+
+    if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+
+    try {
+        await UserModel.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    location: "",
                 },
             },
             { new: true, upsert: true, setDefaultsOnInsert: true },

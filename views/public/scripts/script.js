@@ -5,27 +5,27 @@ window.addEventListener('load', function () {
     loader.style.display = 'none';
 });
 
-$(document).ready(function () {
-    $('#submitRegister').attr('disabled', true);
-    $('input').change(function () {
-        if ($('input[name="pseudo"]').val() != '' && $('input[name="email"]').val() != '' && $('input[name="password"]').val() != '') {
-            $('#submitRegister').attr('disabled', false);
-        } else {
-            $('#submitRegister').attr('disabled', true);
-        }
-    });
-});
+// $(document).ready(function () {
+//     $('#submitRegister').attr('disabled', true);
+//     $('input').change(function () {
+//         if ($('input[name="pseudo"]').val() != '' && $('input[name="email"]').val() != '' && $('input[name="password"]').val() != '') {
+//             $('#submitRegister').attr('disabled', false);
+//         } else {
+//             $('#submitRegister').attr('disabled', true);
+//         }
+//     });
+// });
 
-$(document).ready(function () {
-    $('#submitLogin').attr('disabled', true);
-    $('input').change(function () {
-        if ($('input[name="email"]').val() != '' && $('input[name="password"]').val() != '') {
-            $('#submitLogin').attr('disabled', false);
-        } else {
-            $('#submitLogin').attr('disabled', true);
-        }
-    });
-});
+// $(document).ready(function () {
+//     $('#submitLogin').attr('disabled', true);
+//     $('input').change(function () {
+//         if ($('input[name="email"]').val() != '' && $('input[name="password"]').val() != '') {
+//             $('#submitLogin').attr('disabled', false);
+//         } else {
+//             $('#submitLogin').attr('disabled', true);
+//         }
+//     });
+// });
 
 // $(document).ready(function () {
 //     $('#checkwork').attr('disabled', true);

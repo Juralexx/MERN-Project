@@ -11,6 +11,8 @@ export const UPDATE_NAME = "UPDATE_NAME"
 export const DELETE_NAME = "DELETE_NAME"
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME"
 export const DELETE_LASTNAME = "DELETE_LASTNAME"
+export const UPDATE_LOCATION = "UPDATE_LOCATION"
+export const DELETE_LOCATION = "DELETE_LOCATION"
 export const UPDATE_WORK = "UPDATE_WORK"
 export const DELETE_WORK = "DELETE_WORK"
 export const UPDATE_PHONE = "UPDATE_PHONE"
@@ -191,6 +193,38 @@ export const deleteLastname = (userId, lastname) => {
                     .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                     .then((res) => {
                         dispatch({ type: DELETE_LASTNAME, payload: "" })
+                    })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateLocation = (userId, location) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { location }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_LOCATION, payload: location })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const deleteLocation = (userId, location) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/delete/location/` + userId,
+            data: { location },
+        })
+            .then((res) => {
+                return axios
+                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
+                    .then((res) => {
+                        dispatch({ type: DELETE_LOCATION, payload: "" })
                     })
             })
             .catch((err) => console.log(err))

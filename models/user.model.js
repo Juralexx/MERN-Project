@@ -56,6 +56,10 @@ const UserModel = new mongoose.Schema(
             },
         },
 
+        location: {
+            type: String,
+        },
+
         picture: {
             type: String,
             default: "./img/random-user.png"

@@ -22,6 +22,11 @@ const NavbarProfilEdit = () => {
                         <p>Coordonnées</p>
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink to="/about/location" className={(navData) => navData.isActive ? "activeLink" : "" }>
+                        <p>Adresse</p>
+                    </NavLink>
+                </li>
             </ul>
         </div>
     )

@@ -311,3 +311,25 @@
         }
     }
 }
+
+.auto-container {
+    width : 100%;
+    input {
+        width         : 100%;
+        border        : 1px solid transparent;
+        padding       : 10px;
+        border-radius : $radius;
+        color         : white;
+    }
+
+    ul {
+        padding       : 10px;
+        border-radius : 0 0 5px 5px;
+
+        li {
+            border-bottom   : 1px solid $bg-body;
+            list-style-type : none;
+            padding         : 10px 0;
+        }
+    }
+}

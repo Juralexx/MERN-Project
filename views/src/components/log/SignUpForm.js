@@ -112,7 +112,7 @@ const SignUpForm = () => {
                     </div>
                     <div className="terms error"></div>
 
-                    <button className="btn btn-primary" id="submitRegister" disabled type="submit">S'inscrire</button>
+                    <button className="btn btn-primary" id="submitRegister" type="submit">S'inscrire</button>
                 </form>
             )}
         </>

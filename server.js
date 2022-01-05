@@ -12,11 +12,12 @@ import './config/db.js'
 const app = express();
 
 app.use(cors({
+  mode: 'no-cors',
   credentials: true,
   origin: process.env.FRONT_URL,
-  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'allowedHeaders': ['sessionId', 'Content-Type', 'Authorization'],
   'exposedHeaders': ['sessionId'],
-  'methods': 'GET, HEAD, PUT, PATCH, POST, DELETE',
+  'methods': 'GET, OPTIONS, HEAD, PUT, PATCH, POST, DELETE',
   'preflightContinue': false,
 }))
 app.use(bodyParser.urlencoded({

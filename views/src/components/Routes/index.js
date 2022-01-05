@@ -12,6 +12,7 @@ import ProfilEdit from '../../pages/ProfilEdit'
 import MainInfos from '../Profil/update/MainInfos'
 import ContactInfos from '../Profil/update/ContactInfos'
 import Bio from '../Profil/update/Bio'
+import Location from '../Profil/update/Location'
 
 function Index() {
   return (
@@ -28,6 +29,7 @@ function Index() {
             <Route index element={ <MainInfos /> } />
             <Route path="contact" element={ <ContactInfos /> } />
             <Route path="bio" element={ <Bio /> } />
+            <Route path="location" element={ <Location /> } />
           </Route>
 
           <Route path="dashboard" element={ <Dashboard /> } />
