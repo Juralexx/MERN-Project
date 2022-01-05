@@ -21,7 +21,6 @@ const UploadCoverImg = () => {
             showConfirmButton: false,
             timer: 1500
         })
-
         setFile(false)
     }
 
@@ -51,7 +50,7 @@ const UploadCoverImg = () => {
 
     return (
         <div className="btn-cover-edit">
-            {(userData.coverPicture === "./img/random-cover.jpg") ? (
+            {(userData.coverPicture === "/img/random-cover.jpg") ? (
                 <div className="fileUpload btn btn-primary">
                     <span>Ajouter une photo de couverture</span>
                     <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />

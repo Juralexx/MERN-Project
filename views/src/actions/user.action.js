@@ -58,7 +58,7 @@ export const deleteProfilPicture = (userId, picture) => {
                 return axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                     .then((res) => {
-                        dispatch({ type: DELETE_UPLOADED_PICTURE, payload: "./img/random-user.png" })
+                        dispatch({ type: DELETE_UPLOADED_PICTURE, payload: "/img/random-user.png" })
                     })
             })
             .catch((err) => console.log(err))
@@ -92,7 +92,7 @@ export const deleteCoverPicture = (userId, coverPicture) => {
                 return axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                     .then((res) => {
-                        dispatch({ type: DELETE_COVER_PICTURE, payload: "./img/random-cover.jpg" })
+                        dispatch({ type: DELETE_COVER_PICTURE, payload: "/img/random-cover.jpg" })
                     })
             })
             .catch((err) => console.log(err))

@@ -18,7 +18,7 @@ const Profil = () => {
                             <div className="profil-card">
                                 <h5>Introduction</h5>
                                 <p><i className="fas fa-envelope-open-text"></i> {userData.email}</p>
-                                <p><i className="fas fa-home"></i> New York</p>
+                                {userData.location === '' ? (<p style={{ display: 'none' }}></p>) : (<p className="location-field"><i className="fas fa-home"></i> {userData.location}</p>)}
                                 {userData.name === '' ||  userData.lastname === '' ? (<p style={{ display: 'none' }}></p>) : (<p className="name-field"><i className="fas fa-user-circle"></i> {userData.name} {userData.lastname}</p>)}
                                 {userData.work === '' ? (<p style={{ display: 'none' }}></p>) : (<p className="work-field"><i className="fas fa-user-md"></i> {userData.work}</p>)}
                                 {userData.phone === ''  ? (<p style={{ display: 'none' }}></p>) : (<p className="phone-field"><i className="fas fa-mobile-alt"></i> {userData.phone}</p>)}

@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { useDebounce } from "../../tools/Deboucing";
 import { useSelector, useDispatch } from "react-redux";
-import { updateLocation } from "../../../actions/user.action";
+import { deleteLocation, updateLocation } from "../../../actions/user.action";
 import Swal from "sweetalert2";
-import codesPostaux from './codes-postaux.json';
+import { ThreeDots } from 'react-loading-icons'
 
 const LocationUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
-    const [code, setCode] = useState(userData.code);
-    const [city, setCity] = useState(userData.city);
-    const [locationUpdater, setLocationUpdater] = useState(false);
-    const [value, setValue] = React.useState("");
     const dispatch = useDispatch()
 
+    const startOfReqUrl = 'https://api-adresse.data.gouv.fr/search/?q=';
+    const endOfReqUrl = '&type=municipality&limit=5&autocomplete=1';
+    const [searchQuery, setSearchQuery] = useState("")
+    const [locationsFound, setLocationsFound] = useState([])
+    const [isLoading, setLoading] = useState(false)
+    const [isResponse, setResponse] = useState(true)
+    const [display, setDisplay] = useState(false)
+    const [isSelected, setIsSelected] = useState(false)
+    const wrapperRef = useRef();
+
+    const [location, setLocation] = useState("");
+    const [locationUpdater, setLocationUpdater] = useState(false);
+
     const handleLocation = (e) => {
-        dispatch(updateLocation(userData._id, code, city))
+        dispatch(updateLocation(userData._id, location))
         setLocationUpdater(false)
         Swal.fire({
             position: 'top-end',
@@ -22,19 +33,127 @@ const LocationUpdater = () => {
             showConfirmButton: false,
             timer: 1300
         })
+        setIsSelected(false)
+        setDisplay(false)
+        setLoading(false)
+        console.log(location)
     }
 
-    const handleLocationChange = (e) => { setValue(e.target.value) }
+    const handleLocationDelete = () => {
+        Swal.fire({
+            title: "Etes-vous sur de vouloir supprimer votre adresse ?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Supprimer'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteLocation(userData._id, location))
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Votre adresse a bien été supprimée !',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+    }
+
+    const isEmpty = !locationsFound || locationsFound.length === 0
+
+    const handleInputChange = (e) => {
+        setSearchQuery(e.target.value)
+        setLocation(searchQuery)
+    }
+
+    const prepareSearchQuery = (query) => {
+        const url = `${startOfReqUrl}${query}${endOfReqUrl}`
+        return encodeURI(url)
+    }
+
+    const searchLocation = async () => {
+        if (!searchQuery || searchQuery.trim() === "") { return }
+        setLoading(true)
+        setDisplay(false)
+        const URL = prepareSearchQuery(searchQuery)
+        const response = await axios.get(URL).catch((err) => {
+            console.log("Error: ", err)
+        })
+
+        if (response) {
+            if (searchQuery.length >= 2) {
+                console.log(response.data)
+                setLocationsFound(response.data.features)
+                setDisplay(true)
+                setResponse(true)
+                if (locationsFound.length === 0) {
+                    setResponse(false)
+                    setLoading(false)
+                }
+            } else {
+                setLoading(false)
+            }
+        }
+    }
+
+    const handleClickOutside = (e) => {
+        const { current: wrap } = wrapperRef;
+        if (wrap && !wrap.contains(e.target)) {
+            setDisplay(false);
+            setLoading(false);
+        }
+    }; useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const setSelect = (e) => {
+        setSearchQuery(e)
+        setIsSelected(true)
+        setDisplay(false)
+        setLoading(false)
+    }
+
+    const closeSelection = () => {
+        setLocationUpdater(false)
+        setSearchQuery("")
+        setIsSelected(false)
+        setDisplay(false)
+        setLoading(false);
+    }
+
+    useDebounce(searchQuery, 1500, searchLocation)
 
     const openLocationUpdater = () => {
         return (
-            <div className="user-info-edit">
-                <label htmlFor="lastname">Code Postal</label>
-                <input type="text" name="code" id="code" placeholder="Votre code postal" onChange={handleLocationChange} onInput={findLocation} defaultValue={userData.code} />
-                <input type="text" name="city" id="city" placeholder="Votre ville" onChange={handleLocationChange} onInput={(e) => setCity(e.target.value)} defaultValue={userData.city} />
+            <div className="auto-container" ref={wrapperRef}>
+                <input value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
+                {!isEmpty && display && isResponse && (
+                    <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
+                        {locationsFound.map(({ properties }) => {
+                            const town = `${properties.city}`;
+                            const zipcode = `${properties.postcode}`;
+                            const adress = `${town} (${zipcode})`;
+                            return (
+                                <li onClick={(e) => { setSelect(adress); setLocation(adress) }} key={properties.id}>{adress}</li>
+                            )
+                        })}
+                    </ul>
+                )}
+                {isLoading && !display && (
+                    <ThreeDots />
+                )}
+                {!isResponse && !isLoading && (
+                    <p>Aucun resultat ne correspond à votre recherche</p>
+                )}
                 <div className="btn-container">
-                    <button className="btn btn-primary" onClick={() => setLocationUpdater(false)}>Annuler</button>
-                    <button className="btn btn-primary" disabled={!value} onClick={handleLocation}>Enregistrer</button>
+                    <button className="btn btn-primary" onClick={closeSelection}>Annuler</button>
+                    <button className="btn btn-primary" disabled={!isSelected} onClick={() => { handleLocation(); setLocation(searchQuery) }}>Enregistrer</button>
                 </div>
             </div>
         )
@@ -42,7 +161,7 @@ const LocationUpdater = () => {
 
     return (
         <>
-            {(userData.code === '' && userData.city === '') ? (
+            {(userData.location === '') ? (
                 <>
                     <div className="user-info">
                         <button className="add-btn" onClick={() => setLocationUpdater(true)} style={{ display: locationUpdater ? "none" : "block" }}>
@@ -56,21 +175,17 @@ const LocationUpdater = () => {
             ) : (
                 <>
                     <div className="user-info">
-                        {(userData.code === '' && userData.city === '') ? (
-                            <p style={{ display: locationUpdater ? "none" : "block" }}><em>Vous n'avez pas encore ajouté d'adresse</em></p>
-                        ) : (
-                            <p style={{ display: locationUpdater ? "none" : "block" }}><i className="fas"></i>{userData.code}, {userData.city}</p>
-                        )}
+                        <p style={{ display: locationUpdater ? "none" : "block" }}><i className="fas fa-home"></i>{userData.location}</p>
+
                         <div className="btn-container">
                             <button className="btn btn-primary btn-edit" onClick={() => setLocationUpdater(true)} style={{ display: locationUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
-                            {/* <button className="btn btn-primary btn-edit" onClick={handleLastnameDelete} style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button> */}
-                        </div>
+                            <button className="btn btn-primary btn-edit" onClick={handleLocationDelete} style={{ display: locationUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>                        </div>
                         {locationUpdater ? openLocationUpdater() : null}
                     </div>
                 </>
             )}
         </>
     )
-};
+}
 
 export default LocationUpdater;

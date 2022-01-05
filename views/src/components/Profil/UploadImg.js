@@ -150,7 +150,7 @@ const UploadImg = () => {
             {!file ? (
               <form action="" encType="multipart/form-data" className="upload-picture">
                 <div className="modal-container-btn">
-                  { (userData.picture === './img/random-user.png') ? (
+                  { (userData.picture === '/img/random-user.png') ? (
                     <div className="fileUpload btn btn-primary">
                       <span>Ajouter une photo</span>
                       <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />

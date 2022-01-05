@@ -35,7 +35,7 @@ export const uploadProfilPicture = async (req, res) => {
     try {
         UserModel.findByIdAndUpdate(
             req.body.userId,
-            { $set: { picture: "./uploads/profil/" + fileName } },
+            { $set: { picture: "/uploads/profil/" + fileName } },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {
@@ -57,7 +57,7 @@ export const deleteProfilPicture = async (req, res) => {
     try {
         UserModel.findOneAndUpdate(
             { _id: req.params.id },
-            { $set: { picture: "./img/random-user.png" } },
+            { $set: { picture: "/img/random-user.png" } },
             { new: true, upsert: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {
@@ -70,7 +70,6 @@ export const deleteProfilPicture = async (req, res) => {
         );
 
         fs.unlinkSync(`${__dirname}/../views/public/uploads/profil/${req.params.id}.jpg`)
-        console.log('coucou')
 
     } catch (err) {
         return res.status(400).send({ message: err });
@@ -103,7 +102,7 @@ export const uploadCoverPicture = async (req, res) => {
     try {
         UserModel.findByIdAndUpdate(
             req.body.userId,
-            { $set: { coverPicture: "./uploads/cover/" + fileName } },
+            { $set: { coverPicture: "/uploads/cover/" + fileName } },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {
@@ -125,7 +124,7 @@ export const deleteCoverPicture = async (req, res) => {
     try {
         UserModel.findOneAndUpdate(
             { _id: req.params.id },
-            { $set: { coverPicture: "./img/random-cover.jpg" } },
+            { $set: { coverPicture: "/img/random-cover.jpg" } },
             { new: true, upsert: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {
@@ -138,7 +137,6 @@ export const deleteCoverPicture = async (req, res) => {
         );
 
         fs.unlinkSync(`${__dirname}/../views/public/uploads/cover/${req.params.id}.jpg`)
-        console.log('coucou')
 
     } catch (err) {
         return res.status(400).send({ message: err });
