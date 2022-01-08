@@ -1,6 +1,6 @@
 import {
-    DELETE_BIO, DELETE_COVER_PICTURE, DELETE_LASTNAME, DELETE_LOCATION, DELETE_NAME, DELETE_PHONE, 
-    DELETE_UPLOADED_PICTURE, DELETE_WORK, GET_USER, UPDATE_BIO, UPDATE_EMAIL, UPDATE_LASTNAME,
+    DELETE_BIO, DELETE_COVER_PICTURE, DELETE_GENDER, DELETE_LASTNAME, DELETE_LOCATION, DELETE_NAME, DELETE_PHONE,
+    DELETE_UPLOADED_PICTURE, DELETE_WORK, GET_USER, UPDATE_BIO, UPDATE_EMAIL, UPDATE_GENDER, UPDATE_LASTNAME,
     UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_WORK, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE
 } from "../actions/user.action";
 
@@ -60,6 +60,16 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 lastname: action.payload,
+            }
+        case UPDATE_GENDER:
+            return {
+                ...state,
+                gender: action.payload,
+            }
+        case DELETE_GENDER:
+            return {
+                ...state,
+                gender: action.payload,
             }
         case UPDATE_LOCATION:
             return {

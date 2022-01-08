@@ -78,11 +78,7 @@ const LastnameUpdater = () => {
             ) : (
                 <>
                     <div className="user-info">
-                        {(userData.lastname === '') ? (
-                            <p style={{ display: lastnameUpdater ? "none" : "block" }}><em>Vous n'avez pas encore ajouté votre nom</em></p>
-                        ) : (
-                            <p style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fas"></i>{userData.lastname}</p>
-                        )}
+                        <p style={{ display: lastnameUpdater ? "none" : "flex" }}><span className="lastname">{userData.lastname}</span></p>
                         <div className="btn-container">
                             <button className="btn btn-primary btn-edit" onClick={() => setLastnameUpdater(true)} style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
                             <button className="btn btn-primary btn-edit" onClick={handleLastnameDelete} style={{ display: lastnameUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateName, deleteName } from "../../../actions/user.action";
 import Swal from "sweetalert2";
+import { BsFillPersonFill } from 'react-icons/bs'
 
 const NameUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -79,9 +80,9 @@ const NameUpdater = () => {
                 <>
                     <div className="user-info">
                         {(userData.name === '') ? (
-                            <p style={{ display: nameUpdater ? "none" : "block" }}><i className="fas fa-user"></i><em>Vous n'avez pas encore ajouté votre prénom</em></p>
+                            <p style={{ display: nameUpdater ? "none" : "flex" }}><BsFillPersonFill /><span><em>Vous n'avez pas encore ajouté votre prénom</em></span></p>
                         ) : (
-                            <p style={{ display: nameUpdater ? "none" : "block" }}><i className="fas fa-user"></i>{userData.name}</p>
+                            <p style={{ display: nameUpdater ? "none" : "flex" }}><BsFillPersonFill /><span>{userData.name}</span></p>
                         )}
                         <div className="btn-container">
                             <button className="btn btn-primary btn-edit" onClick={() => setNameUpdater(true)} style={{ display: nameUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>

@@ -9,65 +9,48 @@ header {
         height     : 60px;
         width      : 100%;
         background : $bg-color;
+        z-index:10;
 
-        .container {
-            position        : relative;
-            display         : flex;
-            justify-content : space-between;
+        .logo-container {
+            position     : relative;
+            padding-left : 10px;
+            
+            .logo {
+                display     : flex;
+                width       : auto;
+                height      : 100%;
+                align-items : center;
 
-            .logo-container {
-                position : relative;
-                
-                .logo {
-                    display     : flex;
-                    width       : auto;
-                    height      : 100%;
-                    align-items : center;
-
-
-                    img {
-                        height       : 40px;
-                        width        : auto;
-                        margin-right : 4px;
-                    }
+                img {
+                    height       : 35px;
+                    width        : auto;
+                    margin-left : 5px;
                 }
             }
+        }
+
+        .navbar-container {
+            position        : absolute;
+            top             : 0;
+            left            : 50%;
+            transform       : translateX(-50%);
+            display         : flex;
+            justify-content : space-between;
+            width           : auto;
+            margin          : 0 auto;
+            height          : 60px;
 
             ul {
                 position   : relative;
                 display    : flex;
                 list-style : none;
                 margin     : 0;
-
-                .add-project {
-                    position     : relative;
-                    display      : flex;
-                    align-items  : center;
-                    justify-self : left;
-                    margin-right : 40px;
-
-                    .btn {
-                        background : $primary-color;
-                        padding    : 5px 10px;
-
-                        .svg-icon {
-                            height       : 25px;
-                            width        : 25px;
-                            margin-right : 5px;
-                            stroke-width : 2px;
-
-                            path {
-                                fill         : whitesmoke;
-                                stroke-width : 2px;
-                            }
-                        }
-
-                    }
-                }
+                padding    : 0;
 
                 li {
                     display         : flex;
                     height          : 100%;
+                    width           : 180px;
                     min-width       : 80px;
                     text-align      : center;
                     justify-content : center;
@@ -80,14 +63,10 @@ header {
                         line-height : 17px;
                     }
 
-                    .svg-icon {
-                        width         : 1.8em;
-                        height        : 1.8em;
-                        margin-bottom : 2px;
-
-                        path {
-                            fill : whitesmoke;
-                        }
+                    svg {
+                        width         : 1.4em;
+                        height        : 1.4em;
+                        margin-bottom : 6px;
                     }
 
                     .avatar {
@@ -103,7 +82,7 @@ header {
                         width           : 100%;
                         color           : $text-color;
                         display         : flex;
-                        flex-direction: column;
+                        flex-direction  : column;
                         align-items     : center;
                         justify-content : center;
                         padding         : 0 7px;
@@ -112,7 +91,7 @@ header {
                         &:hover {
                             background    : lighten($bg-color, 3%);
                             border-bottom : 3px solid $primary-color;
-                            .svg-icon {
+                            svg {
         
                                 path {
                                     fill : $primary-color;
@@ -123,7 +102,7 @@ header {
                         &.activeLink {
                             background    : lighten($bg-color, 3%);
                             border-bottom : 3px solid $primary-color;
-                            .svg-icon {
+                            svg {
                 
                                 path {
                                     fill : $primary-color;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateEmail } from "../../../actions/user.action";
 import Swal from "sweetalert2";
+import { FaEnvelope } from 'react-icons/fa'
 
 const EmailUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -36,7 +37,7 @@ const EmailUpdater = () => {
         )
     }
 
-    const handleChange = (e) => { 
+    const handleChange = (e) => {
         setValue(e.target.value)
     }
 
@@ -56,8 +57,10 @@ const EmailUpdater = () => {
             ) : (
                 <>
                     <div className="user-info">
-                        <p style={{ display: emailUpdater ? "none" : "block" }}><i className="fas fa-envelope-open-text"></i>{userData.email}</p>
-                        <button className="btn btn-primary btn-edit" id="checkout" onClick={() => setEmailUpdater(true)} style={{ display: emailUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
+                        <p style={{ display: emailUpdater ? "none" : "flex" }}><FaEnvelope /><span>{userData.email}</span></p>
+                        <div className="btn-container">
+                            <button className="btn btn-primary btn-edit" onClick={() => setEmailUpdater(true)} style={{ display: emailUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
+                        </div>
                         {emailUpdater ? openEmailUpdater() : null}
                     </div>
                 </>

@@ -47,6 +47,10 @@ const UserModel = new mongoose.Schema(
             },
         },
 
+        gender: {
+            type: String,
+        },
+
         lastname: {
             type: String,
             trimp: true,

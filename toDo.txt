@@ -6,8 +6,18 @@
 
 - file d'ariane
 
-- Affichag erreurs upload images profil
-- suppression de l'image upload pour remttre img par default
+- Affichage erreurs : 
+    - upload images profil
+    - upload images couverture
+    - modification : nom, prenom, metier, adresse, telephone
+
+- Ajouter possibilité d'ajouter plusieurs adresse, numéro de téléphone, métier
+
+
+
+*****************************************************************************************
+********************************* AVANT MISE EN PROD ************************************
+*****************************************************************************************
 
 A mettre en place juste avant mise en prod :
     - modification d'email possible si confirmation de la meme adresse avant

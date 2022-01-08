@@ -70,7 +70,7 @@ const BioUpdater = () => {
                 </>
             ) : (
                 <>
-                    <textarea type="text" defaultValue={userData.bio} onInput={handleChange} onChange={(e) => setBio(e.target.value)}></textarea>
+                    <textarea type="text" placeholder="Parlez-nous de vous..." defaultValue={userData.bio} onInput={handleChange} onChange={(e) => setBio(e.target.value)}></textarea>
                     <div className="btn-container">
                         <button className="btn btn-primary" onClick={hideBioUpdater}>Annuler</button>
                         <button className="btn btn-primary" disabled={!value}  onClick={handleBio}>Enregistrer</button>

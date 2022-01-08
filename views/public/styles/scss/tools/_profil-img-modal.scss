@@ -1,15 +1,23 @@
 .modal-container {
-    z-index       : 1050;
     position      : fixed;
-    border        : 1px solid lightgray;
     border-radius : 6px;
-    background    : white;
+    background    : $bg-color;
     width         : 600px;
-    min-height    : 300px;
+    height        : auto;
     left          : 50%;
     top           : 20%;
     margin-left   : -300px;
     display       : none;
+    z-index       : 1050;
+
+    .modal-avatar {
+        width         : 160px;
+        height        : 160px;
+        border-radius : 80px;
+        margin        : 0 auto;
+        top           : 70px;
+        left          : 30px;
+    }
 
     &.hide-modal {
         opacity    : 0;
@@ -30,46 +38,60 @@
     }
 
     .modal-inner {
-        position:relative;
-        width         : 600px;
-        min-height    : 300px;
-        padding       : 20px;
+        position : relative;
+        width    : 600px;
+        padding  : 20px;
     }
 
     .close-modal {
-        width     : 25px;
-        height    : 25px;
-        position  : absolute;
-        top       : 0;
-        right     : 0;
-        color     : black;
-        cursor    : pointer;
-        font-size : 22px;
+        position : absolute;
+        padding  : 7px 12px;
+        top      : 0;
+        right    : 0;
+        color    : $text-color;
+        cursor   : pointer;
+
+        svg {
+            width  : 14px;
+            height : 14px;
+        }
     }
 
     .body {
-        display:flex;
-        flex-direction: column;
+        display        : flex;
+        flex-direction : column;
+        height         : 100%;
 
         canvas {
-            margin : 20px auto;
+            margin        : 20px auto;
+            border-radius : 5px;
         }
 
-        input[type=range] {
-            width:200px;
-            margin:5px auto;
+        .range-container {
+            display     : flex;
+            align-items : center;
+            width       : 280px;
+            margin      : 0 auto;
+
+            label {
+                margin : 0 10px 0 0;
+                width  : 60px;
+            }
+
+            input[type=range] {
+                width : 200px;
+            }
         }
     }
 
     .footer {
-        position   : relative;;
-        margin-top : auto;
-        bottom     : 0;
+        position   : relative;
+        margin-top : 50px;
         width      : 100%;
 
         .modal-container-btn {
             display         : flex;
-            flex-direction: row-reverse;
+            flex-direction  : row-reverse;
             justify-content : space-between;
             align-items     : center;
             width           : 100%;

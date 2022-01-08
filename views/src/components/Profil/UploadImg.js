@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteProfilPicture, uploadProfilPicture } from "../../actions/user.action";
 import AvatarEditor from 'react-avatar-editor'
 import Swal from "sweetalert2";
+import { ImCross } from 'react-icons/im'
 
 const UploadImg = () => {
   const [file, setFile] = useState();
@@ -26,7 +27,7 @@ const UploadImg = () => {
     width: 200,
     height: 200,
     border: 20,
-    color: [0, 0, 0, 0.3],
+    color: [0, 0, 0, 0.7],
     borderRadius: 200,
     rotate: 1,
     zoom: 1.8,
@@ -108,11 +109,11 @@ const UploadImg = () => {
 
       <div className={containerClass}>
         <div className="modal-inner">
-          <div className="close-modal" onClick={modalClose}><i className="fas fa-times"></i></div>
+          <div className="close-modal" onClick={modalClose}><ImCross /></div>
           <div className='header'></div>
           <div className='body'>
             {!file ? (
-              <div className="avatar" style={profilAvatar}></div>
+              <div className="modal-avatar" style={profilAvatar}></div>
             ) : (
               <>
                 <AvatarEditor
@@ -126,23 +127,29 @@ const UploadImg = () => {
                   rotate={picture.rotate}
                   scale={picture.zoom}
                 />
-                <input
-                  defaultValue={picture.zoom}
-                  name="scale"
-                  type="range"
-                  onChange={handleZoom}
-                  min="1"
-                  max="3"
-                  step="0.01"
-                />
-                <input
-                  defaultValue={picture.rotate}
-                  name="rotate"
-                  type="range"
-                  onChange={handleRotate}
-                  max="360"
-                  step="0.01"
-                />
+                <div className="range-container">
+                  <label>Zoom</label>
+                  <input
+                    defaultValue={picture.zoom}
+                    name="scale"
+                    type="range"
+                    onChange={handleZoom}
+                    min="1"
+                    max="3"
+                    step="0.01"
+                  />
+                </div>
+                <div className="range-container">
+                  <label>Rotation</label>
+                  <input
+                    defaultValue={picture.rotate}
+                    name="rotate"
+                    type="range"
+                    onChange={handleRotate}
+                    max="360"
+                    step="0.01"
+                  />
+                </div>
               </>
             )}
           </div>
@@ -150,7 +157,7 @@ const UploadImg = () => {
             {!file ? (
               <form action="" encType="multipart/form-data" className="upload-picture">
                 <div className="modal-container-btn">
-                  { (userData.picture === '/img/random-user.png') ? (
+                  {(userData.picture === '/img/random-user.png') ? (
                     <div className="fileUpload btn btn-primary">
                       <span>Ajouter une photo</span>
                       <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />

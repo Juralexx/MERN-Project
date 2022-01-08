@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import NavbarProfil from "./NavbarProfil";
 import UploadCoverImg from "./UploadCoverImg";
 import UploadImg from "./UploadImg";
 
@@ -22,7 +21,7 @@ const ProfilHeader = () => {
     }
 
     return (
-        <div className="profil-top">
+        <div className="profil-header">
             <div className="cover-img" style={coverPicture}>
                 <div className="pseudo-header"><p>{userData.pseudo}</p></div>
                 <UploadCoverImg />
@@ -30,7 +29,6 @@ const ProfilHeader = () => {
             <div className="avatar -online-ring" style={profilAvatar}>
                 <UploadImg />
             </div>
-            <NavbarProfil />
         </div>
     )
 }

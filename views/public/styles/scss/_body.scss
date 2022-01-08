@@ -25,12 +25,16 @@ body {
     overflow-y      : auto;
     overflow-x      : hidden;
 
+    .container {
+        max-width : 900px;
+    }
+
     p {
-        font-size : 14px;
+        font-size : 15px;
     }
 
     input, textarea {
-        background : $bg-input;
+        background : lighten($bg-color, 5%);
     }
 }
 

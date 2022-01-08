@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteWork, updateWork } from "../../../actions/user.action";
 import Swal from "sweetalert2";
-
+import { MdOutlineWork } from 'react-icons/md'
 const WorkUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
     const [work, setWork] = useState(userData.work);
@@ -54,7 +54,7 @@ const WorkUpdater = () => {
         return (
             <div className="user-info-edit">
                 <label htmlFor="work">Métier</label>
-                <input type="text" name="work" id="work" onInput={handleChange} onChange={(e) => setWork(e.target.value)} defaultValue={userData.work} />
+                <input type="text" name="work" id="work" placeholder="Votre métier" onInput={handleChange} onChange={(e) => setWork(e.target.value)} defaultValue={userData.work} />
                 <div className="btn-container">
                     <button className="btn btn-primary" onClick={() => setWorkUpdater(false)}>Annuler</button>
                     <button className="btn btn-primary" disabled={!value} onClick={handleWork}>Enregistrer</button>
@@ -76,7 +76,7 @@ const WorkUpdater = () => {
                 </div>
             ) : (
                 <div className="user-info">
-                    <p style={{ display: workUpdater ? "none" : "block" }}><i className="fas fa-building"></i>{userData.work}</p>
+                    <p style={{ display: workUpdater ? "none" : "flex" }}><MdOutlineWork /><span>{userData.work}</span></p>
                     <div className="btn-container">
                         <button className="btn btn-primary btn-edit" onClick={() => setWorkUpdater(true)} style={{ display: workUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
                         <button className="btn btn-primary btn-edit" onClick={handleWorkDelete} style={{ display: workUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>

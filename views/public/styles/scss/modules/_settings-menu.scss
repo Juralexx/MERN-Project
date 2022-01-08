@@ -1,0 +1,73 @@
+.settings-menu {
+    width         : 300px;
+    height        : auto;
+    position      : absolute;
+    background    : $bg-color;
+    border-radius : 5px;
+    top           : 65px;
+    right         : 5px;
+    z-index       : 1100;
+
+    .settings-menu-nav {
+
+        ul {
+            padding         : 0;
+            margin          : 0;
+            list-style-type : none;
+
+            li {
+                display         : flex;
+                justify-content : space-between;
+                height          : 52px;
+                border-left     : 3px solid transparent;
+                cursor          : pointer;
+                
+                .left {
+                    display     : flex;
+                    align-items : center;
+                    padding     : 0 0 0 10px;
+                    height      : 100%;
+                    width       : auto;
+
+                    p {
+                        margin    : 0 0 0 10px;
+                        font-size : 15px;
+                    }
+
+                    svg {
+                        height        : 36px;
+                        width         : 36px;
+                        padding       : 7px;
+                        border-radius : 30px;
+                        background    : lighten($bg-color, 3%)
+                    }
+                }
+
+                .right {
+                    display     : flex;
+                    align-items : center;
+                    padding     : 0 0 0 10px;
+                    height      : 100%;
+                    width       : auto;
+
+                    svg {
+                        height  : 30px;
+                        width   : 30px;
+                        padding : 7px;
+                    }
+                }
+
+                &:hover {
+                    background  : lighten($bg-color, 8%);
+                    border-left : 3px solid $primary-color;
+
+                    svg {
+                        path {
+                            fill : $primary-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

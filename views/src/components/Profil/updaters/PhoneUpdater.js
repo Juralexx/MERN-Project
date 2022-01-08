@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deletePhone, updatePhone } from "../../../actions/user.action";
 import Swal from "sweetalert2";
+import { BsFillPhoneFill } from 'react-icons/bs'
 
 const PhoneUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -80,7 +81,7 @@ const PhoneUpdater = () => {
             ) : (
                 <>
                     <div className="user-info">
-                        <p style={{ display: phoneUpdater ? "none" : "block" }}><i className="fas fa-mobile"></i>{userData.phone}</p>
+                        <p style={{ display: phoneUpdater ? "none" : "flex" }}><BsFillPhoneFill /><span>{userData.phone}</span></p>
                         <div className="btn-container">
                             <button className="btn btn-primary btn-edit" onClick={() => setPhoneUpdater(true)} style={{ display: phoneUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
                             <button className="btn btn-primary btn-edit" onClick={handlePhoneDelete} style={{ display: phoneUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>

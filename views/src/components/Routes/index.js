@@ -7,7 +7,7 @@ import Project from '../../pages/Project'
 import Login from '../../pages/Signin'
 import Signup from '../../pages/Signup'
 import Navbar from '../Navbar'
-import ProfilPage from '../../pages/Profil'
+import Profil from '../../pages/Profil'
 import ProfilEdit from '../../pages/ProfilEdit'
 import MainInfos from '../Profil/update/MainInfos'
 import ContactInfos from '../Profil/update/ContactInfos'
@@ -23,7 +23,7 @@ function Index() {
           <Route path="login" element={ <Login /> } />
           <Route path="register" element={ <Signup /> } />
           <Route path="trending" element={ <Trending /> } />
-          <Route path="profil" element={ <ProfilPage /> } />
+          <Route path="profil" element={ <Profil /> } />
 
           <Route path="about" element={ <ProfilEdit /> }>
             <Route index element={ <MainInfos /> } />

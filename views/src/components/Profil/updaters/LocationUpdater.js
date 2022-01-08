@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteLocation, updateLocation } from "../../../actions/user.action";
 import Swal from "sweetalert2";
 import { ThreeDots } from 'react-loading-icons'
+import { AiFillHome } from 'react-icons/ai'
 
 const LocationUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -132,7 +133,7 @@ const LocationUpdater = () => {
     const openLocationUpdater = () => {
         return (
             <div className="auto-container" ref={wrapperRef}>
-                <input value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
+                <input placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                 {!isEmpty && display && isResponse && (
                     <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
                         {locationsFound.map(({ properties }) => {
@@ -146,10 +147,14 @@ const LocationUpdater = () => {
                     </ul>
                 )}
                 {isLoading && !display && (
-                    <ThreeDots />
+                    <div className="load-container">
+                        <ThreeDots />
+                    </div>
                 )}
                 {!isResponse && !isLoading && (
-                    <p>Aucun resultat ne correspond à votre recherche</p>
+                    <div className="load-container">
+                        <p>Aucun resultat ne correspond à votre recherche</p>
+                    </div>
                 )}
                 <div className="btn-container">
                     <button className="btn btn-primary" onClick={closeSelection}>Annuler</button>
@@ -175,7 +180,7 @@ const LocationUpdater = () => {
             ) : (
                 <>
                     <div className="user-info">
-                        <p style={{ display: locationUpdater ? "none" : "block" }}><i className="fas fa-home"></i>{userData.location}</p>
+                        <p style={{ display: locationUpdater ? "none" : "flex" }}><AiFillHome /><span>{userData.location}</span></p>
 
                         <div className="btn-container">
                             <button className="btn btn-primary btn-edit" onClick={() => setLocationUpdater(true)} style={{ display: locationUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>

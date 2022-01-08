@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCoverPicture, uploadCoverPicture } from "../../actions/user.action";
 import Swal from "sweetalert2";
+import { BsThreeDots } from 'react-icons/bs'
 
 const UploadCoverImg = () => {
     const [file, setFile] = useState();
+    const [isOpen, setOpen] = useState(false)
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.userReducer);
 
@@ -49,24 +51,33 @@ const UploadCoverImg = () => {
     }
 
     return (
-        <div className="btn-cover-edit">
+        <>
             {(userData.coverPicture === "/img/random-cover.jpg") ? (
-                <div className="fileUpload btn btn-primary">
-                    <span>Ajouter une photo de couverture</span>
-                    <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
+                <div className="btn-cover-edit">
+                    <div className="fileUpload btn btn-primary">
+                        <span>Ajouter une photo de couverture</span>
+                        <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
+                    </div>
                 </div>
             ) : (
                 <>
-                    <div className="fileUpload btn btn-primary">
-                        <span>Modifier ma photo</span>
-                        <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
+                    <div className="btn-menu-cover-img">
+                        <button className="dot-button" onClick={() => setOpen(!isOpen)}><BsThreeDots /></button>
                     </div>
-                    <button className="btn btn-primary" onClick={deletePicture}>Supprimer ma photo</button>
+                    {isOpen && (
+                        <div className="cover-img-menu">
+                            <div className="fileUpload btn-menu">
+                                <p>Modifier ma photo</p>
+                                <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
+                            </div>
+                            <div className="btn-menu" onClick={deletePicture}>
+                                <p>Supprimer ma photo</p>
+                            </div>
+                        </div>
+                    )}
                 </>
-                )
-            }
-        </div>
-
+            )}
+        </>
     )
 }
 

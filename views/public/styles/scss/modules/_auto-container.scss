@@ -1,0 +1,60 @@
+.auto-container {
+    display        : flex;
+    flex-direction : column;
+    width          : 100%;
+    padding        : 10px;
+    margin         : 10px 0;
+    background     : lighten($bg-color, 2%);
+    border-radius  : $radius;
+
+    input {
+        width         : 100%;
+        border        : 1px solid transparent;
+        padding       : 10px;
+        border-radius : $radius;
+        color         : white;
+    }
+
+    ul {
+        padding       : 10px 0;
+        border-radius : 0 0 5px 5px;
+
+        li {
+            border-bottom   : 1px solid $bg-body;
+            list-style-type : none;
+            padding         : 10px;
+            cursor: pointer;
+            border-left   : 3px solid transparent;
+
+            &:hover {
+                background    : lighten($bg-color, 5%);
+                border-left : 3px solid $primary-color;
+            }
+        }
+    }
+
+    .btn-container {
+        display         : flex;
+        align-items     : center;
+        justify-content : flex-end;
+        padding         : 7px 0 5px;
+
+        .btn {
+            margin : 0 5px;
+        }
+    }
+
+    .load-container {
+        height : 50px;
+        width:100%;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            margin : 0;
+            height : 35px;
+            width:35px;
+        }
+    }
+}
