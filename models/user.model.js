@@ -63,6 +63,12 @@ const UserModel = new mongoose.Schema(
         location: {
             type: String,
         },
+        secondLocation: {
+            type: String,
+        },
+        thirdLocation: {
+            type: String,
+        },
 
         picture: {
             type: String,

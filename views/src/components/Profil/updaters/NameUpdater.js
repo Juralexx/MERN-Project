@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateName, deleteName } from "../../../actions/user.action";
+import { updateName } from "../../../actions/user.action";
+import { deleteName } from "../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { BsFillPersonFill } from 'react-icons/bs'
 

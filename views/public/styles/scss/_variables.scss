@@ -5,9 +5,9 @@ $radius : 5px;
 
 /************** THEME SOMBRE ***************/
 
-$bg-color         : #242526;
-$bg-body          : #18191A;
-$bg-color-lighten : #2b2d2e;
+$bg-color         : #0e0e10; //#242526;
+$bg-body          : #18181b; //#18191A;
+$bg-color-lighten : lighten($bg-body, 5%);
 $white            : #ffffff;
 
 $text-color : #aaaab8;
@@ -29,7 +29,7 @@ $dark                  : #292929;
 
 $text-color-light : #363636;
 
-.white-content {
+.light-theme {
     --color-body-background            : #{$bg-body-light};
     --color-content-background         : #{$bg-color-light};
     --color-content-lighten-background : #{$bg-color-darken-light};

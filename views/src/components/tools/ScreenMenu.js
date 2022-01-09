@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ThemeContext, themes } from './Theme';
 import { ImArrowLeft2 } from 'react-icons/im'
 import SettingsMenu from "./SettingsMenu";
 import ThemeToggle from "./ThemeToggle";

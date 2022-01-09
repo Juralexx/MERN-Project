@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProfilPicture, uploadProfilPicture } from "../../actions/user.action";
+import { deleteProfilPicture, uploadProfilPicture } from "../../actions/user.action.upload";
 import AvatarEditor from 'react-avatar-editor'
 import Swal from "sweetalert2";
 import { ImCross } from 'react-icons/im'

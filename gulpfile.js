@@ -1,5 +1,3 @@
-'use strict'
-
 import gulp from 'gulp'
 const { src, dest, watch, series } = gulp
 import dartSass from 'sass';
@@ -38,13 +36,13 @@ function styleCompiler() {
 
 function watchTask() {
     watch(paths.styles.srcWatched, styleCompiler);
-    //browserSync.init({
+    // browserSync.init({
     //    server: {
     //        baseDir: './'
     //    }
-    //})
-    //watch(paths.scripts.src).on('change', browserSync.reload);
-    //watch('./*.jsx').on('change', browserSync.reload);
+    // })
+    // watch(paths.scripts.src).on('change', browserSync.reload);
+    // watch('./*.jsx').on('change', browserSync.reload);
 }
 
 export default series(styleCompiler, watchTask);

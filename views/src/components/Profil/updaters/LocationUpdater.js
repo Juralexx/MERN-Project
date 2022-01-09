@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useDebounce } from "../../tools/Deboucing";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteLocation, updateLocation } from "../../../actions/user.action";
+import { updateLocation } from "../../../actions/user.action";
+import { deleteLocation } from "../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { ThreeDots } from 'react-loading-icons'
 import { AiFillHome } from 'react-icons/ai'
@@ -184,7 +185,8 @@ const LocationUpdater = () => {
 
                         <div className="btn-container">
                             <button className="btn btn-primary btn-edit" onClick={() => setLocationUpdater(true)} style={{ display: locationUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>
-                            <button className="btn btn-primary btn-edit" onClick={handleLocationDelete} style={{ display: locationUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>                        </div>
+                            <button className="btn btn-primary btn-edit" onClick={handleLocationDelete} style={{ display: locationUpdater ? "none" : "block" }}><i className="fa fa-trash-alt"></i></button>
+                        </div>
                         {locationUpdater ? openLocationUpdater() : null}
                     </div>
                 </>

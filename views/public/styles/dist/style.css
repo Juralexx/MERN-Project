@@ -2,15 +2,15 @@
 /****************  GENERAL *****************/
 /************** THEME SOMBRE ***************/
 :root {
-  --color-body-background: #18191A;
-  --color-content-background: #242526;
-  --color-content-lighten-background: #2b2d2e;
+  --color-body-background: #18181b;
+  --color-content-background: #0e0e10;
+  --color-content-lighten-background: #242429;
   --color-text: #aaaab8;
   --color-white: #ffffff;
 }
 
 /*************** THEME CLAIR ***************/
-.white-content {
+.light-theme {
   --color-body-background: white;
   --color-content-background: #f2f2f2;
   --color-content-lighten-background: #e4e6eb;

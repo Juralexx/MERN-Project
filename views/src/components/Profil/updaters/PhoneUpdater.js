@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deletePhone, updatePhone } from "../../../actions/user.action";
+import { updatePhone } from "../../../actions/user.action";
+import { deletePhone } from "../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { BsFillPhoneFill } from 'react-icons/bs'
 
