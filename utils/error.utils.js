@@ -32,13 +32,13 @@ export const signInErrors = (err) => {
 }
 
 export const uploadErrors = (err) => {
-    let errors = { format: '', maxSize: '' }
+    let error = { format: "", maxSize: "" }
 
     if (err.message.includes("invalid file"))
-        return errors.format = "Format incompatible. Les extensions acceptées sont .jpg, .jpeg, .png"
+        return error.format = "Format incompatible. Les extensions acceptées sont .jpg, .jpeg, .png"
 
     if (err.message.includes("max size"))
-        return errors.maxSize = "Le fichier dépasse 500ko"
+        return error.maxSize = "Le fichier dépasse 1Mo. Merci de choisir un autre fichier."
 
-    return errors
+    return error
 }

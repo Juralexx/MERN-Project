@@ -13,8 +13,10 @@ import MainInfos from '../Profil/update/MainInfos'
 import ContactInfos from '../Profil/update/ContactInfos'
 import Bio from '../Profil/update/Bio'
 import Location from '../Profil/update/Location'
+import { useDispatch, useSelector } from "react-redux";
 
 function Index() {
+  const userData = useSelector((state) => state.userReducer);
   return (
     <Router>
       <Navbar/>

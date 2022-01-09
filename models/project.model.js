@@ -6,11 +6,11 @@ const ProjectModel = new mongoose.Schema(
             required: true
         },
 
-        name: {
+        title: {
             type: String,
             required: true,
-            minlength: 3,
-            maxlength: 1024,
+            minlength: 10,
+            maxlength: 120,
             unique: false,
             trimp: true
         },
@@ -71,7 +71,11 @@ const ProjectModel = new mongoose.Schema(
 
         views: {
             type: Number
-        }
+        },
+
+        viewers: {
+            type: Number
+        },
     },
     {
         timestamps: true

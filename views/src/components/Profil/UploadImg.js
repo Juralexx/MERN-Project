@@ -9,6 +9,7 @@ const UploadImg = () => {
   const [file, setFile] = useState();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
+  const error = useSelector((state) => state.errorsReducer.uploadProfilPictureErrors);
 
   const [open, setOpen] = useState(false)
   const modalOpen = () => { setOpen(true) }
@@ -64,17 +65,19 @@ const UploadImg = () => {
       data.append("file", file)
       dispatch(uploadProfilPicture(data, userData._id))
 
-      modalClose()
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Votre image a bien été ajoutée !',
-        showConfirmButton: false,
-        timer: 1500
-      })
-
-      setFile(false)
-      e.stopPropagation();
+      if (error) {
+        return error
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Votre image a bien été ajoutée !',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        modalClose()
+        setFile(false)
+        e.stopPropagation();
+      }
     }
   };
 
@@ -127,6 +130,9 @@ const UploadImg = () => {
                   rotate={picture.rotate}
                   scale={picture.zoom}
                 />
+
+                {error && <p className="error">{error}</p>}
+
                 <div className="range-container">
                   <label>Zoom</label>
                   <input

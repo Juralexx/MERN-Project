@@ -14,7 +14,7 @@ export const uploadProfilPicture = async (req, res) => {
         if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") {
             throw Error("invalid file");
         }
-        if (req.file.size > 5000000) {
+        if (req.file.size > 1000000) {
             throw Error("max size");
         }
     }
@@ -81,7 +81,7 @@ export const uploadCoverPicture = async (req, res) => {
         if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") {
             throw Error("invalid file");
         }
-        if (req.file.size > 5000000) {
+        if (req.file.size > 1000000) {
             throw Error("max size");
         }
     }

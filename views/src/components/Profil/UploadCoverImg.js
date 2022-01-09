@@ -9,6 +9,7 @@ const UploadCoverImg = () => {
     const [isOpen, setOpen] = useState(false)
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.userReducer);
+    const error = useSelector((state) => state.errorsReducer.uploadProfilPictureErrors);
 
     const handleSave = (e) => {
         e.preventDefault();
@@ -17,13 +18,24 @@ const UploadCoverImg = () => {
         data.append("file", file)
         dispatch(uploadCoverPicture(data, userData._id));
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Votre image a bien été ajoutée !',
-            showConfirmButton: false,
-            timer: 1500
-        })
-        setFile(false)
+        if (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Une erreur s\'est produite...',
+                html: 'Votre image de couverture ne doit pas excéder 1Mo.<br> Les formats acceptés sont : .jpg, .jpeg et .png',
+                showCloseButton: true,
+                confirmButtonText: 'Compris'
+            })
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Votre image a bien été ajoutée !',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setFile(false)
+            e.stopPropagation();
+        }
     }
 
     const deletePicture = (e) => {
