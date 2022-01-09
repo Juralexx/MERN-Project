@@ -1,7 +1,7 @@
 .modal-container {
     position      : fixed;
     border-radius : 6px;
-    background    : $bg-color;
+    background    : var(--color-content-background);
     width         : 600px;
     height        : auto;
     left          : 50%;
@@ -48,7 +48,7 @@
         padding  : 7px 12px;
         top      : 0;
         right    : 0;
-        color    : $text-color;
+        color    : var(--color-text);
         cursor   : pointer;
 
         svg {

@@ -4,7 +4,7 @@
     justify-content : left;
     height          : 100%;
     width           : 100%;
-    background      : $bg-color;
+    background      : var(--color-content-background);
 
     ul {
         position   : relative;
@@ -31,14 +31,14 @@
                 text-decoration : none;
                 height          : 100%;
                 width           : 100%;
-                color           : $text-color;
+                color           : var(--color-text);
                 display         : flex;
                 align-items     : center;
                 padding         : 10px;
                 border-left   : 3px solid transparent;
 
                 &:hover {
-                    background    : lighten($bg-color, 3%);
+                    background    : var(--color-content-lighten-background);;
                     border-left : 3px solid $primary-color;
                     color         : $primary-color;
                     .svg-icon {
@@ -50,7 +50,7 @@
                 }
 
                 &.activeLink {
-                    background    : lighten($bg-color, 3%);
+                    background    : var(--color-content-lighten-background);;
                     border-left : 3px solid $primary-color;
                     .svg-icon {
         

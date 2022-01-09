@@ -1,6 +1,38 @@
-$bg-color : #242526;
-$bg-body : #18191A;
-$text-color: #aaaab8;
-$primary-color: #6366f1;
+/****************  GENERAL *****************/
 
-$radius: 5px;
+$primary-color : #6366f1;
+$radius : 5px;
+
+/************** THEME SOMBRE ***************/
+
+$bg-color         : #242526;
+$bg-body          : #18191A;
+$bg-color-lighten : #2b2d2e;
+$white            : #ffffff;
+
+$text-color : #aaaab8;
+
+:root {
+    --color-body-background            : #{$bg-body};
+    --color-content-background         : #{$bg-color};
+    --color-content-lighten-background : #{$bg-color-lighten};
+    --color-text                       : #{$text-color};
+    --color-white                      : #{$white};
+}
+
+/*************** THEME CLAIR ***************/
+
+$bg-body-light         : rgb(255,255,255);
+$bg-color-light        : darken($bg-body-light, 5%);
+$bg-color-darken-light : #e4e6eb;
+$dark                  : #292929;
+
+$text-color-light : #363636;
+
+.white-content {
+    --color-body-background            : #{$bg-body-light};
+    --color-content-background         : #{$bg-color-light};
+    --color-content-lighten-background : #{$bg-color-darken-light};
+    --color-text                       : #{$text-color-light};
+    --color-white                      : #{$white};
+}

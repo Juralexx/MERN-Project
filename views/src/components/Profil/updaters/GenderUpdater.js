@@ -9,7 +9,6 @@ const GenderUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
     const [gender, setGender] = useState("");
     const [genderUpdater, setGenderUpdater] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
     const dispatch = useDispatch()
 
     const handleGender = () => {

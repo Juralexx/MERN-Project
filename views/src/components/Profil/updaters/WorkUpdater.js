@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteWork, updateWork } from "../../../actions/user.action";
 import Swal from "sweetalert2";
 import { MdOutlineWork } from 'react-icons/md'
+
 const WorkUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
     const [work, setWork] = useState(userData.work);
     const [workUpdater, setWorkUpdater] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
     const [value, setValue] = React.useState("");
     const dispatch = useDispatch()
 

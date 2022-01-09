@@ -11,19 +11,19 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchToken = async() => {
-    await axios({
-      method: "get",
-      url: `${process.env.REACT_APP_API_URL}jwtid`,
-      withCredentials: true,
-    })
-      .then((res) => { setUid(res.data) } )
-      .catch((err) => console.log(err))
+    const fetchToken = async () => {
+      await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API_URL}jwtid`,
+        withCredentials: true,
+      })
+        .then((res) => { setUid(res.data) })
+        .catch((err) => console.log(err))
     }
-  fetchToken();
+    fetchToken();
 
-  if(uid) { dispatch(getUser(uid)) }
-  }, ); //[uid][dispatch]
+    if (uid) { dispatch(getUser(uid)) }
+  }); //[uid][dispatch]
 
 
   return (

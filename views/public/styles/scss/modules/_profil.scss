@@ -24,17 +24,17 @@
         display         : block;
         height          : 150px;
         text-decoration : none;
-        color           : white;
+        color           : var(--color-text);
     }
 
     .profil-card {
         height        : auto;
         padding       : 20px;
-        background    : $bg-color;
+        background    : var(--color-content-background);
         border-radius : $radius;
 
         .fas, .fa, .fab {
-            color        : white;
+            color        : var(--color-text);
             margin-right : 5px;
         }
 
@@ -50,7 +50,7 @@
     .bio {
         height        : auto;
         padding       : 20px;
-        background    : $bg-color;
+        background    : var(--color-content-background);
         border-radius : $radius;
 
         p{
@@ -63,8 +63,8 @@
             padding    : 15px;
             min-height : 100px;
             width      : 100%;
-            background : lighten($bg-color, 5%);
-            color      : white;
+            background : var(--color-content-lighten-background);;
+            color      : var(--color-text);
         }
     }
 }
@@ -76,7 +76,7 @@
     width         : 100%;
     height        : auto;
     margin        : 20px 0;
-    background    : $bg-color;
+    background    : var(--color-content-background);
     padding       : 20px 0;
     border-radius : $radius;
 
@@ -92,7 +92,7 @@
         position    : relative;
         width       : 100%;
         padding     : 0 20px;
-        border-left : 1px solid $bg-body;
+        border-left : 1px solid var(--color-body-background);
 
         h5 {
             padding : 0 0 10px 10px;
@@ -161,17 +161,17 @@
                 width          : 100%;
                 padding        : 10px;
                 margin         : 10px 0;
-                background     : lighten($bg-color, 2%);
+                background     : var(--color-content-lighten-background);;
                 border-radius  : $radius;
 
                 input {
                     border        : 1px solid transparent;
                     padding       : 10px;
                     border-radius : $radius;
-                    color         : white;
+                    color         : var(--color-text);
 
                     &:hover {
-                        border : 1px solid white;
+                        border : 1px solid var(--color-text);;
                     }
                 }
 
@@ -248,7 +248,7 @@
 
             p {
                 padding       : 20px 10px;
-                background    : lighten($bg-color, 2%);
+                background    : var(--color-content-lighten-background);
                 border-radius : $radius;
             }
 
@@ -256,10 +256,10 @@
                 border        : 1px solid transparent;
                 padding       : 10px;
                 border-radius : $radius;
-                color         : white;
+                color         : var(--color-text);
 
                 &:hover {
-                    border : 1px solid white;
+                    border : 1px solid var(--color-text);
                 }
             }
 

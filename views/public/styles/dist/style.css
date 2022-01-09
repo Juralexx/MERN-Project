@@ -1,4 +1,23 @@
 @charset "UTF-8";
+/****************  GENERAL *****************/
+/************** THEME SOMBRE ***************/
+:root {
+  --color-body-background: #18191A;
+  --color-content-background: #242526;
+  --color-content-lighten-background: #2b2d2e;
+  --color-text: #aaaab8;
+  --color-white: #ffffff;
+}
+
+/*************** THEME CLAIR ***************/
+.white-content {
+  --color-body-background: white;
+  --color-content-background: #f2f2f2;
+  --color-content-lighten-background: #e4e6eb;
+  --color-text: #363636;
+  --color-white: #ffffff;
+}
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -21,8 +40,8 @@ body {
   font-family: "Faktum", sans-serif !important;
   scroll-behavior: smooth;
   overflow: hidden;
-  background: #18191A;
-  color: #aaaab8;
+  background-color: var(--color-body-background);
+  color: var(--color-text);
   width: 100vw;
   overflow-y: auto;
   overflow-x: hidden;
@@ -34,7 +53,7 @@ body p {
   font-size: 15px;
 }
 body input, body textarea {
-  background: #303233;
+  background: var(--color-content-lighten-background);
 }
 
 #main {
@@ -75,8 +94,8 @@ body input, body textarea {
   border-radius: 6px;
   padding: 20px;
   font-size: 14px;
-  background-color: #2b2d2e;
-  border: 1px solid #3d3f40;
+  background-color: var(--color-content-lighten-background);
+  border: 1px solid var(--color-content-lighten-background);
   color: #c9d1d9;
 }
 .auth-form .auth-form-body label, .auth-form .register-form-body label, .auth-form .update-form-body label, .register-form .auth-form-body label, .register-form .register-form-body label, .register-form .update-form-body label, .update-form .auth-form-body label, .update-form .register-form-body label, .update-form .update-form-body label {
@@ -93,8 +112,8 @@ body input, body textarea {
   padding: 5px 12px;
   font-size: 14px;
   line-height: 20px;
-  border: 1px solid #3d3f40;
-  background-color: #242526;
+  border: 1px solid var(--color-content-lighten-background);
+  background-color: var(--color-content-background);
   border-radius: 6px;
   color: #c9d1d9;
 }
@@ -129,7 +148,7 @@ body input, body textarea {
 .auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout, .update-form .login-callout, .update-form .register-callout {
   padding: 15px 20px;
   text-align: center;
-  border: 1px solid #3d3f40;
+  border: 1px solid var(--color-content-lighten-background);
   border-radius: 6px;
   margin-top: 15px;
   color: #c9d1d9;
@@ -160,8 +179,8 @@ body input, body textarea {
   border-radius: 6px;
   padding: 20px;
   font-size: 14px;
-  background-color: #2b2d2e;
-  border: 1px solid #3d3f40;
+  background-color: var(--color-content-lighten-background);
+  border: 1px solid var(--color-content-lighten-background);
   color: #c9d1d9;
 }
 .update-form .update-form-body #update-form, .update-form .update-form-body #update-email-form, .update-form .update-form-body #update-phone-form {
@@ -196,8 +215,8 @@ body input, body textarea {
   padding: 5px 12px;
   font-size: 14px;
   line-height: 20px;
-  border: 1px solid #3d3f40;
-  background-color: #242526;
+  border: 1px solid var(--color-content-lighten-background);
+  background-color: var(--color-content-background);
   border-radius: 6px;
   color: #c9d1d9;
 }
@@ -207,8 +226,8 @@ body input, body textarea {
   margin: 12px auto;
 }
 .update-form .update-form-body .btn:disabled {
-  background: #2b2d2e;
-  border: 1px solid #3d3f40;
+  background: var(--color-content-lighten-background);
+  border: 1px solid var(--color-content-lighten-background);
 }
 
 .btn {
@@ -280,7 +299,7 @@ body input, body textarea {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: #1d1d1e;
+  background-color: var(--color-content-lighten-background);
   border-radius: 95px;
   z-index: 20;
   border: 2px solid #6366f1;
@@ -371,7 +390,7 @@ body input, body textarea {
 .modal-container {
   position: fixed;
   border-radius: 6px;
-  background: #242526;
+  background: var(--color-content-background);
   width: 600px;
   height: auto;
   left: 50%;
@@ -421,7 +440,7 @@ body input, body textarea {
   padding: 7px 12px;
   top: 0;
   right: 0;
-  color: #aaaab8;
+  color: var(--color-text);
   cursor: pointer;
 }
 .modal-container .close-modal svg {
@@ -589,7 +608,7 @@ header nav {
   position: fixed;
   height: 60px;
   width: 100%;
-  background: #242526;
+  background: var(--color-content-background);
   z-index: 10;
 }
 header nav .logo-container {
@@ -672,7 +691,7 @@ header nav .navbar-container ul li a {
   text-decoration: none;
   height: 100%;
   width: 100%;
-  color: #aaaab8;
+  color: var(--color-text);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -690,14 +709,14 @@ header nav .navbar-container ul li a {
   border-bottom: 3px solid transparent;
 }
 header nav .navbar-container ul li a:hover {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-bottom: 3px solid #6366f1;
 }
 header nav .navbar-container ul li a:hover svg path {
   fill: #6366f1;
 }
 header nav .navbar-container ul li a.activeLink {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-bottom: 3px solid #6366f1;
 }
 header nav .navbar-container ul li a.activeLink svg path {
@@ -742,7 +761,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: whitesmoke;
+  color: var(--color-text);
   cursor: pointer;
 }
 .mini-nav-container ul li p {
@@ -759,7 +778,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   text-decoration: none;
   height: 100%;
   width: 100%;
-  color: #aaaab8;
+  color: var(--color-text);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -778,14 +797,14 @@ header nav .navbar-container ul li a.activeLink svg path {
   margin-right: 10px;
 }
 .mini-nav-container ul li.to-profil a:hover {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-bottom: 3px solid #6366f1;
 }
 .mini-nav-container ul li.to-profil a:hover svg path {
   fill: #6366f1;
 }
 .mini-nav-container ul li.to-profil a.activeLink {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-bottom: 3px solid #6366f1;
 }
 .mini-nav-container ul li.to-profil a.activeLink svg path {
@@ -798,8 +817,8 @@ header nav .navbar-container ul li a.activeLink svg path {
   text-decoration: none;
   height: 45px;
   width: 45px;
-  color: #aaaab8;
-  background: #2b2d2e;
+  color: var(--color-text);
+  background: var(--color-content-lighten-background);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -816,13 +835,13 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-radius: 30px;
 }
 .mini-nav-container ul li.to-messages a:hover, .mini-nav-container ul li.to-messages div:hover, .mini-nav-container ul li.to-notifications a:hover, .mini-nav-container ul li.to-notifications div:hover, .mini-nav-container ul li.to-settings-menu a:hover, .mini-nav-container ul li.to-settings-menu div:hover {
-  background: #38393b;
+  background: var(--color-content-lighten-background);
 }
 .mini-nav-container ul li.to-messages a:hover svg path, .mini-nav-container ul li.to-messages div:hover svg path, .mini-nav-container ul li.to-notifications a:hover svg path, .mini-nav-container ul li.to-notifications div:hover svg path, .mini-nav-container ul li.to-settings-menu a:hover svg path, .mini-nav-container ul li.to-settings-menu div:hover svg path {
   fill: #6366f1;
 }
 .mini-nav-container ul li.to-messages a.activeLink, .mini-nav-container ul li.to-messages div.activeLink, .mini-nav-container ul li.to-notifications a.activeLink, .mini-nav-container ul li.to-notifications div.activeLink, .mini-nav-container ul li.to-settings-menu a.activeLink, .mini-nav-container ul li.to-settings-menu div.activeLink {
-  background: #38393b;
+  background: var(--color-content-lighten-background);
 }
 .mini-nav-container ul li.to-messages a.activeLink svg path, .mini-nav-container ul li.to-messages div.activeLink svg path, .mini-nav-container ul li.to-notifications a.activeLink svg path, .mini-nav-container ul li.to-notifications div.activeLink svg path, .mini-nav-container ul li.to-settings-menu a.activeLink svg path, .mini-nav-container ul li.to-settings-menu div.activeLink svg path {
   fill: #6366f1;
@@ -834,7 +853,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   top: 60px;
   width: 200px;
   height: 100vh;
-  background: #242526;
+  background: var(--color-content-background);
 }
 .left-nav-container ul {
   position: relative;
@@ -874,11 +893,11 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 100%;
   padding-left: 10px;
   text-decoration: none;
-  color: #aaaab8;
+  color: var(--color-text);
   border-left: 3px solid transparent;
 }
 .left-nav-container ul li a:hover {
-  background: #38393b;
+  background: var(--color-content-lighten-background);
   border-left: 3px solid #6366f1;
 }
 .left-nav-container ul li a:hover svg path {
@@ -902,7 +921,7 @@ header nav .navbar-container ul li a.activeLink svg path {
           justify-content: center;
   height: 60px;
   width: 100%;
-  background: #242526;
+  background: var(--color-content-background);
   border-radius: 0 0 5px 5px;
 }
 .profil-nav ul {
@@ -936,7 +955,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   text-decoration: none;
   height: 100%;
   width: 100%;
-  color: #aaaab8;
+  color: var(--color-text);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -950,7 +969,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-bottom: 3px solid transparent;
 }
 .profil-nav ul li a:hover {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-bottom: 3px solid #6366f1;
   color: #6366f1;
 }
@@ -958,7 +977,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   fill: #6366f1;
 }
 .profil-nav ul li a.activeLink {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-bottom: 3px solid #6366f1;
 }
 .profil-nav ul li a.activeLink .svg-icon path {
@@ -978,7 +997,7 @@ header nav .navbar-container ul li a.activeLink svg path {
           justify-content: left;
   height: 100%;
   width: 100%;
-  background: #242526;
+  background: var(--color-content-background);
 }
 .profil-edit-nav ul {
   position: relative;
@@ -1013,7 +1032,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   text-decoration: none;
   height: 100%;
   width: 100%;
-  color: #aaaab8;
+  color: var(--color-text);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1024,7 +1043,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-left: 3px solid transparent;
 }
 .profil-edit-nav ul li a:hover {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-left: 3px solid #6366f1;
   color: #6366f1;
 }
@@ -1032,7 +1051,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   fill: #6366f1;
 }
 .profil-edit-nav ul li a.activeLink {
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
   border-left: 3px solid #6366f1;
 }
 .profil-edit-nav ul li a.activeLink .svg-icon path {
@@ -1067,16 +1086,16 @@ header nav .navbar-container ul li a.activeLink svg path {
   display: block;
   height: 150px;
   text-decoration: none;
-  color: white;
+  color: var(--color-text);
 }
 .profil-container .profil-card {
   height: auto;
   padding: 20px;
-  background: #242526;
+  background: var(--color-content-background);
   border-radius: 5px;
 }
 .profil-container .profil-card .fas, .profil-container .profil-card .fa, .profil-container .profil-card .fab {
-  color: white;
+  color: var(--color-text);
   margin-right: 5px;
 }
 .profil-container .profil-card h5 {
@@ -1088,7 +1107,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 .profil-container .bio {
   height: auto;
   padding: 20px;
-  background: #242526;
+  background: var(--color-content-background);
   border-radius: 5px;
 }
 .profil-container .bio p {
@@ -1100,8 +1119,8 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 15px;
   min-height: 100px;
   width: 100%;
-  background: #303233;
-  color: white;
+  background: var(--color-content-lighten-background);
+  color: var(--color-text);
 }
 
 .profil-edit-container {
@@ -1112,7 +1131,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 100%;
   height: auto;
   margin: 20px 0;
-  background: #242526;
+  background: var(--color-content-background);
   padding: 20px 0;
   border-radius: 5px;
 }
@@ -1126,7 +1145,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   position: relative;
   width: 100%;
   padding: 0 20px;
-  border-left: 1px solid #18191A;
+  border-left: 1px solid var(--color-body-background);
 }
 .profil-edit-container .right h5 {
   padding: 0 0 10px 10px;
@@ -1209,17 +1228,17 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-  background: #292a2b;
+  background: var(--color-content-lighten-background);
   border-radius: 5px;
 }
 .profil-edit-container .right .user-info .user-info-edit input {
   border: 1px solid transparent;
   padding: 10px;
   border-radius: 5px;
-  color: white;
+  color: var(--color-text);
 }
 .profil-edit-container .right .user-info .user-info-edit input:hover {
-  border: 1px solid white;
+  border: 1px solid var(--color-text);
 }
 .profil-edit-container .right .user-info .user-info-edit .btn-container {
   display: -webkit-box;
@@ -1303,17 +1322,17 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .profil-edit-container .right .bio p {
   padding: 20px 10px;
-  background: #292a2b;
+  background: var(--color-content-lighten-background);
   border-radius: 5px;
 }
 .profil-edit-container .right .bio textarea {
   border: 1px solid transparent;
   padding: 10px;
   border-radius: 5px;
-  color: white;
+  color: var(--color-text);
 }
 .profil-edit-container .right .bio textarea:hover {
-  border: 1px solid white;
+  border: 1px solid var(--color-text);
 }
 .profil-edit-container .right .bio .btn-container {
   display: -webkit-box;
@@ -1343,7 +1362,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   position: relative;
   width: 100%;
   height: 250px;
-  background: #242526;
+  background: var(--color-content-background);
   border-radius: 5px;
 }
 .profil-header .cover-img {
@@ -1374,7 +1393,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   font-size: 32px;
   text-align: center;
   margin-left: auto;
-  color: white;
+  color: var(--color-white);
 }
 .profil-header .avatar {
   position: absolute;
@@ -1386,8 +1405,8 @@ header nav .navbar-container ul li a.activeLink svg path {
   left: 30px;
 }
 .profil-header .avatar.-online-ring {
-  -webkit-box-shadow: inset 0 0 0 3px #242526;
-          box-shadow: inset 0 0 0 3px #242526;
+  -webkit-box-shadow: inset 0 0 0 3px var(--color-content-background);
+          box-shadow: inset 0 0 0 3px var(--color-content-background);
 }
 .profil-header .avatar .btn-img-edit {
   position: absolute;
@@ -1420,13 +1439,14 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 32px;
   background: transparent;
   border-radius: 20px;
-  color: #aaaab8;
+  color: var(--color-text);
   border: none;
   outline: none;
   padding: 0;
 }
 .profil-header .btn-menu-cover-img button svg {
   font-size: 20px;
+  color: var(--color-content-lighten-background);
 }
 .profil-header .fileUpload {
   position: relative;
@@ -1454,7 +1474,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   position: absolute;
   top: 40px;
   right: 5px;
-  background: #242526;
+  background: var(--color-content-background);
   padding: 10px;
   border-radius: 5px;
 }
@@ -1464,7 +1484,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 0px;
   height: 0px;
   border: 10px solid;
-  border-color: transparent transparent #242526 transparent;
+  border-color: transparent transparent var(--color-content-background) transparent;
   right: 6px;
   top: -19px;
 }
@@ -1475,7 +1495,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-radius: 5px;
 }
 .profil-header .cover-img-menu .btn-menu:hover {
-  background: #38393b;
+  background: var(--color-content-lighten-background);
   cursor: pointer;
 }
 .profil-header .cover-img-menu .btn-menu p {
@@ -1487,11 +1507,49 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 300px;
   height: auto;
   position: absolute;
-  background: #242526;
+  background: var(--color-content-background);
   border-radius: 5px;
   top: 65px;
   right: 5px;
   z-index: 1100;
+}
+.settings-menu:before {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border: 10px solid;
+  border-color: transparent transparent var(--color-content-background) transparent;
+  right: 30px;
+  top: -19px;
+}
+.settings-menu .settings-menu-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+}
+.settings-menu .settings-menu-header h5 {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
+.settings-menu .settings-menu-header svg {
+  height: 36px;
+  width: 36px;
+  padding: 7px;
+  border-radius: 30px;
+  cursor: pointer;
+  background: var(--color-content-lighten-background);
+}
+.settings-menu .settings-menu-header svg:hover {
+  background: var(--color-content-lighten-background);
+}
+.settings-menu .settings-menu-header svg:hover path {
+  fill: #6366f1;
 }
 .settings-menu .settings-menu-nav ul {
   padding: 0;
@@ -1505,6 +1563,9 @@ header nav .navbar-container ul li a.activeLink svg path {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 52px;
   border-left: 3px solid transparent;
   cursor: pointer;
@@ -1529,7 +1590,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 36px;
   padding: 7px;
   border-radius: 30px;
-  background: #2b2d2e;
+  background: var(--color-content-lighten-background);
 }
 .settings-menu .settings-menu-nav ul li .right {
   display: -webkit-box;
@@ -1548,11 +1609,62 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 7px;
 }
 .settings-menu .settings-menu-nav ul li:hover {
-  background: #38393b;
+  background: var(--color-content-lighten-background);
   border-left: 3px solid #6366f1;
 }
 .settings-menu .settings-menu-nav ul li:hover svg path {
   fill: #6366f1;
+}
+.settings-menu .settings-menu-nav ul li .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 28px;
+  margin: 0 10px 0 0;
+}
+.settings-menu .settings-menu-nav ul li .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.settings-menu .settings-menu-nav ul li .switch input:checked + .slider {
+  background-color: #6366f1;
+}
+.settings-menu .settings-menu-nav ul li .switch input:checked + .slider:before {
+  -webkit-transform: translateX(32px);
+          transform: translateX(32px);
+}
+.settings-menu .settings-menu-nav ul li .switch input:focus + .slider {
+  -webkit-box-shadow: 0 0 1px #2196F3;
+          box-shadow: 0 0 1px #2196F3;
+}
+.settings-menu .settings-menu-nav ul li .switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.settings-menu .settings-menu-nav ul li .switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.settings-menu .settings-menu-nav ul li .slider.round {
+  border-radius: 34px;
+}
+.settings-menu .settings-menu-nav ul li .slider.round:before {
+  border-radius: 50%;
 }
 
 .auto-container {
@@ -1566,7 +1678,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-  background: #292a2b;
+  background: var(--color-content-lighten-background);
   border-radius: 5px;
 }
 .auto-container input {
@@ -1581,14 +1693,14 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-radius: 0 0 5px 5px;
 }
 .auto-container ul li {
-  border-bottom: 1px solid #18191A;
+  border-bottom: 1px solid var(--color-body-background);
   list-style-type: none;
   padding: 10px;
   cursor: pointer;
   border-left: 3px solid transparent;
 }
 .auto-container ul li:hover {
-  background: #303233;
+  background: var(--color-content-lighten-background);
   border-left: 3px solid #6366f1;
 }
 .auto-container .btn-container {

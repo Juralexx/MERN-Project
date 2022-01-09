@@ -4,7 +4,7 @@
     top      : 60px;
     width    : 200px;
     height   : 100vh;
-    background : $bg-color;
+    background : var(--color-content-background);
 
     ul {
         position        : relative;
@@ -30,11 +30,11 @@
                 width           : 100%;
                 padding-left    : 10px;
                 text-decoration : none;
-                color           : $text-color;
+                color           : var(--color-text);
                 border-left:3px solid transparent;
 
                 &:hover {
-                    background : lighten($bg-color, 8%);
+                    background : var(--color-content-lighten-background);;
                     border-left:3px solid $primary-color;
 
                     svg {

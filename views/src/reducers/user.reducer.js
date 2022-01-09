@@ -1,7 +1,7 @@
 import {
     DELETE_BIO, DELETE_COVER_PICTURE, DELETE_GENDER, DELETE_LASTNAME, DELETE_LOCATION, DELETE_NAME, DELETE_PHONE,
     DELETE_UPLOADED_PICTURE, DELETE_WORK, GET_USER, UPDATE_BIO, UPDATE_EMAIL, UPDATE_GENDER, UPDATE_LASTNAME,
-    UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_WORK, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE
+    UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_THEME, UPDATE_WORK, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE
 } from "../actions/user.action";
 
 const initialState = {}
@@ -110,6 +110,11 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 bio: action.payload,
+            }
+        case UPDATE_THEME:
+            return {
+                ...state,
+                theme: action.payload,
             }
 
         default:

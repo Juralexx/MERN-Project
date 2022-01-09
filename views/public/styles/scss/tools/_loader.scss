@@ -14,7 +14,7 @@
         display          : flex;
         align-items      : center;
         justify-content  : center;
-        background-color : darken($bg-color, 3%);
+        background-color : var(--color-content-lighten-background);
         border-radius    : 95px;
         z-index          : 20;
         border           : 2px solid $primary-color;

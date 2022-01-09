@@ -97,12 +97,17 @@ const UserModel = new mongoose.Schema(
             maxlength: 1024
         },
 
+        theme: {
+            type: String,
+            default: "dark"
+        },
+        
         following: {
             type: [String]
         },
 
         likes: {
-            type: [String],
+            type: [String]
         }
     },
     {

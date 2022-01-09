@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useSelector } from 'react-redux'
 import { NavLink } from "react-router-dom";
 import { UidContext } from "./AppContext";
 import MiniNav from "./MiniNav";
@@ -11,14 +10,7 @@ import { RiLoginCircleLine } from 'react-icons/ri'
 
 const Navbar = () => {
     const uid = useContext(UidContext)
-    const userData = useSelector((state) => state.userReducer)
     //const active = (navData) => navData.isActive ? "activeLink" : ""
-    const avatar = {
-        backgroundImage: "url(" + userData.picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-    }
 
     return (
         <header>

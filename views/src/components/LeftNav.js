@@ -1,20 +1,12 @@
-import React, { useContext, useState } from "react";
-import { useSelector } from 'react-redux'
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { BsFillCaretDownFill, BsChatRightTextFill, BsHeartFill } from 'react-icons/bs'
+import { BsHeartFill } from 'react-icons/bs'
 import { AiFillHome } from 'react-icons/ai'
 import { IoIosAlbums } from 'react-icons/io'
 import { ImLink } from 'react-icons/im'
 import { FaEye } from 'react-icons/fa'
 
 const LeftNav = () => {
-    const userData = useSelector((state) => state.userReducer)
-    const avatar = {
-        backgroundImage: "url(" + userData.picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-    }
 
     return (
         <div className="left-nav-container">

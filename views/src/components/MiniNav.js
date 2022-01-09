@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from 'react-redux'
 import { NavLink } from "react-router-dom";
 import { BsFillCaretDownFill, BsChatRightTextFill } from 'react-icons/bs'
@@ -17,33 +17,33 @@ const MiniNav = () => {
 
     return (
         <>
-                <div className="mini-nav-container">
-                    <ul>
-                        <li className="to-profil">
-                            <NavLink to="/profil">
-                                <div className="avatar" style={avatar}></div>
-                                <p>{userData.pseudo}</p>
-                            </NavLink>
-                        </li>
-                        <li className="to-messages">
-                            <NavLink to="/">
-                                <BsChatRightTextFill />
-                            </NavLink>
-                        </li>
-                        <li className="to-notifications">
-                            <div>
-                                <IoNotifications />
-                            </div>
-                        </li>
-                        <li className="to-settings-menu" onClick={() => setOpen(!isOpen)}>
-                            <div>
-                                <BsFillCaretDownFill />
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div className="mini-nav-container">
+                <ul>
+                    <li className="to-profil">
+                        <NavLink to="/profil">
+                            <div className="avatar" style={avatar}></div>
+                            <p>{userData.pseudo}</p>
+                        </NavLink>
+                    </li>
+                    <li className="to-messages">
+                        <NavLink to="/">
+                            <BsChatRightTextFill />
+                        </NavLink>
+                    </li>
+                    <li className="to-notifications">
+                        <div>
+                            <IoNotifications />
+                        </div>
+                    </li>
+                    <li className="to-settings-menu" onClick={() => setOpen(!isOpen)}>
+                        <div>
+                            <BsFillCaretDownFill />
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <>
-                {!isOpen && ( <SettingsMenu /> )}
+                {!isOpen && (<SettingsMenu />)}
             </>
         </>
     )

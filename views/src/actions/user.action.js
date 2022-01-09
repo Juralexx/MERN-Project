@@ -21,6 +21,7 @@ export const UPDATE_PHONE = "UPDATE_PHONE"
 export const DELETE_PHONE = "DELETE_PHONE"
 export const UPDATE_BIO = "UPDATE_BIO"
 export const DELETE_BIO = "DELETE_BIO"
+export const UPDATE_THEME = "UPDATE_THEME"
 
 export const getUser = (uid) => {
     return (dispatch) => {
@@ -360,6 +361,20 @@ export const deleteBio = (userId, bio) => {
                     .then((res) => {
                         dispatch({ type: DELETE_BIO, payload: "" })
                     })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateTheme = (userId, theme) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { theme }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_THEME, payload: theme })
             })
             .catch((err) => console.log(err))
     }

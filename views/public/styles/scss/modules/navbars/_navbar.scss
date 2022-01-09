@@ -8,7 +8,7 @@ header {
         position   : fixed;
         height     : 60px;
         width      : 100%;
-        background : $bg-color;
+        background : var(--color-content-background);
         z-index:10;
 
         .logo-container {
@@ -80,7 +80,7 @@ header {
                         text-decoration : none;
                         height          : 100%;
                         width           : 100%;
-                        color           : $text-color;
+                        color           : var(--color-text);
                         display         : flex;
                         flex-direction  : column;
                         align-items     : center;
@@ -89,7 +89,7 @@ header {
                         border-bottom   : 3px solid transparent;
         
                         &:hover {
-                            background    : lighten($bg-color, 3%);
+                            background    : var(--color-content-lighten-background);;
                             border-bottom : 3px solid $primary-color;
                             svg {
         
@@ -100,7 +100,7 @@ header {
                         }
         
                         &.activeLink {
-                            background    : lighten($bg-color, 3%);
+                            background    : var(--color-content-lighten-background);;
                             border-bottom : 3px solid $primary-color;
                             svg {
                 

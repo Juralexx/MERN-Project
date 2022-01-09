@@ -8,7 +8,6 @@ const PhoneUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
     const [phone, setPhone] = useState(userData.phone);
     const [phoneUpdater, setPhoneUpdater] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
     const [value, setValue] = React.useState("");
     const dispatch = useDispatch()
 

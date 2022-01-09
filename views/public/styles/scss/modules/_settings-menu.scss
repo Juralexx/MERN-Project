@@ -2,11 +2,51 @@
     width         : 300px;
     height        : auto;
     position      : absolute;
-    background    : $bg-color;
+    background    : var(--color-content-background);
     border-radius : 5px;
     top           : 65px;
     right         : 5px;
     z-index       : 1100;
+
+    &:before {
+        content      : "";
+        position     : absolute;
+        width        : 0px;
+        height       : 0px;
+        border       : 10px solid;
+        border-color : transparent transparent var(--color-content-background) transparent;
+        right        : 30px;
+        top          : -19px;
+    }
+
+    .settings-menu-header {
+        display     : flex;
+        align-items : center;
+        padding     : 10px;
+
+        h5 {
+            text-align : center;
+            width      : 100%;
+            margin     : 0;
+        }
+
+        svg {
+            height        : 36px;
+            width         : 36px;
+            padding       : 7px;
+            border-radius : 30px;
+            cursor        : pointer;
+            background    : var(--color-content-lighten-background);;
+
+            &:hover {
+                background : var(--color-content-lighten-background);;
+                
+                path {
+                    fill : $primary-color;
+                }
+            }
+        }
+    }
 
     .settings-menu-nav {
 
@@ -18,6 +58,7 @@
             li {
                 display         : flex;
                 justify-content : space-between;
+                align-items     : center;
                 height          : 52px;
                 border-left     : 3px solid transparent;
                 cursor          : pointer;
@@ -39,7 +80,7 @@
                         width         : 36px;
                         padding       : 7px;
                         border-radius : 30px;
-                        background    : lighten($bg-color, 3%)
+                        background    : var(--color-content-lighten-background);;
                     }
                 }
 
@@ -58,13 +99,67 @@
                 }
 
                 &:hover {
-                    background  : lighten($bg-color, 8%);
+                    background  : var(--color-content-lighten-background);;
                     border-left : 3px solid $primary-color;
 
                     svg {
                         path {
                             fill : $primary-color;
                         }
+                    }
+                }
+                .switch {
+                    position : relative;
+                    display  : inline-block;
+                    width    : 60px;
+                    height   : 28px;
+                    margin : 0 10px 0 0;
+
+                    input { 
+                        opacity : 0;
+                        width   : 0;
+                        height  : 0;
+                
+                        &:checked + .slider {
+                            background-color : $primary-color;
+                
+                            &:before {
+                                transform : translateX(32px);
+                            }
+                        }
+                
+                        &:focus + .slider {
+                            box-shadow : 0 0 1px #2196F3;
+                        }
+                    }
+                
+                    .slider {
+                        position         : absolute;
+                        cursor           : pointer;
+                        top              : 0;
+                        left             : 0;
+                        right            : 0;
+                        bottom           : 0;
+                        background-color : #ccc;
+                        transition       : .4s;
+                
+                        &:before {
+                            position         : absolute;
+                            content          : "";
+                            height           : 20px;
+                            width            : 20px;
+                            left             : 4px;
+                            bottom           : 4px;
+                            background-color : white;
+                            transition       : .4s;
+                        }
+                    }
+                }
+                .slider.round {
+                    border-radius : 34px;
+                
+                    &:before {
+                        border-radius : 50%;
                     }
                 }
             }
