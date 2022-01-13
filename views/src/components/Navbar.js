@@ -2,10 +2,8 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UidContext } from "./AppContext";
 import MiniNav from "./MiniNav";
-import { AiFillHome } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineUnorderedList, AiOutlineFundProjectionScreen } from 'react-icons/ai'
 import { IoPersonCircleSharp } from 'react-icons/io5'
-import { IoIosListBox } from 'react-icons/io'
-import { FaProjectDiagram } from 'react-icons/fa'
 import { RiLoginCircleLine } from 'react-icons/ri'
 
 const Navbar = () => {
@@ -29,19 +27,19 @@ const Navbar = () => {
                             <ul>
                                 <li className="to-home">
                                     <NavLink to="/">
-                                        <AiFillHome />
+                                        <AiOutlineHome />
                                         <p>Accueil</p>
                                     </NavLink>
                                 </li>
                                 <li className="to-search-history">
                                     <NavLink to="/">
-                                        <IoIosListBox />
+                                        <AiOutlineUnorderedList />
                                         <p>Mes recherches</p>
                                     </NavLink>
                                 </li>
                                 <li className="to-favorites">
                                     <NavLink to="/">
-                                        <FaProjectDiagram />
+                                        <AiOutlineFundProjectionScreen />
                                         <p>Projets</p>
                                     </NavLink>
                                 </li>
@@ -56,19 +54,19 @@ const Navbar = () => {
                         <ul>
                             <li className="to-home">
                                 <NavLink to="/">
-                                    <AiFillHome />
+                                    <AiOutlineHome />
                                     <p>Accueil</p>
                                 </NavLink>
                             </li>
                             <li className="to-search-history">
                                 <NavLink to="/">
-                                    <IoIosListBox />
+                                    <AiOutlineUnorderedList />
                                     <p>Mes recherches</p>
                                 </NavLink>
                             </li>
                             <li className="to-favorites">
                                 <NavLink to="/">
-                                    <FaProjectDiagram />
+                                    <AiOutlineFundProjectionScreen />
                                     <p>Projets</p>
                                 </NavLink>
                             </li>

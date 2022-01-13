@@ -20,6 +20,17 @@ export const userInfo = (req, res) => {
     }).select('-password')
 };
 
+export const findUser = async (req, res) => {
+    UserModel.findOne({ pseudo: req.params.pseudo },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs)
+            } else {
+                console.log('Unknown ID : ' + err)
+            }
+        }).select('-password')
+};
+
 export const updateUser = async (req, res) => {
     const { pseudo, email, name, lastname, location, work, phone, bio, gender, theme } = req.body
 

@@ -18,7 +18,14 @@ const UploadCoverImg = () => {
         data.append("file", file)
         dispatch(uploadCoverPicture(data, userData._id));
 
-        if (error) {
+        if (!error) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Votre image a bien été ajoutée !',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Une erreur s\'est produite...',
@@ -26,16 +33,9 @@ const UploadCoverImg = () => {
                 showCloseButton: true,
                 confirmButtonText: 'Compris'
             })
-        } else {
-            Swal.fire({
-                icon: 'success',
-                title: 'Votre image a bien été ajoutée !',
-                showConfirmButton: false,
-                timer: 1500
-            })
-            setFile(false)
-            e.stopPropagation();
         }
+        setFile(false)
+        e.stopPropagation();
     }
 
     const deletePicture = (e) => {

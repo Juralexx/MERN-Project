@@ -1,23 +1,148 @@
 @charset "UTF-8";
 /****************  GENERAL *****************/
-/************** THEME SOMBRE ***************/
-:root {
-  --color-body-background: #18181b;
-  --color-content-background: #0e0e10;
-  --color-content-lighten-background: #242429;
-  --color-text: #aaaab8;
-  --color-white: #ffffff;
-}
-
 /*************** THEME CLAIR ***************/
 .light-theme {
-  --color-body-background: white;
-  --color-content-background: #f2f2f2;
-  --color-content-lighten-background: #e4e6eb;
-  --color-text: #363636;
+  --color-primary-light: #d9e9fd;
+  --color-body: #f0f2f5;
+  --color-content: #ffffff;
+  --color-content-light: #f2f2f3;
+  --color-text: #6c6c6c;
+  --color-text-one: #49607e;
   --color-white: #ffffff;
+  --color-svg-light: #abb9c9;
+  --color-bg-hover: #f5f5f7;
+  --color-border: #e8eaf1;
+  --color-input: #f2f2f2;
 }
 
+/************** THEME SOMBRE ***************/
+:root {
+  --color-primary-light: #d9e9fd;
+  --color-body: #18181b;
+  --color-content: #0e0e10;
+  --color-content-light: #151518;
+  --color-text: #6c6c6c;
+  --color-text-one: #71829a;
+  --color-white: #ffffff;
+  --color-svg-light: #abb9c9;
+  --color-bg-hover: #202023;
+  --color-border: #202023;
+  --color-input: #1a1a1e;
+}
+
+/**************** TOOLS ******************/
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-Thin.eot");
+  src: local("Faktum Thin"), local("Faktum-Thin"), url("./font/Faktum-Thin.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-Thin.woff2") format("woff2"), url("./font/Faktum-Thin.woff") format("woff"), url("./font/Faktum-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-ThinItalic.eot");
+  src: local("Faktum Thin Italic"), local("Faktum-ThinItalic"), url("./font/Faktum-ThinItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-ThinItalic.woff2") format("woff2"), url("./font/Faktum-ThinItalic.woff") format("woff"), url("./font/Faktum-ThinItalic.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-Light.eot");
+  src: local("Faktum Light"), local("Faktum-Light"), url("./font/Faktum-Light.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-Light.woff2") format("woff2"), url("./font/Faktum-Light.woff") format("woff"), url("./font/Faktum-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-MediumItalic.eot");
+  src: local("Faktum Medium Italic"), local("Faktum-MediumItalic"), url("./font/Faktum-MediumItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-MediumItalic.woff2") format("woff2"), url("./font/Faktum-MediumItalic.woff") format("woff"), url("./font/Faktum-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-RegularItalic.eot");
+  src: local("Faktum Regular Italic"), local("Faktum-RegularItalic"), url("./font/Faktum-RegularItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-RegularItalic.woff2") format("woff2"), url("./font/Faktum-RegularItalic.woff") format("woff"), url("./font/Faktum-RegularItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-Regular.eot");
+  src: local("Faktum Regular"), local("Faktum-Regular"), url("./font/Faktum-Regular.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-Regular.woff2") format("woff2"), url("./font/Faktum-Regular.woff") format("woff"), url("./font/Faktum-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-BoldItalic.eot");
+  src: local("Faktum Bold Italic"), local("Faktum-BoldItalic"), url("./font/Faktum-BoldItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-BoldItalic.woff2") format("woff2"), url("./font/Faktum-BoldItalic.woff") format("woff"), url("./font/Faktum-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-ExtraBoldItalic.eot");
+  src: local("Faktum ExtraBold Italic"), local("Faktum-ExtraBoldItalic"), url("./font/Faktum-ExtraBoldItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-ExtraBoldItalic.woff2") format("woff2"), url("./font/Faktum-ExtraBoldItalic.woff") format("woff"), url("./font/Faktum-ExtraBoldItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-SemiBold.eot");
+  src: local("Faktum SemiBold"), local("Faktum-SemiBold"), url("./font/Faktum-SemiBold.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-SemiBold.woff2") format("woff2"), url("./font/Faktum-SemiBold.woff") format("woff"), url("./font/Faktum-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-ExtraLightItalic.eot");
+  src: local("Faktum ExtraLight Italic"), local("Faktum-ExtraLightItalic"), url("./font/Faktum-ExtraLightItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-ExtraLightItalic.woff2") format("woff2"), url("./font/Faktum-ExtraLightItalic.woff") format("woff"), url("./font/Faktum-ExtraLightItalic.ttf") format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-ExtraBold.eot");
+  src: local("Faktum ExtraBold"), local("Faktum-ExtraBold"), url("./font/Faktum-ExtraBold.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-ExtraBold.woff2") format("woff2"), url("./font/Faktum-ExtraBold.woff") format("woff"), url("./font/Faktum-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-ExtraLight.eot");
+  src: local("Faktum ExtraLight"), local("Faktum-ExtraLight"), url("./font/Faktum-ExtraLight.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-ExtraLight.woff2") format("woff2"), url("./font/Faktum-ExtraLight.woff") format("woff"), url("./font/Faktum-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-LightItalic.eot");
+  src: local("Faktum Light Italic"), local("Faktum-LightItalic"), url("./font/Faktum-LightItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-LightItalic.woff2") format("woff2"), url("./font/Faktum-LightItalic.woff") format("woff"), url("./font/Faktum-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-Bold.eot");
+  src: local("Faktum Bold"), local("Faktum-Bold"), url("./font/Faktum-Bold.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-Bold.woff2") format("woff2"), url("./font/Faktum-Bold.woff") format("woff"), url("./font/Faktum-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-SemiBoldItalic.eot");
+  src: local("Faktum SemiBold Italic"), local("Faktum-SemiBoldItalic"), url("./font/Faktum-SemiBoldItalic.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-SemiBoldItalic.woff2") format("woff2"), url("./font/Faktum-SemiBoldItalic.woff") format("woff"), url("./font/Faktum-SemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("./font/Faktum-Medium.eot");
+  src: local("Faktum Medium"), local("Faktum-Medium"), url("./font/Faktum-Medium.eot?#iefix") format("embedded-opentype"), url("./font/Faktum-Medium.woff2") format("woff2"), url("./font/Faktum-Medium.woff") format("woff"), url("./font/Faktum-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -27,7 +152,7 @@ html {
   margin: 0;
   padding: 0;
   position: relative;
-  font-family: "Faktum", sans-serif;
+  font-family: "Segoe UI", sans-serif;
   scroll-behavior: smooth;
   overflow-y: auto;
   overflow-x: hidden;
@@ -37,10 +162,10 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Faktum", sans-serif !important;
+  font-family: "Segoe UI", sans-serif;
   scroll-behavior: smooth;
   overflow: hidden;
-  background-color: var(--color-body-background);
+  background-color: var(--color-body);
   color: var(--color-text);
   width: 100vw;
   overflow-y: auto;
@@ -53,13 +178,20 @@ body p {
   font-size: 15px;
 }
 body input, body textarea {
-  background: var(--color-content-lighten-background);
+  background: var(--color-input);
 }
 
 #main {
   position: relative;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+}
+
+#main-container {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  padding: 15px;
 }
 
 .header-login, .header-register {
@@ -94,8 +226,8 @@ body input, body textarea {
   border-radius: 6px;
   padding: 20px;
   font-size: 14px;
-  background-color: var(--color-content-lighten-background);
-  border: 1px solid var(--color-content-lighten-background);
+  background-color: var(--color-content-light);
+  border: 1px solid var(--color-content-light);
   color: #c9d1d9;
 }
 .auth-form .auth-form-body label, .auth-form .register-form-body label, .auth-form .update-form-body label, .register-form .auth-form-body label, .register-form .register-form-body label, .register-form .update-form-body label, .update-form .auth-form-body label, .update-form .register-form-body label, .update-form .update-form-body label {
@@ -112,8 +244,8 @@ body input, body textarea {
   padding: 5px 12px;
   font-size: 14px;
   line-height: 20px;
-  border: 1px solid var(--color-content-lighten-background);
-  background-color: var(--color-content-background);
+  border: 1px solid var(--color-content-light);
+  background-color: var(--color-input);
   border-radius: 6px;
   color: #c9d1d9;
 }
@@ -148,7 +280,7 @@ body input, body textarea {
 .auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout, .update-form .login-callout, .update-form .register-callout {
   padding: 15px 20px;
   text-align: center;
-  border: 1px solid var(--color-content-lighten-background);
+  border: 1px solid var(--color-content-light);
   border-radius: 6px;
   margin-top: 15px;
   color: #c9d1d9;
@@ -179,8 +311,8 @@ body input, body textarea {
   border-radius: 6px;
   padding: 20px;
   font-size: 14px;
-  background-color: var(--color-content-lighten-background);
-  border: 1px solid var(--color-content-lighten-background);
+  background-color: var(--color-content-light);
+  border: 1px solid var(--color-content-light);
   color: #c9d1d9;
 }
 .update-form .update-form-body #update-form, .update-form .update-form-body #update-email-form, .update-form .update-form-body #update-phone-form {
@@ -215,8 +347,8 @@ body input, body textarea {
   padding: 5px 12px;
   font-size: 14px;
   line-height: 20px;
-  border: 1px solid var(--color-content-lighten-background);
-  background-color: var(--color-content-background);
+  border: 1px solid var(--color-content-light);
+  background-color: var(--color-input);
   border-radius: 6px;
   color: #c9d1d9;
 }
@@ -226,23 +358,23 @@ body input, body textarea {
   margin: 12px auto;
 }
 .update-form .update-form-body .btn:disabled {
-  background: var(--color-content-lighten-background);
-  border: 1px solid var(--color-content-lighten-background);
+  background: var(--color-content-light);
+  border: 1px solid var(--color-content-light);
 }
 
 .btn {
   z-index: 1;
   position: relative;
   margin: 0;
-  padding: 10px;
+  padding: 8px 10px 12px;
   border: none;
   overflow: hidden;
   text-decoration: none;
   text-align: center;
-  font-weight: 300;
+  font-weight: 500;
   font-size: 14px;
   line-height: 20px;
-  background: #6366f1;
+  background: #1877f2;
 }
 
 .fileUpload {
@@ -250,7 +382,6 @@ body input, body textarea {
   overflow: hidden;
   margin: 10px;
 }
-
 .fileUpload input.upload {
   position: absolute;
   top: 0;
@@ -299,10 +430,10 @@ body input, body textarea {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: var(--color-content-lighten-background);
+  background-color: var(--color-content-light);
   border-radius: 95px;
   z-index: 20;
-  border: 2px solid #6366f1;
+  border: 2px solid #1877f2;
   -webkit-backdrop-filter: blur(6px);
           backdrop-filter: blur(6px);
 }
@@ -314,7 +445,7 @@ body input, body textarea {
   border-radius: 100px;
   vertical-align: middle;
   border: 3px solid transparent;
-  border-top-color: #6366f1;
+  border-top-color: #1877f2;
   -webkit-animation: spinClockwise 1s linear infinite;
           animation: spinClockwise 1s linear infinite;
   z-index: 20;
@@ -327,7 +458,7 @@ body input, body textarea {
   bottom: 5px;
   right: 5px;
   border: 3px solid transparent;
-  border-top-color: rgba(99, 102, 241, 0.8);
+  border-top-color: rgba(24, 119, 242, 0.8);
   border-radius: 100px;
   -webkit-animation: spinClockwise 5s linear infinite;
           animation: spinClockwise 5s linear infinite;
@@ -340,7 +471,7 @@ body input, body textarea {
   bottom: 12px;
   right: 12px;
   border: 3px solid transparent;
-  border-top-color: rgba(99, 102, 241, 0.6);
+  border-top-color: rgba(24, 119, 242, 0.6);
   border-radius: 100px;
   -webkit-animation: spinClockwise 10s linear infinite;
           animation: spinClockwise 10s linear infinite;
@@ -390,7 +521,7 @@ body input, body textarea {
 .modal-container {
   position: fixed;
   border-radius: 6px;
-  background: var(--color-content-background);
+  background: var(--color-content);
   width: 600px;
   height: auto;
   left: 50%;
@@ -608,8 +739,10 @@ header nav {
   position: fixed;
   height: 60px;
   width: 100%;
-  background: var(--color-content-background);
+  background: var(--color-content);
   z-index: 10;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 header nav .logo-container {
   position: relative;
@@ -675,11 +808,13 @@ header nav .navbar-container ul li {
 header nav .navbar-container ul li p {
   margin: 0;
   line-height: 17px;
+  font-weight: 600;
 }
 header nav .navbar-container ul li svg {
   width: 1.4em;
   height: 1.4em;
   margin-bottom: 6px;
+  color: var(--color-svg-light);
 }
 header nav .navbar-container ul li .avatar {
   width: 26px;
@@ -691,7 +826,7 @@ header nav .navbar-container ul li a {
   text-decoration: none;
   height: 100%;
   width: 100%;
-  color: var(--color-text);
+  color: var(--color-text-one);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -709,18 +844,18 @@ header nav .navbar-container ul li a {
   border-bottom: 3px solid transparent;
 }
 header nav .navbar-container ul li a:hover {
-  background: var(--color-content-lighten-background);
-  border-bottom: 3px solid #6366f1;
+  background: var(--color-bg-hover);
+  border-bottom: 3px solid #1877f2;
 }
-header nav .navbar-container ul li a:hover svg path {
-  fill: #6366f1;
+header nav .navbar-container ul li a:hover svg {
+  fill: #1877f2;
 }
 header nav .navbar-container ul li a.activeLink {
-  background: var(--color-content-lighten-background);
-  border-bottom: 3px solid #6366f1;
+  background: var(--color-content-light);
+  border-bottom: 3px solid #1877f2;
 }
 header nav .navbar-container ul li a.activeLink svg path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 
 .mini-nav-container {
@@ -761,7 +896,6 @@ header nav .navbar-container ul li a.activeLink svg path {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  color: var(--color-text);
   cursor: pointer;
 }
 .mini-nav-container ul li p {
@@ -769,16 +903,16 @@ header nav .navbar-container ul li a.activeLink svg path {
   line-height: 17px;
 }
 .mini-nav-container ul li .avatar {
-  width: 26px;
-  height: 26px;
-  border-radius: 15px;
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
   margin: 3px auto 5px;
 }
 .mini-nav-container ul li.to-profil a {
   text-decoration: none;
   height: 100%;
   width: 100%;
-  color: var(--color-text);
+  color: var(--color-text-one);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -792,23 +926,23 @@ header nav .navbar-container ul li a.activeLink svg path {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding: 0 7px;
+  padding: 0 10px;
   border-bottom: 3px solid transparent;
   margin-right: 10px;
 }
 .mini-nav-container ul li.to-profil a:hover {
-  background: var(--color-content-lighten-background);
-  border-bottom: 3px solid #6366f1;
+  background: var(--color-bg-hover);
+  border-bottom: 3px solid #1877f2;
 }
 .mini-nav-container ul li.to-profil a:hover svg path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .mini-nav-container ul li.to-profil a.activeLink {
-  background: var(--color-content-lighten-background);
-  border-bottom: 3px solid #6366f1;
+  background: var(--color-bg-hover);
+  border-bottom: 3px solid #1877f2;
 }
 .mini-nav-container ul li.to-profil a.activeLink svg path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .mini-nav-container ul li.to-messages, .mini-nav-container ul li.to-notifications, .mini-nav-container ul li.to-settings-menu {
   margin: 0 2px;
@@ -817,8 +951,8 @@ header nav .navbar-container ul li a.activeLink svg path {
   text-decoration: none;
   height: 45px;
   width: 45px;
-  color: var(--color-text);
-  background: var(--color-content-lighten-background);
+  color: var(--color-text-one);
+  background: var(--color-content-light);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -835,27 +969,33 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-radius: 30px;
 }
 .mini-nav-container ul li.to-messages a:hover, .mini-nav-container ul li.to-messages div:hover, .mini-nav-container ul li.to-notifications a:hover, .mini-nav-container ul li.to-notifications div:hover, .mini-nav-container ul li.to-settings-menu a:hover, .mini-nav-container ul li.to-settings-menu div:hover {
-  background: var(--color-content-lighten-background);
+  background: var(--color-primary-light);
 }
 .mini-nav-container ul li.to-messages a:hover svg path, .mini-nav-container ul li.to-messages div:hover svg path, .mini-nav-container ul li.to-notifications a:hover svg path, .mini-nav-container ul li.to-notifications div:hover svg path, .mini-nav-container ul li.to-settings-menu a:hover svg path, .mini-nav-container ul li.to-settings-menu div:hover svg path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .mini-nav-container ul li.to-messages a.activeLink, .mini-nav-container ul li.to-messages div.activeLink, .mini-nav-container ul li.to-notifications a.activeLink, .mini-nav-container ul li.to-notifications div.activeLink, .mini-nav-container ul li.to-settings-menu a.activeLink, .mini-nav-container ul li.to-settings-menu div.activeLink {
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
 }
 .mini-nav-container ul li.to-messages a.activeLink svg path, .mini-nav-container ul li.to-messages div.activeLink svg path, .mini-nav-container ul li.to-notifications a.activeLink svg path, .mini-nav-container ul li.to-notifications div.activeLink svg path, .mini-nav-container ul li.to-settings-menu a.activeLink svg path, .mini-nav-container ul li.to-settings-menu div.activeLink svg path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 
-.left-nav-container {
+.left-nav {
   position: fixed;
   left: 0;
   top: 60px;
-  width: 200px;
-  height: 100vh;
-  background: var(--color-content-background);
+  width: 230px;
+  height: auto;
+  padding: 15px 0 0 15px;
 }
-.left-nav-container ul {
+.left-nav .left-nav-container {
+  background: var(--color-content);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+.left-nav .left-nav-container ul {
   position: relative;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -865,24 +1005,33 @@ header nav .navbar-container ul li a.activeLink svg path {
           align-items: center;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 10px 0;
 }
-.left-nav-container ul li {
+.left-nav .left-nav-container ul li {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   height: 50px;
   min-width: 50px;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  padding: 0 20px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   color: whitesmoke;
   cursor: pointer;
+  border-left: 3px solid transparent;
 }
-.left-nav-container ul li a {
+.left-nav .left-nav-container ul li:hover {
+  background: var(--color-content-light);
+  border-left: 3px solid #1877f2;
+}
+.left-nav .left-nav-container ul li:hover svg path {
+  fill: #1877f2;
+}
+.left-nav .left-nav-container ul li a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -891,23 +1040,19 @@ header nav .navbar-container ul li a.activeLink svg path {
           align-items: center;
   height: 100%;
   width: 100%;
-  padding-left: 10px;
   text-decoration: none;
-  color: var(--color-text);
-  border-left: 3px solid transparent;
+  color: var(--color-text-one);
+  border-bottom: 1px solid var(--color-border);
 }
-.left-nav-container ul li a:hover {
-  background: var(--color-content-lighten-background);
-  border-left: 3px solid #6366f1;
+.left-nav .left-nav-container ul li:last-child a {
+  border-bottom: none;
 }
-.left-nav-container ul li a:hover svg path {
-  fill: #6366f1;
-}
-.left-nav-container ul li svg {
+.left-nav .left-nav-container ul li svg {
   width: 22px;
   height: 22px;
+  color: var(--color-svg-light);
 }
-.left-nav-container ul li p {
+.left-nav .left-nav-container ul li p {
   margin: 0 0 0 10px;
   font-size: 15px;
 }
@@ -921,7 +1066,7 @@ header nav .navbar-container ul li a.activeLink svg path {
           justify-content: center;
   height: 60px;
   width: 100%;
-  background: var(--color-content-background);
+  background: var(--color-content);
   border-radius: 0 0 5px 5px;
 }
 .profil-nav ul {
@@ -969,19 +1114,19 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-bottom: 3px solid transparent;
 }
 .profil-nav ul li a:hover {
-  background: var(--color-content-lighten-background);
-  border-bottom: 3px solid #6366f1;
-  color: #6366f1;
+  background: var(--color-content-light);
+  border-bottom: 3px solid #1877f2;
+  color: #1877f2;
 }
 .profil-nav ul li a:hover .svg-icon path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .profil-nav ul li a.activeLink {
-  background: var(--color-content-lighten-background);
-  border-bottom: 3px solid #6366f1;
+  background: var(--color-content-light);
+  border-bottom: 3px solid #1877f2;
 }
 .profil-nav ul li a.activeLink .svg-icon path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 
 .profil-edit-nav {
@@ -997,7 +1142,7 @@ header nav .navbar-container ul li a.activeLink svg path {
           justify-content: left;
   height: 100%;
   width: 100%;
-  background: var(--color-content-background);
+  background: var(--color-content);
 }
 .profil-edit-nav ul {
   position: relative;
@@ -1043,19 +1188,19 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-left: 3px solid transparent;
 }
 .profil-edit-nav ul li a:hover {
-  background: var(--color-content-lighten-background);
-  border-left: 3px solid #6366f1;
-  color: #6366f1;
+  background: var(--color-content-light);
+  border-left: 3px solid #1877f2;
+  color: #1877f2;
 }
 .profil-edit-nav ul li a:hover .svg-icon path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .profil-edit-nav ul li a.activeLink {
-  background: var(--color-content-lighten-background);
-  border-left: 3px solid #6366f1;
+  background: var(--color-content-light);
+  border-left: 3px solid #1877f2;
 }
 .profil-edit-nav ul li a.activeLink .svg-icon path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 
 .profil-container {
@@ -1091,7 +1236,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 .profil-container .profil-card {
   height: auto;
   padding: 20px;
-  background: var(--color-content-background);
+  background: var(--color-content);
   border-radius: 5px;
 }
 .profil-container .profil-card .fas, .profil-container .profil-card .fa, .profil-container .profil-card .fab {
@@ -1100,6 +1245,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .profil-container .profil-card h5 {
   margin-bottom: 15px;
+  color: var(--color-text-one);
 }
 .profil-container .profil-card p {
   margin: 10px 0;
@@ -1107,7 +1253,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 .profil-container .bio {
   height: auto;
   padding: 20px;
-  background: var(--color-content-background);
+  background: var(--color-content);
   border-radius: 5px;
 }
 .profil-container .bio p {
@@ -1119,7 +1265,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 15px;
   min-height: 100px;
   width: 100%;
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
   color: var(--color-text);
 }
 
@@ -1131,25 +1277,29 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 100%;
   height: auto;
   margin: 20px 0;
-  background: var(--color-content-background);
+  background: var(--color-content);
   padding: 20px 0;
   border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .profil-edit-container .left {
   width: 30%;
 }
 .profil-edit-container .left h5 {
   padding: 0 0 10px 15px;
+  color: var(--color-text-one);
 }
 .profil-edit-container .right {
   position: relative;
   width: 100%;
   padding: 0 20px;
-  border-left: 1px solid var(--color-body-background);
+  border-left: 1px solid var(--color-body);
 }
 .profil-edit-container .right h5 {
   padding: 0 0 10px 10px;
   margin: 0;
+  color: var(--color-text-one);
 }
 .profil-edit-container .right .user-info {
   display: -webkit-box;
@@ -1185,6 +1335,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .profil-edit-container .right .user-info p svg {
   margin-right: 10px;
+  color: var(--color-svg-light);
 }
 .profil-edit-container .right .user-info .btn-container {
   display: -webkit-box;
@@ -1206,7 +1357,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .profil-edit-container .right .user-info .add-btn {
   background: transparent;
-  color: #6366f1;
+  color: #1877f2;
   border: none;
   outline: none;
   padding: 0;
@@ -1215,7 +1366,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   text-decoration: underline;
 }
 .profil-edit-container .right .user-info .add-btn svg path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .profil-edit-container .right .user-info .user-info-edit {
   display: -webkit-box;
@@ -1228,7 +1379,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
   border-radius: 5px;
 }
 .profil-edit-container .right .user-info .user-info-edit input {
@@ -1297,7 +1448,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   background: #9faab7;
 }
 .profil-edit-container .right .user-info .user-info-edit .gender-updater div .option-input:checked {
-  background: #6366f1;
+  background: #1877f2;
 }
 .profil-edit-container .right .user-info .user-info-edit .gender-updater div .option-input:checked:before {
   height: 17px;
@@ -1322,7 +1473,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .profil-edit-container .right .bio p {
   padding: 20px 10px;
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
   border-radius: 5px;
 }
 .profil-edit-container .right .bio textarea {
@@ -1362,8 +1513,10 @@ header nav .navbar-container ul li a.activeLink svg path {
   position: relative;
   width: 100%;
   height: 250px;
-  background: var(--color-content-background);
+  background: var(--color-content);
   border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .profil-header .cover-img {
   position: relative;
@@ -1405,15 +1558,15 @@ header nav .navbar-container ul li a.activeLink svg path {
   left: 30px;
 }
 .profil-header .avatar.-online-ring {
-  -webkit-box-shadow: inset 0 0 0 3px var(--color-content-background);
-          box-shadow: inset 0 0 0 3px var(--color-content-background);
+  -webkit-box-shadow: inset 0 0 0 3px var(--color-content);
+          box-shadow: inset 0 0 0 3px var(--color-content);
 }
 .profil-header .avatar .btn-img-edit {
   position: absolute;
   width: 35px;
   height: 35px;
   border-radius: 20px;
-  background: #6366f1;
+  background: #1877f2;
   color: white;
   border: none;
   outline: none;
@@ -1446,14 +1599,13 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .profil-header .btn-menu-cover-img button svg {
   font-size: 20px;
-  color: var(--color-content-lighten-background);
+  color: var(--color-content-light);
 }
 .profil-header .fileUpload {
   position: relative;
   overflow: hidden;
   margin: 0;
   bottom: 0;
-  width: 140px;
   cursor: pointer;
 }
 .profil-header .fileUpload input.upload {
@@ -1474,7 +1626,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   position: absolute;
   top: 40px;
   right: 5px;
-  background: var(--color-content-background);
+  background: var(--color-content);
   padding: 10px;
   border-radius: 5px;
 }
@@ -1484,7 +1636,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 0px;
   height: 0px;
   border: 10px solid;
-  border-color: transparent transparent var(--color-content-background) transparent;
+  border-color: transparent transparent var(--color-content) transparent;
   right: 6px;
   top: -19px;
 }
@@ -1495,7 +1647,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-radius: 5px;
 }
 .profil-header .cover-img-menu .btn-menu:hover {
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
   cursor: pointer;
 }
 .profil-header .cover-img-menu .btn-menu p {
@@ -1507,7 +1659,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 300px;
   height: auto;
   position: absolute;
-  background: var(--color-content-background);
+  background: var(--color-content);
   border-radius: 5px;
   top: 65px;
   right: 5px;
@@ -1519,7 +1671,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 0px;
   height: 0px;
   border: 10px solid;
-  border-color: transparent transparent var(--color-content-background) transparent;
+  border-color: transparent transparent var(--color-content) transparent;
   right: 30px;
   top: -19px;
 }
@@ -1543,13 +1695,13 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 7px;
   border-radius: 30px;
   cursor: pointer;
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
 }
 .settings-menu .settings-menu-header svg:hover {
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
 }
 .settings-menu .settings-menu-header svg:hover path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .settings-menu .settings-menu-nav ul {
   padding: 0;
@@ -1590,7 +1742,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 36px;
   padding: 7px;
   border-radius: 30px;
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
 }
 .settings-menu .settings-menu-nav ul li .right {
   display: -webkit-box;
@@ -1609,11 +1761,11 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 7px;
 }
 .settings-menu .settings-menu-nav ul li:hover {
-  background: var(--color-content-lighten-background);
-  border-left: 3px solid #6366f1;
+  background: var(--color-content-light);
+  border-left: 3px solid #1877f2;
 }
 .settings-menu .settings-menu-nav ul li:hover svg path {
-  fill: #6366f1;
+  fill: #1877f2;
 }
 .settings-menu .settings-menu-nav ul li .switch {
   position: relative;
@@ -1628,7 +1780,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   height: 0;
 }
 .settings-menu .settings-menu-nav ul li .switch input:checked + .slider {
-  background-color: #6366f1;
+  background-color: #1877f2;
 }
 .settings-menu .settings-menu-nav ul li .switch input:checked + .slider:before {
   -webkit-transform: translateX(32px);
@@ -1678,7 +1830,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-  background: var(--color-content-lighten-background);
+  background: var(--color-content-light);
   border-radius: 5px;
 }
 .auto-container input {
@@ -1687,21 +1839,22 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 10px;
   border-radius: 5px;
   color: white;
+  background: var(--color-input);
 }
 .auto-container ul {
   padding: 10px 0;
   border-radius: 0 0 5px 5px;
 }
 .auto-container ul li {
-  border-bottom: 1px solid var(--color-body-background);
+  border-bottom: 1px solid var(--color-body);
   list-style-type: none;
   padding: 10px;
   cursor: pointer;
   border-left: 3px solid transparent;
 }
 .auto-container ul li:hover {
-  background: var(--color-content-lighten-background);
-  border-left: 3px solid #6366f1;
+  background: var(--color-content-light);
+  border-left: 3px solid #1877f2;
 }
 .auto-container .btn-container {
   display: -webkit-box;

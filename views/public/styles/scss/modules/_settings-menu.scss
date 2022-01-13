@@ -2,7 +2,7 @@
     width         : 300px;
     height        : auto;
     position      : absolute;
-    background    : var(--color-content-background);
+    background    : var(--color-content);
     border-radius : 5px;
     top           : 65px;
     right         : 5px;
@@ -14,7 +14,7 @@
         width        : 0px;
         height       : 0px;
         border       : 10px solid;
-        border-color : transparent transparent var(--color-content-background) transparent;
+        border-color : transparent transparent var(--color-content) transparent;
         right        : 30px;
         top          : -19px;
     }
@@ -36,10 +36,10 @@
             padding       : 7px;
             border-radius : 30px;
             cursor        : pointer;
-            background    : var(--color-content-lighten-background);;
+            background    : var(--color-content-light);;
 
             &:hover {
-                background : var(--color-content-lighten-background);;
+                background : var(--color-content-light);;
                 
                 path {
                     fill : $primary-color;
@@ -80,7 +80,7 @@
                         width         : 36px;
                         padding       : 7px;
                         border-radius : 30px;
-                        background    : var(--color-content-lighten-background);;
+                        background    : var(--color-content-light);;
                     }
                 }
 
@@ -99,7 +99,7 @@
                 }
 
                 &:hover {
-                    background  : var(--color-content-lighten-background);;
+                    background  : var(--color-content-light);;
                     border-left : 3px solid $primary-color;
 
                     svg {

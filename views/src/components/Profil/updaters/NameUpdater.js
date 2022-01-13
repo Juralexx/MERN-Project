@@ -66,7 +66,7 @@ const NameUpdater = () => {
 
     return (
         <>
-            {(userData.name === '') ? (
+            {(userData.name === '' || userData.name === null || userData.name === undefined) ? (
                 <>
                     <div className="user-info">
                         <button className="add-btn" onClick={() => setNameUpdater(true)} style={{ display: nameUpdater ? "none" : "block" }}>

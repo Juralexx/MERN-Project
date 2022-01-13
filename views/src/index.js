@@ -6,7 +6,7 @@ import { Provider } from "react-redux"
 import { applyMiddleware, createStore } from "redux"
 import thunk from "redux-thunk"
 import rootReducer from './reducers'
-import ThemeContextWrapper from './components/tools/ThemeContextWrapper';
+import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"

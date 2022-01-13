@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { BsFillCaretDownFill, BsChatRightTextFill } from 'react-icons/bs'
 import { IoNotifications } from 'react-icons/io5'
 import SettingsMenu from "./tools/SettingsMenu";
+import {useParams} from 'react-router-dom'
 
 const MiniNav = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -14,6 +15,7 @@ const MiniNav = () => {
         backgroundPosition: "center",
         backgroundSize: "cover",
     }
+    const pseudo = userData.pseudo
 
     return (
         <>

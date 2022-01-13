@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ImArrowLeft2 } from 'react-icons/im'
 import SettingsMenu from "./SettingsMenu";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "./theme/ThemeToggle";
 
 const ScreenMenu = () => {
     const [isOpen, setOpen] = useState(true)
@@ -38,8 +38,6 @@ const ScreenMenu = () => {
                         <ul>
                             <li className="to-screenmode">
                                 <ThemeToggle />
-                            </li>
-                            <li>
                             </li>
                         </ul>
                     </div>

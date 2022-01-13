@@ -65,7 +65,7 @@ const LastnameUpdater = () => {
 
     return (
         <>
-            {(userData.lastname === '') ? (
+            {(userData.lastname === '' || userData.lastname === null || userData.lastname === undefined) ? (
                 <>
                     <div className="user-info">
                         <button className="add-btn" onClick={() => setLastnameUpdater(true)} style={{ display: lastnameUpdater ? "none" : "block" }}>

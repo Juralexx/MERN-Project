@@ -22,7 +22,6 @@
             min-width       : 50px;
             justify-content : center;
             align-items     : center;
-            color           : var(--color-text);
             cursor          : pointer;
 
             p {
@@ -31,9 +30,9 @@
             }
 
             .avatar {
-                width         : 26px;
-                height        : 26px;
-                border-radius : 15px;
+                width         : 27px;
+                height        : 27px;
+                border-radius : 8px;
                 margin        : 3px auto 5px;
             }
 
@@ -43,17 +42,17 @@
                     text-decoration : none;
                     height          : 100%;
                     width           : 100%;
-                    color           : var(--color-text);
+                    color           : var(--color-text-one);
                     display         : flex;
                     flex-direction  : column;
                     align-items     : center;
                     justify-content : center;
-                    padding         : 0 7px;
+                    padding         : 0 10px;
                     border-bottom   : 3px solid transparent;
                     margin-right    : 10px;
 
                     &:hover {
-                        background    : var(--color-content-lighten-background);
+                        background    : var(--color-bg-hover);
                         border-bottom : 3px solid $primary-color;
                         svg {
                             path {
@@ -63,7 +62,7 @@
                     }
 
                     &.activeLink {
-                        background    : var(--color-content-lighten-background);
+                        background    : var(--color-bg-hover);
                         border-bottom : 3px solid $primary-color;
                         svg {
                             path {
@@ -81,8 +80,8 @@
                     text-decoration : none;
                     height          : 45px;
                     width           : 45px;
-                    color           : var(--color-text);
-                    background      : var(--color-content-lighten-background);
+                    color           : var(--color-text-one);
+                    background      : var(--color-content-light);
                     display         : flex;
                     flex-direction  : column;
                     align-items     : center;
@@ -90,7 +89,7 @@
                     border-radius   : 30px;
 
                     &:hover {
-                        background : var(--color-content-lighten-background);
+                        background : var(--color-primary-light);
                         svg {
                             path {
                                 fill : $primary-color;
@@ -99,7 +98,7 @@
                     }
 
                     &.activeLink {
-                        background : var(--color-content-lighten-background);
+                        background : var(--color-content-light);
                         svg {
                             path {
                                 fill : $primary-color;

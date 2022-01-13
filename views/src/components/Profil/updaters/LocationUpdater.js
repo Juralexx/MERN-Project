@@ -167,7 +167,7 @@ const LocationUpdater = () => {
 
     return (
         <>
-            {(userData.location === '') ? (
+            {(userData.location === '' || userData.location === null || userData.location === undefined ) ? (
                 <>
                     <div className="user-info">
                         <button className="add-btn" onClick={() => setLocationUpdater(true)} style={{ display: locationUpdater ? "none" : "block" }}>

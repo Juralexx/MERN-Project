@@ -49,6 +49,7 @@ const UserModel = new mongoose.Schema(
 
         gender: {
             type: String,
+            default: 'Non défini',
         },
 
         lastname: {
@@ -62,12 +63,7 @@ const UserModel = new mongoose.Schema(
 
         location: {
             type: String,
-        },
-        secondLocation: {
-            type: String,
-        },
-        thirdLocation: {
-            type: String,
+            default: null,
         },
 
         picture: {
@@ -118,7 +114,7 @@ const UserModel = new mongoose.Schema(
     },
     {
         timestamps: true,
-    }
+    },{ minimize: false }
 );
 
 UserModel.pre("save", async function (next) {

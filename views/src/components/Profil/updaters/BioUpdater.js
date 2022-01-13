@@ -52,7 +52,7 @@ const BioUpdater = () => {
         <div className="bio">
             {updateBioForm === false ? (
                 <>
-                    {(userData.bio === '') ? (
+                    {(userData.bio === '' || userData.bio === null || userData.bio === undefined) ? (
                         <>
                             <p>Vous n'avez pas encore de description</p>
                             <div className="btn-container">

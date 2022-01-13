@@ -4,7 +4,7 @@
     justify-content : left;
     height          : 100%;
     width           : 100%;
-    background      : var(--color-content-background);
+    background      : var(--color-content);
 
     ul {
         position   : relative;
@@ -38,7 +38,7 @@
                 border-left   : 3px solid transparent;
 
                 &:hover {
-                    background    : var(--color-content-lighten-background);;
+                    background    : var(--color-content-light);;
                     border-left : 3px solid $primary-color;
                     color         : $primary-color;
                     .svg-icon {
@@ -50,7 +50,7 @@
                 }
 
                 &.activeLink {
-                    background    : var(--color-content-lighten-background);;
+                    background    : var(--color-content-light);;
                     border-left : 3px solid $primary-color;
                     .svg-icon {
         

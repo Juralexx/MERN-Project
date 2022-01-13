@@ -13,30 +13,34 @@ import MainInfos from '../Profil/update/MainInfos'
 import ContactInfos from '../Profil/update/ContactInfos'
 import Bio from '../Profil/update/Bio'
 import Location from '../Profil/update/Location'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import MemberProfil from '../Members/MemberProfil'
 
 function Index() {
-  const userData = useSelector((state) => state.userReducer);
+
   return (
     <Router>
-      <Navbar/>
+      <Navbar />
       <Routes>
-        <Route path="/" element={ <Home /> } />
-          <Route path="login" element={ <Login /> } />
-          <Route path="register" element={ <Signup /> } />
-          <Route path="trending" element={ <Trending /> } />
-          <Route path="profil" element={ <Profil /> } />
+        <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Signup />} />
+        <Route path="profil" element={<Profil />} />
 
-          <Route path="about" element={ <ProfilEdit /> }>
-            <Route index element={ <MainInfos /> } />
-            <Route path="contact" element={ <ContactInfos /> } />
-            <Route path="bio" element={ <Bio /> } />
-            <Route path="location" element={ <Location /> } />
-          </Route>
+        <Route path="about" element={<ProfilEdit />}>
+          <Route index element={<MainInfos />} />
+          <Route path="contact" element={<ContactInfos />} />
+          <Route path="bio" element={<Bio />} />
+          <Route path="location" element={<Location />} />
+        </Route>
 
-          <Route path="dashboard" element={ <Dashboard /> } />
-          <Route path="project" element={ <Project /> } />
-        <Route path="*" element={ <Navigate to="/" /> } />
+        <Route path="dashboard" element={<Dashboard />} />
+
+        <Route path=":pseudo" element={<MemberProfil />} />
+
+        <Route path="trending" element={<Trending />} />
+        <Route path="project" element={<Project />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

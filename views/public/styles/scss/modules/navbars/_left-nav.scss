@@ -1,41 +1,38 @@
-.left-nav-container {
+.left-nav {
     position : fixed;
     left     : 0;
     top      : 60px;
-    width    : 200px;
-    height   : 100vh;
-    background : var(--color-content-background);
+    width    : 230px;
+    height   : auto;
+    padding  : 15px 0 0 15px;
 
-    ul {
-        position        : relative;
-        justify-content : center;
-        align-items     : center;
-        list-style      : none;
-        margin          : 0;
-        padding         : 0;
+ .left-nav-container {
+        background : var(--color-content);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
 
-        li {
-            display         : flex;
-            height          : 50px;
-            min-width       : 50px;
-            justify-content : flex-start;
+        ul {
+            position        : relative;
+            justify-content : center;
             align-items     : center;
-            color           : whitesmoke;
-            cursor          : pointer;
+            list-style      : none;
+            margin          : 0;
+            padding         : 10px 0;
 
-            a {
+            li {
                 display         : flex;
+                height          : 50px;
+                min-width       : 50px;
+                padding         : 0 20px;
+                justify-content : center;
                 align-items     : center;
-                height          : 100%;
-                width           : 100%;
-                padding-left    : 10px;
-                text-decoration : none;
-                color           : var(--color-text);
-                border-left:3px solid transparent;
+                color           : whitesmoke;
+                cursor          : pointer;
+                border-left     : 3px solid transparent;
 
                 &:hover {
-                    background : var(--color-content-lighten-background);;
-                    border-left:3px solid $primary-color;
+                    background  : var(--color-content-light);
+                    border-left : 3px solid $primary-color;
 
                     svg {
                         path {
@@ -43,16 +40,31 @@
                         }
                     }
                 }
-            }
 
-            svg {
-                width  : 22px;
-                height : 22px;
-            }
+                a {
+                    display         : flex;
+                    align-items     : center;
+                    height          : 100%;
+                    width           : 100%;
+                    text-decoration : none;
+                    color           : var(--color-text-one);
+                    border-bottom   : 1px solid var(--color-border);
+                }
 
-            p {
-                margin    : 0 0 0 10px;
-                font-size : 15px;
+                &:last-child a {
+                    border-bottom : none;
+                }
+
+                svg {
+                    width  : 22px;
+                    height : 22px;
+                    color  : var(--color-svg-light);
+                }
+
+                p {
+                    margin    : 0 0 0 10px;
+                    font-size : 15px;
+                }
             }
         }
     }

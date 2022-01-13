@@ -66,7 +66,7 @@ const WorkUpdater = () => {
 
     return (
         <>
-            {(userData.work === '' || userData.work === undefined) ? (
+            {(userData.work === '' || userData.work === undefined || userData.work === null) ? (
                 <div className="user-info">
                     <button className="add-btn" onClick={() => setWorkUpdater(true)} style={{ display: workUpdater ? "none" : "block" }}>
                         <svg className="svg-icon" viewBox="0 0 20 20">

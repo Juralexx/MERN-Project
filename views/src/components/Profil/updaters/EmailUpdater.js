@@ -43,7 +43,7 @@ const EmailUpdater = () => {
 
     return (
         <>
-            {(userData.email === '') ? (
+            {(userData.email === '' || userData.email === null || userData.email === undefined) ? (
                 <>
                     <div className="user-info">
                         <button className="add-btn" onClick={() => setEmailUpdater(true)} style={{ display: emailUpdater ? "none" : "block" }}>
