@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCoverPicture, uploadCoverPicture } from "../../actions/user.action.upload";
+import { deleteCoverPicture, uploadCoverPicture } from "../../../actions/user.action.upload";
 import Swal from "sweetalert2";
 import { BsThreeDots } from 'react-icons/bs'
 

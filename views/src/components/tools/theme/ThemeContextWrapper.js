@@ -18,6 +18,8 @@ export default function ThemeContextWrapper(props) {
                 document.body.classList.remove('light-theme');
                 localStorage.setItem('theme', 'dark')
                 break;
+            default :
+                break;
         }
     }, [theme]);
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { dateParser } from "../Utils";
 import ProfilHeader from "../Profil/ProfilHeader";
 import LeftNavProfil from "../Profil/LeftNavProfil";
 import { useParams } from 'react-router-dom'
@@ -19,7 +18,7 @@ const MemberProfil = () => {
       }
     };
     fetch();
-  }, []);
+  }, [pseudo]);
 
   return (
     <>

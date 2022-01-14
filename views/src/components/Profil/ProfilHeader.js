@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import UploadCoverImg from "./UploadCoverImg";
-import UploadImg from "./UploadImg";
+import UploadCoverImg from "./uploads/UploadCoverImg";
+import UploadImg from "./uploads/UploadImg";
 
 const ProfilHeader = () => {
     const userData = useSelector((state) => state.userReducer)

@@ -17,7 +17,7 @@ const LeftNavProfil = () => {
                         </NavLink>
                     </li>
                     <li className="to-about">
-                        <NavLink to="/about">
+                        <NavLink to="/profil/about">
                             <AiOutlineInfoCircle />
                             <p>À propos</p>
                         </NavLink>

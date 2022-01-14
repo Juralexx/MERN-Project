@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeContext, themes } from './Theme';
 import { BsFillSunFill, BsFillMoonStarsFill } from 'react-icons/bs'

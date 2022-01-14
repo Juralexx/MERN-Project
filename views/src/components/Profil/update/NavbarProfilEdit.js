@@ -9,16 +9,16 @@ const NavbarProfilEdit = () => {
             <h5>À propos</h5>
             <ul>
                 <li>
-                    <NavLink to="/about"><p>Informations générales</p></NavLink>
+                    <NavLink to="/profil/about"><p>Informations générales</p></NavLink>
                 </li>
                 <li>
-                    <NavLink to="/about/bio"><p>Description</p></NavLink>
+                    <NavLink to="/profil/about/bio"><p>Description</p></NavLink>
                 </li>
                 <li>
-                    <NavLink to="/about/contact"><p>Coordonnées</p></NavLink>
+                    <NavLink to="/profil/about/contact"><p>Coordonnées</p></NavLink>
                 </li>
                 <li>
-                    <NavLink to="/about/location"><p>Adresse</p></NavLink>
+                    <NavLink to="/profil/about/location"><p>Adresse</p></NavLink>
                 </li>
             </ul>
         </div>
