@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateGender } from "../../../actions/user.action";
-import { deleteGender } from "../../../actions/user.action.delete";
+import { updateGender } from "../../../../actions/user.action";
+import { deleteGender } from "../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { FaTransgender } from 'react-icons/fa'
 import { GiMale, GiFemale } from 'react-icons/gi'

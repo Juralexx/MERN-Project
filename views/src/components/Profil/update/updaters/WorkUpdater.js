@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateWork } from "../../../actions/user.action";
-import { deleteWork } from "../../../actions/user.action.delete";
+import { updateWork } from "../../../../actions/user.action";
+import { deleteWork } from "../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { MdOutlineWork } from 'react-icons/md'
 

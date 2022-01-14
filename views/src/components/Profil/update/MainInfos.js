@@ -1,8 +1,8 @@
 import React from "react";
-import WorkUpdater from "../updaters/WorkUpdater";
-import NameUpdater from "../updaters/NameUpdater";
-import LastnameUpdater from "../updaters/LastnameUpdater";
-import GenderUpdater from "../updaters/GenderUpdater";
+import WorkUpdater from "./updaters/WorkUpdater";
+import NameUpdater from "./updaters/NameUpdater";
+import LastnameUpdater from "./updaters/LastnameUpdater";
+import GenderUpdater from "./updaters/GenderUpdater";
 
 const MainInfos = () => {
 

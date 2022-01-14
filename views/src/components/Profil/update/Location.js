@@ -1,5 +1,5 @@
 import React from "react";
-import LocationUpdater from "../updaters/LocationUpdater";
+import LocationUpdater from "./updaters/LocationUpdater";
 
 const Location = () => {
 

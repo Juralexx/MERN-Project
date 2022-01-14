@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmail } from "../../../actions/user.action";
+import { updateEmail } from "../../../../actions/user.action";
 import Swal from "sweetalert2";
 import { FaEnvelope } from 'react-icons/fa'
 

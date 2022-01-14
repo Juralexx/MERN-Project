@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useDebounce } from "../../tools/Deboucing";
+import { useDebounce } from "../../../tools/Deboucing";
 import { useSelector, useDispatch } from "react-redux";
-import { updateLocation } from "../../../actions/user.action";
-import { deleteLocation } from "../../../actions/user.action.delete";
+import { updateLocation } from "../../../../actions/user.action";
+import { deleteLocation } from "../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { ThreeDots } from 'react-loading-icons'
 import { AiFillHome } from 'react-icons/ai'

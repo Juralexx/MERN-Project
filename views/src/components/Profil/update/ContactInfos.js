@@ -1,6 +1,6 @@
 import React from "react";
-import PhoneUpdater from "../updaters/PhoneUpdater";
-import EmailUpdater from "../updaters/EmailUpdater";
+import PhoneUpdater from "./updaters/PhoneUpdater";
+import EmailUpdater from "./updaters/EmailUpdater";
 
 const ContactInfos = () => {
 

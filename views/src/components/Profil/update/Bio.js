@@ -1,5 +1,5 @@
 import React from "react";
-import BioUpdater from "../updaters/BioUpdater";
+import BioUpdater from "./updaters/BioUpdater";
 
 const Bio = () => {
 
