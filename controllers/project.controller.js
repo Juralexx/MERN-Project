@@ -79,7 +79,7 @@ export const likeProject = async (req, res) => {
             },
             { new: true },
         )
-        .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.id },
@@ -88,8 +88,8 @@ export const likeProject = async (req, res) => {
             },
             { news: true },
         )
-        .then((docs) => { res.send(docs) })
-        .catch((err) => { return res.status(400).send({ message: err }) })
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -109,7 +109,7 @@ export const unlikeProject = async (req, res) => {
             },
             { new: true },
         )
-        .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.id },
@@ -118,10 +118,62 @@ export const unlikeProject = async (req, res) => {
             },
             { news: true },
         )
-        .then((docs) => { res.send(docs) })
-        .catch((err) => { return res.status(400).send({ message: err }) })
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
         return res.status(400).json({ message: err });
+    }
+}
+
+export const follow = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.followerId)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+
+    try {
+        await ProjectModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            { $addToSet: { followers: req.body.followerId } },
+            { new: true, upsert: true },
+        )
+            .catch((err) => { return res.status(400).send({ message: err }) })
+
+        await UserModel.findByIdAndUpdate(
+            { _id: req.body.followerId },
+            { $addToSet: { following: req.params.id } },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(500).json({ message: err })
+    }
+}
+
+export const unfollow = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.followerId)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+
+    try {
+        await ProjectModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            { $pull: { followers: req.body.followerId } },
+            { new: true, upsert: true },
+        )
+            .catch((err) => { return res.status(400).send({ message: err }) })
+
+        await UserModel.findByIdAndUpdate(
+            { _id: req.body.followerId },
+            { $pull: { following: req.params.id } },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(500).json({ message: err })
     }
 }

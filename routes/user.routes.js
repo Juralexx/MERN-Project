@@ -1,7 +1,7 @@
 import express from 'express'
 const userRoutes = express.Router()
 import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
-import { getAllUsers, userInfo, updateUser, deleteUser, follow, unfollow, findUser } from '../controllers/user.controller.js'
+import { getAllUsers, userInfo, updateUser, deleteUser, findUser } from '../controllers/user.controller.js'
 import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, 
         deleteUserPhone, deleteUserLocation, deleteGender } from '../controllers/user.controller.delete.js'
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/upload.controller.js'
@@ -18,9 +18,6 @@ userRoutes.get('/:id', userInfo)
 userRoutes.put('/:id', updateUser)
 userRoutes.delete('/:id', deleteUser)
 userRoutes.get('/profil/:pseudo', findUser)
-
-userRoutes.patch('/follow/:id', follow)
-userRoutes.patch('/unfollow/:id', unfollow)
 
 userRoutes.post('/upload', upload.single('file'), uploadProfilPicture)
 userRoutes.post('/upload/cover', upload.single('file'), uploadCoverPicture)
