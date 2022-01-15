@@ -8,13 +8,13 @@ import Login from '../../pages/Signin'
 import Signup from '../../pages/Signup'
 import Navbar from '../Navbar'
 import Profil from '../../pages/Profil'
-import MainInfos from '../Profil/update/MainInfos'
-import ContactInfos from '../Profil/update/ContactInfos'
-import Bio from '../Profil/update/Bio'
-import Location from '../Profil/update/Location'
 import MemberProfil from '../Members/MemberProfil'
-import About from '../Profil/about/About'
 import Main from '../Profil/main/Main'
+import About from '../Profil/about/About'
+import Bio from '../Profil/about/update/Bio'
+import MainInfos from '../Profil/about/update/MainInfos'
+import ContactInfos from '../Profil/about/update/ContactInfos'
+import Location from '../Profil/about/update/Location'
 
 function Index() {
 

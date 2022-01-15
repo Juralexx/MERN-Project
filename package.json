@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "concurrently \"npm run back\" \"npm run front\"",
     "back": "nodemon server.js",
     "front": "npm start --prefix views",
-    "start": "concurrently \"npm run back\" \"npm run front\"",
     "gulp": "run gulpfile.js"
   },
   "repository": {
@@ -47,6 +47,8 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
     "browser-sync": "^2.27.7",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
@@ -54,6 +56,6 @@
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.0.0",
     "gulp-uglify": "^3.0.2",
-    "sass": "^1.45.0"
+    "sass": "^1.48.0"
   }
 }

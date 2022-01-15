@@ -19,7 +19,7 @@ export default function ThemeContextWrapper(props) {
                 localStorage.setItem('theme', 'dark')
                 break;
             default :
-                break;
+                break
         }
     }, [theme]);
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateBio } from "../../../../actions/user.action";
-import { deleteBio } from "../../../../actions/user.action.delete";
+import { deleteBio } from "../../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
+import { updateBio } from "../../../../../actions/user.action";
 
 const BioUpdater = () => {
     const userData = useSelector((state) => state.userReducer)

@@ -7,6 +7,7 @@ import prefix from 'gulp-autoprefixer'
 import minify from 'gulp-clean-css'
 import uglify from'gulp-uglify'
 import rename from 'gulp-rename'
+import browserSync from 'browser-sync';
 
 var paths = {
         styles: {
@@ -31,18 +32,18 @@ function styleCompiler() {
     .pipe(minify())
     .pipe(rename('style.min.css' ))
     .pipe(dest(paths.styles.dest))
-    //.pipe(browserSync.stream());
+    .pipe(browserSync.stream());
 }
 
 function watchTask() {
     watch(paths.styles.srcWatched, styleCompiler);
-    // browserSync.init({
-    //    server: {
-    //        baseDir: './'
-    //    }
-    // })
-    // watch(paths.scripts.src).on('change', browserSync.reload);
-    // watch('./*.jsx').on('change', browserSync.reload);
+    browserSync.init({
+       server: {
+           baseDir: './views/public/styles/dist/style.min.css'
+       }
+    })
+    watch(paths.scripts.src).on('change', browserSync.reload);
+    //watch('./*.jsx').on('change', browserSync.reload);
 }
 
 export default series(styleCompiler, watchTask);

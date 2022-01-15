@@ -1,5 +1,5 @@
 import React from "react";
-import NavbarProfilEdit from "../update/NavbarProfilEdit";
+import NavbarProfilEdit from "./update/NavbarProfilEdit";
 import { Outlet } from "react-router-dom";
 
 const InfoBloc = () => {

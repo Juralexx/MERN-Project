@@ -7,9 +7,7 @@ const Main = () => {
         <div className="container">
             <div className="row">
                 <div className="col-md-4">
-                    <div className="profil-card">
-                        <Intro />
-                    </div>
+                    <Intro />
                 </div>
             </div>
         </div>

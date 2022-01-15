@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateLastname } from "../../../../actions/user.action";
-import { deleteLastname } from "../../../../actions/user.action.delete";
+import { updateLastname } from "../../../../../actions/user.action";
+import { deleteLastname } from "../../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 
 const LastnameUpdater = () => {
