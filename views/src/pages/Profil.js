@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import ProfilHeader from "../components/Profil/ProfilHeader";
-import LeftNavProfil from "../components/Profil/LeftNavProfil";
+import ProfilHeader from "../components/profil/ProfilHeader";
+import LeftNavProfil from "../components/profil/LeftNavProfil";
 
 const Profil = () => {
 

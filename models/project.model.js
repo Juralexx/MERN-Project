@@ -15,11 +15,10 @@ const ProjectModel = new mongoose.Schema(
             trimp: true
         },
 
-        bio: {
+        content: {
             type: String,
             required: true,
             unique: false,
-            trimp: true
         },
 
         numberofcontributors: {
@@ -38,15 +37,16 @@ const ProjectModel = new mongoose.Schema(
 
                         picture: {
                             type: String,
-                            default: "../views/public/img/random-user.png"
+                            default: "/img/random-user.png"
                         }
                     }
                 ]
             }
         },
-        
+
         picture: {
-            type: String
+            type: String,
+            default: "/img/random-cover.jpg"
         },
 
         video: {
@@ -55,6 +55,10 @@ const ProjectModel = new mongoose.Schema(
 
         end: {
             type: Date
+        },
+
+        follows: {
+            type: [String]
         },
 
         followers: {
@@ -70,12 +74,8 @@ const ProjectModel = new mongoose.Schema(
         },
 
         views: {
-            type: Number
-        },
-
-        viewers: {
-            type: Number
-        },
+            type: [String]
+        }
     },
     {
         timestamps: true

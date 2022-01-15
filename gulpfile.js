@@ -36,10 +36,10 @@ function styleCompiler() {
 }
 
 function watchTask() {
-    watch(paths.styles.srcWatched, styleCompiler);
+    watch(paths.styles.srcWatched, styleCompiler, browserSync.reload);
     browserSync.init({
        server: {
-           baseDir: './views/public/styles/dist/style.min.css'
+           baseDir: './'
        }
     })
     watch(paths.scripts.src).on('change', browserSync.reload);

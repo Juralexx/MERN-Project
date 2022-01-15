@@ -3,6 +3,7 @@
     top      : 0;
     width    : 100vw;
     height   : 100vh;
+    z-index  : 1000;
 
     .loader-inner { 
         position         : absolute;
@@ -21,41 +22,44 @@
         backdrop-filter  : blur(6px);
         
         .loader-animation {
-            display          : inline-block;
-            position         : relative;
-            height           : 70px;
-            width            : 70px;
-            border-radius    : 100px;
-            vertical-align   : middle;
-            border           : 3px solid transparent;
-            border-top-color : rgba($primary-color, 1);
-            animation        : spinClockwise 1s linear infinite;
-            z-index          : 20;
+            display             : inline-block;
+            position            : relative;
+            height              : 70px;
+            width               : 70px;
+            border-radius       : 100px;
+            vertical-align      : middle;
+            border              : 3px solid transparent;
+            border-top-color    : rgba($primary-color, 1);
+            border-bottom-color : rgba($primary-color, 1);
+            animation           : spinClockwise 1s linear infinite;
+            z-index             : 1000;
 
             &:after {
-                content          : '';
-                position         : absolute;
-                top              : 5px;
-                left             : 5px;
-                bottom           : 5px;
-                right            : 5px;
-                border           : 3px solid transparent;
-                border-top-color : rgba($primary-color, 0.8);
-                border-radius    : 100px;
-                animation        : spinClockwise 5s linear infinite;
+                content             : '';
+                position            : absolute;
+                top                 : 7px;
+                left                : 7px;
+                bottom              : 7px;
+                right               : 7px;
+                border              : 3px solid transparent;
+                border-top-color    : rgba($primary-color, 0.8);
+                border-bottom-color : rgba($primary-color, 0.8);
+                border-radius       : 100px;
+                animation           : spinClockwise 5s linear infinite;
             }
 
             &:before {
-                content          : '';
-                position         : absolute;
-                top              : 12px;
-                left             : 12px;
-                bottom           : 12px;
-                right            : 12px;
-                border           : 3px solid transparent;
-                border-top-color : rgba($primary-color, 0.6);
-                border-radius    : 100px;
-                animation        : spinClockwise 10s linear infinite;
+                content             : '';
+                position            : absolute;
+                top                 : 15px;
+                left                : 15px;
+                bottom              : 15px;
+                right               : 15px;
+                border              : 3px solid transparent;
+                border-top-color    : rgba($primary-color, 0.6);
+                border-bottom-color : rgba($primary-color, 0.6);
+                border-radius       : 100px;
+                animation           : spinClockwise 10s linear infinite;
             }
         }
     }

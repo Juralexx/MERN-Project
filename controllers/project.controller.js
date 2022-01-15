@@ -5,7 +5,7 @@ const ObjectID = mongoose.Types.ObjectId
 
 export const readProject = (req, res) => {
     PostModel.find((err, docs) => {
-        if(!err) {
+        if (!err) {
             res.send(docs)
         } else {
             console.log('Error to get data : ' + err)
@@ -14,11 +14,11 @@ export const readProject = (req, res) => {
 }
 
 export const projectInfo = (req, res) => {
-    if(!ObjectID.isValid(req.params.id)){
+    if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
     ProjectModel.findById(req.params.id, (err, docs) => {
-        if(!err) {
+        if (!err) {
             res.send(docs)
         } else {
             console.log('Unknown ID : ' + err)
@@ -27,7 +27,9 @@ export const projectInfo = (req, res) => {
 };
 
 export const updateProject = async (req, res) => {
-    if(!ObjectID.isValid(req.params.id)){
+    const { title, content, numberofcontributors, contributor, end } = req.body
+
+    if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
     try {
@@ -35,26 +37,24 @@ export const updateProject = async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    bio: req.body.bio
+                    title,
+                    content,
+                    numberofcontributors,
+                    contributor,
+                    end,
                 }
             },
             { new: true, upsert: true, setDefaultsOnInsert: true },
-            (err, docs) => {
-                if(!err) {
-                    return res.send(docs);
-                }
-                if(err) {
-                    return res.status(500).send({ message: err})
-                }
-            }
         )
-    } catch(err) {
-        return res.status(500).json({ message: err})
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        return res.status(500).json({ message: err })
     }
 };
 
 export const deleteProject = async (req, res) => {
-    if(!ObjectID.isValid(req.params.id)){
+    if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
 
@@ -62,6 +62,66 @@ export const deleteProject = async (req, res) => {
         await ProjectModel.remove({ _id: req.params.id }).exec()
         res.status(200).json({ message: "Successfully deleted." })
     } catch {
-        return res.status(500).json({ message: err})
+        return res.status(500).json({ message: err })
+    }
+}
+
+export const likeProject = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+
+    try {
+        await ProjectModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $addToSet: { likers: req.body.id }
+            },
+            { new: true },
+        )
+        .catch((err) => { return res.status(400).send({ message: err }) })
+
+        await UserModel.findByIdAndUpdate(
+            { _id: req.body.id },
+            {
+                $addToSet: { likes: req.params.id }
+            },
+            { news: true },
+        )
+        .then((docs) => { res.send(docs) })
+        .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(400).json({ message: err });
+    }
+}
+
+export const unlikeProject = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+
+    try {
+        await ProjectModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $pull: { likers: req.body.id }
+            },
+            { new: true },
+        )
+        .catch((err) => { return res.status(400).send({ message: err }) })
+
+        await UserModel.findByIdAndUpdate(
+            { _id: req.body.id },
+            {
+                $pull: { likes: req.params.id }
+            },
+            { news: true },
+        )
+        .then((docs) => { res.send(docs) })
+        .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(400).json({ message: err });
     }
 }

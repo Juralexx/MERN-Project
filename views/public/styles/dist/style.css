@@ -412,6 +412,7 @@ body input, body textarea {
   top: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 1000;
 }
 #loader .loader-inner {
   position: absolute;
@@ -446,19 +447,21 @@ body input, body textarea {
   vertical-align: middle;
   border: 3px solid transparent;
   border-top-color: #1877f2;
+  border-bottom-color: #1877f2;
   -webkit-animation: spinClockwise 1s linear infinite;
           animation: spinClockwise 1s linear infinite;
-  z-index: 20;
+  z-index: 1000;
 }
 #loader .loader-inner .loader-animation:after {
   content: "";
   position: absolute;
-  top: 5px;
-  left: 5px;
-  bottom: 5px;
-  right: 5px;
+  top: 7px;
+  left: 7px;
+  bottom: 7px;
+  right: 7px;
   border: 3px solid transparent;
   border-top-color: rgba(24, 119, 242, 0.8);
+  border-bottom-color: rgba(24, 119, 242, 0.8);
   border-radius: 100px;
   -webkit-animation: spinClockwise 5s linear infinite;
           animation: spinClockwise 5s linear infinite;
@@ -466,12 +469,13 @@ body input, body textarea {
 #loader .loader-inner .loader-animation:before {
   content: "";
   position: absolute;
-  top: 12px;
-  left: 12px;
-  bottom: 12px;
-  right: 12px;
+  top: 15px;
+  left: 15px;
+  bottom: 15px;
+  right: 15px;
   border: 3px solid transparent;
   border-top-color: rgba(24, 119, 242, 0.6);
+  border-bottom-color: rgba(24, 119, 242, 0.6);
   border-radius: 100px;
   -webkit-animation: spinClockwise 10s linear infinite;
           animation: spinClockwise 10s linear infinite;

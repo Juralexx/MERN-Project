@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import ProfilHeader from "../Profil/ProfilHeader";
-import LeftNavProfil from "../Profil/LeftNavProfil";
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from "axios";
 
 const MemberProfil = () => {
   const { pseudo } = useParams();
   const [user, setUser] = useState({});
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetch = async () => {
       try {
         const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/profil/${pseudo}`)
-        setUser(data)
+        data.pseudo ? setUser(data) : navigate('/')
+        
       } catch (err) {
         console.error(err)
       }
@@ -22,28 +22,8 @@ const MemberProfil = () => {
 
   return (
     <>
-      <>
-        <LeftNavProfil />
-      </>
       <div className="container">
-        <div className="profil-container">
-          <ProfilHeader />
-
-          <div className="container">
-            <div className="row">
-              <div className="col-md-4">
-                <div className="profil-card">
-                  <h5>Introduction</h5>
-                  <p>{user._id}</p>
-                  <p>{user.pseudo}</p>
-                  <p>{user.email}</p>
-                  <p>{user.name}</p>
-                  <p>{user.work}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <h1>Bienvenu sur la page de {user.pseudo}</h1>
       </div>
     </>
 

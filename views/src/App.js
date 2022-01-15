@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Index from './components/Routes/index';
+import Index from './components/routes/index';
 import { UidContext } from "./components/AppContext"
 import axios from 'axios';
 import { getUser } from './actions/user.action';
