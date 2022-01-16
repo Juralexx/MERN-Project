@@ -38,9 +38,9 @@ const Navbar = () => {
                                     </NavLink>
                                 </li>
                                 <li className="to-favorites">
-                                    <NavLink to="/">
+                                    <NavLink to="/projects">
                                         <AiOutlineFundProjectionScreen />
-                                        <p>Projets</p>
+                                        <p>Mes Projets</p>
                                     </NavLink>
                                 </li>
                             </ul>

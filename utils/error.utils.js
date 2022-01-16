@@ -42,3 +42,21 @@ export const uploadErrors = (err) => {
 
     return error
 }
+
+export const projectErrors = (err) => {
+    let errors = { title: "", category: "", content: "", numberofcontributors: "" }
+
+    if (err.message.includes("title"))
+        errors.title = "Veuillez saisir un titre valide"
+
+    if (err.message.includes("category"))
+        errors.category = "Veuillez sélectionner une catégorie"
+
+    if (err.message.includes("content"))
+        errors.content = "Veuillez ajouter une description"
+
+    if (err.message.includes("numberofcontributors"))
+        errors.numberofcontributors = "Veuillez indiquer de combien de personnes vous avez besoin pour réaliser votre projet, si vous ne savez pas merci de l'indiquer"
+        
+    return errors
+}

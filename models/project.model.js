@@ -6,6 +6,11 @@ const ProjectModel = new mongoose.Schema(
             required: true
         },
 
+        category: {
+            type: String,
+            required: true
+        },
+
         title: {
             type: String,
             required: true,
@@ -58,7 +63,8 @@ const ProjectModel = new mongoose.Schema(
         },
 
         follows: {
-            type: [String]
+            type: Number,
+            default: 0
         },
 
         followers: {
@@ -66,7 +72,8 @@ const ProjectModel = new mongoose.Schema(
         },
 
         likes: {
-            type: [String]
+            type: Number,
+            default: 0
         },
 
         likers: {

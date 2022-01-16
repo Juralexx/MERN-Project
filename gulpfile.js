@@ -5,7 +5,6 @@ import gulpSass from 'gulp-sass';
 const sass = gulpSass( dartSass );
 import prefix from 'gulp-autoprefixer'
 import minify from 'gulp-clean-css'
-import uglify from'gulp-uglify'
 import rename from 'gulp-rename'
 import browserSync from 'browser-sync';
 
@@ -36,23 +35,13 @@ function styleCompiler() {
 }
 
 function watchTask() {
-    watch(paths.styles.srcWatched, styleCompiler, browserSync.reload);
     browserSync.init({
        server: {
-           baseDir: './'
+           baseDir: './views/public/styles/dist/style.min.css'
        }
     })
+    watch(paths.styles.srcWatched, styleCompiler, browserSync.reload);
     watch(paths.scripts.src).on('change', browserSync.reload);
-    //watch('./*.jsx').on('change', browserSync.reload);
 }
 
 export default series(styleCompiler, watchTask);
- 
-// function uglifyJs() {
-//   return src(paths.scripts.src)
-//     .pipe(uglify())
-//     .pipe(rename('script.min.js' ))
-//     .pipe(dest(paths.scripts.dest));
-// }
-
-//exports.uglifyJs = uglifyJs();

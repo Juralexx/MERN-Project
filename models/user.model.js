@@ -103,12 +103,22 @@ const UserModel = new mongoose.Schema(
             type: String,
             default: "dark"
         },
+
+        follows: {
+            type: Number,
+            default: 0
+        },
         
         following: {
             type: [String]
         },
 
         likes: {
+            type: Number,
+            default: 0
+        },
+
+        projectsLiked: {
             type: [String]
         }
     },

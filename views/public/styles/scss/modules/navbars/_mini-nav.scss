@@ -89,7 +89,7 @@
                     border-radius   : 30px;
 
                     &:hover {
-                        background : var(--color-primary-light);
+                        background : var(--color-bg-hover);
                         svg {
                             path {
                                 fill : $primary-color;

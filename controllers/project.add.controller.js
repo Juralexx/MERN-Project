@@ -1,4 +1,5 @@
 import ProjectModel from '../models/project.model.js'
+import { projectErrors } from '../utils/error.utils.js'
 
 export const createProject = async (req, res) => {
     const newProject = new ProjectModel({
@@ -10,9 +11,9 @@ export const createProject = async (req, res) => {
         picture: req.body.picture,
         video: req.body.video,
         end: req.body.end,
-        follows: [],
+        follows: 0,
         followers: [],
-        likes: [],
+        likes: 0,
         likers: [],
         views: []
     })
@@ -22,6 +23,7 @@ export const createProject = async (req, res) => {
         return res.status(201).json(project)
     }
     catch (err) {
-        return res.status(400).send(err)
+        const errors = projectErrors(err);
+        res.status(200).json({ errors })
     }
 }

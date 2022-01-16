@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { IoIosLink } from 'react-icons/io'
+import { FiLayers } from 'react-icons/fi'
 import { AiOutlineHome, AiOutlineEye, AiOutlineHeart, AiOutlineDownload } from 'react-icons/ai'
 
 const LeftNav = () => {
@@ -13,6 +14,12 @@ const LeftNav = () => {
                         <NavLink to="/">
                             <AiOutlineHome />
                             <p>Général</p>
+                        </NavLink>
+                    </li>
+                    <li className="to-all-projects">
+                        <NavLink to="/all-projects">
+                            <FiLayers />
+                            <p>Tous les projets</p>
                         </NavLink>
                     </li>
                     <li className="to-most-followed">

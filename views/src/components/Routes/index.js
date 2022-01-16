@@ -15,6 +15,7 @@ import Bio from '../profil/about/update/Bio'
 import MainInfos from '../profil/about/update/MainInfos'
 import ContactInfos from '../profil/about/update/ContactInfos'
 import Location from '../profil/about/update/Location'
+import AddProject from '../../pages/AddProject'
 
 function Index() {
 
@@ -36,12 +37,15 @@ function Index() {
           </Route>
         </Route>
 
+        <Route path="projects" element={ <Project /> } />
+
+        <Route path="project/add" element={ <AddProject /> } />
+
         <Route path="dashboard" element={ <Dashboard /> } />
 
         <Route path=":pseudo" element={ <MemberProfil /> } />
 
         <Route path="trending" element={ <Trending /> } />
-        <Route path="project" element={ <Project /> } />
         <Route path="*" element={ <Navigate to="/" /> } />
       </Routes>
     </Router>

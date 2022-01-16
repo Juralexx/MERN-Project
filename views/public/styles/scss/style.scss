@@ -13,10 +13,14 @@
 @import 'modules/navbars/_navbar';
 @import 'modules/navbars/_mini-nav';
 @import 'modules/navbars/_left-nav';
-@import 'modules/navbars/_profil-nav';
-@import 'modules/navbars/_profil-edit-nav';
 
-@import 'modules/_profil';
-@import 'modules/_profil-header';
+@import 'modules/profil/_profil';
+@import 'modules/profil/_profil-header';
+@import 'modules/profil/_profil-nav';
+@import 'modules/profil/_profil-edit-nav';
+@import 'modules/profil/_auto-container';
+
+@import 'modules/project/_project';
+@import 'modules/project/_add-project';
+
 @import 'modules/_settings-menu';
-@import 'modules/_auto-container';

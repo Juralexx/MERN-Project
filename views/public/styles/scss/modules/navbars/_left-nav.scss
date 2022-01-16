@@ -26,7 +26,6 @@
                 padding         : 0 20px;
                 justify-content : center;
                 align-items     : center;
-                color           : whitesmoke;
                 cursor          : pointer;
                 border-left     : 3px solid transparent;
 
@@ -35,9 +34,7 @@
                     border-left : 3px solid $primary-color;
 
                     svg {
-                        path {
-                            fill : $primary-color;
-                        }
+                        color  : $primary-color;
                     }
                 }
 

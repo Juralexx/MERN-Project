@@ -18,7 +18,6 @@ const Profil = () => {
         </div>
       </div>
     </>
-
   )
 }
 

@@ -2,7 +2,7 @@
     box-sizing : border-box;
 }
 
-html{
+html {
     margin          : 0;
     padding         : 0;
     position        : relative;
@@ -13,20 +13,19 @@ html{
 }
 
 body {
-    width            : 100%;
     margin           : 0;
     padding          : 0;
     font-family      : 'Segoe UI', sans-serif;
     scroll-behavior  : smooth;
     overflow         : hidden;
     background-color : var(--color-body);
-    color            : var(--color-text);
+    color            : var(--color-text-one);
     width            : 100vw;
     overflow-y       : auto;
     overflow-x       : hidden;
 
     .container {
-        max-width : 900px;
+        max-width : 1366px;
     }
 
     p {
@@ -35,6 +34,10 @@ body {
 
     input, textarea {
         background : var(--color-input);
+    }
+
+    ul, li {
+        list-style-type: none;
     }
 }
 
@@ -50,3 +53,9 @@ body {
     width    : 100vw;
     padding  : 15px;
 }
+
+h1 { font-size: 24px }
+h2 { font-size: 21px }
+h3 { font-size: 18px }
+h4 { font-size: 16px }
+h5 { font-size: 14px }
