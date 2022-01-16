@@ -30,15 +30,12 @@ function styleCompiler() {
     .pipe(prefix('last 2 versions'))
     .pipe(minify())
     .pipe(rename('style.min.css' ))
-    .pipe(dest(paths.styles.dest))
-    .pipe(browserSync.stream());
+    .pipe(dest(paths.styles.dest));
 }
 
 function watchTask() {
     browserSync.init({
-       server: {
-           baseDir: './views/public/styles/dist/style.min.css'
-       }
+       proxy: 'http://localhost:3000'
     })
     watch(paths.styles.srcWatched, styleCompiler, browserSync.reload);
     watch(paths.scripts.src).on('change', browserSync.reload);

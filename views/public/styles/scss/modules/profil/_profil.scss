@@ -1,7 +1,9 @@
 .profil-container {
-    position : relative;
-    height   : auto;
-    width    : 100%;
+    position  : relative;
+    height    : auto;
+    width     : 100%;
+    max-width : 1000px;
+    margin    : 0 auto;
 
     .upload-picture {
         display        : flex;
@@ -40,7 +42,7 @@
 
         h5 {
             margin-bottom : 15px;
-            color : var(--color-text-one);
+            color         : var(--color-text-one);
         }
 
         p {
@@ -80,14 +82,14 @@
     background    : var(--color-content);
     padding       : 20px 0;
     border-radius : $radius;
-    box-shadow: $box-card;
+    box-shadow    : $box-card;
 
     .left {
         width : 30%;
 
         h5 {
             padding : 0 0 10px 15px;
-            color : var(--color-text-one);
+            color   : var(--color-text-one);
         }
     }
 
@@ -100,7 +102,7 @@
         h5 {
             padding : 0 0 10px 10px;
             margin  : 0;
-            color : var(--color-text-one);
+            color   : var(--color-text-one);
         }
 
         .user-info {
@@ -114,17 +116,17 @@
                 align-items : center;
                 margin      : 0;
                 font-size   : 15px;
-                line-height:15px;
+                line-height : 15px;
 
                 span {
                     display     : flex;
                     align-items : center;
-                    margin-top:4px;
+                    margin-top  : 4px;
                 }
 
                 svg {
                     margin-right : 10px;
-                    color: var(--color-svg-light);
+                    color        : var(--color-svg-light);
                 }
             }
             
@@ -281,7 +283,7 @@
         }
 
         .lastname {
-            margin-left:33px;
+            margin-left : 33px;
         }
     }
     

@@ -18,7 +18,7 @@ const Project = () => {
         }
       };
       fetch();
-    }, [titleURL]);
+    }, [titleURL, navigate]);
   
     return (
       <>

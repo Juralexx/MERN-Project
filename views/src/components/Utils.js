@@ -418,17 +418,9 @@ var characterMap = {
 
 var chars = Object.keys(characterMap).join('|');
 var allAccents = new RegExp(chars, 'g');
-var firstAccent = new RegExp(chars, '');
 
 export const removeAccents = (string) => {
     return string.replace(allAccents, function (match) {
         return characterMap[match];
     });
 };
-
-var hasAccents = function (string) {
-    return !!string.match(firstAccent);
-};
-
-// module.exports.has = hasAccents;
-// module.exports.remove = removeAccents;
