@@ -1832,6 +1832,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   background: var(--color-input);
 }
 .add-project-container .add-project-bloc .input-container .category-selection {
+  position: absolute;
   margin-top: 10px;
   width: 350px;
   border: none;

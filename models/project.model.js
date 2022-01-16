@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import validator from 'validator'
 const ProjectModel = new mongoose.Schema(
     {
         posterId: {
@@ -6,18 +7,21 @@ const ProjectModel = new mongoose.Schema(
             required: true
         },
 
-        category: {
-            type: String,
-            required: true
-        },
-
         title: {
             type: String,
             required: true,
-            minlength: 10,
-            maxlength: 120,
             unique: false,
-            trimp: true
+            trim: true,
+        },
+
+        titleURL: {
+            type: String,
+            trim: true
+        },
+
+        category: {
+            type: String,
+            required: true
         },
 
         content: {
@@ -37,7 +41,7 @@ const ProjectModel = new mongoose.Schema(
                             minlength: 3,
                             maxlength: 1024,
                             unique: false,
-                            trimp: true
+                            trim: true
                         },
 
                         picture: {
@@ -89,4 +93,4 @@ const ProjectModel = new mongoose.Schema(
     }
 )
 
-export default mongoose.model('project', ProjectModel)
+export default mongoose.model("project", ProjectModel)

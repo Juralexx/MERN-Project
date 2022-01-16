@@ -38,6 +38,7 @@
             }
 
             .category-selection {
+                position      : absolute;
                 margin-top    : 10px;
                 width         : 350px;
                 border        : none;
@@ -103,13 +104,13 @@
             }
 
             .undefined-choice {
-                display:flex;
-                align-items: center;
-                justify-content: center;
-                padding:0 20px;
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                padding         : 0 20px;
 
                 label {
-                    margin:0;
+                    margin : 0;
                 }
 
                 .option-input {

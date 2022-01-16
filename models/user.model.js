@@ -40,7 +40,7 @@ const UserModel = new mongoose.Schema(
 
         name: {
             type: String,
-            trimp: true,
+            trim: true,
             validate: {
                 validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
                 message: 'Veuillez saisir un nom valide'
@@ -54,7 +54,7 @@ const UserModel = new mongoose.Schema(
 
         lastname: {
             type: String,
-            trimp: true,
+            trim: true,
             validate: {
                 validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
                 message: 'Veuillez saisir un nom valide'
@@ -102,6 +102,33 @@ const UserModel = new mongoose.Schema(
         theme: {
             type: String,
             default: "dark"
+        },
+
+        currentProjects: {
+            type: [String]
+        },
+
+        nbOfCurrentProjects: {
+            type: Number,
+            default: 0
+        },
+
+        completedProjects: {
+            type: [String]
+        },
+
+        nbOfCompletedProjects: {
+            type: Number,
+            default: 0
+        },
+        
+        createdProjects: {
+            type: [String]
+        },
+
+        nbOfCreatedProjects: {
+            type: Number,
+            default: 0
         },
 
         follows: {

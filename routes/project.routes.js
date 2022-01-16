@@ -6,7 +6,7 @@ import { readProject, projectInfo, updateProject, deleteProject, likeProject, un
 projectRoutes.post('/add', createProject)
 
 projectRoutes.get('/', readProject)
-projectRoutes.get('/:id', projectInfo)
+projectRoutes.get('/:titleURL', projectInfo)
 projectRoutes.put('/:id', updateProject)
 projectRoutes.delete('/:id', deleteProject)
 

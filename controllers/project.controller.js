@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const ObjectID = mongoose.Types.ObjectId
 
 export const readProject = (req, res) => {
-    PostModel.find((err, docs) => {
+    ProjectModel.find((err, docs) => {
         if (!err) {
             res.send(docs)
         } else {
@@ -14,14 +14,12 @@ export const readProject = (req, res) => {
 }
 
 export const projectInfo = (req, res) => {
-    if (!ObjectID.isValid(req.params.id)) {
-        return res.status(400).send('Unknown ID : ' + req.params.id)
-    }
-    ProjectModel.findById(req.params.id, (err, docs) => {
+    ProjectModel.findOne({ titleURL: req.params.titleURL }, 
+        (err, docs) => {
         if (!err) {
             res.send(docs)
         } else {
-            console.log('Unknown ID : ' + err)
+            console.log('Unknown URL : ' + err)
         }
     }).select()
 };
