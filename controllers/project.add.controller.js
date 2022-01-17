@@ -1,19 +1,22 @@
 import ProjectModel from '../models/project.model.js'
 import UserModel from '../models/user.model.js'
 import { projectErrors } from '../utils/error.utils.js'
+import mongoose from 'mongoose'
+const projectId = mongoose.Types.ObjectId()
 
 export const createProject = async (req, res) => {
-    const { posterId, title, titleURL, category, content, numberofcontributors } = req.body
+    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors } = req.body
+    const _id = projectId
 
     try {
-        const project = ProjectModel.create({ posterId, title, titleURL, category, content, numberofcontributors })
+        const project = ProjectModel.create({ _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.posterId },
             {
                 $addToSet: {
-                    currentProjects: req.params._id,
-                    createdProjects: req.params._id
+                    currentProjects: projectId,
+                    createdProjects: projectId
                 },
                 $inc: {
                     nbOfCurrentProjects: 1,
@@ -28,7 +31,6 @@ export const createProject = async (req, res) => {
             .catch((err) => {
                 return res.status(400).send({ message: err })
             })
-            console.log(req.params.id)
     }
     catch (err) {
         const errors = projectErrors(err);

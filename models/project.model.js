@@ -1,10 +1,21 @@
 import mongoose from 'mongoose'
-import validator from 'validator'
 const ProjectModel = new mongoose.Schema(
     {
         posterId: {
             type: String,
             required: true
+        },
+
+        posterPseudo: {
+            type: String
+        },
+
+        posterAvatar: {
+            type: String
+        },
+
+        state: {
+            type: String
         },
 
         title: {
@@ -24,6 +35,11 @@ const ProjectModel = new mongoose.Schema(
             required: true
         },
 
+        location: {
+            type: String,
+            default: null,
+        },
+
         content: {
             type: String,
             required: true,
@@ -31,7 +47,7 @@ const ProjectModel = new mongoose.Schema(
         },
 
         numberofcontributors: {
-            type: Number,
+            type: String,
             required: false,
             contributor: {
                 type: [

@@ -973,8 +973,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 .profil-container {
   position: relative;
   height: auto;
-  width: 100%;
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
 }
 .profil-container .upload-picture {
