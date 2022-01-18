@@ -169,9 +169,13 @@ const AddProjectForm = () => {
         setDisplaySelection(false)
     }
 
+    // const [delta, setDelta] = useState({ value: null })
     const [content, setContent] = useState({ value: null })
+
     const handleChange = value => {
-        setContent({ value })
+        const delta = JSON.stringify(value)
+        delta.getContents()
+        setContent(delta)
         console.log(content)
     };
 
