@@ -17,5 +17,5 @@ export function useDebounce(value, timeout, callback) {
             }
         }
         setNewTimer()
-    }, [])
+    })
 }

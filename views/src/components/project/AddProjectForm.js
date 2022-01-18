@@ -17,7 +17,6 @@ const AddProjectForm = () => {
     const posterAvatar = userData.picture
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
-    const [content, setContent] = useState("");
     const [end, setEnd] = useState("")
     const [numberofcontributors, setNumberofcontributors] = useState("");
     const wrapperRef = useRef()
@@ -170,15 +169,16 @@ const AddProjectForm = () => {
         setDisplaySelection(false)
     }
 
-    // const [state, setState] = React.useState({ value: null });
-    // const handleChange = value => {
-    //     setState({ value });
-    // };
+    const [content, setContent] = useState({ value: null })
+    const handleChange = value => {
+        setContent({ value })
+        console.log(content)
+    };
 
     return (
         <>
-        {/* <>**********************************************************************************************</> */}
-        {/* <>************************************* TITRE + CATEGORIE **************************************</> */}
+            {/* <>**********************************************************************************************</> */}
+            {/* <>************************************* TITRE + CATEGORIE **************************************</> */}
             <div className="add-title-category-bloc add-project-bloc">
                 <h3>Un titre clair et cours est le meilleur moyen de vous faire repérer !</h3>
                 <label htmlFor="title"><span>Quel est le titre de votre project ?</span><small>Champ requis</small></label>
@@ -204,8 +204,8 @@ const AddProjectForm = () => {
                 <div className="category error"></div>
             </div>
 
-        {/* <>***********************************************************************************************</> */}
-        {/* <>************************************* LOCALISATION ********************************************</> */}
+            {/* <>***********************************************************************************************</> */}
+            {/* <>************************************* LOCALISATION ********************************************</> */}
             <div className="auto-container add-title-location-bloc add-project-bloc">
                 <h3>Où votre projet se situe-t-il ?</h3>
                 <label htmlFor="title"><span>Localité</span><small>Champ requis</small></label>
@@ -234,8 +234,8 @@ const AddProjectForm = () => {
                 )}
             </div>
 
-        {/* <>**********************************************************************************************</> */}
-        {/* <>************************************* DATE DE FIN ********************************************</> */}
+            {/* <>**********************************************************************************************</> */}
+            {/* <>************************************* DATE DE FIN ********************************************</> */}
             <div className="add-end-bloc add-project-bloc">
                 <h3>Votre projet a-t-il une date de fin potentielle ?</h3>
                 <label htmlFor="end"><span>Date de fin potentielle</span></label>
@@ -245,8 +245,8 @@ const AddProjectForm = () => {
                 <div className="end error"></div>
             </div>
 
-        {/* <>*********************************************$*************************************************</> */}
-        {/* <>************************************* NOMBRE DE PERSONNES *************************************</> */}
+            {/* <>*********************************************$*************************************************</> */}
+            {/* <>************************************* NOMBRE DE PERSONNES *************************************</> */}
             <div className="add-numberofcontributors-bloc add-project-bloc">
                 <h3>Avez-vous besoin d'une équipe ?</h3>
                 <label htmlFor="numberofcontributors"><span>Nombre de personne dont vous avez besoin</span></label>
@@ -259,8 +259,8 @@ const AddProjectForm = () => {
                 <div className="numberofcontributors error"></div>
             </div>
 
-        {/* <>************************************************************************************************</> */}
-        {/* <>*************************************** DESCRIPTION ********************************************</> */}
+            {/* <>************************************************************************************************</> */}
+            {/* <>*************************************** DESCRIPTION ********************************************</> */}
             <div className="add-content-bloc add-project-bloc" disabled>
                 <h3>Il est temps d'expliquer votre projet en détail !</h3>
                 <div className="content-container">
@@ -270,9 +270,12 @@ const AddProjectForm = () => {
                     <div className="text-editor">
                         <EditorToolbar />
                         <ReactQuill
+                            name="content"
+                            id="content"
+                            style={{ height: 200 }}
                             theme="snow"
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
+                            value={content.value}
+                            onChange={handleChange}
                             placeholder={"Décrivez votre projet..."}
                             modules={modules}
                             formats={formats}

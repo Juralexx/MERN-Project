@@ -24,6 +24,20 @@ export const projectInfo = (req, res) => {
     }).select()
 };
 
+export const findProject = (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+    ProjectModel.findById({ _id: req.params.id }, 
+        (err, docs) => {
+        if (!err) {
+            res.send(docs)
+        } else {
+            console.log('Unknown URL : ' + err)
+        }
+    }).select()
+};
+
 export const updateProject = async (req, res) => {
     const { title, content, numberofcontributors, contributor, end } = req.body
 
