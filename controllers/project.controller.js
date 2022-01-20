@@ -39,7 +39,7 @@ export const findProject = (req, res) => {
 };
 
 export const updateProject = async (req, res) => {
-    const { title, content, numberofcontributors, contributor, end } = req.body
+    const { title, titleURL, category, location, content, numberofcontributors, contributor, picture, end } = req.body
 
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
@@ -50,9 +50,13 @@ export const updateProject = async (req, res) => {
             {
                 $set: {
                     title,
+                    titleURL,
+                    category,
+                    location,
                     content,
                     numberofcontributors,
                     contributor,
+                    picture,
                     end,
                 }
             },

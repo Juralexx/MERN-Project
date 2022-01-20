@@ -1,0 +1,11 @@
+.myprojects-container {
+    display:flex;
+
+    .myprojects-card {
+        max-width : 600px;
+        padding:20px;
+        border-radius : 5px;
+        background : var(--color-content);
+        margin : 20px auto;
+    }
+}

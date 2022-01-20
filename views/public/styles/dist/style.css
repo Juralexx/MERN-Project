@@ -1277,6 +1277,165 @@ header nav .navbar-container ul li a.activeLink svg path {
   margin-right: 5px;
 }
 
+.user-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-height: 40px;
+}
+.user-info p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0;
+  font-size: 15px;
+  line-height: 15px;
+}
+.user-info p span {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 4px;
+}
+.user-info p svg {
+  margin-right: 10px;
+  color: var(--color-svg-light);
+}
+.user-info .btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+.user-info .btn-container .btn-edit {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border-radius: 30px;
+  margin: 0 5px;
+}
+.user-info .add-btn {
+  background: transparent;
+  color: #0050D7;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+.user-info .add-btn:hover {
+  text-decoration: underline;
+}
+.user-info .add-btn svg path {
+  fill: #0050D7;
+}
+.user-info .user-info-edit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: var(--color-content-light);
+  border-radius: 5px;
+}
+.user-info .user-info-edit input {
+  border: 1px solid transparent;
+  padding: 10px;
+  border-radius: 5px;
+  color: var(--color-text);
+}
+.user-info .user-info-edit input:hover {
+  border: 1px solid var(--color-text);
+}
+.user-info .user-info-edit .btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 7px 0 5px;
+}
+.user-info .user-info-edit .btn-container .btn {
+  margin: 0 5px;
+}
+.user-info .user-info-edit .gender-updater {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.user-info .user-info-edit .gender-updater div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 130px;
+}
+.user-info .user-info-edit .gender-updater div label {
+  margin: 0;
+}
+.user-info .user-info-edit .gender-updater div .option-input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: relative;
+  height: 17px;
+  width: 17px;
+  -webkit-transition: all 0.15s ease-out 0s;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0;
+  outline: none;
+  position: relative;
+  border-radius: 20px;
+  z-index: 1000;
+}
+.user-info .user-info-edit .gender-updater div .option-input:hover {
+  background: #9faab7;
+}
+.user-info .user-info-edit .gender-updater div .option-input:checked {
+  background: #0050D7;
+}
+.user-info .user-info-edit .gender-updater div .option-input:checked:before {
+  height: 17px;
+  width: 17px;
+  position: absolute;
+  content: "✔";
+  display: inline-block;
+  text-align: center;
+  line-height: 17px;
+}
+
 .profil-header {
   position: relative;
   width: 100%;
@@ -1658,8 +1817,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  min-height: 150px;
-  background: var(--color-content);
+  min-height: 50px;
 }
 .projects-page .projects-container .add-bloc .btn-container {
   display: -webkit-box;
@@ -1837,6 +1995,19 @@ header nav .navbar-container ul li a.activeLink svg path {
       -ms-flex-pack: end;
           justify-content: flex-end;
   padding: 10px 0 5px;
+}
+
+.myprojects-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.myprojects-container .myprojects-card {
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 5px;
+  background: var(--color-content);
+  margin: 20px auto;
 }
 
 .settings-menu {

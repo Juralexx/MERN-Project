@@ -7,7 +7,7 @@ import { ThreeDots } from 'react-loading-icons'
 import { removeAccents } from "../Utils";
 
 import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./EditorToolbar";
+import EditorToolbar, { modules, formats } from "../tools/editor/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
 
 const AddProjectForm = () => {
