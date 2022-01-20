@@ -1,9 +1,6 @@
 import React from "react";
 import { Quill } from "react-quill";
 
-// Custom Undo button icon component for Quill editor. You can import it directly
-// from 'quill/assets/icons/undo.svg' but I found that a number of loaders do not
-// handle them correctly
 const CustomUndo = () => (
     <svg viewBox="0 0 18 18">
         <polygon className="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10" />
@@ -14,7 +11,6 @@ const CustomUndo = () => (
     </svg>
 );
 
-// Redo button icon component for Quill editor
 const CustomRedo = () => (
     <svg viewBox="0 0 18 18">
         <polygon className="ql-fill ql-stroke" points="12 10 14 12 16 10 12 10" />
@@ -25,7 +21,6 @@ const CustomRedo = () => (
     </svg>
 );
 
-// Undo and redo functions for Custom Toolbar
 function undoChange() {
     this.quill.history.undo();
 }
@@ -33,12 +28,10 @@ function redoChange() {
     this.quill.history.redo();
 }
 
-// Add sizes to whitelist and register them
 const Size = Quill.import("formats/size");
 Size.whitelist = ["extra-small", "small", "medium", "large"];
 Quill.register(Size, true);
 
-// Add fonts to whitelist and register them
 const Font = Quill.import("formats/font");
 Font.whitelist = [
     "arial",
@@ -50,7 +43,6 @@ Font.whitelist = [
 ];
 Quill.register(Font, true);
 
-// Modules object for setting up the Quill editor
 export const modules = {
     toolbar: {
         container: "#toolbar",
@@ -66,7 +58,6 @@ export const modules = {
     }
 };
 
-// Formats objects for setting up the Quill editor
 export const formats = [
     "header",
     "font",
@@ -88,7 +79,6 @@ export const formats = [
     "code-block"
 ];
 
-// Quill Toolbar component
 export const QuillToolbar = () => (
     <div id="toolbar">
         <span className="ql-formats">

@@ -3,22 +3,19 @@ import { useSelector } from 'react-redux'
 import axios from "axios";
 import { dateParser } from '../components/Utils';
 import AddBloc from '../components/project/AddBloc';
+import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 
 const MyProjects = () => {
   const userData = useSelector((state) => state.userReducer)
   const id = userData._id
   const [nbOfRes, setNbOfRes] = useState([])
-  const [resBody, setResBody] = useState([])
   const [axiosRes, setAxiosRes] = useState([])
-  localStorage.setItem('id', `${id}`)
-
-  document.getElementsByClassName('titleproject').innerHTML = ""
+  // const [description, setDescription] = useState([]);
 
   useEffect(() => {
-    const userId = localStorage.getItem('id', `${id}`)
     const fetch = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
         const checkarray = data.createdProjects
         setNbOfRes(checkarray.length)
 
@@ -31,9 +28,7 @@ const MyProjects = () => {
           })
           Promise.all(projects).then((res) => {
             setAxiosRes(res)
-            res.map((project) => {
-              setResBody(project)
-            })
+            console.log(res)
           });
         }
       } catch (err) {
@@ -41,7 +36,7 @@ const MyProjects = () => {
       }
     };
     fetch();
-  }, []);
+  }, [id]);
 
   return (
     <div className="container projects-page">
@@ -51,6 +46,12 @@ const MyProjects = () => {
         <div className="container">
           {(nbOfRes > 0) ? (
             axiosRes.map((element, key) => {
+              var description = element.content[0].ops
+              var callback = {}
+              var deltaOps = description
+              var converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
+              var html = converter.convert(deltaOps)
+              function getDescription() { return ({ __html: html }) }
               return (
                 <div key={key}>
                   <h1>ID : {element._id}</h1>
@@ -62,7 +63,7 @@ const MyProjects = () => {
                   <p>Localisation : {element.location}</p>
                   <p>Date de fin potentielle : {dateParser(element.end)}</p>
                   <p>Nombre de personne : {element.numberofcontributors}</p>
-                  <p>Description : {element.content}</p>
+                  <p dangerouslySetInnerHTML={getDescription()}></p>
                 </div>
               )
             })

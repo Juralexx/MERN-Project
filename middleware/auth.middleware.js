@@ -29,7 +29,6 @@ export const requireAuth = (req, res, next) => {
                 console.log(err);
                 res.send(200).json('no token')
             } else {
-                // console.log(decodedToken.id);
                 next();
             }
         });

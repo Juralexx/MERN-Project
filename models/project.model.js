@@ -41,7 +41,7 @@ const ProjectModel = new mongoose.Schema(
         },
 
         content: {
-            type: String,
+            type: [],
             required: true,
             unique: false,
         },
