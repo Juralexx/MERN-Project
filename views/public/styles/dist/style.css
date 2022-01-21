@@ -1997,17 +1997,90 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 10px 0 5px;
 }
 
-.myprojects-container {
+.myprojects-container .myprojects-card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  width: 850px;
+  height: 370px;
+  border-radius: 5px;
+  background: var(--color-content);
+  margin: 20px auto;
+}
+.myprojects-container .myprojects-card .left {
+  position: relative;
+  width: 300px;
+  height: 100%;
+  margin: 0;
+}
+.myprojects-container .myprojects-card .right {
+  padding: 20px;
+  width: 500px;
+}
+.myprojects-container .myprojects-card .right .pseudo-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+}
+.myprojects-container .myprojects-card .right .pseudo-container .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  margin-right: 10px;
+}
+.myprojects-container .myprojects-card .right > p {
+  margin: 0;
+}
+.myprojects-container .myprojects-card .right .description {
+  margin: 10px 0;
+}
+.myprojects-container .myprojects-card .right .action-container {
+  width: 100%;
+}
+.myprojects-container .myprojects-card .right .action-container .top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.myprojects-container .myprojects-card .right .action-container .bottom {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.myprojects-container .myprojects-card {
-  max-width: 600px;
-  padding: 20px;
+.myprojects-container .myprojects-card .right .action-container .bottom .action-btn {
+  width: 100%;
+  padding: 10px 0;
   border-radius: 5px;
-  background: var(--color-content);
-  margin: 20px auto;
+  outline: none;
+  border: none;
+  background: transparent;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: var(--color-text-one);
+}
+.myprojects-container .myprojects-card .right .action-container .bottom .action-btn span {
+  margin-left: 5px;
+}
+.myprojects-container .myprojects-card .right .action-container .bottom .action-btn:hover {
+  background: #232323;
 }
 
 .settings-menu {

@@ -1,9 +1,9 @@
-window.addEventListener('load', function () {
-    const loader = document.getElementById('loader');
-    const innerloader = document.getElementsByClassName('loader');
-    // loader.classList.add('fade');
-    loader.style.display = 'none';
-});
+// window.addEventListener('load', function () {
+//     const loader = document.getElementById('loader');
+//     const innerloader = document.getElementsByClassName('loader');
+//     // loader.classList.add('fade');
+//     loader.style.display = 'none';
+// });
 
 // $(document).ready(function () {
 //     $('#submitRegister').attr('disabled', true);

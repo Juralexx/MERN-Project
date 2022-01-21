@@ -28,7 +28,7 @@ function App() {
 
   return (
     <UidContext.Provider value={uid}>
-      <Loader />
+      {/* <Loader /> */}
       <Index />
     </UidContext.Provider>
   );

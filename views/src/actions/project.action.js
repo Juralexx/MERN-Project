@@ -10,6 +10,11 @@ export const UPDATE_NUMBEROFCONTRIBUTORS = "UPDATE_NUMBEROFCONTRIBUTORS"
 export const UPDATE_CONTRIBUTORS = "UPDATE_CONTRIBUTORS"
 export const UPDATE_END = "UPDATE_END"
 
+export const LIKE = "LIKE"
+export const UNLIKE = "UNLIKE"
+export const FOLLOW = "FOLLOW"
+export const UNFOLLOW = "UNFOLLOW"
+
 export const getProject = (projectId) => {
     return async (dispatch) => {
         return axios
@@ -128,6 +133,62 @@ export const updateEnd = (projectId, end) => {
         })
             .then((res) => {
                 dispatch({ type: UPDATE_END, payload: end })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const likeProject = (projectId, posterId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/project/like/` + projectId,
+            data: { id: posterId }
+        })
+            .then((res) => {
+                dispatch({ type: LIKE, payload: { projectId, posterId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const unlikeProject = (projectId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/project/unlike/` + projectId,
+            data: { id: userId }
+        })
+            .then((res) => {
+                dispatch({ type: UNLIKE, payload: { projectId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const followProject = (projectId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/project/follow/` + projectId,
+            data: { followerId: userId }
+        })
+            .then((res) => {
+                dispatch({ type: FOLLOW, payload: { projectId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const unfollowProject = (projectId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/project/unfollow/` + projectId,
+            data: { followerId: userId }
+        })
+            .then((res) => {
+                dispatch({ type: UNFOLLOW, payload: { projectId, userId } })
             })
             .catch((err) => console.log(err))
     }

@@ -14,7 +14,7 @@ projectRoutes.delete('/:id', deleteProject)
 projectRoutes.patch('/follow/:id', follow)
 projectRoutes.patch('/unfollow/:id', unfollow)
 
-projectRoutes.patch('/like-project/:id', likeProject)
-projectRoutes.patch('/unlike-project/:id', unlikeProject)
+projectRoutes.patch('/like/:id', likeProject)
+projectRoutes.patch('/unlike/:id', unlikeProject)
 
 export default projectRoutes;

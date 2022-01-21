@@ -1,5 +1,6 @@
 import {
-    GET_PROJECT, UPDATE_CATEGORY, UPDATE_CONTENT, UPDATE_CONTRIBUTORS,
+    FOLLOW,
+    GET_PROJECT, LIKE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT, UPDATE_CONTRIBUTORS,
     UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_TITLE,
     UPDATE_TITLEURL
 } from "../actions/project.action";
@@ -50,6 +51,46 @@ export default function projectReducer(state = initialState, action) {
                 ...state,
                 end: action.payload
             }
+        case LIKE:
+            return Object.keys(state).map((project) => {
+                if (project._id === action.payload.projectId) {
+                    return {
+                        ...project,
+                        likers: [action.payload.userId, ...project.likers]
+                    }
+                }
+                return project
+            })
+        case UNLIKE:
+            return Object.keys(state).map((project) => {
+                if (project._id === action.payload.projectId) {
+                    return {
+                        ...project,
+                        likers: project.likers.filter((UnlikerId) => UnlikerId !== action.payload.userId)
+                    }
+                }
+                return project
+            })
+        case FOLLOW:
+            return Object.keys(state).map((project) => {
+                if (project._id === action.payload.projectId) {
+                    return {
+                        ...project,
+                        followers: [action.payload.userId, ...project.followers]
+                    }
+                }
+                return project
+            })
+        case UNFOLLOW:
+            return Object.keys(state).map((project) => {
+                if (project._id === action.payload.projectId) {
+                    return {
+                        ...project,
+                        followers: project.followers.filter((unfollowerId) => unfollowerId !== action.payload.followerId)
+                    }
+                }
+                return project
+            })
         default:
             return state;
     }

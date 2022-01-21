@@ -2,7 +2,7 @@ import UserModel from '../models/user.model.js'
 import jwt from 'jsonwebtoken'
 import { signUpErrors, signInErrors } from './../utils/error.utils.js'
 
-const maxAge = 3 * 24 * 60 * 60 * 1000
+const maxAge = 3000 * 24 * 60 * 60 * 1000
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.TOKEN_SECRET, {
         expiresIn: maxAge

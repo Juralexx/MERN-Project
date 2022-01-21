@@ -2,8 +2,7 @@ import express from 'express'
 const userRoutes = express.Router()
 import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
 import { getAllUsers, userInfo, updateUser, deleteUser, findUser } from '../controllers/user.controller.js'
-import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, 
-        deleteUserPhone, deleteUserLocation, deleteGender } from '../controllers/user.controller.delete.js'
+import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteGender } from '../controllers/user.controller.delete.js'
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/upload.controller.js'
 import multer from 'multer'
 const upload = multer()
