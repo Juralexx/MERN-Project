@@ -44,34 +44,43 @@
             .action-container {
                 width : 100%;
 
-                .top {
+                .content {
                     display         : flex;
                     align-items     : center;
                     justify-content : space-between;
+
+                    p {
+                        margin : 0;
+                    }
+
+                    .likers-modal-btn {
+                        display:flex;
+                        align-items: center;
+
+                        svg {
+                            margin-right:5px;
+                        }
+                    }
                 }
 
-                .bottom {
-                    display : flex;
+                .action-btn {
+                    width           : 200px;
+                    padding         : 10px 0;
+                    border-radius   : 5px;
+                    outline         : none;
+                    border          : none;
+                    background      : transparent;
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : center;
+                    color           : var(--color-text-one);
 
-                    .action-btn {
-                        width           : 100%;
-                        padding         : 10px 0;
-                        border-radius   : 5px;
-                        outline         : none;
-                        border          : none;
-                        background      : transparent;
-                        display         : flex;
-                        align-items     : center;
-                        justify-content : center;
-                        color           : var(--color-text-one);
+                    span {
+                        margin-left : 5px;
+                    }
 
-                        span {
-                            margin-left : 5px;
-                        }
-
-                        &:hover {
-                            background : #232323;
-                        }
+                    &:hover {
+                        background : #232323;
                     }
                 }
             }

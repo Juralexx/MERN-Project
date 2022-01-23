@@ -11,6 +11,7 @@ export default function projectReducer(state = initialState, action) {
     switch (action.type) {
         case GET_PROJECT:
             return action.payload
+
         case UPDATE_TITLE:
             return {
                 ...state,

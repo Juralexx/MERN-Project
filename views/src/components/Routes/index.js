@@ -1,8 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Home from '../../pages/Home'
-import Trending from '../../pages/Trending'
-import Dashboard from '../../pages/Dashboard'
 import Login from '../../pages/Signin'
 import Signup from '../../pages/Signup'
 import Navbar from '../Navbar'
@@ -17,6 +15,7 @@ import Location from '../profil/about/update/Location'
 import AddProject from '../../pages/AddProject'
 import MyProjects from '../../pages/MyProjects'
 import Project from '../../pages/Project'
+import YourProjects from '../../pages/YourProjects'
 
 function Index() {
 
@@ -38,17 +37,13 @@ function Index() {
           </Route>
         </Route>
 
-        <Route path="projects" element={ <MyProjects /> } />
-
         <Route path="project/add" element={ <AddProject /> } />
-
+        <Route path="projects" element={ <MyProjects /> } />
+        <Route path="projects/:pseudo" element={ <YourProjects /> } />
         <Route path="project/:titleURL" element={<Project />} />
-
-        <Route path="dashboard" element={ <Dashboard /> } />
 
         <Route path=":pseudo" element={ <MemberProfil /> } />
 
-        <Route path="trending" element={ <Trending /> } />
         <Route path="*" element={ <Navigate to="/" /> } />
       </Routes>
     </Router>

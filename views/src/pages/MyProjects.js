@@ -1,15 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useSelector } from 'react-redux'
 import axios from "axios";
 import { dateParser } from '../components/Utils';
 import AddBloc from '../components/project/AddBloc';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink } from 'react-router-dom';
-import { IoIosHeartEmpty } from "react-icons/io"
 import { UidContext } from '../components/AppContext';
 import 'reactjs-popup/dist/index.css'
-import LikeButton from '../components/project/my-projects/LikeButton';
-import FollowButton from '../components/project/my-projects/FollowButton';
+import { IoIosHeart } from "react-icons/io"
 import Loader from '../components/tools/Loader';
 
 const MyProjects = () => {
@@ -24,6 +21,8 @@ const MyProjects = () => {
         const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
         const checkarray = data.createdProjects
         setNbOfRes(checkarray.length)
+
+        if(checkarray.length === 0) { setLoading(false) }
 
         if (checkarray.length > 0) {
           const projects = checkarray.map(async (projectID) => {
@@ -59,16 +58,22 @@ const MyProjects = () => {
                 var deltaOps = description
                 var converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
                 var html = converter.convert(deltaOps)
-                function getDescription() { return ({ __html: html.substring(0, 150) + "..." }) }
-                const avatar = {
-                  backgroundImage: "url(" + element.posterAvatar + ")",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  backgroundSize: "cover",
+                function getDescription() {
+                  if (html.length >= 150) {
+                    if (html.substring(149, 150) === " ") {
+                      var cleanSpaces = html.replace(html.substring(149, 150), "")
+                      html = cleanSpaces.substring(0, 150) + "..."
+                    }
+                    html = html.substring(0, 150) + "..."
+                  }
+                  return ({ __html: html })
                 }
+                const avatar = {  backgroundImage: "url(" + element.posterAvatar + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
+                const projectPicture = { backgroundImage: "url(" + element.picture + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
+                
                 return (
                   <div className="myprojects-card" key={key}>
-                    <div className="left" style={avatar}></div>
+                    <div className="left" style={projectPicture}></div>
                     <div className="right">
                       <h2><NavLink to={"/project/" + element.titleURL}>{element.title}</NavLink></h2>
                       <div className="pseudo-container">
@@ -84,12 +89,8 @@ const MyProjects = () => {
 
                       <div className="action-container">
                         <div className="top">
-                          <p><IoIosHeartEmpty /> {element.likers.length}</p>
-                          <p>{"Suivi par " + element.follows + " personnes"}</p>
-                        </div>
-                        <div className="bottom">
-                          <LikeButton project={element} />
-                          <FollowButton project={element} />
+                          <p><IoIosHeart /> {element.likers.length}</p>
+                          <p>Suivi par {element.followers.length} personnes</p>
                         </div>
                       </div>
 

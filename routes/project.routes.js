@@ -2,6 +2,8 @@ import express from 'express'
 const projectRoutes = express.Router()
 import { createProject } from '../controllers/project.add.controller.js'
 import { readProject, projectInfo, updateProject, deleteProject, likeProject, unlikeProject, follow, unfollow, findProject } from '../controllers/project.controller.js'
+import multer from 'multer'
+const upload = multer()
 
 projectRoutes.post('/add', createProject)
 
