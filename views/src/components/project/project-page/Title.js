@@ -31,7 +31,6 @@ const Title = ({props, id}) => {
         dispatch(updateTitle(id, title))
         dispatch(updateTitleURL(id, titleURL))
         setUpdateTitleForm(false)
-
         navigate(`/project/${titleURL}`)
     }
 

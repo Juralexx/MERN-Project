@@ -9,6 +9,7 @@ import { removeAccents } from "../Utils";
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../tools/editor/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
+import Work from "./Work";
 
 const AddProjectForm = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -177,6 +178,7 @@ const AddProjectForm = () => {
 
     return (
         <>
+        <Work />
             {/* <>**********************************************************************************************</> */}
             {/* <>************************************* TITRE + CATEGORIE **************************************</> */}
             <div className="add-title-category-bloc add-project-bloc">

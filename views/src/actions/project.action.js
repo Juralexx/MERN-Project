@@ -1,4 +1,5 @@
 import axios from "axios";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export const GET_PROJECT = "GET_PROJECT"
 export const UPDATE_TITLE = "UPDATE_TITLE"
@@ -76,6 +77,11 @@ export const updateContent = (projectId, content) => {
             data: { content }
         })
             .then((res) => {
+                var callback = {}
+                var deltaOps = res.data.content[0].ops
+                var converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
+                var html = converter.convert(deltaOps)
+                content = html
                 dispatch({ type: UPDATE_CONTENT, payload: content })
             })
             .catch((err) => console.log(err))

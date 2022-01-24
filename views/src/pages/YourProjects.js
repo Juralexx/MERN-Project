@@ -6,7 +6,6 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { UidContext } from '../components/AppContext';
 import 'reactjs-popup/dist/index.css'
-import LikeButton from '../components/project/my-projects/LikeButton';
 import FollowButton from '../components/project/my-projects/FollowButton';
 import Loader from '../components/tools/Loader';
 import LikersModal from '../components/project/my-projects/LikersModal';
@@ -46,7 +45,7 @@ const MyProjects = () => {
             }
         };
         fetch();
-    }, [uid]);
+    }, [uid, navigate, pseudo]);
 
     return (
         <div className="container projects-page">

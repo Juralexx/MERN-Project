@@ -48,17 +48,23 @@ const FollowersModal = ({ project }) => {
                     </div>
                     <div className='body'>
                         <div>
-                            {follower.map((element, key) => {
-                                return (
-                                    <div className="likers-followers-found" key={key}>
-                                        <NavLink to={"/" + element.pseudo}  onMouseEnter={() => setOpenInfoModal(true)} onMouseLeave={() => setOpenInfoModal(false)}>
-                                            <div className="avatar" style={avatar}></div>
-                                            <p>{element.pseudo}</p>
-                                        </NavLink>
-                                        {openInfoModal && ( <HoverModal user={element}/> )}
-                                    </div>
+                            {open && (
+                                project.followers.length > 0 ? (
+                                    follower.map((element, key) => {
+                                        return (
+                                            <div className="likers-followers-found" key={key}>
+                                                <NavLink to={"/" + element.pseudo} onMouseEnter={() => setOpenInfoModal(true)} onMouseLeave={() => setOpenInfoModal(false)}>
+                                                    <div className="avatar" style={avatar}></div>
+                                                    <p>{element.pseudo}</p>
+                                                </NavLink>
+                                                {openInfoModal && (<HoverModal user={element} />)}
+                                            </div>
+                                        )
+                                    })
+                                ) : (
+                                    <p>Personne ne suit ce projet</p>
                                 )
-                            })}
+                            )}
                         </div>
                     </div>
                     <div className='footer'>

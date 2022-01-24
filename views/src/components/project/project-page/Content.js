@@ -4,14 +4,13 @@ import EditorToolbar, { modules, formats } from "../../tools/editor/EditorToolba
 import "react-quill/dist/quill.snow.css";
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate, useParams } from "react-router-dom";
 // import { deleteBio } from "../../../../../actions/user.action.delete";
 // import Swal from "sweetalert2";
 import { updateContent } from "../../../actions/project.action";
 
-
 const Content = ({ props, id }) => {
-    const [content, setContent] = useState(props)
+    const [content, setContent] = useState("")
     const [updateContentForm, setUpdateContentForm] = useState(false)
     const [value, setValue] = React.useState(false);
     const dispatch = useDispatch()
@@ -29,9 +28,8 @@ const Content = ({ props, id }) => {
     }
 
     var callback = {}
-    var deltaOps = props
-    var converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
-    var html = converter.convert(deltaOps)
+    var converter = new QuillDeltaToHtmlConverter(props, callback)
+    var html = converter.convert(props)
 
     function getDescription() { return ({ __html: html }) }
 
