@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { deleteBio } from "../../../../../actions/user.action.delete";
 // import Swal from "sweetalert2";
-import { updateTitle, updateTitleURL } from "../../../actions/project.action";
-import { removeAccents } from "../../Utils";
+import { updateTitle, updateTitleURL } from "../../../../actions/project.action";
+import { removeAccents } from "../../../Utils";
 
 const Title = ({props, id}) => {
     const [title, setTitle] = useState("")

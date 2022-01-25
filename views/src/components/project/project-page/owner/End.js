@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-// import { deleteBio } from "../../../../../actions/user.action.delete";
-// import Swal from "sweetalert2";
-import { updateEnd } from "../../../actions/project.action";
-import { dateParser } from "../../Utils";
+import { updateEnd } from "../../../../actions/project.action";
+import { dateParser } from "../../../Utils";
 
 const End = ({props, id}) => {
     const [end, setEnd] = useState(props)
     const [updateEndForm, setUpdateEndForm] = useState(false)
     const [value, setValue] = React.useState("");
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const hideEndUpdater = () => { setUpdateEndForm(false) }
 

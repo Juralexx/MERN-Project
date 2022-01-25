@@ -19,6 +19,8 @@
     ul {
         padding       : 10px 0;
         border-radius : 0 0 5px 5px;
+        max-height    : 300px;
+        overflow-y    : auto;
 
         li {
             border-bottom   : 1px solid var(--color-body);

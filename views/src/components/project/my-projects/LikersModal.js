@@ -19,48 +19,68 @@ const LikersModal = ({ project }) => {
 
     const [openInfoModal, setOpenInfoModal] = useState(false)
     const [liker, setLiker] = useState([])
-    const avatar = { backgroundImage: "url(" + liker.picture + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
+    const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover", width: 50, height: 50 }) }
 
     const uid = useContext(UidContext)
     const dispatch = useDispatch()
     const [liked, setLiked] = useState(false)
+    const [action, setAction] = useState("")
 
     useEffect(() => {
         if (project.likers.includes(uid)) { setLiked(true) }
         else { setLiked(false) }
-    }, [project.likers, uid])
+    }, [])
+
+    useEffect(() => {
+        if (project.likers.includes(uid)) {
+            if (liked) {
+                if (project.likers.length > 1)
+                    setAction(<span>Vous et {project.likers.length - 1} autres personnes</span>)
+                if (project.likers.length === 1)
+                    setAction(<span>Vous</span>)
+                if (project.likers.length === 0)
+                    setAction(<span>Vous</span>)
+            }
+            if (!liked) { setAction(<span>{project.likers.length - 1}</span>) }
+        }
+        else {
+            if (liked) {
+                if (project.likers.length > 1)
+                    setAction(<span>Vous et {project.likers.length} autres personnes</span>)
+                if (project.likers.length === 1)
+                    setAction(<span>Vous et 1 autre personne</span>)
+                if (project.likers.length === 0)
+                    setAction(<span>Vous</span>)
+            }
+            if (!liked) { setAction(<span>{project.likers.length}</span>) }
+        }
+    }, [liked])
 
     const like = () => { dispatch(likeProject(project._id, uid)); setLiked(true) }
     const unlike = () => { dispatch(unlikeProject(project._id, uid)); setLiked(false) }
 
     useEffect(() => {
-        if (open) {
-            if (project.likers.length > 0) {
-                const findLikers = async () => {
-                    try {
-                        const likerFound = project.likers.map(async (likerId) => {
-                            return await axios.get(`${process.env.REACT_APP_API_URL}api/user/${likerId}`)
-                                .then((res) => res.data)
-                                .catch((err) => console.error(err))
-                        })
-                        Promise.all(likerFound).then((res) => {
-                            setLiker(res)
-                            console.log(res)
-                        })
-                    }
-                    catch (err) { console.log(err) }
-                }
-                findLikers()
+        const findLikers = () => {
+            try {
+                const likerFound = project.likers.map(async (likerId) => {
+                    return await axios.get(`${process.env.REACT_APP_API_URL}api/user/${likerId}`)
+                        .then((res) => res.data)
+                        .catch((err) => console.error(err))
+                })
+                Promise.all(likerFound).then((res) => {
+                    setLiker(res)
+                    console.log(res)
+                })
             }
+            catch (err) { console.log(err) }
         }
-    }, [project.likers, open])
+        findLikers()
+    }, [])
 
     return (
         <>
             <div>
-                <div className="likers-modal-btn" onClick={modalOpen}><IoIosHeart />
-                    {liked ? ( <span>Vous et {project.likers.length} autres personnes</span> ) : ( <span>{project.likers.length}</span> )}
-                </div>
+                <div className="likers-modal-btn" onClick={modalOpen}><IoIosHeart />{action}</div>
 
                 <div className={containerClass}>
                     <div className="modal-inner">
@@ -75,11 +95,11 @@ const LikersModal = ({ project }) => {
                                         liker.map((element, key) => {
                                             return (
                                                 <div className="likers-followers-found" key={key}>
-                                                    <NavLink to={"/" + element.pseudo} onMouseEnter={() => setOpenInfoModal(true)} onMouseLeave={() => setOpenInfoModal(false)}>
-                                                        <div className="avatar" style={avatar}></div>
-                                                        <p>{element.pseudo}</p>
+                                                    <NavLink to={"/" + element.pseudo} >
+                                                        <div className="avatar" style={avatar(element.picture)}></div>
+                                                        <p onMouseEnter={() => setOpenInfoModal(true)} onMouseLeave={() => setOpenInfoModal(false)}>{element.pseudo}</p>
                                                     </NavLink>
-                                                    <HoverModal user={element} />
+                                                    {openInfoModal && <HoverModal user={element} />}
                                                 </div>
                                             )
                                         })

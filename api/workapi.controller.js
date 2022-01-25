@@ -21,5 +21,4 @@ export const findWork = (req, res) => {
                 console.log(err)
             }
         })
-        .limit(10)
 };

@@ -1792,6 +1792,8 @@ header nav .navbar-container ul li a.activeLink svg path {
 .auto-container ul {
   padding: 10px 0;
   border-radius: 0 0 5px 5px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 .auto-container ul li {
   border-bottom: 1px solid var(--color-body);

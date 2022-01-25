@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch } from "react-redux";
 import { useParams, useNavigate, NavLink } from 'react-router-dom'
 import axios from "axios";
 import { dateParser } from '../components/Utils';
-import Title from '../components/project/project-page/Title';
 import { getProject } from '../actions/project.action';
-import Category from '../components/project/project-page/Category';
-import Location from '../components/project/project-page/Location';
-import End from '../components/project/project-page/End';
-import Content from '../components/project/project-page/Content';
+import Title from '../components/project/project-page/owner/Title';
+import Category from '../components/project/project-page/owner/Category';
+import Location from '../components/project/project-page/owner/Location';
+import End from '../components/project/project-page/owner/End';
+import Content from '../components/project/project-page/owner/Content';
 import Loader from '../components/tools/Loader';
+import { UidContext } from '../components/AppContext';
+import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 
 const Project = () => {
-  const projectData = useSelector((state) => state.projectReducer)
+  const uid = useContext(UidContext)
+  const [projectOwner, setProjectOwner] = useState(false)
   const { titleURL } = useParams()
   const [project, setProject] = useState([])
   const [description, setDescription] = useState([])
@@ -29,29 +32,51 @@ const Project = () => {
           setProject(data)
           setDescription(data.content[0].ops)
           setLoading(false)
+          if (project.posterId === uid) {
+            setProjectOwner(true)
+          }
         } else { navigate('/') }
       } catch (err) {
         console.error(err)
       }
     };
     fetch()
-  }, [titleURL, navigate, dispatch])
+  }, [titleURL, navigate, dispatch, uid, project.posterId])
+
+  var callback = {}
+  var converter = new QuillDeltaToHtmlConverter(description, callback)
+  var html = converter.convert(description)
+  function getDescription() { return ({ __html: html }) }
 
   return (
     <div className="container">
       {isLoading && <Loader />}
       {!isLoading && (
-        <>
-          <Title props={projectData.title} id={project._id} />
-          <p>Posté par : <NavLink to={"/" + project.posterPseudo}>{project.posterPseudo}</NavLink></p>
-          <Category props={projectData.category} id={project._id} />
-          <Location props={projectData.location} id={project._id} />
-          <End props={projectData.end} id={project._id} />
-          <p>Nombre de personne : {project.numberofcontributors}</p>
-          <p>Date de création : {dateParser(project.createdAt)}</p>
-          <p>Dernière modification : {dateParser(project.updatedAt)}</p>
-          <Content props={description} id={project._id} />
-        </>
+        projectOwner ? (
+          <>
+            <Title props={project.title} id={project._id} />
+            <p>Posté par : <NavLink to={"/" + project.posterPseudo}>{project.posterPseudo}</NavLink></p>
+            <Category props={project.category} id={project._id} />
+            <Location props={project.location} id={project._id} />
+            <End props={project.end} id={project._id} />
+            <p>Nombre de personne : {project.numberofcontributors}</p>
+            <p>Date de création : {dateParser(project.createdAt)}</p>
+            <p>Dernière modification : {dateParser(project.updatedAt)}</p>
+            <Content props={description} id={project._id} />
+          </>
+        ) : (
+          <>
+            <p>{project.title}</p>
+            <p>Posté par : <NavLink to={"/" + project.posterPseudo}>{project.posterPseudo}</NavLink></p>
+            <p>{project.category}</p>
+            <p>{project.location}</p>
+            <p>Date de fin potentielle : {dateParser(project.end)}</p>
+            <p>Nombre de personne : {project.numberofcontributors}</p>
+            <p>Date de création : {dateParser(project.createdAt)}</p>
+            <p>Dernière modification : {dateParser(project.updatedAt)}</p>
+            <p dangerouslySetInnerHTML={getDescription()}></p>
+          </>
+        )
       )}
     </div>
   )

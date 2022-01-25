@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { ThreeDots } from 'react-loading-icons'
 // import { deleteBio } from "../../../../../actions/user.action.delete";
 // import Swal from "sweetalert2";
-import { updateLocation } from "../../../actions/project.action";
+import { updateLocation } from "../../../../actions/project.action";
 
 const Location = ({ props, id }) => {
     const startOfReqUrl = 'https://api-adresse.data.gouv.fr/search/?q=';

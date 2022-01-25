@@ -11,7 +11,7 @@ import Loader from '../components/tools/Loader';
 import LikersModal from '../components/project/my-projects/LikersModal';
 import FollowersModal from '../components/project/my-projects/FollowersModal';
 
-const MyProjects = () => {
+const UserProjects = () => {
     const { pseudo } = useParams()
     const uid = useContext(UidContext)
     const [isLoading, setLoading] = useState(true)
@@ -50,8 +50,6 @@ const MyProjects = () => {
     return (
         <div className="container projects-page">
             <div className="projects-container">
-                <AddBloc />
-
                 {isLoading && (<Loader />)}
                 {!isLoading && (
                     <div className="container myprojects-container">
@@ -115,4 +113,4 @@ const MyProjects = () => {
     );
 }
 
-export default MyProjects;
+export default UserProjects;

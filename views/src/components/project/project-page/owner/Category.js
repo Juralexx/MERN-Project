@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 // import { deleteBio } from "../../../../../actions/user.action.delete";
 // import Swal from "sweetalert2";
-import { updateCategory } from "../../../actions/project.action";
+import { updateCategory } from "../../../../actions/project.action";
 
 const Category = ({ props, id }) => {
     const [category, setCategory] = useState(props)

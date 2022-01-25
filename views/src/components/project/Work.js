@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { ThreeDots } from 'react-loading-icons'
 
 const Work = () => {
-
     const api = `${process.env.REACT_APP_API_URL}api/work/`;
-    const [work, setWork] = useState("");
     const [searchQuery, setSearchQuery] = useState("")
     const [worksFound, setWorksFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -21,7 +19,6 @@ const Work = () => {
 
     const handleInputChange = (e) => {
         setSearchQuery(e.target.value)
-        setWork(searchQuery)
     }
 
     const prepareSearchQuery = (query) => {
@@ -40,7 +37,6 @@ const Work = () => {
 
         if (response) {
             if (searchQuery.length >= 2) {
-                console.log(response)
                 setWorksFound(response.data)
                 setDisplay(true)
                 setResponse(true)
@@ -48,9 +44,7 @@ const Work = () => {
                     setResponse(false)
                     setLoading(false)
                 }
-            } else {
-                setLoading(false)
-            }
+            } else { setLoading(false) }
         }
     }
 
@@ -58,13 +52,13 @@ const Work = () => {
         <div className="auto-container add-work-bloc add-project-bloc">
             <h3>De qui avez vous besoin ?</h3>
             <label htmlFor="title"><span>Métier</span><small>Champ requis</small></label>
-            <input placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchWork} type="search" />
+            <input placeholder="Rechercher un métier" value={searchQuery} onChange={handleInputChange} onKeyPress={searchWork} type="search" />
             {!isEmpty && display && isResponse && (
                 <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
-                    {worksFound.map(( element ) => {
+                    {worksFound.map((element) => {
                         const choice = `${element.appelation_metier}`;
                         return (
-                            <li onClick={() => { setSelect(choice); setWork(choice) }} key={element._id}>{choice}</li>
+                            <li onClick={() => { setSelect(choice) }} key={element._id}>{choice}</li>
                         )
                     })}
                 </ul>

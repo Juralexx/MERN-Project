@@ -15,10 +15,10 @@ import Location from '../profil/about/update/Location'
 import AddProject from '../../pages/AddProject'
 import MyProjects from '../../pages/MyProjects'
 import Project from '../../pages/Project'
-import YourProjects from '../../pages/YourProjects'
+import UserProjects from '../../pages/UserProjects'
+import MostLiked from '../../pages/MostLiked'
 
 function Index() {
-
   return (
     <Router>
       <Navbar />
@@ -36,13 +36,15 @@ function Index() {
             <Route path="location" element={ <Location /> } />
           </Route>
         </Route>
+        
+        <Route path=":pseudo" element={ <MemberProfil /> } />
 
         <Route path="project/add" element={ <AddProject /> } />
         <Route path="projects" element={ <MyProjects /> } />
-        <Route path="projects/:pseudo" element={ <YourProjects /> } />
+        <Route path="projects/:pseudo" element={ <UserProjects /> } />
         <Route path="project/:titleURL" element={<Project />} />
 
-        <Route path=":pseudo" element={ <MemberProfil /> } />
+        <Route path="most-liked" element={<MostLiked />} />
 
         <Route path="*" element={ <Navigate to="/" /> } />
       </Routes>
