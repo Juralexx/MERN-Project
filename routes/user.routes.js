@@ -2,7 +2,7 @@ import express from 'express'
 const userRoutes = express.Router()
 import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
 import { getAllUsers, userInfo, updateUser, deleteUser, findUser } from '../controllers/user.controller.js'
-import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteGender } from '../controllers/user.controller.delete.js'
+import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteGender, deleteUserWebsite, deleteUserLinkedin, deleteUserFacebook, deleteUserInstagram, deleteUserTwitter, deleteUserYoutube } from '../controllers/user.controller.delete.js'
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/upload.user.controller.js'
 import multer from 'multer'
 const upload = multer()
@@ -30,5 +30,11 @@ userRoutes.put('/delete/work/:id', deleteUserWork)
 userRoutes.put('/delete/phone/:id', deleteUserPhone)
 userRoutes.put('/delete/location/:id', deleteUserLocation)
 userRoutes.put('/delete/bio/:id', deleteUserBio)
+userRoutes.put('/delete/website/:id', deleteUserWebsite)
+userRoutes.put('/delete/facebook/:id', deleteUserFacebook)
+userRoutes.put('/delete/instagram/:id', deleteUserInstagram)
+userRoutes.put('/delete/twitter/:id', deleteUserTwitter)
+userRoutes.put('/delete/youtube/:id', deleteUserYoutube)
+userRoutes.put('/delete/linkedin/:id', deleteUserLinkedin)
 
 export default userRoutes;

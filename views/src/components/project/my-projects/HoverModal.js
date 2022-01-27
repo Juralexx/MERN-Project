@@ -2,12 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const HoverModal = ({ user }) => {
-    const avatar = {
-        backgroundImage: "url(" + user.picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-    }
+    const avatar = { backgroundImage: "url(" + user.picture + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
 
     return (
         <div className="user-info-modal">

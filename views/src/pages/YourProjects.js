@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
 import { dateParser } from '../components/Utils';
+import AddBloc from '../components/project/AddBloc';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { UidContext } from '../components/AppContext';
@@ -10,7 +11,7 @@ import Loader from '../components/tools/Loader';
 import LikersModal from '../components/project/my-projects/LikersModal';
 import FollowersModal from '../components/project/my-projects/FollowersModal';
 
-const UserProjects = () => {
+const MyProjects = () => {
     const { pseudo } = useParams()
     const uid = useContext(UidContext)
     const [isLoading, setLoading] = useState(true)
@@ -49,6 +50,8 @@ const UserProjects = () => {
     return (
         <div className="container projects-page">
             <div className="projects-container">
+                <AddBloc />
+
                 {isLoading && (<Loader />)}
                 {!isLoading && (
                     <div className="container myprojects-container">
@@ -112,4 +115,4 @@ const UserProjects = () => {
     );
 }
 
-export default UserProjects;
+export default MyProjects;

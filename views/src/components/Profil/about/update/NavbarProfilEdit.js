@@ -20,6 +20,9 @@ const NavbarProfilEdit = () => {
                 <li>
                     <NavLink to="/profil/about/location"><p>Adresse</p></NavLink>
                 </li>
+                <li>
+                    <NavLink to="/profil/about/socials-networks"><p>Réseaux sociaux</p></NavLink>
+                </li>
             </ul>
         </div>
     )

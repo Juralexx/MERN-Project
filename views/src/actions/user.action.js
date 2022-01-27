@@ -11,6 +11,12 @@ export const UPDATE_WORK = "UPDATE_WORK"
 export const UPDATE_PHONE = "UPDATE_PHONE"
 export const UPDATE_BIO = "UPDATE_BIO"
 export const UPDATE_THEME = "UPDATE_THEME"
+export const UPDATE_WEBSITE = "UPDATE_WEBSITE"
+export const UPDATE_FACEBOOK = "UPDATE_FACEBOOK"
+export const UPDATE_INSTAGRAM = "UPDATE_INSTAGRAM"
+export const UPDATE_TWITTER = "UPDATE_TWITTER"
+export const UPDATE_YOUTUBE = "UPDATE_YOUTUBE"
+export const UPDATE_LINKEDIN = "UPDATE_LINKEDIN"
 
 export const getUser = (uid) => {
     return (dispatch) => {
@@ -170,6 +176,90 @@ export const updateTheme = (userId, theme) => {
         })
             .then((res) => {
                 dispatch({ type: UPDATE_THEME, payload: theme })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateWebsite = (userId, website) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { website }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_WEBSITE, payload: website })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateFacebook = (userId, facebook) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { facebook }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_FACEBOOK, payload: facebook })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateInstagram = (userId, instagram) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { instagram }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_INSTAGRAM, payload: instagram })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateTwitter = (userId, twitter) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { twitter }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_TWITTER, payload: twitter })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateYoutube = (userId, youtube) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { youtube }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_YOUTUBE, payload: youtube })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateLinkedin = (userId, linkedin) => {
+    return (dispatch) => {
+        return axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+            data: { linkedin }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_LINKEDIN, payload: linkedin })
             })
             .catch((err) => console.log(err))
     }

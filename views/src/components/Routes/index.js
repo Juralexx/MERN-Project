@@ -17,6 +17,7 @@ import MyProjects from '../../pages/MyProjects'
 import Project from '../../pages/Project'
 import UserProjects from '../../pages/UserProjects'
 import MostLiked from '../../pages/MostLiked'
+import SocialsNetworks from '../profil/about/update/SocialsNetworks'
 
 function Index() {
   return (
@@ -34,6 +35,7 @@ function Index() {
             <Route path="contact" element={ <ContactInfos /> } />
             <Route path="bio" element={ <Bio /> } />
             <Route path="location" element={ <Location /> } />
+            <Route path="socials-networks" element={ <SocialsNetworks /> } />
           </Route>
         </Route>
         

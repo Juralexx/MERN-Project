@@ -79,7 +79,7 @@ const UserModel = new mongoose.Schema(
         phone: {
             type: String,
             trim: true,
-            validate : {
+            validate: {
                 validator: validator.isMobilePhone,
                 message: 'Veuillez saisir un numéro de téléphone valide'
             },
@@ -98,6 +98,16 @@ const UserModel = new mongoose.Schema(
             type: String,
             maxlength: 1024
         },
+
+        website: {
+            type: String
+        },
+
+        facebook: { type: String },
+        instagram: { type: String },
+        twitter: { type: String },
+        youtube: { type: String },
+        linkedin: { type: String },
 
         theme: {
             type: String,
@@ -121,7 +131,7 @@ const UserModel = new mongoose.Schema(
             type: Number,
             default: 0
         },
-        
+
         createdProjects: {
             type: [String]
         },
@@ -135,7 +145,7 @@ const UserModel = new mongoose.Schema(
             type: Number,
             default: 0
         },
-        
+
         following: {
             type: [String]
         },
@@ -151,7 +161,7 @@ const UserModel = new mongoose.Schema(
     },
     {
         timestamps: true,
-    },{ minimize: false }
+    }, { minimize: false }
 );
 
 UserModel.pre("save", async function (next) {

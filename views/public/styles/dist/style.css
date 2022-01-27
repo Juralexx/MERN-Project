@@ -1033,13 +1033,6 @@ header nav .navbar-container ul li a.activeLink svg path {
 .profil-container .container {
   padding: 20px 0;
 }
-.profil-container a {
-  font-size: 19px;
-  display: block;
-  height: 150px;
-  text-decoration: none;
-  color: var(--color-text);
-}
 .profil-container .profil-card {
   height: auto;
   padding: 20px;
