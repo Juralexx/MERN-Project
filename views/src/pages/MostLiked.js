@@ -29,7 +29,6 @@ const MostLiked = () => {
                     const sort = axiosRes.sort((a, b) => { return b.likers.length - a.likers.length })
                     setSortedtable(sort)
                     setLoading(false)
-                    console.log(sortedTable)
                 });
             } catch (err) {
                 console.error(err)

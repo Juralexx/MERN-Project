@@ -17,7 +17,7 @@ const LikersModal = ({ project }) => {
     const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
     const containerClass = open ? 'modal-container modal-container-active show-modal' : 'modal-container hide-modal'
 
-    const [openInfoModal, setOpenInfoModal] = useState(false)
+    const [isModalOpen, setModalIsOpen] = useState(false)
     const [liker, setLiker] = useState([])
     const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover", width: 50, height: 50 }) }
 
@@ -25,6 +25,7 @@ const LikersModal = ({ project }) => {
     const dispatch = useDispatch()
     const [liked, setLiked] = useState(false)
     const [action, setAction] = useState("")
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         if (project.likers.includes(uid)) { setLiked(true) }
@@ -69,13 +70,27 @@ const LikersModal = ({ project }) => {
                 })
                 Promise.all(likerFound).then((res) => {
                     setLiker(res)
-                    console.log(res)
                 })
             }
             catch (err) { console.log(err) }
         }
         findLikers()
     }, [])
+
+    const handleOnHover = async (userID) => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${userID}`);
+            setUsers(data)
+            setModalIsOpen(true)
+        } catch (err) { console.error(err) }
+    }
+
+    const closeUserModal = () => { setModalIsOpen(false) }
+    const keepUserModal = () => { setModalIsOpen(true) }
+    const modal = () => {
+        return <HoverModal user={users} onMouseEnter={keepUserModal} onMouseLeave={closeUserModal} />
+
+    }
 
     return (
         <>
@@ -91,21 +106,21 @@ const LikersModal = ({ project }) => {
                         <div className='body'>
                             <div>
                                 {open && (
-                                    project.likers.length > 0 ? (
-                                        liker.map((element, key) => {
+                                    project.likers.length > 0 ? (<>
+                                        {liker.map((element, key) => {
                                             return (
                                                 <div className="likers-followers-found" key={key}>
-                                                    <NavLink to={"/" + element.pseudo} >
+                                                    <NavLink to={"/" + element.pseudo} onMouseEnter={() => handleOnHover(element._id)} onMouseLeave={closeUserModal}>
                                                         <div className="avatar" style={avatar(element.picture)}></div>
-                                                        <p onMouseEnter={() => setOpenInfoModal(true)} onMouseLeave={() => setOpenInfoModal(false)}>{element.pseudo}</p>
+                                                        <p>{element.pseudo}</p>
                                                     </NavLink>
-                                                    {openInfoModal && <HoverModal user={element} />}
                                                 </div>
                                             )
-                                        })
-                                    ) : (
-                                        <p>Personne n'a encore soutenu ce projet</p>
-                                    )
+                                        })}
+                                        
+                                        {isModalOpen && modal()}
+                                        </>
+                                    ) : (<p>Personne n'a encore soutenu ce projet</p>)
                                 )}
                             </div>
                         </div>
