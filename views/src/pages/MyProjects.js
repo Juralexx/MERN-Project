@@ -15,6 +15,10 @@ const MyProjects = () => {
   const [nbOfRes, setNbOfRes] = useState([])
   const [axiosRes, setAxiosRes] = useState([])
 
+  const [sortedTable, setSortedTable] = useState([])
+  const [sortedValue, setSortedValue] = useState("Trier")
+  const [display, setDisplay] = useState(false)
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -22,7 +26,7 @@ const MyProjects = () => {
         const checkarray = data.createdProjects
         setNbOfRes(checkarray.length)
 
-        if(checkarray.length === 0) { setLoading(false) }
+        if (checkarray.length === 0) { setLoading(false) }
 
         if (checkarray.length > 0) {
           const projects = checkarray.map(async (projectID) => {
@@ -33,6 +37,7 @@ const MyProjects = () => {
           })
           Promise.all(projects).then((res) => {
             setAxiosRes(res)
+            setSortedTable(res)
             setLoading(false)
           });
         }
@@ -43,19 +48,59 @@ const MyProjects = () => {
     fetch();
   }, [uid]);
 
+  function sortByLikes() {
+    const sort = axiosRes.sort((a, b) => { return b.likers.length - a.likers.length })
+    setSortedTable(sort)
+    setSortedValue("Trier par nombre de likes")
+    setDisplay(false)
+  }
+  function sortByFollows() {
+    const sort = axiosRes.sort((a, b) => { return b.followers.length - a.followers.length })
+    setSortedTable(sort)
+    setSortedValue("Trier par nombre de follows")
+    setDisplay(false)
+  }
+  function sortByDate() {
+    const sort = axiosRes.sort((a, b) => { return new Date(b.createdAt) - new Date(a.createdAt) })
+    setSortedTable(sort)
+    setSortedValue("Trier par date")
+    setDisplay(false)
+  }
+  function sortedStateUnderPreparation() {
+    const array = axiosRes.filter((element) => { return element.state === "En préparation" })
+    setSortedTable(array)
+    setSortedValue("Project en préparation")
+    setDisplay(false)
+  }
+  function sortedStateInPorgress() {
+    const array = axiosRes.filter((element) => { return element.state === "En cours" })
+    setSortedTable(array)
+    setSortedValue("Project en cours")
+    setDisplay(false)
+  }
+
   return (
     <div className="container projects-page">
       <div className="projects-container">
         <AddBloc />
+        <button onClick={() => setDisplay(!display)}>{sortedValue}</button>
+        {display && (
+          <div className="category-selection">
+            <option onClick={() => sortByLikes()}>Trier par nombre de likes</option>
+            <option onClick={() => sortByFollows()}>Trier par nombre de follows</option>
+            <option onClick={() => sortByDate()}>Trier par date</option>
+            <option onClick={() => sortedStateUnderPreparation()}>Project en préparation</option>
+            <option onClick={() => sortedStateInPorgress()}>Project en cours</option>
+          </div>
+        )}
 
         {isLoading && (<Loader />)}
         {!isLoading && (
           <div className="container myprojects-container">
             {(nbOfRes > 0) ? (
-              axiosRes.map((element, key) => {
-                var description = element.content[0].ops
+              sortedTable.map((element, key) => {
                 var callback = {}
-                var deltaOps = description
+                var deltaOps = element.content[0].ops
                 var converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
                 var html = converter.convert(deltaOps)
                 function getDescription() {
@@ -68,9 +113,9 @@ const MyProjects = () => {
                   }
                   return ({ __html: html })
                 }
-                const avatar = {  backgroundImage: "url(" + element.posterAvatar + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
+                const avatar = { backgroundImage: "url(" + element.posterAvatar + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
                 const projectPicture = { backgroundImage: "url(" + element.picture + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
-                
+
                 return (
                   <div className="myprojects-card" key={key}>
                     <div className="left" style={projectPicture}></div>

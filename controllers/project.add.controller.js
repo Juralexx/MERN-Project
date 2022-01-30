@@ -3,22 +3,16 @@ import UserModel from '../models/user.model.js'
 import { projectErrors } from '../utils/error.utils.js'
 import mongoose from 'mongoose'
 const projectId = mongoose.Types.ObjectId()
-import fs from 'fs'
-import { promisify } from 'util'
-import stream from 'stream'
-const pipeline = promisify(stream.pipeline);
-import { uploadErrors } from "../utils/error.utils.js"
-
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const createProject = async (req, res) => {
-    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors } = req.body
+    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors, works } = req.body
     const _id = projectId
+    const state = "En préparation"
 
     try {
-        const project = ProjectModel.create({ _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors })
+        const project = ProjectModel.create({
+            _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors, works, state
+        })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.posterId },

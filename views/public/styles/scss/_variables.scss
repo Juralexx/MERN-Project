@@ -15,6 +15,7 @@ $white                 : #ffffff;
 $text-one-light        : #49607e;
 $border-color-light    : #e8eaf1;
 $input-color-light     : darken($bg-color-light, 5%);
+$input-text-light     : $dark;
 
 $svg-light : #abb9c9;
 
@@ -32,6 +33,7 @@ $text-color-light : #6c6c6c;
     --color-bg-hover      : #{$bg-hover-light};
     --color-border        : #{$border-color-light};
     --color-input         : #{$input-color-light};
+    --color-text-input    : #{$input-text-light};
 }
 
 /************** THEME SOMBRE ***************/
@@ -45,6 +47,7 @@ $white            : #ffffff;
 $text-one         : #9aa6b8;
 $border-color     : #202023;
 $input-color      : lighten($bg-color, 5%);
+$input-text-color : $white;
 
 $text-color : #aaaab8;
 
@@ -60,6 +63,7 @@ $text-color : #aaaab8;
     --color-bg-hover      : #{$bg-hover};
     --color-border        : #{$border-color};
     --color-input         : #{$input-color};
+    --color-text-input    : #{$input-text-color};
 }
 
 /**************** TOOLS ******************/

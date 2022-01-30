@@ -6,17 +6,11 @@ const ProjectModel = new mongoose.Schema(
             required: true
         },
 
-        posterPseudo: {
-            type: String
-        },
+        posterPseudo: { type: String },
 
-        posterAvatar: {
-            type: String
-        },
+        posterAvatar: { type: String },
 
-        state: {
-            type: String
-        },
+        state: { type: String, default: "En préparation" },
 
         title: {
             type: String,
@@ -47,26 +41,13 @@ const ProjectModel = new mongoose.Schema(
         },
 
         numberofcontributors: {
-            type: String,
-            required: false,
-            contributor: {
-                type: [
-                    {
-                        work: {
-                            type: String,
-                            minlength: 3,
-                            maxlength: 1024,
-                            unique: false,
-                            trim: true
-                        },
+            type: Number,
+        },
 
-                        picture: {
-                            type: String,
-                            default: "/img/random-user.png"
-                        }
-                    }
-                ]
-            }
+        works: {
+            type: [],
+            name: String,
+            number: Number
         },
 
         picture: {
@@ -74,31 +55,15 @@ const ProjectModel = new mongoose.Schema(
             default: "/img/random-cover.jpg"
         },
 
-        video: {
-            type: String
-        },
-
         end: {
             type: Date
         },
 
-        follows: {
-            type: Number,
-            default: 0
-        },
+        follows: { type: Number, default: 0 },
+        followers: { type: [String] },
 
-        followers: {
-            type: [String]
-        },
-
-        likes: {
-            type: Number,
-            default: 0
-        },
-
-        likers: {
-            type: [String]
-        },
+        likes: { type: Number, default: 0 },
+        likers: { type: [String] },
 
         views: {
             type: [String]

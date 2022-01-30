@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateEnd } from "../../../../actions/project.action";
 import { dateParser } from "../../../Utils";
 
 const End = ({props, id}) => {
+    const projectData = useSelector((state) => state.projectReducer)
     const [end, setEnd] = useState(props)
     const [updateEndForm, setUpdateEndForm] = useState(false)
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = useState(false);
+    const [modified, setModified] = useState(false)
     const dispatch = useDispatch()
 
     const hideEndUpdater = () => { setUpdateEndForm(false) }
@@ -14,15 +16,16 @@ const End = ({props, id}) => {
     const handleEnd = () => {
         dispatch(updateEnd(id, end))
         setUpdateEndForm(false)
+        setModified(true)
     }
 
-    const handleChange = (e) => { setValue(e.target.value) }
+    const handleChange = (e) => { setValue(true) }
 
     return (
         <div className="user-info">
             {!updateEndForm ? (
                 <>
-                    <p>{dateParser(props)}</p>
+                    {modified ? ( <p>{dateParser(projectData.state)}</p> ) : ( <p>{dateParser(props)}</p> )}
                     <div className="btn-container">
                         {/* <button className="btn btn-primary" onClick={handleBioDelete}>Supprimer</button> */}
                         <button className="btn btn-primary" onClick={() => setUpdateEndForm(!updateEndForm)}>Modifier</button>

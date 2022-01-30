@@ -10,6 +10,7 @@ export const UPDATE_LOCATION = "UPDATE_LOCATION"
 export const UPDATE_NUMBEROFCONTRIBUTORS = "UPDATE_NUMBEROFCONTRIBUTORS"
 export const UPDATE_CONTRIBUTORS = "UPDATE_CONTRIBUTORS"
 export const UPDATE_END = "UPDATE_END"
+export const UPDATE_STATE = "UPDATE_STATE"
 
 export const LIKE = "LIKE"
 export const UNLIKE = "UNLIKE"
@@ -22,6 +23,20 @@ export const getProject = (projectId) => {
             .get(`${process.env.REACT_APP_API_URL}api/project/single/${projectId}`)
             .then((res) => {
                 dispatch({ type: GET_PROJECT, payload: res.data })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const updateState = (projectId, state) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+            data: { state }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_STATE, payload: state })
             })
             .catch((err) => console.log(err))
     }

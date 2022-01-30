@@ -1,17 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { deleteBio } from "../../../../../actions/user.action.delete";
-// import Swal from "sweetalert2";
 import { updateTitle, updateTitleURL } from "../../../../actions/project.action";
+import Loader from "../../../tools/Loader";
 import { removeAccents } from "../../../Utils";
 
-const Title = ({props, id}) => {
+const Title = ({ props, id }) => {
+    const projectData = useSelector((state) => state.projectReducer)
     const [title, setTitle] = useState("")
     const [updateTitleForm, setUpdateTitleForm] = useState(false)
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = useState(false)
+    const [modified, setModified] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [titleUrl, setTitleUrl] = useState()
+    const [isLoading, setLoading] = useState(false)
 
     const hideTitleUpdater = () => { setUpdateTitleForm(false) }
 
@@ -26,21 +29,41 @@ const Title = ({props, id}) => {
         const lowerTitle = newTitle.toLowerCase();
         const removeaccent = removeAccents(lowerTitle)
         const url = removeaccent.replace(/ /g, "-");
-        const titleURL = url
-        
+        setTitleUrl(url)
+
         dispatch(updateTitle(id, title))
-        dispatch(updateTitleURL(id, titleURL))
+        dispatch(updateTitleURL(id, url))
         setUpdateTitleForm(false)
-        navigate(`/project/${titleURL}`)
+        setModified(true)
+        setLoading(true)
     }
 
-    const handleChange = (e) => { setValue(e.target.value) }
+    useEffect(() => {
+        if (modified) {
+            const redirection = setInterval(() => {
+                navigate(`/project/${titleUrl}`)
+            }, 2000)
+
+            return () => {
+                clearInterval(redirection)
+                setModified(false)
+                setLoading(false)
+            }
+        }
+    }, [modified, titleUrl, navigate]);
+
+    const handleChange = () => { setValue(true) }
 
     return (
         <div className="user-info">
             {!updateTitleForm ? (
                 <>
-                    <h1>{props}</h1>
+                    {isLoading && <Loader />}
+                    {modified ? (
+                        <h1>{projectData.title}</h1>
+                    ) : (
+                        <h1>{props}</h1>
+                    )}
                     <div className="btn-container">
                         {/* <button className="btn btn-primary" onClick={handleBioDelete}>Supprimer</button> */}
                         <button className="btn btn-primary" onClick={() => setUpdateTitleForm(!updateTitleForm)}>Modifier</button>

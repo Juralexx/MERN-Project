@@ -1,26 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-// import { deleteBio } from "../../../../../actions/user.action.delete";
-// import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCategory } from "../../../../actions/project.action";
 
 const Category = ({ props, id }) => {
+    const projectData = useSelector((state) => state.projectReducer)
     const [category, setCategory] = useState(props)
     const [updateCategoryForm, setUpdateCategoryForm] = useState(false)
-    const [value, setValue] = React.useState("")
+    const [value, setValue] = useState(false)
     const dispatch = useDispatch()
     const wrapperRef = useRef()
     const [displaySelection, setDisplaySelection] = useState(false)
+    const [modified, setModified] = useState(false)
 
     const hideCategoryUpdater = () => { setUpdateCategoryForm(false) }
 
     const handleCategory = () => {
         dispatch(updateCategory(id, category))
         setUpdateCategoryForm(false)
+        setModified(true)
     }
 
     const openCategory = (e) => {
-        setValue(e.target.value)
+        setValue(true)
         setCategory(e.target.value)
         setDisplaySelection(false)
     }
@@ -41,7 +42,7 @@ const Category = ({ props, id }) => {
         <div className="user-info">
             {!updateCategoryForm ? (
                 <>
-                    <p>{props}</p>
+                    {modified ? ( <p>{projectData.category}</p> ) : ( <p>{props}</p> )}
                     <div className="btn-container">
                         {/* <button className="btn btn-primary" onClick={handleBioDelete}>Supprimer</button> */}
                         <button className="btn btn-primary" onClick={() => setUpdateCategoryForm(!updateCategoryForm)}>Modifier</button>

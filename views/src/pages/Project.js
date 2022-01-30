@@ -12,6 +12,7 @@ import Content from '../components/project/project-page/owner/Content';
 import Loader from '../components/tools/Loader';
 import { UidContext } from '../components/AppContext';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+import State from '../components/project/project-page/owner/State';
 
 const Project = () => {
   const uid = useContext(UidContext)
@@ -56,6 +57,7 @@ const Project = () => {
           <>
             <Title props={project.title} id={project._id} />
             <p>Posté par : <NavLink to={"/" + project.posterPseudo}>{project.posterPseudo}</NavLink></p>
+            <State props={project.state} id={project._id} />
             <Category props={project.category} id={project._id} />
             <Location props={project.location} id={project._id} />
             <End props={project.end} id={project._id} />

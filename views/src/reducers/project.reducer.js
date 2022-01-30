@@ -1,7 +1,7 @@
 import {
     FOLLOW,
     GET_PROJECT, LIKE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT, UPDATE_CONTRIBUTORS,
-    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_TITLE,
+    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE,
     UPDATE_TITLEURL
 } from "../actions/project.action";
 
@@ -12,6 +12,11 @@ export default function projectReducer(state = initialState, action) {
         case GET_PROJECT:
             return action.payload
 
+        case UPDATE_STATE:
+            return {
+                ...state,
+                state: action.payload
+            }
         case UPDATE_TITLE:
             return {
                 ...state,

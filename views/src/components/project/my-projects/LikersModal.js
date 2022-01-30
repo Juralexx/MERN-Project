@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ImCross } from 'react-icons/im'
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
 import { NavLink } from "react-router-dom";
@@ -77,19 +77,16 @@ const LikersModal = ({ project }) => {
         findLikers()
     }, [])
 
+    const closeUserModal = () => { setModalIsOpen(false) }
+    const keepUserModal = () => { setModalIsOpen(true) }
+    const modal = () => { return <HoverModal user={users} onMouseEnter={keepUserModal} onMouseLeave={closeUserModal} /> }
+
     const handleOnHover = async (userID) => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${userID}`);
             setUsers(data)
             setModalIsOpen(true)
         } catch (err) { console.error(err) }
-    }
-
-    const closeUserModal = () => { setModalIsOpen(false) }
-    const keepUserModal = () => { setModalIsOpen(true) }
-    const modal = () => {
-        return <HoverModal user={users} onMouseEnter={keepUserModal} onMouseLeave={closeUserModal} />
-
     }
 
     return (
@@ -106,19 +103,19 @@ const LikersModal = ({ project }) => {
                         <div className='body'>
                             <div>
                                 {open && (
-                                    project.likers.length > 0 ? (<>
-                                        {liker.map((element, key) => {
-                                            return (
-                                                <div className="likers-followers-found" key={key}>
-                                                    <NavLink to={"/" + element.pseudo} onMouseEnter={() => handleOnHover(element._id)} onMouseLeave={closeUserModal}>
-                                                        <div className="avatar" style={avatar(element.picture)}></div>
-                                                        <p>{element.pseudo}</p>
-                                                    </NavLink>
-                                                </div>
-                                            )
-                                        })}
-                                        
-                                        {isModalOpen && modal()}
+                                    project.likers.length > 0 ? (
+                                        <>
+                                            {liker.map((element, key) => {
+                                                return (
+                                                    <div className="likers-followers-found" key={key}>
+                                                        <NavLink to={"/" + element.pseudo} onMouseEnter={() => handleOnHover(element._id)} onMouseLeave={closeUserModal} style={{ display: 'flex' }}>
+                                                            <div className="avatar" style={avatar(element.picture)}></div>
+                                                            <p>{element.pseudo}</p>
+                                                        </NavLink>
+                                                    </div>
+                                                )
+                                            })}
+                                            {isModalOpen && modal()}
                                         </>
                                     ) : (<p>Personne n'a encore soutenu ce projet</p>)
                                 )}

@@ -3,14 +3,16 @@ import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../../../tools/editor/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateContent } from "../../../../actions/project.action";
 
 const Content = ({ props, id }) => {
+    const projectData = useSelector((state) => state.projectReducer)
     const [content, setContent] = useState("")
     const [updateContentForm, setUpdateContentForm] = useState(false)
-    const [value, setValue] = React.useState(false);
+    const [value, setValue] = useState(false)
     const dispatch = useDispatch()
+    const [modified, setModified] = useState(false)
 
     const handleChange = (text, delta, source, editor) => {
         setContent(editor.getContents());
@@ -22,20 +24,26 @@ const Content = ({ props, id }) => {
     const handleContent = () => {
         dispatch(updateContent(id, content))
         setUpdateContentForm(false)
+        setModified(true)
     }
 
-    var callback = {}
-    var converter = new QuillDeltaToHtmlConverter(props, callback)
-    var html = converter.convert(props)
-    function getDescription() { return ({ __html: html }) }
+    function getDescription() {
+        var callback = {}
+        var converter = new QuillDeltaToHtmlConverter(props, callback)
+        var html = converter.convert(props)
+        return ({ __html: html })
+    }
 
     return (
         <div>
             {!updateContentForm ? (
                 <>
-                    <p dangerouslySetInnerHTML={getDescription()}></p>
+                    {modified ? (
+                        <p dangerouslySetInnerHTML={{ __html: projectData.content }}></p>
+                    ) : (
+                        <p dangerouslySetInnerHTML={getDescription()}></p>
+                    )}
                     <div className="btn-container">
-                        {/* <button className="btn btn-primary" onClick={handleBioDelete}>Supprimer</button> */}
                         <button className="btn btn-primary" onClick={() => setUpdateContentForm(!updateContentForm)}>Modifier</button>
                     </div>
                 </>
@@ -48,7 +56,7 @@ const Content = ({ props, id }) => {
                             id="content"
                             style={{ height: 200 }}
                             theme="snow"
-                            defaultValue={props}
+                            defaultValue={modified ? (projectData.content) : (props)}
                             onChange={handleChange}
                             placeholder={"Décrivez votre projet..."}
                             modules={modules}

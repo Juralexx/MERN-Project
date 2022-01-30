@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { ThreeDots } from 'react-loading-icons'
+import { ImCross } from 'react-icons/im'
 import { removeAccents } from "../Utils";
 
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../tools/editor/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
-import Work from "./Work";
 
 const AddProjectForm = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -38,23 +38,36 @@ const AddProjectForm = () => {
     const isEmpty = !locationsFound || locationsFound.length === 0
 
     /*************************************************************************************** */
-    /***************************** FONCTION PRINCIPALE ************************************* */
+    /*************************************** METIER **************************************** */
+
+    const [workArray, setWorkArray] = useState([]);
+    const [searchWorkQuery, setWorkSearchQuery] = useState("")
+    const [workNumber, setWorkNumber] = useState("")
+    const [choice, setChoice] = useState("")
+
+    const [worksFound, setWorksFound] = useState([])
+    const [isWorkLoading, setWorkLoading] = useState(false)
+    const [isWorkResponse, setWorkResponse] = useState(true)
+    const [displayWork, setDisplayWork] = useState(false)
+    const isWorkEmpty = !worksFound || worksFound.length === 0
+
+    /*************************************************************************************** */
+    /********************************* FONCTION PRINCIPALE ********************************* */
 
     const handleAddProject = async () => {
         const titleError = document.querySelector(".title.error");
         const categoryError = document.querySelector(".category.error");
         const contentError = document.querySelector(".content.error");
         const numberofcontributorsError = document.querySelector(".numberofcontributors.error");
-
         titleError.innerHTML = ""
         categoryError.innerHTML = ""
         contentError.innerHTML = ""
-        numberofcontributorsError.innerHTML = ""
 
+        numberofcontributorsError.innerHTML = ""
         if (title === "" || title.length < 10 || title.length > 120) { titleError.innerHTML = "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 120 caractères" }
-        else if (category === "") { categoryError.innerHTML = "Veuillez saisir une catégorie" }
-        else if (numberofcontributors.value === "" || numberofcontributors.value === 0) { numberofcontributorsError.innerHTML = "Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer" }
-        else if (content === "" || content.length < 10) { contentError.innerHTML = "Veuillez ajouter une description" }
+        if (category === "") { categoryError.innerHTML = "Veuillez saisir une catégorie" }
+        if (numberofcontributors.value === "" || numberofcontributors.value === 0) { numberofcontributorsError.innerHTML = "Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer" }
+        if (content === "" || content.length < 10) { contentError.innerHTML = "Veuillez ajouter une description" }
 
         else {
             const tolower = title.toLowerCase();
@@ -83,6 +96,7 @@ const AddProjectForm = () => {
                     end: end,
                     content: content,
                     numberofcontributors: numberofcontributors,
+                    works: workArray
                 },
             })
                 .then((res) => {
@@ -136,7 +150,6 @@ const AddProjectForm = () => {
 
         if (response) {
             if (searchQuery.length >= 2) {
-                console.log(response.data)
                 setLocationsFound(response.data.features)
                 setDisplay(true)
                 setResponse(true)
@@ -151,7 +164,71 @@ const AddProjectForm = () => {
     }
 
     /*************************************************************************************** */
-    /***************************** FONCTIONS SECONDAIRES *********************************** */
+    /**************************************** METIER *************************************** */
+
+    const setWorkSelect = (e) => {
+        setWorkSearchQuery(e)
+        setDisplayWork(false)
+        setWorkLoading(false)
+    }
+
+    const handleWorkInputChange = (e) => {
+        setWorkSearchQuery(e.target.value)
+    }
+
+    const prepareWorkSearchQuery = (query) => {
+        const url = `${process.env.REACT_APP_API_URL}api/work/${query}`
+        return encodeURI(url)
+    }
+
+    const searchWork = async () => {
+        if (!searchWorkQuery || searchWorkQuery.trim() === "") { return }
+        setWorkLoading(true)
+        setDisplayWork(false)
+        const URL = prepareWorkSearchQuery(searchWorkQuery)
+        const response = await axios.get(URL).catch((err) => {
+            console.log("Error: ", err)
+        })
+
+        if (response) {
+            if (searchWorkQuery.length >= 2) {
+                setWorksFound(response.data)
+                setDisplayWork(true)
+                setWorkResponse(true)
+                if (worksFound.length === 0) {
+                    setWorkResponse(false)
+                    setWorkLoading(false)
+                }
+            } else { setWorkLoading(false) }
+        }
+    }
+
+    const checkIfOk = () => {
+        if (choice !== "" && workNumber !== "") {
+            if (workNumber === "0") {
+                document.querySelector('.submit.error').innerHTML = "Le nombre de personnes recherchées ne peut pas être de 0"
+            } else {
+                if (JSON.stringify(workArray).includes(JSON.stringify(choice))) {
+                    document.querySelector('.submit.error').innerHTML = "Vous avez déjà selectionné ce métier"
+                } else {
+                    console.log(workArray)
+                    setWorkArray([...workArray, { name: choice, number: workNumber }])
+                    setWorkSearchQuery("")
+                    setWorkNumber("")
+                    console.log(workArray)
+                }
+            }
+        }
+    }
+
+    const deleteItem = (key) => {
+        var storedArray = workArray.slice()
+        storedArray.splice(key, 1)
+        setWorkArray(storedArray)
+    }
+
+    /*************************************************************************************** */
+    /********************************* FONCTIONS SECONDAIRES ******************************* */
 
     const handleClickOutside = (e) => {
         const { current: wrap } = wrapperRef;
@@ -171,16 +248,14 @@ const AddProjectForm = () => {
     }
 
     const [content, setContent] = useState({})
-
     const handleChange = (text, delta, source, editor) => {
         setContent(editor.getContents());
     }
 
     return (
         <>
-        <Work />
-            {/* <>**********************************************************************************************</> */}
-            {/* <>************************************* TITRE + CATEGORIE **************************************</> */}
+            {/* <>***********************************************************************************************</> */}
+            {/* <>******************************************* TITRE *********************************************</> */}
             <div className="add-title-category-bloc add-project-bloc">
                 <h3>Un titre clair et cours est le meilleur moyen de vous faire repérer !</h3>
                 <label htmlFor="title"><span>Quel est le titre de votre project ?</span><small>Champ requis</small></label>
@@ -207,7 +282,7 @@ const AddProjectForm = () => {
             </div>
 
             {/* <>***********************************************************************************************</> */}
-            {/* <>************************************* LOCALISATION ********************************************</> */}
+            {/* <>**************************************** LOCALISATION *****************************************</> */}
             <div className="auto-container add-title-location-bloc add-project-bloc">
                 <h3>Où votre projet se situe-t-il ?</h3>
                 <label htmlFor="title"><span>Localité</span><small>Champ requis</small></label>
@@ -237,7 +312,7 @@ const AddProjectForm = () => {
             </div>
 
             {/* <>**********************************************************************************************</> */}
-            {/* <>************************************* DATE DE FIN ********************************************</> */}
+            {/* <>***************************************** DATE DE FIN ****************************************</> */}
             <div className="add-end-bloc add-project-bloc">
                 <h3>Votre projet a-t-il une date de fin potentielle ?</h3>
                 <label htmlFor="end"><span>Date de fin potentielle</span></label>
@@ -247,8 +322,8 @@ const AddProjectForm = () => {
                 <div className="end error"></div>
             </div>
 
-            {/* <>*********************************************$*************************************************</> */}
-            {/* <>************************************* NOMBRE DE PERSONNES *************************************</> */}
+            {/* <>***********************************************************************************************</> */}
+            {/* <>************************************** NOMBRE DE PERSONNES ************************************</> */}
             <div className="add-numberofcontributors-bloc add-project-bloc">
                 <h3>Avez-vous besoin d'une équipe ?</h3>
                 <label htmlFor="numberofcontributors"><span>Nombre de personne dont vous avez besoin</span></label>
@@ -261,8 +336,46 @@ const AddProjectForm = () => {
                 <div className="numberofcontributors error"></div>
             </div>
 
+            {/* <>***********************************************************************************************</> */}
+            {/* <>******************************************** METIER *******************************************</> */}
+            <div className="auto-container add-work-bloc add-project-bloc">
+                <h3>De qui avez vous besoin ?</h3>
+                {workArray &&
+                    workArray.map((works, key) => {
+                        return (
+                            <li key={key}>{works.name + " - " + works.number} <button onClick={() => deleteItem(key)}><ImCross /></button></li>
+                        )
+                    })
+                }
+                <label htmlFor="work"><span>Métier</span><small>Champ requis</small></label>
+                <div style={{ display: "flex" }}>
+                    <div>
+                        <input placeholder="Rechercher un métier" value={searchWorkQuery} onChange={handleWorkInputChange} onKeyPress={searchWork} type="search" style={{ minWidth: 500 }} />
+                        {!isWorkEmpty && displayWork && isWorkResponse && (
+                            <ul tabIndex="0" style={{ display: searchWorkQuery.length < 3 ? "none" : "block" }}>
+                                {worksFound.map((element) => {
+                                    const chosenWork = `${element.appelation_metier}`;
+                                    return (
+                                        <li onClick={() => { setWorkSelect(chosenWork); setChoice(chosenWork) }} key={element._id}>{chosenWork}</li>
+                                    )
+                                })}
+                            </ul>
+                        )}
+                        {isWorkLoading && !displayWork && (<div className="load-container"><ThreeDots /></div>)}
+                        {!isWorkResponse && !isWorkLoading && (<div className="load-container"><p>Aucun resultat ne correspond à votre recherche</p></div>)}
+                    </div>
+                    <input type="number" min="1" onChange={(e) => setWorkNumber(e.target.value)} value={workNumber} style={{ maxWidth: 100, maxHeight: 46, margin: "0 50px" }} />
+                    {(choice !== "" && workNumber !== "" && workNumber !== "0") ? (
+                        <button className="btn btn-primary" onClick={checkIfOk} style={{ maxHeight: 46 }}>Valider</button>
+                    ) : (
+                        <button className="btn btn-primary" disabled style={{ maxHeight: 46 }}>Valider</button>
+                    )}
+                </div>
+                <p className="submit error"></p>
+            </div>
+
             {/* <>************************************************************************************************</> */}
-            {/* <>*************************************** DESCRIPTION ********************************************</> */}
+            {/* <>***************************************** DESCRIPTION ******************************************</> */}
             <div className="add-content-bloc add-project-bloc" disabled>
                 <h3>Il est temps d'expliquer votre projet en détail !</h3>
                 <div className="content-container">

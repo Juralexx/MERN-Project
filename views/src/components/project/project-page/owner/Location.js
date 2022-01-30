@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { ThreeDots } from 'react-loading-icons'
-// import { deleteBio } from "../../../../../actions/user.action.delete";
-// import Swal from "sweetalert2";
 import { updateLocation } from "../../../../actions/project.action";
 
 const Location = ({ props, id }) => {
+    const projectData = useSelector((state) => state.projectReducer)
     const startOfReqUrl = 'https://api-adresse.data.gouv.fr/search/?q=';
     const endOfReqUrl = '&type=municipality&limit=5&autocomplete=1';
     const [location, setLocation] = useState("");
@@ -19,13 +18,15 @@ const Location = ({ props, id }) => {
     const [updateLocationForm, setUpdateLocationForm] = useState(false)
     const wrapperRef = useRef()
     const dispatch = useDispatch()
-    const [value, setValue] = React.useState("");
+    const [value, setValue] = useState(false)
+    const [modified, setModified] = useState(false)
 
     const hideLocationUpdater = () => { setUpdateLocationForm(false) }
 
     const handleLocation = () => {
         dispatch(updateLocation(id, location))
         setUpdateLocationForm(false)
+        setModified(true)
     }
 
     const setSelect = (e) => {
@@ -86,7 +87,7 @@ const Location = ({ props, id }) => {
         <div className="user-info">
             {!updateLocationForm ? (
                 <>
-                    <p>{props}</p>
+                    {modified ? ( <p>{projectData.location}</p> ) : ( <p>{props}</p> )}
                     <div className="btn-container">
                         {/* <button className="btn btn-primary" onClick={handleBioDelete}>Supprimer</button> */}
                         <button className="btn btn-primary" onClick={() => setUpdateLocationForm(!updateLocationForm)}>Modifier</button>
