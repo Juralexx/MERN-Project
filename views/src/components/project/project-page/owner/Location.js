@@ -89,7 +89,6 @@ const Location = ({ props, id }) => {
                 <>
                     {modified ? ( <p>{projectData.location}</p> ) : ( <p>{props}</p> )}
                     <div className="btn-container">
-                        {/* <button className="btn btn-primary" onClick={handleBioDelete}>Supprimer</button> */}
                         <button className="btn btn-primary" onClick={() => setUpdateLocationForm(!updateLocationForm)}>Modifier</button>
                     </div>
                 </>

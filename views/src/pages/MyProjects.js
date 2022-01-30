@@ -66,16 +66,22 @@ const MyProjects = () => {
     setSortedValue("Trier par date")
     setDisplay(false)
   }
-  function sortedStateUnderPreparation() {
+  function sortedByStateUnderPreparation() {
     const array = axiosRes.filter((element) => { return element.state === "En préparation" })
     setSortedTable(array)
     setSortedValue("Project en préparation")
     setDisplay(false)
   }
-  function sortedStateInPorgress() {
+  function sortedByStateInPorgress() {
     const array = axiosRes.filter((element) => { return element.state === "En cours" })
     setSortedTable(array)
     setSortedValue("Project en cours")
+    setDisplay(false)
+  }
+  function sortedByStateCompleted() {
+    const array = axiosRes.filter((element) => { return element.state === "Terminé" })
+    setSortedTable(array)
+    setSortedValue("Project terminé")
     setDisplay(false)
   }
 
@@ -89,8 +95,9 @@ const MyProjects = () => {
             <option onClick={() => sortByLikes()}>Trier par nombre de likes</option>
             <option onClick={() => sortByFollows()}>Trier par nombre de follows</option>
             <option onClick={() => sortByDate()}>Trier par date</option>
-            <option onClick={() => sortedStateUnderPreparation()}>Project en préparation</option>
-            <option onClick={() => sortedStateInPorgress()}>Project en cours</option>
+            <option onClick={() => sortedByStateUnderPreparation()}>Project en préparation</option>
+            <option onClick={() => sortedByStateInPorgress()}>Project en cours</option>
+            <option onClick={() => sortedByStateCompleted()}>Project terminé</option>
           </div>
         )}
 

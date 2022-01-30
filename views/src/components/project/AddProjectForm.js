@@ -120,6 +120,7 @@ const AddProjectForm = () => {
                 .catch((err) => console.log(err));
         }
     };
+
     /*************************************************************************************** */
     /************************************ LOCALISATION ************************************* */
 
@@ -211,11 +212,9 @@ const AddProjectForm = () => {
                 if (JSON.stringify(workArray).includes(JSON.stringify(choice))) {
                     document.querySelector('.submit.error').innerHTML = "Vous avez déjà selectionné ce métier"
                 } else {
-                    console.log(workArray)
                     setWorkArray([...workArray, { name: choice, number: workNumber }])
                     setWorkSearchQuery("")
                     setWorkNumber("")
-                    console.log(workArray)
                 }
             }
         }

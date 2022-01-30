@@ -13,6 +13,7 @@ import Loader from '../components/tools/Loader';
 import { UidContext } from '../components/AppContext';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import State from '../components/project/project-page/owner/State';
+import Work from '../components/project/project-page/owner/Work';
 
 const Project = () => {
   const uid = useContext(UidContext)
@@ -64,6 +65,7 @@ const Project = () => {
             <p>Nombre de personne : {project.numberofcontributors}</p>
             <p>Date de création : {dateParser(project.createdAt)}</p>
             <p>Dernière modification : {dateParser(project.updatedAt)}</p>
+            <Work props={project.works} id={project._id} />
             <Content props={description} id={project._id} />
           </>
         ) : (

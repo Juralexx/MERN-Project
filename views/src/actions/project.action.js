@@ -8,7 +8,7 @@ export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
 export const UPDATE_CONTENT = "UPDATE_CONTENT"
 export const UPDATE_LOCATION = "UPDATE_LOCATION"
 export const UPDATE_NUMBEROFCONTRIBUTORS = "UPDATE_NUMBEROFCONTRIBUTORS"
-export const UPDATE_CONTRIBUTORS = "UPDATE_CONTRIBUTORS"
+export const UPDATE_WORKS = "UPDATE_WORKS"
 export const UPDATE_END = "UPDATE_END"
 export const UPDATE_STATE = "UPDATE_STATE"
 
@@ -131,15 +131,15 @@ export const updateNumberofcontributors = (projectId, numberofcontributors) => {
     }
 }
 
-export const updateContributors = (projectId, contributors) => {
+export const updateWorks = (projectId, works) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { contributors }
+            data: { works }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_CONTRIBUTORS, payload: contributors })
+                dispatch({ type: UPDATE_WORKS, payload: works })
             })
             .catch((err) => console.log(err))
     }
