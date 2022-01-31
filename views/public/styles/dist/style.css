@@ -685,6 +685,68 @@ h5 {
   margin: 0 5px;
 }
 
+.map-container {
+  max-width: 500px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#map-departments, #map-regions {
+  height: 500px;
+  width: auto;
+}
+#map-departments path, #map-regions path {
+  fill: #86AAE0;
+  stroke: #FFFFFF;
+  stroke-width: 0.6;
+  -webkit-transition: fill 0.2s, stroke 0.3s;
+  transition: fill 0.2s, stroke 0.3s;
+}
+#map-departments path:hover, #map-regions path:hover {
+  fill: red;
+  stroke: red;
+}
+#map-departments .separator, #map-regions .separator {
+  stroke: #ccc;
+  fill: none;
+  stroke-width: 1.5;
+}
+#map-departments .separator:hover, #map-regions .separator:hover {
+  stroke: #ccc;
+  fill: none;
+}
+
+.carte {
+  width: 100%;
+  margin: 0 auto;
+}
+.carte path {
+  stroke: #000000;
+  stroke-width: 1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-opacity: 0.25;
+  fill: #86aae0;
+}
+.carte g:hover path {
+  fill: #86cce0;
+}
+.carte g path:hover {
+  fill: #86eee0;
+}
+
 header {
   height: 60px;
   width: 100%;

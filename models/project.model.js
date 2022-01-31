@@ -47,6 +47,7 @@ const ProjectModel = new mongoose.Schema(
         works: {
             type: [],
             name: String,
+            numberFound: {type: Number, default: "0"},
             number: Number
         },
 
