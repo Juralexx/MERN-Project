@@ -44,7 +44,7 @@ export default function projectReducer(state = initialState, action) {
                 location: action.location,
                 department: action.department,
                 region: action.region,
-                newRegion: action.newRegion
+                new_region: action.new_region
             }
         case UPDATE_NUMBEROFCONTRIBUTORS:
             return {

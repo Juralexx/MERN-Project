@@ -102,7 +102,7 @@ export const uploadCoverPicture = async (req, res) => {
     try {
         UserModel.findByIdAndUpdate(
             req.body.userId,
-            { $set: { coverPicture: "/uploads/cover/" + fileName } },
+            { $set: { cover_picture: "/uploads/cover/" + fileName } },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {
@@ -124,7 +124,7 @@ export const deleteCoverPicture = async (req, res) => {
     try {
         UserModel.findOneAndUpdate(
             { _id: req.params.id },
-            { $set: { coverPicture: "/img/random-cover.jpg" } },
+            { $set: { cover_picture: "/img/random-cover.jpg" } },
             { new: true, upsert: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {

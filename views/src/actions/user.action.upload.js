@@ -57,7 +57,7 @@ export const uploadCoverPicture = (data, id) => {
                     return axios
                         .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
                         .then((res) => {
-                            dispatch({ type: UPLOAD_COVER_PICTURE, payload: res.data.coverPicture })
+                            dispatch({ type: UPLOAD_COVER_PICTURE, payload: res.data.cover_picture })
                             console.log(res)
                         })
                 }
@@ -66,12 +66,12 @@ export const uploadCoverPicture = (data, id) => {
     }
 }
 
-export const deleteCoverPicture = (userId, coverPicture) => {
+export const deleteCoverPicture = (userId, cover_picture) => {
     return (dispatch) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/cover/` + userId,
-            data: { coverPicture },
+            data: { cover_picture },
         })
             .then((res) => {
                 return axios

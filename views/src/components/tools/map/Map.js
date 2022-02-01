@@ -6,7 +6,7 @@ const Map = () => {
     const [selectByDepartments, setSelectByDepartments] = useState(false)
 
     return (
-        <div className="map-container">
+        <div className="map-container" style={{marginTop: 600}}>
 
             {selectByDepartments ? (
                 <>

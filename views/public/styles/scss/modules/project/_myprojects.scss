@@ -1,87 +1,84 @@
-.myprojects-container {
+.myprojects-card {
+    display       : flex;
+    position      : relative;
+    width         : 850px;
+    height        : 370px;
+    border-radius : 5px;
+    background    : var(--color-content);
+    margin        : 20px auto;
 
-    .myprojects-card {
-        display       : flex;
-        position      : relative;
-        width         : 850px;
-        height        : 370px;
-        border-radius : 5px;
-        background    : var(--color-content);
-        margin        : 20px auto;
+    .left {
+        position : relative;
+        width    : 300px;
+        height   : 100%;
+        margin   : 0;
+    }
 
-        .left {
-            position : relative;
-            width    : 300px;
-            height   : 100%;
-            margin   : 0;
+    .right {
+        padding : 20px;
+        width   : 500px;
+
+        .pseudo-container {
+            display       : flex;
+            align-items   : center;
+            margin-bottom : 10px;
+
+            .avatar {
+                width         : 30px;
+                height        : 30px;
+                border-radius : 15px;
+                margin-right  : 10px;
+            }
         }
 
-        .right {
-            padding : 20px;
-            width   : 500px;
+        > p {
+            margin : 0;
+        }
 
-            .pseudo-container {
-                display       : flex;
-                align-items   : center;
-                margin-bottom : 10px;
+        .description {
+            margin : 10px 0;
+        }
 
-                .avatar {
-                    width         : 30px;
-                    height        : 30px;
-                    border-radius : 15px;
-                    margin-right  : 10px;
+        .action-container {
+            width : 100%;
+
+            .content {
+                display         : flex;
+                align-items     : center;
+                justify-content : space-between;
+
+                p {
+                    margin : 0;
+                }
+
+                .likers-modal-btn {
+                    display:flex;
+                    align-items: center;
+
+                    svg {
+                        margin-right:5px;
+                    }
                 }
             }
 
-            > p {
-                margin : 0;
-            }
+            .action-btn {
+                width           : 200px;
+                padding         : 10px 0;
+                border-radius   : 5px;
+                outline         : none;
+                border          : none;
+                background      : transparent;
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                color           : var(--color-text-one);
 
-            .description {
-                margin : 10px 0;
-            }
-
-            .action-container {
-                width : 100%;
-
-                .content {
-                    display         : flex;
-                    align-items     : center;
-                    justify-content : space-between;
-
-                    p {
-                        margin : 0;
-                    }
-
-                    .likers-modal-btn {
-                        display:flex;
-                        align-items: center;
-
-                        svg {
-                            margin-right:5px;
-                        }
-                    }
+                span {
+                    margin-left : 5px;
                 }
 
-                .action-btn {
-                    width           : 200px;
-                    padding         : 10px 0;
-                    border-radius   : 5px;
-                    outline         : none;
-                    border          : none;
-                    background      : transparent;
-                    display         : flex;
-                    align-items     : center;
-                    justify-content : center;
-                    color           : var(--color-text-one);
-
-                    span {
-                        margin-left : 5px;
-                    }
-
-                    &:hover {
-                        background : #232323;
-                    }
+                &:hover {
+                    background : #232323;
                 }
             }
         }

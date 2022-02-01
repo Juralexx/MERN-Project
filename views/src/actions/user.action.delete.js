@@ -68,12 +68,12 @@ export const deleteGender = (userId, gender) => {
     }
 }
 
-export const deleteLocation = (userId, location, department, region, newRegion) => {
+export const deleteLocation = (userId, location, department, region, new_region) => {
     return (dispatch) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/delete/location/` + userId,
-            data: { location, department, region, newRegion },
+            data: { location, department, region, new_region },
         })
             .then((res) => {
                 return axios
@@ -234,7 +234,7 @@ export const deleteLinkedin = (userId, linkedin) => {
     return async (dispatch) => {
         return await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/delete/youtube/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/delete/linkedin/` + userId,
             data: { linkedin },
         })
             .then((res) => {

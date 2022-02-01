@@ -73,7 +73,7 @@ const UserModel = new mongoose.Schema(
             type: String,
             default: null,
         },
-        newRegion: {
+        new_region: {
             type: String,
             default: null,
         },
@@ -87,7 +87,7 @@ const UserModel = new mongoose.Schema(
             default: "/img/random-user.png"
         },
 
-        coverPicture: {
+        cover_picture: {
             type: String,
             default: "/img/random-cover.jpg"
         },

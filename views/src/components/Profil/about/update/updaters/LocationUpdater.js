@@ -89,10 +89,10 @@ const LocationUpdater = () => {
                 setLocationsFound(response.data)
                 setDisplay(true)
                 setResponse(true)
+                console.log(response)
                 if (locationsFound.length === 0) {
                     setResponse(false)
                     setLoading(false)
-                    console.log('coucou')
                 }
             } else {
                 setLoading(false)
@@ -115,12 +115,12 @@ const LocationUpdater = () => {
         setLoading(false);
     }
 
-    const debounceCallApi = useMemo(() => debounce(searchLocation, 1500), [])
+    // const debounced = debounce(handleInputChange, 1500)
 
     const openLocationUpdater = () => {
         return (
             <div className="auto-container">
-                <input placeholder="Rechercher mon adresse" defaultValue={searchQuery} onInput={handleInputChange} onChange={debounceCallApi()} type="search" />
+                <input placeholder="Rechercher mon adresse" defaultValue={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                 {!isEmpty && display && isResponse && (
                     <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
                         {locationsFound.map((element, key) => {

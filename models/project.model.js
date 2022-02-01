@@ -41,7 +41,7 @@ const ProjectModel = new mongoose.Schema(
             type: String,
             default: null,
         },
-        newRegion: {
+        new_region: {
             type: String,
             default: null,
         },

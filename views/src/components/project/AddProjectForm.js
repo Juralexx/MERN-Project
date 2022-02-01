@@ -97,7 +97,7 @@ const AddProjectForm = () => {
                     location: location,
                     department: department,
                     region: region,
-                    newRegion: newRegion,
+                    new_region: newRegion,
                     end: end,
                     content: content,
                     numberofcontributors: numberofcontributors,

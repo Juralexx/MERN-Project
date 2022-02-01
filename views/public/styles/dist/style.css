@@ -2158,7 +2158,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 10px 0 5px;
 }
 
-.myprojects-container .myprojects-card {
+.myprojects-card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2169,17 +2169,17 @@ header nav .navbar-container ul li a.activeLink svg path {
   background: var(--color-content);
   margin: 20px auto;
 }
-.myprojects-container .myprojects-card .left {
+.myprojects-card .left {
   position: relative;
   width: 300px;
   height: 100%;
   margin: 0;
 }
-.myprojects-container .myprojects-card .right {
+.myprojects-card .right {
   padding: 20px;
   width: 500px;
 }
-.myprojects-container .myprojects-card .right .pseudo-container {
+.myprojects-card .right .pseudo-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2188,22 +2188,22 @@ header nav .navbar-container ul li a.activeLink svg path {
           align-items: center;
   margin-bottom: 10px;
 }
-.myprojects-container .myprojects-card .right .pseudo-container .avatar {
+.myprojects-card .right .pseudo-container .avatar {
   width: 30px;
   height: 30px;
   border-radius: 15px;
   margin-right: 10px;
 }
-.myprojects-container .myprojects-card .right > p {
+.myprojects-card .right > p {
   margin: 0;
 }
-.myprojects-container .myprojects-card .right .description {
+.myprojects-card .right .description {
   margin: 10px 0;
 }
-.myprojects-container .myprojects-card .right .action-container {
+.myprojects-card .right .action-container {
   width: 100%;
 }
-.myprojects-container .myprojects-card .right .action-container .content {
+.myprojects-card .right .action-container .content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2214,10 +2214,10 @@ header nav .navbar-container ul li a.activeLink svg path {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-.myprojects-container .myprojects-card .right .action-container .content p {
+.myprojects-card .right .action-container .content p {
   margin: 0;
 }
-.myprojects-container .myprojects-card .right .action-container .content .likers-modal-btn {
+.myprojects-card .right .action-container .content .likers-modal-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2225,10 +2225,10 @@ header nav .navbar-container ul li a.activeLink svg path {
       -ms-flex-align: center;
           align-items: center;
 }
-.myprojects-container .myprojects-card .right .action-container .content .likers-modal-btn svg {
+.myprojects-card .right .action-container .content .likers-modal-btn svg {
   margin-right: 5px;
 }
-.myprojects-container .myprojects-card .right .action-container .action-btn {
+.myprojects-card .right .action-container .action-btn {
   width: 200px;
   padding: 10px 0;
   border-radius: 5px;
@@ -2246,10 +2246,10 @@ header nav .navbar-container ul li a.activeLink svg path {
           justify-content: center;
   color: var(--color-text-one);
 }
-.myprojects-container .myprojects-card .right .action-container .action-btn span {
+.myprojects-card .right .action-container .action-btn span {
   margin-left: 5px;
 }
-.myprojects-container .myprojects-card .right .action-container .action-btn:hover {
+.myprojects-card .right .action-container .action-btn:hover {
   background: #232323;
 }
 

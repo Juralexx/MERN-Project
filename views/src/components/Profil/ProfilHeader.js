@@ -7,7 +7,7 @@ const ProfilHeader = () => {
     const userData = useSelector((state) => state.userReducer)
 
     const coverPicture = {
-        backgroundImage: "url(" + userData.coverPicture + ")",
+        backgroundImage: "url(" + userData.cover_picture + ")",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",

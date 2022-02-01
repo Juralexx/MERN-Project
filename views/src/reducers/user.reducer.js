@@ -22,12 +22,12 @@ export default function userReducer(state = initialState, action) {
         case UPLOAD_COVER_PICTURE:
             return {
                 ...state,
-                coverPicture: action.payload,
+                cover_picture: action.payload,
             }
         case DELETE_COVER_PICTURE:
             return {
                 ...state,
-                coverPicture: action.payload
+                cover_picture: action.payload
             }
         case UPDATE_PSEUDO:
             return {
@@ -75,7 +75,7 @@ export default function userReducer(state = initialState, action) {
                 location: action.location,
                 department: action.department,
                 region: action.region,
-                newRegion: action.newRegion,
+                new_region: action.new_region,
             }
         case DELETE_LOCATION:
             return {
@@ -83,7 +83,7 @@ export default function userReducer(state = initialState, action) {
                 location: action.payload,
                 department: action.payload,
                 region: action.payload,
-                newRegion: action.payload,
+                new_region: action.payload,
             }
         case UPDATE_WORK:
             return {

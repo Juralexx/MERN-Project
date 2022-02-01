@@ -103,15 +103,15 @@ export const updateContent = (projectId, content) => {
     }
 }
 
-export const updateLocation = (projectId, location, department, region, newRegion) => {
+export const updateLocation = (projectId, location, department, region, new_region) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { location, department, region, newRegion }
+            data: { location, department, region, new_region }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_LOCATION, location: location, department: department, region: region, newRegion: newRegion })
+                dispatch({ type: UPDATE_LOCATION, location: location, department: department, region: region, new_region: new_region })
             })
             .catch((err) => console.log(err))
     }

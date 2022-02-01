@@ -64,7 +64,7 @@ const UploadCoverImg = () => {
 
     return (
         <>
-            {(userData.coverPicture === "/img/random-cover.jpg") ? (
+            {(userData.cover_picture === "/img/random-cover.jpg") ? (
                 <div className="btn-cover-edit">
                     <div className="fileUpload btn btn-primary">
                         <span>Ajouter une photo de couverture</span>
