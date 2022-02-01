@@ -13,8 +13,8 @@ const HoverModal = ({ user }) => {
                 <div className="right">
                     <p><NavLink to={"/" + user.pseudo}>{user.pseudo}</NavLink></p>
                     <p>{user.location}</p>
-                    <p>{user.createdProjects.length} projets créés</p>
-                    <p>{user.currentProjects.length} projets en cours</p>
+                    <p>{user.created_projects.length} projets créés</p>
+                    <p>{user.current_projects.length} projets en cours</p>
                 </div>
             </div>
             <div className="bottom">

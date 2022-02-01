@@ -6,9 +6,10 @@ import { updateLocation } from "../../../../actions/project.action";
 
 const Location = ({ props, id }) => {
     const projectData = useSelector((state) => state.projectReducer)
-    const startOfReqUrl = 'https://api-adresse.data.gouv.fr/search/?q=';
-    const endOfReqUrl = '&type=municipality&limit=5&autocomplete=1';
     const [location, setLocation] = useState("");
+    const [department, setDepartment] = useState("");
+    const [region, setRegion] = useState("");
+    const [newRegion, setNewRegion] = useState("");
     const [searchQuery, setSearchQuery] = useState("")
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -24,7 +25,7 @@ const Location = ({ props, id }) => {
     const hideLocationUpdater = () => { setUpdateLocationForm(false) }
 
     const handleLocation = () => {
-        dispatch(updateLocation(id, location))
+        dispatch(updateLocation(id, location, department, region, newRegion))
         setUpdateLocationForm(false)
         setModified(true)
     }
@@ -42,7 +43,7 @@ const Location = ({ props, id }) => {
     }
 
     const prepareSearchQuery = (query) => {
-        const url = `${startOfReqUrl}${query}${endOfReqUrl}`
+        const url = `${process.env.REACT_APP_API_URL}api/location/${query}`
         return encodeURI(url)
     }
 
@@ -57,8 +58,7 @@ const Location = ({ props, id }) => {
 
         if (response) {
             if (searchQuery.length >= 2) {
-                console.log(response.data)
-                setLocationsFound(response.data.features)
+                setLocationsFound(response.data)
                 setDisplay(true)
                 setResponse(true)
                 if (locationsFound.length === 0) {
@@ -87,7 +87,7 @@ const Location = ({ props, id }) => {
         <div className="user-info">
             {!updateLocationForm ? (
                 <>
-                    {modified ? ( <p>{projectData.location}</p> ) : ( <p>{props}</p> )}
+                    {modified ? (<p>{projectData.location}, {projectData.department}, {projectData.region}</p>) : (<p>{props}</p>)}
                     <div className="btn-container">
                         <button className="btn btn-primary" onClick={() => setUpdateLocationForm(!updateLocationForm)}>Modifier</button>
                     </div>
@@ -98,12 +98,16 @@ const Location = ({ props, id }) => {
                         <input placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                         {!isEmpty && display && isResponse && (
                             <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
-                                {locationsFound.map(({ properties }) => {
-                                    const town = `${properties.city}`;
-                                    const zipcode = `${properties.postcode}`;
-                                    const adress = `${town} (${zipcode})`;
+                                {locationsFound.map((element, key) => {
+                                    const adress = `${element.COM_NOM}, ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`;
                                     return (
-                                        <li onClick={(e) => { setSelect(adress); setLocation(adress) }} key={properties.id}>{adress}</li>
+                                        <li onClick={(e) => {
+                                            setSelect(adress)
+                                            setLocation(element.COM_NOM)
+                                            setDepartment(element.DEP_NOM_NUM)
+                                            setRegion(element.REG_NOM_OLD)
+                                            setNewRegion(element.REG_NOM)
+                                        }} key={key}>{adress}</li>
                                     )
                                 })}
                             </ul>

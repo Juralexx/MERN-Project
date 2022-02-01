@@ -33,6 +33,18 @@ const ProjectModel = new mongoose.Schema(
             type: String,
             default: null,
         },
+        department: {
+            type: String,
+            default: null,
+        },
+        region: {
+            type: String,
+            default: null,
+        },
+        newRegion: {
+            type: String,
+            default: null,
+        },
 
         content: {
             type: [],

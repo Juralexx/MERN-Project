@@ -5,25 +5,25 @@ import mongoose from 'mongoose'
 const projectId = mongoose.Types.ObjectId()
 
 export const createProject = async (req, res) => {
-    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors, works } = req.body
+    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department, region, newRegion, end, content, numberofcontributors, works } = req.body
     const _id = projectId
     const state = "En préparation"
 
     try {
         const project = ProjectModel.create({
-            _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, end, content, numberofcontributors, works, state
+            _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department, region, newRegion, end, content, numberofcontributors, works, state
         })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.posterId },
             {
                 $addToSet: {
-                    currentProjects: projectId,
-                    createdProjects: projectId
+                    current_projects: projectId,
+                    created_projects: projectId
                 },
                 $inc: {
-                    nbOfCurrentProjects: 1,
-                    nbOfCreatedProjects: 1
+                    number_of_current_projects: 1,
+                    number_of_created_projects: 1
                 }
             },
             { news: true },

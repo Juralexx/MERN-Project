@@ -60,7 +60,7 @@ const Project = () => {
             <p>Posté par : <NavLink to={"/" + project.posterPseudo}>{project.posterPseudo}</NavLink></p>
             <State props={project.state} id={project._id} />
             <Category props={project.category} id={project._id} />
-            <Location props={project.location} id={project._id} />
+            <Location props={project.location + ", " + project.department + ", " + project.region} id={project._id} />
             <End props={project.end} id={project._id} />
             <p>Nombre de personne : {project.numberofcontributors}</p>
             <p>Date de création : {dateParser(project.createdAt)}</p>

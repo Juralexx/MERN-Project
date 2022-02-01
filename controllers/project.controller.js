@@ -39,7 +39,7 @@ export const findProject = (req, res) => {
 };
 
 export const updateProject = async (req, res) => {
-    const { title, titleURL, category, state, location, content, numberofcontributors, contributors, picture, end, works } = req.body
+    const { title, titleURL, category, state, location, department, region, newRegion, content, numberofcontributors, contributors, picture, end, works } = req.body
 
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
@@ -54,6 +54,9 @@ export const updateProject = async (req, res) => {
                     category,
                     state,
                     location,
+                    department,
+                    region,
+                    newRegion,
                     content,
                     numberofcontributors,
                     contributors,
@@ -103,7 +106,7 @@ export const likeProject = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.id },
             {
-                $addToSet: { projectsLiked: req.params.id },
+                $addToSet: { projects_liked: req.params.id },
                 $inc: { likes: 1 }
             },
             { news: true },
@@ -135,7 +138,7 @@ export const unlikeProject = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.id },
             {
-                $pull: { projectsLiked: req.params.id },
+                $pull: { projects_liked: req.params.id },
                 $inc: { likes: -1 }
             },
             { news: true },

@@ -65,6 +65,22 @@ const UserModel = new mongoose.Schema(
             type: String,
             default: null,
         },
+        department: {
+            type: String,
+            default: null,
+        },
+        region: {
+            type: String,
+            default: null,
+        },
+        newRegion: {
+            type: String,
+            default: null,
+        },
+        country: {
+            type: String,
+            default: null,
+        },
 
         picture: {
             type: String,
@@ -103,40 +119,50 @@ const UserModel = new mongoose.Schema(
             type: String
         },
 
-        facebook: { type: String },
-        instagram: { type: String },
-        twitter: { type: String },
-        youtube: { type: String },
-        linkedin: { type: String },
+        facebook: { 
+            type: String 
+        },
+        instagram: { 
+            type: String 
+        },
+        twitter: { 
+            type: String 
+        },
+        youtube: { 
+            type: String 
+        },
+        linkedin: { 
+            type: String 
+        },
 
         theme: {
             type: String,
             default: "dark"
         },
 
-        currentProjects: {
+        current_projects: {
             type: [String]
         },
 
-        nbOfCurrentProjects: {
+        number_of_current_projects: {
             type: Number,
             default: 0
         },
 
-        completedProjects: {
+        completed_projects: {
             type: [String]
         },
 
-        nbOfCompletedProjects: {
+        number_of_completed_projects: {
             type: Number,
             default: 0
         },
 
-        createdProjects: {
+        created_projects: {
             type: [String]
         },
 
-        nbOfCreatedProjects: {
+        number_of_created_projects: {
             type: Number,
             default: 0
         },
@@ -155,7 +181,7 @@ const UserModel = new mongoose.Schema(
             default: 0
         },
 
-        projectsLiked: {
+        projects_liked: {
             type: [String]
         }
     },

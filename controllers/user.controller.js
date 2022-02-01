@@ -32,7 +32,7 @@ export const findUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    const { pseudo, email, name, lastname, location, work, phone, bio, gender, theme, website, facebook, instagram, twitter, youtube, linkedin } = req.body
+    const { pseudo, email, name, lastname, location, department, region, newRegion, work, phone, bio, gender, theme, website, facebook, instagram, twitter, youtube, linkedin } = req.body
 
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
@@ -42,7 +42,7 @@ export const updateUser = async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    pseudo, email, name, lastname, gender, location, work, phone, bio, theme, website, facebook, instagram, twitter, youtube, linkedin
+                    pseudo, email, name, lastname, gender, location, department, region, newRegion, work, phone, bio, theme, website, facebook, instagram, twitter, youtube, linkedin
                 },
             },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },

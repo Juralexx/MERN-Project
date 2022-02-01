@@ -9,6 +9,7 @@ dotenv.config({ path: './config/config.env' })
 import { checkUser, requireAuth } from './middleware/auth.middleware.js'
 import './config/db.js'
 import workRoutes from './api/workapi.routes.js'
+import LocationRoutes from './api/locationapi.routes.js'
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.get('/jwtid', requireAuth, (req, res) => {
 app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
 app.use('/api/work', workRoutes)
+app.use('/api/location', LocationRoutes)
 
 if (process.env.NODE_ENV !== 'production') {
   process.once('uncaughtException', function (err) {

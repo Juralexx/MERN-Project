@@ -10,12 +10,12 @@ const Map = () => {
 
             {selectByDepartments ? (
                 <>
-                    <button onClick={() => setSelectByDepartments(false)}>Filtrer par région</button>
+                    <button className="btn btn-primary" onClick={() => setSelectByDepartments(false)}>Filtrer par région</button>
                     <MapDepartments />
                 </>
             ) : (
                 <>
-                    <button onClick={() => setSelectByDepartments(true)}>Filtrer par département</button>
+                    <button className="btn btn-primary" onClick={() => setSelectByDepartments(true)}>Filtrer par département</button>
                     <MapRegions />
                 </>
             )}

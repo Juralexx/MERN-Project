@@ -1,33 +1,32 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { useDebounce } from "../../../../tools/Deboucing";
 import { useSelector, useDispatch } from "react-redux";
 import { updateLocation } from "../../../../../actions/user.action";
 import { deleteLocation } from "../../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
-import { Oval } from 'react-loading-icons'
+import { ThreeDots } from 'react-loading-icons'
 import { AiFillHome } from 'react-icons/ai'
-import { debounce } from 'lodash'
 
 const LocationUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
     const dispatch = useDispatch()
 
+    const startOfReqUrl = 'https://api-adresse.data.gouv.fr/search/?q=';
+    const endOfReqUrl = '&type=municipality&limit=5&autocomplete=1';
     const [searchQuery, setSearchQuery] = useState("")
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [isResponse, setResponse] = useState(true)
     const [display, setDisplay] = useState(false)
     const [isSelected, setIsSelected] = useState(false)
+    const wrapperRef = useRef();
 
     const [location, setLocation] = useState("");
-    const [department, setDepartment] = useState("");
-    const [region, setRegion] = useState("");
-    const [newRegion, setNewRegion] = useState("");
     const [locationUpdater, setLocationUpdater] = useState(false);
-    const isEmpty = !locationsFound || locationsFound.length === 0
 
     const handleLocation = (e) => {
-        dispatch(updateLocation(userData._id, location, department, region, newRegion))
+        dispatch(updateLocation(userData._id, location))
         setLocationUpdater(false)
         Swal.fire({
             position: 'top-end',
@@ -53,7 +52,7 @@ const LocationUpdater = () => {
             confirmButtonText: 'Supprimer'
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteLocation(userData._id, location, department, region, newRegion))
+                dispatch(deleteLocation(userData._id, location))
 
                 Swal.fire({
                     icon: 'success',
@@ -65,13 +64,15 @@ const LocationUpdater = () => {
         })
     }
 
+    const isEmpty = !locationsFound || locationsFound.length === 0
+
     const handleInputChange = (e) => {
         setSearchQuery(e.target.value)
         setLocation(searchQuery)
     }
 
     const prepareSearchQuery = (query) => {
-        const url = `${process.env.REACT_APP_API_URL}api/location/${query}`
+        const url = `${startOfReqUrl}${query}${endOfReqUrl}`
         return encodeURI(url)
     }
 
@@ -86,19 +87,32 @@ const LocationUpdater = () => {
 
         if (response) {
             if (searchQuery.length >= 2) {
-                setLocationsFound(response.data)
+                console.log(response.data)
+                setLocationsFound(response.data.features)
                 setDisplay(true)
                 setResponse(true)
                 if (locationsFound.length === 0) {
                     setResponse(false)
                     setLoading(false)
-                    console.log('coucou')
                 }
             } else {
                 setLoading(false)
             }
         }
     }
+
+    const handleClickOutside = (e) => {
+        const { current: wrap } = wrapperRef;
+        if (wrap && !wrap.contains(e.target)) {
+            setDisplay(false);
+            setLoading(false);
+        }
+    }; useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const setSelect = (e) => {
         setSearchQuery(e)
@@ -115,31 +129,27 @@ const LocationUpdater = () => {
         setLoading(false);
     }
 
-    const debounceCallApi = useMemo(() => debounce(searchLocation, 1500), [])
+    useDebounce(searchQuery, 1500, searchLocation)
 
     const openLocationUpdater = () => {
         return (
-            <div className="auto-container">
-                <input placeholder="Rechercher mon adresse" defaultValue={searchQuery} onInput={handleInputChange} onChange={debounceCallApi()} type="search" />
+            <div className="auto-container" ref={wrapperRef}>
+                <input placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                 {!isEmpty && display && isResponse && (
                     <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
-                        {locationsFound.map((element, key) => {
-                            const adress = `${element.COM_NOM} - ${element.DEP_NOM_NUM} - ${element.REG_NOM_OLD}`;
+                        {locationsFound.map(({ properties }) => {
+                            const town = `${properties.city}`;
+                            const zipcode = `${properties.postcode}`;
+                            const adress = `${town} (${zipcode})`;
                             return (
-                                <li onClick={(e) => {
-                                    setSelect(adress)
-                                    setLocation(element.COM_NOM)
-                                    setDepartment(element.DEP_NOM_NUM)
-                                    setRegion(element.REG_NOM_OLD)
-                                    setNewRegion(element.REG_NOM)
-                                }} key={key}>{adress}</li>
+                                <li onClick={(e) => { setSelect(adress); setLocation(adress) }} key={properties.id}>{adress}</li>
                             )
                         })}
                     </ul>
                 )}
                 {isLoading && !display && (
                     <div className="load-container">
-                        <Oval />
+                        <ThreeDots />
                     </div>
                 )}
                 {!isResponse && !isLoading && (
@@ -157,7 +167,7 @@ const LocationUpdater = () => {
 
     return (
         <>
-            {(userData.location === '' || userData.location === null || userData.location === undefined) ? (
+            {(userData.location === '' || userData.location === null || userData.location === undefined ) ? (
                 <>
                     <div className="user-info">
                         <button className="add-btn" onClick={() => setLocationUpdater(true)} style={{ display: locationUpdater ? "none" : "block" }}>
@@ -171,9 +181,7 @@ const LocationUpdater = () => {
             ) : (
                 <>
                     <div className="user-info">
-                        <p style={{ display: locationUpdater ? "none" : "flex" }}><AiFillHome />
-                            {userData.location}, {userData.department}, {userData.region}
-                        </p>
+                        <p style={{ display: locationUpdater ? "none" : "flex" }}><AiFillHome /><span>{userData.location}</span></p>
 
                         <div className="btn-container">
                             <button className="btn btn-primary btn-edit" onClick={() => setLocationUpdater(true)} style={{ display: locationUpdater ? "none" : "block" }}><i className="fas fa-pen"></i></button>

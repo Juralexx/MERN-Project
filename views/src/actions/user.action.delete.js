@@ -68,12 +68,12 @@ export const deleteGender = (userId, gender) => {
     }
 }
 
-export const deleteLocation = (userId, location) => {
+export const deleteLocation = (userId, location, department, region, newRegion) => {
     return (dispatch) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/delete/location/` + userId,
-            data: { location },
+            data: { location, department, region, newRegion },
         })
             .then((res) => {
                 return axios

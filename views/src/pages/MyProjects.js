@@ -23,7 +23,7 @@ const MyProjects = () => {
     const fetch = async () => {
       try {
         const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
-        const checkarray = data.createdProjects
+        const checkarray = data.created_projects
         setNbOfRes(checkarray.length)
 
         if (checkarray.length === 0) { setLoading(false) }

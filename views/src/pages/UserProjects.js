@@ -24,7 +24,7 @@ const UserProjects = () => {
                 const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/profil/${pseudo}`)
                 if (!data) { navigate('/') }
 
-                const checkarray = data.createdProjects
+                const checkarray = data.created_projects
                 setNbOfRes(checkarray.length)
 
                 if (checkarray.length > 0) {

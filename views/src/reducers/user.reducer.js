@@ -72,12 +72,18 @@ export default function userReducer(state = initialState, action) {
         case UPDATE_LOCATION:
             return {
                 ...state,
-                location: action.payload,
+                location: action.location,
+                department: action.department,
+                region: action.region,
+                newRegion: action.newRegion,
             }
         case DELETE_LOCATION:
             return {
                 ...state,
                 location: action.payload,
+                department: action.payload,
+                region: action.payload,
+                newRegion: action.payload,
             }
         case UPDATE_WORK:
             return {

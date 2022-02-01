@@ -111,15 +111,15 @@ export const updateGender = (userId, gender) => {
     }
 }
 
-export const updateLocation = (userId, location) => {
+export const updateLocation = (userId, location, department, region, newRegion) => {
     return (dispatch) => {
         return axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { location }
+            data: { location, department, region, newRegion }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_LOCATION, payload: location })
+                dispatch({ type: UPDATE_LOCATION, location: location, department: department, region: region, newRegion: newRegion })
             })
             .catch((err) => console.log(err))
     }

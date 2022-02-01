@@ -27,16 +27,14 @@ const AddProjectForm = () => {
     /*************************************************************************************** */
     /************************************ LOCALISATION ************************************* */
 
+    const startOfReqUrl = 'https://api-adresse.data.gouv.fr/search/?q=';
+    const endOfReqUrl = '&type=municipality&limit=5&autocomplete=1';
+    const [location, setLocation] = useState("");
     const [searchQuery, setSearchQuery] = useState("")
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [isResponse, setResponse] = useState(true)
     const [display, setDisplay] = useState(false)
-
-    const [location, setLocation] = useState("");
-    const [department, setDepartment] = useState("");
-    const [region, setRegion] = useState("");
-    const [newRegion, setNewRegion] = useState("");
     const isEmpty = !locationsFound || locationsFound.length === 0
 
     /*************************************************************************************** */
@@ -95,9 +93,6 @@ const AddProjectForm = () => {
                     titleURL: titleURL,
                     category: category,
                     location: location,
-                    department: department,
-                    region: region,
-                    newRegion: newRegion,
                     end: end,
                     content: content,
                     numberofcontributors: numberofcontributors,
@@ -141,7 +136,7 @@ const AddProjectForm = () => {
     }
 
     const prepareSearchQuery = (query) => {
-        const url = `${process.env.REACT_APP_API_URL}api/location/${query}`
+        const url = `${startOfReqUrl}${query}${endOfReqUrl}`
         return encodeURI(url)
     }
 
@@ -156,7 +151,7 @@ const AddProjectForm = () => {
 
         if (response) {
             if (searchQuery.length >= 2) {
-                setLocationsFound(response.data)
+                setLocationsFound(response.data.features)
                 setDisplay(true)
                 setResponse(true)
                 if (locationsFound.length === 0) {
@@ -293,17 +288,12 @@ const AddProjectForm = () => {
                 <input placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                 {!isEmpty && display && isResponse && (
                     <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
-                        {locationsFound.map((element, key) => {
-                            const adress = `${element.COM_NOM}, ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`;
-
+                        {locationsFound.map(({ properties }) => {
+                            const town = `${properties.city}`;
+                            const zipcode = `${properties.postcode}`;
+                            const adress = `${town} (${zipcode})`;
                             return (
-                                <li onClick={(e) => {
-                                    setSelect(adress)
-                                    setLocation(element.COM_NOM)
-                                    setDepartment(element.DEP_NOM_NUM)
-                                    setRegion(element.REG_NOM_OLD)
-                                    setNewRegion(element.REG_NOM)
-                                }} key={key}>{adress}</li>
+                                <li onClick={(e) => { setSelect(adress); setLocation(adress) }} key={properties.id}>{adress}</li>
                             )
                         })}
                     </ul>
