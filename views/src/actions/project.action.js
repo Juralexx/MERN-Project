@@ -16,6 +16,8 @@ export const LIKE = "LIKE"
 export const UNLIKE = "UNLIKE"
 export const FOLLOW = "FOLLOW"
 export const UNFOLLOW = "UNFOLLOW"
+export const FAVORITE = "FAVORITE"
+export const UNFAVORITE = "UNFAVORITE"
 
 export const getProject = (projectId) => {
     return async (dispatch) => {
@@ -210,6 +212,34 @@ export const unfollowProject = (projectId, userId) => {
         })
             .then((res) => {
                 dispatch({ type: UNFOLLOW, payload: { projectId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const favoriteProject = (projectId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/project/favorite/` + projectId,
+            data: { userId: userId }
+        })
+            .then((res) => {
+                dispatch({ type: FAVORITE, payload: { projectId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const unfavoriteProject = (projectId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/project/unfavorite/` + projectId,
+            data: { userId: userId }
+        })
+            .then((res) => {
+                dispatch({ type: UNFAVORITE, payload: { projectId, userId } })
             })
             .catch((err) => console.log(err))
     }

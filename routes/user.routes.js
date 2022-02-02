@@ -5,6 +5,7 @@ import { getAllUsers, userInfo, updateUser, deleteUser, findUser } from '../cont
 import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteGender, deleteUserWebsite, deleteUserLinkedin, deleteUserFacebook, deleteUserInstagram, deleteUserTwitter, deleteUserYoutube } from '../controllers/user.controller.delete.js'
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/upload.user.controller.js'
 import multer from 'multer'
+import { acceptFriend, cancelSentFriendRequest, refuseFriend, sendFriendRequest, deleteFriend } from '../controllers/user.friend.js'
 const upload = multer()
 
 userRoutes.post('/register', signUp)
@@ -36,5 +37,11 @@ userRoutes.put('/delete/instagram/:id', deleteUserInstagram)
 userRoutes.put('/delete/twitter/:id', deleteUserTwitter)
 userRoutes.put('/delete/youtube/:id', deleteUserYoutube)
 userRoutes.put('/delete/linkedin/:id', deleteUserLinkedin)
+
+userRoutes.put('/send-friend-request/:id', sendFriendRequest)
+userRoutes.put('/cancel-friend-request/:id', cancelSentFriendRequest)
+userRoutes.put('/accept-friend-request/:id', acceptFriend)
+userRoutes.put('/refuse-friend-request/:id', refuseFriend)
+userRoutes.put('/delete/friend/:id', deleteFriend)
 
 export default userRoutes;

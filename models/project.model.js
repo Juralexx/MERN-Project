@@ -78,6 +78,10 @@ const ProjectModel = new mongoose.Schema(
         likes: { type: Number, default: 0 },
         likers: { type: [String] },
 
+        favorites: {
+            type: [String]
+        },
+
         views: {
             type: [String]
         }

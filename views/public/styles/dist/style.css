@@ -2164,7 +2164,7 @@ header nav .navbar-container ul li a.activeLink svg path {
   display: flex;
   position: relative;
   width: 850px;
-  height: 370px;
+  height: 420px;
   border-radius: 5px;
   background: var(--color-content);
   margin: 20px auto;
@@ -2415,4 +2415,13 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .settings-menu .settings-menu-nav ul li .slider.round:before {
   border-radius: 50%;
+}
+
+.right-menu {
+  position: absolute;
+  height: 100vh;
+  width: 250px;
+  background: var(--color-content);
+  right: 15px;
+  top: 60px;
 }

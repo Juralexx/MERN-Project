@@ -11,7 +11,7 @@ export const deleteUserName = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     name: "",
                 },
             },
@@ -33,7 +33,7 @@ export const deleteUserLastname = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     lastname: "",
                 },
             },
@@ -77,7 +77,7 @@ export const deleteUserWork = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     work: "",
                 },
             },
@@ -99,7 +99,7 @@ export const deleteUserPhone = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     phone: "",
                 },
             },
@@ -121,8 +121,11 @@ export const deleteUserLocation = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     location: "",
+                    department: "",
+                    region: "",
+                    new_region: "",
                 },
             },
             { new: true, upsert: true, setDefaultsOnInsert: true },
@@ -143,7 +146,7 @@ export const deleteUserBio = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     bio: "",
                 },
             },
@@ -165,7 +168,7 @@ export const deleteUserWebsite = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     website: "",
                 },
             },
@@ -186,7 +189,7 @@ export const deleteUserFacebook = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     facebook: ""
                 },
             },
@@ -207,7 +210,7 @@ export const deleteUserInstagram = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     instagram: ""
                 },
             },
@@ -228,7 +231,7 @@ export const deleteUserTwitter = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     twitter: ""
                 },
             },
@@ -249,7 +252,7 @@ export const deleteUserYoutube = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     youtube: ""
                 },
             },
@@ -270,7 +273,7 @@ export const deleteUserLinkedin = async (req, res) => {
         await UserModel.findOneAndUpdate(
             { _id: req.params.id },
             {
-                $set: {
+                $unset: {
                     linkedin: ""
                 },
             },

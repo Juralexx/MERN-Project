@@ -18,6 +18,9 @@ export const UPDATE_TWITTER = "UPDATE_TWITTER"
 export const UPDATE_YOUTUBE = "UPDATE_YOUTUBE"
 export const UPDATE_LINKEDIN = "UPDATE_LINKEDIN"
 
+export const SEND_FRIEND_REQUEST = "SEND_FRIEND_REQUEST"
+export const CANCEL_SENT_FRIEND_REQUEST = "CANCEL_SENT_FRIEND_REQUEST"
+
 export const getUser = (uid) => {
     return (dispatch) => {
         return axios
@@ -260,6 +263,34 @@ export const updateLinkedin = (userId, linkedin) => {
         })
             .then((res) => {
                 dispatch({ type: UPDATE_LINKEDIN, payload: linkedin })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const sendFriendRequest = (friendId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/send-friend-request/` + userId,
+            data: { friendId }
+        })
+            .then((res) => {
+                dispatch({ type: SEND_FRIEND_REQUEST, payload: { friendId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const cancelSentFriendRequest = (friendId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/cancel-friend-request/` + userId,
+            data: { friendId }
+        })
+            .then((res) => {
+                dispatch({ type: CANCEL_SENT_FRIEND_REQUEST, payload: { friendId, userId } })
             })
             .catch((err) => console.log(err))
     }

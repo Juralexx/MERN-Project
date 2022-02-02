@@ -9,6 +9,7 @@ import { UidContext } from '../../AppContext';
 import { Popup } from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
 import { likeProject, unlikeProject } from '../../../actions/project.action';
+import { cancelSentFriendRequest, sendFriendRequest } from "../../../actions/user.action";
 
 const LikersModal = ({ project }) => {
     const [open, setOpen] = useState(false)
@@ -26,6 +27,8 @@ const LikersModal = ({ project }) => {
     const [liked, setLiked] = useState(false)
     const [action, setAction] = useState("")
     const [users, setUsers] = useState([]);
+
+    const [friendRequest, setFriendRequest] = useState(false)
 
     useEffect(() => {
         if (project.likers.includes(uid)) { setLiked(true) }
@@ -112,6 +115,17 @@ const LikersModal = ({ project }) => {
                                                             <div className="avatar" style={avatar(element.picture)}></div>
                                                             <p>{element.pseudo}</p>
                                                         </NavLink>
+                                                        {friendRequest ? (
+                                                            <button className="btn btn-primary" onClick={() => {
+                                                                dispatch(cancelSentFriendRequest(element._id, uid))
+                                                                setFriendRequest(false)
+                                                            }}>Annuler ma demande</button>
+                                                        ) : (
+                                                            <button className="btn btn-primary" onClick={() => {
+                                                                dispatch(sendFriendRequest(element._id, uid))
+                                                                setFriendRequest(true)
+                                                            }}>Ajouter en ami</button>
+                                                        )}
                                                     </div>
                                                 )
                                             })}

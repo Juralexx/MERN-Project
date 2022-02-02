@@ -2,7 +2,7 @@
     display       : flex;
     position      : relative;
     width         : 850px;
-    height        : 370px;
+    height        : 420px;
     border-radius : 5px;
     background    : var(--color-content);
     margin        : 20px auto;
@@ -52,11 +52,11 @@
                 }
 
                 .likers-modal-btn {
-                    display:flex;
-                    align-items: center;
+                    display     : flex;
+                    align-items : center;
 
                     svg {
-                        margin-right:5px;
+                        margin-right : 5px;
                     }
                 }
             }

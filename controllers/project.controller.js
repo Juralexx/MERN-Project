@@ -214,3 +214,65 @@ export const unfollow = async (req, res) => {
         return res.status(500).json({ message: err })
     }
 }
+
+
+
+export const favorite = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.userId)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+
+    try {
+        await ProjectModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            { 
+                $addToSet: { favorites: req.body.userId },
+            },
+            { new: true, upsert: true },
+        )
+            .catch((err) => { return res.status(400).send({ message: err }) })
+
+        await UserModel.findByIdAndUpdate(
+            { _id: req.body.userId },
+            { 
+                $addToSet: { favorites: req.params.id },
+            },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(500).json({ message: err })
+    }
+}
+
+export const unfavorite = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.userId)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+
+    try {
+        await ProjectModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            { 
+                $pull: { favorites: req.body.userId },
+            },
+            { new: true, upsert: true },
+        )
+            .catch((err) => { return res.status(400).send({ message: err }) })
+
+        await UserModel.findByIdAndUpdate(
+            { _id: req.body.userId },
+            { 
+                $pull: { favorites: req.params.id },
+            },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(500).json({ message: err })
+    }
+}

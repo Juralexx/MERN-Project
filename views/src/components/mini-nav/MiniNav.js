@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux'
 import { NavLink } from "react-router-dom";
 import { BsFillCaretDownFill, BsChatRightTextFill } from 'react-icons/bs'
 import { IoNotifications } from 'react-icons/io5'
-import SettingsMenu from "./tools/SettingsMenu";
+import SettingsMenu from "../tools/SettingsMenu";
+import NotificationsMenu from "./Notifications";
 
 const MiniNav = () => {
     const userData = useSelector((state) => state.userReducer)
-    const [isOpen, setOpen] = useState(true)
+    const [openSettingsMenu, setOpenSettingsMenu] = useState(true)
+    const [openNotificationsMenu, setOpenNotificationsMenu] = useState(true)
     const avatar = {
         backgroundImage: "url(" + userData.picture + ")",
         backgroundRepeat: "no-repeat",
@@ -30,12 +32,12 @@ const MiniNav = () => {
                             <BsChatRightTextFill />
                         </NavLink>
                     </li>
-                    <li className="to-notifications">
+                    <li className="to-notifications" onClick={() => setOpenNotificationsMenu(!openNotificationsMenu)}>
                         <div>
                             <IoNotifications />
                         </div>
                     </li>
-                    <li className="to-settings-menu" onClick={() => setOpen(!isOpen)}>
+                    <li className="to-settings-menu" onClick={() => setOpenSettingsMenu(!openSettingsMenu)}>
                         <div>
                             <BsFillCaretDownFill />
                         </div>
@@ -43,7 +45,10 @@ const MiniNav = () => {
                 </ul>
             </div>
             <>
-                {!isOpen && (<SettingsMenu />)}
+                {!openSettingsMenu && (<SettingsMenu />)}
+            </>
+            <>
+                {!openNotificationsMenu && (<NotificationsMenu />)}
             </>
         </>
     )

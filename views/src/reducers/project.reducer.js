@@ -1,6 +1,5 @@
 import {
-    FOLLOW,
-    GET_PROJECT, LIKE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
+    FAVORITE, FOLLOW, GET_PROJECT, LIKE, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
     UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE,
     UPDATE_TITLEURL,
     UPDATE_WORKS
@@ -97,6 +96,26 @@ export default function projectReducer(state = initialState, action) {
                     return {
                         ...project,
                         followers: project.followers.filter((unfollowerId) => unfollowerId !== action.payload.followerId)
+                    }
+                }
+                return project
+            })
+        case FAVORITE:
+            return Object.keys(state).map((project) => {
+                if (project._id === action.payload.projectId) {
+                    return {
+                        ...project,
+                        favorites: [action.payload.userId, ...project.favorites]
+                    }
+                }
+                return project
+            })
+        case UNFAVORITE:
+            return Object.keys(state).map((project) => {
+                if (project._id === action.payload.projectId) {
+                    return {
+                        ...project,
+                        favorites: project.favorites.filter((userId) => userId !== action.payload.userId)
                     }
                 }
                 return project

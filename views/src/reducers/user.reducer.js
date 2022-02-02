@@ -1,6 +1,7 @@
 import { GET_USER, UPDATE_BIO, UPDATE_EMAIL, UPDATE_FACEBOOK, UPDATE_GENDER, UPDATE_INSTAGRAM, UPDATE_LASTNAME, UPDATE_LINKEDIN, UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_THEME, UPDATE_TWITTER, UPDATE_WEBSITE, UPDATE_WORK, UPDATE_YOUTUBE } from "../actions/user.action";
 import { DELETE_BIO, DELETE_FACEBOOK, DELETE_GENDER, DELETE_INSTAGRAM, DELETE_LASTNAME, DELETE_LINKEDIN, DELETE_LOCATION, DELETE_NAME, DELETE_PHONE, DELETE_TWITTER, DELETE_WEBSITE, DELETE_WORK, DELETE_YOUTUBE } from "../actions/user.action.delete";
 import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action.upload";
+import { CANCEL_SENT_FRIEND_REQUEST, SEND_FRIEND_REQUEST } from "../actions/user.action";
 
 const initialState = {}
 
@@ -180,6 +181,27 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 linkedin: action.payload
             }
+        case SEND_FRIEND_REQUEST:
+            return Object.keys(state).map((friend) => {
+                if (friend._id === action.payload.friendId) {
+                    console.log('coucou')
+                    return {
+                        ...friend,
+                        friend_request: [action.payload.userId, ...friend.friend_request]
+                    }
+                }
+                return friend
+            })
+        case CANCEL_SENT_FRIEND_REQUEST:
+            return Object.keys(state).map((friend) => {
+                if (friend._id === action.payload.friendId) {
+                    return {
+                        ...friend,
+                        friend_request: friend.friend_request.filter((userId) => userId !== action.payload.userId)
+                    }
+                }
+                return friend
+            })
 
         default:
             return state;

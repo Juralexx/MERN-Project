@@ -9,6 +9,7 @@ import FollowButton from '../components/project/my-projects/FollowButton';
 import Loader from '../components/tools/Loader';
 import LikersModal from '../components/project/my-projects/LikersModal';
 import FollowersModal from '../components/project/my-projects/FollowersModal';
+import FavoriteButton from '../components/project/my-projects/FavoriteButton';
 
 const UserProjects = () => {
     const { pseudo } = useParams()
@@ -88,6 +89,9 @@ const UserProjects = () => {
                                             <div className="description"><p dangerouslySetInnerHTML={getDescription()}></p></div>
 
                                             <div className="action-container">
+                                                <div className="content">
+                                                    <FavoriteButton project={element} />
+                                                </div>
                                                 <div className="content">
                                                     <LikersModal project={element} />
                                                 </div>

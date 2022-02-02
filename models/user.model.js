@@ -61,26 +61,16 @@ const UserModel = new mongoose.Schema(
             },
         },
 
-        location: {
-            type: String,
-            default: null,
-        },
-        department: {
-            type: String,
-            default: null,
-        },
-        region: {
-            type: String,
-            default: null,
-        },
-        new_region: {
-            type: String,
-            default: null,
-        },
-        country: {
-            type: String,
-            default: null,
-        },
+        location: { type: String, },
+
+        department: { type: String, },
+
+        region: { type: String, },
+
+        new_region: { type: String, },
+
+        country: { type: String, },
+
 
         picture: {
             type: String,
@@ -110,57 +100,41 @@ const UserModel = new mongoose.Schema(
             },
         },
 
-        bio: {
-            type: String,
-            maxlength: 1024
-        },
+        bio: { type: String },
 
-        website: {
-            type: String
-        },
+        website: { type: String },
 
-        facebook: { 
-            type: String 
-        },
-        instagram: { 
-            type: String 
-        },
-        twitter: { 
-            type: String 
-        },
-        youtube: { 
-            type: String 
-        },
-        linkedin: { 
-            type: String 
-        },
+        facebook: { type: String },
 
-        theme: {
-            type: String,
-            default: "dark"
-        },
+        instagram: { type: String },
 
-        current_projects: {
-            type: [String]
-        },
+        twitter: { type: String },
+
+        youtube: { type: String },
+
+        linkedin: { type: String },
+
+        friends: { type: [String] },
+
+        friend_request_sent: { type: [String] },
+
+        friend_request: { type: [String] },
+
+        current_projects: { type: [String] },
 
         number_of_current_projects: {
             type: Number,
             default: 0
         },
 
-        completed_projects: {
-            type: [String]
-        },
+        completed_projects: { type: [String] },
 
         number_of_completed_projects: {
             type: Number,
             default: 0
         },
 
-        created_projects: {
-            type: [String]
-        },
+        created_projects: { type: [String] },
 
         number_of_created_projects: {
             type: Number,
@@ -172,18 +146,21 @@ const UserModel = new mongoose.Schema(
             default: 0
         },
 
-        following: {
-            type: [String]
-        },
+        following: { type: [String] },
 
         likes: {
             type: Number,
             default: 0
         },
 
-        projects_liked: {
-            type: [String]
-        }
+        projects_liked: { type: [String] },
+
+        favorites: { type: [String] },
+
+        theme: {
+            type: String,
+            default: "dark"
+        },
     },
     {
         timestamps: true,

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UidContext } from "./AppContext";
-import MiniNav from "./MiniNav";
+import MiniNav from "./mini-nav/MiniNav";
 import { AiOutlineHome, AiOutlineUnorderedList, AiOutlineFundProjectionScreen } from 'react-icons/ai'
 import { IoPersonCircleSharp } from 'react-icons/io5'
 import { RiLoginCircleLine } from 'react-icons/ri'

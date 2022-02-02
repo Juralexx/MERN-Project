@@ -120,7 +120,7 @@ const LocationUpdater = () => {
     const openLocationUpdater = () => {
         return (
             <div className="auto-container">
-                <input placeholder="Rechercher mon adresse" defaultValue={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
+                <input placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                 {!isEmpty && display && isResponse && (
                     <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
                         {locationsFound.map((element, key) => {
