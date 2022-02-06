@@ -66,7 +66,7 @@ const UploadImg = () => {
       dispatch(uploadProfilPicture(data, userData._id))
 
       if (error) {
-        return error
+        return 'crotte'
       } else {
         Swal.fire({
           icon: 'success',

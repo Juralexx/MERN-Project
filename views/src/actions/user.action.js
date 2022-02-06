@@ -20,10 +20,12 @@ export const UPDATE_LINKEDIN = "UPDATE_LINKEDIN"
 
 export const SEND_FRIEND_REQUEST = "SEND_FRIEND_REQUEST"
 export const CANCEL_SENT_FRIEND_REQUEST = "CANCEL_SENT_FRIEND_REQUEST"
+export const ACCEPT_FRIEND_REQUEST = "ACCEPT_FRIEND_REQUEST"
+export const REFUSE_FRIEND_REQUEST = "REFUSE_FRIEND_REQUEST"
 
 export const getUser = (uid) => {
-    return (dispatch) => {
-        return axios
+    return async (dispatch) => {
+        await axios
             .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
             .then((res) => {
                 dispatch({ type: GET_USER, payload: res.data })
@@ -33,8 +35,8 @@ export const getUser = (uid) => {
 }
 
 export const updatePseudo = (userId, pseudo) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { pseudo }
@@ -61,8 +63,8 @@ export const updateEmail = (userId, email) => {
 }
 
 export const updateName = (userId, name) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { name },
@@ -79,8 +81,8 @@ export const updateName = (userId, name) => {
 }
 
 export const updateLastname = (userId, lastname) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { lastname },
@@ -97,8 +99,8 @@ export const updateLastname = (userId, lastname) => {
 }
 
 export const updateGender = (userId, gender) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { gender },
@@ -115,8 +117,8 @@ export const updateGender = (userId, gender) => {
 }
 
 export const updateLocation = (userId, location, department, region, new_region) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { location, department, region, new_region }
@@ -129,8 +131,8 @@ export const updateLocation = (userId, location, department, region, new_region)
 }
 
 export const updateWork = (userId, work) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { work }
@@ -143,8 +145,8 @@ export const updateWork = (userId, work) => {
 }
 
 export const updatePhone = (userId, phone) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { phone }
@@ -157,8 +159,8 @@ export const updatePhone = (userId, phone) => {
 }
 
 export const updateBio = (userId, bio) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { bio }
@@ -171,8 +173,8 @@ export const updateBio = (userId, bio) => {
 }
 
 export const updateTheme = (userId, theme) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { theme }
@@ -185,8 +187,8 @@ export const updateTheme = (userId, theme) => {
 }
 
 export const updateWebsite = (userId, website) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { website }
@@ -199,8 +201,8 @@ export const updateWebsite = (userId, website) => {
 }
 
 export const updateFacebook = (userId, facebook) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { facebook }
@@ -213,8 +215,8 @@ export const updateFacebook = (userId, facebook) => {
 }
 
 export const updateInstagram = (userId, instagram) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { instagram }
@@ -227,8 +229,8 @@ export const updateInstagram = (userId, instagram) => {
 }
 
 export const updateTwitter = (userId, twitter) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { twitter }
@@ -241,8 +243,8 @@ export const updateTwitter = (userId, twitter) => {
 }
 
 export const updateYoutube = (userId, youtube) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { youtube }
@@ -255,8 +257,8 @@ export const updateYoutube = (userId, youtube) => {
 }
 
 export const updateLinkedin = (userId, linkedin) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { linkedin }
@@ -291,6 +293,34 @@ export const cancelSentFriendRequest = (friendId, userId) => {
         })
             .then((res) => {
                 dispatch({ type: CANCEL_SENT_FRIEND_REQUEST, payload: { friendId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const acceptFriendRequest = (friendId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/accept-friend-request/` + userId,
+            data: { friendId }
+        })
+            .then((res) => {
+                dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { friendId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const refuseFriendRequest = (friendId, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/refuse-friend-request/` + userId,
+            data: { friendId }
+        })
+            .then((res) => {
+                dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { friendId, userId } })
             })
             .catch((err) => console.log(err))
     }

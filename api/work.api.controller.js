@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import WorkApiModel from './workapi.model.js';
+import WorkApiModel from './work.api.model.js';
 
 export const getWorks = (req, res) => {
     WorkApiModel.find((err, docs) => {

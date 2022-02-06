@@ -28,6 +28,11 @@ body {
         max-width : 1366px;
     }
 
+    a {
+        text-decoration: none !important;
+        color : var(--color-text-one);
+    }
+    
     p {
         font-size : 15px;
     }

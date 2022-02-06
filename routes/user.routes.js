@@ -19,8 +19,8 @@ userRoutes.put('/:id', updateUser)
 userRoutes.delete('/:id', deleteUser)
 userRoutes.get('/profil/:pseudo', findUser)
 
-userRoutes.post('/upload', upload.single('file'), uploadProfilPicture)
-userRoutes.post('/upload/cover', upload.single('file'), uploadCoverPicture)
+userRoutes.post('/upload/:id', upload.single('file'), uploadProfilPicture)
+userRoutes.post('/upload/cover/:id', upload.single('file'), uploadCoverPicture)
 userRoutes.put('/upload/delete/:id', deleteProfilPicture)
 userRoutes.put('/upload/delete/cover/:id', deleteCoverPicture)
 

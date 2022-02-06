@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import LocationApiModel from './locationapi.model.js';
+import LocationApiModel from './location.api.model.js';
 
 export const getLocation = (req, res) => {
     LocationApiModel.find((err, docs) => {

@@ -63,6 +63,10 @@ body {
 body .container {
   max-width: 1366px;
 }
+body a {
+  text-decoration: none !important;
+  color: var(--color-text-one);
+}
 body p {
   font-size: 15px;
 }
@@ -279,7 +283,7 @@ h5 {
   z-index: 1;
   position: relative;
   margin: 0;
-  padding: 8px 10px 12px;
+  padding: 8px 20px 12px;
   border: none;
   overflow: hidden;
   text-decoration: none;
@@ -288,6 +292,14 @@ h5 {
   font-size: 14px;
   line-height: 20px;
   background: #0050D7;
+}
+
+.btn-primary {
+  background-color: #0050D7;
+}
+
+.btn-secondary {
+  background-color: var(--color-body);
 }
 
 .fileUpload {
@@ -649,7 +661,6 @@ h5 {
   background: var(--color-content);
   padding: 10px;
   width: 400px;
-  height: 200px;
 }
 .user-info-modal .top {
   display: -webkit-box;
@@ -657,7 +668,6 @@ h5 {
   display: flex;
 }
 .user-info-modal .top .left {
-  height: 200px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2253,6 +2263,170 @@ header nav .navbar-container ul li a.activeLink svg path {
   background: #232323;
 }
 
+.messenger {
+  height: calc(100vh - 60px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.messenger .conversation-menu {
+  -webkit-box-flex: 3.5;
+      -ms-flex: 3.5;
+          flex: 3.5;
+}
+.messenger .conversation-menu .conversation-menu-input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: var(--color-content);
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.messenger .conversation-menu .conversation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border-bottom: 1px solid #393939;
+}
+.messenger .conversation-menu .conversation:hover {
+  background: #2c2b2b;
+}
+.messenger .conversation-menu .conversation .conversation-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+.messenger .conversation-menu .conversation .conversation-name {
+  margin: 0px;
+}
+.messenger .conversation-menu .conversation .last-message-wrapper {
+  margin: 0px;
+  font-size: 12px;
+}
+.messenger .conversation-box {
+  -webkit-box-flex: 5.5;
+      -ms-flex: 5.5;
+          flex: 5.5;
+}
+.messenger .conversation-box .conversation-box-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+}
+.messenger .conversation-box .conversation-box-wrapper .conversation-top {
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 10px;
+  background: var(--color-content);
+}
+.messenger .conversation-box .message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 20px;
+}
+.messenger .conversation-box .message .message-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.messenger .conversation-box .message .message-top .message-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+.messenger .conversation-box .message .message-top .message-text {
+  background-color: #0b66ff;
+  padding: 6px 10px 7px;
+  border-radius: 5px;
+  max-width: 300px;
+  color: white;
+  margin-bottom: 5px;
+}
+.messenger .conversation-box .message .message-bottom .time-ago {
+  font-size: 12px;
+}
+.messenger .conversation-box .message.own {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+.messenger .conversation-box .message.own .message-text {
+  background-color: #f7f4f4;
+  color: #232323;
+}
+.messenger .conversation-box .conversation-bottom {
+  padding: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.messenger .conversation-box .conversation-bottom .conversation-input {
+  width: 500px;
+  min-height: 40px;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+.messenger .online-users-container {
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+}
+.messenger .online-users-container .online-users-wrapper .online-users {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  position: relative;
+  margin-top: 10px;
+}
+.messenger .online-users-container .online-users-wrapper .online-users .online-user-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+.messenger .online-users-container .online-users-wrapper .online-users .online-badge {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: limegreen;
+  bottom: 0;
+  left: 0;
+}
+.messenger .online-users-wrapper, .messenger .conversation-menu-wrapper {
+  padding: 10px;
+  height: 100%;
+}
+
 .settings-menu {
   width: 300px;
   height: auto;
@@ -2420,8 +2594,46 @@ header nav .navbar-container ul li a.activeLink svg path {
 .right-menu {
   position: absolute;
   height: 100vh;
-  width: 250px;
+  width: 360px;
   background: var(--color-content);
-  right: 15px;
+  right: 25px;
   top: 60px;
+  height: auto;
+  padding: 15px;
+  border-radius: 5px;
+}
+.right-menu h2 {
+  margin-bottom: 20px;
+}
+.right-menu .notification-card {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 10px;
+  border-radius: 5px;
+}
+.right-menu .notification-card:hover {
+  background-color: var(--color-body);
+}
+.right-menu .notification-card .left {
+  padding: 0 10px 0 0;
+}
+.right-menu .notification-card .left .avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 30px;
+}
+.right-menu .notification-card .right p {
+  margin-bottom: 5px;
+  line-height: 18px;
+}
+.right-menu .notification-card .right span {
+  font-size: 14px;
+  color: #0050D7;
+  font-style: italic;
+}
+.right-menu .notification-card .right .btn {
+  margin: 0 5px;
 }

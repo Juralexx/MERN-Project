@@ -114,11 +114,29 @@ const UserModel = new mongoose.Schema(
 
         linkedin: { type: String },
 
-        friends: { type: [String] },
+        friends: {
+            type: [],
+            friend: {
+                type: String,
+                requestedAt: Date,
+            }
+        },
 
-        friend_request_sent: { type: [String] },
+        friend_request_sent: {
+            type: [],
+            friend: {
+                type: String,
+                requestedAt: Date,
+            }
+        },
 
-        friend_request: { type: [String] },
+        friend_request: {
+            type: [],
+            friend: {
+                type: String,
+                requestedAt: Date,
+            }
+        },
 
         current_projects: { type: [String] },
 

@@ -18,6 +18,7 @@ import Project from '../../pages/Project'
 import UserProjects from '../../pages/UserProjects'
 import MostLiked from '../../pages/MostLiked'
 import SocialsNetworks from '../profil/about/update/SocialsNetworks'
+import Messenger from '../messenger/Messenger'
 
 function Index() {
   return (
@@ -47,6 +48,8 @@ function Index() {
         <Route path="project/:titleURL" element={<Project />} />
 
         <Route path="most-liked" element={<MostLiked />} />
+
+        <Route path="messenger" element={<Messenger />} />
 
         <Route path="*" element={ <Navigate to="/" /> } />
       </Routes>

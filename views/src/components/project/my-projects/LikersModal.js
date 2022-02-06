@@ -1,10 +1,10 @@
 import axios from "axios";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ImCross } from 'react-icons/im'
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io'
 import { NavLink } from "react-router-dom";
 import HoverModal from "./HoverModal";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { Popup } from 'reactjs-popup'
 import 'reactjs-popup/dist/index.css'
@@ -12,6 +12,7 @@ import { likeProject, unlikeProject } from '../../../actions/project.action';
 import { cancelSentFriendRequest, sendFriendRequest } from "../../../actions/user.action";
 
 const LikersModal = ({ project }) => {
+    const userData = useSelector((state) => state.userReducer)
     const [open, setOpen] = useState(false)
     const modalOpen = () => { setOpen(true) }
     const modalClose = () => { setOpen(false) }
@@ -20,15 +21,13 @@ const LikersModal = ({ project }) => {
 
     const [isModalOpen, setModalIsOpen] = useState(false)
     const [liker, setLiker] = useState([])
-    const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover", width: 50, height: 50 }) }
+    const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover", width: 50, height: 50, borderRadius: '30px', marginRight: '10px' }) }
 
     const uid = useContext(UidContext)
     const dispatch = useDispatch()
     const [liked, setLiked] = useState(false)
     const [action, setAction] = useState("")
     const [users, setUsers] = useState([]);
-
-    const [friendRequest, setFriendRequest] = useState(false)
 
     useEffect(() => {
         if (project.likers.includes(uid)) { setLiked(true) }
@@ -110,21 +109,39 @@ const LikersModal = ({ project }) => {
                                         <>
                                             {liker.map((element, key) => {
                                                 return (
-                                                    <div className="likers-followers-found" key={key}>
-                                                        <NavLink to={"/" + element.pseudo} onMouseEnter={() => handleOnHover(element._id)} onMouseLeave={closeUserModal} style={{ display: 'flex' }}>
+                                                    <div className="likers-followers-found" key={key} style={{ display: 'flex', justifyContent: 'space-between', margin: '9px 0' }}>
+                                                        <NavLink to={"/" + element.pseudo} onMouseEnter={() => handleOnHover(element._id)} onMouseLeave={closeUserModal} style={{ display: 'flex', alignItems: 'center' }}>
                                                             <div className="avatar" style={avatar(element.picture)}></div>
                                                             <p>{element.pseudo}</p>
                                                         </NavLink>
-                                                        {friendRequest ? (
-                                                            <button className="btn btn-primary" onClick={() => {
-                                                                dispatch(cancelSentFriendRequest(element._id, uid))
-                                                                setFriendRequest(false)
-                                                            }}>Annuler ma demande</button>
-                                                        ) : (
-                                                            <button className="btn btn-primary" onClick={() => {
+                                                        {userData.friend_request_sent
+                                                        && !userData.friend_request_sent.some((object) => object.friend === element._id)
+                                                        && !userData.friends.some((object) => object.friend === element._id)
+                                                        && element._id !== uid
+                                                        && (
+                                                            <button className="btn btn-secondary" onClick={() => {
                                                                 dispatch(sendFriendRequest(element._id, uid))
-                                                                setFriendRequest(true)
                                                             }}>Ajouter en ami</button>
+                                                        )}
+                                                        {userData.friend_request_sent
+                                                        && userData.friend_request_sent.some((object) => object.friend === element._id)
+                                                        && element._id !== uid
+                                                        && (
+                                                            <button className="btn btn-secondary" onClick={() => {
+                                                                dispatch(cancelSentFriendRequest(element._id, uid))
+                                                            }}>Annuler ma demande</button>
+                                                        )}
+                                                        {!userData.friend_request_sent
+                                                        && element._id !== uid
+                                                        && (
+                                                            <button className="btn btn-secondary" onClick={() => {
+                                                                dispatch(sendFriendRequest(element._id, uid))
+                                                            }}>Ajouter en ami</button>
+                                                        )}
+                                                        {userData.friends
+                                                        && userData.friends.some((object) => object.friend === element._id)
+                                                        && (
+                                                            <button className="btn btn-secondary">Vous êtes ami</button>
                                                         )}
                                                     </div>
                                                 )

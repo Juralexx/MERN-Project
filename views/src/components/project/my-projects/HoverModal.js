@@ -18,8 +18,8 @@ const HoverModal = ({ user }) => {
                 </div>
             </div>
             <div className="bottom">
-                <button className="btn btn-primary"><NavLink to={"/" + user.pseudo}>Voir le profil</NavLink></button>
-                <button className="btn btn-primary"><NavLink to={"/projects/" + user.pseudo}>Voir les projets</NavLink></button>
+                <button className="btn btn-secondary"><NavLink to={"/" + user.pseudo}>Voir le profil</NavLink></button>
+                <button className="btn btn-secondary"><NavLink to={"/projects/" + user.pseudo}>Voir les projets</NavLink></button>
             </div>
         </div>
     )

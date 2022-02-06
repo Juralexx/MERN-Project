@@ -8,17 +8,17 @@ export const DELETE_COVER_PICTURE = "DELETE_COVER_PICTURE"
 export const GET_UPLOAD_PROFIL_ERRORS = "GET_UPLOAD_PROFIL_ERRORS"
 export const GET_UPLOAD_COVER_ERRORS = "GET_UPLOAD_COVER_ERRORS"
 
-export const uploadProfilPicture = (data, id) => {
-    return (dispatch) => {
-        return axios
-            .post(`${process.env.REACT_APP_API_URL}api/user/upload/`, data)
+export const uploadProfilPicture = (data, userId) => {
+    return async (dispatch) => {
+        return await axios
+            .post(`${process.env.REACT_APP_API_URL}api/user/upload/${userId}`, data)
             .then((res) => {
                 if (res.data.message) {
                     dispatch({ type: GET_UPLOAD_PROFIL_ERRORS, payload: res.data.message })
                 } else {
                     console.log(res)
                     return axios
-                        .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
+                        .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                         .then((res) => {
                             dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture })
                         })
@@ -29,10 +29,10 @@ export const uploadProfilPicture = (data, id) => {
 }
 
 export const deleteProfilPicture = (userId, picture) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        return await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/${userId}` + userId,
             data: { picture },
         })
             .then((res) => {
@@ -46,16 +46,16 @@ export const deleteProfilPicture = (userId, picture) => {
     }
 }
 
-export const uploadCoverPicture = (data, id) => {
-    return (dispatch) => {
-        return axios
-            .post(`${process.env.REACT_APP_API_URL}api/user/upload/cover/`, data)
+export const uploadCoverPicture = (data, userId) => {
+    return async (dispatch) => {
+        return await axios
+            .post(`${process.env.REACT_APP_API_URL}api/user/upload/cover/${userId}`, data)
             .then((res) => {
                 if (res.data.message) {
                     dispatch({ type: GET_UPLOAD_PROFIL_ERRORS, payload: res.data.message })
                 } else {
                     return axios
-                        .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
+                        .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                         .then((res) => {
                             dispatch({ type: UPLOAD_COVER_PICTURE, payload: res.data.cover_picture })
                             console.log(res)
@@ -67,10 +67,10 @@ export const uploadCoverPicture = (data, id) => {
 }
 
 export const deleteCoverPicture = (userId, cover_picture) => {
-    return (dispatch) => {
-        return axios({
+    return async (dispatch) => {
+        return await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/cover/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/cover/${userId}` + userId,
             data: { cover_picture },
         })
             .then((res) => {

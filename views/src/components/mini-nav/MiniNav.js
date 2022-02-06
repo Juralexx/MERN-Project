@@ -28,7 +28,7 @@ const MiniNav = () => {
                         </NavLink>
                     </li>
                     <li className="to-messages">
-                        <NavLink to="/">
+                        <NavLink to="/messenger">
                             <BsChatRightTextFill />
                         </NavLink>
                     </li>

@@ -50,7 +50,7 @@ const SwiperBloc = () => {
             keyboard={{ enabled: true }}
             mousewheel={true}
             modules={[Navigation, Keyboard, Mousewheel]}
-            style={{ maxWidth: 1020 }}
+            style={{ maxWidth: 1120 }}
         >
             {sortedTable.map((element, key) => {
                 var description = element.content[0].ops
