@@ -2298,15 +2298,27 @@ header nav .navbar-container ul li a.activeLink svg path {
   background: #2c2b2b;
 }
 .messenger .conversation-menu .conversation .conversation-img {
-  width: 36px;
-  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   border-radius: 20px;
   margin-right: 10px;
 }
-.messenger .conversation-menu .conversation .conversation-name {
-  margin: 0px;
+.messenger .conversation-menu .conversation .conversation-infos {
+  width: 100%;
 }
-.messenger .conversation-menu .conversation .last-message-wrapper {
+.messenger .conversation-menu .conversation .conversation-infos .conversation-name {
+  margin: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.messenger .conversation-menu .conversation .conversation-infos .conversation-name span {
+  font-size: 12px;
+}
+.messenger .conversation-menu .conversation .conversation-infos .last-message-wrapper {
   margin: 0px;
   font-size: 12px;
 }

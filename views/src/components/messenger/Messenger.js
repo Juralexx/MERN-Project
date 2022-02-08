@@ -6,6 +6,7 @@ import Message from './Message';
 import OnlineUsers from './OnlineUsers';
 import { io } from 'socket.io-client'
 import { useSelector } from 'react-redux';
+import NewConversationModal from './NewConversationModal';
 
 const Messenger = () => {
     const uid = useContext(UidContext)
@@ -13,6 +14,7 @@ const Messenger = () => {
     const [conversations, setConversations] = useState([])
     const [conversationsFound, setConversationsFound] = useState(false)
     const [onlineUsers, setOnlineUsers] = useState([])
+    const [friends, setFriends] = useState([])
     const [currentChat, setCurrentChat] = useState(null)
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState()
@@ -42,6 +44,7 @@ const Messenger = () => {
         websocket.current.on("getUsers", async (users) => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
+                setFriends(response.data.friends)
                 setOnlineUsers(response.data.friends.filter((f) => users.some((u) => u.userId === f.friend)))
             } catch (err) {
                 console.log(err)
@@ -55,6 +58,15 @@ const Messenger = () => {
                 const res = await axios.get(`${process.env.REACT_APP_API_URL}api/conversations/${uid}`)
                 setConversations(res.data)
                 setConversationsFound(true)
+                const getLastMessage = res.data.map(async (element) => {
+                    return await axios.get(`${process.env.REACT_APP_API_URL}api/messages/${element._id}`)
+                        .then((res) => res.data)
+                        .catch((err) => console.error(err))
+                })
+                Promise.all(getLastMessage).then((res) => {
+                    setLastMessage(res)
+                    console.log(res)
+                })
             } catch (err) {
                 console.error(err)
             }
@@ -78,10 +90,10 @@ const Messenger = () => {
         const getMessages = async () => {
             const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/${currentChat._id}`)
             setMessages(response.data)
-            setLastMessage(messages.pop())
+            // setLastMessage(messages.pop())
         }
         getMessages()
-    }, [currentChat, messages])
+    }, [currentChat, messages.length])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -117,6 +129,7 @@ const Messenger = () => {
         <div className="messenger">
             <div className="conversation-menu">
                 <div className="conversation-menu-wrapper">
+                    <NewConversationModal friends={friends} currentId={uid} changeCurrentChat={setCurrentChat} />
                     <input placeholder="Rechercher une conversation..." className="conversation-menu-input" />
                     {conversations.map((element, key) => {
                         return (

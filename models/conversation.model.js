@@ -4,7 +4,13 @@ const ConversationModel = new mongoose.Schema(
     {
         members: {
             type: []
-        }
+        },
+        owner: {
+            type: String
+        },
+        creator: {
+            type: String
+        },
     },
     {
         timestamps: true

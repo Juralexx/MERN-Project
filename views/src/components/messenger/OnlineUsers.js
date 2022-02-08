@@ -46,7 +46,6 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat }) => {
   const handleClick = async (receiver) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}api/conversations/${currentId}`)
-      const member = [currentId, receiver._id]
       const conversationFound = response.data.filter(element => element.members.includes([currentId, receiver._id]))
 
       if (conversationFound === true) {

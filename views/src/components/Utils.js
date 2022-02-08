@@ -5,6 +5,13 @@ export const dateParser = (num) => {
     return date.toString()
 }
 
+export const dateParserWithoutYear = (num) => {
+    let options = { month: "short", day: "2-digit" }
+    let timestamp = Date.parse(num)
+    let date = new Date(timestamp).toLocaleDateString('fr-FR', options)
+    return date.toString()
+}
+
 export const timeFromNow = (time) => {
 
     // Get timestamps

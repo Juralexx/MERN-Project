@@ -4,7 +4,9 @@ import ConversationModel from '../models/conversation.model.js';
 
 conversationRoutes.post('/', async (req, res) => {
     const newConversation = new ConversationModel({
-        members: [req.body.senderId, req.body.receiverId],
+        members: req.body.members,
+        owner: req.body.owner, 
+        creator: req.body.creator
     })
 
     try {
