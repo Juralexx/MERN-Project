@@ -65,6 +65,18 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
         }
     }
 
+    const removeUserFromArray = (user) => {
+        var storedArray = array.slice()
+        var index = storedArray.find(id => id === user._id);
+        storedArray.splice(index, 1)
+        setArray(storedArray)
+
+        var storedPropertiesArray = propertiesArray.slice()
+        var propertiesIndex = storedPropertiesArray.indexOf(user);
+        storedPropertiesArray.splice(propertiesIndex, 1)
+        setPropertiesArray(storedPropertiesArray)
+    }
+
     return (
         <>
             <button className="btn btn-primary" onClick={modalOpen} style={{ width: "100%", marginBottom: 10 }}>Nouvelle conversation de groupe</button>
@@ -101,6 +113,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
                                     <div key={key} style={{ display: "flex" }}>
                                         <div style={avatar(element.picture)}></div>
                                         <p>{element.pseudo}</p>
+                                        <ImCross onClick={() => removeUserFromArray(element)}/>
                                     </div>
                                 )
                             })

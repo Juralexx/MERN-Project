@@ -18,7 +18,7 @@ const Messenger = () => {
     const [currentChat, setCurrentChat] = useState(null)
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState()
-    const [lastMessage, setLastMessage] = useState()
+    const [lastMessage, setLastMessage] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState(null)
     const scrollToLastMessage = useRef()
     const websocket = useRef()
@@ -65,7 +65,6 @@ const Messenger = () => {
                 })
                 Promise.all(getLastMessage).then((res) => {
                     setLastMessage(res)
-                    console.log(res)
                 })
             } catch (err) {
                 console.error(err)
@@ -100,6 +99,7 @@ const Messenger = () => {
         const message = {
             sender: uid,
             sender_pseudo: userData.pseudo,
+            sender_picture: userData.picture,
             text: newMessage,
             conversationId: currentChat._id,
         }
@@ -125,16 +125,45 @@ const Messenger = () => {
         scrollToLastMessage.current?.scrollIntoView()
     }, [messages])
 
+    const [searchQuery, setSearchQuery] = useState("")
+    const [isConversationInResult, setConversationsInResult] = useState([])
+    const [search, setSearch] = useState(false)
+    const isEmpty = !isConversationInResult || isConversationInResult.length === 0
+    const regexp = new RegExp(searchQuery, 'i');
+
+    const handleInputChange = (e) => {
+        setSearchQuery(e.target.value)
+    }
+
+    const searchConversation = () => {
+        if (!searchQuery || searchQuery.trim() === "") { return }
+        const response = conversations.filter(properties => regexp.test(properties.name))
+        if (searchQuery.length >= 2) {
+            setConversationsInResult(response)
+            setSearch(true)
+            if (isEmpty) {
+                setSearch(false)
+            }
+        } else {
+            setSearch(false)
+        }
+    }
+
     return (
         <div className="messenger">
             <div className="conversation-menu">
                 <div className="conversation-menu-wrapper">
                     <NewConversationModal friends={friends} currentId={uid} changeCurrentChat={setCurrentChat} />
-                    <input placeholder="Rechercher une conversation..." className="conversation-menu-input" />
+
+                    <input placeholder="Rechercher une conversation..." className="conversation-menu-input" value={searchQuery} onInput={handleInputChange} onChange={searchConversation} type="search" />
                     {conversations.map((element, key) => {
                         return (
-                            <div onClick={() => setCurrentChat(element)} key={key}>
-                                <Conversation conversation={element} displayLastMessage={lastMessage} />
+                            <div onClick={() => setCurrentChat(element)} key={key}
+                                style={{ display: search && isConversationInResult.indexOf(element) ? "none" : "block" }}>
+                                <Conversation
+                                    conversation={element}
+                                    displayLastMessage={lastMessage}
+                                />
                             </div>
                         )
                     })}

@@ -14,6 +14,10 @@ const MessageModel = new mongoose.Schema(
             type: String,
         },
 
+        sender_picture: {
+            type: String,
+        },
+
         text: {
             type: String
         }

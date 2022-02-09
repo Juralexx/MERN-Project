@@ -2,7 +2,13 @@ import mongoose from 'mongoose'
 
 const ConversationModel = new mongoose.Schema(
     {
-        members: {
+        name: {
+            type: String
+        },
+        members_id: {
+            type: []
+        },
+        members_pseudo: {
             type: []
         },
         owner: {

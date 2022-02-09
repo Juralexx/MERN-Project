@@ -84,7 +84,7 @@ const getUser = (userId) => {
 }
 
 io.on("connection", (socket) => {
-  console.log('Connexion au Websocket réussie !')
+  // console.log('Connexion au Websocket réussie !')
   socket.on("addUser", userId => {
     addUser(userId, socket.id)
     io.emit("getUsers", users)
@@ -99,7 +99,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("disconnect", () => {
-    console.log("Un utilisateur s'est déconnecté")
+    // console.log("Un utilisateur s'est déconnecté")
     removeUser(socket.id)
   })
 })
