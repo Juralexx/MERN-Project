@@ -35,8 +35,8 @@ function styleCompiler() {
 
 function watchTask() {
     browserSync.init({
-        watch: true
-        // port: 3000
+        watch: true,
+        port: 3000
         //    proxy: 'http://localhost:3000'
     })
     watch(paths.styles.srcWatched, styleCompiler);

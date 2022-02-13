@@ -71,7 +71,6 @@ const UserModel = new mongoose.Schema(
 
         country: { type: String, },
 
-
         picture: {
             type: String,
             default: "/img/random-user.png"
@@ -135,6 +134,14 @@ const UserModel = new mongoose.Schema(
             friend: {
                 type: String,
                 requestedAt: Date,
+            }
+        },
+
+        conversations: {
+            type: [],
+            conversation: {
+                type: String,
+                last_message_seen: String,
             }
         },
 

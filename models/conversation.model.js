@@ -5,11 +5,11 @@ const ConversationModel = new mongoose.Schema(
         name: {
             type: String
         },
-        members_id: {
-            type: []
-        },
-        members_pseudo: {
-            type: []
+        members: {
+            type: [],
+            id: String,
+            pseudo: String,
+            picture: String,
         },
         owner: {
             type: String
@@ -17,6 +17,13 @@ const ConversationModel = new mongoose.Schema(
         creator: {
             type: String
         },
+        messages: {
+            type: [],
+        },
+        last_message: {
+            type: String,
+            default: ""
+        }
     },
     {
         timestamps: true

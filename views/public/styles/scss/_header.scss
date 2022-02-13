@@ -1,0 +1,110 @@
+#header {
+    height     : 500px;
+    background : var(--color-input);
+
+    .header-inner {
+        display     : flex;
+        align-items : center;
+        height      : 100%;
+        width       : 900px;
+        padding     : 50px;
+        margin      : 0 auto;
+
+        .search-container {
+            margin : 0 auto;
+            width  : 100%;
+            height : auto;
+
+            .input-container {
+                display : flex;
+
+                .header-categories-btn {
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : space-between;
+                    width           : 500px;
+                    padding         : 13px;
+                    border          : none;
+                    background      : var(--color-content);
+                    margin-bottom   : 10px;
+                    border-radius   : 5px 0 0 5px;
+                    border-right    : 1px solid var(--color-body);
+                    cursor          : pointer;
+
+                    > div {
+                        display     : flex;
+                        align-items : center;
+
+                        svg {
+                            height       : 20px;
+                            width        : 20px;
+                            margin-right : 10px;
+                        }
+                    }
+
+                    svg:nth-child(2) {
+                        margin-top : 5px;
+                    }
+                }
+
+                .header-search-input {
+                    display       : flex;
+                    align-items   : center;
+                    width         : 100%;
+                    height        : 50px;
+                    padding       : 0 13px;
+                    margin-right  : 10px;
+                    background    : var(--color-content);
+                    border-radius : 0 5px 5px 0;
+                    
+                    input {
+                        width         : 100%;
+                        padding       : 5px;
+                        border        : none;
+                        border-radius : 0 5px 5px 0;
+                        background    : var(--color-content);
+                    }
+
+                    svg {
+                        height       : 22px;
+                        width        : 22px;
+                        margin-right : 10px;
+                    }
+                }
+
+                .header-location-input {
+                    display       : flex;
+                    align-items   : center;
+                    width         : 100%;
+                    height        : 50px;
+                    padding       : 0 13px;
+                    background    : var(--color-content);
+                    border-radius : 5px;
+                    
+                    input {
+                        width         : 100%;
+                        padding       : 5px;
+                        border        : none;
+                        border-radius : 5px;
+                        background    : var(--color-content);
+                    }
+
+                    svg {
+                        height       : 22px;
+                        width        : 22px;
+                        margin-right : 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.categories {
+    width         : 800px;
+    height        : 500px;
+    position      : absolute;
+    background    : var(--color-content);
+    border-radius : 5px;
+    z-index       : 2;
+}

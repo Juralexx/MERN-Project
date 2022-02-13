@@ -11,7 +11,6 @@ import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"
 import logger from "redux-logger"
-//
 
 const store = createStore(
   rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))

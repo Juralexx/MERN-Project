@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { ImCross } from 'react-icons/im'
+import { useSelector } from 'react-redux';
 
 const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
+    const userData = useSelector((state) => state.userReducer)
     const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover", width: 36, height: 36, borderRadius: 30, marginRight: 10 }) }
     const [open, setOpen] = useState(false)
     const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
@@ -12,7 +14,6 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
 
     const [friendsFound, setFriendsFound] = useState([])
     const [array, setArray] = useState([])
-    const [propertiesArray, setPropertiesArray] = useState([])
 
     useEffect(() => {
         const getFriends = async () => {
@@ -31,50 +32,38 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
     }, [friends])
 
     const createNewConversation = async () => {
+        var user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }
         const newConversation = await axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/conversations/`,
             data: {
-                members: [currentId, ...array],
+                members: [user, ...array],
                 owner: currentId, 
                 creator: currentId
             }
         })
         setArray([])
-        setPropertiesArray([])
         modalClose()
         changeCurrentChat(newConversation.data)
-        console.log(newConversation.data)
     }
 
     const pushUserInArray = (user) => {
         var userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture }
-        if (!array.includes(user._id)) {
-            setArray((array) => [...array, user._id])
-            setPropertiesArray((array) => [...array, userProperties])
+        if (!array.some((element) => element.id === user._id)) {
+            setArray((array) => [...array, userProperties])
         } else {
             var storedArray = array.slice()
-            var index = storedArray.indexOf(user._id);
+            var index = storedArray.findIndex(element => element.id === user._id && element.pseudo === user.pseudo)
             storedArray.splice(index, 1)
             setArray(storedArray)
-
-            var storedPropertiesArray = propertiesArray.slice()
-            var propertiesIndex = storedPropertiesArray.indexOf(user._id);
-            storedPropertiesArray.splice(propertiesIndex, 1)
-            setPropertiesArray(storedPropertiesArray)
         }
     }
 
     const removeUserFromArray = (user) => {
         var storedArray = array.slice()
-        var index = storedArray.find(id => id === user._id);
+        var index = storedArray.findIndex(element => element.id === user.id)
         storedArray.splice(index, 1)
         setArray(storedArray)
-
-        var storedPropertiesArray = propertiesArray.slice()
-        var propertiesIndex = storedPropertiesArray.indexOf(user);
-        storedPropertiesArray.splice(propertiesIndex, 1)
-        setPropertiesArray(storedPropertiesArray)
     }
 
     return (
@@ -82,7 +71,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
             <button className="btn btn-primary" onClick={modalOpen} style={{ width: "100%", marginBottom: 10 }}>Nouvelle conversation de groupe</button>
             <div className={containerClass}>
                 <div className="modal-inner">
-                    <div className="close-modal" onClick={() => { modalClose(); setArray([]); setPropertiesArray([]) }}><ImCross /></div>
+                    <div className="close-modal" onClick={() => { modalClose(); setArray([]) }}><ImCross /></div>
                     <div className='header'>
                     </div>
                     <div className='body'>
@@ -95,7 +84,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
                                             <div
                                                 key={key}
                                                 onClick={() => pushUserInArray(element)}
-                                                style={{ display: "flex", background: array.includes(element._id) ? "blue" : "" }}>
+                                                style={{ display: "flex", background: array.some(user => user.id === element._id) ? "blue" : "" }}>
 
                                                 <div style={avatar(element.picture)}></div>
                                                 <p>{element.pseudo}</p>
@@ -108,7 +97,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
                     </div>
                     <div style={{ marginTop: 30 }}>
                         {array.length > 0 && (
-                            propertiesArray.map((element, key) => {
+                            array.map((element, key) => {
                                 return (
                                     <div key={key} style={{ display: "flex" }}>
                                         <div style={avatar(element.picture)}></div>

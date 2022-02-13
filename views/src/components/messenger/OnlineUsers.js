@@ -1,26 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat }) => {
+const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat, setConversations, conversations }) => {
+  const userData = useSelector((state) => state.userReducer)
   const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }) }
-  const [friends, setFriends] = useState([])
   const [friendInfos, setFriendInfos] = useState([])
   const [onlineFriends, setOnlineFriends] = useState([])
-
-  useEffect(() => {
-    const getFriends = async () => {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${currentId}`)
-      setFriends(response.data.friends)
-    }
-    getFriends()
-  }, [currentId])
-
-  // useEffect(() => {
-  //   const onlineFriendsFound = friends.filter(object => onlineUsers.some(user => user.userId === object.friend))
-  //   setOnlineFriends(onlineFriendsFound)
-  //   console.log(onlineFriendsFound)
-  //   console.log(onlineUsers)
-  // }, [friends, onlineUsers])
 
   useEffect(() => {
     setOnlineFriends(onlineUsers)
@@ -46,21 +32,28 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat }) => {
   const handleClick = async (receiver) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}api/conversations/${currentId}`)
-      const conversationFound = response.data.filter(element => element.members.includes([currentId, receiver._id]))
+      var conversationFound = response.data.filter(element => element.members.length === 2)
+          conversationFound = conversationFound.filter(element => element.members[0].id === currentId || element.members[1].id === currentId)
+          conversationFound = conversationFound.find(element => element.members[0].id === receiver._id || element.members[1].id === receiver._id)
 
-      if (conversationFound === true) {
-        changeCurrentChat(receiver)
+      if (conversationFound) {
+        changeCurrentChat(conversationFound)
       } else {
         const createNewConversation = async () => {
-          const newConversation = await axios({
+          var user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }
+          var friend = { id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }
+          await axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/conversations/`,
             data: {
-              senderId: currentId,
-              receiverId: receiver._id
+              members: [user, friend],
+              owner: currentId,
+              creator: currentId
             }
+          }).then((res) => {
+            changeCurrentChat(res.data)
+            conversations.push(res.data)
           })
-          changeCurrentChat(newConversation.data)
         }
         createNewConversation()
       }
@@ -85,3 +78,12 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat }) => {
 };
 
 export default OnlineUsers;
+
+
+
+  // useEffect(() => {
+  //   const onlineFriendsFound = friends.filter(object => onlineUsers.some(user => user.userId === object.friend))
+  //   setOnlineFriends(onlineFriendsFound)
+  //   console.log(onlineFriendsFound)
+  //   console.log(onlineUsers)
+  // }, [friends, onlineUsers])

@@ -14,7 +14,7 @@ const Message = ({ message, own }) => {
                 </p>
             </div>
             <div className="message-bottom">
-                <p className="time-ago">il y a {formatDistance(new Date(message.createdAt), new Date(), { locale: fr, includeSeconds: true })}</p>
+                <p className="time-ago">{formatDistance(new Date(message.createdAt), new Date(), { locale: fr, includeSeconds: true })}</p>
             </div>
         </div>
     );

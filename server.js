@@ -59,7 +59,7 @@ const server = app.listen(PORT, () => {
 })
 
 /*************************************************************/
-/************************** WEBSOCKET ************************/
+/************************ WEBSOCKET **************************/
 
 import { Server } from "socket.io";
 const io = new Server(server, {
@@ -70,36 +70,81 @@ const io = new Server(server, {
 
 let users = []
 
-const addUser = (userId, socketId) => {
-  !users.some(user => user.userId === userId) &&
-    users.push({ userId, socketId })
+const addUser = (userId, socketId, conversationId, allConversations) => {
+  !users.some(user => user.userId === userId)
+    && users.push({ userId, socketId, conversationId, allConversations })
 }
 
-const removeUser = (socketId) => {
-  users = users.filter(user => user.socketId !== socketId)
-}
-
-const getUser = (userId) => {
-  return users.find(user => user.userId === userId)
-}
-
-io.on("connection", (socket) => {
-  // console.log('Connexion au Websocket réussie !')
-  socket.on("addUser", userId => {
-    addUser(userId, socket.id)
+io.on("connect", (socket) => {
+  socket.on("addUser", ({ userId, conversationId, allConversations }) => {
+    addUser(userId, socket.id, conversationId, allConversations)
     io.emit("getUsers", users)
   })
 
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-    const user = getUser(receiverId)
-    io.to(user.socketId).emit("getMessage", {
-      senderId,
-      text,
-    })
+  socket.on("changeCurrentConversation", ({ userId, conversationId }) => {
+    var user = users.filter(member => member.userId === userId)
+    user[0].conversationId = conversationId
   })
 
+  socket.on("sendMessage", ({ senderId, sender_pseudo, receiverId, text, conversationId, createdAt, conversation }) => {
+    var receiver = users.filter(member => member.userId === receiverId)
+    var user = receiver[0]
+    if (user && user.conversationId === conversationId && user.allConversations.includes(conversationId)) {
+      return io.to(user.socketId).emit("getMessage", {
+        senderId,
+        text,
+        conversationId
+      })
+    }
+    if (user && user.conversationId !== conversationId && user.allConversations.includes(conversationId)) {
+      return io.to(user.socketId).emit("getNotification", {
+        senderId,
+        sender_pseudo,
+        text,
+        conversationId,
+        createdAt,
+      })
+    }
+    if (user && user.conversationId !== conversationId && !user.allConversations.includes(conversationId)) {
+      return io.to(user.socketId).emit("addConversations", {
+        senderId,
+        sender_pseudo,
+        text,
+        conversationId,
+        createdAt,
+        conversation,
+      })
+    }
+  })
+
+  socket.on('typing', ({ sender, receiverId, conversationId }) => {
+    var receiver = users.filter(member => member.userId === receiverId)
+    var user = receiver[0]
+    if (user) {
+      if (user.conversationId === conversationId) {
+        return io.to(user.socketId).emit('typing', {
+          sender,
+          conversationId
+        })
+      }
+    }
+  })
+
+  socket.on('deleteConversation', ({ receiverId, conversationId }) => {
+    var receiver = users.filter(member => member.userId === receiverId)
+    var user = receiver[0]
+    if (user) {
+      return io.to(user.socketId).emit('deleteConversation', {
+        conversationId
+      })
+    }
+  })
+
+  const removeUser = (socketId) => {
+    users = users.filter(user => user.socketId !== socketId)
+  }
+
   socket.on("disconnect", () => {
-    // console.log("Un utilisateur s'est déconnecté")
     removeUser(socket.id)
   })
 })
