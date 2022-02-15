@@ -570,14 +570,15 @@ h5 {
   }
 }
 .modal-container {
-  position: fixed;
+  position: absolute;
   border-radius: 6px;
   background: var(--color-content);
   width: 600px;
   height: auto;
   left: 50%;
-  top: 20%;
-  margin-left: -300px;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   display: none;
   z-index: 1050;
 }
@@ -592,8 +593,8 @@ h5 {
 .modal-container.hide-modal {
   opacity: 0;
   visibility: hidden;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+  -webkit-transform: scale(1.1) translate(-50%, -50%);
+          transform: scale(1.1) translate(-50%, -50%);
   -webkit-transition: visibility 0s linear 0.25s, opacity 0.25s 0s, -webkit-transform 0.25s;
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, -webkit-transform 0.25s;
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
@@ -605,8 +606,8 @@ h5 {
 .modal-container.modal-container-active.show-modal {
   opacity: 1;
   visibility: visible;
-  -webkit-transform: scale(1);
-          transform: scale(1);
+  -webkit-transform: scale(1) translate(-50%, -50%);
+          transform: scale(1) translate(-50%, -50%);
   -webkit-transition: visibility 0s linear 0s, opacity 0.25s 0s, -webkit-transform 0.25s;
   transition: visibility 0s linear 0s, opacity 0.25s 0s, -webkit-transform 0.25s;
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
@@ -778,18 +779,24 @@ h5 {
           justify-content: center;
 }
 
-.user-info-modal {
+.user-info-modal-container {
   position: absolute;
-  background: var(--color-content);
-  padding: 10px;
-  width: 400px;
+  bottom: 30px;
+  left: -140px;
+  padding: 20px;
 }
-.user-info-modal .top {
+.user-info-modal-container .user-info-modal {
+  background: var(--color-content);
+  width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+}
+.user-info-modal-container .user-info-modal .top {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.user-info-modal .top .left {
+.user-info-modal-container .user-info-modal .top .left {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -800,21 +807,40 @@ h5 {
       -ms-flex-pack: center;
           justify-content: center;
 }
-.user-info-modal .top .left .avatar {
+.user-info-modal-container .user-info-modal .top .left .avatar {
   width: 90px;
   height: 90px;
   border-radius: 50px;
 }
-.user-info-modal .bottom {
+.user-info-modal-container .user-info-modal .bottom {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: auto;
 }
-.user-info-modal .bottom .btn {
+.user-info-modal-container .user-info-modal .bottom .btn {
   width: 100%;
   margin: 0 5px;
+}
+
+.likers-followers-found {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 9px 0;
+  position: relative;
+}
+.likers-followers-found .modal-list-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .map-container {
@@ -2579,6 +2605,129 @@ header nav .navbar-container ul li a.activeLink svg path {
   width: 65px;
 }
 .messenger .conversation-box .message {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px 10px;
+  width: 100%;
+  border-radius: 5px;
+}
+.messenger .conversation-box .message:hover {
+  background: var(--color-content);
+}
+.messenger .conversation-box .message .message-left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 3px;
+}
+.messenger .conversation-box .message .message-left .message-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.messenger .conversation-box .message .message-right {
+  position: relative;
+}
+.messenger .conversation-box .message .message-right .message-right-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  margin-bottom: 3px;
+}
+.messenger .conversation-box .message .message-right .message-right-top .message-sender {
+  margin-right: 7px;
+  font-weight: 500;
+}
+.messenger .conversation-box .message .message-right .message-right-top .time-ago {
+  font-size: 12px;
+}
+.messenger .conversation-box .message .message-right .message-text {
+  margin: 0 0 5px 0;
+  width: 100%;
+  color: white;
+}
+.messenger .conversation-box .message .message-right .emoji-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.messenger .conversation-box .message .message-right .emoji-container .emoji {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 35px;
+  height: 26px;
+  margin-right: 5px;
+  border-radius: 15px;
+  background: rgba(99, 102, 241, 0.45);
+  border: 1px solid #6366f1;
+}
+.messenger .conversation-box .message .message-right .emoji-container .emoji-add {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 35px;
+  height: 26px;
+  margin-right: 5px;
+  border-radius: 15px;
+  background: var(--color-body);
+  cursor: pointer;
+}
+.messenger .conversation-box .message .message-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: -10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: var(--color-body);
+  cursor: pointer;
+}
+.messenger .conversation-box .message .message-actions .message-actions-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 5px;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+.messenger .conversation-box .message .message-actions .message-actions-btn svg {
+  width: 14px;
+  height: 14px;
+}
+.messenger .conversation-box .message .message-actions .message-actions-btn:hover {
+  background: var(--color-content);
+}
+.messenger .conversation-box .message .message-actions .message-tools-menu {
+  position: absolute;
+  right: 0;
+  top: -75px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2586,40 +2735,20 @@ header nav .navbar-container ul li a.activeLink svg path {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-top: 20px;
+  background: var(--color-body);
+  padding: 5px;
 }
-.messenger .conversation-box .message .message-top {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.messenger .conversation-box .message .message-top .message-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 20px;
-  margin-right: 10px;
-}
-.messenger .conversation-box .message .message-top .message-text {
-  background-color: #9294f5;
-  padding: 6px 10px 7px;
+.messenger .conversation-box .message .message-actions .message-tools-menu button {
+  width: 100%;
+  background: transparent;
   border-radius: 5px;
-  max-width: 300px;
+  padding: 5px 10px;
+  border: none;
   color: white;
-  margin-bottom: 5px;
-}
-.messenger .conversation-box .message .message-bottom .time-ago {
-  font-size: 12px;
-}
-.messenger .conversation-box .message.own {
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-}
-.messenger .conversation-box .message.own .message-text {
-  background-color: #f7f4f4;
-  color: #232323;
+  font-size: 14px;
 }
 .messenger .conversation-box .conversation-bottom {
+  position: relative;
   padding: 10px 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2637,6 +2766,11 @@ header nav .navbar-container ul li a.activeLink svg path {
   padding: 10px;
   border: none;
   outline: none;
+}
+.messenger .conversation-box .conversation-bottom .emoji-picker-container {
+  position: absolute;
+  right: 0;
+  bottom: 70px;
 }
 .messenger .online-users-container {
   -webkit-box-flex: 3;

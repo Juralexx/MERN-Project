@@ -175,47 +175,132 @@
         }
 
         .message {
-            display        : flex;
-            flex-direction : column;
-            margin-top     : 20px;
+            position      : relative;
+            display       : flex;
+            padding       : 5px 10px;
+            width         : 100%;
+            border-radius : 5px;
 
-            .message-top {
-                display : flex;
+            &:hover {
+                background : var(--color-content);
+            }
+
+            .message-left {
+                display     : flex;
+                padding-top : 3px;
 
                 .message-img {
                     width         : 32px;
                     height        : 32px;
-                    border-radius : 20px;
+                    border-radius : 5px;
                     margin-right  : 10px;
                 }
+            }
+
+            .message-right {
+                position : relative;
+
+                .message-right-top {
+                    display       : flex;
+                    align-items   : flex-end;
+                    margin-bottom : 3px;
+
+                    .message-sender {
+                        margin-right : 7px;
+                        font-weight  : 500;
+                    }
+
+                    .time-ago {
+                        font-size : 12px;
+                    }
+                }
 
                 .message-text {
-                    background-color : lighten($primary-color, 10%);
-                    padding          : 6px 10px 7px;
-                    border-radius    : 5px;
-                    max-width        : 300px;
-                    color            : white;
-                    margin-bottom    : 5px;
+                    margin : 0 0 5px 0;
+                    width  : 100%;
+                    color  : white;
+                }
+
+                .emoji-container {
+                    display : flex;
+
+                    .emoji {
+                        display         : flex;
+                        align-items     : center;
+                        justify-content : center;
+                        width           : 35px;
+                        height          : 26px;
+                        margin-right    : 5px;
+                        border-radius   : 15px;
+                        background      : rgba($primary-color, 0.45);
+                        border          : 1px solid $primary-color;
+                    }
+                    .emoji-add {
+                        display         : flex;
+                        align-items     : center;
+                        justify-content : center;
+                        width           : 35px;
+                        height          : 26px;
+                        margin-right    : 5px;
+                        border-radius   : 15px;
+                        background      : var(--color-body);
+                        cursor          : pointer;
+                    }
                 }
             }
 
-            .message-bottom {
-                .time-ago {
-                    font-size : 12px;
-                }
-            }
+            .message-actions {
+                display       : flex;
+                position      : absolute;
+                right         : 0;
+                top           : -10px;
+                padding       : 5px 10px;
+                border-radius : 5px;
+                background    : var(--color-body);
+                cursor        : pointer;
 
-            &.own {
-                align-items : flex-end;
-                
-                .message-text {
-                    background-color : rgb(247, 244, 244);
-                    color            : rgb(35, 35, 35);
+                .message-actions-btn {
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : center;
+                    padding         : 5px;
+                    margin          : 0 5px;
+                    border-radius   : 5px;
+
+                    svg {
+                        width  : 14px;
+                        height : 14px;
+                    }
+
+                    &:hover {
+                        background : var(--color-content);
+                    }
+                }
+
+                .message-tools-menu {
+                    position       : absolute;
+                    right          : 0;
+                    top            : -75px;
+                    display        : flex;
+                    flex-direction : column;
+                    background     : var(--color-body);
+                    padding        : 5px;
+
+                    button {
+                        width         : 100%;
+                        background    : transparent;
+                        border-radius : 5px;
+                        padding       : 5px 10px;
+                        border        : none;
+                        color         : white;
+                        font-size     : 14px;
+                    }
                 }
             }
         }
 
         .conversation-bottom {
+            position        : relative;
             padding         : 10px 0;
             display         : flex;
             align-items     : center;
@@ -227,6 +312,12 @@
                 padding    : 10px;
                 border     : none;
                 outline    : none;
+            }
+
+            .emoji-picker-container {
+                position : absolute;
+                right    : 0;
+                bottom   : 70px;
             }
         }
     }

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
+    "emoji-mart": "^3.0.1",
     "node-emoji": "^1.11.0",
     "quill-delta": "^4.2.2",
     "quill-delta-to-html": "^0.12.0",

@@ -52,7 +52,7 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat, setConversatio
             }
           }).then((res) => {
             changeCurrentChat(res.data)
-            conversations.push(res.data)
+            setConversations(conversations => [...conversations, res.data])
           })
         }
         createNewConversation()

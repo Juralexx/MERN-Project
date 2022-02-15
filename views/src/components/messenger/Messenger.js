@@ -10,6 +10,7 @@ import NewConversationModal from './NewConversationModal';
 import { AiOutlineInfoCircle } from 'react-icons/ai'
 import { FaTrashAlt } from 'react-icons/fa'
 import { ThreeDots } from 'react-loading-icons'
+import EmojiPicker from './EmojiPicker';
 
 const Messenger = () => {
     const avatar = (props) => {
@@ -40,6 +41,7 @@ const Messenger = () => {
     const [whereIsTyping, setWhereIsTyping] = useState("")
     const scrollToTyper = useRef()
     const [openConvMenu, setOpenConvMenu] = useState(false)
+    const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
 
     const getMembers = (conversation) => {
         const array = conversation.members.slice()
@@ -82,8 +84,8 @@ const Messenger = () => {
                 conversationId: data.conversationId,
                 createdAt: Date.now()
             })
-            conversations.push(addConversation)
-            setConversations(conversations)
+            // conversations.push(addConversation)
+            setConversations(conversations => [...conversations, addConversation])
         })
         
         websocket.current.on("deleteConversation", data => {
@@ -92,8 +94,6 @@ const Messenger = () => {
             setConversations(conversations)
         })
     }, [])
-
-    console.log(whereIsTyping)
 
     useEffect(() => {
         if (currentChat) {
@@ -344,7 +344,7 @@ const Messenger = () => {
                                 {messages.map((message, key) => {
                                     return (
                                         <div ref={scrollToLastMessage} key={key}>
-                                            <Message message={message} own={message.sender === uid} />
+                                            <Message message={message} own={message.sender === uid} uniqueKey={key} />
                                         </div>
                                     )
                                 })}
@@ -360,6 +360,8 @@ const Messenger = () => {
                     )}
                     <div className="conversation-bottom">
                         <textarea ref={inputField} className="conversation-input" placeholder="Écrire..." onInput={(e) => setNewMessage(e.target.value)} defaultValue={newMessage}></textarea>
+                        <button className="btn btn-secondary" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}> Emojis</button>
+                        {openEmojiPicker && <EmojiPicker />}
                         <button className="btn btn-secondary" onClick={handleSubmit}>Envoyer</button>
                     </div>
                 </div>

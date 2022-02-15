@@ -5,7 +5,7 @@ const MessageModel = new mongoose.Schema(
         conversationId: {
             type: String
         },
-        
+
         sender: {
             type: String,
         },
@@ -20,6 +20,13 @@ const MessageModel = new mongoose.Schema(
 
         text: {
             type: String
+        },
+
+        emojis: {
+            type: [],
+            emojis: {
+                emoji_sender: String
+            },
         }
     },
     {
