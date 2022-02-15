@@ -130,6 +130,10 @@ io.on("connect", (socket) => {
     }
   })
 
+  socket.on('emoji', () => {
+    
+  })
+
   socket.on('deleteConversation', ({ receiverId, conversationId }) => {
     var receiver = users.filter(member => member.userId === receiverId)
     var user = receiver[0]
