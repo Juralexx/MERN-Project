@@ -15,7 +15,9 @@ const ConversationModel = new mongoose.Schema(
             type: String
         },
         creator: {
-            type: String
+            type: [],
+            id: String,
+            pseudo: String,
         },
         messages: {
             type: [],
@@ -23,7 +25,10 @@ const ConversationModel = new mongoose.Schema(
         last_message: {
             type: String,
             default: ""
-        }
+        },
+        description: {
+            type: String,
+        },
     },
     {
         timestamps: true

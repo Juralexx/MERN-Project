@@ -40,7 +40,7 @@ messageRoutes.get('/:conversationId', async (req, res) => {
 
 messageRoutes.get('/single/:messageId', async (req, res) => {
     try {
-        const messages = await MessageModel.find({ _id: req.params.messageId })
+        const messages = await MessageModel.findOne({ _id: req.params.messageId })
         res.status(200).json(messages)
     } catch (err) {
         res.status(400).json(err)

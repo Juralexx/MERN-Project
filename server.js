@@ -70,14 +70,14 @@ const io = new Server(server, {
 
 let users = []
 
-const addUser = (userId, socketId, conversationId, allConversations) => {
+const addUser = (userId, socketId, conversationId) => {
   !users.some(user => user.userId === userId)
-    && users.push({ userId, socketId, conversationId, allConversations })
+    && users.push({ userId, socketId, conversationId })
 }
 
 io.on("connect", (socket) => {
-  socket.on("addUser", ({ userId, conversationId, allConversations }) => {
-    addUser(userId, socket.id, conversationId, allConversations)
+  socket.on("addUser", ({ userId, conversationId }) => {
+    addUser(userId, socket.id, conversationId)
     io.emit("getUsers", users)
   })
 
@@ -86,33 +86,23 @@ io.on("connect", (socket) => {
     user[0].conversationId = conversationId
   })
 
-  socket.on("sendMessage", ({ senderId, sender_pseudo, receiverId, text, conversationId, createdAt, conversation }) => {
+  socket.on("sendMessage", ({ senderId, sender_pseudo, receiverId, text, conversationId, createdAt }) => {
     var receiver = users.filter(member => member.userId === receiverId)
     var user = receiver[0]
-    if (user && user.conversationId === conversationId && user.allConversations.includes(conversationId)) {
+    if (user && user.conversationId === conversationId) {
       return io.to(user.socketId).emit("getMessage", {
         senderId,
         text,
         conversationId
       })
     }
-    if (user && user.conversationId !== conversationId && user.allConversations.includes(conversationId)) {
+    if (user && user.conversationId !== conversationId) {
       return io.to(user.socketId).emit("getNotification", {
         senderId,
         sender_pseudo,
         text,
         conversationId,
         createdAt,
-      })
-    }
-    if (user && user.conversationId !== conversationId && !user.allConversations.includes(conversationId)) {
-      return io.to(user.socketId).emit("addConversations", {
-        senderId,
-        sender_pseudo,
-        text,
-        conversationId,
-        createdAt,
-        conversation,
       })
     }
   })

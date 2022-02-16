@@ -19,7 +19,7 @@ const MessageModel = new mongoose.Schema(
         },
 
         text: {
-            type: String
+            type: [],
         },
 
         emojis: {

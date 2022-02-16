@@ -4,6 +4,7 @@ import { UidContext } from '../AppContext';
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
 import { dateParserWithoutYear } from '../Utils'
+import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 
 const Conversation = ({ conversation, newMessage, notification }) => {
     const avatar = (props) => {
@@ -43,7 +44,7 @@ const Conversation = ({ conversation, newMessage, notification }) => {
             const getLastMessage = async () => {
                 try {
                     const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/single/${conversation.last_message}`)
-                    setLastMessageFound(response.data[0])
+                    setLastMessageFound(response.data)
                     setResponse(true)
                     if (lastMessageFound) {
                         getDate(lastMessageFound)
@@ -71,6 +72,13 @@ const Conversation = ({ conversation, newMessage, notification }) => {
             setDate('À l\'instant')
         }
     }, [notification, conversation._id])
+    
+    function getMessage() {
+        var callback = {}
+        var converter = new QuillDeltaToHtmlConverter(lastMessageFound.text[0].ops, callback)
+        var html = converter.convert(lastMessageFound.text[0].ops)
+        return ({ __html: html })
+    }
 
     return (
         <>
@@ -102,16 +110,16 @@ const Conversation = ({ conversation, newMessage, notification }) => {
                             <div className="conversation-date">{date}</div>
                         </div>
                         {lastMessageFound && (
-                            <p className="last-message-wrapper">
-                                <span className="last-message-pseudo">{lastMessageFound.sender_pseudo} : </span>
-                                <span className="last-message">{lastMessageFound.text}</span>
-                            </p>
+                            <div className="last-message-wrapper">
+                                <div className="last-message-pseudo">{lastMessageFound.sender_pseudo} :&nbsp;</div>
+                                <div className="last-message" dangerouslySetInnerHTML={getMessage()}></div>
+                            </div>
                         )}
                         {!lastMessageFound && (
-                            <p className="last-message-wrapper">
+                            <div className="last-message-wrapper">
                                 <span className="last-message-pseudo"></span>
                                 <span className="last-message"></span>
-                            </p>
+                            </div>
                         )}
                     </div>
                 </div>

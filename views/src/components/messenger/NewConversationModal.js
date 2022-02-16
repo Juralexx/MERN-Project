@@ -29,7 +29,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
             }
         }
         getFriends()
-    }, [friends])
+    }, [friends.length])
 
     const createNewConversation = async () => {
         var user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }

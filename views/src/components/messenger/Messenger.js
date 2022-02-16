@@ -12,6 +12,13 @@ import { FaTrashAlt } from 'react-icons/fa'
 import { ThreeDots } from 'react-loading-icons'
 import EmojiPicker from './EmojiPicker';
 
+import ReactQuill from "react-quill";
+import EditorToolbar, { modules, formats } from "./editor/EditorToolbar";
+import { IoSend } from 'react-icons/io5'
+import { BsEmojiSmile } from 'react-icons/bs'
+import { BiFontFamily } from 'react-icons/bi'
+import { FiAtSign } from 'react-icons/fi'
+
 const Messenger = () => {
     const avatar = (props) => {
         return ({
@@ -29,19 +36,20 @@ const Messenger = () => {
     const [onlineUsers, setOnlineUsers] = useState([])
     const [currentChat, setCurrentChat] = useState(null)
     const [messages, setMessages] = useState([])
-    const [newMessage, setNewMessage] = useState()
-    const [getNewMessage, setGetNewMessage] = useState()
+    const [newMessage, setNewMessage] = useState({})
+    const [getNewMessage, setGetNewMessage] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState("")
     const [notification, setNotification] = useState("")
     const [addConversation, setAddConversation] = useState("")
     const scrollToLastMessage = useRef()
     const websocket = useRef()
-    const inputField = useRef()
+    const quillRef = useRef()
     const [isTyping, setTyping] = useState(false)
     const [whereIsTyping, setWhereIsTyping] = useState("")
     const scrollToTyper = useRef()
     const [openConvMenu, setOpenConvMenu] = useState(false)
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
+    const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
 
     const getMembers = (conversation) => {
         const array = conversation.members.slice()
@@ -53,7 +61,6 @@ const Messenger = () => {
     useEffect(() => {
         websocket.current = io('ws://localhost:3001')
         websocket.current.on("getMessage", data => {
-            console.log('1')
             setArrivalMessage({
                 sender: data.senderId,
                 text: data.text,
@@ -63,7 +70,6 @@ const Messenger = () => {
             setWhereIsTyping("")
         })
         websocket.current.on("getNotification", data => {
-            console.log('2')
             setNotification({
                 sender: data.senderId,
                 sender_pseudo: data.sender_pseudo,
@@ -75,7 +81,6 @@ const Messenger = () => {
             setWhereIsTyping("")
         })
         websocket.current.on("addConversation", data => {
-            console.log('3')
             setAddConversation({
                 conversation: data.currentChat,
                 sender: data.senderId,
@@ -87,7 +92,7 @@ const Messenger = () => {
             // conversations.push(addConversation)
             setConversations(conversations => [...conversations, addConversation])
         })
-        
+
         websocket.current.on("deleteConversation", data => {
             const index = conversations.findIndex(conversation => conversation._id !== data.conversationId)
             conversations.splice(index, 1)
@@ -97,7 +102,7 @@ const Messenger = () => {
 
     useEffect(() => {
         if (currentChat) {
-            inputField.current.addEventListener("keypress", () => {
+            quillRef.current.addEventListener("keypress", () => {
                 const membersId = currentChat.members.filter(member => member.id !== uid)
                 var ids = []
                 membersId.map(member => { return ids = [...ids, member.id] })
@@ -141,8 +146,7 @@ const Messenger = () => {
             conversations.map((conversation) => { return conversationsIds.push(conversation._id) })
             websocket.current.emit("addUser", {
                 userId: uid,
-                conversationId: currentChat._id,
-                allConversations: conversationsIds
+                conversationId: currentChat._id
             })
         }
         websocket.current.on("getUsers", (users) => {
@@ -189,6 +193,13 @@ const Messenger = () => {
         }
     }, [currentChat, messages.length, arrivalMessage])
 
+    /*************************************************************************************** */
+    /************************************** INPUT ****************************************** */
+
+    const handleNewMessage = (text, delta, source, editor) => {
+        setNewMessage(editor.getContents());
+    }
+
     const handleSubmit = async (e) => {
         const message = {
             sender: uid,
@@ -207,9 +218,8 @@ const Messenger = () => {
                 senderId: uid,
                 sender_pseudo: userData.pseudo,
                 receiverId: memberId,
-                text: newMessage,
-                conversationId: currentChat._id,
-                conversation: currentChat,
+                text: newMessage.ops,
+                conversationId: currentChat._id
             })
         })
 
@@ -300,7 +310,6 @@ const Messenger = () => {
                     })}
                 </div>
             </div>
-
             <div className="conversation-box">
                 <div className="conversation-box-wrapper">
                     {currentChat ? (
@@ -344,7 +353,7 @@ const Messenger = () => {
                                 {messages.map((message, key) => {
                                     return (
                                         <div ref={scrollToLastMessage} key={key}>
-                                            <Message message={message} own={message.sender === uid} uniqueKey={key} />
+                                            <Message message={message} own={message.sender === uid} uniqueKey={key} userId={uid} />
                                         </div>
                                     )
                                 })}
@@ -359,10 +368,30 @@ const Messenger = () => {
                         <p>Créer votre première conversation pour commencer à chatter !</p>
                     )}
                     <div className="conversation-bottom">
-                        <textarea ref={inputField} className="conversation-input" placeholder="Écrire..." onInput={(e) => setNewMessage(e.target.value)} defaultValue={newMessage}></textarea>
-                        <button className="btn btn-secondary" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}> Emojis</button>
-                        {openEmojiPicker && <EmojiPicker />}
-                        <button className="btn btn-secondary" onClick={handleSubmit}>Envoyer</button>
+                        <div className="message-text-editor">
+                            <EditorToolbar display={openEditorToolbar} />
+                            <div ref={quillRef}>
+                                <ReactQuill
+                                    onChange={handleNewMessage}
+                                    value={newMessage}
+                                    placeholder={"Envoyer un message..."}
+                                    modules={modules}
+                                    formats={formats}
+                                />
+                            </div>
+                            <div className="content error"></div>
+                        </div>
+                        <div className="message-text-tools">
+                            <div className="left">
+                                <button className="btn btn-secondary" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><BsEmojiSmile /></button>
+                                {openEmojiPicker && <EmojiPicker />}
+                                <button className="btn btn-secondary"><FiAtSign /></button>
+                                <button className="btn btn-secondary" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
+                            </div>
+                            <div className="right">
+                                <button className="btn btn-secondary" onClick={handleSubmit}><IoSend /></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
