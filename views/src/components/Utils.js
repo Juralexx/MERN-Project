@@ -438,3 +438,46 @@ export const removeAccents = (string) => {
         return characterMap[match];
     });
 };
+
+// function compareDates(dateOne, index, array) {
+//     const firstDate = dateOne.substr(0, 10)
+//     if (index === 0) {
+//         setMessagesDates(key => [...key, index])
+//         console.log(messagesDates)
+//         return dateParser(firstDate)
+//     } else if (index > 0 && index < array.length - 2) {
+//         const secondDate = (array[index + 1].createdAt).substr(0, 10)
+//         if (firstDate === secondDate) { return null }
+//         else {
+//             setMessagesDates(key => [...key, index])
+//             console.log(messagesDates)
+//             return dateParser(firstDate)
+//         }
+//     } else if (index === array.length - 1) {
+//         const secondDate = (array[index - 1].createdAt).substr(0, 10)
+//         if (firstDate === secondDate) { return null }
+//         else {
+//             setMessagesDates(key => [...key, index])
+//             console.log(messagesDates)
+//             return dateParser(firstDate)
+//         }
+//     }
+// }
+
+
+// const firstDate = messages.createdAt.substr(0, 10)
+//                     if (index === 0) {
+//                         return setMessagesDates(key => [...key, index])
+//                     }
+//                     else if (index > 0 && index < array.length - 2) {
+//                         const secondDate = (array[index + 1].createdAt).substr(0, 10)
+//                         if (firstDate !== secondDate) {
+//                             return setMessagesDates(key => [...key, index])
+//                         } else return
+//                     }
+//                     else if (index === array.length - 1) {
+//                         const secondDate = (array[index - 1].createdAt).substr(0, 10)
+//                         if (firstDate !== secondDate) {
+//                             return setMessagesDates(key => [...key, index])
+//                         } else return
+//                     }

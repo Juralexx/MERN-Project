@@ -77,7 +77,7 @@ export const formats = [
 ];
 
 export const QuillToolbar = ({ display }) => (
-    <div id="toolbar">
+    <div id="toolbar" style={{display: display ? "block" : "none"}}>
         <span className="ql-formats">
             <button className="ql-bold" />
             <button className="ql-italic" />

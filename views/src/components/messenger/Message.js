@@ -13,6 +13,7 @@ const Message = ({ message, own, uniqueKey, userId }) => {
     const userData = useSelector((state) => state.userReducer)
     const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }) }
     const [hoveredCard, setHoveredCard] = useState(-1)
+    const [hoveredPopup, setHoveredPopup] = useState(-1)
     const [openToolsMenu, setOpenToolsMenu] = useState(false)
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
     const [emojis, setEmojis] = useState(message.emojis)
@@ -20,6 +21,9 @@ const Message = ({ message, own, uniqueKey, userId }) => {
 
     const showCardHandler = (key) => { setHoveredCard(key) }
     const hideCardHandler = () => { setHoveredCard(-1) }
+
+    const showPopupHandler = (key) => { setHoveredPopup(key) }
+    const hidePopupHandler = () => { setHoveredPopup(-1) }
 
     const handleEmoji = async (emoji) => {
         setEmojis([...emojis, emoji])
@@ -71,29 +75,38 @@ const Message = ({ message, own, uniqueKey, userId }) => {
             </div>
             <div className="message-right">
                 <div className="message-right-top">
-                    <div className="message-sender">{message.sender_pseudo}</div>
-                    <div className="time-ago">{getHourOnly(new Date(message.createdAt))}</div>
+                    <div className="message-sender">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))}</span></div>
                 </div>
 
                 {message && <div className="message-text" dangerouslySetInnerHTML={getMessage()}></div>}
 
                 {emojis && emojis.length > 0 && (
                     <div className="emoji-container">
-                        {emojis.map((emoji, i) => {
+                        {emojis.map((emoji, key) => {
                             return (
-                                <div className="emoji" key={i}>
-                                    <Emoji emoji={emoji} size={18} onClick={emoji.emoji_sender_id === userId && (() => deleteEmoji(emoji))} />
+                                <div className="emoji" key={key} onMouseEnter={() => showPopupHandler(key)} onMouseLeave={hidePopupHandler}>
+                                    <Emoji emoji={emoji} size={14} onClick={() => emoji.emoji_sender_id === userId && (deleteEmoji(emoji))} />
+                                    {hoveredPopup === key && (
+                                        <div className="emoji-popup">
+                                            <Emoji emoji={emoji} size={26} />
+                                            <p>{emoji.emoji_sender + " a réagit avec " + emoji.colons}</p>
+                                        </div>
+                                    )}
                                 </div>
                             )
                         })}
-                        <div className="emoji-add">
-                            <MdOutlineAddReaction onClick={() => setOpenEmojiPicker(true)} />
+                        <div className="emoji-add" onClick={() => setOpenEmojiPicker(!openEmojiPicker)} ref={wrapperRef}>
+                            <MdOutlineAddReaction />
                         </div>
                     </div>
                 )}
             </div>
+            {openEmojiPicker &&
+                <div ref={wrapperRef}>
+                    <Picker emoji="point_up" onClick={(emoji) => handleEmoji(emoji)} style={{ position: "absolute", top: -80, right: 0, transform: "scale(0.7)", zIndex: 10 }} />
+                </div>
+            }
             <div className="message-actions" ref={wrapperRef} style={{ display: hoveredCard === uniqueKey ? 'flex' : 'none' }}>
-                {openEmojiPicker && <Picker emoji="point_up" onClick={(emoji) => handleEmoji(emoji)} style={{ position: "absolute", top: -80, right: 0, transform: "scale(0.7)", zIndex: 10 }} />}
                 <div className="message-actions-btn"><Emoji emoji="thumbsup" size={16} /></div>
                 <div className="message-actions-btn"><Emoji emoji=":white_check_mark:" size={16} /></div>
                 <div className="message-actions-btn"><Emoji emoji=":grin:" size={16} /></div>

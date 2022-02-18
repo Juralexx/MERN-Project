@@ -56,7 +56,7 @@
 
                     .conversation-name {
                         display : flex;
-                        color:white;
+                        color   : white;
                     }
         
                     .conversation-date {
@@ -68,7 +68,7 @@
                     display   : flex;
                     margin    : 0px;
                     font-size : 12px;
-                    color: #dfdfdf;
+                    color     : #dfdfdf;
                     
                     p {
                         margin    : 0;
@@ -162,7 +162,7 @@
                 position   : relative;
                 height     : 100%;
                 overflow-y : auto;
-                padding    : 0 0 15px;
+                padding    : 15px 0;
                 background : var(--color-content-light);
 
                 .is-typing {
@@ -182,10 +182,60 @@
             }
         }
 
+        .messages-date {
+            display     : flex;
+            align-items : center;
+            position    : relative;
+            z-index     : 10;
+            cursor      : pointer;
+
+            svg {
+                width  : 20px;
+                height : 20px;
+            }
+
+            p {
+                padding       : 5px 10px;
+                text-align    : center;
+                width         : 160px;
+                margin        : 0 auto;
+                font-size     : 13px;
+                background    : var(--color-content);
+                border-radius : 30px;
+            }
+
+            .message-date-sort-tools {
+                background    : var(--color-content);
+                position      : absolute;
+                top           : 32px;
+                left          : 57%;
+                transform     : translateX(-50%);
+                padding       : 20px 0;
+                font-size     : 14px;
+                color         : white;
+                border-radius : 5px;
+
+                ul {
+                    list-style-type : none;
+                    padding         : 0;
+                    margin          : 0;
+
+                    li {
+                        white-space : nowrap;
+                        padding     : 5px 30px;
+                        &:hover {
+                            background : var(--color-body);
+                        }
+                    }
+                }
+
+            }
+        }
+
         .message {
             position      : relative;
             display       : flex;
-            padding       : 5px 20px;
+            padding       : 10px 20px;
             width         : 100%;
             border-radius : 5px;
 
@@ -194,12 +244,11 @@
             }
 
             .message-left {
-                display     : flex;
-                padding-top : 3px;
+                display : flex;
 
                 .message-img {
-                    width         : 32px;
-                    height        : 32px;
+                    width         : 38px;
+                    height        : 38px;
                     border-radius : 5px;
                     margin-right  : 10px;
                 }
@@ -214,35 +263,44 @@
                     margin-bottom : 3px;
 
                     .message-sender {
+                        font-size    : 15px;
+                        line-height  : 17px;
                         margin-right : 7px;
                         font-weight  : 500;
-                        color:white;
-                    }
+                        color        : white;
 
-                    .time-ago {
-                        font-size : 12px;
+                        span {
+                            margin-left : 5px;
+                            font-size   : 12px;
+                            line-height : 17px;
+                            color       : var(--color-text-one);
+                        }
                     }
                 }
 
                 .message-text {
                     margin : 0 0 5px 0;
-                    width  : 100%;
-                    color  : rgb(223, 223, 223);
+                    
+                    width : 100%;
+                    color : rgb(223, 223, 223);
 
                     p {
-                        margin:0;
+                        margin      : 0;
+                        line-height : 17px;
                     }
                 }
 
                 .emoji-container {
-                    display : flex;
+                    display     : flex;
+                    padding-top : 4px;
 
                     .emoji {
+                        position        : relative;
                         display         : flex;
                         align-items     : center;
                         justify-content : center;
-                        width           : 35px;
-                        height          : 26px;
+                        width           : 30px;
+                        height          : 22px;
                         margin-right    : 5px;
                         border-radius   : 15px;
                         background      : rgba($primary-color, 0.45);
@@ -252,8 +310,8 @@
                         display         : flex;
                         align-items     : center;
                         justify-content : center;
-                        width           : 35px;
-                        height          : 26px;
+                        width           : 30px;
+                        height          : 22px;
                         margin-right    : 5px;
                         border-radius   : 15px;
                         background      : var(--color-body);
@@ -319,9 +377,9 @@
             align-items     : center;
             justify-content : space-between;
             color           : white;
-            border-radius   : 0 0 5px 5px;
+            border-radius   : 5px;
             border          : 1px solid white;
-            margin-bottom:10px;
+            margin-bottom   : 10px;
 
             .message-text-editor {
                 width : 100%;
@@ -330,10 +388,10 @@
                     border : none;
                 }
                 .ql-snow .ql-stroke, .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
-                    stroke:white;
+                    stroke : white;
                 }
                 .ql-editor.ql-blank::before {
-                    color:white;
+                    color : white;
                 }
 
                 .conversation-input {
@@ -361,11 +419,11 @@
                 padding         : 0 10px 5px;
 
                 .left, .right {
-                    display:flex;
+                    display : flex;
                     .btn {
-                        padding : 5px 7px !important;
-                        display:flex;
-                        align-items: center;
+                        padding     : 5px 7px !important;
+                        display     : flex;
+                        align-items : center;
                     }
                 }
 
@@ -413,5 +471,50 @@
     .online-users-wrapper, .conversation-menu-wrapper {
         padding : 10px;
         height  : 100%;
+    }
+}
+
+.emoji-popup {
+    display         : flex;
+    flex-direction  : column;
+    justify-content : center;
+    align-items     : center;
+    position        : absolute;
+    bottom          : 30px;
+    background      : var(--color-body);
+    border-radius   : 5px;
+    padding         : 7px;
+
+    span {
+        padding       : 7px;
+        border-radius : 5px;
+        background    : var(--color-content);
+    }
+
+    p {
+        font-size   : 10px;
+        white-space : nowrap;
+        margin      : 0;
+    }
+}
+
+.conversation-scroll-btn {
+    position        : absolute;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : 160px;
+    left            : 49%;
+    transform       : translateX(-50%);
+    top             : -36px;
+    padding         : 3px 0;
+    font-size       : 13px;
+    border-radius   : 30px;
+    border          : 1px solid $primary-color;
+    background      : $primary-color;
+    color           : white;
+
+    span {
+        margin-right : 6px;
     }
 }

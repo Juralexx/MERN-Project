@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { UidContext } from '../AppContext';
 import Conversation from './Conversation';
 import Message from './Message';
@@ -18,6 +18,9 @@ import { IoSend } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { BiFontFamily } from 'react-icons/bi'
 import { FiAtSign } from 'react-icons/fi'
+import { dateParser } from '../Utils';
+import ScrollButton from './ScrollButton';
+import MessageDate from './MessageDate';
 
 const Messenger = () => {
     const avatar = (props) => {
@@ -44,12 +47,14 @@ const Messenger = () => {
     const scrollToLastMessage = useRef()
     const websocket = useRef()
     const quillRef = useRef()
+    const conversationContainer = useRef()
     const [isTyping, setTyping] = useState(false)
     const [whereIsTyping, setWhereIsTyping] = useState("")
     const scrollToTyper = useRef()
     const [openConvMenu, setOpenConvMenu] = useState(false)
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
     const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
+    const [messagesDates, setMessagesDates] = useState([])
 
     const getMembers = (conversation) => {
         const array = conversation.members.slice()
@@ -188,8 +193,19 @@ const Messenger = () => {
             const getMessages = async () => {
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/${currentChat._id}`)
                 setMessages(response.data)
+
+                var array = []
+                response.data.map((messages, key) => { array = [...array, { index: key, date: messages.createdAt.substr(0, 10) }] })
+                var filteredArray = []
+                array.filter((item) => {
+                    var i = filteredArray.findIndex(element => (element.date === item.date));
+                    if (i <= -1) { filteredArray.push(item) }
+                    return null;
+                });
+                setMessagesDates(filteredArray)
             }
             getMessages()
+
         }
     }, [currentChat, messages.length, arrivalMessage])
 
@@ -349,11 +365,16 @@ const Messenger = () => {
                                     )
                                 )}
                             </div>
-                            <div className="conversation-box-container">
+                            <div className="conversation-box-container custom-scrollbar" ref={conversationContainer}>
                                 {messages.map((message, key) => {
                                     return (
-                                        <div ref={scrollToLastMessage} key={key}>
-                                            <Message message={message} own={message.sender === uid} uniqueKey={key} userId={uid} />
+                                        <div key={key}>
+                                            {messagesDates.some(element => element.date === message.createdAt.substr(0, 10) && element.index === key) && (
+                                                <MessageDate message={message}/>
+                                            )}
+                                            <div ref={scrollToLastMessage}>
+                                                <Message message={message} own={message.sender === uid} uniqueKey={key} userId={uid} />
+                                            </div>
                                         </div>
                                     )
                                 })}
@@ -365,9 +386,12 @@ const Messenger = () => {
                             </div>
                         </>
                     ) : (
-                        <p>Créer votre première conversation pour commencer à chatter !</p>
+                        <div className="conversation-box-container">
+                            <p>Créer votre première conversation pour commencer à chatter !</p>
+                        </div>
                     )}
                     <div className="conversation-bottom">
+                        <ScrollButton conversationContainer={conversationContainer} scrollTo={scrollToLastMessage}/>
                         <div className="message-text-editor">
                             <EditorToolbar display={openEditorToolbar} />
                             <div ref={quillRef}>
