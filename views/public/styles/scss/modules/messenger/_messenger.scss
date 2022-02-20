@@ -27,6 +27,7 @@
 
             &.new-notification {
                 border : 1px solid $primary-color;
+                background : rgba($primary-color, 0.2);
             }
             
             .conversation-img-container {
@@ -164,21 +165,6 @@
                 overflow-y : auto;
                 padding    : 15px 0;
                 background : var(--color-content-light);
-
-                .is-typing {
-                    position      : absolute;
-                    bottom        : 0;
-                    font-size     : 14px;
-                    padding       : 5px 10px;
-                    background    : rgba($primary-color, 0.6);
-                    color         : white;
-                    border-radius : 5px;
-
-                    svg {
-                        max-height : 13px;
-                        width      : 65px;
-                    }
-                }
             }
         }
 
@@ -443,6 +429,23 @@
             border-radius   : 5px;
             border          : 1px solid white;
             margin-bottom   : 10px;
+
+            .is-typing {
+                position      : absolute;
+                font-size     : 12px;
+                top           : -32px;
+                right         : 20px;
+                padding       : 3px 10px;
+                background    : rgba($primary-color, 086);
+                color         : white;
+                border-radius : 5px;
+
+                svg {
+                    margin-left: 10px;
+                    max-height : 11px;
+                    width      : 30px;
+                }
+            }
 
             .message-text-editor {
                 width : 100%;

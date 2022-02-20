@@ -1,5 +1,5 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { ImCross } from 'react-icons/im'
 import { dateParser } from '../Utils'
 
@@ -7,12 +7,14 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
     const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
     const containerClass = open ? 'modal-container modal-container-active show-modal' : 'modal-container hide-modal'
     const modalClose = () => { setOpen(false) }
+    
     const [displayInfos, setDisplayInfos] = useState(true)
     const [displayMembers, setDisplayMembers] = useState(false)
     const [name, setName] = useState(conversation.name)
     const [changeName, setChangeName] = useState(false)
     const [description, setDescription] = useState(conversation.description)
     const [changeDescription, setChangeDescription] = useState(false)
+    
     const [addMember, setAddMember] = useState(false)
     const [membersToAdd, setMembersToAdd] = useState([])
 

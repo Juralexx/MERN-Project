@@ -8,7 +8,6 @@ import Message from './Message';
 import OnlineUsers from './OnlineUsers';
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
-import { ThreeDots } from 'react-loading-icons'
 import ConversationBottom from './ConversationBottom';
 
 const Messenger = () => {
@@ -16,29 +15,28 @@ const Messenger = () => {
     const userData = useSelector((state) => state.userReducer)
     const [conversations, setConversations] = useState([])
     const [conversationsFound, setConversationsFound] = useState(false)
+    /*=========================================================*/
     const [friends, setFriends] = useState([])
     const [onlineUsers, setOnlineUsers] = useState([])
     const [currentChat, setCurrentChat] = useState(null)
+    /*=========================================================*/
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState({})
     const [getNewMessage, setGetNewMessage] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState("")
     const [modifiedMessage, setModifiedMessage] = useState("")
+    const [messagesDates, setMessagesDates] = useState([])
+    /*=========================================================*/
     const [notification, setNotification] = useState("")
-    const [addConversation, setAddConversation] = useState("")
+    const [addedToConversation, setAddedToConversation] = useState(false)
+    /*=========================================================*/
+    const [isTyping, setTyping] = useState(false)
+    const [typingContext, setTypingContext] = useState("")
+    /*=========================================================*/
     const lastMessageRef = useRef()
+    const convWrapperRef = useRef()
     const websocket = useRef()
     const quillRef = useRef()
-    const convWrapperRef = useRef()
-    const [isTyping, setTyping] = useState(false)
-    const [whereIsTyping, setWhereIsTyping] = useState("")
-    const showTypingRef = useRef()
-    const [messagesDates, setMessagesDates] = useState([])
-
-    const getMembers = (conversation) => {
-        const members = conversation.members.filter(member => member.id !== uid)
-        return members
-    }
 
     useEffect(() => {
         websocket.current = io('ws://localhost:3001')
@@ -46,10 +44,10 @@ const Messenger = () => {
             setArrivalMessage({
                 sender: data.senderId,
                 text: data.text,
-                createdAt: Date.now()
+                createdAt: new Date().toISOString()
             })
             setTyping(false)
-            setWhereIsTyping("")
+            setTypingContext("")
         })
         websocket.current.on("getNotification", data => {
             setNotification({
@@ -57,34 +55,43 @@ const Messenger = () => {
                 sender_pseudo: data.sender_pseudo,
                 text: data.text,
                 conversationId: data.conversationId,
-                createdAt: Date.now()
+                createdAt: new Date().toISOString()
             })
             setTyping(false)
-            setWhereIsTyping("")
+            setTypingContext("")
         })
         websocket.current.on("addConversation", data => {
-            setAddConversation({
-                conversation: data.currentChat,
-                sender: data.senderId,
-                sender_pseudo: data.sender_pseudo,
-                text: data.text,
-                conversationId: data.conversationId,
-                createdAt: Date.now()
-            })
-            // conversations.push(addConversation)
-            setConversations(conversations => [...conversations, addConversation])
+            var newConversation = {
+                conversation: data.conversation
+            }
+            setAddedToConversation(false)
+            setConversations(conversations => [...conversations, newConversation])
         })
-
         websocket.current.on("deleteConversation", data => {
             const index = conversations.findIndex(conversation => conversation._id !== data.conversationId)
-            conversations.splice(index, 1)
-            setConversations(conversations)
+            setConversations(conversations.splice(index, 1))
+        })
+        websocket.current.on("modifyMessage", data => {
+            const array = messages.filter(message => message.conversationId === data.conversationId)
+            const mess = array.find(message => message._id === data.messageId)
+            mess.text = data.text
+            setMessages(messages => [...messages, mess])
+        })
+        websocket.current.on("deleteMessage", data => {
+            const array = messages.filter(message => message.conversationId === data.conversationId)
+            const index = array.findIndex(message => message._id === data.messageId)
+            setMessages(messages.splice(index, 1))
+        })
+        websocket.current.on("addEmoji", data => {
+            const mess = messages.find(message => message._id === data.messageId)
+            mess.emojis.push(data.emoji)
+            setMessages(messages => [...messages, mess])
         })
     }, [])
 
     useEffect(() => {
         if (currentChat) {
-            quillRef.current.addEventListener("keypress", () => {
+            function getTyping() {
                 const membersId = currentChat.members.filter(member => member.id !== uid)
                 var ids = []
                 membersId.map(member => { return ids = [...ids, member.id] })
@@ -96,15 +103,18 @@ const Messenger = () => {
                         conversationId: currentChat._id
                     })
                 })
-            })
+            }
 
             websocket.current.on('typing', data => {
                 setTyping(true)
-                setWhereIsTyping({
+                setTypingContext({
                     sender: data.sender,
                     conversationId: data.conversationId
                 })
             })
+
+            quillRef?.current?.addEventListener("keypress", getTyping)
+            return () => quillRef?.current?.removeEventListener("keypress", getTyping)
         }
     }, [currentChat])
 
@@ -171,15 +181,17 @@ const Messenger = () => {
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/${currentChat._id}`)
                 setMessages(response.data)
 
-                var array = []
-                response.data.map((messages, key) => { array = [...array, { index: key, date: messages.createdAt.substr(0, 10) }] })
-                var filteredArray = []
-                array.filter((item) => {
-                    var i = filteredArray.findIndex(element => (element.date === item.date));
-                    if (i <= -1) { filteredArray.push(item) }
-                    return null;
-                });
-                setMessagesDates(filteredArray)
+                if (!arrivalMessage) {
+                    var array = []
+                    response.data.map((messages, key) => { array = [...array, { index: key, date: messages.createdAt.substr(0, 10) }] })
+                    var filteredArray = []
+                    array.filter((item) => {
+                        var i = filteredArray.findIndex(element => (element.date === item.date));
+                        if (i <= -1) { filteredArray.push(item) }
+                        return null;
+                    });
+                    setMessagesDates(filteredArray)
+                }
             }
             getMessages()
 
@@ -187,7 +199,7 @@ const Messenger = () => {
     }, [currentChat, messages.length, arrivalMessage])
 
     /*************************************************************************************** */
-    /************************************** INPUT ****************************************** */
+    /************************************ FONCTIONS **************************************** */
 
     const handleSubmit = async (e) => {
         const message = {
@@ -198,16 +210,16 @@ const Messenger = () => {
             conversationId: currentChat._id,
         }
 
-        const membersId = currentChat.members.filter(member => member.id !== uid)
+        // const membersId = currentChat.members.filter(member => member.id !== uid)
         var ids = []
-        membersId.map(member => { return ids = [...ids, member.id] })
+        currentChat.members.map(member => { return ids = [...ids, member.id] })
 
         ids.map(memberId => {
             return websocket.current.emit("sendMessage", {
                 senderId: uid,
                 sender_pseudo: userData.pseudo,
                 receiverId: memberId,
-                text: newMessage.ops,
+                text: [newMessage],
                 conversationId: currentChat._id
             })
         })
@@ -223,17 +235,21 @@ const Messenger = () => {
     }
 
     useEffect(() => {
-        if (!isTyping)
-            lastMessageRef.current?.scrollIntoView()
-        else
-            showTypingRef.current?.scrollIntoView()
-    }, [messages, whereIsTyping])
+        lastMessageRef.current?.scrollIntoView()
+    }, [messages])
+
+    const getMembers = (conversation) => {
+        const members = conversation.members.filter(member => member.id !== uid)
+        return members
+    }
 
     const changeCurrentChat = (conversation) => {
-        websocket.current.emit("changeCurrentConversation", {
-            userId: uid,
-            conversationId: conversation._id
-        })
+        if (conversation) {
+            websocket.current.emit("changeCurrentConversation", {
+                userId: uid,
+                conversationId: conversation._id
+            })
+        }
     }
 
     const deleteConversation = async (element) => {
@@ -281,6 +297,17 @@ const Messenger = () => {
     }
 
     const deleteMessage = async (message) => {
+        var ids = []
+        currentChat.members.map(member => { return ids = [...ids, member.id] })
+
+        ids.map(memberId => {
+            return websocket.current.emit("deleteMessage", {
+                receiverId: memberId,
+                conversationId: currentChat._id,
+                messageId: message._id
+            })
+        })
+
         await axios
             .delete(`${process.env.REACT_APP_API_URL}api/messages/${message._id}`)
             .then((res) => res.data)
@@ -288,6 +315,17 @@ const Messenger = () => {
     }
 
     const modifyMessage = async (message) => {
+        var ids = []
+        currentChat.members.map(member => { return ids = [...ids, member.id] })
+        ids.map(memberId => {
+            return websocket.current.emit("modifyMessage", {
+                receiverId: memberId,
+                conversationId: currentChat._id,
+                messageId: message._id,
+                text: [modifiedMessage]
+            })
+        })
+
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/messages/single/${message._id}`,
@@ -300,11 +338,14 @@ const Messenger = () => {
             <ConversationsMenu
                 uid={uid}
                 friends={friends}
+                websocket={websocket}
                 setCurrentChat={setCurrentChat}
                 conversations={conversations}
+                setConversations={setConversations}
                 changeCurrentChat={changeCurrentChat}
                 getNewMessage={getNewMessage}
                 notification={notification}
+                addedToConversation={addedToConversation}
             />
             <div className="conversation-box">
                 <div className="conversation-box-wrapper">
@@ -332,20 +373,16 @@ const Messenger = () => {
                                                     own={message.sender === uid}
                                                     uniqueKey={key}
                                                     uid={uid}
+                                                    currentChat={currentChat}
+                                                    websocket={websocket}
                                                     modifyMessage={modifyMessage}
                                                     setModifiedMessage={setModifiedMessage}
                                                     deleteMessage={deleteMessage}
-                                                    quillRef={quillRef}
                                                 />
                                             </div>
                                         </div>
                                     )
                                 })}
-                                {isTyping && (
-                                    whereIsTyping.conversationId === currentChat._id && (
-                                        <div ref={showTypingRef} className="is-typing">{whereIsTyping.sender + " est en train d'écrire..."} <ThreeDots /></div>
-                                    )
-                                )}
                             </div>
                             <ConversationBottom
                                 convWrapperRef={convWrapperRef}
@@ -354,6 +391,9 @@ const Messenger = () => {
                                 setNewMessage={setNewMessage}
                                 newMessage={newMessage}
                                 handleSubmit={handleSubmit}
+                                typingContext={typingContext}
+                                currentChat={currentChat}
+                                isTyping={isTyping}
                             />
                         </>
                     ) : (
@@ -366,7 +406,13 @@ const Messenger = () => {
 
             <div className="online-users-container">
                 <div className="online-users-wrapper">
-                    <OnlineUsers onlineUsers={onlineUsers} currentId={uid} changeCurrentChat={setCurrentChat} setConversations={setConversations} conversations={conversations} />
+                    <OnlineUsers
+                        onlineUsers={onlineUsers}
+                        currentId={uid}
+                        changeCurrentChat={setCurrentChat}
+                        setConversations={setConversations}
+                        conversations={conversations}
+                    />
                 </div>
             </div>
         </div>

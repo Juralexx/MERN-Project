@@ -46,6 +46,7 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat, setConversatio
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/conversations/`,
             data: {
+              type: 'dialog',
               members: [user, friend],
               owner: currentId,
               creator: currentId

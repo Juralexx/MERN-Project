@@ -5,7 +5,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { useSelector } from 'react-redux';
 import { avatar } from '../tools/functions/useAvatar';
 
-const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
+const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket }) => {
     const userData = useSelector((state) => state.userReducer)
     const [open, setOpen] = useState(false)
     const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
@@ -41,7 +41,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
         else type = 'group'
 
         var user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }
-        const newConversation = await axios({
+        await axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/conversations/`,
             data: {
@@ -60,14 +60,22 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
                     picture: userData.picture
                 }
             }
+        }).then((res) => {
+            var ids = []
+            res.data.members.map(member => { return ids = [...ids, member.id] })
+            ids.map(memberId => {
+                return websocket.current.emit("addConversation", {
+                    receiverId: memberId,
+                    conversation: res.data
+                })
+            })
+            setArray([])
+            setDisplayMembers(true)
+            setDisplayInfos(false)
+            setName()
+            setDescription()
+            modalClose()
         })
-        setArray([])
-        setDisplayMembers(true)
-        setDisplayInfos(false)
-        setName()
-        setDescription()
-        modalClose()
-        changeCurrentChat(newConversation.data)
     }
 
     const pushUserInArray = (user) => {
@@ -173,7 +181,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat }) => {
                             <div className="left">
                                 <div className="title">Description</div>
                                 <div className="info">
-                                    <input className="conversation-menu-input" onChange={(e) => setDescription(e.target.value)} placeholder="Description de la conversation..." />
+                                    <textarea className="conversation-menu-input" onChange={(e) => setDescription(e.target.value)} placeholder="Description de la conversation..."></textarea>
                                 </div>
                             </div>
                         </div>

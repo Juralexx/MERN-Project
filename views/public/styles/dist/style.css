@@ -2487,6 +2487,7 @@ header nav .navbar-container ul li a.activeLink svg path {
 }
 .messenger .conversation-menu .conversation.new-notification {
   border: 1px solid #6366f1;
+  background: rgba(99, 102, 241, 0.2);
 }
 .messenger .conversation-menu .conversation .conversation-img-container {
   display: -webkit-box;
@@ -2639,19 +2640,6 @@ header nav .navbar-container ul li a.activeLink svg path {
   overflow-y: auto;
   padding: 15px 0;
   background: var(--color-content-light);
-}
-.messenger .conversation-box .conversation-box-wrapper .conversation-box-container .is-typing {
-  position: absolute;
-  bottom: 0;
-  font-size: 14px;
-  padding: 5px 10px;
-  background: rgba(99, 102, 241, 0.6);
-  color: white;
-  border-radius: 5px;
-}
-.messenger .conversation-box .conversation-box-wrapper .conversation-box-container .is-typing svg {
-  max-height: 13px;
-  width: 65px;
 }
 .messenger .conversation-box .messages-date {
   position: relative;
@@ -2952,6 +2940,21 @@ header nav .navbar-container ul li a.activeLink svg path {
   border-radius: 5px;
   border: 1px solid white;
   margin-bottom: 10px;
+}
+.messenger .conversation-box .conversation-bottom .is-typing {
+  position: absolute;
+  font-size: 12px;
+  top: -32px;
+  right: 20px;
+  padding: 3px 10px;
+  background: #6366f1;
+  color: white;
+  border-radius: 5px;
+}
+.messenger .conversation-box .conversation-bottom .is-typing svg {
+  margin-left: 10px;
+  max-height: 11px;
+  width: 30px;
 }
 .messenger .conversation-box .conversation-bottom .message-text-editor {
   width: 100%;

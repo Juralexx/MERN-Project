@@ -3,7 +3,7 @@ import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import { FaSearch } from 'react-icons/fa'
 
-const ConversationsMenu = ({ friends, uid, setCurrentChat, conversations, changeCurrentChat, getNewMessage, notification }) => {
+const ConversationsMenu = ({ friends, uid, setCurrentChat, conversations, changeCurrentChat, getNewMessage, notification, setConversations, websocket, addedToConversation }) => {
     const [isConversationInResult, setConversationsInResult] = useState([])
     const [openConversationsInput, setOpenConversationsInput] = useState(false)
     const [search, setSearch] = useState(false)
@@ -30,7 +30,13 @@ const ConversationsMenu = ({ friends, uid, setCurrentChat, conversations, change
             <div className="conversation-menu-wrapper">
                 <div style={{ display: "flex" }}>
                     <div className="btn btn-primary" onClick={() => setOpenConversationsInput(!openConversationsInput)} style={{ width: "100%", margin: "0 5px 10px 0" }}><FaSearch /></div>
-                    <NewConversationModal friends={friends} currentId={uid} changeCurrentChat={setCurrentChat} />
+                    <NewConversationModal
+                        friends={friends}
+                        currentId={uid}
+                        changeCurrentChat={setCurrentChat}
+                        websocket={websocket}
+                        setConversations={setConversations}
+                    />
                 </div>
                 {openConversationsInput &&
                     <input placeholder="Rechercher une conversation..." className="conversation-menu-input" value={searchQuery} onInput={handleInputChange} onChange={searchConversation} type="search" />
@@ -39,7 +45,12 @@ const ConversationsMenu = ({ friends, uid, setCurrentChat, conversations, change
                     return (
                         <div onClick={() => { setCurrentChat(element); changeCurrentChat(element) }} key={key}
                             style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}>
-                            <Conversation conversation={element} newMessage={getNewMessage} notification={notification} />
+                            <Conversation
+                                conversation={element}
+                                newMessage={getNewMessage}
+                                notification={notification}
+                                addedToConversation={addedToConversation}
+                            />
                         </div>
                     )
                 })}

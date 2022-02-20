@@ -5,12 +5,13 @@ import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./tools/EditorToolbar";
+import Typing from './tools/Typing';
 import { IoSend } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { BiFontFamily } from 'react-icons/bi'
 import { FiAtSign } from 'react-icons/fi'
 
-const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMessage, newMessage, handleSubmit }) => {
+const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMessage, newMessage, handleSubmit, typingContext, currentChat, isTyping }) => {
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
     const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
     const [cursorPosition, setCursorPosition] = useState()
@@ -36,6 +37,11 @@ const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMe
 
     return (
         <div className="conversation-bottom">
+            <Typing
+                typingContext={typingContext}
+                currentChat={currentChat}
+                isTyping={isTyping}
+            />
             <ScrollButton convWrapperRef={convWrapperRef?.current} scrollTo={lastMessageRef} />
             <div className="message-text-editor">
                 <EditorToolbar display={openEditorToolbar} />

@@ -4,7 +4,6 @@ import { UidContext } from "./components/AppContext"
 import axios from 'axios';
 import { getUser } from './actions/user.action';
 import { useDispatch } from 'react-redux'
-// import { io } from 'socket.io-client'
 
 function App() {
   const [uid, setUid] = useState(null)
@@ -25,8 +24,6 @@ function App() {
     if (uid) dispatch(getUser(uid))
   }, [uid])
 
-//   const websocket = useRef()
-//   websocket.current = io('ws://localhost:3001')
 //   const [onlineUsers, setOnlineUsers] = useState([])
 //   useEffect(() => {
 //     websocket.current.emit("addUser", uid)

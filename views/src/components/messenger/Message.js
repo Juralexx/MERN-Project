@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { avatar } from '../tools/functions/useAvatar';
 import { getHourOnly } from '../Utils';
-import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./tools/EditorToolbar";
 import { Picker } from 'emoji-mart'
@@ -16,8 +15,9 @@ import { IoSend } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { BiFontFamily } from 'react-icons/bi'
 import { FiAtSign } from 'react-icons/fi'
+import { convertEditorToHTML, convertEditorToString } from './tools/function';
 
-const Message = ({ message, own, uniqueKey, uid, quillRef, setModifiedMessage, modifyMessage, deleteMessage }) => {
+const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModifiedMessage, modifyMessage, deleteMessage }) => {
     const userData = useSelector((state) => state.userReducer)
     const [hoveredCard, setHoveredCard] = useState(-1)
     const [hoveredPopup, setHoveredPopup] = useState(-1)
@@ -33,16 +33,21 @@ const Message = ({ message, own, uniqueKey, uid, quillRef, setModifiedMessage, m
     const showCardHandler = (key) => { setHoveredCard(key); setHovered(true) }
     const hideCardHandler = () => { setHoveredCard(-1); setHovered(false) }
 
-    useEffect(() => {
-        if (!hovered)
-            setOpenEmojiPicker(false)
-        setOpenToolsMenu(false)
-    }, [hovered])
-
     const showPopupHandler = (key) => { setHoveredPopup(key) }
     const hidePopupHandler = () => { setHoveredPopup(-1) }
 
     const handleEmoji = async (emoji) => {
+        var ids = []
+        currentChat.members.map(member => { return ids = [...ids, member.id] })
+        ids.map(memberId => {
+            return websocket.current.emit("addEmoji", {
+                receiverId: memberId,
+                conversationId: currentChat._id,
+                messageId: message._id,
+                emoji: emoji
+            })
+        })
+
         setEmojis([...emojis, emoji])
         Object.assign(emoji, { emoji_sender: userData.pseudo, emoji_sender_id: uid })
         await axios({
@@ -68,20 +73,6 @@ const Message = ({ message, own, uniqueKey, uid, quillRef, setModifiedMessage, m
 
     useClickOutside(wrapperRef, setOpenEmojiPicker)
 
-    function getMessage() {
-        var callback = {}
-        var converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
-        var html = converter.convert(message.text[0].ops)
-        return ({ __html: html })
-    }
-
-    function getDefaultMessage() {
-        var callback = {}
-        var converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
-        var html = converter.convert(message.text[0].ops)
-        return html
-    }
-
     const handleModifiedMessage = (text, delta, source, editor) => {
         setModifiedMessage(editor.getContents());
         setModified(true)
@@ -97,16 +88,16 @@ const Message = ({ message, own, uniqueKey, uid, quillRef, setModifiedMessage, m
                     <div className="message-sender">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))}</span></div>
                 </div>
 
-                {message && messageToModify !== uniqueKey && <div className="message-text" dangerouslySetInnerHTML={getMessage()}></div>}
+                {message && messageToModify !== uniqueKey && <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>}
 
                 {message && messageToModify === uniqueKey &&
                     <>
                         <div className="message-text-editor">
                             <EditorToolbar display={openEditorToolbar} />
-                            <div ref={quillRef}>
+                            <div>
                                 <ReactQuill
                                     onChange={handleModifiedMessage}
-                                    defaultValue={getDefaultMessage()}
+                                    defaultValue={convertEditorToString(message)}
                                     placeholder={"Envoyer un message..."}
                                     modules={modules}
                                     formats={formats}
@@ -121,7 +112,7 @@ const Message = ({ message, own, uniqueKey, uid, quillRef, setModifiedMessage, m
                             </div>
                             <div className="right">
                                 <button className="btn btn-secondary" onClick={() => setMessageToModify(-1)}>Annuler</button>
-                                <button className="btn btn-secondary" disabled={!modified} onClick={() => modifyMessage(message)}><IoSend /></button>
+                                <button className="btn btn-secondary" disabled={!modified} onClick={() => {modifyMessage(message); setMessageToModify(-1)}}><IoSend /></button>
                             </div>
                         </div>
                     </>

@@ -120,8 +120,14 @@ io.on("connect", (socket) => {
     }
   })
 
-  socket.on('emoji', () => {
-    
+  socket.on('addConversation', ({ receiverId, conversation }) => {
+    var receiver = users.filter(member => member.userId === receiverId)
+    var user = receiver[0]
+    if (user) {
+      return io.to(user.socketId).emit('addConversation', {
+        conversation
+      })
+    }
   })
 
   socket.on('deleteConversation', ({ receiverId, conversationId }) => {
@@ -130,6 +136,41 @@ io.on("connect", (socket) => {
     if (user) {
       return io.to(user.socketId).emit('deleteConversation', {
         conversationId
+      })
+    }
+  })
+
+  socket.on('modifyMessage', ({ receiverId, conversationId, messageId, text }) => {
+    var receiver = users.filter(member => member.userId === receiverId)
+    var user = receiver[0]
+    if (user) {
+      return io.to(user.socketId).emit('modifyMessage', {
+        conversationId,
+        messageId,
+        text
+      })
+    }
+  })
+
+  socket.on('deleteMessage', ({ receiverId, conversationId, messageId }) => {
+    var receiver = users.filter(member => member.userId === receiverId)
+    var user = receiver[0]
+    if (user) {
+      return io.to(user.socketId).emit('deleteMessage', {
+        conversationId,
+        messageId
+      })
+    }
+  })
+
+  socket.on('addEmoji', ({ receiverId, conversationId, messageId, emoji }) => {
+    var receiver = users.filter(member => member.userId === receiverId)
+    var user = receiver[0]
+    if (user) {
+      return io.to(user.socketId).emit('addEmoji', {
+        conversationId,
+        messageId,
+        emoji
       })
     }
   })

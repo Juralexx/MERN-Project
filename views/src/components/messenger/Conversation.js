@@ -1,47 +1,27 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { UidContext } from '../AppContext';
-import { formatDistanceToNowStrict } from 'date-fns'
-import { fr } from 'date-fns/locale';
-import { dateParserWithoutYear } from '../Utils'
-import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { avatar } from '../tools/functions/useAvatar';
+import { convertEditorToHTML, getDate, getMembers } from './tools/function';
 
-const Conversation = ({ conversation, newMessage, notification }) => {
+const Conversation = ({ conversation, newMessage, notification, addedToConversation }) => {
     const uid = useContext(UidContext)
     const [convMembers, setConvMembers] = useState([])
     const [isResponse, setResponse] = useState(false)
     const [lastMessageFound, setLastMessageFound] = useState()
     const [date, setDate] = useState()
-    const conversationDiv = useRef()
-
-    function getDate(element) {
-        const diffInMs = Math.abs(new Date(element.createdAt) - new Date());
-        const checkDate = diffInMs / (1000 * 60 * 60 * 24);
-        if (checkDate > 1) {
-            const getDateInDays = dateParserWithoutYear(element.createdAt)
-            setDate(getDateInDays)
-        } else {
-            const getDateInHours = formatDistanceToNowStrict(new Date(element.createdAt), new Date(), { locale: fr, includeSeconds: true })
-            setDate(getDateInHours)
-        }
-    }
-    function getMembers() {
-        const index = conversation.members.findIndex(member => member.id === uid)
-        conversation.members.splice(index, 1)
-        setConvMembers(conversation.members)
-    }
+    const wrapperRef = useRef()
 
     useEffect(() => {
-        if (conversation.last_message) {
+        if (conversation.last_message && !addedToConversation) {
             const getLastMessage = async () => {
                 try {
                     const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/single/${conversation.last_message}`)
                     setLastMessageFound(response.data)
                     setResponse(true)
                     if (lastMessageFound) {
-                        getDate(lastMessageFound)
-                        getMembers()
+                        getDate(lastMessageFound, setDate)
+                        getMembers(conversation, uid, setConvMembers)
                     }
                 } catch (err) {
                     console.log(err)
@@ -60,23 +40,16 @@ const Conversation = ({ conversation, newMessage, notification }) => {
 
     useEffect(() => {
         if (notification && notification.conversationId === conversation._id) {
-            conversationDiv.current.className = "conversation new-notification";
+            wrapperRef.current.className = "conversation new-notification";
             setLastMessageFound(notification)
             setDate('À l\'instant')
         }
     }, [notification, conversation._id])
-    
-    function getMessage() {
-        var callback = {}
-        var converter = new QuillDeltaToHtmlConverter(lastMessageFound.text[0].ops, callback)
-        var html = converter.convert(lastMessageFound.text[0].ops)
-        return ({ __html: html })
-    }
 
     return (
         <>
             {isResponse && (
-                <div className="conversation" ref={conversationDiv}>
+                <div className="conversation" ref={wrapperRef}>
                     <div className="conversation-img-container">
                         {convMembers.map((element, key) => {
                             return (
@@ -105,7 +78,7 @@ const Conversation = ({ conversation, newMessage, notification }) => {
                         {lastMessageFound && (
                             <div className="last-message-wrapper">
                                 <div className="last-message-pseudo">{lastMessageFound.sender_pseudo} :&nbsp;</div>
-                                <div className="last-message" dangerouslySetInnerHTML={getMessage()}></div>
+                                <div className="last-message" dangerouslySetInnerHTML={convertEditorToHTML(lastMessageFound)}></div>
                             </div>
                         )}
                         {!lastMessageFound && (
