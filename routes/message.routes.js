@@ -86,7 +86,7 @@ messageRoutes.put('/single/remove-emoji/:messageId', async (req, res) => {
     }
 })
 
-messageRoutes.delete('/single/:messageId', async (req, res) => {
+messageRoutes.delete('/:messageId', async (req, res) => {
     try {
         const message = await MessageModel.findById({ _id: req.params.messageId })
 

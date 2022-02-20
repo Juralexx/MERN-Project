@@ -1,36 +1,17 @@
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { UidContext } from '../AppContext';
-import Conversation from './Conversation';
-import Message from './Message';
-import OnlineUsers from './OnlineUsers';
 import { io } from 'socket.io-client'
 import { useSelector } from 'react-redux';
-import NewConversationModal from './NewConversationModal';
-import { AiOutlineInfoCircle } from 'react-icons/ai'
-import { FaTrashAlt } from 'react-icons/fa'
-import { ThreeDots } from 'react-loading-icons'
-import EmojiPicker from './EmojiPicker';
-
-import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./editor/EditorToolbar";
-import { IoSend } from 'react-icons/io5'
-import { BsEmojiSmile } from 'react-icons/bs'
-import { BiFontFamily } from 'react-icons/bi'
-import { FiAtSign } from 'react-icons/fi'
-import { dateParser } from '../Utils';
-import ScrollButton from './ScrollButton';
 import MessageDate from './MessageDate';
+import Message from './Message';
+import OnlineUsers from './OnlineUsers';
+import ConversationHeader from './ConversationHeader';
+import ConversationsMenu from './ConversationsMenu';
+import { ThreeDots } from 'react-loading-icons'
+import ConversationBottom from './ConversationBottom';
 
 const Messenger = () => {
-    const avatar = (props) => {
-        return ({
-            backgroundImage: `url(${props})`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-        })
-    }
     const uid = useContext(UidContext)
     const userData = useSelector((state) => state.userReducer)
     const [conversations, setConversations] = useState([])
@@ -42,25 +23,21 @@ const Messenger = () => {
     const [newMessage, setNewMessage] = useState({})
     const [getNewMessage, setGetNewMessage] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState("")
+    const [modifiedMessage, setModifiedMessage] = useState("")
     const [notification, setNotification] = useState("")
     const [addConversation, setAddConversation] = useState("")
-    const scrollToLastMessage = useRef()
+    const lastMessageRef = useRef()
     const websocket = useRef()
     const quillRef = useRef()
-    const conversationContainer = useRef()
+    const convWrapperRef = useRef()
     const [isTyping, setTyping] = useState(false)
     const [whereIsTyping, setWhereIsTyping] = useState("")
-    const scrollToTyper = useRef()
-    const [openConvMenu, setOpenConvMenu] = useState(false)
-    const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
-    const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
+    const showTypingRef = useRef()
     const [messagesDates, setMessagesDates] = useState([])
 
     const getMembers = (conversation) => {
-        const array = conversation.members.slice()
-        const index = array.findIndex(member => member.id === uid)
-        array.splice(index, 1)
-        return array
+        const members = conversation.members.filter(member => member.id !== uid)
+        return members
     }
 
     useEffect(() => {
@@ -212,10 +189,6 @@ const Messenger = () => {
     /*************************************************************************************** */
     /************************************** INPUT ****************************************** */
 
-    const handleNewMessage = (text, delta, source, editor) => {
-        setNewMessage(editor.getContents());
-    }
-
     const handleSubmit = async (e) => {
         const message = {
             sender: uid,
@@ -251,34 +224,10 @@ const Messenger = () => {
 
     useEffect(() => {
         if (!isTyping)
-            scrollToLastMessage.current?.scrollIntoView()
+            lastMessageRef.current?.scrollIntoView()
         else
-            scrollToTyper.current?.scrollIntoView()
+            showTypingRef.current?.scrollIntoView()
     }, [messages, whereIsTyping])
-
-    const [searchQuery, setSearchQuery] = useState("")
-    const [isConversationInResult, setConversationsInResult] = useState([])
-    const [search, setSearch] = useState(false)
-    const isEmpty = !isConversationInResult || isConversationInResult.length === 0
-    const regexp = new RegExp(searchQuery, 'i');
-
-    const handleInputChange = (e) => {
-        setSearchQuery(e.target.value)
-    }
-
-    const searchConversation = () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        if (searchQuery.length >= 2) {
-            const response = conversations.filter(conversation => conversation.members.some(member => regexp.test(member.pseudo)))
-            setSearch(true)
-            setConversationsInResult(response)
-            if (isEmpty) {
-                setSearch(false)
-            }
-        } else {
-            setSearch(false)
-        }
-    }
 
     const changeCurrentChat = (conversation) => {
         websocket.current.emit("changeCurrentConversation", {
@@ -310,113 +259,108 @@ const Messenger = () => {
             .catch((err) => console.log(err))
     }
 
+    const leaveConversation = async (element, memberId) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/conversations/${element._id}/pull`,
+            data: { memberId }
+        })
+    }
+
+    const addNewMember = async (element, member) => {
+        var newMember = {
+            id: member._id,
+            pseudo: member.pseudo,
+            picture: member.picture
+        }
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/conversations/${element._id}/add`,
+            data: { newMember }
+        })
+    }
+
+    const deleteMessage = async (message) => {
+        await axios
+            .delete(`${process.env.REACT_APP_API_URL}api/messages/${message._id}`)
+            .then((res) => res.data)
+            .catch((err) => console.log(err))
+    }
+
+    const modifyMessage = async (message) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/messages/single/${message._id}`,
+            data: { text: modifiedMessage }
+        })
+    }
+
     return (
         <div className="messenger">
-            <div className="conversation-menu">
-                <div className="conversation-menu-wrapper">
-                    <NewConversationModal friends={friends} currentId={uid} changeCurrentChat={setCurrentChat} />
-                    <input placeholder="Rechercher une conversation..." className="conversation-menu-input" value={searchQuery} onInput={handleInputChange} onChange={searchConversation} type="search" />
-                    {conversations.map((element, key) => {
-                        return (
-                            <div onClick={() => { setCurrentChat(element); changeCurrentChat(element) }} key={key}
-                                style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}>
-                                <Conversation conversation={element} newMessage={getNewMessage} notification={notification} />
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
+            <ConversationsMenu
+                uid={uid}
+                friends={friends}
+                setCurrentChat={setCurrentChat}
+                conversations={conversations}
+                changeCurrentChat={changeCurrentChat}
+                getNewMessage={getNewMessage}
+                notification={notification}
+            />
             <div className="conversation-box">
                 <div className="conversation-box-wrapper">
                     {currentChat ? (
                         <>
-                            <div className="conversation-box-top">
-                                <div className="conversation-box-members">
-                                    <div className="conversation-img-container">
-                                        {getMembers(currentChat).map((element, key) => {
-                                            return (
-                                                <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                                            )
-                                        })}
-                                    </div>
-                                    <div className="conversation-name">
-                                        {getMembers(currentChat).length === 1 && (
-                                            <strong>{getMembers(currentChat)[0].pseudo}</strong>
-                                        )}
-                                        {getMembers(currentChat).length === 2 && (
-                                            <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo}</strong>
-                                        )}
-                                        {getMembers(currentChat).length === 3 && (
-                                            <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo + ", " + getMembers(currentChat)[2].pseudo}</strong>
-                                        )}
-                                        {getMembers(currentChat).length > 3 && (
-                                            <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo + ", " + getMembers(currentChat)[2].pseudo + " et " + (getMembers(currentChat).length - 3) + " autres"}</strong>
-                                        )}
-                                    </div>
-                                </div>
-                                <div className="conversation-box-menu">
-                                    <div role="button" onClick={() => setOpenConvMenu(!openConvMenu)}><AiOutlineInfoCircle /></div>
-                                </div>
-                                {openConvMenu && (
-                                    currentChat.owner === uid && (
-                                        <div className="conversation-tools">
-                                            <button onClick={() => deleteConversation(currentChat)}><FaTrashAlt /> Supprimer</button>
-                                        </div>
-                                    )
-                                )}
-                            </div>
-                            <div className="conversation-box-container custom-scrollbar" ref={conversationContainer}>
+                            <ConversationHeader
+                                uid={uid}
+                                friends={friends}
+                                getMembers={getMembers}
+                                currentChat={currentChat}
+                                deleteConversation={deleteConversation}
+                                leaveConversation={leaveConversation}
+                                addNewMember={addNewMember}
+                            />
+                            <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
                                 {messages.map((message, key) => {
                                     return (
                                         <div key={key}>
                                             {messagesDates.some(element => element.date === message.createdAt.substr(0, 10) && element.index === key) && (
-                                                <MessageDate message={message}/>
+                                                <MessageDate message={message} />
                                             )}
-                                            <div ref={scrollToLastMessage}>
-                                                <Message message={message} own={message.sender === uid} uniqueKey={key} userId={uid} />
+                                            <div ref={lastMessageRef}>
+                                                <Message
+                                                    message={message}
+                                                    own={message.sender === uid}
+                                                    uniqueKey={key}
+                                                    uid={uid}
+                                                    modifyMessage={modifyMessage}
+                                                    setModifiedMessage={setModifiedMessage}
+                                                    deleteMessage={deleteMessage}
+                                                    quillRef={quillRef}
+                                                />
                                             </div>
                                         </div>
                                     )
                                 })}
                                 {isTyping && (
                                     whereIsTyping.conversationId === currentChat._id && (
-                                        <div ref={scrollToTyper} className="is-typing">{whereIsTyping.sender + " est en train d'écrire..."} <ThreeDots /></div>
+                                        <div ref={showTypingRef} className="is-typing">{whereIsTyping.sender + " est en train d'écrire..."} <ThreeDots /></div>
                                     )
                                 )}
                             </div>
+                            <ConversationBottom
+                                convWrapperRef={convWrapperRef}
+                                lastMessageRef={lastMessageRef}
+                                quillRef={quillRef}
+                                setNewMessage={setNewMessage}
+                                newMessage={newMessage}
+                                handleSubmit={handleSubmit}
+                            />
                         </>
                     ) : (
                         <div className="conversation-box-container">
                             <p>Créer votre première conversation pour commencer à chatter !</p>
                         </div>
                     )}
-                    <div className="conversation-bottom">
-                        <ScrollButton conversationContainer={conversationContainer} scrollTo={scrollToLastMessage}/>
-                        <div className="message-text-editor">
-                            <EditorToolbar display={openEditorToolbar} />
-                            <div ref={quillRef}>
-                                <ReactQuill
-                                    onChange={handleNewMessage}
-                                    value={newMessage}
-                                    placeholder={"Envoyer un message..."}
-                                    modules={modules}
-                                    formats={formats}
-                                />
-                            </div>
-                            <div className="content error"></div>
-                        </div>
-                        <div className="message-text-tools">
-                            <div className="left">
-                                <button className="btn btn-secondary" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><BsEmojiSmile /></button>
-                                {openEmojiPicker && <EmojiPicker />}
-                                <button className="btn btn-secondary"><FiAtSign /></button>
-                                <button className="btn btn-secondary" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
-                            </div>
-                            <div className="right">
-                                <button className="btn btn-secondary" onClick={handleSubmit}><IoSend /></button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 

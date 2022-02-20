@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ImCross } from 'react-icons/im'
 import { NavLink } from "react-router-dom";
+import { avatar } from "../../tools/functions/useAvatar";
 import HoverModal from "./HoverModal";
 
 const FollowersModal = ({ project }) => {
@@ -12,12 +13,6 @@ const FollowersModal = ({ project }) => {
     const containerClass = open ? 'modal-container modal-container-active show-modal' : 'modal-container hide-modal'
     const [openInfoModal, setOpenInfoModal] = useState(false)
     const [follower, setFollower] = useState([])
-    const avatar = {
-        backgroundImage: "url(" + follower.picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-    }
 
     useEffect(() => {
         const findFollowers = async () => {
@@ -54,7 +49,7 @@ const FollowersModal = ({ project }) => {
                                         return (
                                             <div className="likers-followers-found" key={key}>
                                                 <NavLink to={"/" + element.pseudo} onMouseEnter={() => setOpenInfoModal(true)} onMouseLeave={() => setOpenInfoModal(false)}>
-                                                    <div className="avatar" style={avatar}></div>
+                                                    <div className="avatar" style={avatar(follower.picture)}></div>
                                                     <p>{element.pseudo}</p>
                                                 </NavLink>
                                                 {openInfoModal && (<HoverModal user={element} />)}

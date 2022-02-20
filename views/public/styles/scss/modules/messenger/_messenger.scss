@@ -3,14 +3,13 @@
     display : flex;
 
     .conversation-menu {
-        flex : 3.5;
+        width:28%;
 
         .conversation-menu-input {
             width         : 100%;
             padding       : 10px;
             border        : none;
-            background    : var(--color-content);
-            margin-bottom : 10px;
+            margin        : 10px 0;
             border-radius : 5px;
         }
 
@@ -80,7 +79,7 @@
     }
 
     .conversation-box {
-        flex : 5.5;
+        width:50%;
 
         .conversation-box-wrapper {
             display        : flex;
@@ -98,17 +97,18 @@
                     display     : flex;
                     align-items : center;
                     margin-left : 20px;
+                    cursor      : pointer;
             
                     .conversation-img-container {
                         display      : flex;
                         position     : relative;
-                        height       : 36px;
+                        height       : 32px;
                         margin-right : 10px;
         
                         .conversation-img {
-                            min-width     : 36px;
-                            min-height    : 36px;
-                            border-radius : 20px;
+                            min-width     : 32px;
+                            min-height    : 32px;
+                            border-radius : 5px;
             
                             &:nth-child(n+2) {
                                 margin-left : -20px;
@@ -183,9 +183,9 @@
         }
 
         .messages-date {
+            position    : relative;
             display     : flex;
             align-items : center;
-            position    : relative;
             z-index     : 10;
             cursor      : pointer;
 
@@ -195,11 +195,12 @@
             }
 
             p {
-                padding       : 5px 10px;
+                padding       : 3px 10px;
                 text-align    : center;
                 width         : 160px;
                 margin        : 0 auto;
-                font-size     : 13px;
+                font-size     : 12px;
+                line-height   : 12px;
                 background    : var(--color-content);
                 border-radius : 30px;
             }
@@ -214,6 +215,7 @@
                 font-size     : 14px;
                 color         : white;
                 border-radius : 5px;
+                z-index       : 11;
 
                 ul {
                     list-style-type : none;
@@ -235,7 +237,7 @@
         .message {
             position      : relative;
             display       : flex;
-            padding       : 10px 20px;
+            padding       : 15px 20px;
             width         : 100%;
             border-radius : 5px;
 
@@ -256,6 +258,7 @@
 
             .message-right {
                 position : relative;
+                width    : 100%;
 
                 .message-right-top {
                     display       : flex;
@@ -323,7 +326,7 @@
             .message-actions {
                 display       : flex;
                 position      : absolute;
-                right         : 0;
+                right         : 10px;
                 top           : -10px;
                 padding       : 5px 10px;
                 border-radius : 5px;
@@ -351,21 +354,81 @@
                 .message-tools-menu {
                     position       : absolute;
                     right          : 0;
-                    top            : -75px;
+                    top            : -72px;
                     display        : flex;
                     flex-direction : column;
                     background     : var(--color-body);
                     padding        : 5px;
+                    z-index:10;
 
                     button {
                         width         : 100%;
-                        background    : transparent;
+                        background    : var(--color-body);
                         border-radius : 5px;
                         padding       : 5px 10px;
                         border        : none;
                         color         : white;
                         font-size     : 14px;
+                        
+                        &:hover {
+                            background: var(--color-content);
+                        }
                     }
+                }
+            }
+
+            .message-text-editor {
+                width : 100%;
+
+                .ql-toolbar.ql-snow, .ql-container.ql-snow {
+                    border        : 1px solid white;
+                    border-radius : 5px;
+                    margin-bottom : 3px;
+                }
+                .ql-snow .ql-stroke, .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
+                    stroke : white;
+                }
+                .ql-editor.ql-blank::before {
+                    color : white;
+                }
+
+                .conversation-input {
+                    width      : 500px;
+                    min-height : 40px;
+                    padding    : 10px;
+                    border     : none;
+                    outline    : none;
+                }
+
+                .ql-editor {
+                    padding : 10px 15px;
+
+                    &::placeholder {
+                        color : white;
+                    }
+                }
+            }
+
+            .message-text-tools {
+                display         : flex;
+                justify-content : space-between;
+                align-items     : center;
+                width           : 100%;
+                padding         : 0 10px 5px;
+
+                .left, .right {
+                    display : flex;
+                    .btn {
+                        padding     : 5px 7px !important;
+                        display     : flex;
+                        align-items : center;
+                    }
+                }
+
+                .emoji-picker-container {
+                    position : absolute;
+                    right    : 0;
+                    bottom   : 70px;
                 }
             }
         }
@@ -403,7 +466,7 @@
                 }
 
                 .ql-editor {
-                    padding : 7px 15px;
+                    padding : 10px 15px;
 
                     &::placeholder {
                         color : white;
@@ -437,7 +500,7 @@
     }
 
     .online-users-container {
-        flex : 3;
+        width:22%;
 
         .online-users-wrapper {
 
@@ -516,5 +579,245 @@
 
     span {
         margin-right : 6px;
+    }
+}
+
+.add-conversation-modal {
+    width          : 470px;
+    height         : 500px;
+    display        : flex;
+    flex-direction : column;
+
+    .footer {
+        position  : fixed;
+        bottom    : 0;
+        left      : 50%;
+        transform : translateX(-50%);
+        padding   : 20px;
+        width     : auto;
+    }
+
+    .modal-inner {
+        width  : 470px;
+        height : 500px;
+
+        .header {
+            ul {
+                display       : flex;
+                padding       : 0;
+                margin-bottom : 10px;
+                border-bottom : 1px solid var(--color-body);
+
+                li {
+                    padding       : 3px 5px;
+                    margin        : 0 8px;
+                    cursor        : pointer;
+                    font-size     : 14px;
+                    border-bottom : 1px solid transparent;
+
+                    &:hover {
+                        border-bottom : 1px solid $primary-color;
+                    }
+                }
+            }
+        }
+
+        .display-conversation-users {
+            display   : flex;
+            flex-wrap : wrap;
+        
+            .conversation-user {
+                display       : flex;
+                align-items   : center;
+                margin-right  : 15px;
+                padding       : 5px;
+                background    : $primary-color;
+                border-radius : 3px;
+                cursor        : pointer;
+        
+                .conversation-user-avatar {
+                    height        : 15px;
+                    width         : 15px;
+                    border-radius : 3px;
+                    margin-right  : 5px;
+                }
+        
+                p {
+                    margin    : 0;
+                    font-size : 13px;
+                    color     : white;
+                }
+        
+                svg {
+                    margin-left : 5px;
+                    font-size   : 10px;
+                    fill        : white;
+                }
+            }
+        }
+        
+        .display-selection {
+            overflow-y : auto;
+
+            .selected-users {
+                display       : flex;
+                padding       : 5px 10px;
+                margin        : 5px 0;
+                border-radius : 5px;
+                color         : white;
+                cursor        : pointer;
+            
+                .selected-users-avatar {
+                    height        : 35px;
+                    width         : 35px;
+                    border-radius : 5px;
+                    margin-right  : 10px;
+                }
+            
+                p {
+                    display     : flex;
+                    align-items : center;
+                    font-size   : 16px;
+                    margin      : 0;
+                    color       : white;
+                }
+            }
+        }
+    }
+}
+
+.user-conversation-modal {
+    width          : 470px;
+    height         : auto;
+    display        : flex;
+    flex-direction : column;
+
+    .modal-inner {
+        width   : 470px;
+        height  : auto;
+        padding : 30px;
+
+        .header {
+            display       : flex;
+            align-items   : center;
+            margin-bottom : 20px;
+
+            .user-modal-img {
+                width         : 60px;
+                height        : 60px;
+                border-radius : 5px;
+                margin-right  : 10px;
+            }
+
+            .user-modal-pseudo {
+                font-weight : 600;
+                font-size   : 22px;
+                text-align  : center;
+            }
+        }
+
+        .body {
+            ul {
+                padding : 0;
+                margin  : 0;
+
+                li {
+                    padding : 7px 0;
+                }
+            }
+        }
+    }
+}
+
+.conversation-modal {
+    width          : 470px;
+    height         : 500px;
+    display        : flex;
+    flex-direction : column;
+
+    .modal-inner {
+        width   : 470px;
+        height  : 500px;
+        padding : 20px;
+
+        .header {
+            .conversation-name {
+                padding     : 0 10px 10px;
+                font-weight : 600;
+            }
+            ul {
+                display       : flex;
+                padding       : 0;
+                margin-bottom : 10px;
+                border-bottom : 1px solid var(--color-body);
+
+                li {
+                    padding       : 3px 5px;
+                    margin        : 0 8px;
+                    cursor        : pointer;
+                    font-size     : 14px;
+                    border-bottom : 1px solid transparent;
+
+                    &:hover {
+                        border-bottom : 1px solid $primary-color;
+                    }
+                }
+            }
+        }
+
+        .body {
+            .conversation-infos {
+                overflow-y : auto;
+
+                .conversation-infos-bloc {
+                    display         : flex;
+                    justify-content : space-between;
+                    padding         : 10px;
+
+                    .left {
+                        width:100%;
+                        .title {
+                            font-weight : 600;
+                            color       : white
+                        }
+                    }
+                }
+            }
+
+            input {
+                width         : 100%;
+                padding       : 10px;
+                border        : none;
+                margin        : 0 0 10px;
+                border-radius : 5px;
+            }
+
+            .conversation-members {
+                overflow-y : auto;
+
+                .conversation-member {
+                    display         : flex;
+                    justify-content : space-between;
+                    padding         : 10px 0;
+
+                    .conversation-member-infos {
+                        display : flex;
+                        align-items: center;
+
+                        .conversation-member-avatar {
+                            height        : 36px;
+                            width         : 36px;
+                            margin-right  : 10px;
+                            border-radius : 5px;
+                        }
+                    }
+
+                    .btn {
+                        padding : 4px 20px 8px;
+                        height  : 38px;
+                    }
+                }
+            }
+        }
     }
 }

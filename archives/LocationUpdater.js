@@ -7,6 +7,7 @@ import { deleteLocation } from "../../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { ThreeDots } from 'react-loading-icons'
 import { AiFillHome } from 'react-icons/ai'
+import { useClickOutside } from "../views/src/components/tools/functions/useClickOutside";
 
 const LocationUpdater = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -101,18 +102,7 @@ const LocationUpdater = () => {
         }
     }
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = wrapperRef;
-        if (wrap && !wrap.contains(e.target)) {
-            setDisplay(false);
-            setLoading(false);
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(wrapperRef, setDisplay, setLoading)
 
     const setSelect = (e) => {
         setSearchQuery(e)

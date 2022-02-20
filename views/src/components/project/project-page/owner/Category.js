@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCategory } from "../../../../actions/project.action";
+import { useClickOutside } from "../../../tools/functions/useClickOutside";
 
 const Category = ({ props, id }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -26,17 +27,7 @@ const Category = ({ props, id }) => {
         setDisplaySelection(false)
     }
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = wrapperRef;
-        if (wrap && !wrap.contains(e.target)) {
-            setDisplaySelection(false);
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(wrapperRef, setDisplaySelection)
 
     return (
         <div className="user-info">

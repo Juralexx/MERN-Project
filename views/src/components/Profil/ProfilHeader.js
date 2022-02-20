@@ -1,32 +1,19 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { avatar, coverPicture } from "../tools/functions/useAvatar";
 import UploadCoverImg from "./uploads/UploadCoverImg";
 import UploadImg from "./uploads/UploadImg";
 
 const ProfilHeader = () => {
     const userData = useSelector((state) => state.userReducer)
 
-    const coverPicture = {
-        backgroundImage: "url(" + userData.cover_picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-    }
-
-    const profilAvatar = {
-        backgroundImage: "url(" + userData.picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-    }
-
     return (
         <div className="profil-header">
-            <div className="cover-img" style={coverPicture}>
+            <div className="cover-img" style={coverPicture(userData.cover_picture)}>
                 <div className="pseudo-header"><p>{userData.pseudo}</p></div>
                 <UploadCoverImg />
             </div>
-            <div className="avatar -online-ring" style={profilAvatar}>
+            <div className="avatar -online-ring" style={avatar(userData.picture)}>
                 <UploadImg />
             </div>
         </div>

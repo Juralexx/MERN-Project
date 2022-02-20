@@ -10,6 +10,7 @@ import Loader from '../components/tools/Loader';
 import LikersModal from '../components/project/my-projects/LikersModal';
 import FollowersModal from '../components/project/my-projects/FollowersModal';
 import FavoriteButton from '../components/project/my-projects/FavoriteButton';
+import { avatar, projectPicture } from '../components/tools/functions/useAvatar';
 
 const UserProjects = () => {
     const { pseudo } = useParams()
@@ -69,16 +70,14 @@ const UserProjects = () => {
                                     }
                                     return ({ __html: html })
                                 }
-                                const projectPicture = { backgroundImage: "url(" + element.picture + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
-                                const avatar = { backgroundImage: "url(" + element.posterAvatar + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
 
                                 return (
                                     <div className="myprojects-card" key={key}>
-                                        <div className="left" style={projectPicture}></div>
+                                        <div className="left" style={projectPicture(element.picture)}></div>
                                         <div className="right">
                                             <h2><NavLink to={"/project/" + element.titleURL}>{element.title}</NavLink></h2>
                                             <div className="pseudo-container">
-                                                <div className="avatar" style={avatar}></div> <NavLink to={"/" + element.posterPseudo}>{element.posterPseudo}</NavLink>
+                                                <div className="avatar" style={avatar(element.posterAvatar)}></div> <NavLink to={"/" + element.posterPseudo}>{element.posterPseudo}</NavLink>
                                             </div>
 
                                             <p>{dateParser(element.createdAt)}</p>

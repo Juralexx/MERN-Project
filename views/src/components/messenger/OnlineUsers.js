@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { avatar } from '../tools/functions/useAvatar';
 
 const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat, setConversations, conversations }) => {
   const userData = useSelector((state) => state.userReducer)
-  const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }) }
   const [friendInfos, setFriendInfos] = useState([])
   const [onlineFriends, setOnlineFriends] = useState([])
 

@@ -10,6 +10,7 @@ import { removeAccents } from "../Utils";
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../tools/editor/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
+import { useClickOutside } from "../tools/functions/useClickOutside";
 
 const AddProjectForm = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -234,17 +235,7 @@ const AddProjectForm = () => {
     /*************************************************************************************** */
     /********************************* FONCTIONS SECONDAIRES ******************************* */
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = wrapperRef;
-        if (wrap && !wrap.contains(e.target)) {
-            setDisplaySelection(false);
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(wrapperRef, setDisplaySelection)
 
     const handleCategory = (e) => {
         setCategory(e.target.value)

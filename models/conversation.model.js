@@ -2,6 +2,9 @@ import mongoose from 'mongoose'
 
 const ConversationModel = new mongoose.Schema(
     {
+        type: {
+            type: String
+        },
         name: {
             type: String
         },
@@ -12,12 +15,14 @@ const ConversationModel = new mongoose.Schema(
             picture: String,
         },
         owner: {
-            type: String
-        },
-        creator: {
-            type: [],
             id: String,
             pseudo: String,
+            picture: String
+        },
+        creator: {
+            id: String,
+            pseudo: String,
+            picture: String
         },
         messages: {
             type: [],

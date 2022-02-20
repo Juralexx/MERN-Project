@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateState } from "../../../../actions/project.action";
+import { useClickOutside } from "../../../tools/functions/useClickOutside";
 
 const State = ({ props, id }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -26,23 +27,13 @@ const State = ({ props, id }) => {
         setDisplaySelection(false)
     }
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = wrapperRef;
-        if (wrap && !wrap.contains(e.target)) {
-            setDisplaySelection(false);
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(wrapperRef, setDisplaySelection)
 
     return (
         <div className="user-info">
             {!updateStateForm ? (
                 <>
-                    {modified ? ( <p>{projectData.state}</p> ) : ( <p>{props}</p> )}
+                    {modified ? (<p>{projectData.state}</p>) : (<p>{props}</p>)}
                     <div className="btn-container">
                         <button className="btn btn-primary" onClick={() => setUpdateStateForm(!updateStateForm)}>Modifier</button>
                     </div>

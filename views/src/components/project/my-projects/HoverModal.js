@@ -1,14 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { avatar } from "../../tools/functions/useAvatar";
 
 const HoverModal = ({ user, style }) => {
-    const avatar = { backgroundImage: "url(" + user.picture + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
 
     return (
         <div className="user-info-modal" style={style}>
             <div className="top">
                 <div className="left">
-                    <NavLink to={"/" + user.pseudo}><div className="avatar" style={avatar}></div></NavLink>
+                    <NavLink to={"/" + user.pseudo}><div className="avatar" style={avatar(user.picture)}></div></NavLink>
                 </div>
                 <div className="right">
                     <p><NavLink to={"/" + user.pseudo}>{user.pseudo}</NavLink></p>

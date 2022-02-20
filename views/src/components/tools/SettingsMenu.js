@@ -4,23 +4,14 @@ import { AiFillSetting } from 'react-icons/ai'
 import { BsFillSunFill } from 'react-icons/bs'
 import { IoCaretForwardOutline } from 'react-icons/io5'
 import ScreenMenu from "./ScreenMenu";
+import { useClickOutside } from "./functions/useClickOutside";
 
 const SettingsMenu = () => {
     const [isOpen, setOpen] = useState(true)
     const [isScreenMenu, setScreenMenu] = useState(false)
     const settingsWrapper = useRef()
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = settingsWrapper;
-        if (wrap && !wrap.contains(e.target)) {
-            setOpen(!isOpen);
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    });
+    useClickOutside(settingsWrapper, setOpen)
 
     const openScreenMenu = () => {
         return (

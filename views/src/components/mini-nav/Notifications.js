@@ -6,6 +6,7 @@ import { UidContext } from '../AppContext';
 import { acceptFriendRequest, refuseFriendRequest } from "../../actions/user.action";
 import formatDistance from 'date-fns/formatDistance'
 import fr from 'date-fns/locale/fr'
+import { avatar } from "../tools/functions/useAvatar";
 
 const NotificationsMenu = () => {
     const uid = useContext(UidContext)
@@ -44,11 +45,10 @@ const NotificationsMenu = () => {
             <h2>Notifications</h2>
             {futureFriend.length !== 0 && (
                 futureFriend.map((element, key) => {
-                    const avatar = { backgroundImage: "url(" + element.picture + ")", backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }
                     return (
                         <div className="notification-card" key={key}>
                             <div className="left">
-                                <NavLink to={'/' + element.pseudo}><div className="avatar" style={avatar}></div></NavLink>
+                                <NavLink to={'/' + element.pseudo}><div className="avatar" style={avatar(element.picture)}></div></NavLink>
                             </div>
                             <div className="right">
                                 {!accepted && !refused && (

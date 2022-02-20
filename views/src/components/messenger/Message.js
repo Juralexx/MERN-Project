@@ -1,33 +1,50 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useClickOutside } from '../tools/functions/useClickOutside';
+import { avatar } from '../tools/functions/useAvatar';
 import { getHourOnly } from '../Utils';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
+import ReactQuill from "react-quill";
+import EditorToolbar, { modules, formats } from "./tools/EditorToolbar";
 import { Picker } from 'emoji-mart'
 import { Emoji } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import { MdOutlineContentCopy, MdOutlineAddReaction } from 'react-icons/md'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { IoSend } from 'react-icons/io5'
+import { BsEmojiSmile } from 'react-icons/bs'
+import { BiFontFamily } from 'react-icons/bi'
+import { FiAtSign } from 'react-icons/fi'
 
-const Message = ({ message, own, uniqueKey, userId }) => {
+const Message = ({ message, own, uniqueKey, uid, quillRef, setModifiedMessage, modifyMessage, deleteMessage }) => {
     const userData = useSelector((state) => state.userReducer)
-    const avatar = (props) => { return ({ backgroundImage: `url(${props})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", backgroundSize: "cover" }) }
     const [hoveredCard, setHoveredCard] = useState(-1)
     const [hoveredPopup, setHoveredPopup] = useState(-1)
+    const [hovered, setHovered] = useState(false)
     const [openToolsMenu, setOpenToolsMenu] = useState(false)
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
     const [emojis, setEmojis] = useState(message.emojis)
     const wrapperRef = useRef()
+    const [messageToModify, setMessageToModify] = useState(-1)
+    const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
+    const [modified, setModified] = useState(false)
 
-    const showCardHandler = (key) => { setHoveredCard(key) }
-    const hideCardHandler = () => { setHoveredCard(-1) }
+    const showCardHandler = (key) => { setHoveredCard(key); setHovered(true) }
+    const hideCardHandler = () => { setHoveredCard(-1); setHovered(false) }
+
+    useEffect(() => {
+        if (!hovered)
+            setOpenEmojiPicker(false)
+        setOpenToolsMenu(false)
+    }, [hovered])
 
     const showPopupHandler = (key) => { setHoveredPopup(key) }
     const hidePopupHandler = () => { setHoveredPopup(-1) }
 
     const handleEmoji = async (emoji) => {
         setEmojis([...emojis, emoji])
-        Object.assign(emoji, { emoji_sender: userData.pseudo, emoji_sender_id: userId })
+        Object.assign(emoji, { emoji_sender: userData.pseudo, emoji_sender_id: uid })
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/messages/single/${message._id}`,
@@ -49,23 +66,25 @@ const Message = ({ message, own, uniqueKey, userId }) => {
         })
     }
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = wrapperRef;
-        if (wrap && !wrap.contains(e.target)) {
-            setOpenEmojiPicker(false)
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(wrapperRef, setOpenEmojiPicker)
 
     function getMessage() {
         var callback = {}
         var converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
         var html = converter.convert(message.text[0].ops)
         return ({ __html: html })
+    }
+
+    function getDefaultMessage() {
+        var callback = {}
+        var converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
+        var html = converter.convert(message.text[0].ops)
+        return html
+    }
+
+    const handleModifiedMessage = (text, delta, source, editor) => {
+        setModifiedMessage(editor.getContents());
+        setModified(true)
     }
 
     return (
@@ -78,14 +97,42 @@ const Message = ({ message, own, uniqueKey, userId }) => {
                     <div className="message-sender">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))}</span></div>
                 </div>
 
-                {message && <div className="message-text" dangerouslySetInnerHTML={getMessage()}></div>}
+                {message && messageToModify !== uniqueKey && <div className="message-text" dangerouslySetInnerHTML={getMessage()}></div>}
+
+                {message && messageToModify === uniqueKey &&
+                    <>
+                        <div className="message-text-editor">
+                            <EditorToolbar display={openEditorToolbar} />
+                            <div ref={quillRef}>
+                                <ReactQuill
+                                    onChange={handleModifiedMessage}
+                                    defaultValue={getDefaultMessage()}
+                                    placeholder={"Envoyer un message..."}
+                                    modules={modules}
+                                    formats={formats}
+                                />
+                            </div>
+                        </div>
+                        <div className="message-text-tools">
+                            <div className="left">
+                                <button className="btn btn-secondary" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><BsEmojiSmile /></button>
+                                <button className="btn btn-secondary"><FiAtSign /></button>
+                                <button className="btn btn-secondary" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
+                            </div>
+                            <div className="right">
+                                <button className="btn btn-secondary" onClick={() => setMessageToModify(-1)}>Annuler</button>
+                                <button className="btn btn-secondary" disabled={!modified} onClick={() => modifyMessage(message)}><IoSend /></button>
+                            </div>
+                        </div>
+                    </>
+                }
 
                 {emojis && emojis.length > 0 && (
                     <div className="emoji-container">
                         {emojis.map((emoji, key) => {
                             return (
                                 <div className="emoji" key={key} onMouseEnter={() => showPopupHandler(key)} onMouseLeave={hidePopupHandler}>
-                                    <Emoji emoji={emoji} size={14} onClick={() => emoji.emoji_sender_id === userId && (deleteEmoji(emoji))} />
+                                    <Emoji emoji={emoji} size={14} onClick={() => emoji.emoji_sender_id === uid && (deleteEmoji(emoji))} />
                                     {hoveredPopup === key && (
                                         <div className="emoji-popup">
                                             <Emoji emoji={emoji} size={26} />
@@ -107,18 +154,32 @@ const Message = ({ message, own, uniqueKey, userId }) => {
                 </div>
             }
             <div className="message-actions" ref={wrapperRef} style={{ display: hoveredCard === uniqueKey ? 'flex' : 'none' }}>
-                <div className="message-actions-btn"><Emoji emoji="thumbsup" size={16} /></div>
-                <div className="message-actions-btn"><Emoji emoji=":white_check_mark:" size={16} /></div>
-                <div className="message-actions-btn"><Emoji emoji=":grin:" size={16} /></div>
-                <div className="message-actions-btn" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><MdOutlineAddReaction /></div>
-                <div className="message-actions-btn" onClick={() => navigator.clipboard.writeText(message.text)}><MdOutlineContentCopy /></div>
-                <div className="message-actions-btn" onClick={() => setOpenToolsMenu(!openToolsMenu)}><BsThreeDotsVertical /></div>
+                <div className="message-actions-btn">
+                    <Emoji emoji="thumbsup" size={16} />
+                </div>
+                <div className="message-actions-btn">
+                    <Emoji emoji=":white_check_mark:" size={16} />
+                </div>
+                <div className="message-actions-btn">
+                    <Emoji emoji=":grin:" size={16} />
+                </div>
+                <div className="message-actions-btn" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}>
+                    <MdOutlineAddReaction />
+                </div>
+                <div className="message-actions-btn" onClick={() => navigator.clipboard.writeText(message.text)}>
+                    <MdOutlineContentCopy />
+                </div>
+                <div className="message-actions-btn" onClick={() => setOpenToolsMenu(!openToolsMenu)}>
+                    <BsThreeDotsVertical />
+                </div>
 
-                {openToolsMenu && (
-                    <div className="message-tools-menu">
-                        <button>Supprimer le message</button>
-                        <button>Modifier le message</button>
-                    </div>
+                {openToolsMenu && hovered && (
+                    message.sender === uid && (
+                        <div className="message-tools-menu">
+                            <button onClick={() => { deleteMessage(message); setHovered(false) }}>Supprimer le message</button>
+                            <button onClick={() => { setMessageToModify(uniqueKey) }}>Modifier le message</button>
+                        </div>
+                    )
                 )}
             </div>
         </div>

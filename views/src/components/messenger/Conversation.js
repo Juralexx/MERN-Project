@@ -5,16 +5,9 @@ import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
 import { dateParserWithoutYear } from '../Utils'
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
+import { avatar } from '../tools/functions/useAvatar';
 
 const Conversation = ({ conversation, newMessage, notification }) => {
-    const avatar = (props) => {
-        return ({
-            backgroundImage: `url(${props})`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-        })
-    }
     const uid = useContext(UidContext)
     const [convMembers, setConvMembers] = useState([])
     const [isResponse, setResponse] = useState(false)

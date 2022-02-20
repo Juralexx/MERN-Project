@@ -1,22 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { dateParser } from '../Utils'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import { useClickOutside } from '../tools/functions/useClickOutside'
 
 const MessageDate = ({ message }) => {
     const [open, setOpen] = useState(false)
     const wrapperRef = useRef()
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = wrapperRef;
-        if (wrap && !wrap.contains(e.target)) {
-            setOpen(false)
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(wrapperRef, setOpen)
 
     return (
         <div className="messages-date" ref={wrapperRef}>

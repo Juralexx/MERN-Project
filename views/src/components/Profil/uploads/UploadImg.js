@@ -4,6 +4,7 @@ import { deleteProfilPicture, uploadProfilPicture } from "../../../actions/user.
 import AvatarEditor from 'react-avatar-editor'
 import Swal from "sweetalert2";
 import { ImCross } from 'react-icons/im'
+import { avatar } from "../../tools/functions/useAvatar";
 
 const UploadImg = () => {
   const [file, setFile] = useState();
@@ -16,12 +17,6 @@ const UploadImg = () => {
   const modalClose = () => { setOpen(false) }
   const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
   const containerClass = open ? 'modal-container modal-container-active show-modal' : 'modal-container hide-modal'
-  const profilAvatar = {
-    backgroundImage: "url(" + userData.picture + ")",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  }
 
   var editor = ""
   const [picture, setPicture] = useState({
@@ -116,7 +111,7 @@ const UploadImg = () => {
           <div className='header'></div>
           <div className='body'>
             {!file ? (
-              <div className="modal-avatar" style={profilAvatar}></div>
+              <div className="modal-avatar" style={avatar(userData.picture)}></div>
             ) : (
               <>
                 <AvatarEditor

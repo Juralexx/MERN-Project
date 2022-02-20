@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { ThreeDots } from 'react-loading-icons'
 import { updateLocation } from "../../../../actions/project.action";
+import { useClickOutside } from "../../../tools/functions/useClickOutside";
 
 const Location = ({ props, id }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -71,17 +72,7 @@ const Location = ({ props, id }) => {
         }
     }
 
-    const handleClickOutside = (e) => {
-        const { current: wrap } = wrapperRef;
-        if (wrap && !wrap.contains(e.target)) {
-            setDisplay(false);
-        }
-    }; useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    useClickOutside(wrapperRef, setDisplay)
 
     return (
         <div className="user-info">

@@ -8,7 +8,10 @@ const ObjectID = mongoose.Types.ObjectId
 
 conversationRoutes.post('/', async (req, res) => {
     const newConversation = new ConversationModel({
+        type: req.body.type,
         members: req.body.members,
+        name: req.body.name,
+        description: req.body.description,
         owner: req.body.owner,
         creator: req.body.creator
     })
@@ -32,6 +35,62 @@ conversationRoutes.post('/', async (req, res) => {
             })
         }
         res.status(200).json(savedConversation)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+conversationRoutes.put('/:id', async (req, res) => {
+    try {
+        await ConversationModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    description: req.body.description,
+                    name: req.body.name,
+                    owner: req.body.owner,
+                }
+            },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+conversationRoutes.put('/:id/pull', async (req, res) => {
+    try {
+        await ConversationModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $pull: {
+                    members: { id: req.body.memberId }
+                }
+            },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+conversationRoutes.put('/:id/add', async (req, res) => {
+    try {
+        await ConversationModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $push: {
+                    members: req.body.newMember
+                }
+            },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
