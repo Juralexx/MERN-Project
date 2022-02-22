@@ -56,6 +56,42 @@ export const updateUser = async (req, res) => {
     }
 };
 
+export const addConversationToFavorite = async (req, res) => {
+    try {
+        await UserModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $addToSet: {
+                    favorite_conversations: req.body.conversationId
+                },
+            },
+            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+}
+
+export const removeConversationFromFavorite = async (req, res) => {
+    try {
+        await UserModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $pull: {
+                    favorite_conversations: req.body.conversationId
+                },
+            },
+            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        return res.status(500).json({ message: err });
+    }
+};
+
 export const deleteUser = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)

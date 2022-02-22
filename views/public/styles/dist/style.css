@@ -2591,13 +2591,12 @@ header nav .navbar-container ul li a.activeLink svg path {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 50px;
+  width: 100px;
   height: 100%;
 }
 .messenger .conversation-box .conversation-box-wrapper .conversation-box-top .conversation-box-menu svg {

@@ -4,30 +4,30 @@ import { UidContext } from '../AppContext';
 import { avatar } from '../tools/functions/useAvatar';
 import { convertEditorToHTML, getDate, getMembers } from './tools/function';
 
-const Conversation = ({ conversation, newMessage, notification, addedToConversation }) => {
+const Conversation = ({ conversation, newMessage, notification }) => {
     const uid = useContext(UidContext)
     const [convMembers, setConvMembers] = useState([])
     const [isResponse, setResponse] = useState(false)
-    const [lastMessageFound, setLastMessageFound] = useState()
+    const [lastMessageFound, setLastMessageFound] = useState(null)
     const [date, setDate] = useState()
     const wrapperRef = useRef()
 
     useEffect(() => {
-        if (conversation.last_message && !addedToConversation) {
+        if (conversation.last_message !== "") {
             const getLastMessage = async () => {
                 try {
                     const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/single/${conversation.last_message}`)
                     setLastMessageFound(response.data)
+                    getDate(response.data, setDate)
+                    getMembers(conversation, uid, setConvMembers)
                     setResponse(true)
-                    if (lastMessageFound) {
-                        getDate(lastMessageFound, setDate)
-                        getMembers(conversation, uid, setConvMembers)
-                    }
-                } catch (err) {
-                    console.log(err)
-                }
+                } catch (err) { console.log(err) }
             }
             getLastMessage()
+        } else {
+            getDate(conversation, setDate)
+            getMembers(conversation, uid, setConvMembers)
+            setResponse(true)
         }
     }, [isResponse, conversation.last_message])
 
@@ -35,6 +35,7 @@ const Conversation = ({ conversation, newMessage, notification, addedToConversat
         if (newMessage && newMessage.conversationId === conversation._id) {
             setLastMessageFound(newMessage)
             setDate('À l\'instant')
+            console.log('cest ok')
         }
     }, [newMessage, conversation._id])
 
@@ -45,6 +46,16 @@ const Conversation = ({ conversation, newMessage, notification, addedToConversat
             setDate('À l\'instant')
         }
     }, [notification, conversation._id])
+
+    useEffect(() => {
+        const ref = wrapperRef.current
+        const disableNotification = () => {
+            if (ref.className === "conversation new-notification")
+                ref.className = "conversation"
+        }
+        ref?.addEventListener('mousedown', disableNotification)
+        return () => ref?.removeEventListener('mousedown', disableNotification)
+    }, [notification])
 
     return (
         <>
@@ -75,13 +86,12 @@ const Conversation = ({ conversation, newMessage, notification, addedToConversat
                             </div>
                             <div className="conversation-date">{date}</div>
                         </div>
-                        {lastMessageFound && (
+                        {lastMessageFound ? (
                             <div className="last-message-wrapper">
                                 <div className="last-message-pseudo">{lastMessageFound.sender_pseudo} :&nbsp;</div>
                                 <div className="last-message" dangerouslySetInnerHTML={convertEditorToHTML(lastMessageFound)}></div>
                             </div>
-                        )}
-                        {!lastMessageFound && (
+                        ) : (
                             <div className="last-message-wrapper">
                                 <span className="last-message-pseudo"></span>
                                 <span className="last-message"></span>

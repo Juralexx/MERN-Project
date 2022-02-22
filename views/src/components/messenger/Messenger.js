@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { UidContext } from '../AppContext';
+import { UidContext, UserContext } from '../AppContext';
 import { io } from 'socket.io-client'
 import { useSelector } from 'react-redux';
 import MessageDate from './MessageDate';
@@ -12,6 +12,7 @@ import ConversationBottom from './ConversationBottom';
 
 const Messenger = () => {
     const uid = useContext(UidContext)
+    const user = useContext(UserContext)
     const userData = useSelector((state) => state.userReducer)
     const [conversations, setConversations] = useState([])
     const [conversationsFound, setConversationsFound] = useState(false)
@@ -28,7 +29,6 @@ const Messenger = () => {
     const [messagesDates, setMessagesDates] = useState([])
     /*=========================================================*/
     const [notification, setNotification] = useState("")
-    const [addedToConversation, setAddedToConversation] = useState(false)
     /*=========================================================*/
     const [isTyping, setTyping] = useState(false)
     const [typingContext, setTypingContext] = useState("")
@@ -42,6 +42,11 @@ const Messenger = () => {
         websocket.current = io('ws://localhost:3001')
         websocket.current.on("getMessage", data => {
             setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: new Date().toISOString()
+            })
+            setGetNewMessage({
                 sender: data.senderId,
                 text: data.text,
                 createdAt: new Date().toISOString()
@@ -61,21 +66,18 @@ const Messenger = () => {
             setTypingContext("")
         })
         websocket.current.on("addConversation", data => {
-            var newConversation = {
-                conversation: data.conversation
-            }
-            setAddedToConversation(false)
+            var newConversation = { conversation: data.conversation }
             setConversations(conversations => [...conversations, newConversation])
         })
         websocket.current.on("deleteConversation", data => {
             const index = conversations.findIndex(conversation => conversation._id !== data.conversationId)
             setConversations(conversations.splice(index, 1))
         })
-        websocket.current.on("modifyMessage", data => {
-            const array = messages.filter(message => message.conversationId === data.conversationId)
-            const mess = array.find(message => message._id === data.messageId)
-            mess.text = data.text
-            setMessages(messages => [...messages, mess])
+        websocket.current.on("modifyMessage", async data => {
+            const object = await messages.find(message => message._id === data.messageId)
+            // const mess = array.find(message => message._id === data.messageId)
+            object.text = data.text
+            setMessages(messages => [...messages, object])
         })
         websocket.current.on("deleteMessage", data => {
             const array = messages.filter(message => message.conversationId === data.conversationId)
@@ -161,7 +163,8 @@ const Messenger = () => {
         const getConversations = async () => {
             try {
                 const res = await axios.get(`${process.env.REACT_APP_API_URL}api/conversations/${uid}`)
-                setConversations(res.data.sort((a, b) => { return b.updatedAt.localeCompare(a.updatedAt) }))
+                const realConversations = res.data.filter(conv => conv.waiter !== uid)
+                setConversations(realConversations.sort((a, b) => { return b.updatedAt.localeCompare(a.updatedAt) }))
                 setConversationsFound(true)
             } catch (err) {
                 console.error(err)
@@ -209,28 +212,56 @@ const Messenger = () => {
             text: newMessage,
             conversationId: currentChat._id,
         }
+        if (currentChat.members.length > 2) {
+            var ids = []
+            currentChat.members.map(member => { return ids = [...ids, member.id] })
+            ids.map(memberId => {
+                return websocket.current.emit("sendMessage", {
+                    senderId: uid,
+                    sender_pseudo: userData.pseudo,
+                    receiverId: memberId,
+                    text: [newMessage],
+                    conversationId: currentChat._id
+                })
+            })
 
-        // const membersId = currentChat.members.filter(member => member.id !== uid)
-        var ids = []
-        currentChat.members.map(member => { return ids = [...ids, member.id] })
-
-        ids.map(memberId => {
-            return websocket.current.emit("sendMessage", {
+            try {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}api/messages/`, message)
+                setMessages([...messages, response.data])
+                setNewMessage('')
+                setGetNewMessage(response.data)
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            const receiver = currentChat.members.find(member => member.id !== uid)
+            if (currentChat.waiter === receiver.id) {
+                const removeWaiter = async () => {
+                    var data = { waiter: receiver.id }
+                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversations/${currentChat._id}/remove-waiter`, data)
+                    websocket.current.emit("addConversation", {
+                        receiverId: receiver.id,
+                        conversation: currentChat
+                    })
+                }
+                removeWaiter()
+            }
+            websocket.current.emit("sendMessage", {
                 senderId: uid,
                 sender_pseudo: userData.pseudo,
-                receiverId: memberId,
+                receiverId: receiver.id,
                 text: [newMessage],
                 conversationId: currentChat._id
             })
-        })
 
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}api/messages/`, message)
-            setMessages([...messages, response.data])
-            setNewMessage('')
-            setGetNewMessage(response.data)
-        } catch (err) {
-            console.log(err)
+            try {
+                const response = await axios.post(`${process.env.REACT_APP_API_URL}api/messages/`, message)
+                setMessages([...messages, response.data])
+                setNewMessage('')
+                setGetNewMessage(response.data)
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 
@@ -345,7 +376,7 @@ const Messenger = () => {
                 changeCurrentChat={changeCurrentChat}
                 getNewMessage={getNewMessage}
                 notification={notification}
-                addedToConversation={addedToConversation}
+                user={user}
             />
             <div className="conversation-box">
                 <div className="conversation-box-wrapper">

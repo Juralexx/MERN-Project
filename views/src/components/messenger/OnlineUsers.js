@@ -7,10 +7,7 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat, setConversatio
   const userData = useSelector((state) => state.userReducer)
   const [friendInfos, setFriendInfos] = useState([])
   const [onlineFriends, setOnlineFriends] = useState([])
-
-  useEffect(() => {
-    setOnlineFriends(onlineUsers)
-  }, [onlineUsers])
+  useEffect(() => { setOnlineFriends(onlineUsers) }, [onlineUsers])
 
   useEffect(() => {
     const fetchFriendsData = () => {
@@ -32,35 +29,26 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat, setConversatio
   const handleClick = async (receiver) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}api/conversations/${currentId}`)
-      var conversationFound = response.data.filter(element => element.members.length === 2)
-          conversationFound = conversationFound.filter(element => element.members[0].id === currentId || element.members[1].id === currentId)
-          conversationFound = conversationFound.find(element => element.members[0].id === receiver._id || element.members[1].id === receiver._id)
+      var isConversation = response.data.filter(element => element.members.length === 2)
+      isConversation = isConversation.filter(element => element.members[0].id === currentId || element.members[1].id === currentId)
+      isConversation = isConversation.find(element => element.members[0].id === receiver._id || element.members[1].id === receiver._id)
 
-      if (conversationFound) {
-        changeCurrentChat(conversationFound)
+      if (isConversation) {
+        changeCurrentChat(isConversation)
       } else {
         const createNewConversation = async () => {
-          var user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }
-          var friend = { id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }
-          await axios({
-            method: "post",
-            url: `${process.env.REACT_APP_API_URL}api/conversations/`,
-            data: {
-              type: 'dialog',
-              members: [user, friend],
-              owner: currentId,
-              creator: currentId
-            }
-          }).then((res) => {
-            changeCurrentChat(res.data)
-            setConversations(conversations => [...conversations, res.data])
-          })
+          const user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }
+          const friend = { id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }
+          const data = { type: 'dialog', owner: user, creator: user, members: [user, friend], waiter: receiver._id }
+          await axios.post(`${process.env.REACT_APP_API_URL}api/conversations/`, data)
+            .then((res) => {
+              changeCurrentChat(res.data)
+              setConversations(conversations => [...conversations, res.data])
+            })
         }
         createNewConversation()
       }
-    } catch (err) {
-      console.log(err)
-    }
+    } catch (err) { console.log(err) }
   }
 
   return (

@@ -45,7 +45,6 @@ export function getDate(element, setState) {
 }
 
 export function getMembers(conversation, uid, setState) {
-    const index = conversation.members.findIndex(member => member.id === uid)
-    conversation.members.splice(index, 1)
-    setState(conversation.members)
+    const index = conversation.members.filter(member => member.id !== uid)
+    setState(index)
 }

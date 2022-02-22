@@ -145,6 +145,10 @@ const UserModel = new mongoose.Schema(
             }
         },
 
+        favorite_conversations: {
+            type: []
+        },
+
         current_projects: { type: [String] },
 
         number_of_current_projects: {

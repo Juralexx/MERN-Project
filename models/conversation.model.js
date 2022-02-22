@@ -5,6 +5,9 @@ const ConversationModel = new mongoose.Schema(
         type: {
             type: String
         },
+        waiter: {
+            type: String
+        },
         name: {
             type: String
         },

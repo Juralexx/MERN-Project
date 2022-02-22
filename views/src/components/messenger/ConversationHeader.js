@@ -1,17 +1,19 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { AiOutlineInfoCircle } from 'react-icons/ai'
-import { FaTrashAlt } from 'react-icons/fa'
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { avatar } from '../tools/functions/useAvatar'
 import ConversationModal from './ConversationModal'
 import UserModal from './UserModal'
+import { AiOutlineInfoCircle } from 'react-icons/ai'
+import { FaTrashAlt } from 'react-icons/fa'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
 
 const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConversation, leaveConversation, addNewMember }) => {
     const [openConvMenu, setOpenConvMenu] = useState(false)
     const [friend, setFriend] = useState({})
     const [openUserModal, setOpenUserModal] = useState(false)
     const [openConvModal, setOpenConvModal] = useState(false)
+    const [favorite, setFavorite] = useState(false)
 
     const getFriend = async () => {
         const member = getMembers(currentChat)
@@ -19,6 +21,22 @@ const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConve
             .then((res) => setFriend(res.data))
             .catch((err) => console.error(err))
         setOpenUserModal(!openUserModal)
+    }
+
+    const addFavorite = async () => {
+        const data = { conversationId: currentChat._id }
+        await axios.put(`${process.env.REACT_APP_API_URL}api/user/conversation/add-favorite/${uid}`, data)
+            .then((res) => res.data)
+            .catch((err) => console.error(err))
+        setFavorite(true)
+    }
+
+    const removeFavorite = async () => {
+        const data = { conversationId: currentChat._id }
+        await axios.put(`${process.env.REACT_APP_API_URL}api/user/conversation/remove-favorite/${uid}`, data)
+            .then((res) => res.data)
+            .catch((err) => console.error(err))
+        setFavorite(false)
     }
 
     return (
@@ -39,6 +57,11 @@ const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConve
                         </div>
                     </div>
                     <div className="conversation-box-menu">
+                        {favorite ? (
+                            <div role="button" onClick={removeFavorite}><AiFillStar /></div>
+                        ) : (
+                            <div role="button" onClick={addFavorite}><AiOutlineStar /></div>
+                        )}
                         <div role="button" onClick={() => setOpenConvMenu(!openConvMenu)}><AiOutlineInfoCircle /></div>
                     </div>
                     {openConvMenu && (
@@ -75,18 +98,25 @@ const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConve
                         </div>
                         <div className="conversation-name">
                             {currentChat.members.length === 2 && (
-                                <strong>{getMembers(currentChat)[0].pseudo}</strong>
+                                <strong>{getMembers(currentChat)[0].pseudo} <MdOutlineKeyboardArrowDown /></strong>
                             )}
                             {currentChat.members.length === 3 && (
-                                <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo}</strong>
+                                <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo} <MdOutlineKeyboardArrowDown /></strong>
                             )}
                             {currentChat.members.length === 4 && (
-                                <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo + ", " + getMembers(currentChat)[2].pseudo}</strong>
+                                <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo + ", " + getMembers(currentChat)[2].pseudo} <MdOutlineKeyboardArrowDown /></strong>
                             )}
                             {currentChat.members.length > 5 && (
-                                <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo + ", " + getMembers(currentChat)[2].pseudo + " et " + (getMembers(currentChat).length - 3) + " autres"}</strong>
+                                <strong>{getMembers(currentChat)[0].pseudo + ", " + getMembers(currentChat)[1].pseudo + ", " + getMembers(currentChat)[2].pseudo + " et " + (getMembers(currentChat).length - 3) + " autres"} <MdOutlineKeyboardArrowDown /></strong>
                             )}
                         </div>
+                    </div>
+                    <div className="conversation-box-menu">
+                        {favorite ? (
+                            <div role="button" onClick={removeFavorite}><AiFillStar /></div>
+                        ) : (
+                            <div role="button" onClick={addFavorite}><AiOutlineStar /></div>
+                        )}
                     </div>
                 </div>
             )}

@@ -1,7 +1,7 @@
 import express from 'express'
 const userRoutes = express.Router()
 import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
-import { getAllUsers, userInfo, updateUser, deleteUser, findUser } from '../controllers/user.controller.js'
+import { getAllUsers, userInfo, updateUser, deleteUser, findUser, addConversationToFavorite, removeConversationFromFavorite } from '../controllers/user.controller.js'
 import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteGender, deleteUserWebsite, deleteUserLinkedin, deleteUserFacebook, deleteUserInstagram, deleteUserTwitter, deleteUserYoutube } from '../controllers/user.controller.delete.js'
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/upload.user.controller.js'
 import multer from 'multer'
@@ -43,5 +43,8 @@ userRoutes.put('/cancel-friend-request/:id', cancelSentFriendRequest)
 userRoutes.put('/accept-friend-request/:id', acceptFriend)
 userRoutes.put('/refuse-friend-request/:id', refuseFriend)
 userRoutes.put('/delete/friend/:id', deleteFriend)
+
+userRoutes.put('/conversation/add-favorite/:id', addConversationToFavorite)
+userRoutes.put('/conversation/remove-favorite/:id', removeConversationFromFavorite)
 
 export default userRoutes;

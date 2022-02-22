@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import { FaSearch } from 'react-icons/fa'
 
-const ConversationsMenu = ({ friends, uid, setCurrentChat, conversations, changeCurrentChat, getNewMessage, notification, setConversations, websocket, addedToConversation }) => {
+const ConversationsMenu = ({ friends, uid, user, setCurrentChat, conversations, changeCurrentChat, getNewMessage, notification, setConversations, websocket }) => {
     const [isConversationInResult, setConversationsInResult] = useState([])
     const [openConversationsInput, setOpenConversationsInput] = useState(false)
     const [search, setSearch] = useState(false)
@@ -41,6 +41,7 @@ const ConversationsMenu = ({ friends, uid, setCurrentChat, conversations, change
                 {openConversationsInput &&
                     <input placeholder="Rechercher une conversation..." className="conversation-menu-input" value={searchQuery} onInput={handleInputChange} onChange={searchConversation} type="search" />
                 }
+
                 {conversations.map((element, key) => {
                     return (
                         <div onClick={() => { setCurrentChat(element); changeCurrentChat(element) }} key={key}
@@ -49,7 +50,6 @@ const ConversationsMenu = ({ friends, uid, setCurrentChat, conversations, change
                                 conversation={element}
                                 newMessage={getNewMessage}
                                 notification={notification}
-                                addedToConversation={addedToConversation}
                             />
                         </div>
                     )

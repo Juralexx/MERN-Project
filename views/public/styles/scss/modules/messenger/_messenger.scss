@@ -120,9 +120,9 @@
 
                 .conversation-box-menu {
                     display         : flex;
-                    justify-content : center;
+                    justify-content : space-around;
                     align-items     : center;
-                    width           : 50px;
+                    width           : 100px;
                     height          : 100%;
 
                     svg {

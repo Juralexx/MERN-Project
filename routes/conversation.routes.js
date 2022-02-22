@@ -13,7 +13,8 @@ conversationRoutes.post('/', async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         owner: req.body.owner,
-        creator: req.body.creator
+        creator: req.body.creator,
+        waiter: req.body.waiter
     })
 
     try {
@@ -40,6 +41,21 @@ conversationRoutes.post('/', async (req, res) => {
     }
 })
 
+conversationRoutes.get('/:id', async (req, res) => {
+    try {
+        const conversation = await ConversationModel.find({
+            members: {
+                $elemMatch: {
+                    id: req.params.id
+                }
+            }
+        })
+        res.status(200).json(conversation)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 conversationRoutes.put('/:id', async (req, res) => {
     try {
         await ConversationModel.findByIdAndUpdate(
@@ -49,6 +65,8 @@ conversationRoutes.put('/:id', async (req, res) => {
                     description: req.body.description,
                     name: req.body.name,
                     owner: req.body.owner,
+                    waiter: req.body.waiter,
+                    last_message: req.body.last_message
                 }
             },
             { new: true, upsert: true },
@@ -96,16 +114,19 @@ conversationRoutes.put('/:id/add', async (req, res) => {
     }
 })
 
-conversationRoutes.get('/:id', async (req, res) => {
+conversationRoutes.put('/:id/remove-waiter', async (req, res) => {
     try {
-        const conversation = await ConversationModel.find({
-            members: {
-                $elemMatch: {
-                    id: req.params.id
+        await ConversationModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+                $unset: {
+                    waiter: req.body.waiter
                 }
-            }
-        })
-        res.status(200).json(conversation)
+            },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
