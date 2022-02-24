@@ -21,37 +21,38 @@ import SocialsNetworks from '../profil/about/update/SocialsNetworks'
 import Messenger from '../messenger/Messenger'
 
 function Index({ websocket, onlineUsers, friends }) {
+
   return (
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={ <Home /> } />
-        <Route path="login" element={ <Login /> } />
-        <Route path="register" element={ <Signup /> } />
+        <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Signup />} />
 
-        <Route path="profil" element={ <Profil /> }>
-          <Route index element={ <Main /> } />
-          <Route path="about" element={ <About /> }>
-            <Route index element={ <MainInfos /> } />
-            <Route path="contact" element={ <ContactInfos /> } />
-            <Route path="bio" element={ <Bio /> } />
-            <Route path="location" element={ <Location /> } />
-            <Route path="socials-networks" element={ <SocialsNetworks /> } />
+        <Route path="profil" element={<Profil />}>
+          <Route index element={<Main />} />
+          <Route path="about" element={<About />}>
+            <Route index element={<MainInfos />} />
+            <Route path="contact" element={<ContactInfos />} />
+            <Route path="bio" element={<Bio />} />
+            <Route path="location" element={<Location />} />
+            <Route path="socials-networks" element={<SocialsNetworks />} />
           </Route>
         </Route>
-        
-        <Route path=":pseudo" element={ <MemberProfil /> } />
 
-        <Route path="project/add" element={ <AddProject /> } />
-        <Route path="projects" element={ <MyProjects /> } />
-        <Route path="projects/:pseudo" element={ <UserProjects /> } />
+        <Route path=":pseudo" element={<MemberProfil />} />
+
+        <Route path="project/add" element={<AddProject />} />
+        <Route path="projects" element={<MyProjects />} />
+        <Route path="projects/:pseudo" element={<UserProjects />} />
         <Route path="project/:titleURL" element={<Project />} />
 
         <Route path="most-liked" element={<MostLiked />} />
 
-        <Route path="messenger" element={<Messenger websocket={websocket} friends={friends} onlineUsers={onlineUsers}/>} />
+        <Route path="messenger" element={<Messenger websocket={websocket} friends={friends} onlineUsers={onlineUsers} />} />
 
-        <Route path="*" element={ <Navigate to="/"/> } />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

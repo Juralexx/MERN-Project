@@ -54,7 +54,6 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             setTypingContext("")
         })
         websocket.current.on("getNotification", data => {
-            console.log('norif')
             setNotification({
                 sender: data.senderId,
                 sender_pseudo: data.sender_pseudo,
@@ -205,6 +204,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                 return websocket.current.emit("sendMessage", {
                     senderId: uid,
                     sender_pseudo: userData.pseudo,
+                    sender_picture: userData.picture,
                     receiverId: memberId,
                     text: [newMessage],
                     conversationId: currentChat._id
@@ -235,6 +235,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             websocket.current.emit("sendMessage", {
                 senderId: uid,
                 sender_pseudo: userData.pseudo,
+                sender_picture: userData.picture,
                 receiverId: receiver.id,
                 text: [newMessage],
                 conversationId: currentChat._id
@@ -261,7 +262,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
     }
 
     const changeCurrentChat = async (conversation) => {
-        const messageId = currentChat.messages[messages.length-1]
+        const messageId = currentChat.messages[currentChat.messages.length - 1]
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/conversation/last-message-seen/${uid}`,
@@ -269,16 +270,11 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                 conversationId: currentChat._id,
                 messageId: messageId
             },
+        }).then(res => res.data).catch(err => console.log(err))
+        websocket.current.emit("changeCurrentConversation", {
+            userId: uid,
+            conversationId: conversation._id
         })
-            .then(res => res.data)
-            .catch(err => console.log(err))
-
-        if (conversation) {
-            websocket.current.emit("changeCurrentConversation", {
-                userId: uid,
-                conversationId: conversation._id
-            })
-        }
     }
 
     const deleteConversation = async (element) => {

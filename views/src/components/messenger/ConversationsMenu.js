@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import { FaSearch } from 'react-icons/fa'
@@ -39,13 +39,21 @@ const ConversationsMenu = ({ friends, uid, user, setCurrentChat, conversations, 
                     />
                 </div>
                 {openConversationsInput &&
-                    <input placeholder="Rechercher une conversation..." className="conversation-menu-input" value={searchQuery} onInput={handleInputChange} onChange={searchConversation} type="search" />
+                    <input
+                        type="search"
+                        placeholder="Rechercher une conversation..."
+                        className="conversation-menu-input" value={searchQuery}
+                        onInput={handleInputChange}
+                        onChange={searchConversation}
+                    />
                 }
 
                 {conversations.map((element, key) => {
                     return (
-                        <div onClick={() => { setCurrentChat(element); changeCurrentChat(element) }} key={key}
-                            style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}>
+                        <div key={key}
+                            onClick={() => { changeCurrentChat(element) && setCurrentChat(element) }}
+                            style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}
+                        >
                             <Conversation
                                 user={user}
                                 conversation={element}

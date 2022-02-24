@@ -5,17 +5,12 @@ import { BsFillCaretDownFill, BsChatRightTextFill } from 'react-icons/bs'
 import { IoNotifications } from 'react-icons/io5'
 import SettingsMenu from "../tools/SettingsMenu";
 import NotificationsMenu from "./Notifications";
+import { avatar } from "../tools/functions/useAvatar";
 
 const MiniNav = () => {
     const userData = useSelector((state) => state.userReducer)
     const [openSettingsMenu, setOpenSettingsMenu] = useState(true)
     const [openNotificationsMenu, setOpenNotificationsMenu] = useState(true)
-    const avatar = {
-        backgroundImage: "url(" + userData.picture + ")",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-    }
 
     return (
         <>
@@ -23,7 +18,7 @@ const MiniNav = () => {
                 <ul>
                     <li className="to-profil">
                         <NavLink to="/profil">
-                            <div className="avatar" style={avatar}></div>
+                            <div className="avatar" style={avatar(userData.picture)}></div>
                             <p>{userData.pseudo}</p>
                         </NavLink>
                     </li>

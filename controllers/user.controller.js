@@ -97,10 +97,10 @@ export const setLastMessageSeen = async (req, res) => {
         await UserModel.updateOne(
             {
                 _id: req.params.id,
-                conversations: { $elemMatch: { conversation: req.body.conversationId } }
+                conversations: { $elemMatch: { conversation: req.body.conversationId } },
             },
             { $set: { "conversations.$.last_message_seen": req.body.messageId } },
-            { new: true, upsert: true },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
         )
             .then((docs) => { res.send(docs) })
             .catch((err) => { return res.status(400).send({ message: err }) })

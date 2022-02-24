@@ -2479,14 +2479,12 @@ header nav .navbar-container ul li a.activeLink svg path {
           align-items: center;
   padding: 10px;
   cursor: pointer;
-  border-radius: 5px;
   border-bottom: 1px solid #535252;
 }
 .messenger .conversation-menu .conversation:hover {
   background: var(--color-bg-hover);
 }
 .messenger .conversation-menu .conversation.new-notification {
-  border: 1px solid #6366f1;
   background: rgba(99, 102, 241, 0.2);
 }
 .messenger .conversation-menu .conversation .conversation-img-container {
@@ -2541,7 +2539,17 @@ header nav .navbar-container ul li a.activeLink svg path {
 .messenger .conversation-menu .conversation .conversation-infos .last-message-wrapper .unseen-messages {
   position: absolute;
   right: 0;
-  padding: 3px 6px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 24px;
+  height: 24px;
   border-radius: 20px;
   background: #6366f1;
   color: white;
@@ -3417,6 +3425,65 @@ header nav .navbar-container ul li a.activeLink svg path {
 .conversation-modal .modal-inner .body .conversation-members .conversation-member .btn {
   padding: 4px 20px 8px;
   height: 38px;
+}
+
+.notification-message {
+  position: absolute;
+  height: auto;
+  width: 370px;
+  right: 20px;
+  bottom: 20px;
+  background: var(--color-content);
+  z-index: 1000000000;
+  font-size: 13px;
+  border-radius: 5px;
+}
+.notification-message .top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 15px 15px 0 15px;
+}
+.notification-message .top svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+  color: #6366f1;
+}
+.notification-message .top .subject {
+  margin-right: 10px;
+  color: white;
+}
+.notification-message .notification-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 7px 15px 15px;
+}
+.notification-message .notification-content .left .sender {
+  font-size: 16px;
+  color: white;
+}
+.notification-message .notification-content .left p {
+  margin: 0;
+}
+.notification-message .notification-content .right {
+  width: 35px;
+  height: 35px;
+  border-radius: 30px;
+}
+.notification-message .bottom {
+  padding: 10px 15px;
+  background: #474c56;
+  border-radius: 0 0 5px 5px;
+}
+.notification-message .bottom button {
+  background: none;
+  border: none;
+  color: white;
 }
 
 .settings-menu {

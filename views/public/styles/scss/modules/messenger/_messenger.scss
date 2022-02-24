@@ -3,7 +3,7 @@
     display : flex;
 
     .conversation-menu {
-        width:28%;
+        width : 28%;
 
         .conversation-menu-input {
             width         : 100%;
@@ -18,7 +18,6 @@
             align-items   : center;
             padding       : 10px;
             cursor        : pointer;
-            border-radius : 5px;
             border-bottom : 1px solid #535252;
 
             &:hover {
@@ -26,7 +25,6 @@
             }
 
             &.new-notification {
-                border : 1px solid $primary-color;
                 background : rgba($primary-color, 0.2);
             }
             
@@ -77,12 +75,16 @@
                     }
 
                     .unseen-messages {
-                        position      : absolute;
-                        right         : 0;
-                        padding       : 3px 6px;
-                        border-radius : 20px;
-                        background    : $primary-color;
-                        color         : white;
+                        position        : absolute;
+                        right           : 0;
+                        display         : flex;
+                        align-items     : center;
+                        justify-content : center;
+                        width           : 24px;
+                        height          : 24px;
+                        border-radius   : 20px;
+                        background      : $primary-color;
+                        color           : white;
                     }
                 }
             }
@@ -883,6 +885,70 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.notification-message {
+    position      : absolute;
+    height        : auto;
+    width         : 370px;
+    right         : 20px;
+    bottom        : 20px;
+    background    : var(--color-content);
+    z-index       : 1000000000;
+    font-size     : 13px;
+    border-radius : 5px;
+
+    .top {
+        display : flex;
+        padding : 15px 15px 0 15px;
+
+        svg {
+            width        : 16px;
+            height       : 16px;
+            margin-right : 10px;
+            color        : $primary-color;
+        }
+
+        .subject {
+            margin-right : 10px;
+            color        : white;
+        }
+    }
+
+    .notification-content {
+        display         : flex;
+        justify-content : space-between;
+        padding         : 7px 15px 15px;
+
+        .left {
+            .sender {
+                font-size : 16px;
+                color     : white;
+            }
+
+            p {
+                margin:0;
+            }
+        }
+
+        .right {
+            width         : 35px;
+            height        : 35px;
+            border-radius : 30px;
+        }
+    }
+
+    .bottom {
+        padding       : 10px 15px;
+        background    : #474c56;
+        border-radius : 0 0 5px 5px;
+
+        button {
+            background : none;
+            border     : none;
+            color      : white;
         }
     }
 }

@@ -96,10 +96,10 @@ io.on("connect", (socket) => {
     if (user) user.conversationId = conversationId
   })
 
-  socket.on("sendMessage", ({ senderId, sender_pseudo, receiverId, text, conversationId, createdAt }) => {
+  socket.on("sendMessage", ({ senderId, sender_pseudo, sender_picture, receiverId, text, conversationId, createdAt }) => {
     var user = users.find(member => member.userId === receiverId)
     if (user) {
-      if (user.conversationId === conversationId) {
+      if (user.conversationId && user.conversationId === conversationId) {
         return io.to(user.socketId).emit("getMessage", {
           senderId,
           sender_pseudo,
@@ -107,11 +107,19 @@ io.on("connect", (socket) => {
           conversationId,
           createdAt,
         })
-      }
-      if (user.conversationId !== conversationId) {
+      } else if (user.conversationId && user.conversationId !== conversationId) {
         return io.to(user.socketId).emit("getNotification", {
           senderId,
           sender_pseudo,
+          text,
+          conversationId,
+          createdAt,
+        })
+      } else {
+        return io.to(user.socketId).emit("sendMessageNotification", {
+          senderId,
+          sender_pseudo,
+          sender_picture,
           text,
           conversationId,
           createdAt,
