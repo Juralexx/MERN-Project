@@ -4,12 +4,13 @@ import { UidContext } from '../AppContext';
 import { avatar } from '../tools/functions/useAvatar';
 import { convertEditorToHTML, getDate, getMembers } from './tools/function';
 
-const Conversation = ({ conversation, newMessage, notification }) => {
+const Conversation = ({ user, conversation, newMessage, notification }) => {
     const uid = useContext(UidContext)
     const [convMembers, setConvMembers] = useState([])
     const [isResponse, setResponse] = useState(false)
     const [lastMessageFound, setLastMessageFound] = useState(null)
     const [date, setDate] = useState()
+    const [unseen, setUnseen] = useState()
     const wrapperRef = useRef()
 
     useEffect(() => {
@@ -32,10 +33,21 @@ const Conversation = ({ conversation, newMessage, notification }) => {
     }, [isResponse, conversation.last_message])
 
     useEffect(() => {
+        if (user && conversation.last_message !== "") {
+            const findConversation = user.conversations.find(element => element.conversation === conversation._id)
+            const lastMessageSeenIndex = conversation.messages.findIndex(element => element === findConversation.last_message_seen)
+            const difference = Math.abs((conversation.messages.length - 1) - lastMessageSeenIndex)
+
+            if (difference > 0)
+                setUnseen(difference)
+            // wrapperRef.current.className = "conversation new-notification";
+        }
+    }, [user, conversation.messages])
+
+    useEffect(() => {
         if (newMessage && newMessage.conversationId === conversation._id) {
             setLastMessageFound(newMessage)
             setDate('À l\'instant')
-            console.log('cest ok')
         }
     }, [newMessage, conversation._id])
 
@@ -90,6 +102,7 @@ const Conversation = ({ conversation, newMessage, notification }) => {
                             <div className="last-message-wrapper">
                                 <div className="last-message-pseudo">{lastMessageFound.sender_pseudo} :&nbsp;</div>
                                 <div className="last-message" dangerouslySetInnerHTML={convertEditorToHTML(lastMessageFound)}></div>
+                                {unseen && <div className="unseen-messages">{unseen}</div>}
                             </div>
                         ) : (
                             <div className="last-message-wrapper">

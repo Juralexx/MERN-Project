@@ -92,6 +92,23 @@ export const removeConversationFromFavorite = async (req, res) => {
     }
 };
 
+export const setLastMessageSeen = async (req, res) => {
+    try {
+        await UserModel.updateOne(
+            {
+                _id: req.params.id,
+                conversations: { $elemMatch: { conversation: req.body.conversationId } }
+            },
+            { $set: { "conversations.$.last_message_seen": req.body.messageId } },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
+    } catch (err) {
+        return res.status(400).json({ message: err });
+    }
+}
+
 export const deleteUser = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)

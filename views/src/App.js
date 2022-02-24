@@ -4,11 +4,16 @@ import { UidContext, UserContext } from "./components/AppContext"
 import axios from 'axios';
 import { getUser } from './actions/user.action';
 import { useDispatch } from 'react-redux'
+import { io } from 'socket.io-client'
 
 function App() {
   const [uid, setUid] = useState(null)
   const [user, setUser] = useState(null)
   const dispatch = useDispatch()
+  const websocket = useRef()
+  const [friends, setFriends] = useState([])
+  const [onlineUsers, setOnlineUsers] = useState([])
+  websocket.current = io('ws://localhost:3001')
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -20,7 +25,7 @@ function App() {
         .then((res) => { setUid(res.data) })
         .catch((err) => console.log(err))
     }
-    fetchToken();
+    fetchToken()
 
     if (uid) {
       dispatch(getUser(uid))
@@ -31,28 +36,30 @@ function App() {
       }
       fetchUser()
     }
-  }, [uid])
+  }, [uid, websocket])
 
-  //   const [onlineUsers, setOnlineUsers] = useState([])
-  //   useEffect(() => {
-  //     websocket.current.emit("addUser", uid)
-  //     websocket.current.on("getUsers", (users) => {
-  //       const getUsers = async () => {
-  //           try {
-  //               const response = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
-  //               setOnlineUsers(response.data.friends.filter((f) => users.some((u) => u.userId === f.friend)))
-  //           } catch (err) {
-  //               console.log(err)
-  //           }
-  //       }
-  //       getUsers()
-  //   })
-  // }, [uid, onlineUsers.length])
+  useEffect(() => {
+    if (user) {
+      websocket.current.emit("addUser", { userId: uid })
+      websocket.current.on("getUsers", (users) => {
+        setFriends(user.friends)
+        setOnlineUsers(user.friends.filter((f) => users.some((u) => u.userId === f.friend)))
+      })
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (!window.location.href.includes("messenger")) {
+      websocket.current.emit("leaveMessenger", {
+        userId: uid
+      })
+    }
+  }, [uid, websocket])
 
   return (
     <UidContext.Provider value={uid}>
       <UserContext.Provider value={user}>
-        <Index />
+        <Index websocket={websocket} friends={friends} onlineUsers={onlineUsers} />
       </UserContext.Provider>
     </UidContext.Provider>
   );
