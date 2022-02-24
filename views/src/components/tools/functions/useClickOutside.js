@@ -1,15 +1,15 @@
 import { useCallback, useEffect } from "react";
 
-export function useClickOutside(ref, func, secondFunc, thirdFunc) {
+export function useClickOutside(ref, func, state, secondFunc, secondState, thirdFunc, thirdState) {
 
     const handleClickOutside = useCallback((e) => {
         const { current: wrap } = ref
         if (wrap && !wrap.contains(e.target)) {
-            func(false)
-            if (secondFunc) secondFunc(false)
-            if (thirdFunc) thirdFunc(false)
+            func(state)
+            if (secondFunc) secondFunc(secondState)
+            if (thirdFunc) thirdFunc(thirdState)
         }
-    }, [ref, func, secondFunc, thirdFunc])
+    }, [ref, func, state, secondFunc, secondState, thirdFunc, thirdState])
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside)

@@ -71,7 +71,7 @@ const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModi
         })
     }
 
-    useClickOutside(wrapperRef, setOpenEmojiPicker)
+    useClickOutside(wrapperRef, setOpenEmojiPicker, false)
 
     const handleModifiedMessage = (text, delta, source, editor) => {
         setModifiedMessage(editor.getContents());
@@ -112,7 +112,7 @@ const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModi
                             </div>
                             <div className="right">
                                 <button className="btn btn-secondary" onClick={() => setMessageToModify(-1)}>Annuler</button>
-                                <button className="btn btn-secondary" disabled={!modified} onClick={() => {modifyMessage(message); setMessageToModify(-1)}}><IoSend /></button>
+                                <button className="btn btn-secondary" disabled={!modified} onClick={() => { modifyMessage(message); setMessageToModify(-1) }}><IoSend /></button>
                             </div>
                         </div>
                     </>

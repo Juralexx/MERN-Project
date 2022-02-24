@@ -20,7 +20,7 @@ import MostLiked from '../../pages/MostLiked'
 import SocialsNetworks from '../profil/about/update/SocialsNetworks'
 import Messenger from '../messenger/Messenger'
 
-function Index() {
+function Index({ websocket, onlineUsers, friends }) {
   return (
     <Router>
       <Navbar />
@@ -49,9 +49,9 @@ function Index() {
 
         <Route path="most-liked" element={<MostLiked />} />
 
-        <Route path="messenger" element={<Messenger />} />
+        <Route path="messenger" element={<Messenger websocket={websocket} friends={friends} onlineUsers={onlineUsers}/>} />
 
-        <Route path="*" element={ <Navigate to="/" /> } />
+        <Route path="*" element={ <Navigate to="/"/> } />
       </Routes>
     </Router>
   );

@@ -27,7 +27,7 @@ const State = ({ props, id }) => {
         setDisplaySelection(false)
     }
 
-    useClickOutside(wrapperRef, setDisplaySelection)
+    useClickOutside(wrapperRef, setDisplaySelection, false)
 
     return (
         <div className="user-info">

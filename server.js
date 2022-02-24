@@ -68,48 +68,60 @@ const io = new Server(server, {
   }
 });
 
-let users = []
+let users = new Array()
 
-const addUser = (userId, socketId, conversationId) => {
+const addUser = (userId, socketId) => {
   !users.some(user => user.userId === userId)
-    && users.push({ userId, socketId, conversationId })
+    && users.push({ userId, socketId })
 }
 
 io.on("connect", (socket) => {
-  socket.on("addUser", ({ userId, conversationId }) => {
-    addUser(userId, socket.id, conversationId)
+  socket.on("addUser", ({ userId }) => {
+    addUser(userId, socket.id)
     io.emit("getUsers", users)
   })
 
+  socket.on("onMessenger", ({ userId, conversationId }) => {
+    const user = users.find(member => member.userId === userId)
+    if (user) Object.assign(user, { conversationId: conversationId })
+  })
+
+  socket.on("leaveMessenger", ({ userId }) => {
+    const user = users.find(member => member.userId === userId)
+    if (user) delete user.conversationId
+  })
+
   socket.on("changeCurrentConversation", ({ userId, conversationId }) => {
-    var user = users.filter(member => member.userId === userId)
-    user[0].conversationId = conversationId
+    const user = users.find(member => member.userId === userId)
+    if (user) user.conversationId = conversationId
   })
 
   socket.on("sendMessage", ({ senderId, sender_pseudo, receiverId, text, conversationId, createdAt }) => {
-    var receiver = users.filter(member => member.userId === receiverId)
-    var user = receiver[0]
-    if (user && user.conversationId === conversationId) {
-      return io.to(user.socketId).emit("getMessage", {
-        senderId,
-        text,
-        conversationId
-      })
-    }
-    if (user && user.conversationId !== conversationId) {
-      return io.to(user.socketId).emit("getNotification", {
-        senderId,
-        sender_pseudo,
-        text,
-        conversationId,
-        createdAt,
-      })
+    var user = users.find(member => member.userId === receiverId)
+    if (user) {
+      if (user.conversationId === conversationId) {
+        return io.to(user.socketId).emit("getMessage", {
+          senderId,
+          sender_pseudo,
+          text,
+          conversationId,
+          createdAt,
+        })
+      }
+      if (user.conversationId !== conversationId) {
+        return io.to(user.socketId).emit("getNotification", {
+          senderId,
+          sender_pseudo,
+          text,
+          conversationId,
+          createdAt,
+        })
+      }
     }
   })
 
   socket.on('typing', ({ sender, receiverId, conversationId }) => {
-    var receiver = users.filter(member => member.userId === receiverId)
-    var user = receiver[0]
+    const user = users.find(member => member.userId === receiverId)
     if (user) {
       if (user.conversationId === conversationId) {
         return io.to(user.socketId).emit('typing', {
@@ -121,8 +133,7 @@ io.on("connect", (socket) => {
   })
 
   socket.on('addConversation', ({ receiverId, conversation }) => {
-    var receiver = users.filter(member => member.userId === receiverId)
-    var user = receiver[0]
+    const user = users.find(member => member.userId === receiverId)
     if (user) {
       return io.to(user.socketId).emit('addConversation', {
         conversation
@@ -131,8 +142,7 @@ io.on("connect", (socket) => {
   })
 
   socket.on('deleteConversation', ({ receiverId, conversationId }) => {
-    var receiver = users.filter(member => member.userId === receiverId)
-    var user = receiver[0]
+    const user = users.filter(member => member.userId === receiverId)
     if (user) {
       return io.to(user.socketId).emit('deleteConversation', {
         conversationId
@@ -141,8 +151,7 @@ io.on("connect", (socket) => {
   })
 
   socket.on('modifyMessage', ({ receiverId, conversationId, messageId, text }) => {
-    var receiver = users.filter(member => member.userId === receiverId)
-    var user = receiver[0]
+    const user = users.find(member => member.userId === receiverId)
     if (user) {
       return io.to(user.socketId).emit('modifyMessage', {
         conversationId,
@@ -153,8 +162,7 @@ io.on("connect", (socket) => {
   })
 
   socket.on('deleteMessage', ({ receiverId, conversationId, messageId }) => {
-    var receiver = users.filter(member => member.userId === receiverId)
-    var user = receiver[0]
+    const user = users.find(member => member.userId === receiverId)
     if (user) {
       return io.to(user.socketId).emit('deleteMessage', {
         conversationId,
@@ -163,9 +171,9 @@ io.on("connect", (socket) => {
     }
   })
 
-  socket.on('addEmoji', ({ receiverId, conversationId, messageId, emoji }) => {
-    var receiver = users.filter(member => member.userId === receiverId)
-    var user = receiver[0]
+  socket.on('addEmoji', async ({ receiverId, conversationId, messageId, emoji }) => {
+    const user = await users.find(member => member.userId === receiverId)
+    console.log(user)
     if (user) {
       return io.to(user.socketId).emit('addEmoji', {
         conversationId,

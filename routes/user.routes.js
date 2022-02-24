@@ -1,11 +1,11 @@
 import express from 'express'
 const userRoutes = express.Router()
 import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
-import { getAllUsers, userInfo, updateUser, deleteUser, findUser, addConversationToFavorite, removeConversationFromFavorite } from '../controllers/user.controller.js'
+import { getAllUsers, userInfo, updateUser, deleteUser, findUser, addConversationToFavorite, removeConversationFromFavorite, setLastMessageSeen } from '../controllers/user.controller.js'
 import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteGender, deleteUserWebsite, deleteUserLinkedin, deleteUserFacebook, deleteUserInstagram, deleteUserTwitter, deleteUserYoutube } from '../controllers/user.controller.delete.js'
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/upload.user.controller.js'
-import multer from 'multer'
 import { acceptFriend, cancelSentFriendRequest, refuseFriend, sendFriendRequest, deleteFriend } from '../controllers/user.friend.js'
+import multer from 'multer'
 const upload = multer()
 
 userRoutes.post('/register', signUp)
@@ -46,5 +46,6 @@ userRoutes.put('/delete/friend/:id', deleteFriend)
 
 userRoutes.put('/conversation/add-favorite/:id', addConversationToFavorite)
 userRoutes.put('/conversation/remove-favorite/:id', removeConversationFromFavorite)
+userRoutes.put('/conversation/last-message-seen/:id', setLastMessageSeen)
 
 export default userRoutes;

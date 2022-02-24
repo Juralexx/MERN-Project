@@ -102,7 +102,7 @@ const LocationUpdater = () => {
         }
     }
 
-    useClickOutside(wrapperRef, setDisplay, setLoading)
+    useClickOutside(wrapperRef, setDisplay, false, setLoading, false)
 
     const setSelect = (e) => {
         setSearchQuery(e)

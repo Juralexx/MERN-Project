@@ -72,7 +72,7 @@ const Location = ({ props, id }) => {
         }
     }
 
-    useClickOutside(wrapperRef, setDisplay)
+    useClickOutside(wrapperRef, setDisplay, false)
 
     return (
         <div className="user-info">

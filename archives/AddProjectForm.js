@@ -230,7 +230,7 @@ const AddProjectForm = () => {
     /*************************************************************************************** */
     /********************************* FONCTIONS SECONDAIRES ******************************* */
 
-    useClickOutside(wrapperRef, setDisplaySelection)
+    useClickOutside(wrapperRef, setDisplaySelection, false)
 
     const handleCategory = (e) => {
         setCategory(e.target.value)

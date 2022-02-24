@@ -47,6 +47,7 @@ const ConversationsMenu = ({ friends, uid, user, setCurrentChat, conversations, 
                         <div onClick={() => { setCurrentChat(element); changeCurrentChat(element) }} key={key}
                             style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}>
                             <Conversation
+                                user={user}
                                 conversation={element}
                                 newMessage={getNewMessage}
                                 notification={notification}

@@ -7,7 +7,7 @@ const MessageDate = ({ message }) => {
     const [open, setOpen] = useState(false)
     const wrapperRef = useRef()
 
-    useClickOutside(wrapperRef, setOpen)
+    useClickOutside(wrapperRef, setOpen, false)
 
     return (
         <div className="messages-date" ref={wrapperRef}>

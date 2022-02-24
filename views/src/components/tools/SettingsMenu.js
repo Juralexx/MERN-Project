@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Logout from "../log/Logout";
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillSunFill } from 'react-icons/bs'
@@ -11,7 +11,7 @@ const SettingsMenu = () => {
     const [isScreenMenu, setScreenMenu] = useState(false)
     const settingsWrapper = useRef()
 
-    useClickOutside(settingsWrapper, setOpen)
+    useClickOutside(settingsWrapper, setOpen, false)
 
     const openScreenMenu = () => {
         return (

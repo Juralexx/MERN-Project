@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { ImArrowLeft2 } from 'react-icons/im'
 import { useClickOutside } from "./functions/useClickOutside";
 import SettingsMenu from "./SettingsMenu";
@@ -9,7 +9,7 @@ const ScreenMenu = () => {
     const [isSettingsMenu, setSettingsMenu] = useState(false)
     const settingsWrapper = useRef()
 
-    useClickOutside(settingsWrapper, setOpen)
+    useClickOutside(settingsWrapper, setOpen, false)
 
     const openSettingsMenu = () => {
         return (
