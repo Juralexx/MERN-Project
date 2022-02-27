@@ -30,13 +30,13 @@ const LikersModal = ({ project }) => {
     useEffect(() => {
         if (project.likers.includes(uid)) { setLiked(true) }
         else { setLiked(false) }
-    }, [])
+    }, [project.likers, uid])
 
     useEffect(() => {
         if (project.likers.includes(uid)) {
             if (liked) {
                 if (project.likers.length > 1)
-                    setAction(<span>Vous et {project.likers.length - 1} autres personnes</span>)
+                    setAction(<span>Vous et {project.likers.length - 1} personnes</span>)
                 if (project.likers.length === 1)
                     setAction(<span>Vous</span>)
                 if (project.likers.length === 0)
@@ -47,15 +47,15 @@ const LikersModal = ({ project }) => {
         else {
             if (liked) {
                 if (project.likers.length > 1)
-                    setAction(<span>Vous et {project.likers.length} autres personnes</span>)
+                    setAction(<span>Vous et {project.likers.length} personnes</span>)
                 if (project.likers.length === 1)
-                    setAction(<span>Vous et 1 autre personne</span>)
+                    setAction(<span>Vous et 1 personne</span>)
                 if (project.likers.length === 0)
                     setAction(<span>Vous</span>)
             }
             if (!liked) { setAction(<span>{project.likers.length}</span>) }
         }
-    }, [liked])
+    }, [liked, project.likers, uid])
 
     const like = () => { dispatch(likeProject(project._id, uid)); setLiked(true) }
     const unlike = () => { dispatch(unlikeProject(project._id, uid)); setLiked(false) }
@@ -75,7 +75,7 @@ const LikersModal = ({ project }) => {
             catch (err) { console.log(err) }
         }
         findLikers()
-    }, [])
+    }, [project.likers])
 
     const [hoveredCard, setHoveredCard] = useState(-1);
     const showCardHandler = (key) => { setHoveredCard(key) }
@@ -83,97 +83,98 @@ const LikersModal = ({ project }) => {
 
     return (
         <>
-            <div>
-                <div className="likers-modal-btn" onClick={modalOpen}><IoIosHeart />{action}</div>
+            {uid === null && (
+                <Popup trigger={<button className="action-btn"><IoIosHeartEmpty /> {action}</button>}
+                    position={['bottom center', 'bottom right', 'bottom left']}
+                    closeOnDocumentClick>
+                    <div>Connectez-vous pour aimer un projet !</div>
+                </Popup>
+            )}
+            {uid && liked === false && (
+                <div className="likers-modal-btn">
+                    <div onClick={like}><IoIosHeartEmpty /></div>
+                    <div onClick={modalOpen}>{action}</div>
+                </div>
+            )}
+            {uid && liked === true && (
+                <div className="likers-modal-btn">
+                    <div onClick={unlike}><IoIosHeart /></div>
+                    <div onClick={modalOpen}>{action}</div>
+                </div>
+            )}
 
-                <div className={containerClass}>
-                    <div className="modal-inner">
-                        <div className="close-modal" onClick={modalClose}><ImCross /></div>
-                        <div className='header'>
-                            <div><IoIosHeartEmpty /> <span>{project.likers.length}</span></div>
-                        </div>
-                        <div className='body'>
-                            <div>
-                                {open && (
-                                    project.likers.length > 0 ? (
-                                        <>
-                                            {liker.map((element, key) => {
-                                                return (
-                                                    <div className="likers-followers-found" key={key}>
-                                                        <div className="user-info-modal-container" onMouseEnter={() => showCardHandler(key)} onMouseLeave={hideCardHandler}>
-                                                            <HoverModal
-                                                                user={element}
-                                                                style={{ display: hoveredCard === key ? 'block' : 'none' }}
-                                                            />
-                                                        </div>
-                                                        <NavLink
-                                                            className="modal-list-item"
-                                                            to={"/" + element.pseudo}
-                                                            onMouseLeave={hideCardHandler}
-                                                            onMouseEnter={() => showCardHandler(key)}
-                                                            onClick={() => showCardHandler(key)}
-                                                        >
-                                                            <div className="avatar" style={avatar(element.picture)}></div>
-                                                            <p>{element.pseudo}</p>
-                                                        </NavLink>
-
-                                                        {userData.friend_request_sent
-                                                            && !userData.friend_request_sent.some((object) => object.friend === element._id)
-                                                            && !userData.friends.some((object) => object.friend === element._id)
-                                                            && element._id !== uid
-                                                            && (
-                                                                <button className="btn btn-secondary" onClick={() => {
-                                                                    dispatch(sendFriendRequest(element._id, uid))
-                                                                }}>Ajouter en ami</button>
-                                                            )}
-                                                        {userData.friend_request_sent
-                                                            && userData.friend_request_sent.some((object) => object.friend === element._id)
-                                                            && element._id !== uid
-                                                            && (
-                                                                <button className="btn btn-secondary" onClick={() => {
-                                                                    dispatch(cancelSentFriendRequest(element._id, uid))
-                                                                }}>Annuler ma demande</button>
-                                                            )}
-                                                        {!userData.friend_request_sent
-                                                            && element._id !== uid
-                                                            && (
-                                                                <button className="btn btn-secondary" onClick={() => {
-                                                                    dispatch(sendFriendRequest(element._id, uid))
-                                                                }}>Ajouter en ami</button>
-                                                            )}
-                                                        {userData.friends
-                                                            && userData.friends.some((object) => object.friend === element._id)
-                                                            && (
-                                                                <button className="btn btn-secondary">Vous êtes ami</button>
-                                                            )}
+            <div className={containerClass}>
+                <div className="modal-inner">
+                    <div className="close-modal" onClick={modalClose}><ImCross /></div>
+                    <div className='header'>
+                        <div><IoIosHeartEmpty /> <span>{project.likers.length}</span></div>
+                    </div>
+                    <div className='body'>
+                        <div>
+                            {open && (
+                                project.likers.length > 0 ? (
+                                    <>
+                                        {liker.map((element, key) => {
+                                            return (
+                                                <div className="likers-followers-found" key={key}>
+                                                    <div className="user-info-modal-container" onMouseEnter={() => showCardHandler(key)} onMouseLeave={hideCardHandler}>
+                                                        <HoverModal
+                                                            user={element}
+                                                            style={{ display: hoveredCard === key ? 'block' : 'none' }}
+                                                        />
                                                     </div>
-                                                )
-                                            })}
-                                        </>
-                                    ) : (<p>Personne n'a encore soutenu ce projet</p>)
-                                )}
-                            </div>
+                                                    <NavLink
+                                                        className="modal-list-item"
+                                                        to={"/" + element.pseudo}
+                                                        onMouseLeave={hideCardHandler}
+                                                        onMouseEnter={() => showCardHandler(key)}
+                                                        onClick={() => showCardHandler(key)}
+                                                    >
+                                                        <div className="avatar" style={avatar(element.picture)}></div>
+                                                        <p>{element.pseudo}</p>
+                                                    </NavLink>
+
+                                                    {userData.friend_request_sent
+                                                        && !userData.friend_request_sent.some((object) => object.friend === element._id)
+                                                        && !userData.friends.some((object) => object.friend === element._id)
+                                                        && element._id !== uid
+                                                        && (
+                                                            <button className="btn btn-secondary" onClick={() => {
+                                                                dispatch(sendFriendRequest(element._id, uid))
+                                                            }}>Ajouter en ami</button>
+                                                        )}
+                                                    {userData.friend_request_sent
+                                                        && userData.friend_request_sent.some((object) => object.friend === element._id)
+                                                        && element._id !== uid
+                                                        && (
+                                                            <button className="btn btn-secondary" onClick={() => {
+                                                                dispatch(cancelSentFriendRequest(element._id, uid))
+                                                            }}>Annuler ma demande</button>
+                                                        )}
+                                                    {!userData.friend_request_sent
+                                                        && element._id !== uid
+                                                        && (
+                                                            <button className="btn btn-secondary" onClick={() => {
+                                                                dispatch(sendFriendRequest(element._id, uid))
+                                                            }}>Ajouter en ami</button>
+                                                        )}
+                                                    {userData.friends
+                                                        && userData.friends.some((object) => object.friend === element._id)
+                                                        && (
+                                                            <button className="btn btn-secondary">Vous êtes ami</button>
+                                                        )}
+                                                </div>
+                                            )
+                                        })}
+                                    </>
+                                ) : (<p>Personne n'a encore soutenu ce projet</p>)
+                            )}
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div className={coverClass} onClick={modalClose}></div>
-            </div>
-            <div>
-                {uid === null && (
-                    <Popup trigger={<button className="action-btn"><IoIosHeartEmpty /> <span>J'aime</span></button>}
-                        position={['bottom center', 'bottom right', 'bottom left']}
-                        closeOnDocumentClick>
-                        <div>Connectez-vous pour aimer un projet !</div>
-                    </Popup>
-                )}
-                {uid && liked === false && (
-                    <button className="action-btn" onClick={like}><IoIosHeartEmpty /> <span>J'aime</span></button>
-                )}
-                {uid && liked === true && (
-                    <button className="action-btn liked" onClick={unlike}><IoIosHeart /> <span>Je n'aime plus</span></button>
-                )}
-            </div>
+            <div className={coverClass} onClick={modalClose}></div>
         </>
     )
 }

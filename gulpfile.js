@@ -10,37 +10,38 @@ import browserSync from 'browser-sync';
 
 var paths = {
     styles: {
-        srcWatched: './views/public/styles/scss/**/**/*.scss',
-        src: './views/public/styles/scss/style.scss',
-        dest: './views/public/styles/dist/',
-        destmin: './views/public/styles/dist/'
+        srcWatched: './views/src/styles/scss/**/**/*.scss',
+        src: './views/src/styles/scss/style.scss',
+        dest: './views/src/styles/dist/',
+        destmin: './views/src/styles/dist/'
     },
     scripts: {
-        src: './views/public/scripts/*.js',
-        dest: './views/public/scripts/dist/'
+        src: './views/src/public/scripts/*.js',
+        dest: './views/src/public/scripts/dist/'
     }
 };
 
+const server = browserSync.create();
+server.init({
+    baseDir: './views/src/styles/dist/',
+});
+
 function styleCompiler() {
-    return src('./views/public/styles/scss/style.scss')
+    return src('./views/src/styles/scss/style.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(prefix('last 2 versions'))
         .pipe(dest(paths.styles.dest))
-        // .pipe(sass().on('error', sass.logError))
-        // .pipe(prefix('last 2 versions'))
-        // .pipe(minify())
-        // .pipe(rename('style.min.css'))
-        // .pipe(dest(paths.styles.dest));
+        .pipe(server.stream())
+    // .pipe(sass().on('error', sass.logError))
+    // .pipe(prefix('last 2 versions'))
+    // .pipe(minify())
+    // .pipe(rename('style.min.css'))
+    // .pipe(dest(paths.styles.dest));
 }
 
 function watchTask() {
-    browserSync.init({
-        watch: true,
-        port: 3000
-        //    proxy: 'http://localhost:3000'
-    })
     watch(paths.styles.srcWatched, styleCompiler);
-    watch(paths.scripts.src).on('change', browserSync.reload);
+    watch(paths.styles.dest).on('change', () => server.stream())
 }
 
 export default series(styleCompiler, watchTask);

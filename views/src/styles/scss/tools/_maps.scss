@@ -1,0 +1,45 @@
+.map-container {
+    max-width       : 350px;
+    margin          : 0 auto;
+    display         : flex;
+    flex-direction  : column;
+    justify-content : center;
+    align-items     : center;
+}
+
+#map-departments {
+    width  : 100%;
+    margin : 0 auto;
+    
+    path {
+        stroke          : #000000;
+        stroke-width    : 1px;
+        stroke-linecap  : round;
+        stroke-linejoin : round;
+        stroke-opacity  : .25;
+        fill            : #4c5769;
+    }
+    g:hover path {
+        fill : lighten($primary-color, 30%);
+    }
+    g path:hover {
+        fill : $primary-color;
+    }
+}
+
+#map-region {
+    width  : 100%;
+    margin : 0 auto;
+    
+    path {
+        stroke          : #000000;
+        stroke-width    : 1px;
+        stroke-linecap  : round;
+        stroke-linejoin : round;
+        stroke-opacity  : .25;
+        fill            : #4c5769;
+    }
+    g path:hover {
+        fill : $primary-color;
+    }
+}

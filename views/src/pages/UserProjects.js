@@ -5,7 +5,6 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { UidContext } from '../components/AppContext';
 import 'reactjs-popup/dist/index.css'
-import FollowButton from '../components/project/my-projects/FollowButton';
 import Loader from '../components/tools/Loader';
 import LikersModal from '../components/project/my-projects/LikersModal';
 import FollowersModal from '../components/project/my-projects/FollowersModal';
@@ -96,7 +95,6 @@ const UserProjects = () => {
                                                 </div>
                                                 <div className="content">
                                                     <FollowersModal project={element} />
-                                                    <FollowButton project={element} />
                                                 </div>
                                             </div>
                                         </div>

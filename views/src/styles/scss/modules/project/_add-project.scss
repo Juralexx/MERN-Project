@@ -1,0 +1,221 @@
+.add-project-container {
+    position   : relative;
+    width      : 100%;
+    max-width  : 900px;
+    height     : auto;
+    padding    : 30px 0 0 0;
+    margin     : 0 auto;
+    overflow-y : hidden;
+
+    .add-project-bloc {
+        background    : var(--color-content);
+        padding       : 20px 30px;
+        border-radius : 5px;
+        border-radius : 5px;
+        margin-top    : 30px;
+
+        label {
+            display         : flex;
+            justify-content : space-between;
+            align-items     : baseline;
+            max-width       : 350px;
+            margin-top      : 30px;
+        }
+
+        .input-container {
+            display     : flex;
+            align-items : center;
+            max-width   : 450px;
+
+            input {
+                width         : 350px;
+                height        : 40px;
+                border        : none;
+                padding       : 10px;
+                border-radius : $radius;
+                color         : white;
+                background    : var(--color-input);
+            }
+
+            .category-selection {
+                position      : absolute;
+                margin-top    : 10px;
+                width         : 350px;
+                border        : none;
+                padding       : 10px 0;
+                border-radius : $radius;
+                color         : white;
+                background    : var(--color-input);
+
+                option {
+                    padding     : 10px 20px;
+                    cursor      : pointer;
+                    border-left : 3px solid transparent;
+
+                    &:hover {
+                        background  : var(--color-content-light);
+                        border-left : 3px solid $primary-color;
+                        color       : $primary-color;
+                        .svg-icon {
+                            color : $primary-color;
+                        }
+                    }
+                }
+            }
+        }
+
+        .content-container {
+            
+            textarea {
+                width         : 100%;
+                height        : 100px;
+                border        : none;
+                padding       : 10px;
+                border-radius : $radius;
+                color         : white;
+                background    : var(--color-input);
+                
+            }
+
+            label {
+                max-width : 100%;
+            }
+        }
+    }
+    
+    .add-img-bloc {
+
+        .input-img-container {
+            display         : flex;
+            position        : relative;
+            justify-content : space-between;
+            max-width       : 500px;
+
+            input {
+                position : relative;
+                height   : 150px;
+                width    : 150px;
+                opacity  : 0;
+                z-index  : 1;
+            }
+
+            .content {
+                position        : absolute;
+                display         : flex;
+                flex-direction  : column;
+                align-items     : center;
+                justify-content : center;
+                height          : 150px;
+                width           : 150px;
+                top             : 0;
+                background      : var(--color-body);
+                border-radius   : 5px;
+                z-index         : 0;
+
+                svg {
+                    width  : 100px;
+                    height : 100px;
+                }
+
+                p {
+                    margin : 0;
+                }
+            }
+
+            .img-preview {
+                display         : flex;
+                flex-direction  : column;
+                align-items     : center;
+                justify-content : center;
+                height          : 150px;
+                width           : 150px;
+                top             : 0;
+                background      : var(--color-body);
+                border-radius   : 5px;
+                z-index         : 0;
+
+                svg {
+                    width  : 100px;
+                    height : 100px;
+                }
+            }
+        }
+    }
+
+    .add-numberofcontributors-bloc {
+
+        label {
+            max-width : unset;
+        }
+
+        .number-container {
+            display     : flex;
+            align-items : center;
+
+            input {
+                width         : 80px;
+                height        : 40px;
+                border        : none;
+                padding       : 10px;
+                border-radius : $radius;
+                color         : white;
+                background    : var(--color-input);
+            }
+
+            .undefined-choice {
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                padding         : 0 20px;
+
+                label {
+                    margin : 0;
+                }
+
+                .option-input {
+                    appearance    : none;
+                    position      : relative;
+                    height        : 17px;
+                    width         : 17px;
+                    transition    : all 0.15s ease-out 0s;
+                    background    : #cbd1d8;
+                    border        : none;
+                    color         : #fff;
+                    cursor        : pointer;
+                    display       : inline-block;
+                    margin-right  : 0.5rem;
+                    padding       : 0;
+                    outline       : none;
+                    position      : relative;
+                    border-radius : 20px;
+                    z-index       : 1000;
+
+                    &:hover {
+                        background : #9faab7;
+                    }
+
+                    &:checked {
+                        background : $primary-color;
+
+                        &:before {
+                            height      : 17px;
+                            width       : 17px;
+                            position    : absolute;
+                            content     : '✔';
+                            display     : inline-block;
+                            text-align  : center;
+                            line-height : 17px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .btn-container {
+        display         : flex;
+        align-items     : center;
+        justify-content : flex-end;
+        padding         : 10px 0 5px;
+    }
+}

@@ -1,0 +1,90 @@
+#loader {
+    position : absolute;
+    top      : 0;
+    width    : 100vw;
+    height   : 100vh;
+    z-index  : 1000;
+
+    .loader-inner { 
+        position         : absolute;
+        height           : 190px;
+        width            : 190px;
+        left             : 50%;
+        top              : 50%;
+        transform        : translate(-50%, -50%);
+        display          : flex;
+        align-items      : center;
+        justify-content  : center;
+        background-color : var(--color-content-light);
+        border-radius    : 95px;
+        z-index          : 20;
+        border           : 2px solid $primary-color;
+        backdrop-filter  : blur(6px);
+        
+        .loader-animation {
+            display             : inline-block;
+            position            : relative;
+            height              : 70px;
+            width               : 70px;
+            border-radius       : 100px;
+            vertical-align      : middle;
+            border              : 3px solid transparent;
+            border-top-color    : rgba($primary-color, 1);
+            border-bottom-color : rgba($primary-color, 1);
+            animation           : spinClockwise 1s linear infinite;
+            z-index             : 1000;
+
+            &:after {
+                content             : '';
+                position            : absolute;
+                top                 : 7px;
+                left                : 7px;
+                bottom              : 7px;
+                right               : 7px;
+                border              : 3px solid transparent;
+                border-top-color    : rgba($primary-color, 0.8);
+                border-bottom-color : rgba($primary-color, 0.8);
+                border-radius       : 100px;
+                animation           : spinClockwise 5s linear infinite;
+            }
+
+            &:before {
+                content             : '';
+                position            : absolute;
+                top                 : 15px;
+                left                : 15px;
+                bottom              : 15px;
+                right               : 15px;
+                border              : 3px solid transparent;
+                border-top-color    : rgba($primary-color, 0.6);
+                border-bottom-color : rgba($primary-color, 0.6);
+                border-radius       : 100px;
+                animation           : spinClockwise 10s linear infinite;
+            }
+        }
+    }
+
+    .loader-blurry {
+        position        : absolute;
+        top             : 0;
+        width           : 100vw;
+        height          : 100vh;
+        backdrop-filter : blur(5px);
+        z-index         : 10;
+    }
+
+    &.fade {
+        opacity    : 0;
+        transition : opacity 0.8s ease-out;
+    }
+}
+
+.fade {
+    opacity    : 0;
+    transition : opacity 0.8s ease-out;
+}
+
+@keyframes spinClockwise {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}

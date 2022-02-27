@@ -115,8 +115,9 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                 })
             })
 
-            quillRef?.current?.addEventListener("keypress", getTyping)
-            return () => quillRef?.current?.removeEventListener("keypress", getTyping)
+            const quill = quillRef?.current
+            quill?.addEventListener("keypress", getTyping)
+            return () => quill?.removeEventListener("keypress", getTyping)
         }
     }, [currentChat])
 
@@ -136,14 +137,12 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
 
     useEffect(() => {
         if (currentChat) {
-            var conversationsIds = []
-            conversations.map((conversation) => { return conversationsIds.push(conversation._id) })
             websocket.current.emit("onMessenger", {
                 userId: uid,
                 conversationId: currentChat._id
             })
         }
-    }, [uid, onlineUsers.length, currentChat])
+    }, [uid, onlineUsers.length, websocket, currentChat])
 
     useEffect(() => {
         const getConversations = async () => {
@@ -172,7 +171,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
 
                 if (!arrivalMessage) {
                     var array = []
-                    response.data.map((messages, key) => { array = [...array, { index: key, date: messages.createdAt.substr(0, 10) }] })
+                    response.data.map((messages, key) => { return array = [...array, { index: key, date: messages.createdAt.substr(0, 10) }] })
                     var filteredArray = []
                     array.filter((item) => {
                         var i = filteredArray.findIndex(element => (element.date === item.date));

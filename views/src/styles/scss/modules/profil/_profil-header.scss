@@ -1,0 +1,151 @@
+.profil-header {
+    position      : relative;
+    width         : 100%;
+    height        : 250px;
+    background    : var(--color-content);
+    border-radius : $radius;
+    box-shadow: $box-card;
+
+    .cover-img {
+        position        : relative;
+        height          : 200px;
+        width           : 100%;
+        display         : flex;
+        align-items     : flex-end;
+        justify-content : space-between;
+
+        .btn-cover-edit {
+            position : relative;
+            padding  : 10px;
+
+            .btn {
+                margin : 0 5px;
+            }
+        }
+
+        .pseudo-header {
+            margin-left : 220px;
+            p {
+                font-size   : 32px;
+                text-align  : center;
+                margin-left : auto;
+                color       : var(--color-white);
+            }
+
+        }
+    }
+
+    .avatar {
+        position      : absolute;
+        width         : 160px;
+        height        : 160px;
+        border-radius : 80px;
+        margin        : 0;
+        top           : 70px;
+        left          : 30px;
+
+        &.-online-ring {
+            box-shadow : inset 0 0 0 3px var(--color-content);
+        }
+
+        .btn-img-edit {
+            position      : absolute;
+            width         : 35px;
+            height        : 35px;
+            border-radius : 20px;
+            background    : $primary-color;
+            color         : white;
+            border        : none;
+            outline       : none;
+            right         : 10px;
+            bottom        : 10px;
+        }
+    }
+
+    .btn-menu-cover-img {
+        position : absolute;
+        top      : 5px;
+        right    : 5px;
+
+        button {
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            height          : 32px;
+            width           : 32px;
+            background      : transparent;
+            border-radius   : 20px;
+            color           : var(--color-text);
+            border          : none;
+            outline         : none;
+            padding         : 0;
+
+            svg {
+                font-size : 20px;
+                color     : var(--color-content-light);
+            }
+        }
+    }
+
+    .fileUpload {
+        position : relative;
+        overflow : hidden;
+        margin   : 0;
+        bottom   : 0;
+        cursor   : pointer;
+    }
+    
+    .fileUpload input.upload {
+        position  : absolute;
+        top       : 0;
+        right     : 0;
+        margin    : 0;
+        padding   : 0;
+        font-size : 20px;
+        opacity   : 0;
+        width     : 140px;
+        height    : 30px;
+
+        &::-webkit-file-upload-button {
+            cursor : pointer;
+        }
+    }
+    
+    .cover-img-menu {
+        position      : absolute;
+        top           : 40px;
+        right         : 5px;
+        background    : var(--color-content);
+        padding       : 10px;
+        border-radius : 5px;
+
+        &:before {
+            content      : "";
+            position     : absolute;
+            width        : 0px;
+            height       : 0px;
+            border       : 10px solid;
+            border-color : transparent transparent var(--color-content) transparent;
+            right        : 6px;
+            top          : -19px;
+        }
+
+        .btn-menu {
+            height        : 30px;
+            width         : 100%;
+            padding       : 0 10px;
+            border-radius : 5px;
+
+            &:hover {
+                background : var(--color-content-light);;
+                cursor     : pointer;
+            }
+            
+            p {
+                margin      : 0;
+                line-height : 30px;
+            }
+        }
+    }
+    
+}

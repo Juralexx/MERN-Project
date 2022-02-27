@@ -1,0 +1,65 @@
+.profil-nav {
+    display         : flex;
+    justify-content : center;
+    height          : 60px;
+    width           : 100%;
+    background      : var(--color-content);
+    border-radius   : 0 0 5px 5px;
+
+    ul {
+        position   : relative;
+        display    : flex;
+        list-style : none;
+        margin     : 0;
+
+        li {
+            display         : flex;
+            height          : 100%;
+            min-width       : 80px;
+            text-align      : center;
+            justify-content : center;
+            align-items     : center;
+            cursor          : pointer;
+
+            p {
+                margin      : 0;
+                line-height : 17px;
+            }
+
+            a {
+                text-decoration : none;
+                height          : 100%;
+                width           : 100%;
+                color           : var(--color-text);
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                padding         : 0 7px;
+                border-bottom   : 3px solid transparent;
+
+                &:hover {
+                    background    : var(--color-content-light);;
+                    border-bottom : 3px solid $primary-color;
+                    color         : $primary-color;
+                    .svg-icon {
+
+                        path {
+                            fill : $primary-color;
+                        }
+                    }
+                }
+
+                &.activeLink {
+                    background    : var(--color-content-light);;
+                    border-bottom : 3px solid $primary-color;
+                    .svg-icon {
+        
+                        path {
+                            fill : $primary-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

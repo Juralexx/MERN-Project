@@ -1,0 +1,67 @@
+* {
+    box-sizing : border-box;
+}
+
+html {
+    margin          : 0;
+    padding         : 0;
+    position        : relative;
+    font-family     : 'Segoe UI', sans-serif;
+    scroll-behavior : smooth;
+    overflow-y      : auto;
+    overflow-x      : hidden;
+}
+
+body {
+    margin           : 0;
+    padding          : 0;
+    font-family      : 'Segoe UI', sans-serif;
+    scroll-behavior  : smooth;
+    overflow         : hidden;
+    background-color : var(--color-body);
+    color            : var(--color-text-grey);
+    width            : 100vw;
+    overflow-y       : auto;
+    overflow-x       : hidden;
+
+    .container {
+        max-width : 1366px;
+    }
+
+    a {
+        text-decoration: none !important;
+        color : var(--color-text-grey);
+    }
+    
+    p {
+        font-size : 15px;
+    }
+
+    input, textarea {
+        background : var(--color-input);
+        color: var(--color-text-input);
+    }
+
+    ul, li {
+        list-style-type: none;
+    }
+}
+
+#main {
+    position : relative;
+    height   : 100vh;
+    width    : 100vw;
+}
+
+#main-container {
+    position : relative;
+    height   : 100vh;
+    width    : 100vw;
+    padding  : 15px;
+}
+
+h1 { font-size: 24px }
+h2 { font-size: 21px }
+h3 { font-size: 18px }
+h4 { font-size: 16px }
+h5 { font-size: 14px }

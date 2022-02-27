@@ -28,17 +28,17 @@ const FavoriteButton = ({ project }) => {
     return (
         <>
             {uid === null &&(
-                <Popup trigger={<button className="action-btn"><BsStar /> Favoris</button>}
+                <Popup trigger={<button className="action-btn-favorite"><BsStar /> Favoris</button>}
                     position={['bottom center', 'bottom right', 'bottom left']}
                     closeOnDocumentClick>
                     <div>Connectez-vous pour ajouter ce projet à vos favoris !</div>
                 </Popup>
             )}
             {uid && favorite === false && (
-                <button className="action-btn" onClick={addFavorite}><BsStar /> Ajouter aux favoris</button>
+                <button className="action-btn-favorite" onClick={addFavorite}><BsStar /></button>
             )}
             {uid && favorite === true && (
-                <button className="action-btn liked" onClick={pullFavorite}><BsStarFill /> Favoris</button>
+                <button className="action-btn-favorite" onClick={pullFavorite}><BsStarFill /></button>
             )}
         </>
     )
