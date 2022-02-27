@@ -30,7 +30,7 @@ export const uploadProfilPicture = async (req, res) => {
         fs.createWriteStream(
             `${__dirname}/../views/public/uploads/profil/${fileName}`
         )
-    );
+    )
 
     try {
         UserModel.findByIdAndUpdate(
@@ -45,11 +45,11 @@ export const uploadProfilPicture = async (req, res) => {
                     return res.status(500).send({ message: err });
                 }
             }
-        );
+        )
     } catch (err) {
         return res.status(500).send({ message: err });
     }
-};
+}
 
 export const deleteProfilPicture = async (req, res) => {
     req.params.id
@@ -74,7 +74,7 @@ export const deleteProfilPicture = async (req, res) => {
     } catch (err) {
         return res.status(400).send({ message: err });
     }
-};
+}
 
 export const uploadCoverPicture = async (req, res) => {
     try {
@@ -116,7 +116,7 @@ export const uploadCoverPicture = async (req, res) => {
     } catch (err) {
         return res.status(500).send({ message: err });
     }
-};
+}
 
 export const deleteCoverPicture = async (req, res) => {
     req.params.id
@@ -141,4 +141,4 @@ export const deleteCoverPicture = async (req, res) => {
     } catch (err) {
         return res.status(400).send({ message: err });
     }
-};
+}

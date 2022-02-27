@@ -1,18 +1,19 @@
-.home-project-card {
-    position      : relative;
-    width         : 340px;
-    height        : 410px;
-    border-radius : 5px;
-    background    : var(--color-content);
-    margin        : 15px 0;
-    font-size     : 14px;
-    color         : var(--color-text-grey);
-    cursor        : pointer;
+.project-modal.modal-container {
+    position       : fixed;
+    display        : flex;
+    width          : 700px;
+    height         : auto;
+    border-radius  : 5px;
+    background     : var(--color-content);
+    color          : var(--color-text-grey);
+    font-size      : 14px;
+    cursor         : pointer;
 
     .left {
         position      : relative;
-        width         : 100%;
-        height        : 150px;
+        display       : block;
+        width         : 300px;
+        height        : auto;
         margin        : 0;
         border-radius : 5px 5px 0 0;
 
@@ -31,22 +32,12 @@
                 height : 16px;
             }
         }
-
-        .deploy-project {
-            position : absolute;
-            right    : 5px;
-            top      : 5px;
-            color    : white;
-            width    : 16px;
-            height   : 16px;
-            cursor   : pointer;
-        }
     }
 
     .right {
         padding : 15px 20px;
-        height  : 300px;
-        width   : 100%;
+        height  : 400px;
+        width:400px;
 
         .title {
             padding       : 0 0 10px 0;
@@ -117,7 +108,7 @@
 
             p {
                 margin    : 0;
-                font-size : 12px;
+                font-size : 14px;
             }
         }
 
@@ -130,8 +121,6 @@
                 align-items     : center;
                 justify-content : flex-end;
                 margin-bottom   : 10px;
-                font-weight     : 600;
-                line-height     : 18px;
     
                 .avatar {
                     width         : 30px;
@@ -140,11 +129,15 @@
                     margin-right  : 7px;
                 }
     
+                a {
+                    font-weight : 600;
+                    line-height : 12px;
+                }
+    
                 p {
                     font-size   : 12px;
                     line-height : 12px;
                     margin      : 0;
-                    font-weight : 400;
                 }
             }
     
@@ -182,27 +175,6 @@
                     }
                 }
             }
-        }
-    }
-}
-
-.home-swipers {
-    margin    : 0 auto;
-    max-width : 1120px;
-
-    .swiper-title {
-        margin          : 30px 10px 20px 0;
-        display         : flex;
-        width           : 100%;
-        justify-content : center;
-        align-items     : center;
-
-        &:after {
-            content    : '';
-            border-top : 1px solid;
-            margin     : 0 0 0 20px;
-            flex       : 1 0 20px;
-            background : var(--color-text-grey);
         }
     }
 }

@@ -1,8 +1,8 @@
-.modal-container {
+.profil-img-modal {
     position      : absolute;
     border-radius : 6px;
     background    : var(--color-content);
-    width         : 600px;
+    width         : auto;
     height        : auto;
     left          : 50%;
     top           : 50%;
@@ -17,44 +17,6 @@
         margin        : 0 auto;
         top           : 70px;
         left          : 30px;
-    }
-
-    &.hide-modal {
-        opacity    : 0;
-        visibility : hidden;
-        transform  : scale(1.1) translate(-50%, -50%);
-        transition : visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
-    }
-
-    &.modal-container-active {
-        display : block;
-    
-        &.show-modal {
-            opacity    : 1;
-            visibility : visible;
-            transform  : scale(1.0) translate(-50%, -50%);
-            transition : visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-        }
-    }
-
-    .modal-inner {
-        position : relative;
-        width    : 600px;
-        padding  : 20px;
-    }
-
-    .close-modal {
-        position : absolute;
-        padding  : 7px 12px;
-        top      : 0;
-        right    : 0;
-        color    : var(--color-text);
-        cursor   : pointer;
-
-        svg {
-            width  : 14px;
-            height : 14px;
-        }
     }
 
     .body {
@@ -100,20 +62,5 @@
                 min-width : 100px;
             }
         }
-    }
-}
-
-.modal-cover {
-    position   : fixed;
-    top        : 0;
-    bottom     : 0;
-    left       : 0;
-    right      : 0;
-    background : rgba(0,0,0,.6);
-    z-index    : 1040;
-    display    : none;
-
-    &.modal-cover-active {
-        display : block;
     }
 }

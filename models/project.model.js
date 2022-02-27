@@ -63,9 +63,9 @@ const ProjectModel = new mongoose.Schema(
             number: Number
         },
 
-        picture: {
-            type: String,
-            default: "/img/random-cover.jpg"
+        pictures: {
+            type: [],
+            picture: String
         },
 
         end: {

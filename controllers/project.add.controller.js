@@ -3,15 +3,42 @@ import UserModel from '../models/user.model.js'
 import { projectErrors } from '../utils/error.utils.js'
 import mongoose from 'mongoose'
 const projectId = mongoose.Types.ObjectId()
+import fs from 'fs'
+import { promisify } from 'util'
+import stream from 'stream'
+const pipeline = promisify(stream.pipeline)
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+import multer from 'multer'
+const upload = multer()
 
 export const createProject = async (req, res) => {
-    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department, region, new_region, end, content, numberofcontributors, works } = req.body
+    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
+        region, new_region, end, content, numberofcontributors, works, pictures } = req.body
     const _id = projectId
     const state = "En préparation"
 
+    console.log(req.files)
+
+    if (req.files) {
+        req.files.map(async (file, key) => {
+            const fileName = projectId + '-' + key + ".jpg";
+            await pipeline(
+                file.stream,
+                fs.createWriteStream(
+                    `${__dirname}/../views/public/uploads/projects/${projectId}/${fileName}`
+                )
+            )
+        })
+    }
+
     try {
         const project = ProjectModel.create({
-            _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department, region, new_region, end, content, numberofcontributors, works, state
+            _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
+            region, new_region, end, content, numberofcontributors, works, state, pictures
         })
 
         await UserModel.findByIdAndUpdate(

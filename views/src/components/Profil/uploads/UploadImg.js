@@ -16,7 +16,7 @@ const UploadImg = () => {
   const modalOpen = () => { setOpen(true) }
   const modalClose = () => { setOpen(false) }
   const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
-  const containerClass = open ? 'modal-container modal-container-active show-modal' : 'modal-container hide-modal'
+  const containerClass = open ? 'modal-container modal-container-active show-modal profil-img-modal' : 'modal-container hide-modal'
 
   var editor = ""
   const [picture, setPicture] = useState({
@@ -61,7 +61,7 @@ const UploadImg = () => {
       dispatch(uploadProfilPicture(data, userData._id))
 
       if (error) {
-        return 'crotte'
+        return error
       } else {
         Swal.fire({
           icon: 'success',

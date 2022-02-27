@@ -15,10 +15,14 @@ import { BsFillPersonFill } from 'react-icons/bs'
 import { Oval } from 'react-loading-icons'
 import { MdZoomOutMap } from 'react-icons/md'
 import ProjectModal from './ProjectModal';
+import ProfilCard from '../tools/ProfilCard';
+import axios from 'axios';
 
 const SwiperMostRecent = ({ projects }) => {
     const [isLoading, setLoading] = useState(false)
     const [sortedTable, setSortedtable] = useState([])
+    const [user, setUser] = useState()
+    const [openProfilCard, setOpenProfilCard] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [project, setProject] = useState()
 
@@ -33,9 +37,19 @@ const SwiperMostRecent = ({ projects }) => {
         setOpenModal(true)
     }
 
+    const getUser = async (project) => {
+        await axios.get(`${process.env.REACT_APP_API_URL}api/user/${project.posterId}`)
+            .then(res => {
+                setUser(res.data)
+                setOpenProfilCard(true)
+            })
+            .catch((err) => console.error(err))
+    }
+
     return (
         <>
             {openModal && <ProjectModal project={project} open={openModal} setOpen={setOpenModal} />}
+            {openProfilCard && <ProfilCard user={user} open={openProfilCard} setOpen={setOpenProfilCard} />}
             <Swiper
                 slidesPerView={3}
                 navigation={true}
@@ -75,8 +89,7 @@ const SwiperMostRecent = ({ projects }) => {
                                         </div>
                                         <div className="pseudo-container">
                                             <div className="avatar" style={avatar(element.posterAvatar)}></div>
-                                            <div>
-                                                <NavLink to={"/" + element.posterPseudo}>{element.posterPseudo}</NavLink>
+                                            <div onClick={() => getUser(element)}>{element.posterPseudo}
                                                 <p>{dateParser(element.createdAt)}</p>
                                             </div>
                                         </div>
