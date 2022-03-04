@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateTitle, updateTitleURL } from "../../../../actions/project.action";
-import Loader from "../../../tools/Loader";
+import Loader from "../../../tools/components/Loader";
 import { removeAccents } from "../../../Utils";
 
 const Title = ({ props, id }) => {

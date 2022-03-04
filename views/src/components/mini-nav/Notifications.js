@@ -41,8 +41,8 @@ const NotificationsMenu = () => {
 
 
     return (
-        <div className="right-menu">
-            <h2>Notifications</h2>
+        <div className="w-[270px] h-auto py-2 absolute bg-background_primary_light shadow-xl rounded-md top-[65px] right-14 z-[1100] before:content-[''] before:absolute before:w-0 before:h-0 border-10 border-background_primary_light before:right-9 before:top-[-19px]">
+            <h2 className="text-center w-full m-0 text-slate-300">Notifications</h2>
             {futureFriend.length !== 0 && (
                 futureFriend.map((element, key) => {
                     return (

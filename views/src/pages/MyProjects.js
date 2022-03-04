@@ -6,22 +6,22 @@ import { NavLink } from 'react-router-dom';
 import { UidContext, UserContext } from '../components/AppContext';
 import 'reactjs-popup/dist/index.css'
 import { IoIosHeart } from "react-icons/io"
-import Loader from '../components/tools/Loader';
+import Loader from '../components/tools/components/Loader';
 import { avatar, projectPicture } from '../components/tools/functions/useAvatar';
-import { parseDescription } from '../components/tools/functions/parseDescription';
+import { parseDescriptionToInnerHTML } from '../components/tools/functions/parseDescription';
 import SortComponent from '../components/project/my-projects/SortComponent';
 
 const MyProjects = () => {
   const uid = useContext(UidContext)
   const user = useContext(UserContext)
   const [isLoading, setLoading] = useState(true)
-  const [nbOfRes, setNbOfRes] = useState([])
+  const [nbOfProjects, setNbOfProjects] = useState([])
   const [axiosRes, setAxiosRes] = useState([])
   const [sortedTable, setSortedTable] = useState([])
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchData = async () => {
-      setNbOfRes(user.created_projects.length)
+      setNbOfProjects(user.created_projects.length)
       if (user.created_projects.length === 0) { setLoading(false) }
       if (user.created_projects.length > 0) {
         const projects = user.created_projects.map(async (projectID) => {
@@ -48,7 +48,7 @@ const MyProjects = () => {
         {isLoading && (<Loader />)}
         {!isLoading && (
           <div className="container myprojects-container">
-            {(nbOfRes > 0) ? (
+            {(nbOfProjects > 0) ? (
               sortedTable.map((element, key) => {
                 return (
                   <div className="myprojects-card" key={key}>
@@ -64,7 +64,7 @@ const MyProjects = () => {
                       <p>{element.location}</p>
                       <p>{element.numberofcontributors + " personnes recherchées"}</p>
 
-                      <div className="description"><p dangerouslySetInnerHTML={parseDescription(element)}></p></div>
+                      <div className="description"><p dangerouslySetInnerHTML={parseDescriptionToInnerHTML(element)}></p></div>
 
                       <div className="action-container">
                         <div className="top">

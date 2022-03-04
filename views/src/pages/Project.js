@@ -9,7 +9,7 @@ import Category from '../components/project/project-page/owner/Category';
 import Location from '../components/project/project-page/owner/Location';
 import End from '../components/project/project-page/owner/End';
 import Content from '../components/project/project-page/owner/Content';
-import Loader from '../components/tools/Loader';
+import Loader from '../components/tools/components/Loader';
 import { UidContext } from '../components/AppContext';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
 import State from '../components/project/project-page/owner/State';

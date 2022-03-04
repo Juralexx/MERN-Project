@@ -185,24 +185,3 @@
         }
     }
 }
-
-.home-swipers {
-    margin    : 0 auto;
-    max-width : 1120px;
-
-    .swiper-title {
-        margin          : 30px 10px 20px 0;
-        display         : flex;
-        width           : 100%;
-        justify-content : center;
-        align-items     : center;
-
-        &:after {
-            content    : '';
-            border-top : 1px solid;
-            margin     : 0 0 0 20px;
-            flex       : 1 0 20px;
-            background : var(--color-text-grey);
-        }
-    }
-}

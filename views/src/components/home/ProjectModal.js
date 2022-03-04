@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 import { avatar, projectPicture } from "../tools/functions/useAvatar";
 import { ImCross } from 'react-icons/im'
 import { dateParser } from "../Utils";
-import LikersModal from "../project/my-projects/LikersModal";
-import FollowersModal from "../project/my-projects/FollowersModal";
-import FavoriteButton from "../project/my-projects/FavoriteButton";
+import LikersModal from "../tools/components/LikersModal";
+import FollowersModal from "../tools/components/FollowersModal";
+import FavoriteButton from "../tools/components/FavoriteButton";
 import { BsFillPersonFill } from "react-icons/bs";
-import { parseDescription } from "../tools/functions/parseDescription";
+import { parseDescriptionToInnerHTML } from "../tools/functions/parseDescription";
 
 const ProjectModal = ({ project, setOpen, open }) => {
     const modalClose = () => { setOpen(false) }
@@ -31,7 +31,7 @@ const ProjectModal = ({ project, setOpen, open }) => {
                         <div className="completed-status">{project.state}</div>
                     </div>
 
-                    <div className="description"><p dangerouslySetInnerHTML={parseDescription(project)}></p></div>
+                    <div className="description"><p dangerouslySetInnerHTML={parseDescriptionToInnerHTML(project)}></p></div>
                     <div className="bottom">
                         <div className="action-container">
                             <div className="action">

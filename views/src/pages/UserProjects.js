@@ -5,10 +5,10 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { UidContext } from '../components/AppContext';
 import 'reactjs-popup/dist/index.css'
-import Loader from '../components/tools/Loader';
-import LikersModal from '../components/project/my-projects/LikersModal';
-import FollowersModal from '../components/project/my-projects/FollowersModal';
-import FavoriteButton from '../components/project/my-projects/FavoriteButton';
+import Loader from '../components/tools/components/Loader';
+import LikersModal from '../components/tools/components/LikersModal';
+import FollowersModal from '../components/tools/components/FollowersModal';
+import FavoriteButton from '../components/tools/components/FavoriteButton';
 import { avatar, projectPicture } from '../components/tools/functions/useAvatar';
 
 const UserProjects = () => {

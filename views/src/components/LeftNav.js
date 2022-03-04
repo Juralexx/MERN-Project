@@ -6,44 +6,52 @@ import { AiOutlineHome, AiOutlineEye, AiOutlineHeart, AiOutlineDownload } from '
 
 const LeftNav = () => {
 
+    const classes = {
+        ul: "relative flex justify-center items-center list-none m-0",
+        li: "group flex h-[60px] py-0 px-3 min-w-15 text-center justify-center items-center text-slate-300 cursor-pointer border-b-2 border-b-transparent hover:border-b-primary",
+        a: "!no-underline h-full w-full text-slate-300 flex flex-col items-center justify-center py-0 px-2 group-hover:text-slate-300",
+        svg: "w-5 h-5 mb-[6px] text-slate-300 group-hover:text-primary",
+        p: "m-0 leading-[14px] font-medium text-[16px] whitespace-nowrap"
+    }
+
     return (
-        <div className="left-nav">
-            <div className="left-nav-container">
-                <ul>
-                    <li className="to-general">
-                        <NavLink to="/">
-                            <AiOutlineHome />
-                            <p>Général</p>
+        <div className="absolute left-0 bottom-0 w-full h-[60px]">
+            <div className="bg-background_primary">
+                <ul className={classes.ul}>
+                    <li className={classes.li}>
+                        <NavLink to="/" className={classes.a}>
+                            <AiOutlineHome className={classes.svg} />
+                            <p className={classes.p}>Général</p>
                         </NavLink>
                     </li>
-                    <li className="to-all-projects">
-                        <NavLink to="/all-projects">
-                            <FiLayers />
-                            <p>Tous les projets</p>
+                    <li className={classes.li}>
+                        <NavLink className={classes.a} to="/all-projects">
+                            <FiLayers className={classes.svg} />
+                            <p className={classes.p}>Tous les projets</p>
                         </NavLink>
                     </li>
-                    <li className="to-most-followed">
-                        <NavLink to="/most-followed">
-                            <IoIosLink />
-                            <p>Plus suivis</p>
+                    <li className={classes.li}>
+                        <NavLink className={classes.a} to="/most-followed">
+                            <IoIosLink className={classes.svg} />
+                            <p className={classes.p}>Plus suivis</p>
                         </NavLink>
                     </li>
-                    <li className="to-most-viewed">
-                        <NavLink to="/most-viewed">
-                            <AiOutlineEye />
-                            <p>Plus consultés</p>
+                    <li className={classes.li}>
+                        <NavLink className={classes.a} to="/most-viewed">
+                            <AiOutlineEye className={classes.svg} />
+                            <p className={classes.p}>Plus consultés</p>
                         </NavLink>
                     </li>
-                    <li className="to-most-liked">
-                        <NavLink to="/most-liked">
-                            <AiOutlineHeart />
-                            <p>Plus aimés</p>
+                    <li className={classes.li}>
+                        <NavLink className={classes.a} to="/most-liked">
+                            <AiOutlineHeart className={classes.svg} />
+                            <p className={classes.p}>Plus aimés</p>
                         </NavLink>
                     </li>
-                    <li className="to-latest-added">
-                        <NavLink to="/latest-added">
-                            <AiOutlineDownload />
-                            <p>Derniers ajoutés</p>
+                    <li className={classes.li}>
+                        <NavLink className={classes.a} to="/latest-added">
+                            <AiOutlineDownload className={classes.svg} />
+                            <p className={classes.p}>Derniers ajoutés</p>
                         </NavLink>
                     </li>
                 </ul>

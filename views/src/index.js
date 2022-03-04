@@ -6,7 +6,8 @@ import { Provider } from "react-redux"
 import { applyMiddleware, createStore } from "redux"
 import thunk from "redux-thunk"
 import rootReducer from './reducers'
-import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './components/tools/Theme.js'
 import './styles/dist/style.css'
 
 // Outils uniquement en dev, à retirer en prod
@@ -20,9 +21,9 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeContextWrapper>
+      <ThemeProvider theme={theme}>
         <App />
-      </ThemeContextWrapper>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('main')

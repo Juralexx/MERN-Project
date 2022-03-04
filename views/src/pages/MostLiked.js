@@ -4,9 +4,9 @@ import { dateParser } from '../components/Utils';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink } from 'react-router-dom';
 import 'reactjs-popup/dist/index.css'
-import Loader from '../components/tools/Loader';
-import LikersModal from '../components/project/my-projects/LikersModal';
-import FollowersModal from '../components/project/my-projects/FollowersModal';
+import Loader from '../components/tools/components/Loader';
+import LikersModal from '../components/tools/components/LikersModal';
+import FollowersModal from '../components/tools/components/FollowersModal';
 import { avatar, projectPicture } from '../components/tools/functions/useAvatar';
 
 const MostLiked = () => {

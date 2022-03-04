@@ -60,9 +60,8 @@ const UploadImg = () => {
       data.append("file", file)
       dispatch(uploadProfilPicture(data, userData._id))
 
-      if (error) {
-        return error
-      } else {
+      if (error) { return error }
+      else {
         Swal.fire({
           icon: 'success',
           title: 'Votre image a bien été ajoutée !',

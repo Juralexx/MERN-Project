@@ -1,6 +1,9 @@
 #header {
-    height     : 500px;
-    background : var(--color-input);
+    height          : calc(100vh - 60px);
+    max-height      : 1440px;
+    background      : var(--color-input);
+    display         : flex;
+    align-items     : center;
 
     .header-inner {
         display     : flex;

@@ -8,38 +8,40 @@
 }
 
 #map-departments {
-    width  : 100%;
+    width  : 450px;
     margin : 0 auto;
+    cursor : pointer;
     
     path {
-        stroke          : #000000;
+        stroke          : #091726;
         stroke-width    : 1px;
         stroke-linecap  : round;
         stroke-linejoin : round;
         stroke-opacity  : .25;
-        fill            : #4c5769;
+        fill            : $primary-color;
     }
     g:hover path {
-        fill : lighten($primary-color, 30%);
+        fill : #366598;
     }
     g path:hover {
-        fill : $primary-color;
+        fill : #184573;
     }
 }
 
 #map-region {
-    width  : 100%;
+    width  : 450px;
     margin : 0 auto;
+    cursor : pointer;
     
     path {
-        stroke          : #000000;
-        stroke-width    : 1px;
+        stroke          : #091726;
+        stroke-width    : 3px;
         stroke-linecap  : round;
         stroke-linejoin : round;
         stroke-opacity  : .25;
-        fill            : #4c5769;
+        fill            : $primary-color;
     }
     g path:hover {
-        fill : $primary-color;
+        fill : #184573;
     }
 }

@@ -1,6 +1,6 @@
 /****************  GENERAL *****************/
 
-$primary-color : #6366f1;                      //#0050D7;
+$primary-color : #90caf9;                      //#6366f1;
 $primary-light : lighten($primary-color, 40%);
 $radius        : 5px;
 
@@ -40,19 +40,20 @@ $text-color-light : #6c6c6c;
 
 /************** THEME SOMBRE ***************/
 
-$bg-color         : #21252c;                //#242526;
-$bg-body          : #2e333b;                //#18191A;
+$bg-color         : #091726;                //#21252c
+$bg-body          : #001e3c;                //#2e333b;
 $bg-color-lighten : lighten($bg-color, 3%);
-$bg-hover         : #21252c;
+$bg-hover         : #0c2036;                //#21252c
 $dark             : #292929;
 $white            : #ffffff;
-$text-one         : #9aa6b8;
-$text-grey        : #d1d1d1;
+$text-one         : #ffffff;
+$text-grey        : rgb(178, 186, 194);
 $border-color     : #202023;
-$input-color      : lighten($bg-color, 3%);
+$input-color      : lighten($bg-body, 2%);
 $input-text-color : $white;
 
-$text-color : #aaaab8;
+$svg : #ffffff;
+$text-color : #ffffff;
 
 :root {
     --color-primary-light : #{$primary-light};
@@ -63,7 +64,7 @@ $text-color : #aaaab8;
     --color-text-one      : #{$text-one};
     --color-text-grey     : #{$text-grey};
     --color-white         : #{$white};
-    --color-svg-light     : #{$svg-light};
+    --color-svg-light     : #{$svg};
     --color-bg-hover      : #{$bg-hover};
     --color-border        : #{$border-color};
     --color-input         : #{$input-color};

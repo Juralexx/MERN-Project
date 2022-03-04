@@ -1,43 +1,42 @@
-.user-info-modal-container {
-    position : absolute;
-    bottom   : 30px;
-    left     : -140px;
-    padding  : 20px;
-    
-    .user-info-modal {
-        background    : var(--color-content);
-        width         : 400px;
-        padding       : 10px;
-        border-radius : 5px;
-    
-        .top {
-            display : flex;
-    
-            .left {
-                display         : flex;
-                align-items     : flex-start;
-                justify-content : center;
-    
-                .avatar {
-                    width         : 90px;
-                    height        : 90px;
-                    border-radius : 50px;
-                }
-            }
-        }
-    
-        .bottom {
-            display : flex;
-            width   : 100%;
-            height  : auto;
-    
-            .btn {
-                width  : 100%;
-                margin : 0 5px;
+.user-info-modal {
+    background    : var(--color-content);
+    width         : 400px;
+    padding       : 10px;
+    border-radius : 5px;
+    position      : absolute;
+    bottom        : 50px;
+    left          : -140px;
+    padding       : 20px;
+    z-index       : 150000;
+
+    .top {
+        display : flex;
+
+        .left {
+            display         : flex;
+            align-items     : flex-start;
+            justify-content : center;
+
+            .avatar {
+                width         : 90px;
+                height        : 90px;
+                border-radius : 50px;
             }
         }
     }
+
+    .bottom {
+        display : flex;
+        width   : 100%;
+        height  : auto;
+
+        .btn {
+            width  : 100%;
+            margin : 0 5px;
+        }
+    }
 }
+
 
 .likers-followers-found {
     display         : flex;

@@ -1,10 +1,12 @@
 import express from 'express'
 const projectRoutes = express.Router()
-import { createProject } from '../controllers/project.add.controller.js'
+import { createProject, uploadProjectPictures } from '../controllers/project.add.controller.js'
 import { readProject, projectInfo, updateProject, deleteProject, likeProject, unlikeProject, follow, unfollow, findProject, favorite, unfavorite } from '../controllers/project.controller.js'
 import multer from 'multer'
+const upload = multer()
 
-projectRoutes.post('/add', multer().array('pictures', 5), createProject)
+projectRoutes.post('/add', createProject)
+projectRoutes.post('/add/pictures', upload.array('files', 5), uploadProjectPictures)
 
 projectRoutes.get('/', readProject)
 projectRoutes.get('/:titleURL', projectInfo)

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { getUser } from './actions/user.action';
 import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
-import Notification from './components/tools/Notification';
+import Notification from './components/messenger/Notification';
 
 function App() {
   const [uid, setUid] = useState(null)

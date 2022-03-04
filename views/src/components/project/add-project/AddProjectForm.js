@@ -25,7 +25,7 @@ const AddProjectForm = () => {
     const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
     const [content, setContent] = useState({})
-    const [pictures, setPictures] = useState([])
+    const [files, setFiles] = useState([])
     const navigate = useNavigate()
 
     const titleError = useRef("")
@@ -57,11 +57,6 @@ const AddProjectForm = () => {
             const url = removeaccent.replace(/ /g, "-")
             const titleURL = url
 
-            const data = new FormData()
-            for (let i = 0; i < pictures.length; i++) {
-                data.append("pictures", pictures[i])
-            }
-
             await axios({
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}api/project/add`,
@@ -79,26 +74,36 @@ const AddProjectForm = () => {
                     end: end,
                     content: content,
                     numberofcontributors: numberofcontributors,
-                    works: workArray,
-                    pictures: data
+                    works: workArray
                 },
             })
-                .then((res) => {
+                .then(async (res) => {
                     if (res.data.errors) {
                         titleError.current.innerHTML = res.data.errors.title;
                         categoryError.current.innerHTML = res.data.errors.category;
                         contentError.current.innerHTML = res.data.errors.content;
                         numberofcontributorsError.current.innerHTML = res.data.errors.numberofcontributors;
                     } else {
-                        e.preventDefault()
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Votre projet est en ligne !',
-                            showConfirmButton: false,
-                            timer: 1500
+                        var formData = new FormData();
+                        for (var i = 0; i < files.length; i++) {
+                            formData.append('files', files[i])
+                        }
+                        await axios({
+                            method: "post",
+                            url: `${process.env.REACT_APP_API_URL}api/project/add/pictures`,
+                            data: { files: files }
                         })
-                        // const redirection = navigate(`/project/${titleURL}`)
-                        // setTimeout(redirection, 2000)
+                            .then(res => {
+                                e.preventDefault()
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Votre projet est en ligne !',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            })
+                        // // const redirection = navigate(`/project/${titleURL}`)
+                        // // setTimeout(redirection, 2000)
                     }
                 })
                 .catch((err) => console.log(err));
@@ -107,49 +112,47 @@ const AddProjectForm = () => {
 
     return (
         <>
-            <form className="add-img-bloc add-project-bloc" encType="multipart/form-data">
-                <Pictures pictures={pictures} setPictures={setPictures} />
-                <Title
-                    title={title}
-                    setTitle={setTitle}
-                    category={category}
-                    setCategory={setCategory}
-                    titleError={titleError}
-                    categoryError={categoryError}
-                />
-                <Location
-                    location={location}
-                    setLocation={setLocation}
-                    department={department}
-                    setDepartment={setDepartment}
-                    region={region}
-                    setRegion={setRegion}
-                    newRegion={newRegion}
-                    setNewRegion={setNewRegion}
-                />
-                <Contributors
-                    numberofcontributors={numberofcontributors}
-                    setNumberofcontributors={setNumberofcontributors}
-                    numberofcontributorsError={numberofcontributorsError}
-                />
-                <Workers
-                    workArray={workArray}
-                    setWorkArray={setWorkArray}
-                />
-                <End
-                    end={end}
-                    setEnd={setEnd}
-                />
-                <Description
-                    content={content}
-                    setContent={setContent}
-                    contentError={contentError}
-                />
+            <Pictures files={files} setFiles={setFiles} />
+            <Title
+                title={title}
+                setTitle={setTitle}
+                category={category}
+                setCategory={setCategory}
+                titleError={titleError}
+                categoryError={categoryError}
+            />
+            <Location
+                location={location}
+                setLocation={setLocation}
+                department={department}
+                setDepartment={setDepartment}
+                region={region}
+                setRegion={setRegion}
+                newRegion={newRegion}
+                setNewRegion={setNewRegion}
+            />
+            <Contributors
+                numberofcontributors={numberofcontributors}
+                setNumberofcontributors={setNumberofcontributors}
+                numberofcontributorsError={numberofcontributorsError}
+            />
+            <Workers
+                workArray={workArray}
+                setWorkArray={setWorkArray}
+            />
+            <End
+                end={end}
+                setEnd={setEnd}
+            />
+            <Description
+                content={content}
+                setContent={setContent}
+                contentError={contentError}
+            />
 
-                <div className="btn-container">
-                    <button className="btn btn-primary" onClick={handleAddProject}>Publier mon projet</button>
-                </div>
-            </form>
+            <div className="btn-container">
+                <button className="btn btn-primary" type="submit" onClick={handleAddProject} value={files}>Publier mon projet</button>
+            </div>
         </>
     )
 }
