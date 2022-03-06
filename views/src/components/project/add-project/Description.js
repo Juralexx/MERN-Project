@@ -9,10 +9,10 @@ const Description = ({ content, setContent, contentError }) => {
     }
 
     return (
-        <div className="add-content-bloc add-project-bloc" disabled>
-            <h3>Il est temps d'expliquer votre projet en détail !</h3>
+        <div className="mt-3 w-full py-5 px-7 rounded-xl bg-white dark:bg-background_primary shadow-xl text-gray-500 dark:text-slate-300">
+            <h3 className="mb-5">Il est temps d'expliquer votre projet en détail !</h3>
             <div className="content-container">
-                <label htmlFor="content"><span>Description de votre projet</span><small>Champ requis</small></label>
+                <p className="mb-2">Description de votre projet</p>
 
                 <div className="text-editor">
                     <EditorToolbar />

@@ -12,6 +12,7 @@ import End from "./End";
 import Description from "./Description";
 import Contributors from "./Contributors";
 import Pictures from "./Pictures";
+import { Button } from "../../tools/components/Button";
 
 const AddProjectForm = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -112,7 +113,6 @@ const AddProjectForm = () => {
 
     return (
         <>
-            <Pictures files={files} setFiles={setFiles} />
             <Title
                 title={title}
                 setTitle={setTitle}
@@ -149,9 +149,13 @@ const AddProjectForm = () => {
                 setContent={setContent}
                 contentError={contentError}
             />
+            <Pictures
+                files={files}
+                setFiles={setFiles}
+            />
 
             <div className="btn-container">
-                <button className="btn btn-primary" type="submit" onClick={handleAddProject} value={files}>Publier mon projet</button>
+                <Button text="Publier mon projet" className="mt-3" type="submit" onClick={handleAddProject} value={files} />
             </div>
         </>
     )

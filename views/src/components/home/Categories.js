@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 
-const Categories = ({ open, setOpen, category, setCategory }) => {
+const Categories = ({ open, setOpen, setCategory }) => {
     const wrapperRef = useRef()
-    const liRef = useRef()
     const [active, setActive] = useState(0)
-    const [letClass, setClass] = useState()
     useClickOutside(wrapperRef, setOpen, false)
 
     const classes = {

@@ -1,0 +1,53 @@
+.modal-container {
+    position      : fixed;
+    border-radius : 6px;
+    left          : 50%;
+    top           : 50%;
+    width         : auto;
+    min-width     : 300px;
+    height        : auto;
+    z-index       : 100000000;
+}
+.modal-container.hide-modal {
+    opacity    : 0;
+    visibility : hidden;
+    transform  : scale(1.1) translate(-47%, -50%);
+    transition : visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.modal-container.modal-container-active {
+    display : block;
+}
+.modal-container.modal-container-active.show-modal {
+    opacity    : 1;
+    visibility : visible;
+    transform  : scale(1) translate(-50%, -50%);
+    transition : visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+.modal-container .modal-inner {
+    position : relative;
+    padding  : 20px;
+}
+.close-modal {
+    position : absolute;
+    padding  : 7px 12px;
+    top      : 0;
+    right    : 0;
+    cursor   : pointer;
+}
+.close-modal svg {
+    width  : 14px;
+    height : 14px;
+}
+.modal-cover {
+    position   : fixed;
+    top        : 0;
+    bottom     : 0;
+    left       : 0;
+    right      : 0;
+    background : rgba(0, 0, 0, .6);
+    z-index    : 1040;
+    display    : none;
+}
+.modal-cover.modal-cover-active {
+    display : block;
+}

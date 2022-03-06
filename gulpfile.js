@@ -30,12 +30,12 @@ function styleCompiler() {
     return src('./views/src/styles/scss/style.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(prefix('last 2 versions'))
+        .pipe(rename('old.css'))
         .pipe(dest(paths.styles.dest))
         .pipe(server.stream())
     // .pipe(sass().on('error', sass.logError))
     // .pipe(prefix('last 2 versions'))
     // .pipe(minify())
-    // .pipe(rename('style.min.css'))
     // .pipe(dest(paths.styles.dest));
 }
 

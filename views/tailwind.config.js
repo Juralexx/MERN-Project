@@ -1,23 +1,25 @@
 module.exports = {
   content: ['./src/**/**/**/**/*.{js, jsx, html}'],
   presets: [],
-  darkMode: 'media', // or 'class'
+  darkMode: 'class', // or 'media'
   theme: {
     screens: {
       sm: '640px',
       md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1536px',
+      lg: '992px',
+      xl: '1200px',
+      '2xl': '1366px',
     },
     colors: ({ colors }) => ({
-      'primary': '#90caf9',
+      'primary': '#086fcd',
       'primary_semi_dark': '#64b5f6',
       'primary_dark': '#2296f3',
       'primary_darker': '#1b76d2',
       'background_primary': "#091726",
       'background_primary_light': "#102944",
       'background_primary_x_light': "#184573",
+      'dark': "#0A1929",
+      'grey_light': "#3E5060",
       inherit: colors.inherit,
       current: colors.current,
       transparent: colors.transparent,

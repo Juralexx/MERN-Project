@@ -8,7 +8,7 @@ import formatDistance from 'date-fns/formatDistance'
 import fr from 'date-fns/locale/fr'
 import { avatar } from "../tools/functions/useAvatar";
 
-const NotificationsMenu = () => {
+const NotificationsMenu = ({ open }) => {
     const uid = useContext(UidContext)
     const dispatch = useDispatch()
     const [futureFriend, setFutureFriend] = useState([])
@@ -41,8 +41,9 @@ const NotificationsMenu = () => {
 
 
     return (
-        <div className="w-[270px] h-auto py-2 absolute bg-background_primary_light shadow-xl rounded-md top-[65px] right-14 z-[1100] before:content-[''] before:absolute before:w-0 before:h-0 border-10 border-background_primary_light before:right-9 before:top-[-19px]">
-            <h2 className="text-center w-full m-0 text-slate-300">Notifications</h2>
+        open &&
+        <div className="w-[270px] h-auto p-2 absolute bg-white dark:bg-background_primary_light shadow-xl rounded-md top-[65px] right-14 z-[1100] dark:border-background_primary_light">
+            <h2 className="text-center w-full m-0 text-slate-500 dark:text-slate-300">Notifications</h2>
             {futureFriend.length !== 0 && (
                 futureFriend.map((element, key) => {
                     return (

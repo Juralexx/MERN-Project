@@ -5,14 +5,11 @@ import { HiLogout } from 'react-icons/hi'
 import { AiFillSetting } from 'react-icons/ai'
 import { BsFillSunFill } from 'react-icons/bs'
 import { IoCaretForwardOutline } from 'react-icons/io5'
-import ScreenMenu from "./ScreenMenu";
-import { useClickOutside } from "../tools/functions/useClickOutside";
+import { ImArrowLeft2 } from 'react-icons/im'
+import ThemeToggle from "../tools/theme/ThemeToggle";
 
-const SettingsMenu = () => {
-    const [isOpen, setOpen] = useState(true)
-    const [isScreenMenu, setScreenMenu] = useState(false)
-    const settingsWrapper = useRef()
-    useClickOutside(settingsWrapper, setOpen, false)
+const SettingsMenu = ({ open }) => {
+    const [value, setValue] = useState(0)
 
     const removeCookie = (key) => {
         if (window !== "undefined") {
@@ -32,47 +29,60 @@ const SettingsMenu = () => {
     }
 
     const classes = {
-        li: "group flex justify-between items-center h-11 border-l-2 border-transparent cursor-pointer hover:bg-background_primary_x_light hover:border-l-2 hover:border-primary",
+        li: "group flex justify-between items-center h-11 border-l-2 border-transparent cursor-pointer hover:bg-slate-100 dark:hover:bg-background_primary_x_light hover:border-l-2 hover:border-primary",
         li_left: "flex items-center pl-[10px] h-full w-auto",
         li_right: "flex items-center pr-[10px] h-full w-auto",
-        svg: "w-9 h-9 p-2 rounded-full bg-background_primary_x_light text-slate-300 group-hover:bg-background_primary_light",
-        p: "pl-[10px] font-xs text-slate-300"
+        svg: "w-9 h-9 p-2 rounded-full bg-slate-100 dark:bg-background_primary_x_light text-slate-500 dark:text-slate-300 group-hover:bg-white dark:group-hover:bg-background_primary_light cursor-pointer",
+        p: "pl-[10px] font-xs text-slate-500 dark:text-slate-300"
     }
 
     return (
         <>
-            {isOpen && !isScreenMenu && (
-                <div className="w-[270px] h-auto py-2 absolute bg-background_primary_light shadow-xl rounded-md top-[65px] right-4 z-[1100] before:content-[''] before:absolute before:w-0 before:h-0 border-10 border-background_primary_light before:right-9 before:top-[-19px]" ref={settingsWrapper}>
-                    <ul className="p-0 m-0 list-none">
-                        <li className={classes.li}>
-                            <div className={classes.li_left}>
-                                <AiFillSetting className={classes.svg} />
-                                <p className={classes.p}>Paramètres</p>
+            {open &&
+                <div className="w-[300px] h-auto py-2 absolute bg-white dark:bg-background_primary_light shadow-xl rounded-md top-[65px] right-4 z-[1100] before:content-[''] before:absolute before:w-0 before:h-0 border-10 border-background_primary_light before:right-9 before:top-[-19px]">
+                    {value === 0 &&
+                        <ul className="p-0 m-0 list-none">
+                            <li className={classes.li}>
+                                <div className={classes.li_left}>
+                                    <AiFillSetting className={classes.svg} />
+                                    <p className={classes.p}>Paramètres</p>
+                                </div>
+                                <div className={classes.li_right}>
+                                    <IoCaretForwardOutline className={classes.svg} />
+                                </div>
+                            </li>
+                            <li className={classes.li} onClick={() => { setValue(1) }}>
+                                <div className={classes.li_left}>
+                                    <BsFillSunFill className={classes.svg} />
+                                    <p className={classes.p}>Affichage</p>
+                                </div>
+                                <div className={classes.li_right}>
+                                    <IoCaretForwardOutline className={classes.svg} />
+                                </div>
+                            </li>
+                            <li className={classes.li} onClick={logout}>
+                                <div className={classes.li_left}>
+                                    <HiLogout className={classes.svg} />
+                                    <p className={classes.p}>Se déconnecter</p>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    {value === 1 &&
+                        <>
+                            <div className="flex items-center h-[44px] px-[10px]">
+                                <ImArrowLeft2 className={classes.svg} onClick={() => { setValue(0) }} />
+                                <h4 className="text-center w-full m-0 text-slate-500 dark:text-slate-300">Affichage</h4>
                             </div>
-                            <div className={classes.li_right}>
-                                <IoCaretForwardOutline className={classes.svg} />
-                            </div>
-                        </li>
-                        <li className={classes.li} onClick={() => setScreenMenu(true)}>
-                            <div className={classes.li_left}>
-                                <BsFillSunFill className={classes.svg} />
-                                <p className={classes.p}>Affichage</p>
-                            </div>
-                            <div className={classes.li_right}>
-                                <IoCaretForwardOutline className={classes.svg} />
-                            </div>
-                        </li>
-                        <li className={classes.li} onClick={logout}>
-                            <div className={classes.li_left}>
-                                <HiLogout className={classes.svg} />
-                                <p className={classes.p}>Se déconnecter</p>
-                            </div>
-                        </li>
-                    </ul>
+                            <ul className="p-0 m-0 list-none">
+                                <li className={classes.li}>
+                                    <ThemeToggle />
+                                </li>
+                            </ul>
+                        </>
+                    }
                 </div>
-            )}
-
-            {isScreenMenu && <ScreenMenu />}
+            }
         </>
     )
 

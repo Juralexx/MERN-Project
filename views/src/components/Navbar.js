@@ -13,15 +13,15 @@ const Navbar = () => {
     const classes = {
         container: "absolute top-0 left-1/2 translate-x-[-50%] flex justify-between w-auto my-0 mx-auto h-[60px]",
         ul: "relative flex list-none m-0 p-0",
-        li: "group flex h-full py-0 px-5 min-w-20 text-center justify-center items-center text-slate-300 cursor-pointer border-b-2 border-b-transparent hover:border-b-primary",
-        a: "!no-underline h-full w-full text-slate-300 flex flex-col items-center justify-center py-0 px-2 group-hover:text-slate-300",
-        svg: "w-5 h-5 mb-[6px] text-slate-300 group-hover:text-primary",
+        li: "group flex h-full py-0 px-5 min-w-20 text-center justify-center items-center text-slate-500 dark:text-slate-300 cursor-pointer border-b-2 border-b-transparent hover:border-b-primary",
+        a: "!no-underline h-full w-full  text-slate-500 dark:text-slate-300 flex flex-col items-center justify-center py-0 px-2 dark:group-hover:text-slate-300 group-hover:text-slate-500 ",
+        svg: "w-5 h-5 mb-[6px] text-slate-500 dark:text-slate-300 group-hover:text-primary",
         p: "m-0 leading-[14px] font-medium text-[16px] whitespace-nowrap"
     }
 
     return (
-        <header className="relative w-full h-[60px] bg-transparent">
-            <nav className="flex fixed h-[60px] w-full bg-background_primary z-10 shadow-xl">
+        <header className="relative w-full h-[60px]">
+            <nav className="flex fixed h-[60px] w-full bg-white dark:bg-background_primary z-10 shadow-lg">
                 <div className="relative pl-5">
                     <NavLink to="/">
                         <div className="flex w-auto h-full items-center">

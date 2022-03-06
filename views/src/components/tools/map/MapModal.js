@@ -1,45 +1,18 @@
 import React, { useState } from "react";
 import MapDepartments from "./MapDepartments";
 import MapRegions from "./MapRegions";
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import { TextField, Autocomplete } from "@mui/material";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import FmdGoodOutlined from "@mui/icons-material/FmdGoodOutlined";
+import Modal from "../components/Modal";
+import { EndIconInput } from "../components/Inputs";
+import { BsCaretDownFill } from 'react-icons/bs'
 
-const MapModal = ({ open, setOpen }) => {
-    const [selectByDepartments, setSelectByDepartments] = useState(false)
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => { setValue(newValue) }
-    function TabPanel(props) {
-        const { children, value, index, ...other } = props;
-
-        return (
-            <div
-                role="tabpanel"
-                hidden={value !== index}
-                id={`simple-tabpanel-${index}`}
-                aria-labelledby={`simple-tab-${index}`}
-                {...other}
-            >
-                {value === index && (
-                    <Box sx={{ pt: 1 }}>{children}</Box>
-                )}
-            </div>
-        )
-    }
-
-    function getContent(index) {
-        return {
-            id: `simple-tab-${index}`,
-            'aria-controls': `simple-tabpanel-${index}`,
-        }
-    }
+const MapModal = ({ open, setOpen, location, setLocation }) => {
+    const [ByDepartments, setDepartments] = useState(false)
+    const [isRegionInResult, setRegionsInResult] = useState([])
+    const [openRegions, setOpenRegions] = useState(false)
+    const [search, setSearch] = useState(false)
+    const [searchQuery, setSearchQuery] = useState()
+    const isEmpty = !isRegionInResult || isRegionInResult.length === 0
+    const regexp = new RegExp(searchQuery, 'i');
 
     const regions = [
         { label: "Alsace" },
@@ -71,74 +44,74 @@ const MapModal = ({ open, setOpen }) => {
         { label: "Mayotte" }
     ]
 
+    const handleInputChange = (e) => { setSearchQuery(e.target.value) }
+
+    const searchRegion = () => {
+        if (!searchQuery || searchQuery.trim() === "") { return }
+        if (searchQuery.length >= 2) {
+            const response = regions.filter(element => regexp.test(element.label))
+            setSearch(true)
+            setRegionsInResult(response)
+            if (isEmpty) {
+                setSearch(false)
+            }
+        } else { setSearch(false) }
+    }
+
     return (
-        <Dialog
-            open={open}
-            onClose={() => setOpen(false)}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            PaperProps={{
-                style: {
-                    background: '#091726'
-                }
-            }}>
-            <DialogTitle id="alert-dialog-title">
-                <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                            <Tab label="Par région" {...getContent(0)} />
-                            <Tab label="Par département" {...getContent(1)} />
-                        </Tabs>
-                    </Box>
-                </Box>
-            </DialogTitle>
-            <DialogContent>
-                <TabPanel value={value} index={0}>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={regions}
-                        sx={{ width: "100%" }}
-                        ListboxProps={{
-                            style: {
-                                width: "100%",
-                                background: '#102944'
-                            }
-                        }}
-                        renderInput={(params) =>
-                            <TextField
-                                {...params}
-                                label="Région"
-                                placeholder="Saisissez une région"
-                            />
-                        }
+        <Modal open={open} setOpen={setOpen} css="bg-white dark:bg-background_primary shadow-xl">
+            <div className="flex relative w-full mb-4 border-b border-b-slate-300/30">
+                <div data-choice="1"
+                    className={`h-full w-1/2 text-center text-gray-500 dark:text-slate-300 py-2 border-b-2 border-transparent cursor-pointer hover:text-primary ${!ByDepartments && "text-primary border-primary"}`}
+                    onClick={() => setDepartments(false)}
+                >Régions</div>
+                <div data-choice="2"
+                    className={`h-full w-1/2 text-center text-gray-500 dark:text-slate-300 py-2 border-b-2 border-transparent cursor-pointer hover:text-primary ${ByDepartments && "text-primary border-primary"}`}
+                    onClick={() => setDepartments(true)}
+                >Départements</div>
+            </div>
+            {!ByDepartments ? (
+                <div className="relative">
+                    <EndIconInput
+                        text="Région"
+                        type="text"
+                        fullwidth
+                        endIcon={<BsCaretDownFill className="h-[18px] w-[18px] text-gray-500" />}
+                        onChange={handleInputChange}
+                        onInput={searchRegion}
+                        onClick={() => setOpenRegions(!openRegions)}
+                        defaultValue={location}
                     />
+                    {openRegions &&
+                        <div className="absolute max-h-[300px] overflow-auto w-full bg-white dark:bg-background_primary_light shadow-xl">
+                            {regions.map((element, key) => {
+                                return (
+                                    <div
+                                        className="flex items-center px-4 py-2 text-gray-500 dark:text-slate-300 border-l-2 border-l-transparent hover:border-l-primary hover:bg-slate-100 dark:hover:bg-background_primary_x_light cursor-pointer"
+                                        key={key}
+                                        onClick={() => { setLocation(element.label); setOpen(false) }}
+                                        style={{ display: search ? (isRegionInResult.includes(element) ? "block" : "none") : ("block") }}
+                                    >
+                                        {element.label}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    }
                     <MapRegions />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={regions}
-                        sx={{ width: "100%" }}
-                        ListboxProps={{
-                            style: {
-                                width: "100%",
-                                background: '#102944'
-                            }
-                        }}
-                        renderInput={(params) =>
-                            <TextField
-                                {...params}
-                                label="Région"
-                                placeholder="Saisissez une région"
-                            />
-                        }
+                </div>
+            ) : (
+                <div>
+                    <EndIconInput
+                        text="Département"
+                        type="text"
+                        fullwidth
+                        endIcon={<BsCaretDownFill className="h-[18px] w-[18px] text-gray-500" />}
                     />
                     <MapDepartments />
-                </TabPanel>
-            </DialogContent>
-        </Dialog>
+                </div>
+            )}
+        </Modal>
     )
 }
 

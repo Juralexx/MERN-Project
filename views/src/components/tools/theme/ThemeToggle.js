@@ -22,16 +22,27 @@ const ThemeToggle = () => {
         }
     }
 
+    const classes = {
+        svg: "w-9 h-9 p-2 rounded-full text-slate-500 dark:text-slate-300 bg-slate-100 dark:bg-background_primary_x_light group-hover:bg-white dark:group-hover:bg-background_primary_light",
+        p: "pl-[10px] font-xs text-slate-500 dark:text-slate-300"
+    }
+
     return (
         <>
-            <div className="left">
+            <div className="flex items-center pl-[10px] h-full w-auto">
                 {localStorageTheme === "dark" ? (
-                    <><BsFillSunFill /> <p>Activer le mode clair</p></>
+                    <div className="flex items-center">
+                        <BsFillSunFill className={classes.svg} />
+                        <p className={classes.p}>Activer le mode clair</p>
+                    </div>
                 ) : (
-                    <><BsFillMoonStarsFill /> <p>Activer le mode sombre</p></>
+                    <div className="flex items-center">
+                        <BsFillMoonStarsFill className={classes.svg} />
+                        <p className={classes.p}>Activer le mode sombre</p>
+                    </div>
                 )}
             </div>
-            <div className="right">
+            <div className="flex items-center h-full">
                 {localStorageTheme === "dark" ? (
                     <ThemeContext.Consumer>
                         {({ changeTheme }) => (

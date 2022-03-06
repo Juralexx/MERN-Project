@@ -6,27 +6,31 @@ import { Provider } from "react-redux"
 import { applyMiddleware, createStore } from "redux"
 import thunk from "redux-thunk"
 import rootReducer from './reducers'
-import { ThemeProvider } from '@mui/material/styles';
-import { theme } from './components/tools/Theme.js'
+import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
 import './styles/dist/style.css'
+import './styles/dist/old.css'
+import './styles/dist/modal.css'
+import './styles/dist/map.css'
+import './styles/dist/toggle.css'
+import './styles/dist/editor.css'
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"
 import logger from "redux-logger"
 
 const store = createStore(
-  rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))
+    rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))
 )
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('main')
+    <React.StrictMode>
+        <Provider store={store}>
+            <ThemeContextWrapper>
+                <App />
+            </ThemeContextWrapper>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('main')
 );
 
 // If you want to start measuring performance in your app, pass a function

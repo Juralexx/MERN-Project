@@ -11,11 +11,11 @@ export default function ThemeContextWrapper(props) {
     useEffect(() => {
         switch (theme) {
             case themes.light:
-                document.body.classList.add('light-theme');
+                document.body.classList.remove('dark');
                 localStorage.setItem('theme', 'light')
                 break;
             case themes.dark:
-                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark');
                 localStorage.setItem('theme', 'dark')
                 break;
             default :
@@ -27,7 +27,9 @@ export default function ThemeContextWrapper(props) {
         const localStorageTheme = localStorage.getItem("theme")
 
         if (localStorageTheme !== null && localStorageTheme === "light") {
-            document.body.classList.add('light-theme');
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
         }
     }
 
