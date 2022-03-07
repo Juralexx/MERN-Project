@@ -1,7 +1,9 @@
 import React from 'react'
 import { BasicInput } from '../../tools/components/Inputs';
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
+import { IconButton } from '../../tools/components/Button';
 
-const Contributors = ({ numberofcontributors, setNumberofcontributors, numberofcontributorsError }) => {
+const Contributors = ({ numberofcontributors, setNumberofcontributors, numberofcontributorsError, onNext, onBack }) => {
     return (
         <div className="mt-3 w-full py-5 px-7 rounded-xl bg-white dark:bg-background_primary shadow-xl text-gray-500 dark:text-slate-300">
             <h3 className="mb-5">Avez-vous besoin d'une équipe ?</h3>
@@ -28,6 +30,10 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, numberofc
                 </div>
             </div>
             <div className="error" ref={numberofcontributorsError}></div>
+            <div className="w-full flex justify-between mt-4 ">
+                <IconButton text="Back" startIcon={<IoMdArrowRoundBack className="w-6 h-6" />} className="w-[90px]" onClick={onBack} />
+                <IconButton text="Next" endIcon={<IoMdArrowRoundForward className="w-6 h-6" />} className="w-[90px]" onClick={onNext} />
+            </div>
         </div>
     )
 }

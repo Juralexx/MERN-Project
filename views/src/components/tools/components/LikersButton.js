@@ -48,19 +48,19 @@ const LikersButton = ({ project, onClick }) => {
         <>
             {uid === null && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeartOutline className="w-6 h-6" />} color="yellow-400" />
+                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} color="yellow-400" />
                     <p>{action}</p>
                 </div>
             )}
             {uid && !liked && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeartOutline className="w-6 h-6" />} color="yellow-400" onClick={like} />
+                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} color="yellow-400" onClick={like} />
                     <p onClick={onClick}>{action}</p>
                 </div>
             )}
             {uid && liked && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeart className="w-6 h-6" />} color="yellow-400" onClick={unlike} />
+                    <IconToggle icon={<IoHeart className="w-6 h-6 fill-title" />} color="yellow-400" onClick={unlike} />
                     <p onClick={onClick}>{action}</p>
                 </div>
             )}

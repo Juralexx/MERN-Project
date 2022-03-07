@@ -29,18 +29,18 @@ const Home = () => {
     return (
         <>
             <Header />
-            <div className="w-full bg-white dark:bg-gradient-to-r from-background_primary to-background_primary_light">
+            <div className="w-full bg-background_light dark:bg-gradient-to-r from-background_primary to-background_primary_light">
                 <div className="container mx-auto">
-                    <p className="text-3xl py-6 text-center text-gray-500 dark:text-slate-300">Les plus récent</p>
+                    <p className="text-3xl py-6 text-center text-title dark:text-slate-300">Les plus récent</p>
                     <ProjectsSwiper projects={projectsByDate} isLoading={isLoading} />
 
-                    <p className="text-3xl py-6 mt-10 text-center text-gray-500 dark:text-slate-300">Tous les projets</p>
+                    <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Tous les projets</p>
                     <ProjectsSwiper projects={projects} isLoading={isLoading} />
 
-                    <p className="text-3xl py-6 mt-10 text-center text-gray-500 dark:text-slate-300">Les plus aimés</p>
+                    <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Les plus aimés</p>
                     <ProjectsSwiper projects={projectsByLikes} isLoading={isLoading} />
 
-                    <p className="text-3xl py-6 mt-10 text-center text-gray-500 dark:text-slate-300">Les plus suivis</p>
+                    <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Les plus suivis</p>
                     <ProjectsSwiper projects={projectsByFollows} isLoading={isLoading} />
                 </div>
             </div>

@@ -12,18 +12,18 @@
     cursor: pointer;
 }
 #map-departments path {
-    stroke: #091726;
+    stroke: #ffffff;
     stroke-width: 3px;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-opacity: 0.25;
-    fill: #90caf9;
+    fill: #a2befc;
 }
 #map-departments g:hover path {
-    fill: #366598;
+    fill: #74b0f0;
 }
 #map-departments g path:hover {
-    fill: #184573;
+    fill: #0026a6;
 }
 #map-region {
     width: 450px;
@@ -31,13 +31,13 @@
     cursor: pointer;
 }
 #map-region path {
-    stroke: #091726;
+    stroke: #ffffff;
     stroke-width: 3px;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-opacity: 0.25;
-    fill: #90caf9;
+    fill: #a2befc;
 }
 #map-region g path:hover {
-    fill: #184573;
+    fill: #0026a6;
 }

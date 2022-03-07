@@ -9,7 +9,7 @@ const Register = () => {
                 <NavLink to="/">
                     <img src="/img/logo.png" className="w-[120px] h-auto mx-auto mb-4" />
                 </NavLink>
-                <div className="p-6 shadow-xl rounded-xl min-w-[400px]">
+                <div className="p-6 shadow-custom dark:shadow-lg rounded-xl min-w-[400px]">
                     <div className="mb-5 text-center">
                         <h1 className="text-2xl text-gray-500 dark:text-slate-300">Inscription</h1>
                     </div>

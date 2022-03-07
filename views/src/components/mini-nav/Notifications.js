@@ -42,7 +42,7 @@ const NotificationsMenu = ({ open }) => {
 
     return (
         open &&
-        <div className="w-[270px] h-auto p-2 absolute bg-white dark:bg-background_primary_light shadow-xl rounded-md top-[65px] right-14 z-[1100] dark:border-background_primary_light">
+        <div className="w-[270px] h-auto p-2 absolute bg-white dark:bg-background_primary_light shadow-custom dark:shadow-lg rounded-md top-[65px] right-14 z-[1100] dark:border-background_primary_light">
             <h2 className="text-center w-full m-0 text-slate-500 dark:text-slate-300">Notifications</h2>
             {futureFriend.length !== 0 && (
                 futureFriend.map((element, key) => {

@@ -13,7 +13,7 @@ import MainInfos from '../profil/about/update/MainInfos'
 import ContactInfos from '../profil/about/update/ContactInfos'
 import Location from '../profil/about/update/Location'
 import AddProject from '../../pages/AddProject'
-import MyProjects from '../../pages/MyProjects'
+import Projects from '../../pages/Projects'
 import Project from '../../pages/Project'
 import UserProjects from '../../pages/UserProjects'
 import MostLiked from '../../pages/MostLiked'
@@ -44,7 +44,7 @@ function Index({ websocket, onlineUsers, friends }) {
         <Route path=":pseudo" element={<MemberProfil />} />
 
         <Route path="project/add" element={<AddProject />} />
-        <Route path="projects" element={<MyProjects />} />
+        <Route path="projects" element={<Projects />} />
         <Route path="projects/:pseudo" element={<UserProjects />} />
         <Route path="project/:titleURL" element={<Project />} />
 

@@ -11,7 +11,7 @@
     height: 0;
 }
 .switch input:checked + .slider {
-    background-color: #90caf9;
+    background-color: #1A56DB;
 }
 .switch input:checked + .slider:before {
     transform: translateX(16px);

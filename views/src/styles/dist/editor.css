@@ -31,7 +31,7 @@
 
 .dark .quill .ql-container.ql-snow {
     border        : none;
-    background    : #102944;
+    background    : rgb(31 41 55);
     border-radius : 0 0 10px 10px;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .dark .ql-toolbar.ql-snow {
-    background    : #184573;
+    background    : rgb(25, 32, 49);
     border        : none;
     border-radius : 10px 10px 0 0;
 }

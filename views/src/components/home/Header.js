@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import LeftNav from '../LeftNav'
+import HeaderNavbar from '../HeaderNavBar'
 import Categories from './Categories'
 import MapModal from '../tools/map/MapModal';
 import { IconButton, TextButton } from '../tools/components/Button';
@@ -22,8 +22,8 @@ const Header = () => {
             <div className="container px-10">
                 <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
                     <div className="pr-10">
-                        <h1 className="text-dark dark:text-slate-300 text-6xl font-bold leading-[1.1]">
-                            Where <span className="text-primary_darker font-bold">all projects</span><br />become reality
+                        <h1 className="text-dark dark:text-slate-300 text-6xl font-extrabold leading-[1.1]" style={{ fontWeight: "900"}}>
+                            Where <span className="text-primary_light font-bold">all projects</span><br />become <span className="text-title font-bold">reality</span>
                         </h1>
                         <p className="mt-2 text-xl dark:text-slate-400 text-slate-500 pr-10">
                             Circa hos dies Lollianus primae lanuginis adulesce,
@@ -75,7 +75,7 @@ const Header = () => {
                 </div>
             </div>
             <MapModal open={openMapModal} setOpen={setOpenMapModal} location={location} setLocation={setLocation} />
-            <LeftNav />
+            <HeaderNavbar />
         </div>
     )
 }

@@ -13,6 +13,7 @@ import Description from "./Description";
 import Contributors from "./Contributors";
 import Pictures from "./Pictures";
 import { Button } from "../../tools/components/Button";
+import { Stepper } from '@zendeskgarden/react-accordions'
 
 const AddProjectForm = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -28,6 +29,10 @@ const AddProjectForm = () => {
     const [content, setContent] = useState({})
     const [files, setFiles] = useState([])
     const navigate = useNavigate()
+
+    const [step, setStep] = useState(0);
+    const onNext = () => setStep(step + 1);
+    const onBack = () => setStep(step - 1);
 
     const titleError = useRef("")
     const categoryError = useRef("")
@@ -111,17 +116,21 @@ const AddProjectForm = () => {
         }
     }
 
-    return (
-        <>
-            <Title
+    const allSteps = [
+        {
+            content: <Title
                 title={title}
                 setTitle={setTitle}
                 category={category}
                 setCategory={setCategory}
                 titleError={titleError}
                 categoryError={categoryError}
-            />
-            <Location
+                onNext={onNext}
+            />,
+            key: 0,
+        },
+        {
+            content: <Location
                 location={location}
                 setLocation={setLocation}
                 department={department}
@@ -130,33 +139,93 @@ const AddProjectForm = () => {
                 setRegion={setRegion}
                 newRegion={newRegion}
                 setNewRegion={setNewRegion}
-            />
-            <Contributors
+                onNext={onNext}
+                onBack={onBack}
+            />,
+            key: 1,
+        },
+        {
+            content: <Contributors
                 numberofcontributors={numberofcontributors}
                 setNumberofcontributors={setNumberofcontributors}
                 numberofcontributorsError={numberofcontributorsError}
-            />
-            <Workers
+                onNext={onNext}
+                onBack={onBack}
+            />,
+            key: 2,
+        },
+        {
+            content: <Workers
                 workArray={workArray}
                 setWorkArray={setWorkArray}
-            />
-            <End
+                onNext={onNext}
+                onBack={onBack}
+            />,
+            key: 3,
+        },
+        {
+            content: <End
                 end={end}
                 setEnd={setEnd}
-            />
-            <Description
+                onNext={onNext}
+                onBack={onBack}
+            />,
+            key: 4,
+        },
+        {
+            content: <Description
                 content={content}
                 setContent={setContent}
                 contentError={contentError}
-            />
-            <Pictures
+                onNext={onNext}
+                onBack={onBack}
+            />,
+            key: 5,
+        },
+        {
+            content: <Pictures
                 files={files}
                 setFiles={setFiles}
-            />
+                onNext={onNext}
+                onBack={onBack}
+                handleAddProject={handleAddProject}
+            />,
+            key: 6,
+        }
+    ];
 
-            <div className="btn-container">
-                <Button text="Publier mon projet" className="mt-3" type="submit" onClick={handleAddProject} value={files} />
-            </div>
+    return (
+        <>
+            <Stepper activeIndex={step} isHorizontal>
+                <Stepper.Step key="step-1">
+                    <Stepper.Label>Titre et catégorie</Stepper.Label>
+                </Stepper.Step>
+                <Stepper.Step key="step-2">
+                    <Stepper.Label>Localisation</Stepper.Label>
+                </Stepper.Step>
+                <Stepper.Step key="step-3">
+                    <Stepper.Label>Nombre de personnes</Stepper.Label>
+                </Stepper.Step>
+                <Stepper.Step key="step-4">
+                    <Stepper.Label>Métiers recherchés</Stepper.Label>
+                </Stepper.Step>
+                <Stepper.Step key="step-5">
+                    <Stepper.Label>Date</Stepper.Label>
+                </Stepper.Step>
+                <Stepper.Step key="step-6">
+                    <Stepper.Label>Description</Stepper.Label>
+                </Stepper.Step>
+                <Stepper.Step key="step-7">
+                    <Stepper.Label>Photos</Stepper.Label>
+                </Stepper.Step>
+            </Stepper>
+            {allSteps.map((element, index) =>
+                index === step && (
+                    <div key={index} className="py-10">
+                        {element.content}
+                    </div>
+                )
+            )}
         </>
     )
 }

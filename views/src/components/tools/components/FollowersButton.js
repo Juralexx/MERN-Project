@@ -52,19 +52,19 @@ const FollowersButton = ({ project, onClick }) => {
         <>
             {uid === null && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<MdOutlineBookmarkBorder className="w-6 h-6" />} color="yellow-400" />
+                    <IconToggle icon={<MdOutlineBookmarkBorder className="w-6 h-6 fill-follow" />} color="yellow-400" />
                     <p>{action}</p>
                 </div>
             )}
             {uid && !followed && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<MdOutlineBookmarkBorder className="w-6 h-6" />} color="yellow-400" onClick={follow} />
+                    <IconToggle icon={<MdOutlineBookmarkBorder className="w-6 h-6 fill-follow" />} color="yellow-400" onClick={follow} />
                     <p onClick={onClick}>{action}</p>
                 </div>
             )}
             {uid && followed && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<MdOutlineBookmark className="w-6 h-6" />} color="yellow-400" onClick={unfollow} />
+                    <IconToggle icon={<MdOutlineBookmark className="w-6 h-6 fill-follow" />} color="yellow-400" onClick={unfollow} />
                     <p onClick={onClick}>{action}</p>
                 </div>
             )}

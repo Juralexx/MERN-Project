@@ -4,7 +4,7 @@ import { IoIosLink } from 'react-icons/io'
 import { FiLayers } from 'react-icons/fi'
 import { AiOutlineHome, AiOutlineEye, AiOutlineHeart, AiOutlineDownload } from 'react-icons/ai'
 
-const LeftNav = () => {
+const HeaderNavbar = () => {
 
     const classes = {
         ul: "relative flex justify-center items-center list-none m-0",
@@ -15,7 +15,7 @@ const LeftNav = () => {
     }
 
     return (
-        <div className="absolute left-0 bottom-0 w-full h-[60px]">
+        <div className="absolute left-0 bottom-5 w-full h-[60px]">
             <ul className={classes.ul}>
                 <li className={classes.li}>
                     <NavLink to="/" className={classes.a}>
@@ -58,4 +58,4 @@ const LeftNav = () => {
     )
 }
 
-export default LeftNav;
+export default HeaderNavbar;

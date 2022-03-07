@@ -59,7 +59,7 @@ const MapModal = ({ open, setOpen, location, setLocation }) => {
     }
 
     return (
-        <Modal open={open} setOpen={setOpen} css="bg-white dark:bg-background_primary shadow-xl">
+        <Modal open={open} setOpen={setOpen} css="bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
             <div className="flex relative w-full mb-4 border-b border-b-slate-300/30">
                 <div data-choice="1"
                     className={`h-full w-1/2 text-center text-gray-500 dark:text-slate-300 py-2 border-b-2 border-transparent cursor-pointer hover:text-primary ${!ByDepartments && "text-primary border-primary"}`}
@@ -83,7 +83,7 @@ const MapModal = ({ open, setOpen, location, setLocation }) => {
                         defaultValue={location}
                     />
                     {openRegions &&
-                        <div className="absolute max-h-[300px] overflow-auto w-full bg-white dark:bg-background_primary_light shadow-xl">
+                        <div className="absolute max-h-[300px] overflow-auto w-full bg-white dark:bg-background_primary_light shadow-custom dark:shadow-lg">
                             {regions.map((element, key) => {
                                 return (
                                     <div

@@ -37,7 +37,7 @@ export const Input = (props) => {
 export const IconInput = (props) => {
     const { text, type, value, defaultValue, onChange, onInput, onClick, readOnly, disabled, fullwidth, icon, endIcon, name, id } = props
     return (
-        <div className={`relative z-0 mb-2 w-full h-[54px] group bg-slate-50 rounded-t dark:bg-background_primary_light ${fullwidth ? "w-full" : "w-[300px]"}`}>
+        <div className={`relative z-0 mb-2 w-full h-[54px] group bg-background_light rounded-t dark:bg-background_primary_light ${fullwidth ? "w-full" : "w-[300px]"}`}>
             <input
                 type={type}
                 name={name}
@@ -129,7 +129,7 @@ export const BasicInput = (props) => {
             onKeyPress={onKeyPress}
             min={min}
             max={max}
-            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  
+            className={`bg-background_light dark:border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  
             dark:bg-background_primary_light dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
             ${fullwidth ? "w-full" : "w-[300px]"}
             ${className ? className : null}`}
@@ -154,7 +154,7 @@ export const BasicInputEndIcon = (props) => {
                 readOnly={readOnly}
                 disabled={disabled}
                 onKeyPress={onKeyPress}
-                className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  
+                className={`bg-background_light dark:border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  
             dark:bg-background_primary_light dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
             ${fullwidth ? "w-full" : "w-[300px]"}
             ${className ? className : null}`}

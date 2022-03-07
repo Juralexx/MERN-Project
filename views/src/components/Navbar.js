@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UidContext } from "./AppContext";
 import MiniNav from "./mini-nav/MiniNav";
-import { AiOutlineHome, AiOutlineUnorderedList, AiOutlineFundProjectionScreen } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineUnorderedList } from 'react-icons/ai'
 import { MdOutlineMessage } from 'react-icons/md'
 import { IoPersonCircleSharp } from 'react-icons/io5'
 import { RiLoginCircleLine } from 'react-icons/ri'
+import { FaProjectDiagram } from 'react-icons/fa'
 
 const Navbar = () => {
     const uid = useContext(UidContext)
@@ -21,7 +22,7 @@ const Navbar = () => {
 
     return (
         <header className="relative w-full h-[60px]">
-            <nav className="flex fixed h-[60px] w-full bg-white dark:bg-background_primary z-10 shadow-lg">
+            <nav className="flex fixed h-[60px] w-full bg-white dark:bg-background_primary z-10 shadow-custom dark:shadow-lg">
                 <div className="relative pl-5">
                     <NavLink to="/">
                         <div className="flex w-auto h-full items-center">
@@ -48,7 +49,7 @@ const Navbar = () => {
                                 </li>
                                 <li className={classes.li}>
                                     <NavLink to="/projects" className={classes.a}>
-                                        <AiOutlineFundProjectionScreen className={classes.svg} />
+                                        <FaProjectDiagram className={classes.svg} />
                                         <p className={classes.p}>Mes Projets</p>
                                     </NavLink>
                                 </li>
@@ -81,7 +82,7 @@ const Navbar = () => {
                             </li>
                             <li className={classes.li}>
                                 <NavLink to="/" className={classes.a}>
-                                    <AiOutlineFundProjectionScreen className={classes.svg} />
+                                    <FaProjectDiagram className={classes.svg} />
                                     <p className={classes.p}>Projets</p>
                                 </NavLink>
                             </li>

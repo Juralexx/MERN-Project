@@ -39,7 +39,7 @@ const SettingsMenu = ({ open }) => {
     return (
         <>
             {open &&
-                <div className="w-[300px] h-auto py-2 absolute bg-white dark:bg-background_primary_light shadow-xl rounded-md top-[65px] right-4 z-[1100] before:content-[''] before:absolute before:w-0 before:h-0 border-10 border-background_primary_light before:right-9 before:top-[-19px]">
+                <div className="w-[300px] h-auto py-2 absolute bg-white dark:bg-background_primary_light shadow-custom dark:shadow-lg rounded-md top-[65px] right-4 z-[1100] before:content-[''] before:absolute before:w-0 before:h-0 border-10 border-background_primary_light before:right-9 before:top-[-19px]">
                     {value === 0 &&
                         <ul className="p-0 m-0 list-none">
                             <li className={classes.li}>

@@ -7,7 +7,7 @@ const HoverModal = ({ user, style }) => {
 
     return (
         <div className="absolute bottom-[10px] left-[-120px] p-8" style={style}>
-            <div className="bg-background_primary p-4 shadow-xl w-[330px] rounded-xl">
+            <div className="bg-background_primary p-4 shadow-custom dark:shadow-lg w-[330px] rounded-xl">
                 <div className="flex w-full mb-3">
                     <div className="pr-3">
                         <NavLink to={"/" + user.pseudo}><div className="w-16 h-16 rounded-full" style={avatar(user.picture)}></div></NavLink>

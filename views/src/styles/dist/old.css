@@ -44,7 +44,7 @@ html {
   margin: 0;
   padding: 0;
   position: relative;
-  font-family: "Segoe UI", sans-serif;
+  /* font-family: "Segoe UI", sans-serif; */
   scroll-behavior: smooth;
   overflow-y: auto;
   overflow-x: hidden;
@@ -53,7 +53,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", sans-serif;
+  /* font-family: "Segoe UI", sans-serif; */
   scroll-behavior: smooth;
   overflow: hidden;
   color: var(--color-text-grey);
@@ -446,7 +446,7 @@ h5 {
   background-color: var(--color-content-light);
   border-radius: 95px;
   z-index: 20;
-  border: 2px solid #90caf9;
+  border: 2px solid #1A56DB;
   -webkit-backdrop-filter: blur(6px);
           backdrop-filter: blur(6px);
 }
@@ -458,8 +458,8 @@ h5 {
   border-radius: 100px;
   vertical-align: middle;
   border: 3px solid transparent;
-  border-top-color: #90caf9;
-  border-bottom-color: #90caf9;
+  border-top-color: #1A56DB;
+  border-bottom-color: #1A56DB;
   -webkit-animation: spinClockwise 1s linear infinite;
           animation: spinClockwise 1s linear infinite;
   z-index: 1000;
@@ -790,7 +790,7 @@ h5 {
 .modal-card .card-info .user-info .info-bloc > div {
   font-weight: 700;
   font-size: 24px;
-  color: #90caf9;
+  color: #1A56DB;
 }
 .modal-card .card-info .user-info .info-bloc p {
   display: -webkit-box;
@@ -968,7 +968,7 @@ h5 {
 }
 .profil-edit-container .right .user-info .add-btn {
   background: transparent;
-  color: #90caf9;
+  color: #1A56DB;
   border: none;
   outline: none;
   padding: 0;
@@ -977,7 +977,7 @@ h5 {
   text-decoration: underline;
 }
 .profil-edit-container .right .user-info .add-btn svg path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 .profil-edit-container .right .user-info .user-info-edit {
   display: -webkit-box;
@@ -1059,7 +1059,7 @@ h5 {
   background: #9faab7;
 }
 .profil-edit-container .right .user-info .user-info-edit .gender-updater div .option-input:checked {
-  background: #90caf9;
+  background: #1A56DB;
 }
 .profil-edit-container .right .user-info .user-info-edit .gender-updater div .option-input:checked:before {
   height: 17px;
@@ -1176,7 +1176,7 @@ h5 {
 }
 .user-info .add-btn {
   background: transparent;
-  color: #90caf9;
+  color: #1A56DB;
   border: none;
   outline: none;
   padding: 0;
@@ -1185,7 +1185,7 @@ h5 {
   text-decoration: underline;
 }
 .user-info .add-btn svg path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 .user-info .user-info-edit {
   display: -webkit-box;
@@ -1267,7 +1267,7 @@ h5 {
   background: #9faab7;
 }
 .user-info .user-info-edit .gender-updater div .option-input:checked {
-  background: #90caf9;
+  background: #1A56DB;
 }
 .user-info .user-info-edit .gender-updater div .option-input:checked:before {
   height: 17px;
@@ -1336,7 +1336,7 @@ h5 {
   width: 35px;
   height: 35px;
   border-radius: 20px;
-  background: #90caf9;
+  background: #1A56DB;
   color: white;
   border: none;
   outline: none;
@@ -1483,18 +1483,18 @@ h5 {
 }
 .profil-nav ul li a:hover {
   background: var(--color-content-light);
-  border-bottom: 3px solid #90caf9;
-  color: #90caf9;
+  border-bottom: 3px solid #1A56DB;
+  color: #1A56DB;
 }
 .profil-nav ul li a:hover .svg-icon path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 .profil-nav ul li a.activeLink {
   background: var(--color-content-light);
-  border-bottom: 3px solid #90caf9;
+  border-bottom: 3px solid #1A56DB;
 }
 .profil-nav ul li a.activeLink .svg-icon path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 
 .profil-edit-nav {
@@ -1557,18 +1557,18 @@ h5 {
 }
 .profil-edit-nav ul li a:hover {
   background: var(--color-content-light);
-  border-left: 3px solid #90caf9;
-  color: #90caf9;
+  border-left: 3px solid #1A56DB;
+  color: #1A56DB;
 }
 .profil-edit-nav ul li a:hover .svg-icon path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 .profil-edit-nav ul li a.activeLink {
   background: var(--color-content-light);
-  border-left: 3px solid #90caf9;
+  border-left: 3px solid #1A56DB;
 }
 .profil-edit-nav ul li a.activeLink .svg-icon path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 
 .auto-container {
@@ -1608,7 +1608,7 @@ h5 {
 }
 .auto-container ul li:hover {
   background: var(--color-content-light);
-  border-left: 3px solid #90caf9;
+  border-left: 3px solid #1A56DB;
 }
 .auto-container .btn-container {
   display: -webkit-box;
@@ -1817,11 +1817,11 @@ h5 {
 }
 .add-project-container .add-project-bloc .input-container .category-selection option:hover {
   background: var(--color-content-light);
-  border-left: 3px solid #90caf9;
-  color: #90caf9;
+  border-left: 3px solid #1A56DB;
+  color: #1A56DB;
 }
 .add-project-container .add-project-bloc .input-container .category-selection option:hover .svg-icon {
-  color: #90caf9;
+  color: #1A56DB;
 }
 .add-project-container .add-project-bloc .content-container textarea {
   width: 100%;
@@ -1855,10 +1855,10 @@ h5 {
   width: 150px;
 }
 .add-project-container .add-img-bloc .add-img-row .input-img-container.input .content {
-  border: 3px solid #90caf9;
+  border: 3px solid #1A56DB;
 }
 .add-project-container .add-img-bloc .add-img-row .input-img-container.input .content svg {
-  color: #90caf9;
+  color: #1A56DB;
 }
 .add-project-container .add-img-bloc .add-img-row .input-img-container input {
   position: relative;
@@ -1996,7 +1996,7 @@ h5 {
   background: #9faab7;
 }
 .add-project-container .add-numberofcontributors-bloc .number-container .undefined-choice .option-input:checked {
-  background: #90caf9;
+  background: #1A56DB;
 }
 .add-project-container .add-numberofcontributors-bloc .number-container .undefined-choice .option-input:checked:before {
   height: 17px;
@@ -2198,7 +2198,7 @@ h5 {
 }
 .home-project-card .right .top div span {
   font-weight: 600;
-  color: #90caf9;
+  color: #1A56DB;
 }
 .home-project-card .right .top div svg {
   margin-right: 5px;
@@ -2387,7 +2387,7 @@ h5 {
 }
 .project-modal.modal-container .right .top div span {
   font-weight: 600;
-  color: #90caf9;
+  color: #1A56DB;
 }
 .project-modal.modal-container .right .top div svg {
   margin-right: 5px;
@@ -2597,7 +2597,7 @@ h5 {
   width: 24px;
   height: 24px;
   border-radius: 20px;
-  background: #90caf9;
+  background: #1A56DB;
   color: white;
 }
 .messenger .conversation-box {
@@ -2833,7 +2833,7 @@ h5 {
   margin-right: 5px;
   border-radius: 15px;
   background: rgba(144, 202, 249, 0.45);
-  border: 1px solid #90caf9;
+  border: 1px solid #1A56DB;
 }
 .messenger .conversation-box .message .message-right .emoji-container .emoji-add {
   display: -webkit-box;
@@ -3009,7 +3009,7 @@ h5 {
   top: -32px;
   right: 20px;
   padding: 3px 10px;
-  background: #90caf9;
+  background: #1A56DB;
   color: white;
   border-radius: 5px;
 }
@@ -3135,7 +3135,7 @@ h5 {
   background-color: var(--color-content);
 }
 .messenger .online-users-container .online-users-wrapper .online-users .online-badge.connected {
-  background-color: #90caf9;
+  background-color: #1A56DB;
 }
 .messenger .online-users-container .online-users-wrapper .online-users:hover {
   background: var(--color-content);
@@ -3217,8 +3217,8 @@ h5 {
   padding: 3px 0;
   font-size: 13px;
   border-radius: 30px;
-  border: 1px solid #90caf9;
-  background: #90caf9;
+  border: 1px solid #1A56DB;
+  background: #1A56DB;
   color: white;
 }
 .conversation-scroll-btn span {
@@ -3265,7 +3265,7 @@ h5 {
   border-bottom: 1px solid transparent;
 }
 .add-conversation-modal .modal-inner .header ul li:hover {
-  border-bottom: 1px solid #90caf9;
+  border-bottom: 1px solid #1A56DB;
 }
 .add-conversation-modal .modal-inner .display-conversation-users {
   display: -webkit-box;
@@ -3283,7 +3283,7 @@ h5 {
           align-items: center;
   margin-right: 15px;
   padding: 5px;
-  background: #90caf9;
+  background: #1A56DB;
   border-radius: 3px;
   cursor: pointer;
 }
@@ -3414,7 +3414,7 @@ h5 {
   border-bottom: 1px solid transparent;
 }
 .conversation-modal .modal-inner .header ul li:hover {
-  border-bottom: 1px solid #90caf9;
+  border-bottom: 1px solid #1A56DB;
 }
 .conversation-modal .modal-inner .body .conversation-infos {
   overflow-y: auto;
@@ -3494,7 +3494,7 @@ h5 {
   width: 16px;
   height: 16px;
   margin-right: 10px;
-  color: #90caf9;
+  color: #1A56DB;
 }
 .notification-message .top .subject {
   margin-right: 10px;
@@ -3578,7 +3578,7 @@ h5 {
   background: var(--color-content-light);
 }
 .settings-menu .settings-menu-header svg:hover path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 .settings-menu .settings-menu-nav ul {
   padding: 0;
@@ -3639,10 +3639,10 @@ h5 {
 }
 .settings-menu .settings-menu-nav ul li:hover {
   background: var(--color-content-light);
-  border-left: 3px solid #90caf9;
+  border-left: 3px solid #1A56DB;
 }
 .settings-menu .settings-menu-nav ul li:hover svg path {
-  fill: #90caf9;
+  fill: #1A56DB;
 }
 .settings-menu .settings-menu-nav ul li .switch {
   position: relative;
@@ -3657,7 +3657,7 @@ h5 {
   height: 0;
 }
 .settings-menu .settings-menu-nav ul li .switch input:checked + .slider {
-  background-color: #90caf9;
+  background-color: #1A56DB;
 }
 .settings-menu .settings-menu-nav ul li .switch input:checked + .slider:before {
   -webkit-transform: translateX(32px);
@@ -3736,7 +3736,7 @@ h5 {
 }
 .right-menu .notification-card .right span {
   font-size: 14px;
-  color: #90caf9;
+  color: #1A56DB;
   font-style: italic;
 }
 .right-menu .notification-card .right .btn {

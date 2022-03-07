@@ -4,8 +4,10 @@ import { ThreeDots } from 'react-loading-icons'
 import { ImCross } from 'react-icons/im'
 import { BasicInput } from '../../tools/components/Inputs';
 import { Button } from '../../tools/components/Button';
+import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
+import { IconButton } from '../../tools/components/Button';
 
-const Workers = ({ workArray, setWorkArray }) => {
+const Workers = ({ workArray, setWorkArray, onNext, onBack }) => {
     const [searchQuery, setSearchQuery] = useState("")
     const [workNumber, setWorkNumber] = useState("")
     const [choice, setChoice] = useState("")
@@ -76,7 +78,7 @@ const Workers = ({ workArray, setWorkArray }) => {
     }
 
     return (
-        <div className="mt-3 w-full py-5 px-7 rounded-xl bg-white dark:bg-background_primary shadow-xl text-gray-500 dark:text-slate-300">
+        <div className="mt-3 w-full py-5 px-7 rounded-xl bg-white dark:bg-background_primary shadow-custom dark:shadow-lg text-gray-500 dark:text-slate-300">
             <h3 className="mb-5">De qui avez vous besoin ?</h3>
             <div>
                 {workArray &&
@@ -136,6 +138,10 @@ const Workers = ({ workArray, setWorkArray }) => {
                 )}
             </div>
             <p className="submit error"></p>
+            <div className="w-full flex justify-between mt-4 ">
+                <IconButton text="Back" startIcon={<IoMdArrowRoundBack className="w-6 h-6" />} className="w-[90px]" onClick={onBack} />
+                <IconButton text="Next" endIcon={<IoMdArrowRoundForward className="w-6 h-6" />} className="w-[90px]" onClick={onNext} />
+            </div>
         </div>
     )
 }

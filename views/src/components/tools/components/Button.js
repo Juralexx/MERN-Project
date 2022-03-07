@@ -3,8 +3,8 @@ import React from "react";
 export const Button = (props) => {
     const { text, fullwidth, color, hoverColor, onClick, className } = props
     return (
-        <div onClick={onClick} className={`h-10 flex justify-center items-center px-4 py-2 rounded-[4px] text-slate-300 cursor-pointer
-            ${fullwidth ? "w-full" : "w-auto"}
+        <div onClick={onClick} className={`h-10 flex justify-center items-center px-4 py-2 rounded-[4px] text-white cursor-pointer
+            ${fullwidth ? "w-full" : "max-w-[300px]"}
             ${color ? `bg-${color}` : "bg-primary"}
             ${hoverColor ? `hover:bg-${hoverColor}` : "hover:bg-primary_semi_dark"}
             ${className ? className : null}
@@ -19,7 +19,7 @@ export const TextButton = (props) => {
     return (
         <div onClick={onClick} className={`h-10 flex justify-center items-center px-4 py-2 rounded-[4px] cursor-pointer
             ${fullwidth ? "w-full" : "w-auto"} 
-            ${color ? `text-${color} hover:bg-${color}/[.15]` : "text-primary hover:bg-primary_semi_dark/[.15]"}
+            ${color ? `text-${color} hover:bg-${color}/[.15]` : "text-primary_light hover:bg-primary_semi_dark/[.15]"}
             ${className ? className : null}
         `}>
             {text}
@@ -43,7 +43,7 @@ export const OutlinedButton = (props) => {
 export const IconButton = (props) => {
     const { startIcon, endIcon, text, fullwidth, color, hoverColor, onClick, className } = props
     return (
-        <div onClick={onClick} className={`h-10 flex justify-between items-center px-4 py-2 rounded-[4px] text-slate-300 cursor-pointer
+        <div onClick={onClick} className={`h-10 flex justify-between items-center px-4 py-2 rounded-[4px] text-white cursor-pointer
             ${fullwidth ? "w-full" : "w-auto"}
             ${color ? `bg-${color}` : "bg-primary"}
             ${hoverColor ? `hover:bg-${hoverColor}` : "hover:bg-primary_semi_dark"}
@@ -54,7 +54,7 @@ export const IconButton = (props) => {
                     {startIcon}
                 </div>
             )}
-            <div>
+            <div className="flex items-center">
                 {text}
             </div>
             {endIcon && (

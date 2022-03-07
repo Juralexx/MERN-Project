@@ -15,7 +15,7 @@ const Login = () => {
                 <NavLink to="/">
                     <img src="/img/logo.png" className="w-[120px] h-auto mx-auto mb-4" />
                 </NavLink>
-                <div className="p-6 shadow-xl rounded-xl">
+                <div className="p-6 shadow-custom dark:shadow-lg rounded-xl">
                     <div className="mb-5 text-center">
                         <h1 className="text-2xl text-gray-500 dark:text-slate-300">Connexion</h1>
                     </div>

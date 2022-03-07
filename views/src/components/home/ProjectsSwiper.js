@@ -47,7 +47,7 @@ const ProjectsSwiper = ({ projects, isLoading }) => {
                     projects.map((element, key) => {
                         return (
                             <SwiperSlide key={key} className="!w-auto mx-2 min-h-[426px] flex justify-center">
-                                <div className="w-[365px] text-gray-500 dark:text-slate-300 cursor-pointer bg-white dark:bg-background_primary rounded-xl shadow-xl">
+                                <div className="w-[365px] text-gray-500 dark:text-slate-300 cursor-pointer bg-white dark:bg-background_primary rounded-xl shadow-custom dark:shadow-lg">
                                     <div className="h-[160px] w-full rounded-t-xl" style={projectPicture('img/paysage-2.jpg')}></div>
                                     <MdZoomOutMap className="absolute top-2 right-4 w-[24px] h-[24px]" onClick={() => getProject(element)} />
                                     <FavoriteButton project={element} />
