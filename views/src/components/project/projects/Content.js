@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "../../../tools/editor/EditorToolbar";
+import EditorToolbar, { modules, formats } from "../../tools/editor/EditorToolbar";
 import "react-quill/dist/quill.snow.css";
-import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { useDispatch, useSelector } from "react-redux";
-import { updateContent } from "../../../../actions/project.action";
+import { updateContent } from "../../../actions/project.action";
+import { RoundedButton, Button } from "../../tools/components/Button";
+import { FaPen } from 'react-icons/fa'
+import { convertDeltaToHTML } from "../../messenger/tools/function";
 
-const Content = ({ props, id }) => {
+const Content = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)
     const [content, setContent] = useState("")
     const [updateContentForm, setUpdateContentForm] = useState(false)
@@ -22,33 +24,24 @@ const Content = ({ props, id }) => {
     const hideContentUpdater = () => { setUpdateContentForm(false) }
 
     const handleContent = () => {
-        dispatch(updateContent(id, content))
+        dispatch(updateContent(project._id, content))
         setUpdateContentForm(false)
         setModified(true)
     }
 
-    function getDescription() {
-        var callback = {}
-        var converter = new QuillDeltaToHtmlConverter(props, callback)
-        var html = converter.convert(props)
-        return ({ __html: html })
-    }
-
     return (
-        <div>
+        <div className="flex items-center justify-between w-full py-5 px-7">
             {!updateContentForm ? (
                 <>
                     {modified ? (
                         <p dangerouslySetInnerHTML={{ __html: projectData.content }}></p>
                     ) : (
-                        <p dangerouslySetInnerHTML={getDescription()}></p>
+                        <p dangerouslySetInnerHTML={convertDeltaToHTML(project.content[0])}></p>
                     )}
-                    <div className="btn-container">
-                        <button className="btn btn-primary" onClick={() => setUpdateContentForm(!updateContentForm)}>Modifier</button>
-                    </div>
+                    <RoundedButton icon={<FaPen className="w-3 h-3" />} color="background_primary" hoverColor="background_primary_x_light" onClick={() => setUpdateContentForm(!updateContentForm)}>Modifier</RoundedButton>
                 </>
             ) : (
-                <>
+                <div className="flex flex-col">
                     <div className="text-editor">
                         <EditorToolbar />
                         <ReactQuill
@@ -56,18 +49,18 @@ const Content = ({ props, id }) => {
                             id="content"
                             style={{ height: 200 }}
                             theme="snow"
-                            defaultValue={modified ? (projectData.content) : (props)}
+                            defaultValue={modified ? (projectData.content) : (project.content[0].ops)}
                             onChange={handleChange}
                             placeholder={"Décrivez votre projet..."}
                             modules={modules}
                             formats={formats}
                         />
                     </div>
-                    <div className="btn-container">
-                        <button className="btn btn-primary" onClick={hideContentUpdater}>Annuler</button>
-                        <button className="btn btn-primary" disabled={!value} onClick={handleContent}>Enregistrer</button>
+                    <div className="flex">
+                        <Button text="Annuler" onClick={hideContentUpdater} />
+                        <Button text="Enregistrer" disabled={!value} onClick={handleContent} />
                     </div>
-                </>
+                </div>
             )}
         </div>
     )

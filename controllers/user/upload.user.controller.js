@@ -1,9 +1,9 @@
-import UserModel from '../models/user.model.js'
+import UserModel from '../../models/user.model.js'
 import fs from 'fs'
 import { promisify } from 'util'
 import stream from 'stream'
 const pipeline = promisify(stream.pipeline);
-import { uploadErrors } from "../utils/error.utils.js"
+import { uploadErrors } from "../../utils/error.utils.js"
 
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';

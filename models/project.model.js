@@ -6,11 +6,18 @@ const ProjectModel = new mongoose.Schema(
             required: true
         },
 
-        posterPseudo: { type: String },
+        posterPseudo: {
+            type: String
+        },
 
-        posterAvatar: { type: String },
+        posterAvatar: {
+            type: String
+        },
 
-        state: { type: String, default: "En préparation" },
+        state: {
+            type: String,
+            default: "En préparation"
+        },
 
         title: {
             type: String,
@@ -59,7 +66,10 @@ const ProjectModel = new mongoose.Schema(
         works: {
             type: [],
             name: String,
-            numberFound: { type: Number, default: "0" },
+            numberFound: {
+                type: Number,
+                default: "0"
+            },
             number: Number
         },
 
@@ -72,11 +82,53 @@ const ProjectModel = new mongoose.Schema(
             type: Date
         },
 
-        follows: { type: Number, default: 0 },
-        followers: { type: [String] },
+        members: {
+            type: [],
+            member: {
+                id: String,
+                pseudo: String,
+                picture: String,
+                role: String,
+                since: Date
+            }
+        },
 
-        likes: { type: Number, default: 0 },
-        likers: { type: [String] },
+        member_requests : {
+            type: [String]
+        },
+
+        tasks: {
+            type: [],
+            task: {
+                title: String,
+                date: Date,
+                description: String,
+                members: {
+                    type: [],
+                    member: {
+                        id: String,
+                        pseudo: String,
+                        picture: String,
+                    }
+                }
+            }
+        },
+
+        follows: {
+            type: Number,
+            default: 0
+        },
+        followers: {
+            type: [String]
+        },
+
+        likes: {
+            type: Number,
+            default: 0
+        },
+        likers: {
+            type: [String]
+        },
 
         favorites: {
             type: [String]

@@ -32,7 +32,7 @@ const Categories = ({ open, setOpen, setCategory }, props) => {
             <ul className="p-0 flex flex-col w-[250px] border-r-[0.01rem] border-slate-300 dark:border-slate-700" aria-label="vertical-tab-picker">
                 {categories.map((category, key) => {
                     return (
-                        <li key={key} className={active === key ? classes.active : classes.main_li} onClick={e => setActive(key)}>{category.value}</li>
+                        <li key={key} className={active === key ? classes.active : classes.main_li} onClick={() => setActive(key)}>{category.value}</li>
                     )
                 })}
             </ul>

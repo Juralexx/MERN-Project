@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateState } from "../../../../actions/project.action";
-import { useClickOutside } from "../../../tools/functions/useClickOutside";
+import { updateState } from "../../../actions/project.action";
+import { useClickOutside } from "../../tools/functions/useClickOutside";
+import { RoundedButton, Button } from "../../tools/components/Button";
+import { FaPen } from 'react-icons/fa'
+import { BasicInput } from "../../tools/components/Inputs";
 
-const State = ({ props, id }) => {
+const State = ({ project, id }) => {
     const projectData = useSelector((state) => state.projectReducer)
-    const [state, setState] = useState(props)
+    const [state, setState] = useState(project.state)
     const [updateStateForm, setUpdateStateForm] = useState(false)
     const [value, setValue] = useState(false)
     const dispatch = useDispatch()
@@ -30,33 +33,32 @@ const State = ({ props, id }) => {
     useClickOutside(wrapperRef, setDisplaySelection, false)
 
     return (
-        <div className="user-info">
+        <div className="flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-slate-100">
             {!updateStateForm ? (
                 <>
-                    {modified ? (<p>{projectData.state}</p>) : (<p>{props}</p>)}
-                    <div className="btn-container">
-                        <button className="btn btn-primary" onClick={() => setUpdateStateForm(!updateStateForm)}>Modifier</button>
-                    </div>
+                    {modified ? (<p>{projectData.state}</p>) : (<p>{project.state}</p>)}
+                    <RoundedButton icon={<FaPen className="w-3 h-3" />} color="background_primary" hoverColor="background_primary_x_light" onClick={() => setUpdateStateForm(!updateStateForm)}>Modifier</RoundedButton>
+
                 </>
             ) : (
                 <>
                     <div ref={wrapperRef}>
-                        <input readOnly type="text" name="state" id="state" onClick={() => setDisplaySelection(!displaySelection)} onInput={(e) => setState(e.target.value)} value={state} placeholder={props} />
+                        <BasicInput readOnly type="text" value={state} onClick={() => setDisplaySelection(!displaySelection)} onInput={(e) => setState(e.target.value)} />
                         {displaySelection && (
                             <div className="state-selection">
-                                {projectData.state === "En préparation" && (
+                                {state === "En préparation" && (
                                     <>
                                         <option value="En cours" onClick={openState}>En cours</option>
                                         <option value="Terminé" onClick={openState}>Terminé</option>
                                     </>
                                 )}
-                                {projectData.state === "En cours" && (
+                                {state === "En cours" && (
                                     <>
                                         <option value="En préparation" onClick={openState}>En préparation</option>
                                         <option value="Terminé" onClick={openState}>Terminé</option>
                                     </>
                                 )}
-                                {projectData.state === "Terminé" && (
+                                {state === "Terminé" && (
                                     <>
                                         <option value="En préparation" onClick={openState}>En préparation</option>
                                         <option value="En cours" onClick={openState}>En cours</option>
@@ -65,9 +67,9 @@ const State = ({ props, id }) => {
                             </div>
                         )}
                     </div>
-                    <div className="btn-container">
-                        <button className="btn btn-primary" onClick={hideStateUpdater}>Annuler</button>
-                        <button className="btn btn-primary" disabled={!value} onClick={handleState}>Enregistrer</button>
+                    <div className="flex">
+                        <Button text="Annuler" onClick={hideStateUpdater}>Annuler</Button>
+                        <Button text="Valider" disabled={!value} onClick={handleState}>Enregistrer</Button>
                     </div>
                 </>
             )}

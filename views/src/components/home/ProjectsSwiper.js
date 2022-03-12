@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import 'reactjs-popup/dist/index.css'
 import ProjectModal from './ProjectModal';
 import ProfilCard from '../tools/components/ProfilCard';
 import { avatar, projectPicture } from '../tools/functions/useAvatar';

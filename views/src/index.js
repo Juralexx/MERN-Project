@@ -13,6 +13,7 @@ import './styles/dist/modal.css'
 import './styles/dist/map.css'
 import './styles/dist/toggle.css'
 import './styles/dist/editor.css'
+import './styles/dist/body.css'
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"

@@ -46,6 +46,7 @@ const Header = () => {
                                     icon={<BiCategoryAlt className="h-[18px] w-[18px] text-gray-500" />}
                                     endIcon={<BsCaretDownFill className="h-[14px] w-[14px] mt-1 text-gray-500" />}
                                     onClick={() => setOpenCategoriesPicker(!openCategoriesPicker)}
+                                    onChange={() => setCategory(category)}
                                     value={category}
                                 />
                                 <Categories open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />

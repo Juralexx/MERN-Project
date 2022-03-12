@@ -3,7 +3,6 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { UidContext } from '../../AppContext';
-import 'reactjs-popup/dist/index.css'
 import HoverModal from "./HoverModal";
 import { cancelSentFriendRequest, sendFriendRequest } from "../../../actions/user.action";
 import { IoHeart } from 'react-icons/io5'

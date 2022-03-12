@@ -149,6 +149,16 @@ const UserModel = new mongoose.Schema(
             type: []
         },
 
+        notifications: {
+            type: [],
+            notification: {
+                type: String,
+                id: String,
+                who: String,
+                date: Date
+            }
+        },
+
         current_projects: { type: [String] },
 
         number_of_current_projects: {

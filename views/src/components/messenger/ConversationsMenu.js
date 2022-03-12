@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import { FaSearch } from 'react-icons/fa'
+import { IconButton } from '../tools/components/Button';
 
 const ConversationsMenu = ({ friends, uid, user, setCurrentChat, conversations, changeCurrentChat, getNewMessage, notification, setConversations, websocket }) => {
     const [isConversationInResult, setConversationsInResult] = useState([])
@@ -29,7 +30,7 @@ const ConversationsMenu = ({ friends, uid, user, setCurrentChat, conversations, 
         <div className="conversation-menu">
             <div className="conversation-menu-wrapper">
                 <div style={{ display: "flex" }}>
-                    <div className="btn btn-primary" onClick={() => setOpenConversationsInput(!openConversationsInput)} style={{ width: "100%", margin: "0 5px 10px 0" }}><FaSearch /></div>
+                    <IconButton  text="Rechercher" endIcon={<FaSearch />} fullwidth onClick={() => setOpenConversationsInput(!openConversationsInput)} style={{ width: "100%", margin: "0 5px 10px 0" }}></IconButton>
                     <NewConversationModal
                         friends={friends}
                         currentId={uid}

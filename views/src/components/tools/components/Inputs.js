@@ -23,7 +23,7 @@ export const Input = (props) => {
                 onKeyPress={onKeyPress}
             />
             <label
-                for="search"
+                htmlFor="search"
                 className="absolute px-4 text-[16px] text-gray-500 dark:text-slate-400 duration-300 transform -translate-y-[16px] scale-75 top-[15px] -z-10 origin-[0]
                 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
                 peer-focus:scale-75 peer-focus:-translate-y-[16px]"
@@ -59,7 +59,7 @@ export const IconInput = (props) => {
                 </div>
             }
             <label
-                for="search"
+                htmlFor="search"
                 className="absolute pl-12 pr-3 text-[16px] text-gray-500 dark:text-slate-400 duration-300 transform -translate-y-[18px] scale-75 top-[15px] -z-10 origin-[0]
                 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
                 peer-focus:scale-75 peer-focus:-translate-y-[18px]"
@@ -95,7 +95,7 @@ export const EndIconInput = (props) => {
                 disabled={disabled}
             />
             <label
-                for="search"
+                htmlFor="search"
                 className="absolute px-4 text-[16px] text-gray-500 dark:text-slate-400 duration-300 transform -translate-y-[18px] scale-75 top-[15px] -z-10 origin-[0]
                 peer-focus:left-0 peer-focus:text-primary peer-focus:dark:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
                 peer-focus:scale-75 peer-focus:-translate-y-[18px]"
@@ -129,7 +129,7 @@ export const BasicInput = (props) => {
             onKeyPress={onKeyPress}
             min={min}
             max={max}
-            className={`bg-background_light dark:border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  
+            className={`bg-background_light dark:border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  
             dark:bg-background_primary_light dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
             ${fullwidth ? "w-full" : "w-[300px]"}
             ${className ? className : null}`}

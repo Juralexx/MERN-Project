@@ -4,12 +4,11 @@ import { dateParser } from '../components/Utils';
 import AddBloc from '../components/project/AddBloc';
 import { NavLink } from 'react-router-dom';
 import { UidContext, UserContext } from '../components/AppContext';
-import 'reactjs-popup/dist/index.css'
 import { IoIosHeart } from "react-icons/io"
 import Loader from '../components/tools/components/Loader';
 import { avatar, projectPicture } from '../components/tools/functions/useAvatar';
 import { parseDescriptionToInnerHTML } from '../components/tools/functions/parseDescription';
-import SortComponent from '../components/project/my-projects/SortComponent';
+import SortComponent from '../components/project/projects/SortComponent';
 
 const MyProjects = () => {
   const uid = useContext(UidContext)

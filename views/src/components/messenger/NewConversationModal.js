@@ -4,6 +4,7 @@ import { ImCross } from 'react-icons/im'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { useSelector } from 'react-redux';
 import { avatar } from '../tools/functions/useAvatar';
+import { IconButton } from '../tools/components/Button';
 
 const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket }) => {
     const userData = useSelector((state) => state.userReducer)
@@ -119,8 +120,8 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
 
     return (
         <>
-            <button className="btn btn-primary" onClick={modalOpen} style={{ width: "100%", margin: "0 0 10px 5px" }}><AiOutlinePlusCircle /></button>
-            <div className={containerClass + " add-conversation-modal"}>
+            <IconButton text="Nouvelle conversation" endIcon={<AiOutlinePlusCircle />} fullwidth className="mb-[10px] ml-[5px]" onClick={modalOpen}></IconButton>
+            <div className={containerClass + " add-conversation-modal bg-white dark:bg-background_primary shadow-custom dark:shadow-lg" }>
                 <div className="modal-inner">
                     <div className="close-modal" onClick={() => { modalClose(); setArray([]) }}><ImCross /></div>
                     <div className='header'>

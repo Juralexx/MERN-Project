@@ -31,7 +31,7 @@
         height        : auto;
         padding       : 20px;
         background    : var(--color-content);
-        border-radius : $radius;
+        border-radius : var(--radius);
 
         .fas, .fa, .fab {
             color        : var(--color-text);
@@ -52,7 +52,7 @@
         height        : auto;
         padding       : 20px;
         background    : var(--color-content);
-        border-radius : $radius;
+        border-radius : var(--radius);
 
         p{
             padding    : 15px;
@@ -79,7 +79,7 @@
     margin        : 20px 0;
     background    : var(--color-content);
     padding       : 20px 0;
-    border-radius : $radius;
+    border-radius : var(--radius);
     box-shadow    : $box-card;
 
     .left {
@@ -124,7 +124,7 @@
 
                 svg {
                     margin-right : 10px;
-                    color        : var(--color-svg-light);
+                    color        : var(var(--color-svg));
                 }
             }
             
@@ -144,7 +144,7 @@
 
             .add-btn {
                 background : transparent;
-                color      : $primary-color;
+                color      : var(--color-primary);
                 border     : none;
                 outline    : none;
                 padding    : 0;
@@ -155,7 +155,7 @@
 
                 svg {
                     path {
-                        fill : $primary-color;
+                        fill : var(--color-primary);
                     }
                 }
             }
@@ -167,12 +167,12 @@
                 padding        : 10px;
                 margin         : 10px 0;
                 background     : var(--color-content-light);;
-                border-radius  : $radius;
+                border-radius  : var(--radius);
 
                 input {
                     border        : 1px solid transparent;
                     padding       : 10px;
-                    border-radius : $radius;
+                    border-radius : var(--radius);
                     color         : var(--color-text);
 
                     &:hover {
@@ -226,7 +226,7 @@
                             }
 
                             &:checked {
-                                background : $primary-color;
+                                background : var(--color-primary);
 
                                 &:before {
                                     height      : 17px;
@@ -249,18 +249,18 @@
             flex-direction : column;
             width          : 100%;
             padding        : 10px;
-            border-radius  : $radius;
+            border-radius  : var(--radius);
 
             p {
                 padding       : 20px 10px;
                 background    : var(--color-content-light);
-                border-radius : $radius;
+                border-radius : var(--radius);
             }
 
             textarea {
                 border        : 1px solid transparent;
                 padding       : 10px;
-                border-radius : $radius;
+                border-radius : var(--radius);
                 color         : var(--color-text);
 
                 &:hover {
@@ -314,7 +314,7 @@
 
             svg {
                 margin-right : 10px;
-                color        : var(--color-svg-light);
+                color        : var(var(--color-svg));
             }
         }
         
@@ -334,7 +334,7 @@
 
         .add-btn {
             background : transparent;
-            color      : $primary-color;
+            color      : var(--color-primary);
             border     : none;
             outline    : none;
             padding    : 0;
@@ -345,7 +345,7 @@
 
             svg {
                 path {
-                    fill : $primary-color;
+                    fill : var(--color-primary);
                 }
             }
         }
@@ -357,12 +357,12 @@
             padding        : 10px;
             margin         : 10px 0;
             background     : var(--color-content-light);;
-            border-radius  : $radius;
+            border-radius  : var(--radius);
 
             input {
                 border        : 1px solid transparent;
                 padding       : 10px;
-                border-radius : $radius;
+                border-radius : var(--radius);
                 color         : var(--color-text);
 
                 &:hover {
@@ -416,7 +416,7 @@
                         }
 
                         &:checked {
-                            background : $primary-color;
+                            background : var(--color-primary);
 
                             &:before {
                                 height      : 17px;

@@ -214,7 +214,9 @@ module.exports = {
       8: '8px',
     },
     boxShadow: {
-      custom: "0 8px 16px rgba(12,65,154,.1)",
+      custom: "0 8px 16px rgba(12, 65, 154, .1)",
+      left: "16px 0 16px -5px rgba(12, 65, 154, .1)",
+      left_dark: "16px 0 16px -5px rgb(0 0 0 / 0.1)",
       sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
       DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
       md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',

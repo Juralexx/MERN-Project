@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
-import 'reactjs-popup/dist/index.css'
 import { likeProject, unlikeProject } from '../../../actions/project.action';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
 import { IconToggle } from "./Button";
@@ -48,19 +47,19 @@ const LikersButton = ({ project, onClick }) => {
         <>
             {uid === null && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} color="yellow-400" />
+                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} hoverColor="bg-title/50" />
                     <p>{action}</p>
                 </div>
             )}
             {uid && !liked && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} color="yellow-400" onClick={like} />
+                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} hoverColor="bg-title/50" onClick={like} />
                     <p onClick={onClick}>{action}</p>
                 </div>
             )}
             {uid && liked && (
                 <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeart className="w-6 h-6 fill-title" />} color="yellow-400" onClick={unlike} />
+                    <IconToggle icon={<IoHeart className="w-6 h-6 fill-title" />} color="title" onClick={unlike} />
                     <p onClick={onClick}>{action}</p>
                 </div>
             )}

@@ -42,7 +42,7 @@
                 background : var(--color-content-light);;
                 
                 path {
-                    fill : $primary-color;
+                    fill : var(--color-primary);
                 }
             }
         }
@@ -100,11 +100,11 @@
 
                 &:hover {
                     background  : var(--color-content-light);;
-                    border-left : 3px solid $primary-color;
+                    border-left : 3px solid var(--color-primary);
 
                     svg {
                         path {
-                            fill : $primary-color;
+                            fill : var(--color-primary);
                         }
                     }
                 }
@@ -121,7 +121,7 @@
                         height  : 0;
                 
                         &:checked + .slider {
-                            background-color : $primary-color;
+                            background-color : var(--color-primary);
                 
                             &:before {
                                 transform : translateX(32px);

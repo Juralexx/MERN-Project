@@ -28,17 +28,17 @@ const FavoriteButton = ({ project }) => {
         <>
             {!uid && (
                 <div className="absolute top-[120px] right-2">
-                    <IconToggle icon={<AiOutlineStar className="w-6 h-6" />} color="yellow-400" />
+                    <IconToggle icon={<AiOutlineStar className="w-6 h-6 fill-yellow-400" />} />
                 </div>
             )}
             {uid && !favorite && (
                 <div className="absolute top-[120px] right-2">
-                    <IconToggle icon={<AiOutlineStar className="w-6 h-6" />} color="yellow-400" onClick={addFavorite} />
+                    <IconToggle icon={<AiOutlineStar className="w-6 h-6 fill-yellow-400" />} onClick={addFavorite} />
                 </div>
             )}
             {uid && favorite && (
                 <div className="absolute top-[120px] right-2">
-                    <IconToggle icon={<AiFillStar className="w-6 h-6" />} color="yellow-400" onClick={pullFavorite} />
+                    <IconToggle icon={<AiFillStar className="w-6 h-6 fill-yellow-400" />} onClick={pullFavorite} />
                 </div>
             )}
         </>

@@ -4,7 +4,6 @@ import { dateParser } from '../components/Utils';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { UidContext } from '../components/AppContext';
-import 'reactjs-popup/dist/index.css'
 import Loader from '../components/tools/components/Loader';
 import LikersModal from '../components/tools/components/LikersModal';
 import FollowersModal from '../components/tools/components/FollowersModal';

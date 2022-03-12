@@ -3,7 +3,6 @@ import axios from "axios";
 import { dateParser } from '../components/Utils';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { NavLink } from 'react-router-dom';
-import 'reactjs-popup/dist/index.css'
 import Loader from '../components/tools/components/Loader';
 import LikersModal from '../components/tools/components/LikersModal';
 import FollowersModal from '../components/tools/components/FollowersModal';

@@ -5,13 +5,13 @@
     padding        : 10px;
     margin         : 10px 0;
     background     : var(--color-content-light);;
-    border-radius  : $radius;
+    border-radius  : var(--radius);
 
     input {
         width         : 100%;
         border        : 1px solid transparent;
         padding       : 10px;
-        border-radius : $radius;
+        border-radius : var(--radius);
         color         : white;
         background    : var(--color-input);;
     }
@@ -31,7 +31,7 @@
 
             &:hover {
                 background  : var(--color-content-light);;
-                border-left : 3px solid $primary-color;
+                border-left : 3px solid var(--color-primary);
             }
         }
     }

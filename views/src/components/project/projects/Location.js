@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { ThreeDots } from 'react-loading-icons'
-import { updateLocation } from "../../../../actions/project.action";
-import { useClickOutside } from "../../../tools/functions/useClickOutside";
+import { updateLocation } from "../../../actions/project.action";
+import { useClickOutside } from "../../tools/functions/useClickOutside";
+import { Button, RoundedButton } from "../../tools/components/Button";
+import { FaPen } from 'react-icons/fa'
+import { BasicInput } from "../../tools/components/Inputs";
 
-const Location = ({ props, id }) => {
+const Location = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)
     const [location, setLocation] = useState("");
     const [department, setDepartment] = useState("");
@@ -26,7 +29,7 @@ const Location = ({ props, id }) => {
     const hideLocationUpdater = () => { setUpdateLocationForm(false) }
 
     const handleLocation = () => {
-        dispatch(updateLocation(id, location, department, region, newRegion))
+        dispatch(updateLocation(project._id, location, department, region, newRegion))
         setUpdateLocationForm(false)
         setModified(true)
     }
@@ -72,27 +75,31 @@ const Location = ({ props, id }) => {
         }
     }
 
-    useClickOutside(wrapperRef, setDisplay, false)
+    useClickOutside(wrapperRef, setDisplay, false, setLoading, false)
 
     return (
-        <div className="user-info">
+        <div className="relative flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-slate-300" ref={wrapperRef}>
             {!updateLocationForm ? (
                 <>
-                    {modified ? (<p>{projectData.location}, {projectData.department}, {projectData.region}</p>) : (<p>{props}</p>)}
-                    <div className="btn-container">
-                        <button className="btn btn-primary" onClick={() => setUpdateLocationForm(!updateLocationForm)}>Modifier</button>
-                    </div>
+                    {modified ? (
+                        <p>{projectData.location}, {projectData.department}, {projectData.region}</p>
+                    ) : (
+                        <p>{project.location + " - " + project.department + " - " + project.region}</p>
+                    )}
+                    <RoundedButton icon={<FaPen className="w-3 h-3" />} color="background_primary" hoverColor="background_primary_x_light" onClick={() => setUpdateLocationForm(!updateLocationForm)}>Modifier</RoundedButton>
                 </>
             ) : (
                 <>
                     <div>
-                        <input placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
+                        <BasicInput placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                         {!isEmpty && display && isResponse && (
-                            <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
+                            <ul tabIndex="0" className="absolute max-h-[300px] overflow-auto w-full bg-white dark:bg-background_primary_light shadow-custom dark:shadow-lg" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
                                 {locationsFound.map((element, key) => {
                                     const adress = `${element.COM_NOM}, ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`;
                                     return (
-                                        <li onClick={(e) => {
+                                        <li 
+                                        className="flex items-center px-4 py-2 text-gray-500 dark:text-slate-300 border-l-2 border-l-transparent hover:border-l-primary hover:bg-slate-100 dark:hover:bg-background_primary_x_light cursor-pointer"
+                                        onClick={(e) => {
                                             setSelect(adress)
                                             setLocation(element.COM_NOM)
                                             setDepartment(element.DEP_NOM_NUM)
@@ -114,9 +121,9 @@ const Location = ({ props, id }) => {
                             </div>
                         )}
                     </div>
-                    <div className="btn-container">
-                        <button className="btn btn-primary" onClick={hideLocationUpdater}>Annuler</button>
-                        <button className="btn btn-primary" disabled={!value} onClick={handleLocation}>Enregistrer</button>
+                    <div className="flex">
+                        <Button text="Annuler" onClick={hideLocationUpdater}>Annuler</Button>
+                        <Button text="Valider" disabled={!value} onClick={handleLocation}>Enregistrer</Button>
                     </div>
                 </>
             )}

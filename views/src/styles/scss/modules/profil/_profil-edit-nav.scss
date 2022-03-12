@@ -39,23 +39,23 @@
 
                 &:hover {
                     background    : var(--color-content-light);;
-                    border-left : 3px solid $primary-color;
-                    color         : $primary-color;
+                    border-left : 3px solid var(--color-primary);
+                    color         : var(--color-primary);
                     .svg-icon {
 
                         path {
-                            fill : $primary-color;
+                            fill : var(--color-primary);
                         }
                     }
                 }
 
                 &.activeLink {
                     background    : var(--color-content-light);;
-                    border-left : 3px solid $primary-color;
+                    border-left : 3px solid var(--color-primary);
                     .svg-icon {
         
                         path {
-                            fill : $primary-color;
+                            fill : var(--color-primary);
                         }
                     }
                 }

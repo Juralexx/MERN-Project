@@ -1,6 +1,6 @@
-import ProjectModel from '../models/project.model.js'
-import UserModel from '../models/user.model.js'
-import { projectErrors } from '../utils/error.utils.js'
+import ProjectModel from '../../models/project.model.js'
+import UserModel from '../../models/user.model.js'
+import { projectErrors } from '../../utils/error.utils.js'
 import mongoose from 'mongoose'
 const projectId = mongoose.Types.ObjectId()
 import fs from 'fs'
@@ -14,14 +14,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const createProject = async (req, res) => {
     const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
-        region, new_region, end, content, numberofcontributors, works } = req.body
+        region, new_region, end, content, numberofcontributors, works, members } = req.body
     const _id = projectId
     const state = "En préparation"
 
     try {
         const project = ProjectModel.create({
             _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
-            region, new_region, end, content, numberofcontributors, works, state
+            region, new_region, end, content, numberofcontributors, works, state, members
         })
 
         await UserModel.findByIdAndUpdate(
