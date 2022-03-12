@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateState } from "../../../actions/project.action";
-import { useClickOutside } from "../../tools/functions/useClickOutside";
-import { RoundedButton, Button } from "../../tools/components/Button";
+import { updateState } from "../../../../actions/project.action";
+import { useClickOutside } from "../../../tools/functions/useClickOutside";
+import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../tools/components/Inputs";
+import { BasicInput } from "../../../tools/components/Inputs";
 
 const State = ({ project, id }) => {
     const projectData = useSelector((state) => state.projectReducer)

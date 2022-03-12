@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThreeDots } from 'react-loading-icons'
 import { ImCross } from 'react-icons/im'
 import { HiPencilAlt } from 'react-icons/hi'
-import { updateWorks } from "../../../actions/project.action";
-import { RoundedButton, Button } from "../../tools/components/Button";
+import { updateWorks } from "../../../../actions/project.action";
+import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../tools/components/Inputs";
+import { BasicInput } from "../../../tools/components/Inputs";
 
 const Work = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)

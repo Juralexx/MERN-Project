@@ -640,6 +640,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   bottom: 20px;
 }
 
+.top-3 {
+  top: 0.75rem;
+}
+
+.bottom-\[0px\] {
+  bottom: 0px;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -662,6 +670,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .-z-10 {
   z-index: -10;
+}
+
+.z-\[1000\] {
+  z-index: 1000;
 }
 
 .col-span-3 {
@@ -818,6 +830,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mt-5 {
   margin-top: 1.25rem;
+}
+
+.ml-5 {
+  margin-left: 1.25rem;
 }
 
 .block {
@@ -1568,6 +1584,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(225 26 129 / 0.5);
 }
 
+.bg-background_primary_light {
+  --tw-bg-opacity: 1;
+  background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+}
+
 .from-background_primary {
   --tw-gradient-from: rgb(17 24 39);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(17 24 39 / 0));
@@ -1798,6 +1819,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
 }
 
 .text-center {

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateEnd } from "../../../actions/project.action";
-import { dateParser } from "../../Utils";
-import { RoundedButton, Button } from "../../tools/components/Button";
+import { updateEnd } from "../../../../actions/project.action";
+import { dateParser } from "../../../Utils";
+import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../tools/components/Inputs";
+import { BasicInput } from "../../../tools/components/Inputs";
 
 const End = ({project}) => {
     const projectData = useSelector((state) => state.projectReducer)

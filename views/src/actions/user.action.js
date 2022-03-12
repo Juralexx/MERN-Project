@@ -270,12 +270,12 @@ export const updateLinkedin = (userId, linkedin) => {
     }
 }
 
-export const sendFriendRequest = (friendId, userId) => {
+export const sendFriendRequest = (friendId, userId, notification) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/send-friend-request/` + userId,
-            data: { friendId }
+            data: { friendId, notification }
         })
             .then((res) => {
                 dispatch({ type: SEND_FRIEND_REQUEST, payload: { friendId, userId } })
@@ -284,12 +284,12 @@ export const sendFriendRequest = (friendId, userId) => {
     }
 }
 
-export const cancelSentFriendRequest = (friendId, userId) => {
+export const cancelSentFriendRequest = (friendId, userId, type) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/cancel-friend-request/` + userId,
-            data: { friendId }
+            data: { friendId, type }
         })
             .then((res) => {
                 dispatch({ type: CANCEL_SENT_FRIEND_REQUEST, payload: { friendId, userId } })
@@ -298,12 +298,12 @@ export const cancelSentFriendRequest = (friendId, userId) => {
     }
 }
 
-export const acceptFriendRequest = (friendId, userId) => {
+export const acceptFriendRequest = (friendId, userId, type) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/accept-friend-request/` + userId,
-            data: { friendId }
+            data: { friendId, type }
         })
             .then((res) => {
                 dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { friendId, userId } })
@@ -312,12 +312,12 @@ export const acceptFriendRequest = (friendId, userId) => {
     }
 }
 
-export const refuseFriendRequest = (friendId, userId) => {
+export const refuseFriendRequest = (friendId, userId, type) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/refuse-friend-request/` + userId,
-            data: { friendId }
+            data: { friendId, type }
         })
             .then((res) => {
                 dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { friendId, userId } })

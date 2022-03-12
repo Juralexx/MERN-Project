@@ -94,7 +94,15 @@ const ProjectModel = new mongoose.Schema(
         },
 
         member_requests : {
-            type: [String]
+            type: [],
+            request: {
+                id: String,
+                pseudo: String,
+                picture: String,
+                requesterId: String,
+                requester: String,
+                date: Date
+            }
         },
 
         tasks: {

@@ -16,7 +16,7 @@ export const sendFriendRequest = async (req, res) => {
                 $addToSet: {
                     friend_request_sent: {
                         friend: req.body.friendId,
-                        requestedAt: new Date(),
+                        requestedAt: new Date().toISOString(),
                     }
                 },
             },
@@ -28,10 +28,7 @@ export const sendFriendRequest = async (req, res) => {
             { _id: req.body.friendId },
             {
                 $addToSet: {
-                    friend_request: {
-                        friend: req.params.id,
-                        requestedAt: new Date(),
-                    }
+                    notifications: req.body.notification
                 },
             },
             { new: true, upsert: true },
@@ -53,8 +50,9 @@ export const cancelSentFriendRequest = async (req, res) => {
             { _id: req.body.friendId },
             {
                 $pull: {
-                    friend_request: {
-                        friend: req.params.id,
+                    notifications: {
+                        requesterId: req.params.id,
+                        type: req.body.type
                     }
                 },
             },
@@ -95,12 +93,13 @@ export const acceptFriend = async (req, res) => {
                 $addToSet: {
                     friends: {
                         friend: req.body.friendId,
-                        requestedAt: new Date(),
+                        requestedAt: new Date().toISOString(),
                     }
                 },
                 $pull: {
-                    friend_request: {
-                        friend: req.body.friendId,
+                    notifications: {
+                        requesterId: req.body.friendId,
+                        type: req.body.type
                     }
                 },
             },
@@ -114,7 +113,7 @@ export const acceptFriend = async (req, res) => {
                 $addToSet: {
                     friends: {
                         friend: req.params.id,
-                        requestedAt: new Date(),
+                        requestedAt: new Date().toISOString(),
                     }
                 },
                 $pull: {
@@ -142,8 +141,9 @@ export const refuseFriend = async (req, res) => {
             { _id: req.params.id },
             {
                 $pull: {
-                    friend_request: {
-                        friend: req.body.friendId
+                    notifications: {
+                        requesterId: req.body.friendId,
+                        type: req.body.type
                     }
                 },
             },

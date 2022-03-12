@@ -129,14 +129,6 @@ const UserModel = new mongoose.Schema(
             }
         },
 
-        friend_request: {
-            type: [],
-            friend: {
-                type: String,
-                requestedAt: Date,
-            }
-        },
-
         conversations: {
             type: [],
             conversation: {
@@ -154,7 +146,9 @@ const UserModel = new mongoose.Schema(
             notification: {
                 type: String,
                 id: String,
-                who: String,
+                requesterId: String,
+                requester: String,
+                requesterPicture: String,
                 date: Date
             }
         },

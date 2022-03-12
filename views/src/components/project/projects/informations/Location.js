@@ -2,11 +2,11 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { ThreeDots } from 'react-loading-icons'
-import { updateLocation } from "../../../actions/project.action";
-import { useClickOutside } from "../../tools/functions/useClickOutside";
-import { Button, RoundedButton } from "../../tools/components/Button";
+import { updateLocation } from "../../../../actions/project.action";
+import { useClickOutside } from "../../../tools/functions/useClickOutside";
+import { Button, RoundedButton } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../tools/components/Inputs";
+import { BasicInput } from "../../../tools/components/Inputs";
 
 const Location = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)

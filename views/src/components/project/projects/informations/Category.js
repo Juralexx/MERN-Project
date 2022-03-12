@@ -1,17 +1,16 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCategory } from "../../../actions/project.action";
-import { useClickOutside } from "../../tools/functions/useClickOutside";
-import { RoundedButton, Button } from "../../tools/components/Button";
+import { updateCategory } from "../../../../actions/project.action";
+import { useClickOutside } from "../../../tools/functions/useClickOutside";
+import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../tools/components/Inputs";
-import Categories from '../../home/Categories'
+import { BasicInput } from "../../../tools/components/Inputs";
+import Categories from '../../../home/Categories'
 
 const Category = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)
     const [category, setCategory] = useState(project.category)
     const [updateCategoryForm, setUpdateCategoryForm] = useState(false)
-    const [value, setValue] = useState(false)
     const [displaySelection, setDisplaySelection] = useState(false)
     const [modified, setModified] = useState(false)
     const dispatch = useDispatch()
@@ -23,12 +22,6 @@ const Category = ({ project }) => {
         dispatch(updateCategory(project._id, category))
         setUpdateCategoryForm(false)
         setModified(true)
-    }
-
-    const openCategory = (e) => {
-        setValue(true)
-        setCategory(e.target.value)
-        setDisplaySelection(false)
     }
 
     useClickOutside(wrapperRef, setDisplaySelection, false)
@@ -51,7 +44,7 @@ const Category = ({ project }) => {
                     </div>
                     <div className="flex">
                         <Button text="Annuler" onClick={hideCategoryUpdater}>Annuler</Button>
-                        <Button text="Valider" disabled={!value} onClick={handleCategory}>Enregistrer</Button>
+                        <Button text="Valider" disabled={!category} onClick={handleCategory}>Enregistrer</Button>
                     </div>
                 </>
             )}

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { UidContext } from '../../AppContext';
+import { UidContext, UserContext } from '../../AppContext';
 import HoverModal from "./HoverModal";
 import { cancelSentFriendRequest, sendFriendRequest } from "../../../actions/user.action";
 import { IoHeart } from 'react-icons/io5'
@@ -11,9 +11,11 @@ import { OutlinedButton } from "./Button";
 import { avatar } from "../functions/useAvatar";
 
 const LikersModal = ({ project, open, setOpen }) => {
+    const user = useContext(UserContext)
     const uid = useContext(UidContext)
     const userData = useSelector((state) => state.userReducer)
     const [liker, setLiker] = useState([])
+    const [hoveredCard, setHoveredCard] = useState(-1)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -33,9 +35,21 @@ const LikersModal = ({ project, open, setOpen }) => {
         findLikers()
     }, [project.likers])
 
-    const [hoveredCard, setHoveredCard] = useState(-1);
-    const showCardHandler = (key) => { setHoveredCard(key) }
-    const hideCardHandler = () => { setHoveredCard(-1) }
+    const sendRequest = (element) => {
+        const notification = {
+            type: "friend-request",
+            requesterId: user._id,
+            requester: user.pseudo,
+            requesterPicture: user.picture,
+            date: new Date().toISOString(),
+        }
+        dispatch(sendFriendRequest(element._id, uid, notification))
+    }
+
+    const cancelRequest = (element) => {
+        const type = "friend-request"
+        dispatch(cancelSentFriendRequest(element._id, uid, type))
+    }
 
     return (
         <>
@@ -50,14 +64,17 @@ const LikersModal = ({ project, open, setOpen }) => {
                             <>
                                 {liker.map((element, key) => {
                                     return (
-                                        <div className="min-w-[300px]"
-                                            onMouseLeave={hideCardHandler}
-                                            onMouseEnter={() => showCardHandler(key)}
-                                            onClick={() => showCardHandler(key)}
-                                        >
-                                            <div className="py-2 relative flex justify-between w-full">
-                                            <HoverModal user={element} style={{ display: hoveredCard === key ? 'block' : 'none' }} />
-                                                <NavLink to={"/" + element.pseudo} style={{ display: "flex" }}>
+                                        <div className="min-w-[300px]" key={key}>
+                                            <div className="py-2 relative flex justify-between w-full cursor-pointer"
+                                                onMouseLeave={() => setHoveredCard(-1)}
+                                            >
+                                                <HoverModal user={element} style={{ display: hoveredCard === key ? 'block' : 'none' }} />
+                                                <NavLink
+                                                    to={"/" + element.pseudo}
+                                                    className="flex"
+                                                    onMouseEnter={() => setHoveredCard(key)}
+                                                    onClick={() => setHoveredCard(key)}
+                                                >
                                                     <div className="w-9 h-9 rounded-full" style={avatar(element.picture)}></div>
                                                     <p className="flex items-center ml-2">{element.pseudo}</p>
                                                 </NavLink>
@@ -66,13 +83,13 @@ const LikersModal = ({ project, open, setOpen }) => {
                                                     && !userData.friends.some((object) => object.friend === element._id)
                                                     && element._id !== uid
                                                     && (
-                                                        <OutlinedButton className="text-xs" text="Ajouter en ami" onClick={() => { dispatch(sendFriendRequest(element._id, uid)) }}></OutlinedButton>
+                                                        <OutlinedButton className="text-xs" text="Ajouter en ami" onClick={() => sendRequest(element)}></OutlinedButton>
                                                     )}
                                                 {userData.friend_request_sent
                                                     && userData.friend_request_sent.some((object) => object.friend === element._id)
                                                     && element._id !== uid
                                                     && (
-                                                        <OutlinedButton className="text-xs" text="Annuler ma demande" onClick={() => { dispatch(cancelSentFriendRequest(element._id, uid)) }}></OutlinedButton>
+                                                        <OutlinedButton className="text-xs" text="Annuler ma demande" onClick={() => cancelRequest(element)}></OutlinedButton>
                                                     )}
                                                 {!userData.friend_request_sent
                                                     && element._id !== uid

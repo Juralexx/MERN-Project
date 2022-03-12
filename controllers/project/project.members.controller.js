@@ -1,6 +1,5 @@
 import ProjectModel from '../../models/project.model.js'
 import UserModel from '../../models/user.model.js'
-import mongoose from 'mongoose'
 
 export const addMemberToProject = async (req, res) => {
     try {
@@ -61,22 +60,17 @@ export const sendMemberRequest = async (req, res) => {
             { _id: req.params.id },
             {
                 $addToSet: {
-                    member_requests: req.body.memberId
+                    member_requests: req.body.request
                 }
             },
             { news: true },
         )
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.memberId },
+            { _id: req.body.request.id },
             {
                 $addToSet: {
-                    notifications: {
-                        id: req.params.id,
-                        type: req.body.type,
-                        who: req.body.who,
-                        date: new Date().toISOString()
-                    }
+                    notifications: req.body.notification
                 }
             },
             { news: true },
@@ -95,14 +89,16 @@ export const cancelMemberRequest = async (req, res) => {
             { _id: req.params.id },
             {
                 $pull: {
-                    member_requests: req.body.userId
+                    member_requests: {
+                        id: req.body.userId
+                    }
                 },
             },
             { new: true, upsert: true },
         )
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.params.id },
+            { _id: req.body.userId },
             {
                 $pull: {
                     notifications: {
@@ -133,7 +129,9 @@ export const acceptMemberRequest = async (req, res) => {
                     members: req.body.member
                 },
                 $pull: {
-                    member_requests: req.body.userId
+                    member_requests: {
+                        id: req.body.userId
+                    }
                 },
             },
             { new: true, upsert: true },
@@ -168,7 +166,9 @@ export const refuseMemberRequest = async (req, res) => {
             { _id: req.params.id },
             {
                 $pull: {
-                    member_requests: req.body.userId
+                    member_requests: {
+                        id: req.body.userId
+                    }
                 },
             },
             { new: true, upsert: true },

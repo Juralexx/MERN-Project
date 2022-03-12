@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateTitle, updateTitleURL } from "../../../actions/project.action";
-import { RoundedButton, Button } from "../../tools/components/Button";
-import { removeAccents } from "../../Utils";
+import { updateTitle, updateTitleURL } from "../../../../actions/project.action";
+import { RoundedButton, Button } from "../../../tools/components/Button";
+import { removeAccents } from "../../../Utils";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../tools/components/Inputs";
+import { BasicInput } from "../../../tools/components/Inputs";
 
 const Title = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)

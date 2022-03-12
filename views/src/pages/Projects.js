@@ -4,15 +4,15 @@ import { getProject } from '../actions/project.action';
 import { UserContext } from '../components/AppContext'
 import Sidebar from '../components/project/projects/Sidebar'
 import Header from '../components/project/projects/Header'
-import Title from '../components/project/projects/Title'
-import Location from '../components/project/projects/Location'
-import Category from '../components/project/projects/Category'
-import End from '../components/project/projects/End'
-import State from '../components/project/projects/State'
+import Title from '../components/project/projects/informations/Title'
+import Location from '../components/project/projects/informations/Location'
+import Category from '../components/project/projects/informations/Category'
+import End from '../components/project/projects/informations/End'
+import State from '../components/project/projects/informations/State'
 import { useDispatch } from 'react-redux';
-import Work from '../components/project/projects/Work';
-import Content from '../components/project/projects/Content';
-import Members from '../components/project/projects/Members';
+import Work from '../components/project/projects/informations/Work';
+import Content from '../components/project/projects/informations/Content';
+import Members from '../components/project/projects/members/Members';
 
 const Projects = () => {
     const user = useContext(UserContext)

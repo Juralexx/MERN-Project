@@ -12,7 +12,6 @@ import End from "./End";
 import Description from "./Description";
 import Contributors from "./Contributors";
 import Pictures from "./Pictures";
-import { Button } from "../../tools/components/Button";
 import { Stepper } from '@zendeskgarden/react-accordions'
 
 const AddProjectForm = () => {
@@ -29,7 +28,7 @@ const AddProjectForm = () => {
     const [content, setContent] = useState({})
     const members = useState({ id: userData._id, pseudo: userData.pseudo, picture: userData.picture, role: "admin", since: new Date().toISOString()})
     const [files, setFiles] = useState([])
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const [step, setStep] = useState(0);
     const onNext = () => setStep(step + 1);
@@ -81,7 +80,8 @@ const AddProjectForm = () => {
                     end: end,
                     content: content,
                     numberofcontributors: numberofcontributors,
-                    works: workArray
+                    works: workArray,
+                    members: members
                 },
             })
                 .then(async (res) => {
