@@ -5,6 +5,7 @@ import { useClickOutside } from '../../../tools/functions/useClickOutside'
 import AddMember from './AddMember'
 import MembersRequests from './MembersRequests'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
+import SmallMenu from '../../../tools/components/SmallMenu'
 
 const Members = ({ project, admins, user }) => {
     const [addMembers, setAddMembers] = useState(false)
@@ -35,10 +36,10 @@ const Members = ({ project, admins, user }) => {
                         <div ref={membersMenu}>
                             <BiDotsVerticalRounded className="h-5 w-5 cursor-pointer" onClick={() => setOpenMenu(!openMenu)} />
                             {openMenu && (
-                                <div className="absolute right-10 top-3 min-w-[200px] p-3 z-[1000] bg-background_light dark:bg-background_primary shadow-lg rounded-lg">
+                                <SmallMenu>
                                     <div className="py-2 cursor-pointer" onClick={() => setAddMembers(true)}>Ajouter des membres</div>
                                     {project.member_requests.length > 0 && <div className="py-2 cursor-pointer" onClick={() => setShowRequests(true)}>Voir les demandes en cours</div>}
-                                </div>
+                                </SmallMenu>
                             )}
                         </div>
                     }
@@ -58,7 +59,7 @@ const Members = ({ project, admins, user }) => {
                                     <>
                                         <BiDotsVerticalRounded className="h-5 w-5 cursor-pointer" onClick={() => setOpenMemberMenu(key)} />
                                         {openMemberMenu === key && (
-                                            <div className="absolute right-10 min-w-[200px] top-6 p-3 bg-background_light dark:bg-background_primary shadow-lg rounded-lg">
+                                            <SmallMenu top="top-6">
                                                 <div className="py-2 cursor-pointer">Voir le profil</div>
                                                 {isAdmin &&
                                                     <>
@@ -73,7 +74,7 @@ const Members = ({ project, admins, user }) => {
                                                         )}
                                                     </>
                                                 }
-                                            </div>
+                                            </SmallMenu>
                                         )}
                                     </>
                                 )}
