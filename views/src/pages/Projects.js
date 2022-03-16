@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import Work from '../components/project/projects/informations/Work';
 import Content from '../components/project/projects/informations/Content';
 import Members from '../components/project/projects/members/Members';
+import Tasks from '../components/project/projects/tasks/Tasks';
 
 const Projects = () => {
     const user = useContext(UserContext)
@@ -68,8 +69,11 @@ const Projects = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
+                                <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
                                     <Members project={project} admins={admins} user={user} />
+                                </div>
+                                <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
+                                    <Tasks project={project} admins={admins} user={user} />
                                 </div>
                             </div>
                         </div>

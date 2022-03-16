@@ -78,7 +78,7 @@ const Location = ({ project }) => {
     useClickOutside(wrapperRef, setDisplay, false, setLoading, false)
 
     return (
-        <div className="relative flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-slate-300" ref={wrapperRef}>
+        <div className="relative flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-b-slate-300/30" ref={wrapperRef}>
             {!updateLocationForm ? (
                 <>
                     {modified ? (

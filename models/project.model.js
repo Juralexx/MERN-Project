@@ -108,7 +108,7 @@ const ProjectModel = new mongoose.Schema(
         tasks: {
             type: [],
             task: {
-                _id: mongoose.Types.ObjectId,
+                _id: String,
                 title: String,
                 description: String,
                 state: String,

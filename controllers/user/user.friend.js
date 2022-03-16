@@ -28,8 +28,9 @@ export const sendFriendRequest = async (req, res) => {
             { _id: req.body.friendId },
             {
                 $addToSet: {
-                    notifications: req.body.notification
+                    notifications: Object.assign(req.body.notification,{ _id: new ObjectID})
                 },
+                $inc: { unseen_notifications: 1 }
             },
             { new: true, upsert: true },
         )
@@ -55,6 +56,7 @@ export const cancelSentFriendRequest = async (req, res) => {
                         type: req.body.type
                     }
                 },
+                $inc: { unseen_notifications: -1 }
             },
             { new: true, upsert: true },
         )

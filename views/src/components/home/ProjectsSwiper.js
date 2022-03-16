@@ -17,7 +17,7 @@ import { BsFillPeopleFill } from 'react-icons/bs'
 import FollowersButton from '../tools/components/FollowersButton';
 import LikersButton from '../tools/components/LikersButton';
 
-const ProjectsSwiper = ({ projects, isLoading }) => {
+const ProjectsSwiper = ({ projects, isLoading, websocket }) => {
     const [openProfilCard, setOpenProfilCard] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
@@ -33,7 +33,7 @@ const ProjectsSwiper = ({ projects, isLoading }) => {
             {openModal && <ProjectModal project={project} open={openModal} setOpen={setOpenModal} />}
             {openProfilCard && <ProfilCard isUser={user} open={openProfilCard} setOpen={setOpenProfilCard} />}
             {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} />}
-            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} />}
+            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} />}
             <Swiper
                 slidesPerView="auto"
                 navigation={true}

@@ -149,8 +149,15 @@ const UserModel = new mongoose.Schema(
                 requesterId: String,
                 requester: String,
                 requesterPicture: String,
-                date: Date
+                date: Date,
+                seen: Boolean,
+                accepted: Boolean,
             }
+        },
+
+        unseen_notifications: {
+            type: Number,
+            default: 0,
         },
 
         current_projects: { type: [String] },

@@ -1,5 +1,7 @@
 import ProjectModel from '../../models/project.model.js'
 import UserModel from '../../models/user.model.js'
+import mongoose from 'mongoose'
+const ObjectID = mongoose.Types.ObjectId
 
 export const createTask = async (req, res) => {
     try {
@@ -8,6 +10,7 @@ export const createTask = async (req, res) => {
             {
                 $addToSet: {
                     tasks: {
+                        _id: new ObjectID,
                         title: req.body.title,
                         description: req.body.description,
                         state: req.body.state,
@@ -31,8 +34,6 @@ export const createTask = async (req, res) => {
 }
 
 export const deleteTask = async (req, res) => {
-    const { title, description, end, members } = req.body
-
     try {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
@@ -53,18 +54,18 @@ export const deleteTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
     try {
-        await ProjectModel.findByIdAndUpdate(
+        await ProjectModel.findOneAndUpdate(
             {
                 _id: req.params.id,
-                tasks: { $elemMatch: { task: { _id: req.body._id } } },
+                "tasks._id": req.body.taskId
             },
             {
                 $set: {
-                    "tasks.$.title": req.body.title,
-                    "tasks.$.description": req.body.description,
+                    // "tasks.$.title": req.body.title,
+                    // "tasks.$.description": req.body.description,
                     "tasks.$.state": req.body.state,
-                    "tasks.$.end": req.body.end,
-                    "tasks.$.members": req.body.members
+                    // "tasks.$.end": req.body.end,
+                    // "tasks.$.members": req.body.members
                 }
             },
             { new: true },

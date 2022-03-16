@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { UidContext } from "./AppContext";
+import { UidContext, UserContext } from "./AppContext";
 import MiniNav from "./mini-nav/MiniNav";
 import { AiOutlineHome, AiOutlineUnorderedList } from 'react-icons/ai'
 import { MdOutlineMessage } from 'react-icons/md'
@@ -8,8 +8,9 @@ import { IoPersonCircleSharp } from 'react-icons/io5'
 import { RiLoginCircleLine } from 'react-icons/ri'
 import { FaProjectDiagram } from 'react-icons/fa'
 
-const Navbar = () => {
+const Navbar = ({ websocket }) => {
     const uid = useContext(UidContext)
+    const user = useContext(UserContext)
 
     const classes = {
         container: "absolute top-0 left-1/2 translate-x-[-50%] flex justify-between w-auto my-0 mx-auto h-[60px]",
@@ -64,7 +65,7 @@ const Navbar = () => {
                             </ul>
                         </div>
                         <>
-                            <MiniNav />
+                            <MiniNav user={user} websocket={websocket} />
                         </>
                     </>
                 ) : (

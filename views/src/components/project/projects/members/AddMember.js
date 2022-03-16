@@ -102,7 +102,7 @@ const AddMember = ({ open, setOpen, project, user }) => {
     return (
         <Modal open={open} setOpen={setOpen} css="bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
             <div className="close-modal" onClick={() => { modalClose(); setArray([]) }}><ImCross /></div>
-            <div className="relative min-h-[400px]">
+            <div className="relative">
                 <div className="flex py-3">
                     {array.length > 0 && (
                         array.map((element, key) => {

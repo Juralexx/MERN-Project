@@ -191,6 +191,29 @@ io.on("connect", (socket) => {
         }
     })
 
+    socket.on('friendRequestNotification', ({ type, requesterId, requester, requesterPicture, date, receiverId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('friendRequestNotification', {
+                type,
+                requesterId,
+                requester,
+                requesterPicture,
+                date
+            })
+        }
+    })
+
+    socket.on('cancelFriendRequestNotification', ({ type, requesterId, receiverId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('cancelFriendRequestNotification', {
+                type,
+                requesterId
+            })
+        }
+    })
+
     const removeUser = (socketId) => {
         users = users.filter(user => user.socketId !== socketId)
     }

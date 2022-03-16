@@ -27,7 +27,7 @@ const Category = ({ project }) => {
     useClickOutside(wrapperRef, setDisplaySelection, false)
 
     return (
-        <div className="relative flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-slate-300">
+        <div className="relative flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-b-slate-300/30">
             {!updateCategoryForm ? (
                 <>
                     {modified ? (<p>{projectData.category}</p>) : (<p>{project.category}</p>)}

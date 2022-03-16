@@ -1,4 +1,5 @@
 import React from 'react'
+import { ImCross } from 'react-icons/im'
 
 const Modal = (props) => {
     const { open, setOpen, css } = props
@@ -10,6 +11,7 @@ const Modal = (props) => {
         <>
             <div className={containerClass}>
                 <div className="modal-inner">
+                    <div className="close-modal" onClick={() => { modalClose() }}><ImCross /></div>
                     {props.children}
                 </div>
             </div>

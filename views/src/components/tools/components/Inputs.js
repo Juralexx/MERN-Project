@@ -137,6 +137,32 @@ export const BasicInput = (props) => {
     )
 }
 
+export const Textarea = (props) => {
+    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, fullwidth, name, id, className, placeholder, min, max } = props
+    return (
+        <textarea
+            type={type}
+            name={name}
+            id={id}
+            placeholder={placeholder}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={onChange}
+            onInput={onInput}
+            onClick={onClick}
+            readOnly={readOnly}
+            disabled={disabled}
+            onKeyPress={onKeyPress}
+            min={min}
+            max={max}
+            className={`bg-background_light dark:border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  
+            dark:bg-background_primary_light dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
+            ${fullwidth ? "w-full" : "w-[300px]"}
+            ${className ? className : null}`}
+        ></textarea>
+    )
+}
+
 export const BasicInputEndIcon = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, fullwidth, name, id, className, placeholder, endIcon } = props
     return (

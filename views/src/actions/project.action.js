@@ -19,6 +19,8 @@ export const UNFOLLOW = "UNFOLLOW"
 export const FAVORITE = "FAVORITE"
 export const UNFAVORITE = "UNFAVORITE"
 
+export const REMOVE_MEMBER = "REMOVE_MEMBER"
+
 export const getProject = (projectId) => {
     return async (dispatch) => {
         return axios
@@ -240,6 +242,20 @@ export const unfavoriteProject = (projectId, userId) => {
         })
             .then((res) => {
                 dispatch({ type: UNFAVORITE, payload: { projectId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const removeMember = (projectId, memberId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/remove-user/` + projectId,
+            data: { memberId: memberId }
+        })
+            .then((res) => {
+                dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId } })
             })
             .catch((err) => console.log(err))
     }

@@ -9,14 +9,17 @@ import { IoHeart } from 'react-icons/io5'
 import Modal from "./Modal";
 import { OutlinedButton } from "./Button";
 import { avatar } from "../functions/useAvatar";
+import { io } from 'socket.io-client'
 
-const LikersModal = ({ project, open, setOpen }) => {
+const LikersModal = ({ project, open, setOpen, websocket }) => {
     const user = useContext(UserContext)
     const uid = useContext(UidContext)
     const userData = useSelector((state) => state.userReducer)
     const [liker, setLiker] = useState([])
     const [hoveredCard, setHoveredCard] = useState(-1)
     const dispatch = useDispatch()
+
+    websocket.current = io('ws://localhost:3001')
 
     useEffect(() => {
         const findLikers = () => {
@@ -42,13 +45,27 @@ const LikersModal = ({ project, open, setOpen }) => {
             requester: user.pseudo,
             requesterPicture: user.picture,
             date: new Date().toISOString(),
+            seen: false,
+            accepted: false,
         }
+        websocket.current.emit("friendRequestNotification", {
+            type: "friend-request",
+            requesterId: user._id,
+            requester: user.pseudo,
+            requesterPicture: user.picture,
+            date: new Date().toISOString(),
+            receiverId: element._id
+        })
         dispatch(sendFriendRequest(element._id, uid, notification))
     }
 
     const cancelRequest = (element) => {
-        const type = "friend-request"
-        dispatch(cancelSentFriendRequest(element._id, uid, type))
+        websocket.current.emit("cancelFriendRequestNotification", {
+            type: "friend-request",
+            requesterId: user._id,
+            receiverId: element._id
+        })
+        dispatch(cancelSentFriendRequest(element._id, uid, "friend-request"))
     }
 
     return (

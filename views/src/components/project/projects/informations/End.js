@@ -25,7 +25,7 @@ const End = ({project}) => {
     const handleChange = (e) => { setValue(true) }
 
     return (
-        <div className="flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-slate-100">
+        <div className="flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-b-slate-300/30">
             {!updateEndForm ? (
                 <>
                     {modified ? ( <p>{dateParser(projectData.state)}</p> ) : ( <p>{dateParser(project.end)}</p> )}
