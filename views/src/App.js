@@ -5,18 +5,18 @@ import axios from 'axios';
 import { getUser } from './actions/user.action';
 import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
-import Notification from './components/messenger/Notification';
+import NotificationCard from './components/mini-nav/notifications/NotificationCard';
 
 function App() {
     const [uid, setUid] = useState(null)
     const [user, setUser] = useState(null)
-    const dispatch = useDispatch()
     const [friends, setFriends] = useState([])
     const [onlineUsers, setOnlineUsers] = useState([])
-    const websocket = useRef()
-    websocket.current = io('ws://localhost:3001')
     const [sentNotification, setSentNotification] = useState({})
     const [send, setSend] = useState(false)
+    const dispatch = useDispatch()
+    const websocket = useRef()
+    websocket.current = io('ws://localhost:3001')
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -39,11 +39,11 @@ function App() {
             }
             fetchUser()
         }
-    }, [uid, websocket])
+    }, [uid, dispatch])
 
     useEffect(() => {
         if (user) {
-            websocket.current.emit("addUser", { userId: uid })
+            websocket.current.emit("addUser", { userId: user._id })
             websocket.current.on("getUsers", (users) => {
                 setFriends(user.friends)
                 setOnlineUsers(user.friends.filter((f) => users.some((u) => u.userId === f.friend)))
@@ -61,8 +61,8 @@ function App() {
 
     useEffect(() => {
         websocket.current.on("sendMessageNotification", data => {
-            setSend(true)
             setSentNotification({
+                type: "new-message",
                 sender: data.senderId,
                 sender_pseudo: data.sender_pseudo,
                 sender_picture: data.sender_picture,
@@ -70,6 +70,29 @@ function App() {
                 conversationId: data.conversationId,
                 createdAt: new Date().toISOString()
             })
+            setSend(true)
+        })
+        websocket.current.on("friendRequestNotification", data => {
+            setSentNotification({
+                type: data.type,
+                requesterId: data.requesterId,
+                requester: data.requester,
+                requesterPicture: data.requesterPicture,
+                createdAt: data.date
+            })
+            setSend(true)
+        })
+        websocket.current.on("sendMemberProjectRequestNotification", data => {
+            setSentNotification({
+                type: data.type,
+                projectId: data.projectId,
+                projectTitle: data.projectTitle,
+                projectURL: data.projectUrl,
+                requesterId: data.requesterId,
+                requester: data.requester,
+                requesterPicture: data.requesterPicture
+            })
+            setSend(true)
         })
     }, [websocket.current])
 
@@ -77,7 +100,7 @@ function App() {
         <UidContext.Provider value={uid}>
             <UserContext.Provider value={user}>
                 <Index websocket={websocket} friends={friends} onlineUsers={onlineUsers} />
-                {send && <Notification sentNotification={sentNotification} setSend={setSend} send={send} />}
+                {send && <NotificationCard sentNotification={sentNotification} setSend={setSend} send={send} user={user} websocket={websocket}/>}
             </UserContext.Provider>
         </UidContext.Provider>
     );

@@ -81,6 +81,9 @@ io.on("connect", (socket) => {
         io.emit("getUsers", users)
     })
 
+    /***********************************************************************************/
+    /********************************** MESSENGER ************************************ */
+
     socket.on("onMessenger", ({ userId, conversationId }) => {
         const user = users.find(member => member.userId === userId)
         if (user) Object.assign(user, { conversationId: conversationId })
@@ -191,6 +194,9 @@ io.on("connect", (socket) => {
         }
     })
 
+    /***********************************************************************************/
+    /******************************** FRIEND REQUEST ***********************************/
+
     socket.on('friendRequestNotification', ({ type, requesterId, requester, requesterPicture, date, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
@@ -210,6 +216,24 @@ io.on("connect", (socket) => {
             return io.to(user.socketId).emit('cancelFriendRequestNotification', {
                 type,
                 requesterId
+            })
+        }
+    })
+
+    /***********************************************************************************/
+    /**************************** PROJECT MEMBER REQUEST *******************************/
+
+    socket.on('sendMemberProjectRequestNotification', ({ type, requesterId, requester, requesterPicture, projectId, projectUrl, projectTitle, receiverId, date }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('sendMemberProjectRequestNotification', {
+                type,
+                requesterId,
+                requester,
+                requesterPicture,
+                projectId,
+                projectUrl,
+                projectTitle, date
             })
         }
     })

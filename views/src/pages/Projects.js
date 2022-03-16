@@ -15,7 +15,7 @@ import Content from '../components/project/projects/informations/Content';
 import Members from '../components/project/projects/members/Members';
 import Tasks from '../components/project/projects/tasks/Tasks';
 
-const Projects = () => {
+const Projects = ({ websocket }) => {
     const user = useContext(UserContext)
     const [projects, setProjects] = useState([])
     const [project, setProject] = useState()
@@ -70,7 +70,7 @@ const Projects = () => {
                             </div>
                             <div>
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
-                                    <Members project={project} admins={admins} user={user} />
+                                    <Members project={project} admins={admins} user={user} websocket={websocket} />
                                 </div>
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
                                     <Tasks project={project} admins={admins} user={user} />

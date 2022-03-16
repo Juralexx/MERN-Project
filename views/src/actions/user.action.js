@@ -23,6 +23,11 @@ export const CANCEL_SENT_FRIEND_REQUEST = "CANCEL_SENT_FRIEND_REQUEST"
 export const ACCEPT_FRIEND_REQUEST = "ACCEPT_FRIEND_REQUEST"
 export const REFUSE_FRIEND_REQUEST = "REFUSE_FRIEND_REQUEST"
 
+export const SEND_MEMBER_REQUEST = "SEND_MEMBER_REQUEST"
+export const CANCEL_SENT_MEMBER_REQUEST = "CANCEL_SENT_MEMBER_REQUEST"
+export const ACCEPT_MEMBER_REQUEST = "ACCEPT_MEMBER_REQUEST"
+export const REFUSE_MEMBER_REQUEST = "REFUSE_MEMBER_REQUEST"
+
 export const getUser = (uid) => {
     return async (dispatch) => {
         await axios
@@ -321,6 +326,62 @@ export const refuseFriendRequest = (friendId, userId, type) => {
         })
             .then((res) => {
                 dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { friendId, userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const sendProjectMemberRequest = (memberId, notification) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/send-member-request/` + memberId,
+            data: { notification }
+        })
+            .then((res) => {
+                dispatch({ type: SEND_MEMBER_REQUEST, payload: { notification, memberId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const cancelProjectMemberRequest = (memberId, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/cancel-member-request/` + memberId,
+            data: { memberId, type }
+        })
+            .then((res) => {
+                dispatch({ type: CANCEL_SENT_MEMBER_REQUEST, payload: { memberId, projectId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const acceptProjectMemberRequest = (memberId, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/accept-member-request/` + projectId,
+            data: { memberId, type }
+        })
+            .then((res) => {
+                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { memberId, projectId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const refuseProjectMemberRequest = (memberId, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/refuse-member-request/` + projectId,
+            data: { memberId, type }
+        })
+            .then((res) => {
+                dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { memberId, projectId } })
             })
             .catch((err) => console.log(err))
     }

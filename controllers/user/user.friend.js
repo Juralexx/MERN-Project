@@ -104,6 +104,7 @@ export const acceptFriend = async (req, res) => {
                         type: req.body.type
                     }
                 },
+                $inc: { unseen_notifications: -1 }
             },
             { new: true, upsert: true },
         )
@@ -148,6 +149,7 @@ export const refuseFriend = async (req, res) => {
                         type: req.body.type
                     }
                 },
+                $inc: { unseen_notifications: -1 }
             },
             { new: true, upsert: true },
         )

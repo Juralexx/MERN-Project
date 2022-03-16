@@ -1,5 +1,4 @@
 import UserModel from '../../models/user.model.js'
-import mongoose from 'mongoose'
 
 export const resetNotifications = async (req, res) => {
     try {

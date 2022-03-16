@@ -18,7 +18,6 @@ const LikersModal = ({ project, open, setOpen, websocket }) => {
     const [liker, setLiker] = useState([])
     const [hoveredCard, setHoveredCard] = useState(-1)
     const dispatch = useDispatch()
-
     websocket.current = io('ws://localhost:3001')
 
     useEffect(() => {

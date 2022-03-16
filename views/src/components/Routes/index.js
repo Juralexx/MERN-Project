@@ -44,7 +44,7 @@ function Index({ websocket, onlineUsers, friends }) {
         <Route path=":pseudo" element={<MemberProfil />} />
 
         <Route path="project/add" element={<AddProject />} />
-        <Route path="projects" element={<Projects />} />
+        <Route path="projects" element={<Projects websocket={websocket} />} />
         <Route path=":pseudo/projects" element={<UserProjects />} />
         <Route path="project/:titleURL" element={<Project />} />
 

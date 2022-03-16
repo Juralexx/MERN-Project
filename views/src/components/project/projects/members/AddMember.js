@@ -5,11 +5,14 @@ import { ImCross } from 'react-icons/im'
 import { avatar } from '../../../tools/functions/useAvatar';
 import { BasicInput } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
+import { useDispatch } from 'react-redux';
+import { sendProjectMemberRequest } from '../../../../actions/user.action';
 
-const AddMember = ({ open, setOpen, project, user }) => {
+const AddMember = ({ open, setOpen, project, user, websocket }) => {
     const [friendsFound, setFriendsFound] = useState([])
     const [array, setArray] = useState([])
     const modalClose = () => { setOpen(false) }
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const getFriends = async () => {
@@ -30,29 +33,46 @@ const AddMember = ({ open, setOpen, project, user }) => {
     const sendMemberRequest = () => {
         if (array.length > 0) {
             array.map(async (element) => {
+                const request = {
+                    memberId: element.id,
+                    pseudo: element.pseudo,
+                    picture: element.picture,
+                    requesterId: user._id,
+                    requester: user.pseudo,
+                    date: new Date().toISOString()
+                }
+                const notification = {
+                    type: "project-member-request",
+                    projectId: project._id,
+                    projectTitle: project.title,
+                    projectUrl: project.titleURL,
+                    requesterId: user._id,
+                    requester: user.pseudo,
+                    requesterPicture: user.picture,
+                    date: new Date().toISOString()
+                }
                 return (
                     await axios({
                         method: "put",
-                        url: `${process.env.REACT_APP_API_URL}api/project/send-member-request/${project._id}`,
+                        url: `${process.env.REACT_APP_API_URL}api/user/send-member-request/${element.id}`,
                         data: {
-                            request: {
-                                id: element.id,
-                                pseudo: element.pseudo,
-                                picture: element.picture,
-                                requesterId: user._id,
-                                requester: user.pseudo,
-                                date: new Date().toISOString()
-                            },
-                            notification: {
-                                type: "member-request",
-                                id: project._id,
-                                requesterId: user._id,
-                                requester: user.pseudo,
-                                requesterPicture: user.picture,
-                                date: new Date().toISOString()
-                            }
+                            projectId: project._id,
+                            request: request,
+                            notification: notification
                         }
-                    })
+                    }),
+                    websocket.current.emit("sendMemberProjectRequestNotification", {
+                        type: "project-member-request",
+                        projectId: project._id,
+                        projectTitle: project.title,
+                        projectUrl: project.titleURL,
+                        requesterId: user._id,
+                        requester: user.pseudo,
+                        requesterPicture: user.picture,
+                        receiverId: element.id,
+                        date: new Date().toISOString()
+                    }),
+                    dispatch(sendProjectMemberRequest(element.id, notification))
                 )
             })
             setArray([])

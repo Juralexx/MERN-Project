@@ -7,7 +7,7 @@ import SettingsMenu from "./SettingsMenu";
 import NotificationsMenu from "./notifications/Notifications";
 import { avatar } from "../tools/functions/useAvatar";
 import { useClickOutside } from "../tools/functions/useClickOutside";
-import { io } from "socket.io-client";
+import axios from "axios";
 
 const MiniNav = ({ user, websocket }) => {
     const userData = useSelector((state) => state.userReducer)
@@ -41,7 +41,26 @@ const MiniNav = ({ user, websocket }) => {
                 requesterId: data.requesterId
             })
         })
-    }, [websocket.current])
+        websocket.current.on("sendMemberProjectRequestNotification", data => {
+            setNotifications(notifications + 1)
+            setNewNotification({
+                type: data.type,
+                projectId: data.projectId,
+                projectTitle: data.projectTitle,
+                projectURL: data.projectUrl,
+                requesterId: data.requesterId,
+                requester: data.requester,
+                requesterPicture: data.requesterPicture,
+                date: data.date
+            })
+        })
+    }, [websocket, notifications, ])
+
+    const resetNotifications = async () => {
+        setOpenNotificationsMenu(!openNotificationsMenu)
+        await axios.put(`${process.env.REACT_APP_API_URL}api/user/reset-notifications/${user._id}`)
+        setNotifications(0)
+    }
 
     const classes = {
         container: "absolute top-0 right-0 h-[60px] w-auto flex mr-5",
@@ -68,7 +87,7 @@ const MiniNav = ({ user, websocket }) => {
                         </div>
                     </li>
                     <li className={classes.li}>
-                        <div className={classes.button} onClick={() => setOpenNotificationsMenu(!openNotificationsMenu)}>
+                        <div className={classes.button} onClick={resetNotifications}>
                             {notifications > 0 && (
                                 <div className="absolute top-[5px] right-0 flex items-center justify-center h-5 w-5 rounded-full bg-primary text-white">{notifications}</div>
                             )}

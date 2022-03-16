@@ -7,7 +7,7 @@ import MembersRequests from './MembersRequests'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import SmallMenu from '../../../tools/components/SmallMenu'
 
-const Members = ({ project, admins, user }) => {
+const Members = ({ project, admins, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)
     const [showRequests, setShowRequests] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
@@ -83,7 +83,7 @@ const Members = ({ project, admins, user }) => {
                     )
                 })}
             </div>
-            {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} />}
+            {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} />}
             {<MembersRequests open={showRequests} setOpen={setShowRequests} project={project} user={user} />}
         </>
     )
