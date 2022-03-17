@@ -84,7 +84,7 @@ const Members = ({ project, admins, user, websocket }) => {
                 })}
             </div>
             {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} />}
-            {<MembersRequests open={showRequests} setOpen={setShowRequests} project={project} user={user} />}
+            {<MembersRequests open={showRequests} setOpen={setShowRequests} project={project} user={user} websocket={websocket} />}
         </>
     )
 }

@@ -3,7 +3,7 @@ const projectRoutes = express.Router()
 import { createProject, uploadProjectPictures } from '../controllers/project/project.add.controller.js'
 import { readProject, projectInfo, updateProject, deleteProject, findProject } from '../controllers/project/project.controller.js'
 import { likeProject, unlikeProject, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
-import { addMemberToProject,  removeMemberFromProject } from '../controllers/project/project.members.controller.js'
+import { acceptMemberRequest, addMemberToProject,  cancelMemberRequest,  refuseMemberRequest,  removeMemberFromProject, sendMemberRequest } from '../controllers/project/project.members.controller.js'
 import { createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
 import multer from 'multer'
 const upload = multer()
@@ -30,5 +30,10 @@ projectRoutes.patch('/like/:id', likeProject)
 projectRoutes.patch('/unlike/:id', unlikeProject)
 projectRoutes.patch('/favorite/:id', favorite)
 projectRoutes.patch('/unfavorite/:id', unfavorite)
+
+projectRoutes.put('/send-member-request/:id', sendMemberRequest)
+projectRoutes.put('/cancel-member-request/:id', cancelMemberRequest)
+projectRoutes.put('/accept-member-request/:id', acceptMemberRequest)
+projectRoutes.put('/refuse-member-request/:id', refuseMemberRequest)
 
 export default projectRoutes;

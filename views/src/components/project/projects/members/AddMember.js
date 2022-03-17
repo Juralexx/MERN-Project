@@ -6,7 +6,7 @@ import { avatar } from '../../../tools/functions/useAvatar';
 import { BasicInput } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { useDispatch } from 'react-redux';
-import { sendProjectMemberRequest } from '../../../../actions/user.action';
+import { sendProjectMemberRequest } from '../../../../actions/project.action';
 
 const AddMember = ({ open, setOpen, project, user, websocket }) => {
     const [friendsFound, setFriendsFound] = useState([])
@@ -52,15 +52,6 @@ const AddMember = ({ open, setOpen, project, user, websocket }) => {
                     date: new Date().toISOString()
                 }
                 return (
-                    await axios({
-                        method: "put",
-                        url: `${process.env.REACT_APP_API_URL}api/user/send-member-request/${element.id}`,
-                        data: {
-                            projectId: project._id,
-                            request: request,
-                            notification: notification
-                        }
-                    }),
                     websocket.current.emit("sendMemberProjectRequestNotification", {
                         type: "project-member-request",
                         projectId: project._id,
@@ -72,7 +63,7 @@ const AddMember = ({ open, setOpen, project, user, websocket }) => {
                         receiverId: element.id,
                         date: new Date().toISOString()
                     }),
-                    dispatch(sendProjectMemberRequest(element.id, notification))
+                    dispatch(sendProjectMemberRequest(element.id, project._id, notification, request))
                 )
             })
             setArray([])

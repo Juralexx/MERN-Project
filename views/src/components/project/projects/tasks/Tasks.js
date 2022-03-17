@@ -17,28 +17,16 @@ const Tasks = ({ project, admins, user }) => {
     useClickOutside(tasksMenu, setOpenTasksMenu, false)
 
     const changeState = async (element) => {
-        if (element.state === "undone") {
-            await axios({
-                method: "put",
-                url: `${process.env.REACT_APP_API_URL}api/project/update-task/${project._id}`,
-                data: {
-                    taskId: element._id,
-                    state: "done",
-                }
-            })
-            .then((res) => console.log(res))
-            .catch(err => console.log(err))
-        } else {
-            await axios({
-                method: "put",
-                url: `${process.env.REACT_APP_API_URL}api/project/update-task/${project._id}`,
-                data: {
-                    taskId: element._id,
-                    state: "undone",
-                }
-            })
+        function state() { if (element.state === "undone") { return "done" } else return "undone" }
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/update-task/${project._id}`,
+            data: {
+                taskId: element._id,
+                state: state()
+            }
+        })
             .then((res) => console.log(res)).catch(err => console.log(err))
-        }
     }
 
     return (
@@ -61,7 +49,7 @@ const Tasks = ({ project, admins, user }) => {
                     return (
                         <div className="relative flex justify-between items-center py-3 px-3" key={key}>
                             <div className="flex items-center">
-                                <input type="checkbox" className="mr-3" onClick={() => changeState(element)}/>
+                                <button type="checkbox" className="mr-3" onClick={() => changeState(element)}>Button</button>
                                 <div>
                                     <div className="">{element.title}</div>
                                     <div className="text-xs">{dateParser(element.end)}</div>

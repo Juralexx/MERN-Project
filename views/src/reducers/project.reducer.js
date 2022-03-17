@@ -1,5 +1,7 @@
 import {
-    FAVORITE, FOLLOW, GET_PROJECT, LIKE, REMOVE_MEMBER, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
+    ACCEPT_MEMBER_REQUEST,
+    CANCEL_SENT_MEMBER_REQUEST,
+    FAVORITE, FOLLOW, GET_PROJECT, LIKE, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
     UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE,
     UPDATE_TITLEURL,
     UPDATE_WORKS
@@ -25,7 +27,7 @@ export default function projectReducer(state = initialState, action) {
         case UPDATE_TITLEURL:
             return {
                 ...state,
-                UPDATE_TITLEURL: action.payload
+                titleURL: action.payload
             }
         case UPDATE_CATEGORY:
             return {
@@ -60,6 +62,10 @@ export default function projectReducer(state = initialState, action) {
                 ...state,
                 end: action.payload
             }
+
+        /*******************************************************************************************************************************/
+        /************************************************************ LIKE *************************************************************/
+
         case LIKE:
             return Object.keys(state).map((project) => {
                 if (project._id === action.payload.projectId) {
@@ -80,6 +86,10 @@ export default function projectReducer(state = initialState, action) {
                 }
                 return project
             })
+
+        /*******************************************************************************************************************************/
+        /********************************************************** FOLLOW *************************************************************/
+
         case FOLLOW:
             return Object.keys(state).map((project) => {
                 if (project._id === action.payload.projectId) {
@@ -100,6 +110,10 @@ export default function projectReducer(state = initialState, action) {
                 }
                 return project
             })
+
+        /*******************************************************************************************************************************/
+        /********************************************************** FAVORITES **********************************************************/
+
         case FAVORITE:
             return Object.keys(state).map((project) => {
                 if (project._id === action.payload.projectId) {
@@ -120,6 +134,10 @@ export default function projectReducer(state = initialState, action) {
                 }
                 return project
             })
+
+        /*******************************************************************************************************************************/
+        /****************************************************** MEMBER ACTION **********************************************************/
+
         case REMOVE_MEMBER:
             return Object.keys(state).map((project) => {
                 if (project._id === action.payload.projectId) {
@@ -130,6 +148,23 @@ export default function projectReducer(state = initialState, action) {
                 }
                 return project
             })
+        case SEND_MEMBER_REQUEST:
+            return {
+                ...state,
+                member_requests: [...state.member_requests, action.payload.request]
+            }
+        case CANCEL_SENT_MEMBER_REQUEST:
+            return {
+                ...state,
+                member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId)
+            }
+        case ACCEPT_MEMBER_REQUEST:
+            return {
+                ...state,
+                member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId),
+                members: [...state.members, action.payload.member]
+            }
+
         default:
             return state;
     }

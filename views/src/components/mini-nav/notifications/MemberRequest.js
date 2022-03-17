@@ -1,18 +1,32 @@
-import React, { useState, useContext } from 'react'
-import { UidContext } from '../../AppContext';
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { acceptProjectMemberRequest, refuseProjectMemberRequest } from "../../../actions/user.action";
+import { acceptProjectMemberRequest, refuseProjectMemberRequest } from "../../../actions/project.action";
 import formatDistance from 'date-fns/formatDistance'
 import fr from 'date-fns/locale/fr'
 import { avatar } from "../../tools/functions/useAvatar";
 import { Button } from '../../tools/components/Button';
 
-const MemberRequest = ({ notification, uniqueKey }) => {
-    const uid = useContext(UidContext)
+const MemberRequest = ({ notification, uniqueKey, user }) => {
     const dispatch = useDispatch()
     const [accepted, setAccepted] = useState(false)
     const [refused, setRefused] = useState(false)
+
+    const acceptMemberRequest = () => {
+        const member = {
+            id: user._id,
+            pseudo: user.pseudo,
+            picture: user.picture,
+            role: "user",
+            since: new Date().toISOString()
+        }
+        dispatch(acceptProjectMemberRequest(user._id, member, notification.projectId, "project-member-request"))
+        setAccepted(true)
+    }
+    const refuseMemberRequest = () => {
+        dispatch(refuseProjectMemberRequest(user._id, notification.projectId, "project-member-request"))
+        setRefused(true)
+    }
 
     return (
         <div className="flex" key={uniqueKey}>
@@ -32,17 +46,11 @@ const MemberRequest = ({ notification, uniqueKey }) => {
                         <Button
                             text="Accepter"
                             className="btn btn-primary"
-                            onClick={() => {
-                                dispatch(acceptProjectMemberRequest(notification.requesterId, uid, "project-member-request"))
-                                setAccepted(true)
-                            }} />
+                            onClick={acceptMemberRequest} />
                         <Button
                             text="Refuser"
                             className="btn btn-secondary"
-                            onClick={() => {
-                                dispatch(refuseProjectMemberRequest(notification.requesterId, uid, "project-member-request"))
-                                setRefused(true)
-                            }} />
+                            onClick={refuseMemberRequest} />
                     </div>
                 </div>
                 {accepted && (

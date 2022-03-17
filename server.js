@@ -238,6 +238,25 @@ io.on("connect", (socket) => {
         }
     })
 
+    socket.on('cancelMemberProjectRequestNotification', ({ type, requesterId, receiverId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('cancelMemberProjectRequestNotification', {
+                type,
+                requesterId
+            })
+        }
+    })
+
+    socket.on('acceptMemberProjectRequestNotification', ({ receiverId, member }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('acceptMemberProjectRequestNotification', {
+                member
+            })
+        }
+    })
+
     const removeUser = (socketId) => {
         users = users.filter(user => user.socketId !== socketId)
     }

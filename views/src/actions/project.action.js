@@ -21,6 +21,11 @@ export const UNFAVORITE = "UNFAVORITE"
 
 export const REMOVE_MEMBER = "REMOVE_MEMBER"
 
+export const SEND_MEMBER_REQUEST = "SEND_MEMBER_REQUEST"
+export const CANCEL_SENT_MEMBER_REQUEST = "CANCEL_SENT_MEMBER_REQUEST"
+export const ACCEPT_MEMBER_REQUEST = "ACCEPT_MEMBER_REQUEST"
+export const REFUSE_MEMBER_REQUEST = "REFUSE_MEMBER_REQUEST"
+
 export const getProject = (projectId) => {
     return async (dispatch) => {
         return axios
@@ -163,6 +168,9 @@ export const updateEnd = (projectId, end) => {
     }
 }
 
+/*******************************************************************************************************************************/
+/*********************************************************** LIKE **************************************************************/
+
 export const likeProject = (projectId, posterId) => {
     return async (dispatch) => {
         await axios({
@@ -190,6 +198,9 @@ export const unlikeProject = (projectId, userId) => {
             .catch((err) => console.log(err))
     }
 }
+
+/*******************************************************************************************************************************/
+/********************************************************** FOLLOW *************************************************************/
 
 export const followProject = (projectId, userId) => {
     return async (dispatch) => {
@@ -219,6 +230,9 @@ export const unfollowProject = (projectId, userId) => {
     }
 }
 
+/*******************************************************************************************************************************/
+/********************************************************** FAVORITES **********************************************************/
+
 export const favoriteProject = (projectId, userId) => {
     return async (dispatch) => {
         await axios({
@@ -247,6 +261,9 @@ export const unfavoriteProject = (projectId, userId) => {
     }
 }
 
+/*******************************************************************************************************************************/
+/*************************************************** MEMBER REQUEST ACTION *****************************************************/
+
 export const removeMember = (projectId, memberId) => {
     return async (dispatch) => {
         await axios({
@@ -257,6 +274,60 @@ export const removeMember = (projectId, memberId) => {
             .then((res) => {
                 dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId } })
             })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const sendProjectMemberRequest = (userId, projectId, notification, request) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/send-member-request/` + projectId,
+            data: { userId, request, notification }
+        })
+            .then((res) => {
+                dispatch({ type: SEND_MEMBER_REQUEST, payload: { userId, request } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const cancelProjectMemberRequest = (userId, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/` + projectId,
+            data: { userId, type }
+        })
+            .then((res) => {
+                dispatch({ type: CANCEL_SENT_MEMBER_REQUEST, payload: { userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const acceptProjectMemberRequest = (userId, member, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
+            data: { userId, member, type }
+        })
+            .then((res) => {
+                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, member } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const refuseProjectMemberRequest = (userId, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/refuse-member-request/` + projectId,
+            data: { userId: userId, type: type }
+        })
+            .then((res) => res.data)
             .catch((err) => console.log(err))
     }
 }

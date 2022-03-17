@@ -1,21 +1,21 @@
-import axios from 'axios'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { cancelProjectMemberRequest } from '../../../../actions/project.action'
 import { Button } from '../../../tools/components/Button'
 import Modal from '../../../tools/components/Modal'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { dateParser } from '../../../Utils'
 
-const MembersRequests = ({ open, setOpen, project }) => {
+const MembersRequests = ({ open, setOpen, project, websocket, user }) => {
+    const dispatch = useDispatch()
 
-    const cancelMemberRequest = async (element) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/${project._id}`,
-            data: {
-                userId: element.id,
-                type: element.type,
-            }
+    const cancelMemberRequest = (element) => {
+        websocket.current.emit("cancelMemberProjectRequestNotification", {
+            type: "project-member-request",
+            requesterId: element.sender,
+            receiverId: user._id
         })
+        dispatch(cancelProjectMemberRequest(element.memberId, project._id, element.type))
         setOpen(false)
     }
 

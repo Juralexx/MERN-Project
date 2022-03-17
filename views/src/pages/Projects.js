@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux';
 import { getProject } from '../actions/project.action';
 import { UserContext } from '../components/AppContext'
 import Sidebar from '../components/project/projects/Sidebar'
@@ -9,13 +10,13 @@ import Location from '../components/project/projects/informations/Location'
 import Category from '../components/project/projects/informations/Category'
 import End from '../components/project/projects/informations/End'
 import State from '../components/project/projects/informations/State'
-import { useDispatch } from 'react-redux';
 import Work from '../components/project/projects/informations/Work';
 import Content from '../components/project/projects/informations/Content';
 import Members from '../components/project/projects/members/Members';
 import Tasks from '../components/project/projects/tasks/Tasks';
 
 const Projects = ({ websocket }) => {
+    const projectData = useSelector((state) => state.projectReducer)
     const user = useContext(UserContext)
     const [projects, setProjects] = useState([])
     const [project, setProject] = useState()
@@ -42,6 +43,12 @@ const Projects = ({ websocket }) => {
             getProjects()
         }
     }, [user, dispatch])
+
+    useEffect(() => {
+        if (projectData && !isLoading) {
+            setProject(projectData)
+        }
+    }, [projectData])
 
     const changeProject = (project) => {
         setProject(project)

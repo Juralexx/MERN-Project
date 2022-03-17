@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import { UidContext } from '../../AppContext';
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { acceptFriendRequest, refuseFriendRequest } from "../../../actions/user.action";
@@ -8,11 +7,19 @@ import fr from 'date-fns/locale/fr'
 import { avatar } from "../../tools/functions/useAvatar";
 import { Button } from '../../tools/components/Button';
 
-const FriendRequest = ({ notification, uniqueKey }) => {
-    const uid = useContext(UidContext)
+const FriendRequest = ({ notification, uniqueKey, user }) => {
     const dispatch = useDispatch()
     const [accepted, setAccepted] = useState(false)
     const [refused, setRefused] = useState(false)
+
+    const acceptRequest = (element) => {
+        dispatch(acceptFriendRequest(element.sender, user._id, "friend-request"))
+        setAccepted(true)
+    }
+    const refuseRequest = (element) => {
+        dispatch(refuseFriendRequest(element.sender, user._id, "friend-request"))
+        setRefused(true)
+    }
 
     return (
         <div className="flex" key={uniqueKey}>
@@ -32,17 +39,11 @@ const FriendRequest = ({ notification, uniqueKey }) => {
                         <Button
                             text="Accepter"
                             className="btn btn-primary"
-                            onClick={() => {
-                                dispatch(acceptFriendRequest(notification.requesterId, uid, "friend-request"))
-                                setAccepted(true)
-                            }} />
+                            onClick={acceptRequest} />
                         <Button
                             text="Refuser"
                             className="btn btn-secondary"
-                            onClick={() => {
-                                dispatch(refuseFriendRequest(notification.requesterId, uid, "friend-request"))
-                                setRefused(true)
-                            }} />
+                            onClick={refuseRequest} />
                     </div>
                 </div>
                 {accepted && (

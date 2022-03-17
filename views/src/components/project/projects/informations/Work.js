@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ThreeDots } from 'react-loading-icons'
 import { ImCross } from 'react-icons/im'
 import { HiPencilAlt } from 'react-icons/hi'
@@ -10,7 +10,6 @@ import { FaPen } from 'react-icons/fa'
 import { BasicInput } from "../../../tools/components/Inputs";
 
 const Work = ({ project }) => {
-    const projectData = useSelector((state) => state.projectReducer)
     const [workArray, setWorkArray] = useState(project.works);
     const [searchQuery, setSearchQuery] = useState("")
     const [number, setNumber] = useState("")
@@ -114,19 +113,6 @@ const Work = ({ project }) => {
     return (
         !updateForm ? (
             <div className="flex items-center justify-between w-full py-5 px-7 border-b border-slate-500 dark:border-b-slate-300/30">
-                {modified ? (
-                    <div className="w-full">
-                        {projectData.works.map((element, key) => {
-                            return (
-                                <div className="flex justify-between py-1 last:mb-5" key={key}>
-                                    <div className="w-[85%]">{element.name}</div>
-                                    <div className="w-[10%]">{element.numberFound}</div>
-                                    <div className="w-[10%]">{element.number}</div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                ) : (
                     <div className="w-full">
                         {project.works.map((element, key) => {
                             return (
@@ -138,7 +124,6 @@ const Work = ({ project }) => {
                             )
                         })}
                     </div>
-                )}
                 <RoundedButton icon={<FaPen className="w-3 h-3" />} color="background_primary" hoverColor="background_primary_x_light" onClick={() => setUpdateForm(!updateForm)}>Modifier</RoundedButton>
             </div>
         ) : (

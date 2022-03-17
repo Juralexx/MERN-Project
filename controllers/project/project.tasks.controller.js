@@ -1,5 +1,4 @@
 import ProjectModel from '../../models/project.model.js'
-import UserModel from '../../models/user.model.js'
 import mongoose from 'mongoose'
 const ObjectID = mongoose.Types.ObjectId
 
@@ -54,10 +53,10 @@ export const deleteTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
     try {
-        await ProjectModel.findOneAndUpdate(
+        await ProjectModel.updateOne(
             {
                 _id: req.params.id,
-                "tasks._id": req.body.taskId
+                "tasks.task._id": req.body.taskId
             },
             {
                 $set: {
@@ -68,7 +67,7 @@ export const updateTask = async (req, res) => {
                     // "tasks.$.members": req.body.members
                 }
             },
-            { new: true },
+            { new: true,  },
         )
             .then((docs) => { res.send(docs) })
             .catch((err) => { return res.status(400).send({ message: err }) })

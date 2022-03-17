@@ -8,7 +8,6 @@ import { acceptFriend, cancelSentFriendRequest, refuseFriend, sendFriendRequest,
 import { addConversationToFavorite, removeConversationFromFavorite, setLastMessageSeen } from '../controllers/user/user.messenger.controller.js'
 import multer from 'multer'
 import { resetNotifications } from '../controllers/user/user.notifications.controller.js'
-import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, sendMemberRequest } from '../controllers/user/user.member.project.js'
 const upload = multer()
 
 userRoutes.post('/register', signUp)
@@ -52,10 +51,5 @@ userRoutes.put('/conversation/remove-favorite/:id', removeConversationFromFavori
 userRoutes.put('/conversation/last-message-seen/:id', setLastMessageSeen)
 
 userRoutes.put('/reset-notifications/:id', resetNotifications)
-
-userRoutes.put('/send-member-request/:id', sendMemberRequest)
-userRoutes.put('/cancel-member-request/:id', cancelMemberRequest)
-userRoutes.put('/accept-member-request/:id', acceptMemberRequest)
-userRoutes.put('/refuse-member-request/:id', refuseMemberRequest)
 
 export default userRoutes;

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { getUser } from './actions/user.action';
 import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
-import NotificationCard from './components/mini-nav/notifications/NotificationCard';
+import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 
 function App() {
     const [uid, setUid] = useState(null)

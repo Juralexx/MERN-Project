@@ -54,6 +54,13 @@ const MiniNav = ({ user, websocket }) => {
                 date: data.date
             })
         })
+        websocket.current.on("cancelMemberProjectRequestNotification", data => {
+            setNotifications(notifications - 1)
+            setCancelNewNotification({
+                type: data.type,
+                requesterId: data.requesterId
+            })
+        })
     }, [websocket, notifications, ])
 
     const resetNotifications = async () => {

@@ -38,10 +38,10 @@ const NotificationsMenu = ({ open, user, newNotification, setNewNotification, ca
             {notifications.length !== 0 && (
                 notifications.map((element) => {
                     if (element.type === "friend-request") {
-                        return <FriendRequest notification={element} uniqueKey={element.date} />
+                        return <FriendRequest notification={element} uniqueKey={element.date} user={user} />
                     }
                     else if (element.type === "project-member-request") {
-                        return <MemberRequest notification={element} uniqueKey={element.date} />
+                        return <MemberRequest notification={element} uniqueKey={element.date} user={user} />
                     }
                 })
             )}

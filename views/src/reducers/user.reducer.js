@@ -1,4 +1,4 @@
-import { ACCEPT_FRIEND_REQUEST, GET_USER, REFUSE_FRIEND_REQUEST, SEND_MEMBER_REQUEST, UPDATE_BIO, UPDATE_EMAIL, UPDATE_FACEBOOK, UPDATE_GENDER, UPDATE_INSTAGRAM, UPDATE_LASTNAME, UPDATE_LINKEDIN, UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_THEME, UPDATE_TWITTER, UPDATE_WEBSITE, UPDATE_WORK, UPDATE_YOUTUBE } from "../actions/user.action";
+import { ACCEPT_FRIEND_REQUEST, GET_USER, REFUSE_FRIEND_REQUEST, UPDATE_BIO, UPDATE_EMAIL, UPDATE_FACEBOOK, UPDATE_GENDER, UPDATE_INSTAGRAM, UPDATE_LASTNAME, UPDATE_LINKEDIN, UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_THEME, UPDATE_TWITTER, UPDATE_WEBSITE, UPDATE_WORK, UPDATE_YOUTUBE } from "../actions/user.action";
 import { DELETE_BIO, DELETE_FACEBOOK, DELETE_GENDER, DELETE_INSTAGRAM, DELETE_LASTNAME, DELETE_LINKEDIN, DELETE_LOCATION, DELETE_NAME, DELETE_PHONE, DELETE_TWITTER, DELETE_WEBSITE, DELETE_WORK, DELETE_YOUTUBE } from "../actions/user.action.delete";
 import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action.upload";
 import { CANCEL_SENT_FRIEND_REQUEST, SEND_FRIEND_REQUEST } from "../actions/user.action";
@@ -181,6 +181,10 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 linkedin: action.payload
             }
+
+        /*******************************************************************************************************************************/
+        /****************************************************** FRIEND ACTION **********************************************************/
+
         case SEND_FRIEND_REQUEST:
             return {
                 ...state,
@@ -201,11 +205,6 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 friend_request: state.friend_request.filter((friendId) => friendId === action.payload.friendId)
-            }
-        case SEND_MEMBER_REQUEST:
-            return {
-                ...state,
-                notifications: [...state.notifications, action.payload.notification]
             }
 
         default:
