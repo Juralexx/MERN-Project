@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { acceptProjectMemberRequest, refuseProjectMemberRequest } from '../../../../actions/project.action'
+import { acceptMemberRequest, refuseMemberRequest } from '../../../../actions/project.action'
 import { useDispatch } from 'react-redux'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
@@ -11,23 +11,23 @@ const MemberRequestCard = ({ sentNotification, websocket, user }) => {
     const [refused, setRefused] = useState(false)
     const dispatch = useDispatch()
 
-    const acceptMemberRequest = async () => {
+    const acceptProjectMemberRequest = async () => {
         const member = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
         await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${sentNotification.projectId}`)
             .then(res => {
                 res.data.members.map(member => {
-                    return websocket.current.emit("acceptMemberProjectRequestNotification", {
+                    return websocket.current.emit("acceptMemberRequest", {
                         member: member,
                         receiverId: member.id
                     })
                 })
             })
-        dispatch(acceptProjectMemberRequest(user._id, member, sentNotification.projectId, "project-member-request"))
+        dispatch(acceptMemberRequest(user._id, member, sentNotification.projectId, "project-member-request"))
         setAccepted(true)
     }
 
-    const refuseMemberRequest = () => {
-        dispatch(refuseProjectMemberRequest(user._id, sentNotification.projectId, "project-member-request"))
+    const refuseProjectMemberRequest = () => {
+        dispatch(refuseMemberRequest(user._id, sentNotification.projectId, "project-member-request"))
         setRefused(true)
     }
 
@@ -52,12 +52,12 @@ const MemberRequestCard = ({ sentNotification, websocket, user }) => {
                             <Button
                                 text="Accepter"
                                 className="btn btn-primary"
-                                onClick={() => acceptMemberRequest(sentNotification)}
+                                onClick={() => acceptProjectMemberRequest(sentNotification)}
                             />
                             <Button
                                 text="Refuser"
                                 className="btn btn-primary"
-                                onClick={() => refuseMemberRequest(sentNotification)}
+                                onClick={() => refuseProjectMemberRequest(sentNotification)}
                             />
                         </div>
                     </>

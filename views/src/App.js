@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import Index from './components/routes/index';
 import { UidContext, UserContext } from "./components/AppContext"
 import axios from 'axios';
-import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveFriendRequest } from './actions/user.action';
+import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 import { useSelector } from 'react-redux';
-import { receiveAcceptProjectMemberRequest, receiveCancelProjectMemberRequest, receiveProjectLeaver, receiveProjectMemberRequest, removeProjectFromMember } from './actions/project.action';
+import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveProjectLeaver, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember } from './actions/project.action';
 
 function App() {
     const user = useSelector((state) => state.userReducer)
@@ -48,7 +48,7 @@ function App() {
             websocket.current.emit("addUser", { userId: user._id })
             websocket.current.on("getUsers", (users) => {
                 setFriends(user.friends)
-                setOnlineUsers(user.friends.filter((f) => users.some((u) => u.userId === f.friend)))
+                setOnlineUsers(user.friends.filter(f => users.some(u => u.userId === f.friend)))
             })
         }
         return () => websocket.current.off("getUsers")
@@ -75,46 +75,53 @@ function App() {
             })
             setSend(true)
         })
-        websocket.current.on("friendRequestNotification", data => {
+        websocket.current.on("friendRequest", data => {
             dispatch(receiveFriendRequest(data.notification))
             setSentNotification(data.notification)
             setSend(true)
         })
-        websocket.current.on("cancelFriendRequestNotification", data => {
+        websocket.current.on("cancelFriendRequest", data => {
             dispatch(receiveCancelFriendRequest(data.type, data.requesterId))
         })
         websocket.current.on("acceptFriendRequest", data => {
             dispatch(receiveAcceptFriendRequest(data.friend))
         })
-        websocket.current.on("sendMemberProjectRequestNotification", data => {
-            dispatch(receiveProjectMemberRequest(data.notification))
+        websocket.current.on("refuseFriendRequest", data => {
+            dispatch(receiveRefuseFriendRequest(data.userId))
+        })
+        websocket.current.on("memberRequest", data => {
+            dispatch(receiveMemberRequest(data.notification))
             setSentNotification(data.notification)
             setSend(true)
         })
-        websocket.current.on("acceptMemberProjectRequestNotification", data => {
-            dispatch(receiveAcceptProjectMemberRequest(data.member))
+        websocket.current.on("cancelMemberRequest", data => {
+            dispatch(receiveCancelMemberRequest(data.type, data.requesterId))
         })
-        websocket.current.on("getLeaverProject", data => {
-            dispatch(receiveProjectLeaver(data.memberId))
+        websocket.current.on("acceptMemberRequest", data => {
+            dispatch(receiveAcceptMemberRequest(data.member))
         })
-        websocket.current.on("cancelMemberProjectRequestNotification", data => {
-            dispatch(receiveCancelProjectMemberRequest(data.type, data.requesterId))
+        websocket.current.on("refuseMemberRequest", data => {
+            dispatch(receiveRefuseMemberRequest(data.userId))
+        })
+        websocket.current.on("removeMember", data => {
+            dispatch(removeMember(data.projectId, data.memberId))
         })
         websocket.current.on("leaveProject", data => {
             dispatch(removeProjectFromMember(data.projectId))
         })
         return () => {
             websocket.current.off("sendMessageNotification")
-            websocket.current.off("friendRequestNotification")
-            websocket.current.off("cancelFriendRequestNotification")
+            websocket.current.off("friendRequest")
+            websocket.current.off("cancelFriendRequest")
             websocket.current.off("acceptFriendRequest")
-            websocket.current.off("sendMemberProjectRequestNotification")
-            websocket.current.off("acceptMemberProjectRequestNotification")
-            websocket.current.off("getLeaverProject")
-            websocket.current.off("cancelMemberProjectRequestNotification")
+            websocket.current.off("refuseFriendRequest")
+            websocket.current.off("memberRequest")
+            websocket.current.off("cancelMemberRequest")
+            websocket.current.off("acceptMemberRequest")
+            websocket.current.off("removeMember")
             websocket.current.off("leaveProject")
         }
-    }, [websocket.current])
+    }, [websocket.current, dispatch])
 
     return (
         <UidContext.Provider value={uid}>

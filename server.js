@@ -198,30 +198,39 @@ io.on("connect", (socket) => {
     /***********************************************************************************/
     /******************************** FRIEND REQUEST ***********************************/
 
-    socket.on('friendRequestNotification', ({ notification, receiverId }) => {
+    socket.on('friendRequest', ({ notification, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('friendRequestNotification', {
+            return io.to(user.socketId).emit('friendRequest', {
                 notification
             })
         }
     })
 
-    socket.on('cancelFriendRequestNotification', ({ type, requesterId, receiverId }) => {
+    socket.on('cancelFriendRequest', ({ type, requesterId, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('cancelFriendRequestNotification', {
+            return io.to(user.socketId).emit('cancelFriendRequest', {
                 type,
                 requesterId
             })
         }
     })
 
-    socket.on('acceptfriendRequest', ({ receiverId, friend }) => {
+    socket.on('acceptFriendRequest', ({ receiverId, friend }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('acceptfriendRequest', {
+            return io.to(user.socketId).emit('acceptFriendRequest', {
                 friend
+            })
+        }
+    })
+
+    socket.on('refuseFriendRequest', ({ userId, receiverId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('refuseFriendRequest', {
+                userId
             })
         }
     })
@@ -229,30 +238,39 @@ io.on("connect", (socket) => {
     /***********************************************************************************/
     /**************************** PROJECT MEMBER REQUEST *******************************/
 
-    socket.on('sendMemberProjectRequestNotification', ({ receiverId, notification }) => {
+    socket.on('memberRequest', ({ receiverId, notification }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('sendMemberProjectRequestNotification', {
+            return io.to(user.socketId).emit('memberRequest', {
                 notification
             })
         }
     })
 
-    socket.on('cancelMemberProjectRequestNotification', ({ type, requesterId, receiverId }) => {
+    socket.on('cancelMemberRequest', ({ type, requesterId, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('cancelMemberProjectRequestNotification', {
+            return io.to(user.socketId).emit('cancelMemberRequest', {
                 type,
                 requesterId
             })
         }
     })
 
-    socket.on('acceptMemberProjectRequestNotification', ({ receiverId, member }) => {
+    socket.on('acceptMemberRequest', ({ receiverId, member }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('acceptMemberProjectRequestNotification', {
+            return io.to(user.socketId).emit('acceptMemberRequest', {
                 member
+            })
+        }
+    })
+
+    socket.on('refuseMemberRequest', ({ receiverId, userId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('refuseMemberRequest', {
+                userId
             })
         }
     })
@@ -269,11 +287,12 @@ io.on("connect", (socket) => {
         }
     })
 
-    socket.on('getProjectLeaver', ({ receiverId, memberId }) => {
+    socket.on('removeMember', ({ receiverId, memberId, projectId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('getProjectLeaver', {
-                memberId
+            return io.to(user.socketId).emit('removeMember', {
+                memberId,
+                projectId
             })
         }
     })

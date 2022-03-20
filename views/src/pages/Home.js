@@ -3,7 +3,7 @@ import axios from 'axios';
 import Header from '../components/home/Header';
 import ProjectsSwiper from '../components/home/ProjectsSwiper';
 
-const Home = ({ websocket }) => {
+const Home = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
     const [projectsByDate, setProjectsByDate] = useState([])
     const [projectsByLikes, setProjectsByLikes] = useState([])
@@ -32,16 +32,16 @@ const Home = ({ websocket }) => {
             <div className="w-full bg-background_light dark:bg-gradient-to-r from-background_primary to-background_primary_light">
                 <div className="container mx-auto">
                     <p className="text-3xl py-6 text-center text-title dark:text-slate-300">Les plus récent</p>
-                    <ProjectsSwiper projects={projectsByDate} isLoading={isLoading} websocket={websocket} />
+                    <ProjectsSwiper projects={projectsByDate} isLoading={isLoading} websocket={websocket} user={user} />
 
                     <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Tous les projets</p>
-                    <ProjectsSwiper projects={projects} isLoading={isLoading} websocket={websocket} />
+                    <ProjectsSwiper projects={projects} isLoading={isLoading} websocket={websocket} user={user} />
 
                     <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Les plus aimés</p>
-                    <ProjectsSwiper projects={projectsByLikes} isLoading={isLoading} websocket={websocket} />
+                    <ProjectsSwiper projects={projectsByLikes} isLoading={isLoading} websocket={websocket} user={user} />
 
                     <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Les plus suivis</p>
-                    <ProjectsSwiper projects={projectsByFollows} isLoading={isLoading} websocket={websocket} />
+                    <ProjectsSwiper projects={projectsByFollows} isLoading={isLoading} websocket={websocket} user={user} />
                 </div>
             </div>
         </>

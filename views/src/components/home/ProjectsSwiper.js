@@ -17,12 +17,12 @@ import { BsFillPeopleFill } from 'react-icons/bs'
 import FollowersButton from '../tools/components/FollowersButton';
 import LikersButton from '../tools/components/LikersButton';
 
-const ProjectsSwiper = ({ projects, isLoading, websocket }) => {
+const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
     const [openProfilCard, setOpenProfilCard] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
     const [openLikersModal, setOpenLikersModal] = useState(false)
-    const [user, setUser] = useState()
+    const [isUser, setUser] = useState()
     const [project, setProject] = useState()
 
     const getUser = (userId) => { setUser(userId); setOpenProfilCard(true) }
@@ -31,9 +31,9 @@ const ProjectsSwiper = ({ projects, isLoading, websocket }) => {
     return (
         <>
             {openModal && <ProjectModal project={project} open={openModal} setOpen={setOpenModal} />}
-            {openProfilCard && <ProfilCard isUser={user} open={openProfilCard} setOpen={setOpenProfilCard} />}
-            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} websocket={websocket} />}
-            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} />}
+            {openProfilCard && <ProfilCard isUser={isUser} open={openProfilCard} setOpen={setOpenProfilCard} />}
+            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} websocket={websocket} user={user} />}
+            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} user={user} />}
             <Swiper
                 slidesPerView="auto"
                 navigation={true}
@@ -94,8 +94,8 @@ const ProjectsSwiper = ({ projects, isLoading, websocket }) => {
                                     <div className="animate-pulse bg-slate-600 dark:bg-slate-700 h-[160px] w-full rounded-t-xl"></div>
                                     <MdZoomOutMap className="absolute top-2 right-4 w-[24px] h-[24px]" />
                                     <div className="py-3 px-4">
-                                        <h3 className="animate-pulse bg-slate-600 dark:bg-slate-700 h-4 w-full pb-2 mb-2 rounded-full"></h3>
-                                        <h3 className="animate-pulse bg-slate-600 dark:bg-slate-700 h-4 w-full pb-2 mb-2 rounded-full"></h3>
+                                        <p className="animate-pulse bg-slate-600 dark:bg-slate-700 h-4 w-full pb-2 mb-2 rounded-full"></p>
+                                        <p className="animate-pulse bg-slate-600 dark:bg-slate-700 h-4 w-full pb-2 mb-2 rounded-full"></p>
                                         <div className="flex justify-between items-center py-2">
                                             <div className="flex items-center">
                                                 <BsFillPeopleFill />

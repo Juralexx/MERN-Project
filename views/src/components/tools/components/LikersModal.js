@@ -1,19 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux'
-import { UidContext, UserContext } from '../../AppContext';
-import { cancelFriendRequest, sendFriendRequest } from "../../../actions/user.action";
 import { avatar } from "../functions/useAvatar";
 import Modal from "./Modal";
 import HoverModal from "./HoverModal";
 import { OutlinedButton } from "./Button";
 import { IoHeart } from 'react-icons/io5'
+import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/friend";
+import { useDispatch } from "react-redux";
 
-const LikersModal = ({ project, open, setOpen, websocket }) => {
-    const user = useContext(UserContext)
-    const uid = useContext(UidContext)
-    const userData = useSelector((state) => state.userReducer)
+const LikersModal = ({ project, open, setOpen, user, websocket }) => {
     const [liker, setLiker] = useState([])
     const [hoveredCard, setHoveredCard] = useState(-1)
     const dispatch = useDispatch()
@@ -35,22 +31,44 @@ const LikersModal = ({ project, open, setOpen, websocket }) => {
         findLikers()
     }, [project.likers])
 
-    const sendRequest = (element) => {
-        const notification = { type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString() }
-        websocket.current.emit("friendRequestNotification", {
-            receiverId: element._id,
-            notification: notification
-        })
-        dispatch(sendFriendRequest(element._id, uid, notification))
-    }
+    const findState = (element, user) => {
+        if ((user.friend_request_sent
+            && !user.friend_request_sent.some(object => object.friend === element._id)
+            && !user.friends.some(object => object.friend === element._id)
+            && !user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id)
+            && element._id !== user._id
+        ) || (
+                !user.friend_request_sent
+                && !user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id)
+                && element._id !== user._id
+            ) || (
+                user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id && notif.state === "refused")
+                && !user.friend_request_sent.some(object => object.friend === element._id)
+                && !user.friends.some(object => object.friend === element._id)
+            )) {
+            return <OutlinedButton className="text-xs" text="Ajouter en ami" onClick={() => sendRequest(element, user, websocket, dispatch)}></OutlinedButton>
+        }
 
-    const cancelRequest = (element) => {
-        websocket.current.emit("cancelFriendRequestNotification", {
-            type: "friend-request",
-            requesterId: user._id,
-            receiverId: element._id
-        })
-        dispatch(cancelFriendRequest(element._id, uid, element.type))
+        else if (user.friend_request_sent && user.friend_request_sent.some(object => object.friend === element._id) && element._id !== user._id) {
+            return <OutlinedButton className="text-xs" text="Annuler ma demande" onClick={() => cancelRequest(element, user, websocket, dispatch)}></OutlinedButton>
+        }
+
+        else if ((user.friends && user.friends.some(object => object.friend === element._id))
+            || (user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id && notif.state === "accepted"))) {
+            return <OutlinedButton className="text-xs" text="Vous êtes ami"></OutlinedButton>
+        }
+
+        else if (user.notifications
+            && user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id && !notif.state)
+            && !user.friend_request_sent.some(object => object.friend === element._id)
+            && !user.friends.some(object => object.friend === element._id)) {
+            return (
+                <div className="flex">
+                    <OutlinedButton className="text-xs" text="Accepter" onClick={() => { acceptRequest(user.notifications.find(notif => notif.type === "friend-request" && notif.requesterId === element._id), user, websocket, dispatch); }}></OutlinedButton>
+                    <OutlinedButton className="text-xs" text="Refuser" onClick={() => { refuseRequest(user.notifications.find(notif => notif.type === "friend-request" && notif.requesterId === element._id), user, websocket, dispatch); }}></OutlinedButton>
+                </div>
+            )
+        }
     }
 
     return (
@@ -64,49 +82,26 @@ const LikersModal = ({ project, open, setOpen, websocket }) => {
                     {open && (
                         project.likers.length > 0 ? (
                             <>
-                                {liker.map((element, key) => {
-                                    return (
-                                        <div className="min-w-[300px]" key={key}>
-                                            <div className="py-2 relative flex justify-between w-full cursor-pointer"
-                                                onMouseLeave={() => setHoveredCard(-1)}
+                                {liker.map((element, key) => (
+                                    <div className="min-w-[300px]" key={key}>
+                                        <div className="py-2 relative flex justify-between w-full cursor-pointer"
+                                            onMouseLeave={() => setHoveredCard(-1)}
+                                        >
+                                            <HoverModal user={element} style={{ display: hoveredCard === key ? 'block' : 'none' }} />
+                                            <NavLink
+                                                to={"/" + element.pseudo}
+                                                className="flex"
+                                                onMouseEnter={() => setHoveredCard(key)}
+                                                onClick={() => setHoveredCard(key)}
                                             >
-                                                <HoverModal user={element} style={{ display: hoveredCard === key ? 'block' : 'none' }} />
-                                                <NavLink
-                                                    to={"/" + element.pseudo}
-                                                    className="flex"
-                                                    onMouseEnter={() => setHoveredCard(key)}
-                                                    onClick={() => setHoveredCard(key)}
-                                                >
-                                                    <div className="w-9 h-9 rounded-full" style={avatar(element.picture)}></div>
-                                                    <p className="flex items-center ml-2">{element.pseudo}</p>
-                                                </NavLink>
-                                                {userData.friend_request_sent
-                                                    && !userData.friend_request_sent.some((object) => object.friend === element._id)
-                                                    && !userData.friends.some((object) => object.friend === element._id)
-                                                    && element._id !== uid
-                                                    && (
-                                                        <OutlinedButton className="text-xs" text="Ajouter en ami" onClick={() => sendRequest(element)}></OutlinedButton>
-                                                    )}
-                                                {userData.friend_request_sent
-                                                    && userData.friend_request_sent.some((object) => object.friend === element._id)
-                                                    && element._id !== uid
-                                                    && (
-                                                        <OutlinedButton className="text-xs" text="Annuler ma demande" onClick={() => cancelRequest(element)}></OutlinedButton>
-                                                    )}
-                                                {!userData.friend_request_sent
-                                                    && element._id !== uid
-                                                    && (
-                                                        <OutlinedButton className="text-xs" text="Ajouter en ami" onClick={() => sendRequest(element)}></OutlinedButton>
-                                                    )}
-                                                {userData.friends
-                                                    && userData.friends.some((object) => object.friend === element._id)
-                                                    && (
-                                                        <OutlinedButton className="text-xs" text="Vous êtes ami"></OutlinedButton>
-                                                    )}
-                                            </div>
+                                                <div className="w-9 h-9 rounded-full" style={avatar(element.picture)}></div>
+                                                <p className="flex items-center ml-2">{element.pseudo}</p>
+                                            </NavLink>
+
+                                            {findState(element, user)}
                                         </div>
-                                    )
-                                })}
+                                    </div>
+                                ))}
                             </>
                         ) : (
                             <p>Personne n'a encore soutenu ce projet</p>)

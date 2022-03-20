@@ -25,6 +25,7 @@ export const RECEIVE_CANCEL_FRIEND_REQUEST = "RECEIVE_CANCEL_FRIEND_REQUEST"
 export const ACCEPT_FRIEND_REQUEST = "ACCEPT_FRIEND_REQUEST"
 export const RECEIVE_ACCEPT_FRIEND_REQUEST = "RECEIVE_ACCEPT_FRIEND_REQUEST"
 export const REFUSE_FRIEND_REQUEST = "REFUSE_FRIEND_REQUEST"
+export const RECEIVE_REFUSE_FRIEND_REQUEST = "RECEIVE_REFUSE_FRIEND_REQUEST"
 
 export const getUser = (uid) => {
     return async (dispatch) => {
@@ -347,5 +348,11 @@ export const refuseFriendRequest = (requesterId, userId, type, notification) => 
                 dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { requesterId, userId, notification } })
             })
             .catch((err) => console.log(err))
+    }
+}
+
+export const receiveRefuseFriendRequest = (friendId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_REFUSE_FRIEND_REQUEST, payload: { friendId } })
     }
 }

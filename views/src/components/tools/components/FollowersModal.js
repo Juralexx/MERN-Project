@@ -39,7 +39,7 @@ const FollowersModal = ({ project, open, setOpen, websocket }) => {
 
     const sendRequest = (element) => {
         const notification = { type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString() }
-        websocket.current.emit("friendRequestNotification", {
+        websocket.current.emit("friendRequest", {
             receiverId: element._id,
             notification: notification
         })
@@ -47,7 +47,7 @@ const FollowersModal = ({ project, open, setOpen, websocket }) => {
     }
 
     const cancelRequest = (element) => {
-        websocket.current.emit("cancelFriendRequestNotification", {
+        websocket.current.emit("cancelFriendRequest", {
             type: "friend-request",
             requesterId: user._id,
             receiverId: element._id

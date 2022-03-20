@@ -26,11 +26,11 @@ function Index({ websocket, onlineUsers, friends, user }) {
     <Router>
       <Navbar websocket={websocket} user={user} />
       <Routes>
-        <Route path="/" element={<Home websocket={websocket} />} />
+        <Route path="/" element={<Home websocket={websocket} user={user} />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Signup />} />
 
-        <Route path="profil" element={<Profil />}>
+        <Route path="profil" element={<Profil user={user} />}>
           <Route index element={<Main />} />
           <Route path="about" element={<About />}>
             <Route index element={<MainInfos />} />

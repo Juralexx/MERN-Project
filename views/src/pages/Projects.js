@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { getProject, removeProjectFromMember } from '../actions/project.action';
+import { getProject } from '../actions/project.action';
 import Sidebar from '../components/project/projects/Sidebar'
 import Header from '../components/project/projects/Header'
 import Title from '../components/project/projects/informations/Title'
@@ -13,7 +13,6 @@ import Work from '../components/project/projects/informations/Work';
 import Content from '../components/project/projects/informations/Content';
 import Members from '../components/project/projects/members/Members';
 import Tasks from '../components/project/projects/tasks/Tasks';
-import { useNavigate } from 'react-router-dom';
 
 const Projects = ({ websocket, user }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -22,7 +21,6 @@ const Projects = ({ websocket, user }) => {
     const [admins, setAdmins] = useState([])
     const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (Object.keys(user).length > 0 && user.current_projects.length > 0) {
@@ -53,12 +51,17 @@ const Projects = ({ websocket, user }) => {
     useEffect(() => {
         let socket = websocket.current
         socket.on("leaveProject", data => {
-            navigate('/')
-            dispatch(removeProjectFromMember(data.projectId))
+            console.log('done')
+            var projectsLeft = projects.slice()
+            var index = projectsLeft.findIndex(element => element._id === data.projectId)
+            projectsLeft.splice(index, 1)
+            setProjects(projectsLeft)
+            if (projectsLeft.length > 0) setProject(projectsLeft[0])
+            else setProject(null)
         })
-        return () => { socket.off("leaveProject") }
-    }, [projects, websocket.current, dispatch, navigate])
- 
+        return () => socket.off("leaveProject")
+    }, [websocket.current])
+
     const changeProject = (project) => {
         setProject(project)
         dispatch(getProject(project._id))

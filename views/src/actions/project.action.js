@@ -25,11 +25,12 @@ export const RECEIVE_PROJECT_LEAVER = "RECEIVE_PROJECT_LEAVER"
 
 export const SEND_MEMBER_REQUEST = "SEND_MEMBER_REQUEST"
 export const RECEIVE_MEMBER_REQUEST = "RECEIVE_MEMBER_REQUEST"
-export const CANCEL_SENT_MEMBER_REQUEST = "CANCEL_SENT_MEMBER_REQUEST"
+export const CANCEL_MEMBER_REQUEST = "CANCEL_MEMBER_REQUEST"
 export const RECEIVE_CANCEL_MEMBER_REQUEST = "RECEIVE_CANCEL_MEMBER_REQUEST"
 export const ACCEPT_MEMBER_REQUEST = "ACCEPT_MEMBER_REQUEST"
 export const RECEIVE_ACCEPT_MEMBER_REQUEST = "RECEIVE_ACCEPT_MEMBER_REQUEST"
 export const REFUSE_MEMBER_REQUEST = "REFUSE_MEMBER_REQUEST"
+export const RECEIVE_REFUSE_MEMBER_REQUEST = "RECEIVE_REFUSE_MEMBER_REQUEST"
 
 export const getProject = (projectId) => {
     return async (dispatch) => {
@@ -267,6 +268,89 @@ export const unfavoriteProject = (projectId, userId) => {
 }
 
 /*******************************************************************************************************************************/
+/*************************************************** MEMBER REQUEST ACTION *****************************************************/
+
+export const sendMemberRequest = (userId, projectId, notification, request) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/send-member-request/` + projectId,
+            data: { userId, request, notification }
+        })
+            .then((res) => {
+                dispatch({ type: SEND_MEMBER_REQUEST, payload: { userId, request } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveMemberRequest = (notification) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_MEMBER_REQUEST, payload: { notification } })
+    }
+}
+
+export const cancelMemberRequest = (userId, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/` + projectId,
+            data: { userId, type }
+        })
+            .then((res) => {
+                dispatch({ type: CANCEL_MEMBER_REQUEST, payload: { userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveCancelMemberRequest = (type, requesterId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_CANCEL_MEMBER_REQUEST, payload: { type, requesterId } })
+    }
+}
+
+export const acceptMemberRequest = (userId, member, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
+            data: { userId, member, type }
+        })
+            .then((res) => {
+                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, type } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveAcceptMemberRequest = (member) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_ACCEPT_MEMBER_REQUEST, payload: { member } })
+    }
+}
+
+export const refuseMemberRequest = (userId, projectId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/refuse-member-request/` + projectId,
+            data: { userId, type }
+        })
+            .then((res) => {
+                dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, type } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveRefuseMemberRequest = (userId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_REFUSE_MEMBER_REQUEST, payload: { userId } })
+    }
+}
+
+/*******************************************************************************************************************************/
 /****************************************************** LEAVE PROJECT **********************************************************/
 
 export const removeMember = (projectId, memberId) => {
@@ -283,91 +367,8 @@ export const removeMember = (projectId, memberId) => {
     }
 }
 
-export const receiveProjectLeaver = (memberId) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_PROJECT_LEAVER, payload: { memberId } })
-    }
-}
-
 export const removeProjectFromMember = (projectId) => {
     return async (dispatch) => {
         dispatch({ type: REMOVE_PROJECT_FROM_MEMBER, payload: { projectId } })
-    }
-}
-
-/*******************************************************************************************************************************/
-/*************************************************** MEMBER REQUEST ACTION *****************************************************/
-
-export const sendProjectMemberRequest = (userId, projectId, notification, request) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/send-member-request/` + projectId,
-            data: { userId, request, notification }
-        })
-            .then((res) => {
-                dispatch({ type: SEND_MEMBER_REQUEST, payload: { userId, request } })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const receiveProjectMemberRequest = (notification) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_MEMBER_REQUEST, payload: { notification } })
-    }
-}
-
-export const cancelProjectMemberRequest = (userId, projectId, type) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/` + projectId,
-            data: { userId, type }
-        })
-            .then((res) => {
-                dispatch({ type: CANCEL_SENT_MEMBER_REQUEST, payload: { userId } })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const receiveCancelProjectMemberRequest = (type, requesterId) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_CANCEL_MEMBER_REQUEST, payload: { type, requesterId } })
-    }
-}
-
-export const acceptProjectMemberRequest = (userId, member, projectId, type) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
-            data: { userId, member, type }
-        })
-            .then((res) => {
-                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, type } })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const receiveAcceptProjectMemberRequest = (member) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_ACCEPT_MEMBER_REQUEST, payload: { member } })
-    }
-}
-
-export const refuseProjectMemberRequest = (userId, projectId, type) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/refuse-member-request/` + projectId,
-            data: { userId, type }
-        })
-            .then((res) => {
-                dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, projectId, type } })
-            })
-            .catch((err) => console.log(err))
     }
 }

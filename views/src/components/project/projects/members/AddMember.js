@@ -6,12 +6,11 @@ import { avatar } from '../../../tools/functions/useAvatar';
 import { BasicInput } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { useDispatch } from 'react-redux';
-import { sendProjectMemberRequest } from '../../../../actions/project.action';
+import { sendProjectMemberRequest } from '../../../tools/functions/member';
 
 const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
     const [friendsFound, setFriendsFound] = useState([])
     const [array, setArray] = useState([])
-    const modalClose = () => { setOpen(false) }
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -27,40 +26,6 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
             getFriends()
         }
     }, [user.friends, admins, user._id])
-
-    const sendMemberRequest = () => {
-        if (array.length > 0) {
-            array.map(async (element) => {
-                const request = {
-                    memberId: element.id,
-                    pseudo: element.pseudo,
-                    picture: element.picture,
-                    requesterId: user._id,
-                    requester: user.pseudo,
-                    date: new Date().toISOString()
-                }
-                const notification = {
-                    type: "project-member-request",
-                    projectId: project._id,
-                    projectTitle: project.title,
-                    projectUrl: project.titleURL,
-                    requesterId: user._id,
-                    requester: user.pseudo,
-                    requesterPicture: user.picture,
-                    date: new Date().toISOString()
-                }
-                return (
-                    websocket.current.emit("sendMemberProjectRequestNotification", {
-                        receiverId: element.id,
-                        notification: notification
-                    }),
-                    dispatch(sendProjectMemberRequest(element.id, project._id, notification, request))
-                )
-            })
-            setArray([])
-            modalClose()
-        }
-    }
 
     const pushUserInArray = (user) => {
         var userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
@@ -99,7 +64,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
 
     return (
         <Modal open={open} setOpen={setOpen} css="bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
-            <div className="close-modal" onClick={() => { modalClose(); setArray([]) }}><ImCross /></div>
+            <div className="close-modal" onClick={() => { setOpen(false); setArray([]) }}><ImCross /></div>
             <div className="relative">
                 <div className="flex py-3">
                     {array.length > 0 && (
@@ -138,7 +103,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
                         </>
                     )}
                 </div>
-                <Button text="Ajouter" className="mt-5" disabled={array.length === 0} onClick={sendMemberRequest} />
+                <Button text="Ajouter" className="mt-5" disabled={array.length === 0} onClick={() => { sendProjectMemberRequest(array, user, project, websocket, dispatch); setArray([]); setOpen(false) }} />
             </div>
         </Modal>
     )

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch } from "react-redux";
-import { removeMember } from "../../../actions/project.action";
 import { avatar } from '../../tools/functions/useAvatar'
 import { dateParser } from '../../Utils'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
@@ -8,26 +7,13 @@ import { TiArrowForward } from 'react-icons/ti'
 import { IconButton } from '../../tools/components/Button'
 import SmallMenu from '../../tools/components/SmallMenu';
 import { useClickOutside } from '../../tools/functions/useClickOutside';
+import { leaveProject } from '../../tools/functions/member';
 
 const Header = ({ project, websocket, user }) => {
     const menuRef = useRef()
     const [openMenu, setOpenMenu] = useState(false)
     useClickOutside(menuRef, setOpenMenu, false)
     const dispatch = useDispatch()
-
-    const leaveProject = () => {
-        project.members.map(async member => {
-            return await websocket.current.emit("getLeaverProject", {
-                receiverId: member.id,
-                memberId: user._id,
-            })
-        })
-        websocket.current.emit("leaveProject", {
-            receiverId: user._id,
-            projectId: project._id
-        })
-        dispatch(removeMember(project._id, user._id))
-    }
 
     return (
         <div className="h-[100px] flex items-center justify-between w-full py-4 px-6 bg-white dark:bg-background_primary_x_light">
@@ -45,7 +31,7 @@ const Header = ({ project, websocket, user }) => {
                         <BiDotsVerticalRounded className="h-5 w-5" onClick={() => setOpenMenu(!openMenu)}/>
                         {openMenu && (
                             <SmallMenu top="top-6" right="right-16">
-                                <div className="py-2 cursor-pointer" onClick={leaveProject}>Quitter le projet</div>
+                                <div className="py-2 cursor-pointer" onClick={() => leaveProject(user, project, websocket, dispatch)}>Quitter le projet</div>
                             </SmallMenu>
                         )}
                     </div>

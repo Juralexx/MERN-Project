@@ -145,7 +145,7 @@ const UserModel = new mongoose.Schema(
             type: [],
             notification: {
                 type: String,
-                id: String,
+                projectId: String,
                 requesterId: String,
                 requester: String,
                 requesterPicture: String,

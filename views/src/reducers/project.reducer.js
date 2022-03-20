@@ -1,5 +1,5 @@
 import {
-    CANCEL_SENT_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_PROJECT_LEAVER, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
+    CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_PROJECT_LEAVER, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
     UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS
 } from "../actions/project.action";
 
@@ -132,24 +132,23 @@ export default function projectReducer(state = initialState, action) {
             })
 
         /*******************************************************************************************************************************/
-        /****************************************************** MEMBER ACTION **********************************************************/
+        /****************************************************** LEAVE PROJECT **********************************************************/
 
         case REMOVE_MEMBER:
             return {
                 ...state,
                 members: state.members.filter(member => member.id !== action.payload.memberId)
             }
-        case RECEIVE_PROJECT_LEAVER:
-            return {
-                ...state,
-                members: state.members.filter(member => member.id !== action.payload.memberId)
-            }
+
+        /*******************************************************************************************************************************/
+        /****************************************************** MEMBER REQUEST *********************************************************/
+
         case SEND_MEMBER_REQUEST:
             return {
                 ...state,
                 member_requests: [...state.member_requests, action.payload.request]
             }
-        case CANCEL_SENT_MEMBER_REQUEST:
+        case CANCEL_MEMBER_REQUEST:
             return {
                 ...state,
                 member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId)
@@ -158,6 +157,11 @@ export default function projectReducer(state = initialState, action) {
             return {
                 ...state,
                 members: [...state.members, action.payload.member]
+            }
+        case RECEIVE_REFUSE_MEMBER_REQUEST:
+            return {
+                ...state,
+                member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId)
             }
 
         default:

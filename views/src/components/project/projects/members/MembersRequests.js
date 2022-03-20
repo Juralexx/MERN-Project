@@ -1,22 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { cancelProjectMemberRequest } from '../../../../actions/project.action'
 import { Button } from '../../../tools/components/Button'
 import Modal from '../../../tools/components/Modal'
+import { cancelProjectMemberRequest } from '../../../tools/functions/member'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { dateParser } from '../../../Utils'
 
-const MembersRequests = ({ open, setOpen, project, websocket, user }) => {
+const MembersRequests = ({ open, setOpen, project, websocket }) => {
     const dispatch = useDispatch()
-
-    const cancelMemberRequest = (element) => {
-        websocket.current.emit("cancelMemberProjectRequestNotification", {
-            type: "project-member-request",
-            requesterId: element.requesterId,
-            receiverId: element.memberId
-        })
-        dispatch(cancelProjectMemberRequest(element.memberId, project._id, element.type))
-    }
 
     return (
         <Modal open={open} setOpen={setOpen} css="bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
@@ -33,7 +24,7 @@ const MembersRequests = ({ open, setOpen, project, websocket, user }) => {
                                 </div>
                             </div>
                             <div>
-                                <Button text="Annuler la demande" onClick={() => cancelMemberRequest(element)} className="ml-5" />
+                                <Button text="Annuler la demande" onClick={() => cancelProjectMemberRequest(element, project, websocket, dispatch)} className="ml-5" />
                             </div>
                         </div>
                     )

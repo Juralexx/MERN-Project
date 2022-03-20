@@ -1,33 +1,12 @@
-import React, { useState } from 'react'
-import { acceptFriendRequest, refuseFriendRequest } from '../../../../actions/user.action'
+import React from 'react'
+import { acceptRequest, refuseRequest } from '../../../tools/functions/friend';
 import { useDispatch } from 'react-redux'
 import { Button } from '../../../tools/components/Button'
 import { FaUserFriends } from 'react-icons/fa'
 import { avatar } from '../../../tools/functions/useAvatar'
 
 const FriendRequestCard = ({ sentNotification, websocket, user }) => {
-    const [accepted, setAccepted] = useState(false)
-    const [refused, setRefused] = useState(false)
     const dispatch = useDispatch()
-
-    const acceptRequest = (element) => {
-        websocket.current.emit("cancelFriendRequestNotification", {
-            type: "friend-request",
-            requesterId: element.sender,
-            receiverId: user._id
-        })
-        dispatch(acceptFriendRequest(element.sender, user._id, "friend-request"))
-        setAccepted(true)
-    }
-    const refuseRequest = (element) => {
-        websocket.current.emit("cancelFriendRequestNotification", {
-            type: "friend-request",
-            requesterId: element.sender,
-            receiverId: user._id
-        })
-        dispatch(refuseFriendRequest(element.sender, user._id, "friend-request"))
-        setRefused(true)
-    }
 
     return (
         sentNotification.type === "friend-request" && (
@@ -37,7 +16,7 @@ const FriendRequestCard = ({ sentNotification, websocket, user }) => {
                     <div className="subject">Demande d'ami</div>
                     <div className="date">À l'instant</div>
                 </div>
-                {!accepted && !refused && (
+                {!sentNotification.state && (
                     <>
                         <div className="notification-content">
                             <div className="left">
@@ -50,17 +29,17 @@ const FriendRequestCard = ({ sentNotification, websocket, user }) => {
                             <Button
                                 text="Accepter"
                                 className="btn btn-primary"
-                                onClick={() => acceptRequest(sentNotification)}
+                                onClick={() => acceptRequest(sentNotification, user, websocket, dispatch)}
                             />
                             <Button
                                 text="Refuser"
                                 className="btn btn-primary"
-                                onClick={() => refuseRequest(sentNotification)}
+                                onClick={() => refuseRequest(sentNotification, user, websocket, dispatch)}
                             />
                         </div>
                     </>
                 )}
-                {refused && (
+                {sentNotification.state === "accepted" && (
                     <>
                         <div className="notification-content">
                             <div className="left">
@@ -72,7 +51,7 @@ const FriendRequestCard = ({ sentNotification, websocket, user }) => {
                         <div className="flex bottom"></div>
                     </>
                 )}
-                {accepted && (
+                {sentNotification.state === "refused" && (
                     <>
                         <div className="notification-content">
                             <div className="left">

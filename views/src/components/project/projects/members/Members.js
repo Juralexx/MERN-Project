@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { removeMember } from '../../../../actions/project.action'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { useClickOutside } from '../../../tools/functions/useClickOutside'
 import AddMember from './AddMember'
 import MembersRequests from './MembersRequests'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import SmallMenu from '../../../tools/components/SmallMenu'
+import { excludeMember } from '../../../tools/functions/member'
 
 const Members = ({ project, setProject, admins, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)
@@ -18,21 +17,6 @@ const Members = ({ project, setProject, admins, user, websocket }) => {
     const membersMenu = useRef()
     useClickOutside(membersMenu, setOpenMenu, false)
     const isAdmin = admins.some(member => member.id === user._id)
-    const dispatch = useDispatch()
-
-    const removeUserFromProject = (element) => {
-        dispatch(removeMember(project._id, element.id))
-        websocket.current.emit("leaveProject", {
-            receiverId: element.id,
-            projectId: project._id
-        })
-        project.members.map(member => {
-            return websocket.current.emit("getLeaverProject", {
-                receiverId: member.id,
-                memberId: element.id,
-            })
-        })
-    }
 
     return (
         <>
@@ -77,7 +61,7 @@ const Members = ({ project, setProject, admins, user, websocket }) => {
                                                             <div className="py-2 cursor-pointer">Supprimer Admin</div>
                                                         )}
                                                         {element.id !== user._id && project.posterId === user._id && (
-                                                            <div className="py-2 cursor-pointer" onClick={() => removeUserFromProject(element)}>Supprimer ce membre</div>
+                                                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, project, websocket)}>Supprimer ce membre</div>
                                                         )}
                                                     </>
                                                 }
