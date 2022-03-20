@@ -8,27 +8,25 @@ import { Button } from '../../../tools/components/Button'
 import { useDispatch } from 'react-redux';
 import { sendProjectMemberRequest } from '../../../../actions/project.action';
 
-const AddMember = ({ open, setOpen, project, user, websocket }) => {
+const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
     const [friendsFound, setFriendsFound] = useState([])
     const [array, setArray] = useState([])
     const modalClose = () => { setOpen(false) }
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const getFriends = async () => {
-            if (user.friends.length > 0) {
+        if (user.friends.length > 0 && admins.some(element => element.id === user._id)) {
+            const getFriends = async () => {
                 const friendsArray = user.friends.map(async (element) => {
                     return await axios.get(`${process.env.REACT_APP_API_URL}api/user/${element.friend}`)
                         .then((res) => res.data)
                         .catch((err) => console.error(err))
                 })
-                Promise.all(friendsArray).then((res) => {
-                    setFriendsFound(res)
-                })
+                Promise.all(friendsArray).then((res) => { setFriendsFound(res) })
             }
+            getFriends()
         }
-        getFriends()
-    }, [user.friends])
+    }, [user.friends, admins, user._id])
 
     const sendMemberRequest = () => {
         if (array.length > 0) {
@@ -53,15 +51,8 @@ const AddMember = ({ open, setOpen, project, user, websocket }) => {
                 }
                 return (
                     websocket.current.emit("sendMemberProjectRequestNotification", {
-                        type: "project-member-request",
-                        projectId: project._id,
-                        projectTitle: project.title,
-                        projectUrl: project.titleURL,
-                        requesterId: user._id,
-                        requester: user.pseudo,
-                        requesterPicture: user.picture,
                         receiverId: element.id,
-                        date: new Date().toISOString()
+                        notification: notification
                     }),
                     dispatch(sendProjectMemberRequest(element.id, project._id, notification, request))
                 )
@@ -82,22 +73,18 @@ const AddMember = ({ open, setOpen, project, user, websocket }) => {
             setArray(storedArray)
         }
     }
-
     const removeUserFromArray = (user) => {
         var storedArray = array.slice()
         var index = storedArray.findIndex(element => element.id === user.id)
         storedArray.splice(index, 1)
         setArray(storedArray)
     }
-
     const [search, setSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [isFriendInResult, setFriendInResult] = useState([])
     const isEmpty = !isFriendInResult || isFriendInResult.length === 0
     const regexp = new RegExp(searchQuery, 'i');
-
     const handleInputChange = (e) => { setSearchQuery(e.target.value) }
-
     const searchFriends = () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         if (searchQuery.length >= 2) {

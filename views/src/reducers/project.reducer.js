@@ -1,10 +1,6 @@
 import {
-    ACCEPT_MEMBER_REQUEST,
-    CANCEL_SENT_MEMBER_REQUEST,
-    FAVORITE, FOLLOW, GET_PROJECT, LIKE, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
-    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE,
-    UPDATE_TITLEURL,
-    UPDATE_WORKS
+    CANCEL_SENT_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_PROJECT_LEAVER, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
+    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS
 } from "../actions/project.action";
 
 const initialState = {}
@@ -139,15 +135,15 @@ export default function projectReducer(state = initialState, action) {
         /****************************************************** MEMBER ACTION **********************************************************/
 
         case REMOVE_MEMBER:
-            return Object.keys(state).map((project) => {
-                if (project._id === action.payload.projectId) {
-                    return {
-                        ...project,
-                        members: project.members.filter((members) => members.some(memberId => memberId !== action.payload.memberId))
-                    }
-                }
-                return project
-            })
+            return {
+                ...state,
+                members: state.members.filter(member => member.id !== action.payload.memberId)
+            }
+        case RECEIVE_PROJECT_LEAVER:
+            return {
+                ...state,
+                members: state.members.filter(member => member.id !== action.payload.memberId)
+            }
         case SEND_MEMBER_REQUEST:
             return {
                 ...state,
@@ -158,10 +154,9 @@ export default function projectReducer(state = initialState, action) {
                 ...state,
                 member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId)
             }
-        case ACCEPT_MEMBER_REQUEST:
+        case RECEIVE_ACCEPT_MEMBER_REQUEST:
             return {
                 ...state,
-                member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId),
                 members: [...state.members, action.payload.member]
             }
 

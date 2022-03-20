@@ -58,8 +58,9 @@ const server = app.listen(PORT, () => {
     console.log(`Serveur démarré : http://localhost:${PORT}`);
 })
 
-/*************************************************************/
-/************************ WEBSOCKET **************************/
+/************************************************************************************/
+/************************************** WEBSOCKET ***********************************/
+/************************************************************************************/
 
 import { Server } from "socket.io";
 const io = new Server(server, {
@@ -82,7 +83,7 @@ io.on("connect", (socket) => {
     })
 
     /***********************************************************************************/
-    /********************************** MESSENGER ************************************ */
+    /********************************** MESSENGER **************************************/
 
     socket.on("onMessenger", ({ userId, conversationId }) => {
         const user = users.find(member => member.userId === userId)
@@ -197,15 +198,11 @@ io.on("connect", (socket) => {
     /***********************************************************************************/
     /******************************** FRIEND REQUEST ***********************************/
 
-    socket.on('friendRequestNotification', ({ type, requesterId, requester, requesterPicture, date, receiverId }) => {
+    socket.on('friendRequestNotification', ({ notification, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('friendRequestNotification', {
-                type,
-                requesterId,
-                requester,
-                requesterPicture,
-                date
+                notification
             })
         }
     })
@@ -220,20 +217,23 @@ io.on("connect", (socket) => {
         }
     })
 
+    socket.on('acceptfriendRequest', ({ receiverId, friend }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('acceptfriendRequest', {
+                friend
+            })
+        }
+    })
+
     /***********************************************************************************/
     /**************************** PROJECT MEMBER REQUEST *******************************/
 
-    socket.on('sendMemberProjectRequestNotification', ({ type, requesterId, requester, requesterPicture, projectId, projectUrl, projectTitle, receiverId, date }) => {
+    socket.on('sendMemberProjectRequestNotification', ({ receiverId, notification }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('sendMemberProjectRequestNotification', {
-                type,
-                requesterId,
-                requester,
-                requesterPicture,
-                projectId,
-                projectUrl,
-                projectTitle, date
+                notification
             })
         }
     })
@@ -256,6 +256,28 @@ io.on("connect", (socket) => {
             })
         }
     })
+
+    /***********************************************************************************/
+    /********************************** LEAVE PROJECT **********************************/
+
+    socket.on('leaveProject', ({ receiverId, projectId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('leaveProject', {
+                projectId
+            })
+        }
+    })
+
+    socket.on('getProjectLeaver', ({ receiverId, memberId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('getProjectLeaver', {
+                memberId
+            })
+        }
+    })
+
 
     const removeUser = (socketId) => {
         users = users.filter(user => user.socketId !== socketId)

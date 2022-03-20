@@ -20,11 +20,11 @@ import MostLiked from '../../pages/MostLiked'
 import SocialsNetworks from '../profil/about/update/SocialsNetworks'
 import Messenger from '../messenger/Messenger'
 
-function Index({ websocket, onlineUsers, friends }) {
+function Index({ websocket, onlineUsers, friends, user }) {
 
   return (
     <Router>
-      <Navbar websocket={websocket} />
+      <Navbar websocket={websocket} user={user} />
       <Routes>
         <Route path="/" element={<Home websocket={websocket} />} />
         <Route path="login" element={<Login />} />
@@ -44,7 +44,7 @@ function Index({ websocket, onlineUsers, friends }) {
         <Route path=":pseudo" element={<MemberProfil />} />
 
         <Route path="project/add" element={<AddProject />} />
-        <Route path="projects" element={<Projects websocket={websocket} />} />
+        <Route path="projects" element={<Projects websocket={websocket} user={user} />} />
         <Route path=":pseudo/projects" element={<UserProjects />} />
         <Route path="project/:titleURL" element={<Project />} />
 

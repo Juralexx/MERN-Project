@@ -1,16 +1,16 @@
-import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { cancelSentFriendRequest, sendFriendRequest } from "../../../actions/user.action";
+import { cancelFriendRequest, sendFriendRequest } from "../../../actions/user.action";
 import { UidContext, UserContext } from "../../AppContext";
-import HoverModal from "./HoverModal";
-import Modal from "./Modal";
-import { MdOutlineBookmark } from 'react-icons/md'
-import { OutlinedButton } from "./Button";
 import { avatar } from "../functions/useAvatar";
+import Modal from "./Modal";
+import HoverModal from "./HoverModal";
+import { OutlinedButton } from "./Button";
+import { MdOutlineBookmark } from 'react-icons/md'
 
-const FollowersModal = ({ project, open, setOpen }) => {
+const FollowersModal = ({ project, open, setOpen, websocket }) => {
     const user = useContext(UserContext)
     const uid = useContext(UidContext)
     const userData = useSelector((state) => state.userReducer)
@@ -38,19 +38,21 @@ const FollowersModal = ({ project, open, setOpen }) => {
     }, [project.followers, open])
 
     const sendRequest = (element) => {
-        const notification = {
-            type: "friend-request",
-            requesterId: user._id,
-            requester: user.pseudo,
-            requesterPicture: user.picture,
-            date: new Date().toISOString(),
-        }
+        const notification = { type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString() }
+        websocket.current.emit("friendRequestNotification", {
+            receiverId: element._id,
+            notification: notification
+        })
         dispatch(sendFriendRequest(element._id, uid, notification))
     }
 
     const cancelRequest = (element) => {
-        const type = "friend-request"
-        dispatch(cancelSentFriendRequest(element._id, uid, type))
+        websocket.current.emit("cancelFriendRequestNotification", {
+            type: "friend-request",
+            requesterId: user._id,
+            receiverId: element._id
+        })
+        dispatch(cancelFriendRequest(element._id, uid, element.type))
     }
 
     return (

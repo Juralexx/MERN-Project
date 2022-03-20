@@ -42,7 +42,7 @@ export const sendFriendRequest = async (req, res) => {
     }
 }
 
-export const cancelSentFriendRequest = async (req, res) => {
+export const cancelFriendRequest = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
 
@@ -94,13 +94,13 @@ export const acceptFriend = async (req, res) => {
             {
                 $addToSet: {
                     friends: {
-                        friend: req.body.friendId,
+                        friend: req.body.requesterId,
                         requestedAt: new Date().toISOString(),
                     }
                 },
                 $pull: {
                     notifications: {
-                        requesterId: req.body.friendId,
+                        requesterId: req.body.requesterId,
                         type: req.body.type
                     }
                 },
@@ -111,7 +111,7 @@ export const acceptFriend = async (req, res) => {
             .catch((err) => { return res.status(400).send({ message: err }) })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.friendId },
+            { _id: req.body.requesterId },
             {
                 $addToSet: {
                     friends: {
@@ -145,7 +145,7 @@ export const refuseFriend = async (req, res) => {
             {
                 $pull: {
                     notifications: {
-                        requesterId: req.body.friendId,
+                        requesterId: req.body.requesterId,
                         type: req.body.type
                     }
                 },
@@ -156,7 +156,7 @@ export const refuseFriend = async (req, res) => {
             .catch((err) => { return res.status(400).send({ message: err }) })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.friendId },
+            { _id: req.body.requesterId },
             {
                 $pull: {
                     friend_request_sent: {

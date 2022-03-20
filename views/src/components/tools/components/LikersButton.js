@@ -22,7 +22,7 @@ const LikersButton = ({ project, onClick }) => {
         if (project.likers.includes(uid)) {
             if (liked) {
                 if (project.likers.length > 1)
-                    setAction(<span>Vous et {project.likers.length - 1} personnes</span>)
+                    setAction(<span>Vous et {project.likers.length - 1}</span>)
                 if (project.likers.length === 1)
                     setAction(<span>Vous</span>)
                 if (project.likers.length === 0)
@@ -33,9 +33,9 @@ const LikersButton = ({ project, onClick }) => {
         else {
             if (liked) {
                 if (project.likers.length > 1)
-                    setAction(<span>Vous et {project.likers.length} personnes</span>)
+                    setAction(<span>Vous et {project.likers.length}</span>)
                 if (project.likers.length === 1)
-                    setAction(<span>Vous et 1 personne</span>)
+                    setAction(<span>Vous et 1</span>)
                 if (project.likers.length === 0)
                     setAction(<span>Vous</span>)
             }

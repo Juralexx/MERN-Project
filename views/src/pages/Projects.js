@@ -1,8 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
-import { getProject } from '../actions/project.action';
-import { UserContext } from '../components/AppContext'
+import { getProject, removeProjectFromMember } from '../actions/project.action';
 import Sidebar from '../components/project/projects/Sidebar'
 import Header from '../components/project/projects/Header'
 import Title from '../components/project/projects/informations/Title'
@@ -14,18 +13,19 @@ import Work from '../components/project/projects/informations/Work';
 import Content from '../components/project/projects/informations/Content';
 import Members from '../components/project/projects/members/Members';
 import Tasks from '../components/project/projects/tasks/Tasks';
+import { useNavigate } from 'react-router-dom';
 
-const Projects = ({ websocket }) => {
+const Projects = ({ websocket, user }) => {
     const projectData = useSelector((state) => state.projectReducer)
-    const user = useContext(UserContext)
     const [projects, setProjects] = useState([])
     const [project, setProject] = useState()
     const [admins, setAdmins] = useState([])
     const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
-        if (user) {
+        if (Object.keys(user).length > 0 && user.current_projects.length > 0) {
             const getProjects = async () => {
                 const currentUserProjects = user.current_projects.map(async (project) => {
                     return await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${project}`)
@@ -45,11 +45,20 @@ const Projects = ({ websocket }) => {
     }, [user, dispatch])
 
     useEffect(() => {
-        if (projectData && !isLoading) {
+        if (Object.keys(projectData).length > 0) {
             setProject(projectData)
         }
     }, [projectData])
 
+    useEffect(() => {
+        let socket = websocket.current
+        socket.on("leaveProject", data => {
+            navigate('/')
+            dispatch(removeProjectFromMember(data.projectId))
+        })
+        return () => { socket.off("leaveProject") }
+    }, [projects, websocket.current, dispatch, navigate])
+ 
     const changeProject = (project) => {
         setProject(project)
         dispatch(getProject(project._id))
@@ -62,7 +71,7 @@ const Projects = ({ websocket }) => {
             <div className="relative w-full h-full overflow-y-auto">
                 {project &&
                     <>
-                        <Header project={project} />
+                        <Header project={project} websocket={websocket} user={user} />
                         <div className="grid grid-cols-2 gap-4 py-4 pl-4 pr-2">
                             <div>
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
@@ -77,7 +86,7 @@ const Projects = ({ websocket }) => {
                             </div>
                             <div>
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
-                                    <Members project={project} admins={admins} user={user} websocket={websocket} />
+                                    <Members project={project} setProject={setProject} admins={admins} user={user} websocket={websocket} />
                                 </div>
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
                                     <Tasks project={project} admins={admins} user={user} />

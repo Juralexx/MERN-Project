@@ -4,34 +4,29 @@ import { useDispatch } from 'react-redux'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { FaUserFriends } from 'react-icons/fa'
+import axios from 'axios'
 
 const MemberRequestCard = ({ sentNotification, websocket, user }) => {
     const [accepted, setAccepted] = useState(false)
     const [refused, setRefused] = useState(false)
     const dispatch = useDispatch()
 
-    const acceptMemberRequest = (element) => {
-        const member = {
-            id: user._id,
-            pseudo: user.pseudo,
-            picture: user.picture,
-            role: "user",
-            since: new Date().toISOString()
-        }
-        websocket.current.emit("cancelMemberProjectRequestNotification", {
-            type: "project-member-request",
-            requesterId: element.sender,
-            receiverId: user._id
-        })
+    const acceptMemberRequest = async () => {
+        const member = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
+        await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${sentNotification.projectId}`)
+            .then(res => {
+                res.data.members.map(member => {
+                    return websocket.current.emit("acceptMemberProjectRequestNotification", {
+                        member: member,
+                        receiverId: member.id
+                    })
+                })
+            })
         dispatch(acceptProjectMemberRequest(user._id, member, sentNotification.projectId, "project-member-request"))
         setAccepted(true)
     }
-    const refuseMemberRequest = (element) => {
-        websocket.current.emit("cancelMemberProjectRequestNotification", {
-            type: "project-member-request",
-            requesterId: element.sender,
-            receiverId: user._id
-        })
+
+    const refuseMemberRequest = () => {
         dispatch(refuseProjectMemberRequest(user._id, sentNotification.projectId, "project-member-request"))
         setRefused(true)
     }

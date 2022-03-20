@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
-import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { removeMember } from '../../../../actions/project.action'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { useClickOutside } from '../../../tools/functions/useClickOutside'
 import AddMember from './AddMember'
@@ -7,7 +8,7 @@ import MembersRequests from './MembersRequests'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import SmallMenu from '../../../tools/components/SmallMenu'
 
-const Members = ({ project, admins, user, websocket }) => {
+const Members = ({ project, setProject, admins, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)
     const [showRequests, setShowRequests] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
@@ -17,14 +18,20 @@ const Members = ({ project, admins, user, websocket }) => {
     const membersMenu = useRef()
     useClickOutside(membersMenu, setOpenMenu, false)
     const isAdmin = admins.some(member => member.id === user._id)
+    const dispatch = useDispatch()
 
-    const removeUserFromProject = async (element) => {
-        const memberId = element.id
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/remove-user/${project._id}`,
-            data: { memberId }
-        }).catch(err => console.log(err))
+    const removeUserFromProject = (element) => {
+        dispatch(removeMember(project._id, element.id))
+        websocket.current.emit("leaveProject", {
+            receiverId: element.id,
+            projectId: project._id
+        })
+        project.members.map(member => {
+            return websocket.current.emit("getLeaverProject", {
+                receiverId: member.id,
+                memberId: element.id,
+            })
+        })
     }
 
     return (
@@ -83,7 +90,7 @@ const Members = ({ project, admins, user, websocket }) => {
                     )
                 })}
             </div>
-            {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} />}
+            {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} admins={admins} />}
             {<MembersRequests open={showRequests} setOpen={setShowRequests} project={project} user={user} websocket={websocket} />}
         </>
     )

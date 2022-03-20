@@ -1,43 +1,32 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import { updateTitle, updateTitleURL } from "../../../actions/project.action";
-import { RoundedButton, Button } from "../../tools/components/Button";
-import { removeAccents } from "../../Utils";
-import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../tools/components/Inputs";
+import React, { useState, useRef } from 'react'
+import { useDispatch } from "react-redux";
+import { removeMember } from "../../../actions/project.action";
 import { avatar } from '../../tools/functions/useAvatar'
 import { dateParser } from '../../Utils'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { TiArrowForward } from 'react-icons/ti'
 import { IconButton } from '../../tools/components/Button'
+import SmallMenu from '../../tools/components/SmallMenu';
+import { useClickOutside } from '../../tools/functions/useClickOutside';
 
-const Header = ({ project }) => {
-    const projectData = useSelector((state) => state.projectReducer)
-    const [title, setTitle] = useState("")
-    const [openForm, setOpenForm] = useState(false)
-    const [value, setValue] = useState(false)
-    const [modified, setModified] = useState(false)
+const Header = ({ project, websocket, user }) => {
+    const menuRef = useRef()
+    const [openMenu, setOpenMenu] = useState(false)
+    useClickOutside(menuRef, setOpenMenu, false)
     const dispatch = useDispatch()
 
-    const hideTitleUpdater = () => { setOpenForm(false) }
-    const handleChange = () => { setValue(true) }
-
-    const handleTitle = () => {
-        const tolower = title.toLowerCase();
-        const uppercase = tolower.charAt(0).toUpperCase() + tolower.slice(1);
-        const deletechars = uppercase.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
-        const deletespaces = deletechars.replace(/ +/g, " ")
-        const newTitle = deletespaces.trim()
-        setTitle(newTitle)
-
-        const lowerTitle = newTitle.toLowerCase();
-        const removeaccent = removeAccents(lowerTitle)
-        const url = removeaccent.replace(/ /g, "-")
-
-        dispatch(updateTitle(project._id, title))
-        dispatch(updateTitleURL(project._id, url))
-        setOpenForm(false)
-        setModified(true)
+    const leaveProject = () => {
+        project.members.map(async member => {
+            return await websocket.current.emit("getLeaverProject", {
+                receiverId: member.id,
+                memberId: user._id,
+            })
+        })
+        websocket.current.emit("leaveProject", {
+            receiverId: user._id,
+            projectId: project._id
+        })
+        dispatch(removeMember(project._id, user._id))
     }
 
     return (
@@ -52,8 +41,13 @@ const Header = ({ project }) => {
             <div>
                 <div className="flex">
                     <IconButton text="Voir l'annonce public" endIcon={<TiArrowForward className="h-5 w-5" />} className="mr-2" />
-                    <div className="flex items-center p-2 rounded-full text-gray-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-background_primary_light cursor-pointer">
-                        <BiDotsVerticalRounded className="h-5 w-5" />
+                    <div ref={menuRef} className="flex items-center p-2 rounded-full text-gray-500 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-background_primary_light cursor-pointer">
+                        <BiDotsVerticalRounded className="h-5 w-5" onClick={() => setOpenMenu(!openMenu)}/>
+                        {openMenu && (
+                            <SmallMenu top="top-6" right="right-16">
+                                <div className="py-2 cursor-pointer" onClick={leaveProject}>Quitter le projet</div>
+                            </SmallMenu>
+                        )}
                     </div>
                 </div>
             </div>

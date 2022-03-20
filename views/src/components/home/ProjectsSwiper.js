@@ -32,7 +32,7 @@ const ProjectsSwiper = ({ projects, isLoading, websocket }) => {
         <>
             {openModal && <ProjectModal project={project} open={openModal} setOpen={setOpenModal} />}
             {openProfilCard && <ProfilCard isUser={user} open={openProfilCard} setOpen={setOpenProfilCard} />}
-            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} />}
+            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} websocket={websocket} />}
             {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} />}
             <Swiper
                 slidesPerView="auto"

@@ -150,8 +150,7 @@ const UserModel = new mongoose.Schema(
                 requester: String,
                 requesterPicture: String,
                 date: Date,
-                seen: Boolean,
-                accepted: Boolean,
+                state: String,
             }
         },
 

@@ -26,7 +26,7 @@ export const addMemberToProject = async (req, res) => {
     }
 }
 
-export const removeMemberFromProject = async (req, res) => {
+export const leaveProject = async (req, res) => {
     try {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },

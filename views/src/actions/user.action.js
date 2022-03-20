@@ -19,8 +19,11 @@ export const UPDATE_YOUTUBE = "UPDATE_YOUTUBE"
 export const UPDATE_LINKEDIN = "UPDATE_LINKEDIN"
 
 export const SEND_FRIEND_REQUEST = "SEND_FRIEND_REQUEST"
+export const RECEIVE_FRIEND_REQUEST = "RECEIVE_FRIEND_REQUEST"
 export const CANCEL_SENT_FRIEND_REQUEST = "CANCEL_SENT_FRIEND_REQUEST"
+export const RECEIVE_CANCEL_FRIEND_REQUEST = "RECEIVE_CANCEL_FRIEND_REQUEST"
 export const ACCEPT_FRIEND_REQUEST = "ACCEPT_FRIEND_REQUEST"
+export const RECEIVE_ACCEPT_FRIEND_REQUEST = "RECEIVE_ACCEPT_FRIEND_REQUEST"
 export const REFUSE_FRIEND_REQUEST = "REFUSE_FRIEND_REQUEST"
 
 export const getUser = (uid) => {
@@ -270,6 +273,9 @@ export const updateLinkedin = (userId, linkedin) => {
     }
 }
 
+/*******************************************************************************************************************************/
+/***************************************************** FRIEND REQUEST **********************************************************/
+
 export const sendFriendRequest = (friendId, userId, notification) => {
     return async (dispatch) => {
         await axios({
@@ -284,7 +290,13 @@ export const sendFriendRequest = (friendId, userId, notification) => {
     }
 }
 
-export const cancelSentFriendRequest = (friendId, userId, type) => {
+export const receiveFriendRequest = (notification) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_FRIEND_REQUEST, payload: { notification } })
+    }
+}
+
+export const cancelFriendRequest = (friendId, userId, type) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -298,29 +310,41 @@ export const cancelSentFriendRequest = (friendId, userId, type) => {
     }
 }
 
-export const acceptFriendRequest = (friendId, userId, type) => {
+export const receiveCancelFriendRequest = (type, requesterId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_CANCEL_FRIEND_REQUEST, payload: { type, requesterId } })
+    }
+}
+
+export const acceptFriendRequest = (requesterId, userId, type, notification) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/accept-friend-request/` + userId,
-            data: { friendId, type }
+            data: { requesterId, type }
         })
             .then((res) => {
-                dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { friendId, userId } })
+                dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { requesterId, userId, notification } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const refuseFriendRequest = (friendId, userId, type) => {
+export const receiveAcceptFriendRequest = (friend) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_ACCEPT_FRIEND_REQUEST, payload: { friend } })
+    }
+}
+
+export const refuseFriendRequest = (requesterId, userId, type, notification) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/refuse-friend-request/` + userId,
-            data: { friendId, type }
+            data: { requesterId, type }
         })
             .then((res) => {
-                dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { friendId, userId } })
+                dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { requesterId, userId, notification } })
             })
             .catch((err) => console.log(err))
     }

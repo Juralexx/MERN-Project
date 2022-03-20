@@ -25,7 +25,7 @@ const FollowersButton = ({ project, onClick }) => {
             if (project.followers.includes(uid)) {
                 if (followed) {
                     if (project.followers.length > 1)
-                        setAction(<span>Vous et {project.followers.length - 1} personnes</span>)
+                        setAction(<span>Vous et {project.followers.length - 1}</span>)
                     if (project.followers.length === 1)
                         setAction(<span>Vous</span>)
                     if (project.followers.length === 0)
@@ -35,9 +35,9 @@ const FollowersButton = ({ project, onClick }) => {
             } else {
                 if (followed) {
                     if (project.followers.length > 1)
-                        setAction(<span>Vous et {project.followers.length} personnes</span>)
+                        setAction(<span>Vous et {project.followers.length}</span>)
                     if (project.followers.length === 1)
-                        setAction(<span>Vous et 1 personne</span>)
+                        setAction(<span>Vous et 1</span>)
                     if (project.followers.length === 0)
                         setAction(<span>Vous</span>)
                 }
