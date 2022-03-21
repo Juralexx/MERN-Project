@@ -93,7 +93,7 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
-        member_requests : {
+        member_requests: {
             type: [],
             request: {
                 id: String,
@@ -105,28 +105,25 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
-        tasks: {
-            type: [],
-            task: {
-                _id: String,
-                title: String,
-                description: String,
-                state: String,
-                creatorId: String,
-                creator: String,
-                creatorPicture: String,
-                end: Date,
-                date: Date,
-                members: {
-                    type: [],
-                    member: {
-                        id: String,
-                        pseudo: String,
-                        picture: String,
-                    }
+        tasks: [{
+            _id: String,
+            title: String,
+            description: String,
+            state: String,
+            creatorId: String,
+            creator: String,
+            creatorPicture: String,
+            end: Date,
+            date: Date,
+            members: {
+                type: [],
+                member: {
+                    id: String,
+                    pseudo: String,
+                    picture: String,
                 }
             }
-        },
+        }],
 
         follows: {
             type: Number,

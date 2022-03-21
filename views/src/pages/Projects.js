@@ -19,33 +19,32 @@ const Projects = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
     const [project, setProject] = useState()
     const [admins, setAdmins] = useState([])
+    const [isManager, setManager] = useState()
+    const [users, setUsers] = useState([])
     const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
 
     useEffect(() => {
         if (Object.keys(user).length > 0 && user.current_projects.length > 0) {
-            const getProjects = async () => {
-                const currentUserProjects = user.current_projects.map(async (project) => {
-                    return await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${project}`)
-                        .then((res) => res.data)
-                        .catch((err) => console.error(err))
-                })
-                Promise.all(currentUserProjects).then((res) => {
-                    setProjects(res)
-                    setProject(res[0])
-                    dispatch(getProject(res[0]._id))
-                    setAdmins(res[0].members.filter(member => member.role === "admin"))
-                    setLoading(false)
-                })
-            }
-            getProjects()
+            const currentUserProjects = user.current_projects.map(async (project) => {
+                return await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${project}`)
+                    .then((res) => res.data)
+                    .catch((err) => console.error(err))
+            })
+            Promise.all(currentUserProjects).then((res) => {
+                setProjects(res)
+                setProject(res[0])
+                dispatch(getProject(res[0]._id))
+                setManager(res[0].members.filter(member => member.role === "manager"))
+                setAdmins(res[0].members.filter(member => member.role === "admin"))
+                setUsers(res[0].members.filter(member => member.role === "user"))
+                setLoading(false)
+            })
         }
     }, [user, dispatch])
 
     useEffect(() => {
-        if (Object.keys(projectData).length > 0) {
-            setProject(projectData)
-        }
+        if (Object.keys(projectData).length > 0) { setProject(projectData) }
     }, [projectData])
 
     useEffect(() => {
@@ -60,12 +59,14 @@ const Projects = ({ websocket, user }) => {
             else setProject(null)
         })
         return () => socket.off("leaveProject")
-    }, [websocket.current])
+    }, [websocket.current, projects])
 
     const changeProject = (project) => {
         setProject(project)
         dispatch(getProject(project._id))
+        setManager(project.members.filter(member => member.role === "manager"))
         setAdmins(project.members.filter(member => member.role === "admin"))
+        setUsers(project.members.filter(member => member.role === "user"))
     }
 
     return (
@@ -89,10 +90,10 @@ const Projects = ({ websocket, user }) => {
                             </div>
                             <div>
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
-                                    <Members project={project} setProject={setProject} admins={admins} user={user} websocket={websocket} />
+                                    <Members project={project} setProject={setProject} admins={admins} isManager={isManager} users={users} user={user} websocket={websocket} />
                                 </div>
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
-                                    <Tasks project={project} admins={admins} user={user} />
+                                    <Tasks project={project} admins={admins} isManager={isManager} user={user} websocket={websocket} />
                                 </div>
                             </div>
                         </div>

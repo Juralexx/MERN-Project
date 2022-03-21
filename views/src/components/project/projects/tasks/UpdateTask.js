@@ -1,34 +1,30 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createTask } from '../../../../actions/project.action'
+import { changeTask } from '../../../../actions/project.action'
 import Modal from '../../../tools/components/Modal'
 import { BasicInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { ImCross } from 'react-icons/im'
 
-const CreateTask = ({ open, setOpen, project, user, websocket }) => {
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [end, setEnd] = useState("")
-    const [array, setArray] = useState([])
+const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
+    const [title, setTitle] = useState(element.title)
+    const [description, setDescription] = useState(element.description)
+    const [end, setEnd] = useState(element.end)
+    const [array, setArray] = useState(element.members)
     const dispatch = useDispatch()
 
-    const newTask = async () => {
-        const task = { title: title, description: description, state: "undone", creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
-        dispatch(createTask(project._id, task))
+    const updateTask = async () => {
+        const task = { _id: element._id, title: title, description: description, state: "undone", creatorId: element.creatorId, creator: element.creator, creatorPicture: element.creatorPicture, end: end, members: array, date: element.date }
+        dispatch(changeTask(project._id, task))
         const members = project.members.filter(member => member.id !== user._id)
         members.map(member => {
-            return websocket.current.emit("createTask", {
+            return websocket.current.emit("updateTask", {
                 receiverId: member.id,
                 task: task
             })
         })
         setOpen(false)
-        setTitle(null)
-        setDescription(null)
-        setEnd(null)
-        setArray([])
     }
 
     const pushUserInArray = (user) => {
@@ -126,9 +122,9 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
                     })}
                 </div>
             )}
-            <Button text="Ajouter" className="mt-5" disabled={title === "" || title === undefined} onClick={newTask} />
+            <Button text="Ajouter" className="mt-5" disabled={title === "" || title === undefined} onClick={updateTask} />
         </Modal>
     )
 }
 
-export default CreateTask
+export default UpdateTask

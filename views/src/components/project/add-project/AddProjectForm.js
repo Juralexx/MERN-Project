@@ -26,7 +26,7 @@ const AddProjectForm = () => {
     const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
     const [content, setContent] = useState({})
-    const members = useState({ id: userData._id, pseudo: userData.pseudo, picture: userData.picture, role: "admin", since: new Date().toISOString()})
+    const members = useState({ id: userData._id, pseudo: userData.pseudo, picture: userData.picture, role: "manager", since: new Date().toISOString()})
     const [files, setFiles] = useState([])
     // const navigate = useNavigate()
 

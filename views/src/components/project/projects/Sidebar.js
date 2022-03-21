@@ -19,7 +19,7 @@ const Sidebar = ({ user, projects, setProject, changeProject, isLoading }) => {
                     <div className="flex items-center justify-center p-2 bg-primary dark:bg-background_primary_light rounded-full">
                         <BsFillDiagram3Fill className="h-5 w-5" />
                     </div>
-                    <p className="text-[16px] font-semibold ml-3">Mes Projets</p>
+                    <p className="text-[16px] font-semibold ml-3">Mes Projets ({projects.length})</p>
                 </div>
                 <div className="cursor-pointer" onClick={() => setReduce(!reduce)}>
                     <GoThreeBars className="h-5 w-5" />

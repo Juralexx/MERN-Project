@@ -5,11 +5,12 @@ import AddMember from './AddMember'
 import MembersRequests from './MembersRequests'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import SmallMenu from '../../../tools/components/SmallMenu'
-import { excludeMember } from '../../../tools/functions/member'
+import { getRole } from '../../../tools/functions/member'
+import MemberMenu from './MemberMenu'
 
-const Members = ({ project, setProject, admins, user, websocket }) => {
+const Members = ({ project, setProject, isManager, admins, users, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)
-    const [showRequests, setShowRequests] = useState(false)
+    const [openRequests, setOpenRequests] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
     const [openMemberMenu, setOpenMemberMenu] = useState(-1)
     const memberMenu = useRef()
@@ -17,19 +18,20 @@ const Members = ({ project, setProject, admins, user, websocket }) => {
     const membersMenu = useRef()
     useClickOutside(membersMenu, setOpenMenu, false)
     const isAdmin = admins.some(member => member.id === user._id)
+    const isUser = users.some(member => member.id === user._id)
 
     return (
         <>
             <div className="py-3">
                 <div className="relative flex justify-between items-center px-3 py-3 mb-2 border-b border-b-slate-300/30">
                     <div className="text-xl">Membres ({project.members.length})</div>
-                    {isAdmin &&
+                    {!isUser &&
                         <div ref={membersMenu}>
                             <BiDotsVerticalRounded className="h-5 w-5 cursor-pointer" onClick={() => setOpenMenu(!openMenu)} />
                             {openMenu && (
                                 <SmallMenu>
                                     <div className="py-2 cursor-pointer" onClick={() => setAddMembers(true)}>Ajouter des membres</div>
-                                    {project.member_requests.length > 0 && <div className="py-2 cursor-pointer" onClick={() => setShowRequests(true)}>Voir les demandes en cours</div>}
+                                    {project.member_requests.length > 0 && <div className="py-2 cursor-pointer" onClick={() => setOpenRequests(true)}>Voir les demandes en cours</div>}
                                 </SmallMenu>
                             )}
                         </div>
@@ -38,44 +40,22 @@ const Members = ({ project, setProject, admins, user, websocket }) => {
                 {project.members.map((element, key) => {
                     return (
                         <div className="relative flex justify-between items-center py-3 px-3" key={key}>
-                            <div className="flex">
-                                <div className="h-11 w-11 rounded-full mr-4" style={avatar(element.picture)}></div>
+                            <div className="flex items-center">
+                                <div className="h-10 w-10 rounded-full mr-4" style={avatar(element.picture)}></div>
                                 <div>
                                     <div className="">{element.pseudo}</div>
-                                    <div className="text-gray-500 dark:text-slate-400">{element.role}</div>
+                                    <div className="text-xs text-gray-500 dark:text-slate-400">{getRole(element)}</div>
                                 </div>
                             </div>
                             <div ref={memberMenu}>
-                                {element.id !== user._id && (
-                                    <>
-                                        <BiDotsVerticalRounded className="h-5 w-5 cursor-pointer" onClick={() => setOpenMemberMenu(key)} />
-                                        {openMemberMenu === key && (
-                                            <SmallMenu top="top-6">
-                                                <div className="py-2 cursor-pointer">Voir le profil</div>
-                                                {isAdmin &&
-                                                    <>
-                                                        {element.role !== "admin" && (
-                                                            <div className="py-2 cursor-pointer">Nommer Admin</div>
-                                                        )}
-                                                        {element.role === "admin" && project.posterId === user._id && element.id !== user._id && (
-                                                            <div className="py-2 cursor-pointer">Supprimer Admin</div>
-                                                        )}
-                                                        {element.id !== user._id && project.posterId === user._id && (
-                                                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, project, websocket)}>Supprimer ce membre</div>
-                                                        )}
-                                                    </>
-                                                }
-                                            </SmallMenu>
-                                        )}
-                                    </>
-                                )}
+                                <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} isUser={isUser} user={user} open={openMemberMenu} setOpen={setOpenMemberMenu} uniqueKey={key} />
                             </div>
                         </div>
                     )
                 })}
             </div>
             {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} admins={admins} />}
-            {<MembersRequests open={showRequests} setOpen={setShowRequests} project={project} user={user} websocket={websocket} />}
+            {<MembersRequests open={openRequests} setOpen={setOpenRequests} project={project} user={user} websocket={websocket} />}
         </>
     )
 }

@@ -32,6 +32,11 @@ export const RECEIVE_ACCEPT_MEMBER_REQUEST = "RECEIVE_ACCEPT_MEMBER_REQUEST"
 export const REFUSE_MEMBER_REQUEST = "REFUSE_MEMBER_REQUEST"
 export const RECEIVE_REFUSE_MEMBER_REQUEST = "RECEIVE_REFUSE_MEMBER_REQUEST"
 
+export const CREATE_TASK = "CREATE_TASK"
+export const RECEIVE_CREATE_TASK = "RECEIVE_CREATE_TASK"
+export const UPDATE_TASK = "UPDATE_TASK"
+export const RECEIVE_UPDATE_TASK = "RECEIVE_UPDATE_TASK"
+
 export const getProject = (projectId) => {
     return async (dispatch) => {
         return axios
@@ -370,5 +375,48 @@ export const removeMember = (projectId, memberId) => {
 export const removeProjectFromMember = (projectId) => {
     return async (dispatch) => {
         dispatch({ type: REMOVE_PROJECT_FROM_MEMBER, payload: { projectId } })
+    }
+}
+
+/*******************************************************************************************************************************/
+/********************************************************* TASKS ***************************************************************/
+
+export const createTask = (projectId, task) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/add-task/` + projectId,
+            data: { task }
+        })
+            .then((res) => {
+                dispatch({ type: CREATE_TASK, payload: { task } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveCreateTask = (task) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_CREATE_TASK, payload: { task } })
+    }
+}
+
+export const changeTask = (projectId, task) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
+            data: { task }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_TASK, payload: { task } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveChangeTask = (task) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_UPDATE_TASK, payload: { task } })
     }
 }

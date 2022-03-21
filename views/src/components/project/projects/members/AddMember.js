@@ -14,7 +14,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (user.friends.length > 0 && admins.some(element => element.id === user._id)) {
+        if (user.friends.length > 0) {
             const getFriends = async () => {
                 const friendsArray = user.friends.map(async (element) => {
                     return await axios.get(`${process.env.REACT_APP_API_URL}api/user/${element.friend}`)

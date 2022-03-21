@@ -19,9 +19,13 @@ projectRoutes.delete('/:id', deleteProject)
 
 projectRoutes.put('/add-user/:id', addMemberToProject)
 projectRoutes.put('/remove-user/:id', leaveProject)
+projectRoutes.put('/send-member-request/:id', sendMemberRequest)
+projectRoutes.put('/cancel-member-request/:id', cancelMemberRequest)
+projectRoutes.put('/accept-member-request/:id', acceptMemberRequest)
+projectRoutes.put('/refuse-member-request/:id', refuseMemberRequest)
 
 projectRoutes.put('/add-task/:id', createTask)
-projectRoutes.put('/update-task/:id', updateTask)
+projectRoutes.patch('/update-task/:id', updateTask)
 projectRoutes.put('/delete-task/:id', deleteTask)
 
 projectRoutes.patch('/follow/:id', follow)
@@ -30,10 +34,5 @@ projectRoutes.patch('/like/:id', likeProject)
 projectRoutes.patch('/unlike/:id', unlikeProject)
 projectRoutes.patch('/favorite/:id', favorite)
 projectRoutes.patch('/unfavorite/:id', unfavorite)
-
-projectRoutes.put('/send-member-request/:id', sendMemberRequest)
-projectRoutes.put('/cancel-member-request/:id', cancelMemberRequest)
-projectRoutes.put('/accept-member-request/:id', acceptMemberRequest)
-projectRoutes.put('/refuse-member-request/:id', refuseMemberRequest)
 
 export default projectRoutes;

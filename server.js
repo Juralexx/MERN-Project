@@ -297,6 +297,26 @@ io.on("connect", (socket) => {
         }
     })
 
+    /***********************************************************************************/
+    /********************************** LEAVE PROJECT **********************************/
+
+    socket.on('createTask', ({ receiverId, task }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('createTask', {
+                task
+            })
+        }
+    })
+
+    socket.on('updateTask', ({ receiverId, task }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateTask', {
+                task
+            })
+        }
+    })
 
     const removeUser = (socketId) => {
         users = users.filter(user => user.socketId !== socketId)

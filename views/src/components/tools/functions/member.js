@@ -93,3 +93,9 @@ export const leaveProject = (user, project, websocket, dispatch) => {
     })
     dispatch(removeMember(project._id, user._id))
 }
+
+export const getRole = (element) => {
+    if (element.role === "manager") return "Manageur"
+    else if (element.role === "admin") return "Administrateur"
+    else return "Membre"
+}
