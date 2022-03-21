@@ -59,7 +59,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
     }
 
     useEffect(() => {
-        var ids = []
+        let ids = []
         conversation.members.map(members => { return ids = [...ids, members.id] })
         const notInConvYet = friends.filter(friend => !ids.includes(friend.friend))
         const findFutureMembers = notInConvYet.map(async (friend) => {

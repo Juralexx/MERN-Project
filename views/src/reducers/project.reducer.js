@@ -1,7 +1,7 @@
 import {
     CREATE_TASK,
     CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
-    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK
+    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE
 } from "../actions/project.action";
 
 const initialState = {}
@@ -179,20 +179,42 @@ export default function projectReducer(state = initialState, action) {
                 tasks: [...state.tasks, action.payload.task]
             }
         case UPDATE_TASK:
-            function newTask() {
-                var array = state.tasks.splice()
-                var index = state.tasks.findIndex(task => task._id === action.payload.task._id)
-                array.splice(index, 1, action.payload.task)
-                return array
-            }
+            let index = state.tasks.findIndex(task => task._id === action.payload.task._id)
+            state.tasks[index] = action.payload.task
             return {
                 ...state,
-                tasks: newTask()
+                tasks: state.tasks
             }
         case RECEIVE_UPDATE_TASK:
+            let i = state.tasks.findIndex(task => task._id === action.payload.task._id)
+            state.tasks[i] = action.payload.task
             return {
                 ...state,
-                tasks: newTask()
+                tasks: state.tasks
+            }
+        case UPDATE_TASK_STATE:
+            let ii = state.tasks.findIndex(task => task._id === action.payload.taskId)
+            state.tasks[ii].state = action.payload.state
+            return {
+                ...state,
+                tasks: state.tasks
+            }
+        case RECEIVE_UPDATE_TASK_STATE:
+            let iii = state.tasks.findIndex(task => task._id === action.payload.taskId)
+            state.tasks[iii].state = action.payload.state
+            return {
+                ...state,
+                tasks: state.tasks
+            }
+        case DELETE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.filter(task => task._id !== action.payload.taskId)
+            }
+        case RECEIVE_DELETE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.filter(task => task._id !== action.payload.taskId)
             }
 
         default:

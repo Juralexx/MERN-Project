@@ -91,8 +91,8 @@ const AddProjectForm = () => {
                         contentError.current.innerHTML = res.data.errors.content;
                         numberofcontributorsError.current.innerHTML = res.data.errors.numberofcontributors;
                     } else {
-                        var formData = new FormData();
-                        for (var i = 0; i < files.length; i++) {
+                        let formData = new FormData();
+                        for (let i = 0; i < files.length; i++) {
                             formData.append('files', files[i])
                         }
                         await axios({

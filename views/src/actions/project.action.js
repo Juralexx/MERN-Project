@@ -36,6 +36,10 @@ export const CREATE_TASK = "CREATE_TASK"
 export const RECEIVE_CREATE_TASK = "RECEIVE_CREATE_TASK"
 export const UPDATE_TASK = "UPDATE_TASK"
 export const RECEIVE_UPDATE_TASK = "RECEIVE_UPDATE_TASK"
+export const UPDATE_TASK_STATE = "UPDATE_TASK_STATE"
+export const RECEIVE_UPDATE_TASK_STATE = "RECEIVE_UPDATE_TASK_STATE"
+export const DELETE_TASK = "DELETE_TASK"
+export const RECEIVE_DELETE_TASK = "RECEIVE_DELETE_TASK"
 
 export const getProject = (projectId) => {
     return async (dispatch) => {
@@ -112,10 +116,10 @@ export const updateContent = (projectId, content) => {
             data: { content }
         })
             .then((res) => {
-                var callback = {}
-                var deltaOps = res.data.content[0].ops
-                var converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
-                var html = converter.convert(deltaOps)
+                let callback = {}
+                let deltaOps = res.data.content[0].ops
+                let converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
+                let html = converter.convert(deltaOps)
                 content = html
                 dispatch({ type: UPDATE_CONTENT, payload: content })
             })
@@ -404,7 +408,7 @@ export const receiveCreateTask = (task) => {
 export const changeTask = (projectId, task) => {
     return async (dispatch) => {
         await axios({
-            method: "put",
+            method: "patch",
             url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
             data: { task }
         })
@@ -418,5 +422,45 @@ export const changeTask = (projectId, task) => {
 export const receiveChangeTask = (task) => {
     return async (dispatch) => {
         dispatch({ type: RECEIVE_UPDATE_TASK, payload: { task } })
+    }
+}
+
+export const changeTaskState = (projectId, taskId, state) => {
+    return async (dispatch) => {
+        await axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
+            data: { taskId, state }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveChangeTaskState = (taskId, state) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_UPDATE_TASK_STATE, payload: { taskId, state } })
+    }
+}
+
+export const deleteTask = (projectId, taskId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/delete-task/` + projectId,
+            data: { taskId }
+        })
+            .then((res) => {
+                dispatch({ type: DELETE_TASK, payload: { taskId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveDeleteTask = (taskId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_DELETE_TASK, payload: { taskId } })
     }
 }

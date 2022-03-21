@@ -1,13 +1,13 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 
 export function parseDescriptionToInnerHTML(project) {
-    var description = project.content[0].ops
-    var callback = {}
-    var converter = new QuillDeltaToHtmlConverter(description, callback)
-    var html = converter.convert(description)
+    let description = project.content[0].ops
+    let callback = {}
+    let converter = new QuillDeltaToHtmlConverter(description, callback)
+    let html = converter.convert(description)
         if (html.length >= 170) {
             if (html.substring(169, 170) === " ") {
-                var cleanSpaces = html.replace(html.substring(169, 170), "")
+                let cleanSpaces = html.replace(html.substring(169, 170), "")
                 html = cleanSpaces.substring(0, 170) + "..."
             }
             html = html.substring(0, 170) + "..."
@@ -16,13 +16,13 @@ export function parseDescriptionToInnerHTML(project) {
 }
 
 export function parseDescription(project) {
-    var description = project.content[0].ops
-    var callback = {}
-    var converter = new QuillDeltaToHtmlConverter(description, callback)
-    var html = converter.convert(description)
+    let description = project.content[0].ops
+    let callback = {}
+    let converter = new QuillDeltaToHtmlConverter(description, callback)
+    let html = converter.convert(description)
         if (html.length >= 170) {
             if (html.substring(169, 170) === " ") {
-                var cleanSpaces = html.replace(html.substring(169, 170), "")
+                let cleanSpaces = html.replace(html.substring(169, 170), "")
                 html = cleanSpaces.substring(0, 170) + "..."
             }
             html = html.substring(0, 170) + "..."

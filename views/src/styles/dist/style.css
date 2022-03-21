@@ -572,8 +572,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 1.5rem;
 }
 
-.right-10 {
-  right: 2.5rem;
+.right-16 {
+  right: 4rem;
 }
 
 .left-\[115\%\] {
@@ -608,24 +608,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 15px;
 }
 
+.right-10 {
+  right: 2.5rem;
+}
+
 .top-3 {
   top: 0.75rem;
 }
 
 .bottom-\[60px\] {
   bottom: 60px;
-}
-
-.right-12 {
-  right: 3rem;
-}
-
-.right-5 {
-  right: 1.25rem;
-}
-
-.right-16 {
-  right: 4rem;
 }
 
 .z-10 {
@@ -1913,6 +1905,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
+}
+
+.line-through {
+  -webkit-text-decoration-line: line-through;
+          text-decoration-line: line-through;
 }
 
 .\!no-underline {

@@ -37,7 +37,7 @@ const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModi
     const hidePopupHandler = () => { setHoveredPopup(-1) }
 
     const handleEmoji = async (emoji) => {
-        var ids = []
+        let ids = []
         currentChat.members.map(member => { return ids = [...ids, member.id] })
         ids.map(memberId => {
             return websocket.current.emit("addEmoji", {
@@ -59,8 +59,8 @@ const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModi
     }
 
     const deleteEmoji = async (emoji) => {
-        var storedArray = emojis.slice()
-        var index = storedArray.findIndex(element => element.id === emoji.id && element.sender_pseudo === emoji.sender_pseudo)
+        let storedArray = emojis.slice()
+        let index = storedArray.findIndex(element => element.id === emoji.id && element.sender_pseudo === emoji.sender_pseudo)
         storedArray.splice(index, 1)
         setEmojis(storedArray)
 

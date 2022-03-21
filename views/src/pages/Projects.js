@@ -43,16 +43,14 @@ const Projects = ({ websocket, user }) => {
         }
     }, [user, dispatch])
 
-    useEffect(() => {
-        if (Object.keys(projectData).length > 0) { setProject(projectData) }
-    }, [projectData])
+    useEffect(() => { if (Object.keys(projectData).length > 0) { setProject(projectData) } }, [projectData])
 
     useEffect(() => {
         let socket = websocket.current
         socket.on("leaveProject", data => {
             console.log('done')
-            var projectsLeft = projects.slice()
-            var index = projectsLeft.findIndex(element => element._id === data.projectId)
+            let projectsLeft = projects.slice()
+            let index = projectsLeft.findIndex(element => element._id === data.projectId)
             projectsLeft.splice(index, 1)
             setProjects(projectsLeft)
             if (projectsLeft.length > 0) setProject(projectsLeft[0])

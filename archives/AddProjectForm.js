@@ -222,7 +222,7 @@ const AddProjectForm = () => {
     }
 
     const deleteItem = (key) => {
-        var storedArray = workArray.slice()
+        let storedArray = workArray.slice()
         storedArray.splice(key, 1)
         setWorkArray(storedArray)
     }

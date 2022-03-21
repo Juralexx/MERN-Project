@@ -22,13 +22,21 @@ export const createTask = async (req, res) => {
     }
 }
 
-export const deleteTask = async (req, res) => {
+export const updateTask = async (req, res) => {
     try {
-        await ProjectModel.findByIdAndUpdate(
-            { _id: req.params.id },
+        await ProjectModel.updateOne(
             {
-                $pull: {
-                    tasks: { _id: req.body.id }
+                _id: req.params.id,
+                tasks: { $elemMatch: { _id: req.body.taskId } }
+            },
+            {
+                $set: {
+                    "tasks.$": req.body.task,
+                    "tasks.$.title": req.body.title,
+                    "tasks.$.description": req.body.description,
+                    "tasks.$.state": req.body.state,
+                    "tasks.$.end": req.body.end,
+                    "tasks.$.members": req.body.members
                 }
             },
             { new: true },
@@ -41,20 +49,13 @@ export const deleteTask = async (req, res) => {
     }
 }
 
-export const updateTask = async (req, res) => {
+export const deleteTask = async (req, res) => {
     try {
-        await ProjectModel.updateOne(
+        await ProjectModel.findByIdAndUpdate(
+            { _id: req.params.id },
             {
-                _id: req.params.id,
-                tasks: { $elemMatch: { _id: req.body.taskId } }
-            },
-            {
-                $set: {
-                    "tasks.$.title": req.body.title,
-                    "tasks.$.description": req.body.description,
-                    "tasks.$.state": req.body.state,
-                    "tasks.$.end": req.body.end,
-                    "tasks.$.members": req.body.members
+                $pull: {
+                    tasks: { _id: req.body.taskId }
                 }
             },
             { new: true },

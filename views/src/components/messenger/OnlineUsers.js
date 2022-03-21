@@ -46,7 +46,7 @@ const OnlineUsers = ({ onlineUsers, currentId, changeCurrentChat, setConversatio
   const handleClick = async (receiver) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}api/conversations/${currentId}`)
-      var isConversation = response.data.filter(element => element.members.length === 2)
+      let isConversation = response.data.filter(element => element.members.length === 2)
       isConversation = isConversation.filter(element => element.members[0].id === currentId || element.members[1].id === currentId)
       isConversation = isConversation.find(element => element.members[0].id === receiver._id || element.members[1].id === receiver._id)
 

@@ -18,7 +18,7 @@ const UploadImg = () => {
   const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
   const containerClass = open ? 'modal-container modal-container-active show-modal profil-img-modal' : 'modal-container hide-modal'
 
-  var editor = ""
+  let editor = ""
   const [picture, setPicture] = useState({
     width: 200,
     height: 200,

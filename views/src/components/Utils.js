@@ -12,6 +12,9 @@ export const dateParserWithoutYear = (num) => {
     return date.toString()
 }
 
+export const ISOtoNavFormat = (date) => {
+    return date.substr(0, 10)
+}
 
 export const getHourOnly = (date) => {
     const hours = date.getUTCHours();
@@ -21,14 +24,14 @@ export const getHourOnly = (date) => {
 
 export const isEmpty = (value) => {
     return (
-        value === undefined ||
-        value === null ||
-        (typeof value === "object" && Object.keys(value).length === 0) ||
-        (typeof value === "string" && value.trim().length === 0)
+        value === undefined
+        || value === null
+        || (typeof value === "object" && Object.keys(value).length === 0)
+        || (typeof value === "string" && value.trim().length === 0)
     );
 };
 
-var characterMap = {
+let characterMap = {
     "À": "A",
     "Á": "A",
     "Â": "A",
@@ -430,11 +433,11 @@ var characterMap = {
     "z̧": "z",
 };
 
-var chars = Object.keys(characterMap).join('|');
-var allAccents = new RegExp(chars, 'g');
+let chars = Object.keys(characterMap).join('|');
+let allAccents = new RegExp(chars, 'g');
 
 export const removeAccents = (string) => {
-    return string.replace(allAccents, function (match) {
+    return string.replace(allAccents, (match) => {
         return characterMap[match];
     });
 };

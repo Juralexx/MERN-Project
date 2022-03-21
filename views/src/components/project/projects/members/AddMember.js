@@ -28,19 +28,19 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
     }, [user.friends, admins, user._id])
 
     const pushUserInArray = (user) => {
-        var userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
+        let userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
         if (!array.some((element) => element.id === user._id)) {
             setArray((array) => [...array, userProperties])
         } else {
-            var storedArray = array.slice()
-            var index = storedArray.findIndex(element => element.id === user._id && element.pseudo === user.pseudo)
+            let storedArray = array.slice()
+            let index = storedArray.findIndex(element => element.id === user._id && element.pseudo === user.pseudo)
             storedArray.splice(index, 1)
             setArray(storedArray)
         }
     }
     const removeUserFromArray = (user) => {
-        var storedArray = array.slice()
-        var index = storedArray.findIndex(element => element.id === user.id)
+        let storedArray = array.slice()
+        let index = storedArray.findIndex(element => element.id === user.id)
         storedArray.splice(index, 1)
         setArray(storedArray)
     }

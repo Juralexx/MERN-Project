@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 import { useSelector } from 'react-redux';
-import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask } from './actions/project.action';
+import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState } from './actions/project.action';
 
 function App() {
     const user = useSelector((state) => state.userReducer)
@@ -115,6 +115,12 @@ function App() {
         websocket.current.on("updateTask", data => {
             dispatch(receiveChangeTask(data.task))
         })
+        websocket.current.on("updateTaskState", data => {
+            dispatch(receiveChangeTaskState(data.taskId, data.state))
+        })
+        websocket.current.on("deleteTask", data => {
+            dispatch(receiveDeleteTask(data.taskId))
+        })
         return () => {
             websocket.current.off("sendMessageNotification")
             websocket.current.off("friendRequest")
@@ -128,6 +134,7 @@ function App() {
             websocket.current.off("leaveProject")
             websocket.current.off("createTask")
             websocket.current.off("updateTask")
+            websocket.current.off("deleteTask")
         }
     }, [websocket.current, dispatch])
 

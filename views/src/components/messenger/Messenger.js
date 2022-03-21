@@ -65,7 +65,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             setTypingContext("")
         })
         websocket.current.on("addConversation", data => {
-            var newConversation = { conversation: data.conversation }
+            let newConversation = { conversation: data.conversation }
             setConversations(conversations => [...conversations, newConversation])
         })
         websocket.current.on("deleteConversation", data => {
@@ -73,7 +73,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             setConversations(conversations.splice(index, 1))
         })
         websocket.current.on("modifyMessage", data => {
-            var object = messages.find(message => message._id === data.messageId)
+            let object = messages.find(message => message._id === data.messageId)
             object.text = data.text
             setMessages(messages => [...messages, object])
         })
@@ -84,7 +84,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
         })
         websocket.current.on("addEmoji", data => {
             const array = messages.slice()
-            var mess = array.filter(message => message._id === data.messageId)
+            let mess = array.filter(message => message._id === data.messageId)
             console.log(mess)
             mess[0].emojis.push(data.emoji)
             setMessages(messages => [...messages, mess])
@@ -95,7 +95,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
         if (currentChat) {
             function getTyping() {
                 const membersId = currentChat.members.filter(member => member.id !== uid)
-                var ids = []
+                let ids = []
                 membersId.map(member => { return ids = [...ids, member.id] })
 
                 ids.map(memberId => {
@@ -170,11 +170,11 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                 setMessages(response.data)
 
                 if (!arrivalMessage) {
-                    var array = []
+                    let array = []
                     response.data.map((messages, key) => { return array = [...array, { index: key, date: messages.createdAt.substr(0, 10) }] })
-                    var filteredArray = []
+                    let filteredArray = []
                     array.filter((item) => {
-                        var i = filteredArray.findIndex(element => (element.date === item.date));
+                        let i = filteredArray.findIndex(element => (element.date === item.date));
                         if (i <= -1) { filteredArray.push(item) }
                         return null;
                     });
@@ -197,7 +197,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             conversationId: currentChat._id,
         }
         if (currentChat.members.length > 2) {
-            var ids = []
+            let ids = []
             currentChat.members.map(member => { return ids = [...ids, member.id] })
             ids.map(memberId => {
                 return websocket.current.emit("sendMessage", {
@@ -222,7 +222,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             const receiver = currentChat.members.find(member => member.id !== uid)
             if (currentChat.waiter === receiver.id) {
                 const removeWaiter = async () => {
-                    var data = { waiter: receiver.id }
+                    let data = { waiter: receiver.id }
                     await axios.put(`${process.env.REACT_APP_API_URL}api/conversations/${currentChat._id}/remove-waiter`, data)
                     websocket.current.emit("addConversation", {
                         receiverId: receiver.id,
@@ -278,7 +278,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
 
     const deleteConversation = async (element) => {
         const membersId = element.members.filter(member => member.id !== uid)
-        var ids = []
+        let ids = []
         membersId.map(member => { return ids = [...ids, member.id] })
 
         ids.map(memberId => {
@@ -291,8 +291,8 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
         await axios
             .delete(`${process.env.REACT_APP_API_URL}api/conversations/${element._id}`)
             .then((res) => {
-                var storedArray = conversations.slice()
-                var todelete = storedArray.find(conversation => conversation._id === element._id)
+                let storedArray = conversations.slice()
+                let todelete = storedArray.find(conversation => conversation._id === element._id)
                 storedArray.splice(todelete, 1)
                 setConversations(storedArray)
             })
@@ -308,7 +308,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
     }
 
     const addNewMember = async (element, member) => {
-        var newMember = {
+        let newMember = {
             id: member._id,
             pseudo: member.pseudo,
             picture: member.picture
@@ -321,7 +321,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
     }
 
     const deleteMessage = async (message) => {
-        var ids = []
+        let ids = []
         currentChat.members.map(member => { return ids = [...ids, member.id] })
 
         ids.map(memberId => {
@@ -339,7 +339,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
     }
 
     const modifyMessage = async (message) => {
-        var ids = []
+        let ids = []
         currentChat.members.map(member => { return ids = [...ids, member.id] })
         ids.map(memberId => {
             return websocket.current.emit("modifyMessage", {

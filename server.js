@@ -101,7 +101,7 @@ io.on("connect", (socket) => {
     })
 
     socket.on("sendMessage", ({ senderId, sender_pseudo, sender_picture, receiverId, text, conversationId, createdAt }) => {
-        var user = users.find(member => member.userId === receiverId)
+        let user = users.find(member => member.userId === receiverId)
         if (user) {
             if (user.conversationId && user.conversationId === conversationId) {
                 return io.to(user.socketId).emit("getMessage", {
@@ -314,6 +314,25 @@ io.on("connect", (socket) => {
         if (user) {
             return io.to(user.socketId).emit('updateTask', {
                 task
+            })
+        }
+    })
+
+    socket.on('updateTaskState', ({ receiverId, taskId, state }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateTaskState', {
+                taskId,
+                state
+            })
+        }
+    })
+
+    socket.on('deleteTask', ({ receiverId, taskId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('deleteTask', {
+                taskId
             })
         }
     })

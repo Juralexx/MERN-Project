@@ -41,7 +41,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
         if (array.length === 1) var type = 'dialog'
         else type = 'group'
 
-        var user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }
+        let user = { id: userData._id, pseudo: userData.pseudo, picture: userData.picture }
         await axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/conversations/`,
@@ -62,7 +62,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
                 }
             }
         }).then((res) => {
-            var ids = []
+            let ids = []
             res.data.members.map(member => { return ids = [...ids, member.id] })
             ids.map(memberId => {
                 return websocket.current.emit("addConversation", {
@@ -80,20 +80,20 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
     }
 
     const pushUserInArray = (user) => {
-        var userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture }
+        let userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture }
         if (!array.some((element) => element.id === user._id)) {
             setArray((array) => [...array, userProperties])
         } else {
-            var storedArray = array.slice()
-            var index = storedArray.findIndex(element => element.id === user._id && element.pseudo === user.pseudo)
+            let storedArray = array.slice()
+            let index = storedArray.findIndex(element => element.id === user._id && element.pseudo === user.pseudo)
             storedArray.splice(index, 1)
             setArray(storedArray)
         }
     }
 
     const removeUserFromArray = (user) => {
-        var storedArray = array.slice()
-        var index = storedArray.findIndex(element => element.id === user.id)
+        let storedArray = array.slice()
+        let index = storedArray.findIndex(element => element.id === user.id)
         storedArray.splice(index, 1)
         setArray(storedArray)
     }

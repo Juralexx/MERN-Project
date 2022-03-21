@@ -4,30 +4,30 @@ import { fr } from 'date-fns/locale';
 import { dateParserWithoutYear } from '../../Utils'
 
 export function convertEditorToHTML(message) {
-    var callback = {}
-    var converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
-    var html = converter.convert(message.text[0].ops)
+    let callback = {}
+    let converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
+    let html = converter.convert(message.text[0].ops)
     return ({ __html: html })
 }
 
 export function convertEditorToString(message) {
-    var callback = {}
-    var converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
-    var html = converter.convert(message.text[0].ops)
+    let callback = {}
+    let converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
+    let html = converter.convert(message.text[0].ops)
     return html
 }
 
 export function convertDeltaToHTML(message) {
-    var callback = {}
-    var converter = new QuillDeltaToHtmlConverter(message.ops, callback)
-    var html = converter.convert(message.ops)
+    let callback = {}
+    let converter = new QuillDeltaToHtmlConverter(message.ops, callback)
+    let html = converter.convert(message.ops)
     return ({ __html: html })
 }
 
 export function convertDeltaToString(message) {
-    var callback = {}
-    var converter = new QuillDeltaToHtmlConverter(message.ops, callback)
-    var html = converter.convert(message.ops)
+    let callback = {}
+    let converter = new QuillDeltaToHtmlConverter(message.ops, callback)
+    let html = converter.convert(message.ops)
     return html
 }
 

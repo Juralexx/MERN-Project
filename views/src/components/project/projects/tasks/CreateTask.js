@@ -6,6 +6,8 @@ import { BasicInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { ImCross } from 'react-icons/im'
+import { addMemberToTask, removeMemberFromTask } from '../../../tools/functions/task'
+import { highlightIt } from '../../../tools/functions/function'
 
 const CreateTask = ({ open, setOpen, project, user, websocket }) => {
     const [title, setTitle] = useState("")
@@ -24,30 +26,11 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
                 task: task
             })
         })
-        setOpen(false)
+        setOpen(false);
         setTitle(null)
         setDescription(null)
         setEnd(null)
         setArray([])
-    }
-
-    const pushUserInArray = (user) => {
-        var userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture, since: new Date().toISOString() }
-        if (!array.some((element) => element.id === user._id)) {
-            setArray((array) => [...array, userProperties])
-        } else {
-            var storedArray = array.slice()
-            var index = storedArray.findIndex(element => element.id === user._id && element.pseudo === user.pseudo)
-            storedArray.splice(index, 1)
-            setArray(storedArray)
-        }
-    }
-
-    const removeUserFromArray = (user) => {
-        var storedArray = array.slice()
-        var index = storedArray.findIndex(element => element.id === user.id)
-        storedArray.splice(index, 1)
-        setArray(storedArray)
     }
 
     const [search, setSearch] = useState(false)
@@ -55,7 +38,6 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
     const [isMemberInResult, setMemberInResult] = useState([])
     const isEmpty = !isMemberInResult || isMemberInResult.length === 0
     const regexp = new RegExp(searchQuery, 'i');
-
     const handleInputChange = (e) => { setSearchQuery(e.target.value) }
 
     const searchMember = () => {
@@ -64,46 +46,23 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
             const response = project.members.filter(member => regexp.test(member.pseudo))
             setMemberInResult(response)
             setSearch(true)
-            if (isEmpty) {
-                setSearch(false)
-            }
+            if (isEmpty) { setSearch(false) }
         } else { setSearch(false) }
     }
 
     return (
         <Modal open={open} setOpen={setOpen} css="w-[420px] bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
             <div className="text-lg pb-2 px-3 mb-4 border-b border-b-gray-500 dark:border-b-slate-300/30">Créer une nouvelle tâche</div>
-            <BasicInput
-                type="text"
-                placeholder="Titre"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <Textarea
-                type="text"
-                placeholder="Description"
-                className="mt-2"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            />
-            <BasicInput
-                type="date"
-                className="mt-2"
-                value={end}
-                onChange={(e) => setEnd(e.target.value)}
-            />
+
+            <BasicInput type="text" placeholder="Titre" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Textarea type="text" placeholder="Description" className="mt-2" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <BasicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
+
             {project.members && searchQuery && (
                 <div className="w-full bottom-[60px] max-h-[200px] mt-2 bg-white dark:bg-background_primary overflow-auto">
                     {project.members.map((element, key) => {
                         return (
-                            <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg"
-                                key={key}
-                                onClick={() => pushUserInArray(element)}
-                                style={{
-                                    background: array.some(user => user.id === element._id) ? "#6366f1" : "",
-                                    display: search ? (isMemberInResult.includes(element) ? "flex" : "none") : ("flex")
-                                }}
-                            >
+                            <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg" key={key} onClick={() => addMemberToTask(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
                                 <div className="w-9 h-9 mr-3 rounded-full" style={avatar(element.picture)}></div>
                                 <p>{element.pseudo}</p>
                             </div>
@@ -120,7 +79,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
                             <div className="flex items-center p-2 mr-1 dark:bg-background_primary_light rounded-lg cursor-pointer" key={key}>
                                 <div className="conversation-user-avatar" style={avatar(element.picture)}></div>
                                 <p>{element.pseudo}</p>
-                                <ImCross className="ml-2 h-3 w-3" onClick={() => removeUserFromArray(element)} />
+                                <ImCross className="ml-2 h-3 w-3" onClick={() => removeMemberFromTask(element, array, setArray)} />
                             </div>
                         )
                     })}

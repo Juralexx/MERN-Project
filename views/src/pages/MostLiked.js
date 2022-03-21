@@ -43,14 +43,14 @@ const MostLiked = () => {
                     {isLoading && (<Loader />)}
                     {!isLoading && (
                         sortedTable.map((element, key) => {
-                            var description = element.content[0].ops
-                            var callback = {}
-                            var converter = new QuillDeltaToHtmlConverter(description, callback)
-                            var html = converter.convert(description)
+                            let description = element.content[0].ops
+                            let callback = {}
+                            let converter = new QuillDeltaToHtmlConverter(description, callback)
+                            let html = converter.convert(description)
                             function getDescription() {
                                 if (html.length >= 150) {
                                     if (html.substring(149, 150) === " ") {
-                                        var cleanSpaces = html.replace(html.substring(149, 150), "")
+                                        let cleanSpaces = html.replace(html.substring(149, 150), "")
                                         html = cleanSpaces.substring(0, 150) + "..."
                                     }
                                     html = html.substring(0, 150) + "..."
