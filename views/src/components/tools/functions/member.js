@@ -1,5 +1,5 @@
 import axios from "axios"
-import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, removeMember, sendMemberRequest } from "../../../actions/project.action"
+import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, removeMember, sendMemberRequest, setAdmin, unsetAdmin } from "../../../actions/project.action"
 
 export const sendProjectMemberRequest = (membersArray, user, project, websocket, dispatch) => {
     if (membersArray.length > 0) {
@@ -98,4 +98,26 @@ export const getRole = (element) => {
     if (element.role === "manager") return "Manageur"
     else if (element.role === "admin") return "Administrateur"
     else return "Membre"
+}
+
+export const nameAdmin = (memberId, project, user, websocket, dispatch) => {
+    const members = project.members.filter(member => member.id !== user._id)
+    members.map(async member => {
+        return await websocket.current.emit("nameAdmin", {
+            receiverId: member.id,
+            userId: memberId,
+        })
+    })
+    dispatch(setAdmin(memberId, project._id))
+}
+
+export const removeAdmin = (memberId, project, user, websocket, dispatch) => {
+    const members = project.members.filter(member => member.id !== user._id)
+    members.map(async member => {
+        return await websocket.current.emit("removeAdmin", {
+            receiverId: member.id,
+            userId: memberId,
+        })
+    })
+    dispatch(unsetAdmin(memberId, project._id))
 }
