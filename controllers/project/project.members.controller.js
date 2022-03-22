@@ -198,3 +198,56 @@ export const refuseMemberRequest = async (req, res) => {
         return res.status(500).json({ message: err })
     }
 }
+
+/************************************************************************************************/
+/************************************ NOMMER / RETIRER ADMIN ************************************/
+
+export const nameAdmin = async (req, res) => {
+    try {
+        await ProjectModel.updateOne(
+            {
+                _id: req.params.id,
+                members: { $elemMatch: { id: req.body.userId } }
+            },
+            {
+                $addToSet: {
+                    admins: req.body.userId
+                },
+                $set: {
+                    "members.$.role": "admin",
+                }
+            },
+            { new: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(500).json({ message: err })
+    }
+}
+
+export const removeAdmin = async (req, res) => {
+    try {
+        await ProjectModel.updateOne(
+            {
+                _id: req.params.id,
+                members: { $elemMatch: { id: req.body.userId } }
+            },
+            {
+                $pull: {
+                    admins: req.body.userId
+                },
+                $set: {
+                    "members.$.role": "user",
+                }
+            },
+            { new: true, upsert: true },
+        )
+            .then((docs) => { res.send(docs) })
+            .catch((err) => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(500).json({ message: err })
+    }
+}

@@ -7,14 +7,15 @@ import { BasicInput } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { useDispatch } from 'react-redux';
 import { sendProjectMemberRequest } from '../../../tools/functions/member';
+import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/task';
 
-const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
+const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager }) => {
     const [friendsFound, setFriendsFound] = useState([])
     const [array, setArray] = useState([])
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (user.friends.length > 0) {
+        if (user.friends.length > 0 && (isAdmin || isManager)) {
             const getFriends = async () => {
                 const friendsArray = user.friends.map(async (element) => {
                     return await axios.get(`${process.env.REACT_APP_API_URL}api/user/${element.friend}`)
@@ -25,25 +26,8 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
             }
             getFriends()
         }
-    }, [user.friends, admins, user._id])
-
-    const pushUserInArray = (user) => {
-        let userProperties = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
-        if (!array.some((element) => element.id === user._id)) {
-            setArray((array) => [...array, userProperties])
-        } else {
-            let storedArray = array.slice()
-            let index = storedArray.findIndex(element => element.id === user._id && element.pseudo === user.pseudo)
-            storedArray.splice(index, 1)
-            setArray(storedArray)
-        }
-    }
-    const removeUserFromArray = (user) => {
-        let storedArray = array.slice()
-        let index = storedArray.findIndex(element => element.id === user.id)
-        storedArray.splice(index, 1)
-        setArray(storedArray)
-    }
+    }, [user.friends, user._id])
+    
     const [search, setSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [isFriendInResult, setFriendInResult] = useState([])
@@ -73,7 +57,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
                                 <div className="flex items-center p-2 mr-1 dark:bg-background_primary_light rounded-lg cursor-pointer" key={key}>
                                     <div className="conversation-user-avatar" style={avatar(element.picture)}></div>
                                     <p>{element.pseudo}</p>
-                                    <ImCross className="ml-2 h-3 w-3" onClick={() => removeUserFromArray(element)} />
+                                    <ImCross className="ml-2 h-3 w-3" onClick={() => removeMemberFromArray(element, array, setArray)} />
                                 </div>
                             )
                         })
@@ -88,7 +72,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, admins }) => {
                                     return (
                                         <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg"
                                             key={key}
-                                            onClick={() => pushUserInArray(element)}
+                                            onClick={() => addMemberToArray(element, array, setArray)}
                                             style={{
                                                 background: array.some(user => user.id === element._id) ? "#6366f1" : "",
                                                 display: search ? (isFriendInResult.includes(element) ? "flex" : "none") : ("flex")

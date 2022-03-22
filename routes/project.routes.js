@@ -3,7 +3,7 @@ const projectRoutes = express.Router()
 import { createProject, uploadProjectPictures } from '../controllers/project/project.add.controller.js'
 import { readProject, projectInfo, updateProject, deleteProject, findProject } from '../controllers/project/project.controller.js'
 import { likeProject, unlikeProject, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
-import { acceptMemberRequest, addMemberToProject,  cancelMemberRequest,  refuseMemberRequest,  leaveProject, sendMemberRequest } from '../controllers/project/project.members.controller.js'
+import { acceptMemberRequest, addMemberToProject,  cancelMemberRequest,  refuseMemberRequest,  leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
 import { createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
 import multer from 'multer'
 const upload = multer()
@@ -24,8 +24,11 @@ projectRoutes.put('/cancel-member-request/:id', cancelMemberRequest)
 projectRoutes.put('/accept-member-request/:id', acceptMemberRequest)
 projectRoutes.put('/refuse-member-request/:id', refuseMemberRequest)
 
+projectRoutes.put('/name-admin/:id', nameAdmin)
+projectRoutes.put('/remove-admin/:id', removeAdmin)
+
 projectRoutes.put('/add-task/:id', createTask)
-projectRoutes.patch('/update-task/:id', updateTask)
+projectRoutes.put('/update-task/:id', updateTask)
 projectRoutes.put('/delete-task/:id', deleteTask)
 
 projectRoutes.patch('/follow/:id', follow)

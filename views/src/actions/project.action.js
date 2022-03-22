@@ -32,6 +32,11 @@ export const RECEIVE_ACCEPT_MEMBER_REQUEST = "RECEIVE_ACCEPT_MEMBER_REQUEST"
 export const REFUSE_MEMBER_REQUEST = "REFUSE_MEMBER_REQUEST"
 export const RECEIVE_REFUSE_MEMBER_REQUEST = "RECEIVE_REFUSE_MEMBER_REQUEST"
 
+export const NAME_ADMIN = "NAME_ADMIN"
+export const RECEIVE_NAME_ADMIN = "RECEIVE_NAME_ADMIN"
+export const UNNAME_ADMIN = "UNNAME_ADMIN"
+export const RECEIVE_UNNAME_ADMIN = "RECEIVE_UNNAME_ADMIN"
+
 export const CREATE_TASK = "CREATE_TASK"
 export const RECEIVE_CREATE_TASK = "RECEIVE_CREATE_TASK"
 export const UPDATE_TASK = "UPDATE_TASK"
@@ -360,6 +365,49 @@ export const receiveRefuseMemberRequest = (userId) => {
 }
 
 /*******************************************************************************************************************************/
+/******************************************************* NAME ADMIN ************************************************************/
+
+export const setAdmin = (userId, projectId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/name-admin/` + projectId,
+            data: { userId }
+        })
+            .then((res) => {
+                dispatch({ type: NAME_ADMIN, payload: { userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveSetAdmin = (userId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_NAME_ADMIN, payload: { userId } })
+    }
+}
+
+export const unsetAdmin = (userId, projectId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/remove-admin/` + projectId,
+            data: { userId }
+        })
+            .then((res) => {
+                dispatch({ type: UNNAME_ADMIN, payload: { userId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveUnsetAdmin = (userId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_UNNAME_ADMIN, payload: { userId } })
+    }
+}
+
+/*******************************************************************************************************************************/
 /****************************************************** LEAVE PROJECT **********************************************************/
 
 export const removeMember = (projectId, memberId) => {
@@ -408,9 +456,9 @@ export const receiveCreateTask = (task) => {
 export const changeTask = (projectId, task) => {
     return async (dispatch) => {
         await axios({
-            method: "patch",
+            method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
-            data: { task }
+            data: { taskId: task._id, task }
         })
             .then((res) => {
                 dispatch({ type: UPDATE_TASK, payload: { task } })
@@ -428,7 +476,7 @@ export const receiveChangeTask = (task) => {
 export const changeTaskState = (projectId, taskId, state) => {
     return async (dispatch) => {
         await axios({
-            method: "patch",
+            method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
             data: { taskId, state }
         })

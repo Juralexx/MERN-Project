@@ -276,6 +276,27 @@ io.on("connect", (socket) => {
     })
 
     /***********************************************************************************/
+    /************************************** ADMIN **************************************/
+
+    socket.on('nameAdmin', ({ receiverId, userId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('nameAdmin', {
+                userId
+            })
+        }
+    })
+
+    socket.on('removeAdmin', ({ receiverId, userId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('removeAdmin', {
+                userId
+            })
+        }
+    })
+
+    /***********************************************************************************/
     /********************************** LEAVE PROJECT **********************************/
 
     socket.on('leaveProject', ({ receiverId, projectId }) => {
@@ -298,7 +319,7 @@ io.on("connect", (socket) => {
     })
 
     /***********************************************************************************/
-    /********************************** LEAVE PROJECT **********************************/
+    /************************************** TASKS **************************************/
 
     socket.on('createTask', ({ receiverId, task }) => {
         const user = users.find(member => member.userId === receiverId)

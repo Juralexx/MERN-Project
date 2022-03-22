@@ -1,10 +1,13 @@
 import React from 'react'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import SmallMenu from '../../../tools/components/SmallMenu'
-import { excludeMember } from '../../../tools/functions/member'
+import { excludeMember, nameAdmin, removeAdmin } from '../../../tools/functions/member'
 
-const MemberMenu = ({ element, project, websocket, isAdmin, isManager, isUser, user, open, setOpen, uniqueKey }) => {
+const MemberMenu = ({ element, project, websocket, isAdmin, isManager, user, open, setOpen, uniqueKey }) => {
+    const dispatch = useDispatch()
+
     return (
         element.id !== user._id &&
         <>
@@ -14,14 +17,14 @@ const MemberMenu = ({ element, project, websocket, isAdmin, isManager, isUser, u
                     {isManager && element.role === "user" &&
                         <>
                             <div className="py-2 cursor-pointer"><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
-                            <div className="py-2 cursor-pointer">Nommer Admin</div>
+                            <div className="py-2 cursor-pointer" onClick={() => nameAdmin(element.id, project, user, websocket, dispatch)}>Nommer Admin</div>
                             <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, project, websocket)}>Supprimer ce membre</div>
                         </>
                     }
                     {isManager && element.role === "admin" &&
                         <>
                             <div className="py-2 cursor-pointer"><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
-                            <div className="py-2 cursor-pointer">Supprimer Admin</div>
+                            <div className="py-2 cursor-pointer" onClick={() => removeAdmin(element.id, project, user, websocket, dispatch)}>Supprimer Admin</div>
                             <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, project, websocket)}>Supprimer ce membre</div>
                         </>
                     }
@@ -34,7 +37,7 @@ const MemberMenu = ({ element, project, websocket, isAdmin, isManager, isUser, u
                     {isAdmin && element.role === "manager" &&
                         <div className="py-2 cursor-pointer"><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
                     }
-                    {isUser &&
+                    {(!isAdmin && !isManager) &&
                         <div className="py-2 cursor-pointer"><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
                     }
                 </SmallMenu>

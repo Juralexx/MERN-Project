@@ -14,14 +14,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const createProject = async (req, res) => {
     const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
-        region, new_region, end, content, numberofcontributors, works, members } = req.body
+        region, new_region, end, content, numberofcontributors, works, members, manager } = req.body
     const _id = projectId
     const state = "En préparation"
 
     try {
         const project = ProjectModel.create({
             _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
-            region, new_region, end, content, numberofcontributors, works, state, members
+            region, new_region, end, content, numberofcontributors, works, state, members, manager
         })
 
         await UserModel.findByIdAndUpdate(

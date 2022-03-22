@@ -81,7 +81,8 @@ const AddProjectForm = () => {
                     content: content,
                     numberofcontributors: numberofcontributors,
                     works: workArray,
-                    members: members
+                    members: members,
+                    manager: userData._id
                 },
             })
                 .then(async (res) => {

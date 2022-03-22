@@ -6,7 +6,7 @@ import { BasicInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { ImCross } from 'react-icons/im'
-import { addMemberToTask, removeMemberFromTask } from '../../../tools/functions/task'
+import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/task'
 import { highlightIt } from '../../../tools/functions/function'
 import { ISOtoNavFormat } from '../../../Utils'
 
@@ -18,7 +18,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
     const dispatch = useDispatch()
 
     const updateTask = async () => {
-        const task = { _id: element._id, title: title, description: description, state: "undone", creatorId: element.creatorId, creator: element.creator, creatorPicture: element.creatorPicture, end: end, members: array, date: element.date }
+        const task = { _id: element._id, title: title, description: description, state: element.state, creatorId: element.creatorId, creator: element.creator, creatorPicture: element.creatorPicture, end: end, members: array, date: element.date }
         dispatch(changeTask(project._id, task))
         const members = project.members.filter(member => member.id !== user._id)
         members.map(member => {
@@ -58,7 +58,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                 <div className="w-full bottom-[60px] max-h-[200px] mt-2 bg-white dark:bg-background_primary overflow-auto">
                     {project.members.map((element, key) => {
                         return (
-                            <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg" key={key} onClick={() => addMemberToTask(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
+                            <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg" key={key} onClick={() => addMemberToArray(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
                                 <div className="w-9 h-9 mr-3 rounded-full" style={avatar(element.picture)}></div>
                                 <p>{element.pseudo}</p>
                             </div>
@@ -75,13 +75,13 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                             <div className="flex items-center p-2 mr-1 dark:bg-background_primary_light rounded-lg cursor-pointer" key={key}>
                                 <div className="conversation-user-avatar" style={avatar(element.picture)}></div>
                                 <p>{element.pseudo}</p>
-                                <ImCross className="ml-2 h-3 w-3" onClick={() => removeMemberFromTask(element, array, setArray)} />
+                                <ImCross className="ml-2 h-3 w-3" onClick={() => removeMemberFromArray(element, array, setArray)} />
                             </div>
                         )
                     })}
                 </div>
             )}
-            <Button text="Ajouter" className="mt-5" disabled={title === "" || title === undefined} onClick={updateTask} />
+            <Button text="Valider" className="mt-5" disabled={title === "" || title === undefined} onClick={updateTask} />
         </Modal>
     )
 }

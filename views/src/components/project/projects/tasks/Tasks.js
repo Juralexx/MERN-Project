@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
-import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { changeState, isDatePassed, removeTask } from '../../../tools/functions/task'
 import { clickOn, useClickOutside } from '../../../tools/functions/useClickOutside'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import SmallMenu from '../../../tools/components/SmallMenu'
@@ -7,11 +8,8 @@ import { dateParser } from '../../../Utils'
 import CreateTask from './CreateTask'
 import TasksMenu from './TasksMenu'
 import UpdateTask from './UpdateTask'
-import { useDispatch } from 'react-redux'
-import { changeTaskState, deleteTask } from '../../../../actions/project.action'
 
-const Tasks = ({ project, admins, isManager, user, websocket }) => {
-    const isAdmin = admins.some(member => member.id === user._id)
+const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [createTask, setCreateTask] = useState(false)
     const [updateTask, setUpdateTask] = useState(false)
     const [getTask, setTask] = useState(null)
@@ -22,30 +20,6 @@ const Tasks = ({ project, admins, isManager, user, websocket }) => {
     const [openTasksMenu, setOpenTasksMenu] = useState(false)
     useClickOutside(tasksMenuRef, setOpenTasksMenu, false)
     const dispatch = useDispatch()
-
-    const changeState = async (element) => {
-        const state = () => { if (element.state === "undone") { return "done" } else { return "undone" } }
-        const members = project.members.filter(member => member.id !== user._id)
-        members.map(member => {
-            return websocket.current.emit('updateTaskState', {
-                receiverId: member.id,
-                taskId: element._id,
-                state: state()
-            })
-        })
-        dispatch(changeTaskState(project._id, element._id, state()))
-    }
-
-    const removeTask = (task) => {
-        const members = project.members.filter(member => member.id !== user._id)
-        members.map(member => {
-            return websocket.current.emit('deleteTask', {
-                receiverId: member.id,
-                taskId: task._id
-            })
-        })
-        dispatch(deleteTask(project._id, task._id))
-    }
 
     return (
         <>
@@ -59,11 +33,11 @@ const Tasks = ({ project, admins, isManager, user, websocket }) => {
                 {project.tasks.map((element, key) => {
                     return (
                         <div className={`relative flex justify-between items-center py-3 px-3 ${element.state === "done" ? "line-through" : ""}`} key={key}>
-                            <div className="flex items-center">
-                                <input type="checkbox" checked={element.state === "done"} className="mr-3" onClick={() => changeState(element)} />
-                                <div>
+                            <div className="flex items-center w-full">
+                                <input type="checkbox" checked={element.state === "done"} className="mr-3" onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                <div className="flex justify-between items-center w-full mr-5">
                                     <div>{element.title}</div>
-                                    <div className="text-xs">{dateParser(element.end)}</div>
+                                    <div className="text-xs" style={{background: element.state !== "done" && isDatePassed(element.end)}}>{dateParser(element.end)}</div>
                                 </div>
                             </div>
                             {(isAdmin || isManager) && (
@@ -72,7 +46,7 @@ const Tasks = ({ project, admins, isManager, user, websocket }) => {
                                     {openTaskMenu === key && (
                                         <SmallMenu useRef={taskMenu}>
                                             <div className="py-2 cursor-pointer" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
-                                            <div className="py-2 cursor-pointer" onClick={() => removeTask(element)}>Supprimer</div>
+                                            <div className="py-2 cursor-pointer" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
                                         </SmallMenu>
                                     )}
                                 </div>

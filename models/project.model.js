@@ -93,6 +93,14 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
+        manager: {
+            type: String
+        },
+
+        admins : {
+            type: [String],
+        },
+
         member_requests: {
             type: [],
             request: {

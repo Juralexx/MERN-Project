@@ -8,7 +8,7 @@ import SmallMenu from '../../../tools/components/SmallMenu'
 import { getRole } from '../../../tools/functions/member'
 import MemberMenu from './MemberMenu'
 
-const Members = ({ project, setProject, isManager, admins, users, user, websocket }) => {
+const Members = ({ project, setProject, isManager, isAdmin, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)
     const [openRequests, setOpenRequests] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
@@ -17,15 +17,13 @@ const Members = ({ project, setProject, isManager, admins, users, user, websocke
     useClickOutside(memberMenu, setOpenMemberMenu, -1)
     const membersMenu = useRef()
     useClickOutside(membersMenu, setOpenMenu, false)
-    const isAdmin = admins.some(member => member.id === user._id)
-    const isUser = users.some(member => member.id === user._id)
 
     return (
         <>
             <div className="py-3">
                 <div className="relative flex justify-between items-center px-3 py-3 mb-2 border-b border-b-slate-300/30">
                     <div className="text-xl">Membres ({project.members.length})</div>
-                    {!isUser &&
+                    {(isAdmin || isManager) &&
                         <div ref={membersMenu}>
                             <BiDotsVerticalRounded className="h-5 w-5 cursor-pointer" onClick={() => setOpenMenu(!openMenu)} />
                             {openMenu && (
@@ -48,13 +46,13 @@ const Members = ({ project, setProject, isManager, admins, users, user, websocke
                                 </div>
                             </div>
                             <div ref={memberMenu}>
-                                <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} isUser={isUser} user={user} open={openMemberMenu} setOpen={setOpenMemberMenu} uniqueKey={key} />
+                                <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} user={user} open={openMemberMenu} setOpen={setOpenMemberMenu} uniqueKey={key} />
                             </div>
                         </div>
                     )
                 })}
             </div>
-            {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} admins={admins} />}
+            {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} isAdmin={isAdmin} isManager={isManager}/>}
             {<MembersRequests open={openRequests} setOpen={setOpenRequests} project={project} user={user} websocket={websocket} />}
         </>
     )

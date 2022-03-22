@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { io } from 'socket.io-client'
 import Index from './components/routes/index';
 import { UidContext, UserContext } from "./components/AppContext"
-import axios from 'axios';
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
-import { useDispatch } from 'react-redux'
-import { io } from 'socket.io-client'
+import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
-import { useSelector } from 'react-redux';
-import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState } from './actions/project.action';
 
 function App() {
     const user = useSelector((state) => state.userReducer)
@@ -103,6 +102,12 @@ function App() {
         websocket.current.on("refuseMemberRequest", data => {
             dispatch(receiveRefuseMemberRequest(data.userId))
         })
+        websocket.current.on("nameAdmin", data => {
+            dispatch(receiveSetAdmin(data.userId))
+        })
+        websocket.current.on("removeAdmin", data => {
+            dispatch(receiveUnsetAdmin(data.userId))
+        })
         websocket.current.on("removeMember", data => {
             dispatch(removeMember(data.projectId, data.memberId))
         })
@@ -130,10 +135,14 @@ function App() {
             websocket.current.off("memberRequest")
             websocket.current.off("cancelMemberRequest")
             websocket.current.off("acceptMemberRequest")
+            websocket.current.off("refuseMemberRequest")
+            websocket.current.off("nameAdmin")
+            websocket.current.off("removeAdmin")
             websocket.current.off("removeMember")
             websocket.current.off("leaveProject")
             websocket.current.off("createTask")
             websocket.current.off("updateTask")
+            websocket.current.off("updateTaskState")
             websocket.current.off("deleteTask")
         }
     }, [websocket.current, dispatch])
