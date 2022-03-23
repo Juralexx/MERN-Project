@@ -324,23 +324,23 @@ export const receiveCancelMemberRequest = (type, requesterId) => {
     }
 }
 
-export const acceptMemberRequest = (userId, member, projectId, type) => {
+export const acceptMemberRequest = (userId, member, projectId, type, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
-            data: { userId, member, type }
+            data: { userId, member, type, activity }
         })
             .then((res) => {
-                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, type } })
+                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, type, activity } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const receiveAcceptMemberRequest = (member) => {
+export const receiveAcceptMemberRequest = (member, activity) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_ACCEPT_MEMBER_REQUEST, payload: { member } })
+        dispatch({ type: RECEIVE_ACCEPT_MEMBER_REQUEST, payload: { member, activity } })
     }
 }
 
@@ -367,23 +367,23 @@ export const receiveRefuseMemberRequest = (userId) => {
 /*******************************************************************************************************************************/
 /******************************************************* NAME ADMIN ************************************************************/
 
-export const setAdmin = (userId, projectId) => {
+export const setAdmin = (userId, projectId, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/name-admin/` + projectId,
-            data: { userId }
+            data: { userId, activity }
         })
             .then((res) => {
-                dispatch({ type: NAME_ADMIN, payload: { userId } })
+                dispatch({ type: NAME_ADMIN, payload: { userId, activity } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const receiveSetAdmin = (userId) => {
+export const receiveSetAdmin = (userId, activity) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_NAME_ADMIN, payload: { userId } })
+        dispatch({ type: RECEIVE_NAME_ADMIN, payload: { userId, activity } })
     }
 }
 
@@ -410,15 +410,15 @@ export const receiveUnsetAdmin = (userId) => {
 /*******************************************************************************************************************************/
 /****************************************************** LEAVE PROJECT **********************************************************/
 
-export const removeMember = (projectId, memberId) => {
+export const removeMember = (projectId, memberId, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/remove-user/` + projectId,
-            data: { memberId }
+            data: { memberId, activity }
         })
             .then((res) => {
-                dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId } })
+                dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId, activity } })
             })
             .catch((err) => console.log(err))
     }
@@ -433,82 +433,82 @@ export const removeProjectFromMember = (projectId) => {
 /*******************************************************************************************************************************/
 /********************************************************* TASKS ***************************************************************/
 
-export const createTask = (projectId, task) => {
+export const createTask = (projectId, task, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/add-task/` + projectId,
-            data: { task }
+            data: { task, activity }
         })
             .then((res) => {
-                dispatch({ type: CREATE_TASK, payload: { task } })
+                dispatch({ type: CREATE_TASK, payload: { task, activity } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const receiveCreateTask = (task) => {
+export const receiveCreateTask = (task, activity) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_CREATE_TASK, payload: { task } })
+        dispatch({ type: RECEIVE_CREATE_TASK, payload: { task, activity } })
     }
 }
 
-export const changeTask = (projectId, task) => {
+export const changeTask = (projectId, task, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
-            data: { taskId: task._id, task }
+            data: { taskId: task._id, task, activity }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_TASK, payload: { task } })
+                dispatch({ type: UPDATE_TASK, payload: { task, activity } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const receiveChangeTask = (task) => {
+export const receiveChangeTask = (task, activity) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_UPDATE_TASK, payload: { task } })
+        dispatch({ type: RECEIVE_UPDATE_TASK, payload: { task, activity } })
     }
 }
 
-export const changeTaskState = (projectId, taskId, state) => {
+export const changeTaskState = (projectId, taskId, state, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
-            data: { taskId, state }
+            data: { taskId, state, activity }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state } })
+                dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state, activity } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const receiveChangeTaskState = (taskId, state) => {
+export const receiveChangeTaskState = (taskId, state, activity) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_UPDATE_TASK_STATE, payload: { taskId, state } })
+        dispatch({ type: RECEIVE_UPDATE_TASK_STATE, payload: { taskId, state, activity } })
     }
 }
 
-export const deleteTask = (projectId, taskId) => {
+export const deleteTask = (projectId, taskId, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/delete-task/` + projectId,
-            data: { taskId }
+            data: { taskId, activity }
         })
             .then((res) => {
-                dispatch({ type: DELETE_TASK, payload: { taskId } })
+                dispatch({ type: DELETE_TASK, payload: { taskId, activity } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const receiveDeleteTask = (taskId) => {
+export const receiveDeleteTask = (taskId, activity) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_DELETE_TASK, payload: { taskId } })
+        dispatch({ type: RECEIVE_DELETE_TASK, payload: { taskId, activity } })
     }
 }

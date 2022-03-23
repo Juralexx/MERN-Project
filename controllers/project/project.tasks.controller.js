@@ -9,7 +9,8 @@ export const createTask = async (req, res) => {
             { _id: req.params.id },
             {
                 $addToSet: {
-                    tasks: task
+                    tasks: task,
+                    activity_feed: req.body.activity
                 }
             },
             { new: true },
@@ -37,6 +38,9 @@ export const updateTask = async (req, res) => {
                     "tasks.$.state": req.body.state,
                     "tasks.$.end": req.body.end,
                     "tasks.$.members": req.body.members
+                },
+                $addToSet: {
+                    activity_feed: req.body.activity
                 }
             },
             { new: true },
@@ -56,6 +60,9 @@ export const deleteTask = async (req, res) => {
             {
                 $pull: {
                     tasks: { _id: req.body.taskId }
+                },
+                $addToSet: {
+                    activity_feed: req.body.activity
                 }
             },
             { new: true },

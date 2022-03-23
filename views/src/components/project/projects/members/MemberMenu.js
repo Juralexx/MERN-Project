@@ -17,21 +17,21 @@ const MemberMenu = ({ element, project, websocket, isAdmin, isManager, user, ope
                     {isManager && element.role === "user" &&
                         <>
                             <div className="py-2 cursor-pointer"><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
-                            <div className="py-2 cursor-pointer" onClick={() => nameAdmin(element.id, project, user, websocket, dispatch)}>Nommer Admin</div>
-                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, project, websocket)}>Supprimer ce membre</div>
+                            <div className="py-2 cursor-pointer" onClick={() => nameAdmin(element, project, user, websocket, dispatch)}>Nommer Admin</div>
+                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, user.pseudo, project, websocket)}>Supprimer ce membre</div>
                         </>
                     }
                     {isManager && element.role === "admin" &&
                         <>
                             <div className="py-2 cursor-pointer"><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
-                            <div className="py-2 cursor-pointer" onClick={() => removeAdmin(element.id, project, user, websocket, dispatch)}>Supprimer Admin</div>
-                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, project, websocket)}>Supprimer ce membre</div>
+                            <div className="py-2 cursor-pointer" onClick={() => removeAdmin(element, project, user, websocket, dispatch)}>Supprimer Admin</div>
+                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, user.pseudo, project, websocket)}>Supprimer ce membre</div>
                         </>
                     }
                     {isAdmin && element.role === "user" &&
                         <>
                             <div className="py-2 cursor-pointer"><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
-                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, project, websocket)}>Supprimer ce membre</div>
+                            <div className="py-2 cursor-pointer" onClick={() => excludeMember(element, user.pseudo, project, websocket)}>Supprimer ce membre</div>
                         </>
                     }
                     {isAdmin && element.role === "manager" &&

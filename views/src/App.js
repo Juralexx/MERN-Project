@@ -97,34 +97,34 @@ function App() {
             dispatch(receiveCancelMemberRequest(data.type, data.requesterId))
         })
         websocket.current.on("acceptMemberRequest", data => {
-            dispatch(receiveAcceptMemberRequest(data.member))
+            dispatch(receiveAcceptMemberRequest(data.member, data.activity))
         })
         websocket.current.on("refuseMemberRequest", data => {
             dispatch(receiveRefuseMemberRequest(data.userId))
         })
         websocket.current.on("nameAdmin", data => {
-            dispatch(receiveSetAdmin(data.userId))
+            dispatch(receiveSetAdmin(data.userId, data.activity))
         })
         websocket.current.on("removeAdmin", data => {
             dispatch(receiveUnsetAdmin(data.userId))
         })
         websocket.current.on("removeMember", data => {
-            dispatch(removeMember(data.projectId, data.memberId))
+            dispatch(removeMember(data.projectId, data.memberId, data.activity))
         })
         websocket.current.on("leaveProject", data => {
             dispatch(removeProjectFromMember(data.projectId))
         })
         websocket.current.on("createTask", data => {
-            dispatch(receiveCreateTask(data.task))
+            dispatch(receiveCreateTask(data.task, data.activity))
         })
         websocket.current.on("updateTask", data => {
-            dispatch(receiveChangeTask(data.task))
+            dispatch(receiveChangeTask(data.task, data.activity))
         })
         websocket.current.on("updateTaskState", data => {
-            dispatch(receiveChangeTaskState(data.taskId, data.state))
+            dispatch(receiveChangeTaskState(data.taskId, data.state, data.activity))
         })
         websocket.current.on("deleteTask", data => {
-            dispatch(receiveDeleteTask(data.taskId))
+            dispatch(receiveDeleteTask(data.taskId, data.activity))
         })
         return () => {
             websocket.current.off("sendMessageNotification")

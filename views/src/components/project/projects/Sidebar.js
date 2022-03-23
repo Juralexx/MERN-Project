@@ -5,12 +5,36 @@ import { BsFillDiagram3Fill, BsFillCaretRightFill } from 'react-icons/bs'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { GoThreeBars } from 'react-icons/go'
 import { avatar } from '../../tools/functions/useAvatar'
+import { useEffect } from 'react'
 
 const Sidebar = ({ user, projects, setProject, changeProject, isLoading }) => {
     const [reduce, setReduce] = useState(false)
     const [submenu, setSubmenu] = useState(-1)
     const openSubmenu = (key) => { if (submenu !== key) { setSubmenu(key) } else { setSubmenu(-1) } }
     const [hoverCard, setHoverCard] = useState(-1)
+    const localStore = localStorage.getItem("sideState")
+
+    const handleState = () => {
+        if (!reduce) {
+            localStorage.setItem("sideState", "closed");
+            setReduce(true)
+        } else {
+            localStorage.setItem("sideState", "open");
+            setReduce(false)
+        }
+    }
+
+    useEffect(() => {
+        if (!isLoading) {
+            if (localStore !== null && localStore === "closed") {
+                setReduce(true)
+            } else if (localStore !== null && localStore === "closed") {
+                setReduce(false)
+            } else {
+                localStorage.setItem("sideState", "open");
+            }
+        }
+    }, [isLoading, localStore])
 
     return (
         <div className={`${reduce ? "w-[80px]" : "min-w-[300px]"} relative h-full bg-white dark:bg-background_primary_light shadow-left dark:shadow-left_dark z-[1500]`}>
@@ -21,7 +45,7 @@ const Sidebar = ({ user, projects, setProject, changeProject, isLoading }) => {
                     </div>
                     <p className="text-[16px] font-semibold ml-3">Mes Projets ({projects.length})</p>
                 </div>
-                <div className="cursor-pointer" onClick={() => setReduce(!reduce)}>
+                <div className="cursor-pointer" onClick={handleState}>
                     <GoThreeBars className="h-5 w-5" />
                 </div>
             </div>

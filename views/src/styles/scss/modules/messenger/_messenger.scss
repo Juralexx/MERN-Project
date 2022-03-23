@@ -952,3 +952,15 @@
         }
     }
 }
+
+
+
+.task-avatar {
+    width     : 30px;
+    height    : 30px;
+    border-radius : 30px;
+
+    &:nth-child(n+2) {
+        margin-left : -10px;
+    }
+}

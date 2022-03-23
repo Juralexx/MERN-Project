@@ -55,3 +55,7 @@ export const highlightIt = (array, element, isInResult, search) => {
         display: search ? (isInResult.includes(element) ? "flex" : "none") : ("flex")
     })
 }
+
+export const getDifference = (one, two) => {
+    return "+ " + (two - one)
+}

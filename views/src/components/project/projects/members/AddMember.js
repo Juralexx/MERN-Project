@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
 import Modal from '../../../tools/components/Modal'
 import { ImCross } from 'react-icons/im'
 import { avatar } from '../../../tools/functions/useAvatar';
 import { BasicInput } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
-import { useDispatch } from 'react-redux';
 import { sendProjectMemberRequest } from '../../../tools/functions/member';
-import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/task';
+import { addMemberToArray, removeMemberFromArray, highlightIt } from '../../../tools/functions/member';
 
 const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager }) => {
     const [friendsFound, setFriendsFound] = useState([])
@@ -26,7 +26,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
             }
             getFriends()
         }
-    }, [user.friends, user._id])
+    }, [user.friends, user._id, isAdmin, isManager])
     
     const [search, setSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
@@ -70,14 +70,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                             <div className="h-full overflow-auto">
                                 {friendsFound.map((element, key) => {
                                     return (
-                                        <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg"
-                                            key={key}
-                                            onClick={() => addMemberToArray(element, array, setArray)}
-                                            style={{
-                                                background: array.some(user => user.id === element._id) ? "#6366f1" : "",
-                                                display: search ? (isFriendInResult.includes(element) ? "flex" : "none") : ("flex")
-                                            }}
-                                        >
+                                        <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg" key={key} onClick={() => addMemberToArray(element, user, array, setArray)} style={highlightIt(array, element, isFriendInResult, search)}>
                                             <div className="w-9 h-9 mr-3 rounded-full" style={avatar(element.picture)}></div>
                                             <p>{element.pseudo}</p>
                                         </div>

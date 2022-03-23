@@ -6,19 +6,19 @@ import SettingsMenu from "./SettingsMenu";
 import NotificationsMenu from "./notifications/Notifications";
 import { avatar } from "../tools/functions/useAvatar";
 import { useClickOutside } from "../tools/functions/useClickOutside";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { removeNotifications } from "../../actions/user.action";
 
 const MiniNav = ({ user, websocket }) => {
     const [openSettingsMenu, setOpenSettingsMenu] = useState(false)
     const wrapperRef = useRef()
     const [openNotificationsMenu, setOpenNotificationsMenu] = useState(false)
     useClickOutside(wrapperRef, setOpenSettingsMenu, false, setOpenNotificationsMenu, false)
-    const [notifications, setNotifications] = useState(null)
+    const dispatch = useDispatch()
 
-    const resetNotifications = async () => {
+    const resetNotifications = () => {
         setOpenNotificationsMenu(!openNotificationsMenu)
-        await axios.put(`${process.env.REACT_APP_API_URL}api/user/reset-notifications/${user._id}`)
-        setNotifications(0)
+        dispatch(removeNotifications(user._id))
     }
 
     const classes = {
@@ -47,7 +47,7 @@ const MiniNav = ({ user, websocket }) => {
                     </li>
                     <li className={classes.li}>
                         <div className={classes.button} onClick={resetNotifications}>
-                            {notifications > 0 && (
+                            {user.unseen_notifications > 0 && (
                                 <div className="absolute top-[5px] right-0 flex items-center justify-center h-5 w-5 rounded-full bg-primary text-white">{user.unseen_notifications}</div>
                             )}
                             <IoNotifications />

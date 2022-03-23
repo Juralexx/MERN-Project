@@ -22,6 +22,22 @@ export const getHourOnly = (date) => {
     return (1 + ((hours - 1))) + "h" + minutes.toString().padStart(2, "0");
 }
 
+export const keepNewDateOnly = (arrayToMap, setState) => {
+    let array = []
+    arrayToMap.map((element, key) => {
+        return (
+            array = [...array, { index: key, date: element.date.substr(0, 10) }]
+        )
+    })
+    let filteredArray = []
+    array.filter(item => {
+        let i = filteredArray.findIndex(element => (element.date === item.date));
+        if (i <= -1) { filteredArray.push(item) }
+        return null;
+    });
+    setState(filteredArray)
+}
+
 export const isEmpty = (value) => {
     return (
         value === undefined

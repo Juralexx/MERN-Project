@@ -257,11 +257,12 @@ io.on("connect", (socket) => {
         }
     })
 
-    socket.on('acceptMemberRequest', ({ receiverId, member }) => {
+    socket.on('acceptMemberRequest', ({ receiverId, member, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('acceptMemberRequest', {
-                member
+                member,
+                activity
             })
         }
     })
@@ -278,11 +279,12 @@ io.on("connect", (socket) => {
     /***********************************************************************************/
     /************************************** ADMIN **************************************/
 
-    socket.on('nameAdmin', ({ receiverId, userId }) => {
+    socket.on('nameAdmin', ({ receiverId, userId, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('nameAdmin', {
-                userId
+                userId,
+                activity
             })
         }
     })
@@ -299,21 +301,23 @@ io.on("connect", (socket) => {
     /***********************************************************************************/
     /********************************** LEAVE PROJECT **********************************/
 
-    socket.on('leaveProject', ({ receiverId, projectId }) => {
+    socket.on('leaveProject', ({ receiverId, projectId, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('leaveProject', {
-                projectId
+                projectId,
+                activity
             })
         }
     })
 
-    socket.on('removeMember', ({ receiverId, memberId, projectId }) => {
+    socket.on('removeMember', ({ receiverId, memberId, projectId, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('removeMember', {
                 memberId,
-                projectId
+                projectId,
+                activity
             })
         }
     })
@@ -321,16 +325,17 @@ io.on("connect", (socket) => {
     /***********************************************************************************/
     /************************************** TASKS **************************************/
 
-    socket.on('createTask', ({ receiverId, task }) => {
+    socket.on('createTask', ({ receiverId, task, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('createTask', {
-                task
+                task,
+                activity
             })
         }
     })
 
-    socket.on('updateTask', ({ receiverId, task }) => {
+    socket.on('updateTask', ({ receiverId, task, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('updateTask', {
@@ -339,21 +344,23 @@ io.on("connect", (socket) => {
         }
     })
 
-    socket.on('updateTaskState', ({ receiverId, taskId, state }) => {
+    socket.on('updateTaskState', ({ receiverId, taskId, state, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('updateTaskState', {
                 taskId,
-                state
+                state,
+                activity
             })
         }
     })
 
-    socket.on('deleteTask', ({ receiverId, taskId }) => {
+    socket.on('deleteTask', ({ receiverId, taskId, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('deleteTask', {
-                taskId
+                taskId,
+                activity
             })
         }
     })

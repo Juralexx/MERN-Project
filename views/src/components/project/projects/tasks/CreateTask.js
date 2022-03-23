@@ -18,18 +18,20 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
 
     const newTask = async () => {
         const task = { title: title, description: description, state: "undone", creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
-        dispatch(createTask(project._id, task))
+        const activity = { type: "create-task", date: new Date().toISOString(), who: user.pseudo, task: title }
+        dispatch(createTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)
         members.map(member => {
             return websocket.current.emit("createTask", {
                 receiverId: member.id,
-                task: task
+                task: task,
+                activity: activity
             })
         })
         setOpen(false);
-        setTitle(null)
-        setDescription(null)
-        setEnd(null)
+        setTitle("")
+        setDescription("")
+        setEnd("")
         setArray([])
     }
 

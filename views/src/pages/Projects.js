@@ -13,6 +13,7 @@ import Work from '../components/project/projects/informations/Work';
 import Content from '../components/project/projects/informations/Content';
 import Members from '../components/project/projects/members/Members';
 import Tasks from '../components/project/projects/tasks/Tasks';
+import ActivityFeed from '../components/project/projects/activity-feed/ActivityFeed';
 
 const Projects = ({ websocket, user }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -43,7 +44,7 @@ const Projects = ({ websocket, user }) => {
             setProject(projectData)
             setManager(projectData.manager === user._id)
             setAdmin(projectData.admins.includes(user._id))
-        } }, [projectData])
+        } }, [projectData, user._id])
 
     useEffect(() => {
         let socket = websocket.current
@@ -54,7 +55,7 @@ const Projects = ({ websocket, user }) => {
             else setProject(null)
         })
         return () => socket.off("leaveProject")
-    }, [websocket.current, projects])
+    }, [websocket.current, websocket, projects])
 
     const changeProject = (project) => {
         setProject(project)
@@ -86,8 +87,11 @@ const Projects = ({ websocket, user }) => {
                                 <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
                                     <Members project={project} setProject={setProject} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                                 </div>
-                                <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
+                                <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
                                     <Tasks project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
+                                </div>
+                                <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
+                                    <ActivityFeed project={project} user={user} websocket={websocket} />
                                 </div>
                             </div>
                         </div>

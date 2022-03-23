@@ -2,26 +2,30 @@ import { changeTaskState, deleteTask } from "../../../actions/project.action"
 
 export const changeState = async (element, project, user, websocket, dispatch) => {
     const state = () => { if (element.state === "undone") { return "done" } else { return "undone" } }
+    const activity = { type: "update-task-state", who: user.pseudo, task: element.title, prevState: stateToString(element.state), newState: stateToString(state()), date: new Date().toISOString() }
     const members = project.members.filter(member => member.id !== user._id)
     members.map(member => {
         return websocket.current.emit('updateTaskState', {
             receiverId: member.id,
             taskId: element._id,
-            state: state()
+            state: state(),
+            activity: activity
         })
     })
-    dispatch(changeTaskState(project._id, element._id, state()))
+    dispatch(changeTaskState(project._id, element._id, state(), activity))
 }
 
 export const removeTask = (task, project, user, websocket, dispatch) => {
+    const activity = { type: "delete-task", who: user.pseudo, task: task.title, date: new Date().toISOString() }
     const members = project.members.filter(member => member.id !== user._id)
     members.map(member => {
         return websocket.current.emit('deleteTask', {
             receiverId: member.id,
-            taskId: task._id
+            taskId: task._id,
+            activity: activity
         })
     })
-    dispatch(deleteTask(project._id, task._id))
+    dispatch(deleteTask(project._id, task._id, activity))
 }
 
 /***************************************************************************************************************************************************/
@@ -58,5 +62,24 @@ export const isDatePassed = (date) => {
         return "green"
     } else {
         return "red"
+    }
+}
+
+/***************************************************************************************************************************************************/
+/******************************************************************* STATES ************************************************************************/
+
+export const checkState = (element) => {
+    if (element === "done") {
+        return "green"
+    } else {
+        return "blue"
+    }
+}
+
+export const stateToString = (element) => {
+    if (element === "done") {
+        return "Terminé"
+    } else {
+        return "En cours"
     }
 }

@@ -3,7 +3,7 @@ const projectRoutes = express.Router()
 import { createProject, uploadProjectPictures } from '../controllers/project/project.add.controller.js'
 import { readProject, projectInfo, updateProject, deleteProject, findProject } from '../controllers/project/project.controller.js'
 import { likeProject, unlikeProject, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
-import { acceptMemberRequest, addMemberToProject,  cancelMemberRequest,  refuseMemberRequest,  leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
+import { acceptMemberRequest,  cancelMemberRequest,  refuseMemberRequest,  leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
 import { createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
 import multer from 'multer'
 const upload = multer()
@@ -17,7 +17,6 @@ projectRoutes.get('/single/:id', findProject)
 projectRoutes.put('/:id', updateProject)
 projectRoutes.delete('/:id', deleteProject)
 
-projectRoutes.put('/add-user/:id', addMemberToProject)
 projectRoutes.put('/remove-user/:id', leaveProject)
 projectRoutes.put('/send-member-request/:id', sendMemberRequest)
 projectRoutes.put('/cancel-member-request/:id', cancelMemberRequest)

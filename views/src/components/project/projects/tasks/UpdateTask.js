@@ -19,7 +19,8 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
 
     const updateTask = async () => {
         const task = { _id: element._id, title: title, description: description, state: element.state, creatorId: element.creatorId, creator: element.creator, creatorPicture: element.creatorPicture, end: end, members: array, date: element.date }
-        dispatch(changeTask(project._id, task))
+        const activity = { type: "update-task", who: user.pseudo, task: title, date: new Date().toISOString()}
+        dispatch(changeTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)
         members.map(member => {
             return websocket.current.emit("updateTask", {

@@ -97,7 +97,7 @@ const ProjectModel = new mongoose.Schema(
             type: String
         },
 
-        admins : {
+        admins: {
             type: [String],
         },
 
@@ -113,25 +113,49 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
-        tasks: [{
-            _id: String,
-            title: String,
-            description: String,
-            state: String,
-            creatorId: String,
-            creator: String,
-            creatorPicture: String,
-            end: Date,
-            date: Date,
-            members: {
-                type: [],
-                member: {
-                    id: String,
-                    pseudo: String,
-                    picture: String,
+        tasks: {
+            type: [],
+            task: {
+                _id: String,
+                title: String,
+                description: String,
+                state: String,
+                creatorId: String,
+                creator: String,
+                creatorPicture: String,
+                end: Date,
+                date: Date,
+                members: {
+                    type: [],
+                    member: {
+                        id: String,
+                        pseudo: String,
+                        picture: String,
+                    }
                 }
             }
-        }],
+        },
+
+        activity_feed: {
+            type: [],
+            activity: {
+                type: String,
+                date: Date,
+                who: String,
+                /****** add / remove member ******/
+                member: String,
+                /************* task **************/
+                task: String,
+                prevState: String,
+                newState: String,
+                /************* admin *************/
+                newAdmin: String,
+                /********* excluse member ********/
+                excluded: String,
+                /********** leave project ********/
+                leaver: String,
+            }
+        },
 
         follows: {
             type: Number,
