@@ -67,7 +67,7 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                             <div className="flex flex-col">{reduceString(element.title, 40)}
                                                 <div className="text-xs">Créée par {element.creator} le {dateParser(element.date)}</div>
                                             </div>
-                                            <div className="text-xs" style={{ background: element.state === "done" && checkState(element.state) }}>{stateToString(element)}</div>
+                                            <div className="text-xs" style={{ background: element.state === "done" && checkState(element.state) }}>{stateToString(element.state)}</div>
                                         </div>
                                     </div>
                                     {(isAdmin || isManager) && (

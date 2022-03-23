@@ -1,3 +1,20 @@
+export const randomID = (max) => {
+    const allCapsAlpha = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+    const allLowerAlpha = [..."abcdefghijklmnopqrstuvwxyz"];
+    const allUniqueChars = [..."~!@#$%^&*()_+-=[]\\{}|;:,./<>?"];
+    const allNumbers = [..."0123456789"];
+
+    const baseline = [...allCapsAlpha, ...allNumbers, ...allLowerAlpha, ...allUniqueChars];
+
+    const generator = (base, len) => {
+        return [...Array(len)]
+        .map(i => base[Math.random() * base.length | 0])
+        .join('');
+    }
+
+    return generator(baseline, max)
+};
+
 export const dateParser = (num) => {
     let options = { year: "numeric", month: "short", day: "2-digit" }
     let timestamp = Date.parse(num)

@@ -38,7 +38,7 @@ const FollowersModal = ({ project, open, setOpen, websocket }) => {
     }, [project.followers, open])
 
     const sendRequest = (element) => {
-        const notification = { type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString() }
+        const notification = { type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString(), seen: false }
         websocket.current.emit("friendRequest", {
             receiverId: element._id,
             notification: notification

@@ -1,10 +1,12 @@
 import axios from "axios"
 import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, removeMember, sendMemberRequest, setAdmin, unsetAdmin } from "../../../actions/project.action"
+import { randomID } from "../../Utils"
 
 /***************************************************************************************************************************************************/
 /****************************************************************** REQUEST ************************************************************************/
 
 export const sendProjectMemberRequest = (membersArray, user, project, websocket, dispatch) => {
+    const randomid = randomID(24)
     if (membersArray.length > 0) {
         membersArray.map(async (element) => {
             const request = {
@@ -13,9 +15,11 @@ export const sendProjectMemberRequest = (membersArray, user, project, websocket,
                 picture: element.picture,
                 requesterId: user._id,
                 requester: user.pseudo,
-                date: new Date().toISOString()
+                date: new Date().toISOString(),
+                notificationId: randomid,
             }
             const notification = {
+                _id: randomid,
                 type: "project-member-request",
                 projectId: project._id,
                 projectTitle: project.title,
@@ -23,8 +27,11 @@ export const sendProjectMemberRequest = (membersArray, user, project, websocket,
                 requesterId: user._id,
                 requester: user.pseudo,
                 requesterPicture: user.picture,
-                date: new Date().toISOString()
+                date: new Date().toISOString(),
+                seen: false
             }
+            console.log(request)
+            console.log(notification)
             return (
                 websocket.current.emit("memberRequest", {
                     receiverId: element.id,
@@ -38,11 +45,10 @@ export const sendProjectMemberRequest = (membersArray, user, project, websocket,
 
 export const cancelProjectMemberRequest = (request, project, websocket, dispatch) => {
     websocket.current.emit("cancelMemberRequest", {
-        type: "project-member-request",
-        requesterId: request.requesterId,
+        notificationId: request.notificationId,
         receiverId: request.memberId
     })
-    dispatch(cancelMemberRequest(request.memberId, project._id, request.type))
+    dispatch(cancelMemberRequest(request.memberId, project._id, request.notificationId))
 }
 
 export const acceptProjectMemberRequest = async (request, user, websocket, dispatch) => {
@@ -59,7 +65,7 @@ export const acceptProjectMemberRequest = async (request, user, websocket, dispa
             })
         })
     Object.assign(request, { state: "accepted" })
-    dispatch(acceptMemberRequest(user._id, member, request.projectId, request.type, activity))
+    dispatch(acceptMemberRequest(user._id, member, request.projectId, request.notificationId, activity))
 }
 
 export const refuseProjectMemberRequest = (request, user, websocket, dispatch) => {
@@ -68,7 +74,7 @@ export const refuseProjectMemberRequest = (request, user, websocket, dispatch) =
         receiverId: request.requesterId
     })
     Object.assign(request, { state: "refused" })
-    dispatch(refuseMemberRequest(user._id, request.projectId, request.type))
+    dispatch(refuseMemberRequest(user._id, request.projectId, request.notificationId))
 }
 
 /***************************************************************************************************************************************************/
@@ -80,7 +86,8 @@ export const excludeMember = (member, user, project, websocket) => {
         receiverId: member.id,
         projectId: project._id
     })
-    project.members.map(element => {
+    const members = project.members.filter(element => element.id !== member.id)
+    members.map(element => {
         return websocket.current.emit("removeMember", {
             receiverId: element.id,
             memberId: member.id,

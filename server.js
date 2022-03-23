@@ -247,12 +247,11 @@ io.on("connect", (socket) => {
         }
     })
 
-    socket.on('cancelMemberRequest', ({ type, requesterId, receiverId }) => {
+    socket.on('cancelMemberRequest', ({ notificationId, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('cancelMemberRequest', {
-                type,
-                requesterId
+                notificationId
             })
         }
     })

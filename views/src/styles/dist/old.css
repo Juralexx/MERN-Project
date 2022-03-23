@@ -414,6 +414,16 @@ h5 {
   z-index: 2;
 }
 
+.three-lines {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 90%;
+  line-height: 19px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 .error {
   margin-bottom: 5px;
   color: red;

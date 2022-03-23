@@ -144,18 +144,23 @@ const UserModel = new mongoose.Schema(
         notifications: {
             type: [],
             notification: {
+                _id: String,
                 type: String,
                 projectId: String,
+                projectTitle: String,
+                projectUrl: String,
                 requesterId: String,
                 requester: String,
                 requesterPicture: String,
                 date: Date,
+                seen: Boolean,
                 state: String,
             }
         },
 
         unseen_notifications: {
             type: Number,
+            min: 0,
             default: 0,
         },
 
@@ -163,6 +168,7 @@ const UserModel = new mongoose.Schema(
 
         number_of_current_projects: {
             type: Number,
+            min: 0,
             default: 0
         },
 
@@ -170,6 +176,7 @@ const UserModel = new mongoose.Schema(
 
         number_of_completed_projects: {
             type: Number,
+            min: 0,
             default: 0
         },
 
@@ -177,6 +184,7 @@ const UserModel = new mongoose.Schema(
 
         number_of_created_projects: {
             type: Number,
+            min: 0,
             default: 0
         },
 
@@ -189,6 +197,7 @@ const UserModel = new mongoose.Schema(
 
         likes: {
             type: Number,
+            min: 0,
             default: 0
         },
 

@@ -94,7 +94,7 @@ function App() {
             setSend(true)
         })
         websocket.current.on("cancelMemberRequest", data => {
-            dispatch(receiveCancelMemberRequest(data.type, data.requesterId))
+            dispatch(receiveCancelMemberRequest(data.notificationId))
         })
         websocket.current.on("acceptMemberRequest", data => {
             dispatch(receiveAcceptMemberRequest(data.member, data.activity))
@@ -151,7 +151,7 @@ function App() {
         <UidContext.Provider value={uid}>
             <UserContext.Provider value={user}>
                 <Index websocket={websocket} friends={friends} onlineUsers={onlineUsers} user={user} />
-                {send && <NotificationCard sentNotification={sentNotification} setSend={setSend} send={send} user={user} websocket={websocket}/>}
+                {send && <NotificationCard sentNotification={sentNotification} setSend={setSend} send={send} user={user} websocket={websocket} />}
             </UserContext.Provider>
         </UidContext.Provider>
     );

@@ -19,6 +19,8 @@ export const UPDATE_YOUTUBE = "UPDATE_YOUTUBE"
 export const UPDATE_LINKEDIN = "UPDATE_LINKEDIN"
 
 export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS"
+export const SET_NOTIFICATION_SEEN = "SET_NOTIFICATION_SEEN"
+export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION"
 
 export const SEND_FRIEND_REQUEST = "SEND_FRIEND_REQUEST"
 export const RECEIVE_FRIEND_REQUEST = "RECEIVE_FRIEND_REQUEST"
@@ -277,7 +279,7 @@ export const updateLinkedin = (userId, linkedin) => {
 }
 
 /*******************************************************************************************************************************/
-/************************************************* RESET NOTIFICATIONS *********************************************************/
+/******************************************************* NOTIFICATIONS *********************************************************/
 
 export const removeNotifications = (userId) => {
     return async (dispatch) => {
@@ -287,6 +289,34 @@ export const removeNotifications = (userId) => {
         })
             .then((res) => {
                 dispatch({ type: RESET_NOTIFICATIONS, payload: { notifications: "0" } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const setNotificationToSeen = (userId, notificationId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/notification-seen/` + userId,
+            data: { userId, notificationId }
+        })
+            .then((res) => {
+                dispatch({ type: SET_NOTIFICATION_SEEN, payload: { notificationId } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const deleteNotification = (userId, notificationId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/delete-notification/` + userId,
+            data: { userId, notificationId }
+        })
+            .then((res) => {
+                dispatch({ type: DELETE_NOTIFICATION, payload: { notificationId } })
             })
             .catch((err) => console.log(err))
     }

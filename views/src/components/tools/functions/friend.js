@@ -1,7 +1,8 @@
 import { acceptFriendRequest, cancelFriendRequest, refuseFriendRequest, sendFriendRequest } from "../../../actions/user.action"
+import { randomID } from "../../Utils"
 
 export const sendRequest = (friend, user, websocket, dispatch) => {
-    const notification = { type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString() }
+    const notification = { _id: randomID(24), type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString(), seen: false }
     websocket.current.emit("friendRequest", {
         receiverId: friend._id,
         notification: notification

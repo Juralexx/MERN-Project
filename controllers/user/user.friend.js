@@ -6,9 +6,6 @@ const ObjectID = mongoose.Types.ObjectId
 /******************* DEMANDE D'AMI / ANNULER DEMANDE D'AMI ******************/
 
 export const sendFriendRequest = async (req, res) => {
-    if (!ObjectID.isValid(req.params.id))
-        return res.status(400).send("ID unknown : " + req.params.id);
-
     try {
         await UserModel.findByIdAndUpdate(
             { _id: req.params.id },
@@ -28,7 +25,7 @@ export const sendFriendRequest = async (req, res) => {
             { _id: req.body.friendId },
             {
                 $addToSet: {
-                    notifications: Object.assign(req.body.notification,{ _id: new ObjectID})
+                    notifications: req.body.notification
                 },
                 $inc: { unseen_notifications: 1 }
             },

@@ -1,4 +1,4 @@
-import { ACCEPT_FRIEND_REQUEST, GET_USER, RECEIVE_ACCEPT_FRIEND_REQUEST, RECEIVE_CANCEL_FRIEND_REQUEST, RECEIVE_FRIEND_REQUEST, RECEIVE_REFUSE_FRIEND_REQUEST, REFUSE_FRIEND_REQUEST, RESET_NOTIFICATIONS, UPDATE_BIO, UPDATE_EMAIL, UPDATE_FACEBOOK, UPDATE_GENDER, UPDATE_INSTAGRAM, UPDATE_LASTNAME, UPDATE_LINKEDIN, UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_THEME, UPDATE_TWITTER, UPDATE_WEBSITE, UPDATE_WORK, UPDATE_YOUTUBE } from "../actions/user.action";
+import { ACCEPT_FRIEND_REQUEST, DELETE_NOTIFICATION, GET_USER, RECEIVE_ACCEPT_FRIEND_REQUEST, RECEIVE_CANCEL_FRIEND_REQUEST, RECEIVE_FRIEND_REQUEST, RECEIVE_REFUSE_FRIEND_REQUEST, REFUSE_FRIEND_REQUEST, RESET_NOTIFICATIONS, SET_NOTIFICATION_SEEN, UPDATE_BIO, UPDATE_EMAIL, UPDATE_FACEBOOK, UPDATE_GENDER, UPDATE_INSTAGRAM, UPDATE_LASTNAME, UPDATE_LINKEDIN, UPDATE_LOCATION, UPDATE_NAME, UPDATE_PHONE, UPDATE_PSEUDO, UPDATE_THEME, UPDATE_TWITTER, UPDATE_WEBSITE, UPDATE_WORK, UPDATE_YOUTUBE } from "../actions/user.action";
 import { DELETE_BIO, DELETE_FACEBOOK, DELETE_GENDER, DELETE_INSTAGRAM, DELETE_LASTNAME, DELETE_LINKEDIN, DELETE_LOCATION, DELETE_NAME, DELETE_PHONE, DELETE_TWITTER, DELETE_WEBSITE, DELETE_WORK, DELETE_YOUTUBE } from "../actions/user.action.delete";
 import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action.upload";
 import { CANCEL_SENT_FRIEND_REQUEST, SEND_FRIEND_REQUEST } from "../actions/user.action";
@@ -7,6 +7,7 @@ import { ACCEPT_MEMBER_REQUEST, RECEIVE_CANCEL_MEMBER_REQUEST, RECEIVE_MEMBER_RE
 const initialState = {}
 
 export default function userReducer(state = initialState, action) {
+    const decrementNotifIfUpperZero = () => { if (state.unseen_notifications > 0) { return state.unseen_notifications - 1 } }
     switch (action.type) {
         case GET_USER:
             return action.payload
@@ -184,12 +185,24 @@ export default function userReducer(state = initialState, action) {
             }
 
         /*******************************************************************************************************************************/
-        /****************************************************** FRIEND ACTION **********************************************************/
+        /****************************************************** NOTIFICATIONS **********************************************************/
 
         case RESET_NOTIFICATIONS:
             return {
                 ...state,
                 unseen_notifications: action.payload.notifications
+            }
+        case SET_NOTIFICATION_SEEN:
+            let a = state.notifications.findIndex(notif => notif._id === action.payload.notificationId)
+            state.notifications[a].seen = true
+            return {
+                ...state,
+                notifications: state.notifications
+            }
+        case DELETE_NOTIFICATION:
+            return {
+                ...state,
+                notifications: state.notifications.filter(notif => notif._id !== action.payload.notificationId)
             }
 
         /*******************************************************************************************************************************/
@@ -204,7 +217,7 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 notifications: [...state.notifications, action.payload.notification],
-                unseen_notifications: (state.unseen_notifications + 1)
+                unseen_notifications: state.unseen_notifications + 1
             }
         case CANCEL_SENT_FRIEND_REQUEST:
             return {
@@ -215,13 +228,13 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 notifications: state.notifications.filter(element => element.type !== action.payload.type && element.requesterId !== action.payload.requesterId),
-                unseen_notifications: state.unseen_notifications - 1
+                unseen_notifications: decrementNotifIfUpperZero()
             }
         case ACCEPT_FRIEND_REQUEST:
             return {
                 ...state,
                 friends: [...state.friends, action.payload.requesterId],
-                unseen_notifications: state.unseen_notifications - 1
+                unseen_notifications: decrementNotifIfUpperZero()
             }
         case RECEIVE_ACCEPT_FRIEND_REQUEST:
             return {
@@ -231,8 +244,8 @@ export default function userReducer(state = initialState, action) {
         case REFUSE_FRIEND_REQUEST:
             return {
                 ...state,
-                notifications: state.notifications.filter(element => element.type !== action.payload.type && element.requesterId !== action.payload.requesterId),
-                unseen_notifications: state.unseen_notifications - 1
+                notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
+                unseen_notifications: decrementNotifIfUpperZero()
             }
         case RECEIVE_REFUSE_FRIEND_REQUEST:
             return {
@@ -252,21 +265,21 @@ export default function userReducer(state = initialState, action) {
         case RECEIVE_CANCEL_MEMBER_REQUEST:
             return {
                 ...state,
-                notifications: state.notifications.filter(element => element.type !== action.payload.type && element.requesterId !== action.payload.requesterId),
-                unseen_notifications: state.unseen_notifications - 1
+                notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
+                unseen_notifications: decrementNotifIfUpperZero()
             }
 
         case ACCEPT_MEMBER_REQUEST:
             return {
                 ...state,
-                unseen_notifications: state.unseen_notifications - 1,
+                unseen_notifications: decrementNotifIfUpperZero(),
                 current_projects: [...state.current_projects, action.payload.projectId]
             }
         case REFUSE_MEMBER_REQUEST:
             return {
                 ...state,
-                notifications: state.notifications.filter(element => element.type !== action.payload.type && element.requesterId !== action.payload.requesterId),
-                unseen_notifications: state.unseen_notifications - 1
+                notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
+                unseen_notifications: decrementNotifIfUpperZero()
             }
         case REMOVE_PROJECT_FROM_MEMBER:
             return {

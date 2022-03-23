@@ -304,12 +304,12 @@ export const receiveMemberRequest = (notification) => {
     }
 }
 
-export const cancelMemberRequest = (userId, projectId, type) => {
+export const cancelMemberRequest = (userId, projectId, notificationId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/` + projectId,
-            data: { userId, type }
+            data: { userId, notificationId }
         })
             .then((res) => {
                 dispatch({ type: CANCEL_MEMBER_REQUEST, payload: { userId } })
@@ -318,21 +318,21 @@ export const cancelMemberRequest = (userId, projectId, type) => {
     }
 }
 
-export const receiveCancelMemberRequest = (type, requesterId) => {
+export const receiveCancelMemberRequest = (notificationId) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_CANCEL_MEMBER_REQUEST, payload: { type, requesterId } })
+        dispatch({ type: RECEIVE_CANCEL_MEMBER_REQUEST, payload: { notificationId } })
     }
 }
 
-export const acceptMemberRequest = (userId, member, projectId, type, activity) => {
+export const acceptMemberRequest = (userId, member, projectId, notificationId, activity) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
-            data: { userId, member, type, activity }
+            data: { userId, member, notificationId, activity }
         })
             .then((res) => {
-                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, type, activity } })
+                dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, activity } })
             })
             .catch((err) => console.log(err))
     }
@@ -344,15 +344,15 @@ export const receiveAcceptMemberRequest = (member, activity) => {
     }
 }
 
-export const refuseMemberRequest = (userId, projectId, type) => {
+export const refuseMemberRequest = (userId, projectId, notificationId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/refuse-member-request/` + projectId,
-            data: { userId, type }
+            data: { userId, notificationId }
         })
             .then((res) => {
-                dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, type } })
+                dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, notificationId } })
             })
             .catch((err) => console.log(err))
     }

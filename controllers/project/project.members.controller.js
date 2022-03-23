@@ -5,6 +5,7 @@ import UserModel from '../../models/user.model.js'
 /**************************************** NOTIFICATIONS *****************************************/
 
 export const sendMemberRequest = async (req, res) => {
+    // const notification = Object.assign(req.body.notification, { _id: new ObjectID })
     try {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
@@ -53,8 +54,7 @@ export const cancelMemberRequest = async (req, res) => {
             {
                 $pull: {
                     notifications: {
-                        type: req.body.type,
-                        projectId: req.params.id,
+                        _id: req.body.notificationId
                     }
                 },
                 $inc: { unseen_notifications: -1 }
@@ -98,8 +98,7 @@ export const acceptMemberRequest = async (req, res) => {
                 },
                 $pull: {
                     notifications: {
-                        type: req.body.type,
-                        projectId: req.params.id,
+                        _id: req.body.notificationId
                     }
                 },
                 $inc: { unseen_notifications: -1 }
@@ -134,8 +133,7 @@ export const refuseMemberRequest = async (req, res) => {
             {
                 $pull: {
                     notifications: {
-                        type: req.body.type,
-                        projectId: req.params.id,
+                        _id: req.body.notificationId
                     }
                 },
                 $inc: { unseen_notifications: -1 }

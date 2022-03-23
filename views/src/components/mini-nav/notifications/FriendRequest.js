@@ -7,11 +7,11 @@ import { avatar } from "../../tools/functions/useAvatar";
 import { Button } from '../../tools/components/Button';
 import { acceptRequest, refuseRequest } from '../../tools/functions/friend';
 
-const FriendRequest = ({ notification, user, websocket }) => {
+const FriendRequest = ({ notification, user, websocket, onClick }) => {
     const dispatch = useDispatch()
 
     return (
-        <div className="flex">
+        <div className="flex" onClick={onClick}>
             <div className="mr-3">
                 <NavLink to={'/' + notification.requester}>
                     <div className="w-12 h-12 rounded-full" style={avatar(notification.requesterPicture)}></div>
@@ -20,7 +20,7 @@ const FriendRequest = ({ notification, user, websocket }) => {
             <div className="right">
                 {!notification.state && (
                     <div className="body">
-                        <p className="text-gray-500 dark:text-slate-300">
+                        <p className="text-gray-500 text-justify dark:text-slate-300">
                             <strong><NavLink to={'/' + notification.requester}>{notification.requester}</NavLink></strong> vous a envoyé une demande d'ami<br />
                             <span className="text-primary">il y a {formatDistance(new Date(notification.date), new Date(), { locale: fr })}</span>
                         </p>

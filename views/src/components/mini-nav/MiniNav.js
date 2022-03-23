@@ -18,7 +18,7 @@ const MiniNav = ({ user, websocket }) => {
 
     const resetNotifications = () => {
         setOpenNotificationsMenu(!openNotificationsMenu)
-        dispatch(removeNotifications(user._id))
+        if (user.unseen_notifications > 0) { dispatch(removeNotifications(user._id)) }
     }
 
     const classes = {

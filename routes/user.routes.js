@@ -7,7 +7,7 @@ import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProf
 import { acceptFriend, cancelFriendRequest, refuseFriend, sendFriendRequest, deleteFriend } from '../controllers/user/user.friend.js'
 import { addConversationToFavorite, removeConversationFromFavorite, setLastMessageSeen } from '../controllers/user/user.messenger.controller.js'
 import multer from 'multer'
-import { resetNotifications } from '../controllers/user/user.notifications.controller.js'
+import { deleteNotification, resetNotifications, setNotificationToSeen } from '../controllers/user/user.notifications.controller.js'
 const upload = multer()
 
 userRoutes.post('/register', signUp)
@@ -51,5 +51,7 @@ userRoutes.put('/conversation/remove-favorite/:id', removeConversationFromFavori
 userRoutes.put('/conversation/last-message-seen/:id', setLastMessageSeen)
 
 userRoutes.put('/reset-notifications/:id', resetNotifications)
+userRoutes.put('/notification-seen/:id', setNotificationToSeen)
+userRoutes.put('/delete-notification/:id', deleteNotification)
 
 export default userRoutes;
