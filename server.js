@@ -354,6 +354,17 @@ io.on("connect", (socket) => {
         }
     })
 
+    socket.on('updateTaskStatus', ({ receiverId, taskId, status, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateTaskStatus', {
+                taskId,
+                status,
+                activity
+            })
+        }
+    })
+
     socket.on('deleteTask', ({ receiverId, taskId, activity }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {

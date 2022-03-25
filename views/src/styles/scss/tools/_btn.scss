@@ -1,0 +1,260 @@
+.btn-first {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 30px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : none;
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : white !important;
+    background      : var(--color-primary);
+    cursor          : pointer;
+
+    &:hover {
+        background : var(--color-primary-dark);
+    }
+}
+
+.btn-icon-start {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : none;
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : white !important;
+    background      : var(--color-primary);
+    cursor          : pointer;
+
+    svg {
+        height       : 18px;
+        width        : 18px;
+        margin-right : 5px;
+    }
+
+    &:hover {
+        background : var(--color-primary-dark);
+    }
+}
+
+.btn-icon-end {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : none;
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : white !important;
+    background      : var(--color-primary);
+    cursor          : pointer;
+
+    svg {
+        height      : 18px;
+        width       : 18px;
+        margin-left : 5px;
+    }
+
+    &:hover {
+        background : var(--color-primary-dark);
+    }
+}
+
+.text-btn {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : none;
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : var(--color-primary);
+    cursor          : pointer;
+
+    &:hover {
+        background : rgba(var(--color-primary-rgb), 0.15);
+    }
+}
+
+.outlined-btn {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : 1px solid var(--color-primary);
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : var(--color-primary);
+    cursor          : pointer;
+
+    &:hover {
+        background : rgba(var(--color-primary-rgb), 0.10);
+    }
+}
+
+.btn-outlined-icon-end {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : 1px solid var(--color-primary);
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : var(--color-primary);
+    cursor          : pointer;
+
+    svg {
+        height      : 18px;
+        width       : 18px;
+        margin-left : 5px;
+    }
+
+    &:hover {
+        background : rgba(var(--color-primary-rgb), 0.10);
+    }
+}
+
+.btn-outlined-icon-start {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : 1px solid var(--color-primary);
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : var(--color-primary);
+    cursor          : pointer;
+
+    svg {
+        height       : 18px;
+        width        : 18px;
+        margin-right : 5px;
+    }
+
+    &:hover {
+        background : rgba(var(--color-primary-rgb), 0.10);
+    }
+}
+
+.text-btn-icon-start {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : none;
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : var(--color-primary);
+    cursor          : pointer;
+
+    svg {
+        height       : 18px;
+        width        : 18px;
+        margin-right : 5px;
+    }
+
+    &:hover {
+        background : rgba(var(--color-primary-rgb), 0.10);
+    }
+}
+
+.text-btn-icon-end {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : auto;
+    height          : 40px;
+    padding         : 16px 20px;
+    font-size       : 16px;
+    text-align      : center;
+    text-decoration : none;
+    text-transform  : none;
+    border          : none;
+    outline         : none;
+    border-radius   : var(--radius);
+    transition      : 0.4s ease-in-out;
+    color           : var(--color-primary);
+    cursor          : pointer;
+
+    svg {
+        height      : 18px;
+        width       : 18px;
+        margin-left : 5px;
+    }
+
+    &:hover {
+        background : rgba(var(--color-primary-rgb), 0.10);
+    }
+}
+
+.icon-toggle {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : 34px;
+    height          : 34px;
+    border-radius   : 40px;
+    cursor          : pointer;
+
+    svg {
+        width  : 20px;
+        height : 20px;
+    }
+}

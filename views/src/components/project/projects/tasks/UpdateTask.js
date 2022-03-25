@@ -6,20 +6,22 @@ import { BasicInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { ImCross } from 'react-icons/im'
-import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/task'
+import { addMemberToArray, removeMemberFromArray, statusToString } from '../../../tools/functions/task'
 import { highlightIt } from '../../../tools/functions/function'
 import { ISOtoNavFormat } from '../../../Utils'
 
-const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {  
+const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
     const [title, setTitle] = useState(element.title)
     const [description, setDescription] = useState(element.description)
     const [end, setEnd] = useState(ISOtoNavFormat(element.end))
+    const [status, setStatus] = useState("normal")
     const [array, setArray] = useState(element.members)
+    const [displayStatus, setDisplayStatus] = useState(false)
     const dispatch = useDispatch()
 
     const updateTask = async () => {
         const task = { _id: element._id, title: title, description: description, state: element.state, creatorId: element.creatorId, creator: element.creator, creatorPicture: element.creatorPicture, end: end, members: array, date: element.date }
-        const activity = { type: "update-task", who: user.pseudo, task: title, date: new Date().toISOString()}
+        const activity = { type: "update-task", who: user.pseudo, task: title, date: new Date().toISOString() }
         dispatch(changeTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)
         members.map(member => {
@@ -49,11 +51,21 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
 
     return (
         <Modal open={open} setOpen={setOpen} css="w-[420px] bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
-            <div className="text-lg pb-2 px-3 mb-4 border-b border-b-gray-500 dark:border-b-slate-300/30">Créer une nouvelle tâche</div>
+            <div className="text-lg pb-2 px-3 mb-4 border-b border-b-gray-500 dark:border-b-slate-300/30">Modifier une nouvelle tâche</div>
 
             <BasicInput type="text" placeholder="Titre" value={title} onChange={(e) => setTitle(e.target.value)} />
             <Textarea type="text" placeholder="Description" className="mt-2" value={description} onChange={(e) => setDescription(e.target.value)} />
             <BasicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
+            <div className="relative">
+                <BasicInput type="text" readOnly className="mt-2" value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)} />
+                {displayStatus &&
+                    <div className="absolute left-2 w-[300px] bg-white dark:bg-background_primary_x_light p-3 z-[1500] shadow-lg rounded-lg">
+                        <div className="py-2 cursor-pointer" onClick={() => setStatus("normal")}>Normal</div>
+                        <div className="py-2 cursor-pointer" onClick={() => setStatus("important")}>Important</div>
+                        <div className="py-2 cursor-pointer" onClick={() => setStatus("priority")}>Prioritaire</div>
+                    </div>
+                }
+            </div>
 
             {project.members && searchQuery && (
                 <div className="w-full bottom-[60px] max-h-[200px] mt-2 bg-white dark:bg-background_primary overflow-auto">

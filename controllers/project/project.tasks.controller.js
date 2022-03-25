@@ -36,6 +36,7 @@ export const updateTask = async (req, res) => {
                     "tasks.$.title": req.body.title,
                     "tasks.$.description": req.body.description,
                     "tasks.$.state": req.body.state,
+                    "tasks.$.status": req.body.status,
                     "tasks.$.end": req.body.end,
                     "tasks.$.members": req.body.members
                 },

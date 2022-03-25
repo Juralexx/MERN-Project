@@ -5,7 +5,7 @@ import { io } from 'socket.io-client'
 import Index from './components/routes/index';
 import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
-import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin } from './actions/project.action';
+import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 
 function App() {
@@ -123,6 +123,9 @@ function App() {
         websocket.current.on("updateTaskState", data => {
             dispatch(receiveChangeTaskState(data.taskId, data.state, data.activity))
         })
+        websocket.current.on("updateTaskStatus", data => {
+            dispatch(receiveChangeTaskStatus(data.taskId, data.status, data.activity))
+        })
         websocket.current.on("deleteTask", data => {
             dispatch(receiveDeleteTask(data.taskId, data.activity))
         })
@@ -143,6 +146,7 @@ function App() {
             websocket.current.off("createTask")
             websocket.current.off("updateTask")
             websocket.current.off("updateTaskState")
+            websocket.current.off("updateTaskStatus")
             websocket.current.off("deleteTask")
         }
     }, [websocket.current, dispatch])

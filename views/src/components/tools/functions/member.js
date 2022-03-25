@@ -30,8 +30,6 @@ export const sendProjectMemberRequest = (membersArray, user, project, websocket,
                 date: new Date().toISOString(),
                 seen: false
             }
-            console.log(request)
-            console.log(notification)
             return (
                 websocket.current.emit("memberRequest", {
                     receiverId: element.id,
@@ -51,10 +49,10 @@ export const cancelProjectMemberRequest = (request, project, websocket, dispatch
     dispatch(cancelMemberRequest(request.memberId, project._id, request.notificationId))
 }
 
-export const acceptProjectMemberRequest = async (request, user, websocket, dispatch) => {
+export const acceptProjectMemberRequest = async (notification, user, websocket, dispatch) => {
     const activity = { type: "join-project", who: user.pseudo, date: new Date().toISOString() }
     const member = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
-    await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${request.projectId}`)
+    await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${notification.projectId}`)
         .then(res => {
             res.data.members.map(async element => {
                 return await websocket.current.emit("acceptMemberRequest", {
@@ -64,17 +62,16 @@ export const acceptProjectMemberRequest = async (request, user, websocket, dispa
                 })
             })
         })
-    Object.assign(request, { state: "accepted" })
-    dispatch(acceptMemberRequest(user._id, member, request.projectId, request.notificationId, activity))
+    Object.assign(notification, { state: "accepted" })
+    dispatch(acceptMemberRequest(user._id, member, notification.projectId, notification.notificationId, activity))
 }
 
-export const refuseProjectMemberRequest = (request, user, websocket, dispatch) => {
+export const refuseProjectMemberRequest = (notification, user, websocket, dispatch) => {
     websocket.current.emit("refuseMemberRequest", {
         userId: user._id,
-        receiverId: request.requesterId
+        receiverId: notification.requesterId
     })
-    Object.assign(request, { state: "refused" })
-    dispatch(refuseMemberRequest(user._id, request.projectId, request.notificationId))
+    dispatch(refuseMemberRequest(user._id, notification.projectId, notification._id))
 }
 
 /***************************************************************************************************************************************************/
@@ -176,4 +173,47 @@ export const removeAdmin = (member, project, user, websocket, dispatch) => {
         })
     })
     dispatch(unsetAdmin(member.id, project._id))
+}
+
+/***************************************************************************************************************************************************/
+/**************************************************************** SORTED ARRAY *********************************************************************/
+
+export const sortByRecent = (members, setMembers, setFilter, setDisplay) => {
+    const array = members.sort((a, b) => { return new Date(b.since) - new Date(a.since) })
+    setMembers(array)
+    setFilter("Plus récent au plus ancien")
+    setDisplay(false)
+}
+
+export const sortByOld = (members, setMembers, setFilter, setDisplay) => {
+    const array = members.sort((a, b) => { return new Date(a.since) - new Date(b.since) })
+    setMembers(array)
+    setFilter("Plus ancien au plus récent")
+    setDisplay(false)
+}
+
+export const sortByRole = (members, setMembers, setFilter, setDisplay) => {
+    const manager = members.filter(element => element.role === "manager")
+    const admins = members.filter(element => element.role === "admin")
+    const users = members.filter(element => element.role === "user")
+    setMembers(manager.concat(admins, users))
+    setFilter("Par rôle")
+    setDisplay(false)
+}
+
+export const sortByAlpha = (members, setMembers, setFilter, setDisplay) => {
+    const array = members.sort((a, b) => { return a.pseudo.toString().localeCompare(b.pseudo.toString()) })
+    setMembers(array)
+    setFilter("Ordre alphabétique")
+    setDisplay(false)
+}
+
+export const checkDateSort = (isByRecent, setIsByRecent, members, setMembers, setFilter, setDisplay) => {
+    if (isByRecent) {
+        sortByOld(members, setMembers, setFilter, setDisplay)
+        setIsByRecent(false)
+    } else {
+        sortByRecent(members, setMembers, setFilter, setDisplay)
+        setIsByRecent(true)
+    }
 }

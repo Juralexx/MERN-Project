@@ -43,6 +43,8 @@ export const UPDATE_TASK = "UPDATE_TASK"
 export const RECEIVE_UPDATE_TASK = "RECEIVE_UPDATE_TASK"
 export const UPDATE_TASK_STATE = "UPDATE_TASK_STATE"
 export const RECEIVE_UPDATE_TASK_STATE = "RECEIVE_UPDATE_TASK_STATE"
+export const UPDATE_TASK_STATUS = "UPDATE_TASK_STATUS"
+export const RECEIVE_UPDATE_TASK_STATUS = "RECEIVE_UPDATE_TASK_STATUS"
 export const DELETE_TASK = "DELETE_TASK"
 export const RECEIVE_DELETE_TASK = "RECEIVE_DELETE_TASK"
 
@@ -490,6 +492,26 @@ export const changeTaskState = (projectId, taskId, state, activity) => {
 export const receiveChangeTaskState = (taskId, state, activity) => {
     return async (dispatch) => {
         dispatch({ type: RECEIVE_UPDATE_TASK_STATE, payload: { taskId, state, activity } })
+    }
+}
+
+export const changeTaskStatus = (projectId, taskId, status, activity) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
+            data: { taskId, status, activity }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_TASK_STATUS, payload: { taskId, status, activity } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveChangeTaskStatus = (taskId, status, activity) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_UPDATE_TASK_STATUS, payload: { taskId, status, activity } })
     }
 }
 

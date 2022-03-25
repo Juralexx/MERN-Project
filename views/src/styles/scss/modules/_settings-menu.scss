@@ -7,24 +7,15 @@
     top           : 65px;
     right         : 5px;
     z-index       : 1100;
-
-    &:before {
-        content      : "";
-        position     : absolute;
-        width        : 0px;
-        height       : 0px;
-        border       : 10px solid;
-        border-color : transparent transparent var(--color-content) transparent;
-        right        : 30px;
-        top          : -19px;
-    }
+    color         : var(--color-text);
+    box-shadow    : var(--shadow-xl);
 
     .settings-menu-header {
         display     : flex;
         align-items : center;
         padding     : 10px;
 
-        h5 {
+        .title {
             text-align : center;
             width      : 100%;
             margin     : 0;
@@ -48,119 +39,120 @@
         }
     }
 
-    .settings-menu-nav {
+    .settings-menu-ul {
+        padding         : 0;
+        margin          : 0;
+        list-style-type : none;
 
-        ul {
-            padding         : 0;
-            margin          : 0;
-            list-style-type : none;
+        .settings-menu-li {
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+            height          : 52px;
+            border-left     : 3px solid transparent;
+            cursor          : pointer;
+            
+            .settings-menu-li-left {
+                display     : flex;
+                align-items : center;
+                padding     : 0 0 0 10px;
+                height      : 100%;
+                width       : auto;
 
-            li {
-                display         : flex;
-                justify-content : space-between;
-                align-items     : center;
-                height          : 52px;
-                border-left     : 3px solid transparent;
-                cursor          : pointer;
-                
-                .left {
-                    display     : flex;
-                    align-items : center;
-                    padding     : 0 0 0 10px;
-                    height      : 100%;
-                    width       : auto;
-
-                    p {
-                        margin    : 0 0 0 10px;
-                        font-size : 15px;
-                    }
-
-                    svg {
-                        height        : 36px;
-                        width         : 36px;
-                        padding       : 7px;
-                        border-radius : 30px;
-                        background    : var(--color-content-light);;
-                    }
+                p {
+                    margin    : 0 0 0 10px;
+                    font-size : 15px;
                 }
 
-                .right {
-                    display     : flex;
-                    align-items : center;
-                    padding     : 0 0 0 10px;
-                    height      : 100%;
-                    width       : auto;
+                svg {
+                    height        : 36px;
+                    width         : 36px;
+                    padding       : 7px;
+                    border-radius : 30px;
+                    background    : var(--color-content-light);
+                }
+            }
 
-                    svg {
-                        height  : 30px;
-                        width   : 30px;
-                        padding : 7px;
+            .settings-menu-li-right {
+                display     : flex;
+                align-items : center;
+                padding     : 0 0 0 10px;
+                height      : 100%;
+                width       : auto;
+
+                svg {
+                    height        : 36px;
+                    width         : 36px;
+                    padding       : 7px;
+                    border-radius : 30px;
+                    margin-right  : 5px;
+                }
+            }
+
+            &:hover {
+                background  : var(--color-content-light);
+                border-left : 3px solid var(--color-primary);
+
+                svg {
+                    background  : var(--color-content);
+                    path {
+                        fill : var(--color-text);
                     }
                 }
+            }
 
-                &:hover {
-                    background  : var(--color-content-light);;
-                    border-left : 3px solid var(--color-primary);
+            .switch {
+                position : relative;
+                display  : inline-block;
+                width    : 60px;
+                height   : 28px;
+                margin : 0 10px 0 0;
 
-                    svg {
-                        path {
-                            fill : var(--color-primary);
-                        }
-                    }
-                }
-                .switch {
-                    position : relative;
-                    display  : inline-block;
-                    width    : 60px;
-                    height   : 28px;
-                    margin : 0 10px 0 0;
-
-                    input { 
-                        opacity : 0;
-                        width   : 0;
-                        height  : 0;
-                
-                        &:checked + .slider {
-                            background-color : var(--color-primary);
-                
-                            &:before {
-                                transform : translateX(32px);
-                            }
-                        }
-                
-                        &:focus + .slider {
-                            box-shadow : 0 0 1px #2196F3;
-                        }
-                    }
-                
-                    .slider {
-                        position         : absolute;
-                        cursor           : pointer;
-                        top              : 0;
-                        left             : 0;
-                        right            : 0;
-                        bottom           : 0;
-                        background-color : #ccc;
-                        transition       : .4s;
-                
+                input { 
+                    opacity : 0;
+                    width   : 0;
+                    height  : 0;
+            
+                    &:checked + .slider {
+                        background-color : var(--color-primary);
+            
                         &:before {
-                            position         : absolute;
-                            content          : "";
-                            height           : 20px;
-                            width            : 20px;
-                            left             : 4px;
-                            bottom           : 4px;
-                            background-color : white;
-                            transition       : .4s;
+                            transform : translateX(32px);
                         }
                     }
-                }
-                .slider.round {
-                    border-radius : 34px;
-                
-                    &:before {
-                        border-radius : 50%;
+            
+                    &:focus + .slider {
+                        box-shadow : 0 0 1px #2196F3;
                     }
+                }
+            
+                .slider {
+                    position         : absolute;
+                    cursor           : pointer;
+                    top              : 0;
+                    left             : 0;
+                    right            : 0;
+                    bottom           : 0;
+                    background-color : #ccc;
+                    transition       : .4s;
+            
+                    &:before {
+                        position         : absolute;
+                        content          : "";
+                        height           : 20px;
+                        width            : 20px;
+                        left             : 4px;
+                        bottom           : 4px;
+                        background-color : white;
+                        transition       : .4s;
+                    }
+                }
+            }
+            .slider.round {
+                border-radius : 34px;
+            
+                &:before {
+                    border-radius : 50%;
                 }
             }
         }

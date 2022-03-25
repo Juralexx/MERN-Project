@@ -55,7 +55,7 @@ export const cancelFriendRequest = async (req, res) => {
                 },
                 $inc: { unseen_notifications: -1 }
             },
-            { new: true, upsert: true },
+            { new: true, upsert: true, runValidators: true },
         )
             .catch((err) => { return res.status(400).send({ message: err }) })
 
@@ -103,7 +103,7 @@ export const acceptFriend = async (req, res) => {
                 },
                 $inc: { unseen_notifications: -1 }
             },
-            { new: true, upsert: true },
+            { new: true, upsert: true, runValidators: true },
         )
             .catch((err) => { return res.status(400).send({ message: err }) })
 
@@ -148,7 +148,7 @@ export const refuseFriend = async (req, res) => {
                 },
                 $inc: { unseen_notifications: -1 }
             },
-            { new: true, upsert: true },
+            { new: true, upsert: true, runValidators: true },
         )
             .catch((err) => { return res.status(400).send({ message: err }) })
 

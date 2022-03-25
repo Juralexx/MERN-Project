@@ -55,6 +55,10 @@ export const keepNewDateOnly = (arrayToMap, setState) => {
     setState(filteredArray)
 }
 
+export const reverseArray = (array) => {
+    return array.map(array.pop,[...array])
+}
+
 export const isEmpty = (value) => {
     return (
         value === undefined

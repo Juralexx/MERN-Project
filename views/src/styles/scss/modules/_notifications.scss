@@ -1,0 +1,66 @@
+.notifications-menu {
+    min-width     : 360px;
+    width         : auto;
+    padding       : 16px 8px;
+    position      : absolute;
+    background    : var(--color-content);
+    box-shadow    : var(--shadow-xl);
+    border-radius : var(--radius);
+    top           : 65px;
+    right         : 42px;
+    z-index       : 1100;
+
+    .notifications-header {
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        width           : 100%;
+        padding         : 0 8px;
+        margin-bottom   : 8px;
+        color           : var(--color-text);
+        font-weight     : 500;
+
+        .title {
+            font-size : 22px;
+        }
+    }
+
+    .notifications-navbar {
+        display       : flex;
+        width         : 100%;
+        padding       : 0 8px 10px;
+        margin-bottom : 16px;
+        color         : var(--color-text);
+        border-bottom : 1px solid var(--color-content-light);
+
+        .navlink {
+            padding          : 8px 12px;
+            cursor           : pointer;
+            background-color : var(--color-content-light);
+            border-radius    : 8px;
+
+            &.active {
+                background-color : var(--color-primary);
+            }
+
+            &:nth-child(2) {
+                margin-left : 8px;
+            }
+        }
+    }
+
+    .empty-notifications {
+        display     : flex;
+        align-items : center;
+        justify-content: center;
+        padding     : 0 8px;
+        color       : var(--color-text);
+        font-size   : 18px;
+
+        svg {
+            width        : 30px;
+            height       : 30px;
+            margin-right : 20px;
+        }
+    }
+}

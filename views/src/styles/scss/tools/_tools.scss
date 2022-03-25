@@ -1,3 +1,13 @@
+.one-line {
+    text-overflow      : ellipsis;
+    overflow           : hidden;
+    width              : 90%;
+    line-height        : 19px;
+    display            : -webkit-box;
+    -webkit-line-clamp : 1;
+    -webkit-box-orient : vertical;
+}
+
 .three-lines {
     text-overflow      : ellipsis;
     overflow           : hidden;
@@ -6,4 +16,50 @@
     display            : -webkit-box;
     -webkit-line-clamp : 3;
     -webkit-box-orient : vertical;
+}
+
+.tools-btn {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    padding         : 10px;
+    cursor          : pointer;
+    border-radius   : 20px;
+    color           : var(--color-text);
+
+    svg {
+        height : 20px;
+        width  : 20px;
+    }
+
+    &:hover {
+        background-color : var(--color-content-light);
+    }
+}
+
+.tools-menu {
+    position      : absolute;
+    padding       : 8px;
+    z-index       : 1000;
+    background    : var(--color-content);
+    box-shadow    : var(--shadow-lg);
+    border-radius : var(--radius);
+    border        : 1px solid var(--color-content-light);
+
+    .tools-choice {
+        min-width     : 300px;
+        text-align    : left;
+        padding       : 10px;
+        color         : var(--color-text);
+        cursor        : pointer;
+        border-radius : 7px;
+
+        &:hover {
+            background : var(--color-content-light);
+        }
+    }
+}
+
+.hidden {
+    display : none;
 }

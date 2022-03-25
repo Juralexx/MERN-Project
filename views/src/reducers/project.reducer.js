@@ -1,7 +1,7 @@
 import {
     CREATE_TASK,
     CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
-    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN
+    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS
 } from "../actions/project.action";
 
 const initialState = {}
@@ -247,6 +247,22 @@ export default function projectReducer(state = initialState, action) {
         case RECEIVE_UPDATE_TASK_STATE:
             let h = state.tasks.findIndex(task => task._id === action.payload.taskId)
             state.tasks[h].state = action.payload.state
+            return {
+                ...state,
+                tasks: state.tasks,
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case UPDATE_TASK_STATUS:
+            let i = state.tasks.findIndex(task => task._id === action.payload.taskId)
+            state.tasks[i].status = action.payload.status
+            return {
+                ...state,
+                tasks: state.tasks,
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_UPDATE_TASK_STATUS:
+            let j = state.tasks.findIndex(task => task._id === action.payload.taskId)
+            state.tasks[j].status = action.payload.status
             return {
                 ...state,
                 tasks: state.tasks,

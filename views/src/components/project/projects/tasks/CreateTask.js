@@ -6,18 +6,20 @@ import { BasicInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { ImCross } from 'react-icons/im'
-import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/task'
+import { addMemberToArray, removeMemberFromArray, statusToString } from '../../../tools/functions/task'
 import { highlightIt } from '../../../tools/functions/function'
 
 const CreateTask = ({ open, setOpen, project, user, websocket }) => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [end, setEnd] = useState("")
+    const [status, setStatus] = useState("normal")
     const [array, setArray] = useState([])
+    const [displayStatus, setDisplayStatus] = useState(false)
     const dispatch = useDispatch()
 
     const newTask = async () => {
-        const task = { title: title, description: description, state: "undone", creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
+        const task = { title: title, description: description, state: "todo", status: status, creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
         const activity = { type: "create-task", date: new Date().toISOString(), who: user.pseudo, task: title }
         dispatch(createTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)
@@ -59,6 +61,16 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
             <BasicInput type="text" placeholder="Titre" value={title} onChange={(e) => setTitle(e.target.value)} />
             <Textarea type="text" placeholder="Description" className="mt-2" value={description} onChange={(e) => setDescription(e.target.value)} />
             <BasicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
+            <div className="relative">
+                <BasicInput type="text" readOnly className="mt-2" value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)} />
+                {displayStatus &&
+                    <div className="absolute left-2 w-[300px] bg-white dark:bg-background_primary_x_light p-3 z-[1500] shadow-lg rounded-lg">
+                        <div className="py-2 cursor-pointer" onClick={() => setStatus("normal")}>Normal</div>
+                        <div className="py-2 cursor-pointer" onClick={() => setStatus("important")}>Important</div>
+                        <div className="py-2 cursor-pointer" onClick={() => setStatus("priority")}>Prioritaire</div>
+                    </div>
+                }
+            </div>
 
             {project.members && searchQuery && (
                 <div className="w-full bottom-[60px] max-h-[200px] mt-2 bg-white dark:bg-background_primary overflow-auto">

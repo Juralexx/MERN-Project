@@ -120,6 +120,7 @@ const ProjectModel = new mongoose.Schema(
                 title: String,
                 description: String,
                 state: String,
+                status: String,
                 creatorId: String,
                 creator: String,
                 creatorPicture: String,

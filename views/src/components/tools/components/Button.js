@@ -1,41 +1,91 @@
 import React from "react";
 
 export const Button = (props) => {
-    const { text, fullwidth, color, hoverColor, onClick, className, disabled } = props
+    const { text, fullwidth, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`h-10 flex justify-center items-center px-4 py-2 rounded-full text-white cursor-pointer
-            ${fullwidth ? "w-full" : "max-w-[300px]"}
-            ${color ? `bg-${color}` : "bg-primary"}
-            ${hoverColor ? `hover:bg-${hoverColor}` : "hover:bg-primary_semi_dark"}
-            ${className ? className : null}
-        `} disabled={disabled}>
+        <div onClick={onClick} className={`btn-first ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
             {text}
         </div>
     )
 }
 
-export const TextButton = (props) => {
-    const { text, fullwidth, color, onClick, className } = props
+export const StartIconButton = (props) => {
+    const { icon, text, fullwidth, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`h-10 flex justify-center items-center px-4 py-2 rounded-full cursor-pointer
-            ${fullwidth ? "w-full" : "w-auto"} 
-            ${color ? `text-${color} hover:bg-${color}/[.15]` : "text-primary_light hover:bg-primary_semi_dark/[.15]"}
-            ${className ? className : null}
-        `}>
-            {text}
+        <div onClick={onClick} className={`btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+            {icon && (icon)}{text}
+        </div>
+    )
+}
+
+export const EndIconButton = (props) => {
+    const { icon, text, fullwidth, onClick, className, disabled } = props
+    return (
+        <div onClick={onClick} className={`btn-icon-end ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+            {text}{icon && (icon)}
         </div>
     )
 }
 
 export const OutlinedButton = (props) => {
-    const { text, fullwidth, color, onClick, className } = props
+    const { text, fullwidth, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`h-10 flex justify-center items-center px-4 py-2 rounded-full cursor-pointer border
-            ${fullwidth ? "w-full" : "w-auto"} 
-            ${color ? `border-${color}/50 text-${color} hover:bg-${color}/[.15]` : "border-primary/50 text-primary hover:bg-primary_semi_dark/[.15]"}
-            ${className ? className : null}
-        `}>
+        <div onClick={onClick} className={`outlined-btn ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
             {text}
+        </div>
+    )
+}
+
+export const StartIconOutlinedButton = (props) => {
+    const { icon, text, fullwidth, onClick, className, disabled } = props
+    return (
+        <div onClick={onClick} className={`btn-outlined-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+            {icon && (icon)}{text}
+        </div>
+    )
+}
+
+export const EndIconOutlinedButton = (props) => {
+    const { icon, text, fullwidth, onClick, className, disabled } = props
+    return (
+        <div onClick={onClick} className={`btn-outlined-icon-end ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+            {text}{icon && (icon)}
+        </div>
+    )
+}
+
+export const TextButton = (props) => {
+    const { text, fullwidth, onClick, className, disabled } = props
+    return (
+        <div onClick={onClick} className={`text-btn ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+            {text}
+        </div>
+    )
+}
+
+export const StartIconTextButton = (props) => {
+    const { icon, text, fullwidth, onClick, className, disabled } = props
+    return (
+        <div onClick={onClick} className={`text-btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+            {icon && (icon)}{text}
+        </div>
+    )
+}
+
+export const EndIconTextButton = (props) => {
+    const { icon, text, fullwidth, onClick, className, disabled } = props
+    return (
+        <div onClick={onClick} className={`text-btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+            {text}{icon && (icon)}
+        </div>
+    )
+}
+
+export const IconToggle = (props) => {
+    const { color, icon, onClick, className } = props
+    return (
+        <div onClick={onClick} className={`icon-toggle text-${color} hover:bg-${color}/25 ${className ?? className}`}>
+            {icon}
         </div>
     )
 }
@@ -62,15 +112,6 @@ export const IconButton = (props) => {
                     {endIcon}
                 </div>
             )}
-        </div>
-    )
-}
-
-export const IconToggle = (props) => {
-    const { color, icon, onClick, className } = props
-    return (
-        <div onClick={onClick} className={`w-10 h-10 px-2 py-2 rounded-full hover:bg-${color}/75 ${className ? className : null}`}>
-            {icon}
         </div>
     )
 }

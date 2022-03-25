@@ -1,7 +1,7 @@
 import { changeTaskState, deleteTask } from "../../../actions/project.action"
 
 export const changeState = async (element, project, user, websocket, dispatch) => {
-    const state = () => { if (element.state === "undone") { return "done" } else { return "undone" } }
+    const state = () => { if (element.state !== "done") { return "done" } else { return "todo" } }
     const activity = { type: "update-task-state", who: user.pseudo, task: element.title, prevState: stateToString(element.state), newState: stateToString(state()), date: new Date().toISOString() }
     const members = project.members.filter(member => member.id !== user._id)
     members.map(member => {
@@ -69,17 +69,44 @@ export const isDatePassed = (date) => {
 /******************************************************************* STATES ************************************************************************/
 
 export const checkState = (element) => {
-    if (element === "done") {
-        return "green"
-    } else {
+    if (element === "todo") {
+        return "orange"
+    } else if (element === "in progress") {
         return "blue"
+    } else if (element === "done") {
+        return "green"
     }
 }
 
 export const stateToString = (element) => {
-    if (element === "done") {
-        return "Terminé"
-    } else {
+    if (element === "todo") {
+        return "À traiter"
+    } else if (element === "in progress") {
         return "En cours"
+    } else if (element === "done") {
+        return "Terminée"
+    }
+}
+
+/***************************************************************************************************************************************************/
+/******************************************************************* STATUS ************************************************************************/
+
+export const checkStatus = (element) => {
+    if (element === "normal") {
+        return "blue"
+    } else if (element === "important") {
+        return "orange"
+    } else if (element === "priority") {
+        return "red"
+    }
+}
+
+export const statusToString = (element) => {
+    if (element === "normal") {
+        return "Normal"
+    } else if (element === "important") {
+        return "Important"
+    } else if (element === "priority") {
+        return "Prioritaire"
     }
 }

@@ -59,7 +59,7 @@ export const cancelMemberRequest = async (req, res) => {
                 },
                 $inc: { unseen_notifications: -1 }
             },
-            { new: true, upsert: true },
+            { new: true, upsert: true, runValidators: true },
         )
             .then((docs) => { res.send(docs) })
             .catch((err) => { return res.status(400).send({ message: err }) })
@@ -103,7 +103,7 @@ export const acceptMemberRequest = async (req, res) => {
                 },
                 $inc: { unseen_notifications: -1 }
             },
-            { new: true, upsert: true },
+            { new: true, upsert: true, runValidators: true },
         )
             .then((docs) => { res.send(docs) })
             .catch((err) => { return res.status(400).send({ message: err }) })
@@ -128,7 +128,7 @@ export const refuseMemberRequest = async (req, res) => {
         )
             .catch((err) => { return res.status(400).send({ message: err }) })
 
-        await UserModel.findByIdAndUpdate(
+        await UserModel.updateOne(
             { _id: req.body.userId },
             {
                 $pull: {
@@ -138,7 +138,7 @@ export const refuseMemberRequest = async (req, res) => {
                 },
                 $inc: { unseen_notifications: -1 }
             },
-            { new: true, upsert: true },
+            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
         )
             .then((docs) => { res.send(docs) })
             .catch((err) => { return res.status(400).send({ message: err }) })
@@ -209,7 +209,10 @@ export const leaveProject = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { members: { id: req.body.memberId } },
+                $pull: {
+                    members: { id: req.body.memberId },
+                    admins: req.body.userId
+                },
                 $addToSet: {
                     activity_feed: req.body.activity
                 }

@@ -1,34 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import FriendRequest from "./FriendRequest";
 import MemberRequest from "./MemberRequest";
 import { BsThreeDots } from 'react-icons/bs'
 import SmallMenu from "../../tools/components/SmallMenu";
 import { setNotifSeen } from "../../tools/functions/notifications";
+import { IoMdNotificationsOff } from 'react-icons/io'
 
 const NotificationsMenu = ({ open, user, websocket }) => {
     const [openMenu, setOpenMenu] = useState(false)
+    const [showUnread, setShowUnread] = useState(false)
+    const [unread, setUnread] = useState([])
     const dispatch = useDispatch()
+    useEffect(() => { if (user.notifications) { setUnread(user.notifications.filter(element => element.seen !== true)) } }, [user.notifications])
 
     return (
         open &&
-        <div className="min-w-[360px] w-auto h-auto py-4 px-2 absolute bg-white dark:bg-background_primary_light shadow-custom dark:shadow-lg rounded-md top-[65px] right-14 z-[1100] dark:border-background_primary_light">
-            <div className="flex justify-between items-center w-full px-2 mb-2 text-slate-500 font-semibold dark:text-slate-300">
-                <h2>Notifications</h2>
-                <BsThreeDots className="cursor-pointer h-5 w-5" onClick={() => setOpenMenu(!openMenu)} />
+        <div className="notifications-menu">
+            <div className="notifications-header">
+                <div className="title">Notifications</div>
+                <div className="tools-btn" onClick={() => setOpenMenu(!openMenu)}>
+                    <BsThreeDots />
+                </div>
             </div>
             {openMenu && (
                 <SmallMenu>
-                    <div className="py-1 text-slate-500 dark:text-slate-300">Tout marquer comme lu</div>
-                    <div className="py-1 text-slate-500 dark:text-slate-300">Voir toutes les notifications</div>
+                    <div className="tools-choice">Tout marquer comme lu</div>
+                    <div className="tools-choice">Voir toutes les notifications</div>
                 </SmallMenu>
             )}
-            <div className="flex w-full px-2 mb-4 dark:text-slate-300">
-                <div className="p-2 bg-primary_semi_dark dark:bg-background_primary_x_light rounded-lg">Tout</div>
-                <div className="ml-2 p-2 bg-primary_semi_dark dark:bg-background_primary_x_light rounded-lg">Non lu</div>
+            <div className="notifications-navbar">
+                <div className={`navlink ${showUnread ? "" : "active"}`} onClick={() => setShowUnread(false)}>Tout</div>
+                <div className={`navlink ${showUnread ? "active" : ""}`} onClick={() => setShowUnread(true)}>Non lu</div>
             </div>
             {user.notifications.length !== 0 && (
-                user.notifications.map((element, key) => {
+                (!showUnread ? user.notifications : unread).map((element, key) => {
                     return (
                         <>
                             {(element.type === "friend-request") &&
@@ -41,8 +47,17 @@ const NotificationsMenu = ({ open, user, websocket }) => {
                     )
                 })
             )}
-            {user.notifications.length === 0 && (
-                <p>Vous n'avez pas de nouvelles notifications</p>
+            {!showUnread && user.notifications.length === 0 && (
+                <div className="empty-notifications">
+                    <div><IoMdNotificationsOff /></div>
+                    <div>Vous n'avez pas de nouvelles notifications</div>
+                </div>
+            )}
+            {showUnread && unread.length === 0 && (
+                <div className="empty-notifications">
+                    <div><IoMdNotificationsOff /></div>
+                    <div>Vous n'avez pas de nouvelles notifications non lu</div>
+                </div>
             )}
         </div>
     )

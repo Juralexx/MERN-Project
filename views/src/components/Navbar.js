@@ -10,55 +10,45 @@ import { FaProjectDiagram } from 'react-icons/fa'
 
 const Navbar = ({ websocket, user }) => {
     const uid = useContext(UidContext)
-
-    const classes = {
-        container: "absolute top-0 left-1/2 translate-x-[-50%] flex justify-between w-auto my-0 mx-auto h-[60px]",
-        ul: "relative flex list-none m-0 p-0",
-        li: "group flex h-full min-w-20 text-center justify-center items-center text-slate-500 dark:text-slate-300 cursor-pointer",
-        a: "!no-underline h-full w-full py-0 px-5 text-slate-500 dark:text-slate-300 flex flex-col items-center justify-center py-0 px-2 dark:group-hover:text-slate-300 group-hover:text-slate-500 border-b-2 border-b-transparent hover:border-b-primary",
-        svg: "w-5 h-5 mb-[6px] text-slate-500 dark:text-slate-300 group-hover:text-primary icon",
-        p: "m-0 leading-[14px] font-medium text-[16px] whitespace-nowrap"
-    }
-    
-    const isThisActive = ({isActive}) => (!isActive ? classes.a : classes.a + " border-b-primary icon:text-primary")
+    const isThisActive = ({isActive}) => (!isActive ? "nav-link" : "nav-link active")
 
     return (
-        <header className="relative w-full h-[60px]">
-            <nav className="flex fixed h-[60px] w-full bg-white dark:bg-background_primary z-10 shadow-custom dark:shadow-lg">
-                <div className="relative pl-5">
+        <header>
+            <nav className="navbar">
+                <div className="logo-container">
                     <NavLink to="/">
-                        <div className="flex w-auto h-full items-center">
-                            <img src="/img/logo-top.png" alt="" className="h-9 w-auto ml-1" />
+                        <div className="logo-inner">
+                            <img src="/img/logo-top.png" alt="" />
                         </div>
                     </NavLink>
                 </div>
 
                 {uid ? (
                     <>
-                        <div className={classes.container}>
-                            <ul className={classes.ul}>
-                                <li className={classes.li}>
+                        <div className="nav-container">
+                            <ul className="nav-ul">
+                                <li className="nav-li">
                                     <NavLink to="/" className={isThisActive}>
-                                        <AiOutlineHome className={classes.svg} />
-                                        <p className={classes.p}>Accueil</p>
+                                        <AiOutlineHome className="nav-icon" />
+                                        <p className="nav-p">Accueil</p>
                                     </NavLink>
                                 </li>
-                                <li className={classes.li}>
+                                <li className="nav-li">
                                     <NavLink to="/recent-searches" className={isThisActive}>
-                                        <AiOutlineUnorderedList className={classes.svg} />
-                                        <p className={classes.p}>Mes recherches</p>
+                                        <AiOutlineUnorderedList className="nav-icon" />
+                                        <p className="nav-p">Mes recherches</p>
                                     </NavLink>
                                 </li>
-                                <li className={classes.li}>
+                                <li className="nav-li">
                                     <NavLink to="/projects" className={isThisActive}>
-                                        <FaProjectDiagram className={classes.svg} />
-                                        <p className={classes.p}>Mes Projets</p>
+                                        <FaProjectDiagram className="nav-icon" />
+                                        <p className="nav-p">Mes Projets</p>
                                     </NavLink>
                                 </li>
-                                <li className={classes.li}>
+                                <li className="nav-li">
                                     <NavLink to="/messenger" className={isThisActive}>
-                                        <MdOutlineMessage className={classes.svg} />
-                                        <p className={classes.p}>Messages</p>
+                                        <MdOutlineMessage className="nav-icon" />
+                                        <p className="nav-p">Messages</p>
                                     </NavLink>
                                 </li>
                             </ul>
@@ -68,42 +58,42 @@ const Navbar = ({ websocket, user }) => {
                         </>
                     </>
                 ) : (
-                    <div className={classes.container}>
-                        <ul className={classes.ul}>
-                            <li className={classes.li}>
+                    <div className="nav-container">
+                        <ul className="nav-ul">
+                            <li className="nav-li">
                                 <NavLink to="/" className={isThisActive}>
-                                    <AiOutlineHome className={classes.svg} />
-                                    <p className={classes.p}>Accueil</p>
+                                    <AiOutlineHome className="nav-icon" />
+                                    <p className="nav-p">Accueil</p>
                                 </NavLink>
                             </li>
-                            <li className={classes.li}>
+                            <li className="nav-li">
                                 <NavLink to="/" className={isThisActive}>
-                                    <AiOutlineUnorderedList className={classes.svg} />
-                                    <p className={classes.p}>Mes recherches</p>
+                                    <AiOutlineUnorderedList className="nav-icon" />
+                                    <p className="nav-p">Mes recherches</p>
                                 </NavLink>
                             </li>
-                            <li className={classes.li}>
+                            <li className="nav-li">
                                 <NavLink to="/" className={isThisActive}>
-                                    <FaProjectDiagram className={classes.svg} />
-                                    <p className={classes.p}>Projets</p>
+                                    <FaProjectDiagram className="nav-icon" />
+                                    <p className="nav-p">Projets</p>
                                 </NavLink>
                             </li>
-                            <li className={classes.li}>
+                            <li className="nav-li">
                                 <NavLink to="/messenger" className={isThisActive}>
-                                    <MdOutlineMessage className={classes.svg} />
-                                    <p className={classes.p}>Messages</p>
+                                    <MdOutlineMessage className="nav-icon" />
+                                    <p className="nav-p">Messages</p>
                                 </NavLink>
                             </li>
-                            <li className={classes.li}>
+                            <li className="nav-li">
                                 <NavLink to="/login" className={isThisActive}>
-                                    <IoPersonCircleSharp className={classes.svg} />
-                                    <p className={classes.p}>Se connecter</p>
+                                    <IoPersonCircleSharp className="nav-icon" />
+                                    <p className="nav-p">Se connecter</p>
                                 </NavLink>
                             </li>
-                            <li className={classes.li}>
+                            <li className="nav-li">
                                 <NavLink to="/register" className={isThisActive}>
-                                    <RiLoginCircleLine className={classes.svg} />
-                                    <p className={classes.p}>S'inscrire</p>
+                                    <RiLoginCircleLine className="nav-icon" />
+                                    <p className="nav-p">S'inscrire</p>
                                 </NavLink>
                             </li>
                         </ul>
