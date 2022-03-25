@@ -2,7 +2,7 @@
     position   : relative;
     height     : 100%;
     width      : 350px;
-    background : var(--color-content);
+    background : var(--content);
     box-shadow : var(--shadow-left);
     z-index    : 1500;
     overflow-y : hidden;
@@ -19,8 +19,8 @@
         padding-left    : 16px;
         padding-right   : 16px;
         height          : 70px;
-        color           : var(--color-text);
-        background      : var(--color-content-light);
+        color           : var(--text);
+        background      : var(--content-light);
 
         &.reduced {
             justify-content : center;
@@ -39,7 +39,7 @@
                 align-items      : center;
                 justify-content  : center;
                 padding          : 8px;
-                background-color : var(--color-content);
+                background-color : var(--content);
                 border-radius    : 50px;
 
                 svg {
@@ -82,12 +82,12 @@
                 justify-content : space-between;
                 position        : relative;
                 padding         : 12px 16px;
-                color           : var(--color-text);
+                color           : var(--text);
                 border-radius   : var(--radius);
                 cursor          : pointer;
     
                 &:hover {
-                    background-color : var(--color-content-light);
+                    background-color : var(--content-light);
                 }
     
                 &.reduced {
@@ -124,8 +124,8 @@
                     transform        : translateY(-50%);
                     padding          : 12px 20px;
                     border-radius    : var(--radius);
-                    background-color : var(--color-content);
-                    border           : 1px solid var(--color-content-light);
+                    background-color : var(--content);
+                    border           : 1px solid var(--content-light);
                     font-size        : 16px;
                 }
             }
@@ -135,7 +135,7 @@
                 padding : 4px 8px 4px 20px;
     
                 .sidebar-submenu-card {
-                    border-left : 1px solid var(--color-content-light);
+                    border-left : 1px solid var(--content-light);
                     margin-left : 8px;
     
                     .sidebar-submenu-title {
@@ -145,7 +145,7 @@
                         font-size       : 16px;
                         padding         : 12px 16px;
                         margin-left     : 8px;
-                        color           : var(--color-text);
+                        color           : var(--text);
                         cursor          : pointer;
                         border-radius   : var(--radius);
     
@@ -156,11 +156,11 @@
                         }
     
                         &:hover {
-                            background-color : var(--color-content-light);
+                            background-color : var(--content-light);
                         }
     
                         &.active {
-                            background-color : var(--color-primary);
+                            background-color : var(--primary);
                         }
                     }
                 }
@@ -200,8 +200,8 @@
         padding         : 0 12px 0 20px;
         width           : 100%;
         height          : 70px;
-        color           : var(--color-text);
-        background      : var(--color-content-light);
+        color           : var(--text);
+        background      : var(--content-light);
 
         .sidebar-bottom-inner {
             display     : flex;
@@ -261,7 +261,7 @@
         }
 
         svg {
-            color : var(--color-text);
+            color : var(--text);
         }
 
         &.reduced {

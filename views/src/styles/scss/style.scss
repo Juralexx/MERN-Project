@@ -1,35 +1,40 @@
-@import '_variables';
-@import '_body';
-@import '_forms';
-@import '_header';
+@import 'variables';
+@import 'body';
+@import 'forms';
+@import 'header';
 
-@import 'tools/_tools';
-@import 'tools/_btn';
-@import 'tools/_errors';
-@import 'tools/_loader';
-@import 'tools/_dropdown';
-@import 'tools/_user-info-modal';
-@import 'tools/_scrollbar';
-@import 'tools/_profil-card';
+@import 'tools/tools';
+@import 'tools/btn';
+@import 'tools/modals';
+@import 'tools/errors';
+@import 'tools/loader';
+@import 'tools/dropdown';
+@import 'tools/user-info-modal';
+@import 'tools/scrollbar';
+@import 'tools/profil-card';
 
-@import 'modules/profil/_profil';
-@import 'modules/profil/_profil-header';
-@import 'modules/profil/_profil-nav';
-@import 'modules/profil/_profil-edit-nav';
-@import 'modules/profil/_auto-container';
-@import 'modules/profil/_profil-img-modal';
+@import 'modules/profil/profil';
+@import 'modules/profil/profil-header';
+@import 'modules/profil/profil-nav';
+@import 'modules/profil/profil-edit-nav';
+@import 'modules/profil/auto-container';
+@import 'modules/profil/profil-img-modal';
 
-@import 'modules/project/_add-project';
-@import 'modules/project/_myprojects';
-@import 'modules/project/_home-project-card';
-@import 'modules/project/_home-project-modal';
+@import 'modules/project/add-project';
+@import 'modules/project/myprojects';
+@import 'modules/project/home-project-card';
+@import 'modules/project/home-project-modal';
 
-@import 'modules/projects/_header';
+@import 'modules/projects/projects';
+@import 'modules/projects/header';
+@import 'modules/projects/members';
+@import 'modules/projects/tasks';
+@import 'modules/projects/kanban';
 
-@import 'modules/messenger/_messenger';
+@import 'modules/messenger/messenger';
 
-@import 'modules/_navbar';
-@import 'modules/_sidebar';
-@import 'modules/_notifications';
-@import 'modules/_settings-menu';
-@import 'modules/_right-menu';
+@import 'modules/navbar';
+@import 'modules/sidebar';
+@import 'modules/notifications';
+@import 'modules/settings-menu';
+@import 'modules/right-menu';

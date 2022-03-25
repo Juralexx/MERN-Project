@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { ThreeDots } from 'react-loading-icons'
-import { Input, BasicInput } from '../../tools/components/Inputs';
+import { ClassicInput } from '../../tools/components/Inputs';
 import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
 import { IconButton } from '../../tools/components/Button';
@@ -62,7 +62,7 @@ const Location = ({ setLocation, setDepartment, setRegion, setNewRegion, onNext,
             <h3 className="mb-5">Où votre projet se situe-t-il ?</h3>
             <div className="relative w-full">
                 <p className="mb-2">Localité</p>
-                <BasicInput
+                <ClassicInput
                     type="search"
                     placeholder="Rechercher mon adresse"
                     value={searchQuery}

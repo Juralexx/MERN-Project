@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useClickOutside } from '../../../tools/functions/useClickOutside'
 import { reverseArray } from '../../../Utils'
-import { IconButton } from '../../../tools/components/Button'
+import { StartIconOutlinedButton } from '../../../tools/components/Button'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import Kanban from './Kanban'
@@ -22,6 +22,7 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     useClickOutside(taskMenu, setOpenTaskMenu, -1)
     const dispatch = useDispatch()
     const localStore = localStorage.getItem("taskLayout")
+    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
 
     const handleLayout = () => {
         if (layout === "list") {
@@ -59,17 +60,17 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
 
     return (
         <>
-            <div className="bg-white dark:bg-background_primary_light my-5 mx-auto w-[97%] max-w-[1366px] text-gray-500 dark:text-slate-300 px-6 py-6 rounded-xl">
-                <div className="flex justify-between items-center">
-                    <div className="flex">
-                        <div className="text-xl">Tâches ({project.tasks.length})</div>
-                        <div className="flex items-center ml-7 text-xl">
-                            <div className="px-3" onClick={handleLayout}>Kanban</div>
-                            <div className="px-3" onClick={handleLayout}>Liste</div>
+            <div className="dashboard-tasks">
+                <div className="dashboard-tasks-header">
+                    <div className="dashboard-tasks-header-left">
+                        <h2>Tâches ({project.tasks.length})</h2>
+                        <div className="dashboard-tasks-nav">
+                            <div className={`dashboard-tasks-nav-item ${addActive(layout === "kanban", "active")}`} onClick={handleLayout}>Kanban</div>
+                            <div className={`dashboard-tasks-nav-item ${addActive(layout === "list", "active")}`} onClick={handleLayout}>Liste</div>
                         </div>
                     </div>
                     {(isAdmin || isManager) &&
-                        <IconButton text="Ajouter une tâche" startIcon={<AiOutlinePlusCircle />} onClick={() => setCreateTask(true)} />
+                        <StartIconOutlinedButton text="Ajouter une tâche" icon={<AiOutlinePlusCircle />} onClick={() => setCreateTask(true)} />
                     }
                 </div>
                 {layout === "list" ? (

@@ -9,7 +9,6 @@ import rootReducer from './reducers'
 import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
 import './styles/dist/style.css'
 import './styles/dist/old.css'
-import './styles/dist/modal.css'
 import './styles/dist/map.css'
 import './styles/dist/toggle.css'
 import './styles/dist/editor.css'

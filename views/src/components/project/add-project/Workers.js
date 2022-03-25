@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { ThreeDots } from 'react-loading-icons'
 import { ImCross } from 'react-icons/im'
-import { BasicInput } from '../../tools/components/Inputs';
+import { ClassicInput } from '../../tools/components/Inputs';
 import { Button } from '../../tools/components/Button';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
 import { IconButton } from '../../tools/components/Button';
@@ -96,7 +96,7 @@ const Workers = ({ workArray, setWorkArray, onNext, onBack }) => {
             <p className="mb-2">Métier</p>
             <div className="flex">
                 <div className="w-full relative">
-                    <BasicInput
+                    <ClassicInput
                         type="search"
                         placeholder="Rechercher un métier"
                         value={searchQuery}
@@ -123,7 +123,7 @@ const Workers = ({ workArray, setWorkArray, onNext, onBack }) => {
                     {isLoading && !display && <div className="load-container"><ThreeDots /></div>}
                     {!isWorkResponse && !isLoading && <div className="load-container"><p>Aucun resultat ne correspond à votre recherche</p></div>}
                 </div>
-                <BasicInput
+                <ClassicInput
                     className="w-[70px] h-[42px] mx-2"
                     text="nombre"
                     type="number"

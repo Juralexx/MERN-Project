@@ -25,7 +25,7 @@
     padding         : 10px;
     cursor          : pointer;
     border-radius   : 20px;
-    color           : var(--color-text);
+    color           : var(--text);
 
     svg {
         height : 20px;
@@ -33,7 +33,7 @@
     }
 
     &:hover {
-        background-color : var(--color-content-light);
+        background-color : var(--content-light);
     }
 }
 
@@ -41,21 +41,21 @@
     position      : absolute;
     padding       : 8px;
     z-index       : 1000;
-    background    : var(--color-content);
+    background    : var(--content);
     box-shadow    : var(--shadow-lg);
     border-radius : var(--radius);
-    border        : 1px solid var(--color-content-light);
+    border        : 1px solid var(--content-light);
 
     .tools-choice {
         min-width     : 300px;
         text-align    : left;
         padding       : 10px;
-        color         : var(--color-text);
+        color         : var(--text);
         cursor        : pointer;
-        border-radius : 7px;
+        border-radius : var(--radius);
 
         &:hover {
-            background : var(--color-content-light);
+            background : var(--content-light);
         }
     }
 }
@@ -63,3 +63,169 @@
 .hidden {
     display : none;
 }
+
+.classic-input {
+    display       : block;
+    width         : 300px;
+    height        : 48px;
+    padding       : 8px;
+    color         : var(--text);
+    background    : var(--content-light);
+    border-radius : var(--radius);
+    border        : 2px solid rgba(0, 0, 0, 0);
+    outline       : none;
+
+    &:focus {
+        border : 2px solid var(--primary);
+    }
+}
+
+.dropdown-input {
+    position      : relative;
+    width         : 200px;
+    margin-bottom : 3px;
+    cursor        : pointer;
+    background    : var(--content-light);
+    border-radius : var(--radius);
+
+    input {
+        padding            : 10px;
+        color              : var(--text);
+        background         : var(--content-light);
+        border-radius      : var(--radius);
+        border             : 2px solid rgba(0, 0, 0, 0);
+        outline            : none;
+        cursor             : pointer;
+        width              : 90%;
+        text-overflow      : ellipsis;
+        overflow           : hidden;
+        display            : -webkit-box;
+        -webkit-line-clamp : 1;
+        -webkit-box-orient : vertical;
+
+        &:focus {
+            outline : none;
+        }
+
+        &::placeholder {
+            color : var(--text-tertiary);
+        }
+    }
+
+    &:hover {
+        background : var(--content-x-light);
+
+        input {
+            background : var(--content-x-light);
+        }
+    }
+
+    svg {
+        position : absolute;
+        height   : 16px;
+        width    : 16px;
+        bottom   : 15px;
+        right    : 10px;
+        color    : var(--text-tertiary);
+    }
+
+    .dropdown-input-choices {
+        position         : absolute;
+        left             : 0;
+        min-width        : 300px;
+        margin-top       : 5px;
+        padding          : 5px;
+        background-color : var(--content-light);
+        z-index          : 1500;
+        box-shadow       : var(--shadow-xl);
+        border-radius    : var(--radius);
+
+        div {
+            padding       : 8px 12px;
+            cursor        : pointer;
+            background    : var(--content-light);
+            border-radius : var(--radius);
+
+            &:hover {
+                background : var(--content);
+            }
+        }
+    }
+}
+
+.big-avatar {
+    height        : 40px;
+    width         : 40px;
+    border-radius : 50px;
+    margin-right  : 16px;
+}
+
+.medium-avatar {
+    height        : 34px;
+    width         : 34px;
+    border-radius : 50px;
+    margin-right  : 10px;
+}
+
+.tiny-avatar {
+    height        : 20px;
+    width         : 20px;
+    border-radius : 50px;
+    margin-right  : 6px;
+}
+
+.user-in-array-container {
+    display   : flex;
+    flex-wrap : wrap;
+    padding   : 10px 0;
+
+    .user-in-array {
+        display          : flex;
+        align-items      : center;
+        height: 30px;
+        padding          : 0 8px;
+        margin-right     : 4px;
+        color            : var(--text);
+        background-color : var(--primary);
+        border-radius    : var(--radius);
+        cursor           : pointer;
+    
+        svg {
+            width         : 20px;
+            height        : 20px;
+            padding       : 2px;
+            border-radius : 20px;
+            margin-left   : 5px;
+            margin-top    : 1px;
+    
+            &:hover {
+                background-color : var(--primary-dark);
+            }
+        }
+    }
+}
+
+.user-selecter {
+    height : 100%;
+    color  : var(--text);
+
+    .user-displayer {
+        min-height : 200px;
+        max-height : 300px;
+        overflow-y : auto;
+
+        .user-display-choice {
+            display       : flex;
+            align-items   : center;
+            padding       : 8px;
+            margin        : 4px 0;
+            cursor        : pointer;
+            border-radius : var(--radius);
+
+            &:hover {
+                background: var(--content-light);
+            }
+        }
+    }
+}
+

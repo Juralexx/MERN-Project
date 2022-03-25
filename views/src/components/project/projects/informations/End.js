@@ -4,7 +4,7 @@ import { updateEnd } from "../../../../actions/project.action";
 import { dateParser } from "../../../Utils";
 import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../../tools/components/Inputs";
+import { ClassicInput } from "../../../tools/components/Inputs";
 
 const End = ({project}) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -34,7 +34,7 @@ const End = ({project}) => {
                 </>
             ) : (
                 <>
-                    <BasicInput type="date" value={end} onInput={handleChange} onChange={(e) => setEnd(e.target.value)} />
+                    <ClassicInput type="date" value={end} onInput={handleChange} onChange={(e) => setEnd(e.target.value)} />
                     <div className="flex">
                         <Button text="Annuler" onClick={hideEndUpdater}>Annuler</Button>
                         <Button text="Valider" disabled={!value} onClick={handleEnd}>Enregistrer</Button>

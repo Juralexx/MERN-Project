@@ -1,0 +1,46 @@
+.dashboard-tasks {
+    width      : 100%;
+    margin     : 20px auto;
+    max-width  : 1366px;
+    padding    : 24px;
+    background : var(--content);
+    color      : var(--text);
+
+    .dashboard-tasks-header {
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+
+        .dashboard-tasks-header-left {
+            display     : flex;
+            align-items : center;
+
+            .dashboard-tasks-nav {
+                display     : flex;
+                margin-left : 28px;
+                font-size   : 15px;
+    
+                .dashboard-tasks-nav-item {
+                    display         : flex;
+                    justify-content : center;
+                    align-items     : center;
+                    width           : 75px;
+                    padding         : 8px 0;
+                    background      : var(--content-light);
+                    cursor          : pointer;
+    
+                    &:nth-child(1) {
+                        border-radius : 8px 0 0 8px;
+                    }
+                    &:nth-child(2) {
+                        border-radius : 0 8px 8px 0;
+                    }
+    
+                    &.active {
+                        background-color : rgba(var(--primary-rgb), 0.6);
+                    }
+                }
+            }
+        }
+    }
+}

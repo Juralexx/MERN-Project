@@ -1,37 +1,42 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Button } from '../../../tools/components/Button'
+import { BigAvatar } from '../../../tools/components/Avatars'
+import { TextButton } from '../../../tools/components/Button'
 import Modal from '../../../tools/components/Modal'
 import { cancelProjectMemberRequest } from '../../../tools/functions/member'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { dateParser } from '../../../Utils'
+import { BsSlashSquare } from 'react-icons/bs'
 
 const MembersRequests = ({ open, setOpen, project, websocket }) => {
     const dispatch = useDispatch()
 
     return (
-        <Modal open={open} setOpen={setOpen} css="bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
-            <div className="text-lg pb-3 px-3 mb-2 border-b border-b-slate-300/30">Demandes d'adhésions en cours</div>
-            {project.member_requests.length > 0 ? (
-                project.member_requests.map((element, key) => {
-                    return (
-                        <div className="relative flex justify-between items-center py-3 px-3" key={key}>
-                            <div className="flex">
-                                <div className="h-11 w-11 rounded-full mr-4" style={avatar(element.picture)}></div>
-                                <div>
-                                    <div className="text-lg">{element.pseudo}</div>
-                                    <div className="text-xs text-gray-500 dark:text-slate-400">le {dateParser(element.date)} par {element.requester}</div>
+        <Modal open={open} setOpen={setOpen}>
+            <h2>Demandes d'adhésions en cours</h2>
+            <div className="member-requests">
+                {project.member_requests.length > 0 ? (
+                    project.member_requests.map((element, key) => {
+                        return (
+                            <div className="member-request" key={key}>
+                                <div className="member-requests-left">
+                                    <BigAvatar pic={element.picture} />
+                                    <div>
+                                        <div className="member-requests-pseudo">{element.pseudo}</div>
+                                        <div className="member-requests-details">le {dateParser(element.date)} par {element.requester}</div>
+                                    </div>
                                 </div>
+                                <TextButton text="Annuler" onClick={() => cancelProjectMemberRequest(element, project, websocket, dispatch)} className="ml-5" />
                             </div>
-                            <div>
-                                <Button text="Annuler la demande" onClick={() => cancelProjectMemberRequest(element, project, websocket, dispatch)} className="ml-5" />
-                            </div>
-                        </div>
-                    )
-                })
-            ) : (
-                <p>Vous n'avez pas de demande en cours</p>
-            )}
+                        )
+                    })
+                ) : (
+                    <div className="empty-requests">
+                        <div><BsSlashSquare /></div>
+                        <div>Vous n'avez pas de demandes en cours</div>
+                    </div>
+                )}
+            </div>
         </Modal>
     )
 }

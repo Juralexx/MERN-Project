@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { getDifference } from '../../../tools/functions/function'
 import { checkState, checkStatus, isDatePassed, stateToString, statusToString } from '../../../tools/functions/task'
 import { avatar } from '../../../tools/functions/useAvatar'
@@ -12,10 +12,10 @@ const Kanban = ({ project, user, isAdmin, isManager, setNavbar, tasks, showTask,
 
     return (
         <>
-            <div className="flex w-full py-2 mt-5 text-xl">
-                <div className="w-1/3 py-1 mx-2 text-center border-b border-b-slate-300">À Traiter</div>
-                <div className="w-1/3 py-1 mx-2 text-center border-b border-b-slate-300">En cours</div>
-                <div className="w-1/3 py-1 mx-2 text-center border-b border-b-slate-300">Terminée</div>
+            <div className="dashboard-kanban-header">
+                <div className="dashboard-kanban-header-title"><p>À Traiter</p></div>
+                <div className="dashboard-kanban-header-title"><p>En cours</p></div>
+                <div className="dashboard-kanban-header-title"><p>Terminée</p></div>
             </div>
             <div className="flex w-full py-2">
                 {array.map((arr, i) => {

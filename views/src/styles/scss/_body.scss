@@ -18,8 +18,8 @@ body {
     font-family      : 'Segoe UI', sans-serif;
     scroll-behavior  : smooth;
     overflow         : hidden;
-    background-color : var(--color-body);
-    color            : var(--color-text-grey);
+    background-color : var(--body);
+    color            : var(--text-grey);
     width            : 100vw;
     overflow-y       : auto;
     overflow-x       : hidden;
@@ -30,7 +30,7 @@ body {
 
     a {
         text-decoration: none !important;
-        color : var(--color-text-grey);
+        color : var(--text);
     }
     
     p {
@@ -38,8 +38,8 @@ body {
     }
 
     input, textarea {
-        background : var(--color-input);
-        color: var(--color-text-input);
+        background : var(--input);
+        color: var(--text-input);
     }
 
     ul, li {

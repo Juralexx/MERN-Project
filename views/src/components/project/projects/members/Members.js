@@ -1,18 +1,18 @@
 import React, { useState, useRef } from 'react'
-import { avatar } from '../../../tools/functions/useAvatar'
+import { Link } from 'react-router-dom'
 import { useClickOutside } from '../../../tools/functions/useClickOutside'
+import { dateParser } from '../../../Utils'
+import { checkDateSort, getRole, sortByAlpha, sortByOld, sortByRecent, sortByRole } from '../../../tools/functions/member'
 import AddMember from './AddMember'
+import MemberMenu from './MemberMenu'
 import MembersRequests from './MembersRequests'
+import { StartIconOutlinedButton, ToolsBtn } from '../../../tools/components/Button'
+import { ClassicInput, DropdownInput } from '../../../tools/components/Inputs'
 import { MdOutlineMessage } from 'react-icons/md'
-import { FaRegUser } from 'react-icons/fa'
+import { FaRegUser, FaTasks } from 'react-icons/fa'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { CgArrowAlignV } from 'react-icons/cg'
-import { checkDateSort, getRole, sortByAlpha, sortByOld, sortByRecent, sortByRole } from '../../../tools/functions/member'
-import MemberMenu from './MemberMenu'
-import { IconButton, Button, IconToggle } from '../../../tools/components/Button'
-import { dateParser } from '../../../Utils'
-import { NavLink } from 'react-router-dom'
-import { BasicInput } from '../../../tools/components/Inputs'
+import { BigAvatar } from '../../../tools/components/Avatars'
 
 const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
     const [members, setMembers] = useState(project.members)
@@ -21,8 +21,10 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
     const [openMemberMenu, setOpenMemberMenu] = useState(-1)
     const memberMenu = useRef()
     useClickOutside(memberMenu, setOpenMemberMenu, -1)
-    const [filter, setFilter] = useState("Filtrer")
+    const filterMenu = useRef()
     const [display, setDisplay] = useState(false)
+    useClickOutside(filterMenu, setDisplay, false)
+    const [filter, setFilter] = useState("Filtrer")
     const [isByRecent, setIsByRecent] = useState(false)
 
     const [search, setSearch] = useState(false)
@@ -45,50 +47,45 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
 
     return (
         <>
-            <div className="bg-white dark:bg-background_primary_light my-5 mx-auto w-[97%] max-w-[1366px] text-gray-500 dark:text-slate-300 px-6 py-6 rounded-xl">
-                <div className="flex justify-between items-center">
-                    <div className="text-xl">Membres ({project.members.length})</div>
+            <div className="dashboard-members">
+                <div className="dashboard-members-title">
+                    <h2>Membres ({project.members.length})</h2>
                     {(isAdmin || isManager) &&
-                        <div>
-                            <IconButton text="Ajouter un membre" startIcon={<AiOutlinePlusCircle />} onClick={() => setAddMembers(true)} />
-                            {project.member_requests.length > 0 && <Button text="Voir les demandes en cours" onClick={() => setOpenRequests(true)} />}
+                        <div className="flex">
+                            {project.member_requests.length > 0 && <StartIconOutlinedButton text="Demandes en cours" icon={<FaTasks />} onClick={() => setOpenRequests(true)} />}
+                            <StartIconOutlinedButton text="Ajouter un membre" icon={<AiOutlinePlusCircle />} onClick={() => setAddMembers(true)} />
                         </div>
                     }
                 </div>
-                <div className="relative flex pt-5 pb-1 mb-3">
-                    <BasicInput placeholder="Rechercher un membre..." value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
-                    <div className="relative">
-                        <BasicInput readOnly placeholder={filter} className="ml-3 max-w-[200px]" onClick={() => setDisplay(!display)} />
-                        {display &&
-                            <div className="absolute left-2 w-[300px] bg-white dark:bg-background_primary_x_light p-3 z-[1500] shadow-lg rounded-lg">
-                                <div className="py-2 cursor-pointer" onClick={() => sortByRecent(members, setMembers, setFilter, setDisplay)}>Plus récent au plus ancien</div>
-                                <div className="py-2 cursor-pointer" onClick={() => sortByOld(members, setMembers, setFilter, setDisplay)}>Plus ancien au plus récent</div>
-                                <div className="py-2 cursor-pointer" onClick={() => sortByRole(members, setMembers, setFilter, setDisplay)}>Par rôle</div>
-                                <div className="py-2 cursor-pointer" onClick={() => sortByAlpha(members, setMembers, setFilter, setDisplay)}>Ordre alphabétique</div>
-                            </div>
-                        }
-                    </div>
+                <div className="dashboard-members-tools">
+                    <ClassicInput type="search" placeholder="Rechercher un membre..." value={searchQuery} onInput={handleInputChange} onChange={searchMember} />
+                    <DropdownInput useRef={filterMenu} readOnly placeholder={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)}>
+                        <div onClick={() => sortByRecent(members, setMembers, setFilter, setDisplay)}>Plus récent au plus ancien</div>
+                        <div onClick={() => sortByOld(members, setMembers, setFilter, setDisplay)}>Plus ancien au plus récent</div>
+                        <div onClick={() => sortByRole(members, setMembers, setFilter, setDisplay)}>Par rôle</div>
+                        <div onClick={() => sortByAlpha(members, setMembers, setFilter, setDisplay)}>Ordre alphabétique</div>
+                    </DropdownInput>
                 </div>
-                <div className="relative flex justify-between items-center mt-3 mb-2 border-b border-b-slate-300/30">
-                    <div className="flex items-center py-2 px-2 w-1/4 cursor-pointer" onClick={() => sortByAlpha(members, setMembers, setFilter, setDisplay)}>Nom <CgArrowAlignV /></div>
-                    <div className="flex items-center py-2 px-2 w-1/4 cursor-pointer" onClick={() => sortByRole(members, setMembers, setFilter, setDisplay)}>Rôle <CgArrowAlignV /></div>
-                    <div className="flex items-center py-2 px-2 w-1/4 cursor-pointer" onClick={() => checkDateSort(isByRecent, setIsByRecent, members, setMembers, setFilter, setDisplay)}>Membre depuis <CgArrowAlignV /></div>
-                    <div className="flex items-center py-2 px-2 w-1/4"></div>
+                <div className="dashboard-members-table-header">
+                    <div className="dashboard-members-table-tools" onClick={() => sortByAlpha(members, setMembers, setFilter, setDisplay)}>Nom <CgArrowAlignV /></div>
+                    <div className="dashboard-members-table-tools" onClick={() => sortByRole(members, setMembers, setFilter, setDisplay)}>Rôle <CgArrowAlignV /></div>
+                    <div className="dashboard-members-table-tools" onClick={() => checkDateSort(isByRecent, setIsByRecent, members, setMembers, setFilter, setDisplay)}>Membre depuis <CgArrowAlignV /></div>
+                    <div className="w-1/4"></div>
                 </div>
                 {members.map((element, key) => {
                     return (
-                        <div className="relative flex justify-between items-center" key={key} style={{ display: search ? (isMemberInResult.includes(element) ? "flex" : "none") : ("flex") }}>
-                            <div className="py-2 px-2 w-1/4 flex items-center">
-                                <div className="h-10 w-10 rounded-full mr-4" style={avatar(element.picture)}></div>
-                                <div className="">{element.pseudo}</div>
+                        <div className="dashboard-members-member" key={key} style={{ display: search ? (isMemberInResult.includes(element) ? "flex" : "none") : ("flex") }}>
+                            <div className="dashboard-members-infos">
+                                <BigAvatar pic={element.picture} />
+                                <div>{element.pseudo}</div>
                             </div>
-                            <div className="py-2 px-2 w-1/4">{getRole(element)}</div>
-                            <div className="py-2 px-2 w-1/4">{dateParser(element.since)}</div>
-                            <div className="py-2 px-2 w-1/4 flex items-center justify-end">
+                            <div className="dashboard-members-infos">{getRole(element)}</div>
+                            <div className="dashboard-members-infos">{dateParser(element.since)}</div>
+                            <div className="dashboard-members-infos justify-end">
                                 {element.id !== user._id &&
                                     <>
-                                        <IconToggle icon={<MdOutlineMessage />} className="flex items-center justify-center dark:bg-background_primary_x_light" />
-                                        <NavLink to={"/" + element.pseudo}><IconToggle icon={<FaRegUser />} className="flex items-center justify-center ml-2 mr-4 dark:bg-background_primary_x_light" /></NavLink>
+                                        <ToolsBtn><MdOutlineMessage /></ToolsBtn>
+                                        <ToolsBtn className="mx-2"><Link to={"/" + element.pseudo}><FaRegUser /></Link></ToolsBtn>
                                         {(isManager || isAdmin) && element.role !== "manager" &&
                                             <div ref={memberMenu}>
                                                 <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} user={user} open={openMemberMenu} setOpen={setOpenMemberMenu} uniqueKey={key} />

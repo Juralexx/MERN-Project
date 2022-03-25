@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createTask } from '../../../../actions/project.action'
 import Modal from '../../../tools/components/Modal'
-import { BasicInput, Textarea } from '../../../tools/components/Inputs'
+import { ClassicInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { avatar } from '../../../tools/functions/useAvatar'
 import { ImCross } from 'react-icons/im'
@@ -58,11 +58,11 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
         <Modal open={open} setOpen={setOpen} css="w-[420px] bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
             <div className="text-lg pb-2 px-3 mb-4 border-b border-b-gray-500 dark:border-b-slate-300/30">Créer une nouvelle tâche</div>
 
-            <BasicInput type="text" placeholder="Titre" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <ClassicInput type="text" placeholder="Titre" value={title} onChange={(e) => setTitle(e.target.value)} />
             <Textarea type="text" placeholder="Description" className="mt-2" value={description} onChange={(e) => setDescription(e.target.value)} />
-            <BasicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
+            <ClassicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
             <div className="relative">
-                <BasicInput type="text" readOnly className="mt-2" value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)} />
+                <ClassicInput type="text" readOnly className="mt-2" value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)} />
                 {displayStatus &&
                     <div className="absolute left-2 w-[300px] bg-white dark:bg-background_primary_x_light p-3 z-[1500] shadow-lg rounded-lg">
                         <div className="py-2 cursor-pointer" onClick={() => setStatus("normal")}>Normal</div>
@@ -84,7 +84,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
                     })}
                 </div>
             )}
-            <BasicInput placeholder="Rechercher un membre..." className="mb-3 mt-2" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
+            <ClassicInput placeholder="Rechercher un membre..." className="mb-3 mt-2" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
 
             {array.length > 0 && (
                 <div className="flex py-3">

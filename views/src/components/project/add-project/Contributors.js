@@ -1,5 +1,5 @@
 import React from 'react'
-import { BasicInput } from '../../tools/components/Inputs';
+import { ClassicInput } from '../../tools/components/Inputs';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
 import { IconButton } from '../../tools/components/Button';
 
@@ -10,7 +10,7 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, numberofc
             <p className="mb-2">Nombre de personne</p>
             <div className="relative w-full flex">
                 <div className="w-[70px]">
-                    <BasicInput
+                    <ClassicInput
                         type="number"
                         min="1"
                         name="numberofcontributors"

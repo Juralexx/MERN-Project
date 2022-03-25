@@ -4,7 +4,7 @@
     width         : 850px;
     height        : 420px;
     border-radius : 5px;
-    background    : var(--color-content);
+    background    : var(--content);
     margin        : 20px auto;
 
     .left {
@@ -71,7 +71,7 @@
                 display         : flex;
                 align-items     : center;
                 justify-content : center;
-                color           : var(--color-text-secondary);
+                color           : var(--text-secondary);
 
                 span {
                     margin-left : 5px;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BasicInput } from '../../tools/components/Inputs'
+import { ClassicInput } from '../../tools/components/Inputs'
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
 import { IconButton } from '../../tools/components/Button';
 
@@ -9,7 +9,7 @@ const End = ({ end, setEnd, onNext, onBack }) => {
             <h3 className="mb-5">Votre projet a-t-il une date de fin potentielle ?</h3>
             <p className="mb-2"><span>Date de fin potentielle</span></p>
             <div className="input-container">
-                <BasicInput
+                <ClassicInput
                     placeholder="Date"
                     type="date"
                     name="end"

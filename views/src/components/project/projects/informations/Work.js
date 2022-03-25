@@ -7,7 +7,7 @@ import { HiPencilAlt } from 'react-icons/hi'
 import { updateWorks } from "../../../../actions/project.action";
 import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../../tools/components/Inputs";
+import { ClassicInput } from "../../../tools/components/Inputs";
 
 const Work = ({ project }) => {
     const [workArray, setWorkArray] = useState(project.works);
@@ -136,7 +136,7 @@ const Work = ({ project }) => {
                                 <div className="flex w-[60px]">
                                     {openInputNumberFound === key ? (
                                         <>
-                                            <BasicInput type="number" min="1" className="w-[40px]" onChange={(e) => setNumberFound(e.target.value)} defaultValue={element.numberFound} />
+                                            <ClassicInput type="number" min="1" className="w-[40px]" onChange={(e) => setNumberFound(e.target.value)} defaultValue={element.numberFound} />
                                             <Button text="Annuler" onClick={() => setOpenInputNumberFound(-1)} />
                                             <Button text="Valider" onClick={() => modifyNumberFound(workArray, key, numberFound)} />
                                         </>
@@ -150,7 +150,7 @@ const Work = ({ project }) => {
                                 <div className="flex w-[60px]">
                                     {openInputNumber === key ? (
                                         <>
-                                            <BasicInput type="number" min="1" onChange={(e) => setNumber(e.target.value)} defaultValue={element.number} style={{ maxWidth: 100, maxHeight: 46, margin: "0 50px" }} />
+                                            <ClassicInput type="number" min="1" onChange={(e) => setNumber(e.target.value)} defaultValue={element.number} style={{ maxWidth: 100, maxHeight: 46, margin: "0 50px" }} />
                                             <button onClick={() => setOpenInputNumber(-1)}>Annuler</button>
                                             <button onClick={() => modifyNumber(workArray, key, number)}>Valider</button>
                                         </>
@@ -167,7 +167,7 @@ const Work = ({ project }) => {
                     })}
                 <div className="flex w-full mt-4">
                     <div className="w-full">
-                        <BasicInput type="search" placeholder="Rechercher un métier" fullwidth value={searchQuery} onChange={handleInputChange} onKeyPress={searchWork} />
+                        <ClassicInput type="search" placeholder="Rechercher un métier" fullwidth value={searchQuery} onChange={handleInputChange} onKeyPress={searchWork} />
                         {!isEmpty && display && isResponse && (
                             <ul tabIndex="0" style={{ display: searchQuery.length < 3 ? "none" : "block" }}>
                                 {worksFound.map((element) => {
@@ -182,7 +182,7 @@ const Work = ({ project }) => {
                         {!isResponse && !isLoading && (<div className="load-container"><p>Aucun resultat ne correspond à votre recherche</p></div>)}
                     </div>
                     
-                    <BasicInput type="number" min="1" onChange={(e) => { setNumber(e.target.value); setNumberFound("0") }} />
+                    <ClassicInput type="number" min="1" onChange={(e) => { setNumber(e.target.value); setNumberFound("0") }} />
                     
                     {(choice !== "" && number !== "" && number !== "0") ? (
                         <Button text="Valider" onClick={checkIfOk} style={{ maxHeight: 46 }} />

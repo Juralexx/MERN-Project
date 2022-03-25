@@ -1,0 +1,22 @@
+.dashboard-kanban-header {
+    display    : flex;
+    width      : 100%;
+    padding    : 8px 0;
+    margin-top : 20px;
+
+    .dashboard-kanban-header-title {
+        display          : flex;
+        align-items      : center;
+        justify-content  : center;
+        width            : 33.333333%;
+        padding          : 10px 0 7px;
+        margin           : 0 8px;
+        background-color : rgba(var(--primary-rgb), 0.2);
+        border-bottom    : 1px solid rgba(var(--primary-rgb), 0.6);
+        border-radius    : 8px 8px 0 0;
+
+        p {
+            font-size  : 18px;
+        }
+    }
+}

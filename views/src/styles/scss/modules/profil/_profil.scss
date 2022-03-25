@@ -24,23 +24,23 @@
     //     font-size       : 19px;
     //     display         : block;
     //     text-decoration : none;
-    //     color           : var(--color-text);
+    //     color           : var(--text);
     // }
 
     .profil-card {
         height        : auto;
         padding       : 20px;
-        background    : var(--color-content);
+        background    : var(--content);
         border-radius : var(--radius);
 
         .fas, .fa, .fab {
-            color        : var(--color-text);
+            color        : var(--text);
             margin-right : 5px;
         }
 
         h5 {
             margin-bottom : 15px;
-            color         : var(--color-text-secondary);
+            color         : var(--text-secondary);
         }
 
         p {
@@ -51,7 +51,7 @@
     .bio {
         height        : auto;
         padding       : 20px;
-        background    : var(--color-content);
+        background    : var(--content);
         border-radius : var(--radius);
 
         p{
@@ -64,8 +64,8 @@
             padding    : 15px;
             min-height : 100px;
             width      : 100%;
-            background : var(--color-content-light);;
-            color      : var(--color-text);
+            background : var(--content-light);;
+            color      : var(--text);
         }
     }
 }
@@ -77,7 +77,7 @@
     width         : 100%;
     height        : auto;
     margin        : 20px 0;
-    background    : var(--color-content);
+    background    : var(--content);
     padding       : 20px 0;
     border-radius : var(--radius);
     box-shadow    : $box-card;
@@ -87,7 +87,7 @@
 
         h5 {
             padding : 0 0 10px 15px;
-            color   : var(--color-text-secondary);
+            color   : var(--text-secondary);
         }
     }
 
@@ -95,12 +95,12 @@
         position    : relative;
         width       : 100%;
         padding     : 0 20px;
-        border-left : 1px solid var(--color-body);
+        border-left : 1px solid var(--body);
 
         h5 {
             padding : 0 0 10px 10px;
             margin  : 0;
-            color   : var(--color-text-secondary);
+            color   : var(--text-secondary);
         }
 
         .user-info {
@@ -124,7 +124,7 @@
 
                 svg {
                     margin-right : 10px;
-                    color        : var(var(--color-svg));
+                    color        : var(var(--svg));
                 }
             }
             
@@ -144,7 +144,7 @@
 
             .add-btn {
                 background : transparent;
-                color      : var(--color-primary);
+                color      : var(--primary);
                 border     : none;
                 outline    : none;
                 padding    : 0;
@@ -155,7 +155,7 @@
 
                 svg {
                     path {
-                        fill : var(--color-primary);
+                        fill : var(--primary);
                     }
                 }
             }
@@ -166,17 +166,17 @@
                 width          : 100%;
                 padding        : 10px;
                 margin         : 10px 0;
-                background     : var(--color-content-light);;
+                background     : var(--content-light);;
                 border-radius  : var(--radius);
 
                 input {
                     border        : 1px solid transparent;
                     padding       : 10px;
                     border-radius : var(--radius);
-                    color         : var(--color-text);
+                    color         : var(--text);
 
                     &:hover {
-                        border : 1px solid var(--color-text);;
+                        border : 1px solid var(--text);;
                     }
                 }
 
@@ -226,7 +226,7 @@
                             }
 
                             &:checked {
-                                background : var(--color-primary);
+                                background : var(--primary);
 
                                 &:before {
                                     height      : 17px;
@@ -253,7 +253,7 @@
 
             p {
                 padding       : 20px 10px;
-                background    : var(--color-content-light);
+                background    : var(--content-light);
                 border-radius : var(--radius);
             }
 
@@ -261,10 +261,10 @@
                 border        : 1px solid transparent;
                 padding       : 10px;
                 border-radius : var(--radius);
-                color         : var(--color-text);
+                color         : var(--text);
 
                 &:hover {
-                    border : 1px solid var(--color-text);
+                    border : 1px solid var(--text);
                 }
             }
 
@@ -314,7 +314,7 @@
 
             svg {
                 margin-right : 10px;
-                color        : var(var(--color-svg));
+                color        : var(var(--svg));
             }
         }
         
@@ -334,7 +334,7 @@
 
         .add-btn {
             background : transparent;
-            color      : var(--color-primary);
+            color      : var(--primary);
             border     : none;
             outline    : none;
             padding    : 0;
@@ -345,7 +345,7 @@
 
             svg {
                 path {
-                    fill : var(--color-primary);
+                    fill : var(--primary);
                 }
             }
         }
@@ -356,17 +356,17 @@
             width          : 100%;
             padding        : 10px;
             margin         : 10px 0;
-            background     : var(--color-content-light);;
+            background     : var(--content-light);;
             border-radius  : var(--radius);
 
             input {
                 border        : 1px solid transparent;
                 padding       : 10px;
                 border-radius : var(--radius);
-                color         : var(--color-text);
+                color         : var(--text);
 
                 &:hover {
-                    border : 1px solid var(--color-text);;
+                    border : 1px solid var(--text);;
                 }
             }
 
@@ -416,7 +416,7 @@
                         }
 
                         &:checked {
-                            background : var(--color-primary);
+                            background : var(--primary);
 
                             &:before {
                                 height      : 17px;

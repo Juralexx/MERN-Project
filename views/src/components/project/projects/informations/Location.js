@@ -6,7 +6,7 @@ import { updateLocation } from "../../../../actions/project.action";
 import { useClickOutside } from "../../../tools/functions/useClickOutside";
 import { Button, RoundedButton } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../../tools/components/Inputs";
+import { ClassicInput } from "../../../tools/components/Inputs";
 
 const Location = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -91,7 +91,7 @@ const Location = ({ project }) => {
             ) : (
                 <>
                     <div>
-                        <BasicInput placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
+                        <ClassicInput placeholder="Rechercher mon adresse" value={searchQuery} onInput={handleInputChange} onChange={searchLocation} type="search" />
                         {!isEmpty && display && isResponse && (
                             <ul tabIndex="0" className="absolute max-h-[300px] overflow-auto w-full bg-white dark:bg-background_primary_light shadow-custom dark:shadow-lg" style={{ display: searchQuery.length < 3 ? "none" : "block" }} >
                                 {locationsFound.map((element, key) => {

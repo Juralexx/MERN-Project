@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { BasicInput, BasicInputEndIcon } from '../../tools/components/Inputs';
+import { ClassicInput, ClassicInputEndIcon } from '../../tools/components/Inputs';
 import { useClickOutside } from "../../tools/functions/useClickOutside";
 import { BsCaretDownFill } from 'react-icons/bs'
 import Categories from '../../home/Categories';
@@ -16,7 +16,7 @@ const Title = ({ title, setTitle, category, setCategory, titleError, categoryErr
             <h3 className="mb-5">Un titre clair et cours est le meilleur moyen de vous faire repérer !</h3>
             <div className="w-full">
                 <p className="mb-2">Quel est le titre de votre project ?</p>
-                <BasicInput
+                <ClassicInput
                     type="text"
                     name="title"
                     id="title"
@@ -30,7 +30,7 @@ const Title = ({ title, setTitle, category, setCategory, titleError, categoryErr
             <div className="w-full mt-3">
                 <p className="mb-2">Catégorie</p>
                 <div className="relative" ref={wrapperRef}>
-                    <BasicInputEndIcon
+                    <ClassicInputEndIcon
                         readOnly
                         type="text"
                         name="category"

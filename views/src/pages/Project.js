@@ -4,7 +4,7 @@ import { useParams, useNavigate, NavLink } from 'react-router-dom'
 import axios from "axios";
 import { dateParser } from '../components/Utils';
 import { getProject } from '../actions/project.action';
-import Loader from '../components/tools/components/Loader';
+import { Loader } from '../components/tools/components/Loader';
 import { UidContext } from '../components/AppContext';
 import { convertDeltaToHTML } from '../components/messenger/tools/function';
 

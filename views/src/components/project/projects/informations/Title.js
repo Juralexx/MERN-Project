@@ -4,7 +4,7 @@ import { updateTitle, updateTitleURL } from "../../../../actions/project.action"
 import { RoundedButton, Button } from "../../../tools/components/Button";
 import { removeAccents } from "../../../Utils";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../../tools/components/Inputs";
+import { ClassicInput } from "../../../tools/components/Inputs";
 
 const Title = ({ project }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -48,7 +48,7 @@ const Title = ({ project }) => {
                 </>
             ) : (
                 <>
-                    <BasicInput type="text" defaultValue={project.title} onInput={handleChange} onChange={(e) => setTitle(e.target.value)} />
+                    <ClassicInput type="text" defaultValue={project.title} onInput={handleChange} onChange={(e) => setTitle(e.target.value)} />
                     <div className="flex">
                         <Button text="Annuler" onClick={hideTitleUpdater}>Annuler</Button>
                         <Button text="Valider" disabled={!value} onClick={handleTitle}>Enregistrer</Button>

@@ -2,12 +2,12 @@
     width         : 300px;
     height        : auto;
     position      : absolute;
-    background    : var(--color-content);
+    background    : var(--content);
     border-radius : 5px;
     top           : 65px;
     right         : 5px;
     z-index       : 1100;
-    color         : var(--color-text);
+    color         : var(--text);
     box-shadow    : var(--shadow-xl);
 
     .settings-menu-header {
@@ -27,13 +27,13 @@
             padding       : 7px;
             border-radius : 30px;
             cursor        : pointer;
-            background    : var(--color-content-light);;
+            background    : var(--content-light);;
 
             &:hover {
-                background : var(--color-content-light);;
+                background : var(--content-light);;
                 
                 path {
-                    fill : var(--color-primary);
+                    fill : var(--primary);
                 }
             }
         }
@@ -69,7 +69,7 @@
                     width         : 36px;
                     padding       : 7px;
                     border-radius : 30px;
-                    background    : var(--color-content-light);
+                    background    : var(--content-light);
                 }
             }
 
@@ -90,13 +90,13 @@
             }
 
             &:hover {
-                background  : var(--color-content-light);
-                border-left : 3px solid var(--color-primary);
+                background  : var(--content-light);
+                border-left : 3px solid var(--primary);
 
                 svg {
-                    background  : var(--color-content);
+                    background  : var(--content);
                     path {
-                        fill : var(--color-text);
+                        fill : var(--text);
                     }
                 }
             }
@@ -114,7 +114,7 @@
                     height  : 0;
             
                     &:checked + .slider {
-                        background-color : var(--color-primary);
+                        background-color : var(--primary);
             
                         &:before {
                             transform : translateX(32px);

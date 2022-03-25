@@ -1,11 +1,11 @@
 import React from "react";
 
 export const Button = (props) => {
-    const { text, fullwidth, onClick, className, disabled } = props
+    const { text, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`btn-first ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "btn-first " + className : "btn-first"}`} disabled={disabled}>
             {text}
-        </div>
+        </button>
     )
 }
 
@@ -39,7 +39,7 @@ export const OutlinedButton = (props) => {
 export const StartIconOutlinedButton = (props) => {
     const { icon, text, fullwidth, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`btn-outlined-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <div onClick={onClick} className={`${className ? "btn-outlined-icon-start " + className : "btn-outlined-icon-start"}`} disabled={disabled}>
             {icon && (icon)}{text}
         </div>
     )
@@ -55,20 +55,20 @@ export const EndIconOutlinedButton = (props) => {
 }
 
 export const TextButton = (props) => {
-    const { text, fullwidth, onClick, className, disabled } = props
+    const { text, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`text-btn ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "text-btn " + className : "text-btn"}`} disabled={disabled}>
             {text}
-        </div>
+        </button>
     )
 }
 
 export const StartIconTextButton = (props) => {
-    const { icon, text, fullwidth, onClick, className, disabled } = props
+    const { icon, text, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`text-btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "text-btn-icon-start " + className : "text-btn-icon-start"}`} disabled={disabled}>
             {icon && (icon)}{text}
-        </div>
+        </button>
     )
 }
 
@@ -86,6 +86,15 @@ export const IconToggle = (props) => {
     return (
         <div onClick={onClick} className={`icon-toggle text-${color} hover:bg-${color}/25 ${className ?? className}`}>
             {icon}
+        </div>
+    )
+}
+
+export const ToolsBtn = (props) => {
+    const { onClick, className } = props
+    return (
+        <div className={`${className ? "tools-btn " + className : "tools-btn"}`} onClick={onClick}>
+            {props.children}
         </div>
     )
 }

@@ -1,4 +1,58 @@
 import React from 'react'
+import { IoCaretDownOutline } from 'react-icons/io5'
+
+export const ClassicInput = (props) => {
+    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max } = props
+    return (
+        <input
+            className={`${className ? 'classic-input ' + className : 'classic-input'}`}
+            type={type}
+            name={name}
+            id={id}
+            placeholder={placeholder}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={onChange}
+            onInput={onInput}
+            onClick={onClick}
+            readOnly={readOnly}
+            disabled={disabled}
+            onKeyPress={onKeyPress}
+            min={min}
+            max={max}
+        />
+    )
+}
+
+export const DropdownInput = (props) => {
+    const { type, value, defaultValue, useRef, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max, open } = props
+    return (
+        <div ref={useRef} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`}>
+            <input
+                type={type}
+                name={name}
+                id={id}
+                placeholder={placeholder}
+                value={value}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                onInput={onInput}
+                onClick={onClick}
+                readOnly={readOnly}
+                disabled={disabled}
+                onKeyPress={onKeyPress}
+                min={min}
+                max={max}
+            />
+            <IoCaretDownOutline />
+            {open &&
+                <div className="dropdown-input-choices">
+                    {props.children}
+                </div>
+            }
+        </div>
+    )
+}
 
 export const Input = (props) => {
     const { text, type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, fullwidth, name, id, className } = props
@@ -111,32 +165,6 @@ export const EndIconInput = (props) => {
     )
 }
 
-export const BasicInput = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, fullwidth, name, id, className, placeholder, min, max } = props
-    return (
-        <input
-            type={type}
-            name={name}
-            id={id}
-            placeholder={placeholder}
-            value={value}
-            defaultValue={defaultValue}
-            onChange={onChange}
-            onInput={onInput}
-            onClick={onClick}
-            readOnly={readOnly}
-            disabled={disabled}
-            onKeyPress={onKeyPress}
-            min={min}
-            max={max}
-            className={`bg-background_light dark:border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  
-            dark:bg-background_primary_light dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-            ${fullwidth ? "w-full" : "w-[300px]"}
-            ${className ? className : null}`}
-        />
-    )
-}
-
 export const Textarea = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, fullwidth, name, id, className, placeholder, min, max } = props
     return (
@@ -163,7 +191,7 @@ export const Textarea = (props) => {
     )
 }
 
-export const BasicInputEndIcon = (props) => {
+export const ClassicInputEndIcon = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, fullwidth, name, id, className, placeholder, endIcon } = props
     return (
         <>

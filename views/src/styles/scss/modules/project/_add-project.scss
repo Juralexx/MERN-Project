@@ -8,7 +8,7 @@
     overflow-y : hidden;
 
     .add-project-bloc {
-        background    : var(--color-content);
+        background    : var(--content);
         padding       : 20px 30px;
         border-radius : 5px;
         border-radius : 5px;
@@ -34,7 +34,7 @@
                 padding       : 10px;
                 border-radius : var(--radius);
                 color         : white;
-                background    : var(--color-input);
+                background    : var(--input);
             }
 
             .category-selection {
@@ -45,7 +45,7 @@
                 padding       : 10px 0;
                 border-radius : var(--radius);
                 color         : white;
-                background    : var(--color-input);
+                background    : var(--input);
 
                 option {
                     padding     : 10px 20px;
@@ -53,11 +53,11 @@
                     border-left : 3px solid transparent;
 
                     &:hover {
-                        background  : var(--color-content-light);
-                        border-left : 3px solid var(--color-primary);
-                        color       : var(--color-primary);
+                        background  : var(--content-light);
+                        border-left : 3px solid var(--primary);
+                        color       : var(--primary);
                         .svg-icon {
-                            color : var(--color-primary);
+                            color : var(--primary);
                         }
                     }
                 }
@@ -73,7 +73,7 @@
                 padding       : 10px;
                 border-radius : var(--radius);
                 color         : white;
-                background    : var(--color-input);
+                background    : var(--input);
                 
             }
 
@@ -101,10 +101,10 @@
 
                 &.input {
                     .content {
-                        border : 3px solid var(--color-primary);
+                        border : 3px solid var(--primary);
     
                         svg {
-                            color:var(--color-primary);
+                            color:var(--primary);
                         }
                     }
                 }
@@ -127,7 +127,7 @@
                     height          : 150px;
                     width           : 150px;
                     top             : 0;
-                    background      : var(--color-body);
+                    background      : var(--body);
                     border-radius   : 5px;
                     z-index         : 0;
     
@@ -146,7 +146,7 @@
                         top           : -5px;
                         padding       : 4px;
                         border-radius : 20px;
-                        background    : var(--color-body);
+                        background    : var(--body);
                         color         : white;
                         cursor        : pointer;
 
@@ -165,7 +165,7 @@
                     height          : 150px;
                     width           : 150px;
                     top             : 0;
-                    background      : var(--color-body);
+                    background      : var(--body);
                     border-radius   : 5px;
                     z-index         : 0;
     
@@ -195,7 +195,7 @@
                 padding       : 10px;
                 border-radius : var(--radius);
                 color         : white;
-                background    : var(--color-input);
+                background    : var(--input);
             }
 
             .undefined-choice {
@@ -231,7 +231,7 @@
                     }
 
                     &:checked {
-                        background : var(--color-primary);
+                        background : var(--primary);
 
                         &:before {
                             height      : 17px;

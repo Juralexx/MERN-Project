@@ -15,10 +15,10 @@
         display          : flex;
         align-items      : center;
         justify-content  : center;
-        background-color : var(--color-content-light);
+        background-color : var(--content-light);
         border-radius    : 95px;
         z-index          : 20;
-        border           : 2px solid var(--color-primary);
+        border           : 2px solid var(--primary);
         backdrop-filter  : blur(6px);
         
         .loader-animation {
@@ -29,8 +29,8 @@
             border-radius       : 100px;
             vertical-align      : middle;
             border              : 3px solid transparent;
-            border-top-color    : rgba(var(--color-primary-rgb), 1);
-            border-bottom-color : rgba(var(--color-primary-rgb), 1);
+            border-top-color    : rgba(var(--primary-rgb), 1);
+            border-bottom-color : rgba(var(--primary-rgb), 1);
             animation           : spinClockwise 1s linear infinite;
             z-index             : 1000;
 
@@ -42,8 +42,8 @@
                 bottom              : 7px;
                 right               : 7px;
                 border              : 3px solid transparent;
-                border-top-color    : rgba(var(--color-primary-rgb), 0.8);
-                border-bottom-color : rgba(var(--color-primary-rgb), 0.8);
+                border-top-color    : rgba(var(--primary-rgb), 0.8);
+                border-bottom-color : rgba(var(--primary-rgb), 0.8);
                 border-radius       : 100px;
                 animation           : spinClockwise 5s linear infinite;
             }
@@ -56,8 +56,8 @@
                 bottom              : 15px;
                 right               : 15px;
                 border              : 3px solid transparent;
-                border-top-color    : rgba(var(--color-primary-rgb), 0.6);
-                border-bottom-color : rgba(var(--color-primary-rgb), 0.6);
+                border-top-color    : rgba(var(--primary-rgb), 0.6);
+                border-bottom-color : rgba(var(--primary-rgb), 0.6);
                 border-radius       : 100px;
                 animation           : spinClockwise 10s linear infinite;
             }
@@ -72,6 +72,81 @@
         backdrop-filter : blur(5px);
         z-index         : 10;
     }
+
+    &.fade {
+        opacity    : 0;
+        transition : opacity 0.8s ease-out;
+    }
+}
+
+.fade {
+    opacity    : 0;
+    transition : opacity 0.8s ease-out;
+}
+
+@keyframes spinClockwise {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+/****************************************************************************************************************/
+/************************************************* SMALL LOADER *************************************************/
+
+#small-loader {
+    position        : relative;
+    display         : flex;
+    flex-direction  : column;
+    align-items     : center;
+    justify-content : center;
+    padding         : 50px 0;
+    z-index         : 1000;
+        
+        .loader-animation {
+            display             : inline-block;
+            position            : relative;
+            height              : 54px;
+            width               : 54px;
+            border-radius       : 100px;
+            vertical-align      : middle;
+            border              : 3px solid transparent;
+            border-top-color    : rgba(var(--primary-rgb), 1);
+            border-bottom-color : rgba(var(--primary-rgb), 1);
+            animation           : spinClockwise 1s linear infinite;
+            z-index             : 1000;
+
+            &:after {
+                content             : '';
+                position            : absolute;
+                top                 : 7px;
+                left                : 7px;
+                bottom              : 7px;
+                right               : 7px;
+                border              : 3px solid transparent;
+                border-top-color    : rgba(var(--primary-rgb), 0.8);
+                border-bottom-color : rgba(var(--primary-rgb), 0.8);
+                border-radius       : 100px;
+                animation           : spinClockwise 5s linear infinite;
+            }
+
+            &:before {
+                content             : '';
+                position            : absolute;
+                top                 : 15px;
+                left                : 15px;
+                bottom              : 15px;
+                right               : 15px;
+                border              : 3px solid transparent;
+                border-top-color    : rgba(var(--primary-rgb), 0.6);
+                border-bottom-color : rgba(var(--primary-rgb), 0.6);
+                border-radius       : 100px;
+                animation           : spinClockwise 10s linear infinite;
+            }
+        }
+    
+        p {
+            margin-top : 15px;
+            color      : rgba(var(--primary-rgb), 1);
+        }
 
     &.fade {
         opacity    : 0;

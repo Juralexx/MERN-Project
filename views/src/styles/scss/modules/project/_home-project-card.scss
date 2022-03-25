@@ -3,10 +3,10 @@
     width         : 340px;
     height        : 410px;
     border-radius : 5px;
-    background    : var(--color-content);
+    background    : var(--content);
     margin        : 15px 0;
     font-size     : 14px;
-    color         : var(--color-text-grey);
+    color         : var(--text-grey);
     cursor        : pointer;
 
     .left {
@@ -50,7 +50,7 @@
 
         .title {
             padding       : 0 0 10px 0;
-            border-bottom : 1px solid var(--color-body);
+            border-bottom : 1px solid var(--body);
 
             h2 {
                 font-size : 14px;
@@ -60,7 +60,7 @@
             p {
                 margin    : 0;
                 font-size : 11px;
-                color     : var(--color-text-grey);
+                color     : var(--text-grey);
             }
         }
 
@@ -76,7 +76,7 @@
 
                 span {
                     font-weight : 600;
-                    color       : var(--color-primary);
+                    color       : var(--primary);
                 }
 
                 svg {

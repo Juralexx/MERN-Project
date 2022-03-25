@@ -75,9 +75,9 @@ const Projects = ({ websocket, user }) => {
     }
 
     return (
-        <div className="relative flex w-[100%] h-[calc(100%-60px)] bg-background_light dark:bg-background_primary">
+        <div className="dashboard">
             <Sidebar projects={projects} setProject={setProject} project={project} changeProject={changeProject} isLoading={isLoading} user={user} home={home} setHome={setHome} members={members} setMembers={setMembers} tasks={tasks} setTasks={setTasks} />
-            <div className="relative w-full h-full overflow-y-auto">
+            <div className="dashboard-content">
                 {project &&
                     <>
                         <Header project={project} websocket={websocket} user={user} />

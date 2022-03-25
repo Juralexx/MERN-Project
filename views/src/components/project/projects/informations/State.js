@@ -4,7 +4,7 @@ import { updateState } from "../../../../actions/project.action";
 import { useClickOutside } from "../../../tools/functions/useClickOutside";
 import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../../tools/components/Inputs";
+import { ClassicInput } from "../../../tools/components/Inputs";
 
 const State = ({ project, id }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -43,7 +43,7 @@ const State = ({ project, id }) => {
             ) : (
                 <>
                     <div ref={wrapperRef}>
-                        <BasicInput readOnly type="text" value={state} onClick={() => setDisplaySelection(!displaySelection)} onInput={(e) => setState(e.target.value)} />
+                        <ClassicInput readOnly type="text" value={state} onClick={() => setDisplaySelection(!displaySelection)} onInput={(e) => setState(e.target.value)} />
                         {displaySelection && (
                             <div className="state-selection">
                                 {state === "En préparation" && (

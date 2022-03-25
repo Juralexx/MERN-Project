@@ -1,0 +1,103 @@
+.dashboard-members {
+    width         : 100%;
+    margin        : 20px auto;
+    max-width     : 1366px;
+    padding       : 24px;
+    background    : var(--content);
+    color         : var(--text);
+
+    .dashboard-members-title {
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+    }
+
+    .dashboard-members-tools {
+        position      : relative;
+        display       : flex;
+        padding       : 20px 0 4px;
+        margin-bottom : 12px;
+    }
+
+    .dashboard-members-table-header {
+        position        : relative;
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        margin          : 12px 0 8px;
+        border-radius   : var(--radius);
+        background      : var(--content-light);
+
+        .dashboard-members-table-tools {
+            display       : flex;
+            align-items   : center;
+            padding       : 10px 20px;
+            width         : 25%;
+            cursor        : pointer;
+            border-radius : var(--radius);
+
+            &:hover {
+                background : var(--content-x-light);
+            }
+
+            svg {
+                margin-left : 10px;
+            }
+        }
+    }
+
+    .dashboard-members-member {
+        position        : relative;
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+
+        .dashboard-members-infos {
+            display     : flex;
+            align-items : center;
+            padding     : 10px 20px;
+            width       : 25%;
+        }
+    }
+}
+
+.member-requests {
+    position : relative;
+    padding  : 12px 0;
+
+    .member-request {
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        padding         : 12px 0;
+        
+        .member-requests-left {
+            display     : flex;
+            align-items : center;
+    
+            .member-requests-pseudo {
+                font-size : 18px;
+            }
+    
+            .member-requests-details {
+                font-size : 13px;
+                color     : var(--text-tertiary);
+            }
+        }
+    }
+
+    .empty-requests {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        padding         : 0 8px;
+        color           : var(--text);
+        font-size       : 18px;
+
+        svg {
+            width        : 30px;
+            height       : 30px;
+            margin-right : 20px;
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { updateCategory } from "../../../../actions/project.action";
 import { useClickOutside } from "../../../tools/functions/useClickOutside";
 import { RoundedButton, Button } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
-import { BasicInput } from "../../../tools/components/Inputs";
+import { ClassicInput } from "../../../tools/components/Inputs";
 import Categories from '../../../home/Categories'
 
 const Category = ({ project }) => {
@@ -36,7 +36,7 @@ const Category = ({ project }) => {
             ) : (
                 <>
                     <div ref={wrapperRef}>
-                        <BasicInput readOnly type="text" value={category} onClick={() => setDisplaySelection(!displaySelection)} onChange={(e) => setCategory(e.target.dataset.category)} />
+                        <ClassicInput readOnly type="text" value={category} onClick={() => setDisplaySelection(!displaySelection)} onChange={(e) => setCategory(e.target.dataset.category)} />
 
                         {displaySelection && (
                             <Categories open={displaySelection} setOpen={setDisplaySelection} category={category} setCategory={setCategory} />

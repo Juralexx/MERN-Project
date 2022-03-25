@@ -8,15 +8,15 @@
         height: 0px;
     }
     &::-webkit-scrollbar-thumb {
-        background: var(--color-content);
-        border: 31px none var(--color-body);
+        background: var(--content);
+        border: 31px none var(--body);
         border-radius: 6px;
     }
     &::-webkit-scrollbar-thumb:hover {
-        background: var(--color-content);
+        background: var(--content);
     }
     &::-webkit-scrollbar-thumb:active {
-        background:  var(--color-content);
+        background:  var(--content);
     }
     &::-webkit-scrollbar-track {
         background: var(--color-hover);

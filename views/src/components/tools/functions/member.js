@@ -143,7 +143,7 @@ export const removeMemberFromArray = (element, array, setArray) => {
 
 export const highlightIt = (array, element, isInResult, search) => {
     return ({
-        background: array.some(member => member.id === element._id) ? "#6366f1" : "",
+        background: array.some(member => member.id === element._id) ? "#bb86fc" : "",
         display: search ? (isInResult.includes(element) ? "flex" : "none") : ("flex")
     })
 }

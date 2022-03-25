@@ -4,7 +4,7 @@
     justify-content : left;
     height          : 100%;
     width           : 100%;
-    background      : var(--color-content);
+    background      : var(--content);
 
     ul {
         position   : relative;
@@ -31,31 +31,31 @@
                 text-decoration : none;
                 height          : 100%;
                 width           : 100%;
-                color           : var(--color-text);
+                color           : var(--text);
                 display         : flex;
                 align-items     : center;
                 padding         : 10px;
                 border-left   : 3px solid transparent;
 
                 &:hover {
-                    background    : var(--color-content-light);;
-                    border-left : 3px solid var(--color-primary);
-                    color         : var(--color-primary);
+                    background    : var(--content-light);;
+                    border-left : 3px solid var(--primary);
+                    color         : var(--primary);
                     .svg-icon {
 
                         path {
-                            fill : var(--color-primary);
+                            fill : var(--primary);
                         }
                     }
                 }
 
                 &.activeLink {
-                    background    : var(--color-content-light);;
-                    border-left : 3px solid var(--color-primary);
+                    background    : var(--content-light);;
+                    border-left : 3px solid var(--primary);
                     .svg-icon {
         
                         path {
-                            fill : var(--color-primary);
+                            fill : var(--primary);
                         }
                     }
                 }
