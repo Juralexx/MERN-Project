@@ -4,7 +4,6 @@ import { BigAvatar } from '../../../tools/components/Avatars'
 import { TextButton } from '../../../tools/components/Button'
 import Modal from '../../../tools/components/Modal'
 import { cancelProjectMemberRequest } from '../../../tools/functions/member'
-import { avatar } from '../../../tools/functions/useAvatar'
 import { dateParser } from '../../../Utils'
 import { BsSlashSquare } from 'react-icons/bs'
 

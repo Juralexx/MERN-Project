@@ -4,7 +4,7 @@
     left             : 50%;
     top              : 50%;
     width            : auto;
-    min-width        : 300px;
+    min-width        : 340px;
     height           : auto;
     z-index          : 1600;
     padding          : 20px 30px;
@@ -14,8 +14,11 @@
 
     h2 {
         padding-bottom : 7px;
-        border-bottom  : 1px solid var(--text-tertiary);
         margin-bottom  : 10px;
+
+        &.title-border {
+            border-bottom : 1px solid var(--text-tertiary);
+        }
     }
 
     &.hide-modal {
@@ -51,6 +54,31 @@
 
         &:hover {
             background-color : var(--content-light);
+        }
+    }
+
+    .modal-nav {
+        display       : flex;
+        min-width     : 100%;
+        margin-bottom : 20px;
+
+        .modal-nav-item {
+            padding          : 8px 16px;
+            cursor           : pointer;
+            background-color : var(--content-light);
+
+            &:hover {
+                background-color : rgba(var(--primary-rgb), 0.3);
+            }
+            &.active {
+                background-color : rgba(var(--primary-rgb), 0.6);
+            }
+            &:nth-child(1) {
+                border-radius : 8px 0 0 8px;
+            }
+            &:nth-child(2) {
+                border-radius : 0 8px 8px 0;
+            }
         }
     }
 }

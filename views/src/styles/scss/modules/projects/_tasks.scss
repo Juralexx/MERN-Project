@@ -1,7 +1,7 @@
 .dashboard-tasks {
     width      : 100%;
     margin     : 20px auto;
-    max-width  : 1366px;
+    max-width  : 1440px;
     padding    : 24px;
     background : var(--content);
     color      : var(--text);
@@ -41,6 +41,133 @@
                     }
                 }
             }
+        }
+    }
+
+    .tasklist-nav {
+        position      : relative;
+        display       : flex;
+        align-items   : center;
+        min-width     : 100%;
+        margin        : 20px 0;
+        border-bottom : 1px solid rgba(var(--primary-rgb), 0.5);
+
+        .tasklist-nav-item {
+            padding          : 8px 16px;
+            cursor           : pointer;
+            background-color : var(--content-light);
+
+            &:hover {
+                background-color : rgba(var(--primary-rgb), 0.3);
+            }
+            &.active {
+                background-color : rgba(var(--primary-rgb), 0.6);
+            }
+        }
+    }
+
+    .details {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        height          : 30px;
+        width           : 90px;
+        font-size       : 12px;
+        padding         : 7px 10px 5px;
+        border-radius   : 5px;
+
+        &.blue {
+            background : rgba(var(--blue-rgb), 0.2);
+            color      : var(--blue);
+        }
+        &.red {
+            background : rgba(var(--red-rgb), 0.2);
+            color      : var(--red);
+        }
+        &.orange {
+            background : rgba(var(--orange-rgb), 0.2);
+            color      : var(--orange);
+        }
+        &.green {
+            background : rgba(var(--green-rgb), 0.2);
+            color      : var(--green);
+        }
+    }
+
+    .tasklist-table {
+        margin-top : 5px;
+        transition : 0.5s ease;
+        max-height : 1000px;
+
+        .tasklist-table-header {
+            display          : flex;
+            justify-content  : space-between;
+            align-items      : center;
+            width            : 100%;
+            padding          : 13px 35px 10px;
+            background-color : var(--content-light);
+            border-radius    : 5px;
+            cursor           : pointer;
+
+            p {
+                font-size      : 18px;
+                text-transform : uppercase;
+                width          : 105px;
+            }
+
+            span {
+                margin-left : 10px;
+                color       : var(--text-tertiary);
+            }
+
+            &:hover {
+                background-color : var(--content-x-light);
+            }
+        }
+
+        &.closed {
+            max-height : 50px;
+            overflow-y : hidden;
+            transition : 0.5s;
+        }
+
+        .tasklist-table-item {
+            position        : relative;
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+            padding         : 12px;
+            cursor          : pointer;
+            border-radius   : 5px;
+
+            &:hover {
+                background-color : var(--content-x-light);
+            }
+            
+            .tasklist-table-item-left {
+                display     : flex;
+                align-items : center;
+                width       : 100%;
+            }
+        }
+    }
+
+    .empty-array {
+        display         : flex;
+        align-items     : center;
+        justify-content : flex-start;
+        padding         : 20px 35px;
+        color           : var(--text);
+        font-size       : 18px;
+
+        span {
+            text-transform : lowercase !important;
+        }
+
+        svg {
+            width        : 30px;
+            height       : 30px;
+            margin-right : 20px;
         }
     }
 }

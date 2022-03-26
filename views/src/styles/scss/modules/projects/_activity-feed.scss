@@ -1,0 +1,102 @@
+.home-activity-feed {
+    position      : relative;
+    padding       : 12px;
+    background    : var(--content-light);
+    color         : var(--text);
+    border-radius : var(--radius);
+    max-height    : 470px;
+
+    .home-activity-feed-header {
+        position        : relative;
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        padding         : 6px 12px;
+        margin-bottom   : 8px;
+        border-bottom   : 1px solid rgba(var(--primary-rgb), 0.5);
+    }
+
+    .home-activity-feed-container {
+        padding    : 0 12px;
+        max-height : 380px;
+        overflow-y : auto;
+
+        .home-activity-feed-item {
+            position : relative;
+            padding  : 12px 0;
+    
+            .activity-date {
+                display       : flex;
+                align-items   : center;
+                margin-bottom : 12px;
+                padding-left  : 0px;
+            }
+    
+            .home-activity-feed-item-inner {
+                position      : relative;
+                display       : flex;
+                margin-bottom : 10px;
+    
+                &:before {
+                    content          : '';
+                    position         : absolute;
+                    top              : -22px;
+                    left             : 3px;
+                    width            : 30px;
+                    height           : 2px;
+                    background-color : var(--light-border);
+                    transform        : rotate(90deg);
+                }
+
+                &.no-before {
+                    &:before {
+                        content : none;
+                    }
+                }
+    
+                .activity-hour {
+                    display     : flex;
+                    align-items : center;
+                    width       : 35px;
+                    font-size   : 12px;
+                    
+                }
+    
+                .activity-content {
+                    display     : flex;
+                    align-items : center;
+    
+                    div {
+                        display     : flex;
+                        align-items : center;
+    
+                        p {
+                            color              : var(--text-secondary);
+                            width              : 100%;
+                            text-overflow      : ellipsis;
+                            overflow           : hidden;
+                            display            : -webkit-box;
+                            -webkit-line-clamp : 1;
+                            -webkit-box-orient : vertical;
+    
+                            span {
+                                font-weight : 500;
+                                color       : var(--text);
+                            }
+                        }
+    
+                        svg {
+                            min-width     : 38px;
+                            min-height    : 38px;
+                            margin        : 0 15px;
+                            padding       : 7px;
+                            border-radius : 20px;
+                            color         : var(--blue);
+                            background    : rgba(var(--blue-rgb), 0.3);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

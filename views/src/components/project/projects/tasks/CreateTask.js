@@ -2,24 +2,22 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createTask } from '../../../../actions/project.action'
 import Modal from '../../../tools/components/Modal'
-import { ClassicInput, Textarea } from '../../../tools/components/Inputs'
+import { ClassicInput, DropdownInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
-import { avatar } from '../../../tools/functions/useAvatar'
-import { ImCross } from 'react-icons/im'
-import { addMemberToArray, removeMemberFromArray, statusToString } from '../../../tools/functions/task'
+import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../../tools/functions/task'
 import { highlightIt } from '../../../tools/functions/function'
+import { MediumAvatar, TinyAvatar } from '../../../tools/components/Avatars'
+import { IoClose } from 'react-icons/io5'
 
-const CreateTask = ({ open, setOpen, project, user, websocket }) => {
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [end, setEnd] = useState("")
-    const [status, setStatus] = useState("normal")
-    const [array, setArray] = useState([])
+const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, description, setDescription, end, setEnd, status, setStatus, state, setState, array, setArray }) => {
     const [displayStatus, setDisplayStatus] = useState(false)
+    const [displayState, setDisplayState] = useState(false)
+    const [navbar, setNavbar] = useState(1)
+    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const dispatch = useDispatch()
 
     const newTask = async () => {
-        const task = { title: title, description: description, state: "todo", status: status, creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
+        const task = { title: title, description: description, state: state, status: status, creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
         const activity = { type: "create-task", date: new Date().toISOString(), who: user.pseudo, task: title }
         dispatch(createTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)
@@ -43,7 +41,6 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
     const isEmpty = !isMemberInResult || isMemberInResult.length === 0
     const regexp = new RegExp(searchQuery, 'i');
     const handleInputChange = (e) => { setSearchQuery(e.target.value) }
-
     const searchMember = () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         if (searchQuery.length >= 2) {
@@ -55,51 +52,79 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
     }
 
     return (
-        <Modal open={open} setOpen={setOpen} css="w-[420px] bg-white dark:bg-background_primary shadow-custom dark:shadow-lg">
-            <div className="text-lg pb-2 px-3 mb-4 border-b border-b-gray-500 dark:border-b-slate-300/30">Créer une nouvelle tâche</div>
+        <Modal open={open} setOpen={setOpen} css="min-w-[500px]">
+            <h2>Créer une nouvelle tâche</h2>
 
-            <ClassicInput type="text" placeholder="Titre" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <Textarea type="text" placeholder="Description" className="mt-2" value={description} onChange={(e) => setDescription(e.target.value)} />
-            <ClassicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
-            <div className="relative">
-                <ClassicInput type="text" readOnly className="mt-2" value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)} />
-                {displayStatus &&
-                    <div className="absolute left-2 w-[300px] bg-white dark:bg-background_primary_x_light p-3 z-[1500] shadow-lg rounded-lg">
-                        <div className="py-2 cursor-pointer" onClick={() => setStatus("normal")}>Normal</div>
-                        <div className="py-2 cursor-pointer" onClick={() => setStatus("important")}>Important</div>
-                        <div className="py-2 cursor-pointer" onClick={() => setStatus("priority")}>Prioritaire</div>
-                    </div>
-                }
+            <div className="modal-nav">
+                <div className={`modal-nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
+                <div className={`modal-nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
             </div>
 
-            {project.members && searchQuery && (
-                <div className="w-full bottom-[60px] max-h-[200px] mt-2 bg-white dark:bg-background_primary overflow-auto">
-                    {project.members.map((element, key) => {
-                        return (
-                            <div className="flex items-center p-2 my-1 cursor-pointer rounded-lg" key={key} onClick={() => addMemberToArray(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
-                                <div className="w-9 h-9 mr-3 rounded-full" style={avatar(element.picture)}></div>
-                                <p>{element.pseudo}</p>
-                            </div>
-                        )
-                    })}
-                </div>
-            )}
-            <ClassicInput placeholder="Rechercher un membre..." className="mb-3 mt-2" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
+            {navbar === 1 ? (
+                <>
+                    <div className="mb-2">Titre de la tâche</div>
+                    <ClassicInput type="text" className="w-full" placeholder="Titre..." value={title} onChange={(e) => setTitle(e.target.value)} />
 
-            {array.length > 0 && (
-                <div className="flex py-3">
-                    {array.map((element, key) => {
-                        return (
-                            <div className="flex items-center p-2 mr-1 dark:bg-background_primary_light rounded-lg cursor-pointer" key={key}>
-                                <div className="conversation-user-avatar" style={avatar(element.picture)}></div>
-                                <p>{element.pseudo}</p>
-                                <ImCross className="ml-2 h-3 w-3" onClick={() => removeMemberFromArray(element, array, setArray)} />
+                    <div className="mb-2 mt-4">Description</div>
+                    <Textarea type="text" className="w-full" placeholder="Description... " value={description} onChange={(e) => setDescription(e.target.value)} />
+
+                    <div className="flex items-center mt-4">
+                        <div className="mb-2 mt-4 mr-4">Date de fin</div>
+                        <ClassicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
+                    </div>
+
+                    <div className="flex w-full">
+                        <div className="w-1/2">
+                            <div className="mb-2 mt-4">État</div>
+                            <DropdownInput className="w-full" readOnly open={displayStatus} value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)}>
+                                <div onClick={() => { setStatus("normal"); setDisplayStatus(false) }}>Normal</div>
+                                <div onClick={() => { setStatus("important"); setDisplayStatus(false) }}>Important</div>
+                                <div onClick={() => { setStatus("priority"); setDisplayStatus(false) }}>Prioritaire</div>
+                            </DropdownInput>
+                        </div>
+                        <div className="w-1/2 ml-2">
+                            <div className="mb-2 mt-4">Status</div>
+                            <DropdownInput className="w-full" readOnly open={displayState} value={stateToString(state)} onClick={() => setDisplayState(!displayState)}>
+                                <div onClick={() => { setState("todo"); setDisplayState(!displayState) }}>À traiter</div>
+                                <div onClick={() => { setState("in progress"); setDisplayState(!displayState) }}>En cours</div>
+                                <div onClick={() => { setState("done"); setDisplayState(!displayState) }}>Terminée</div>
+                            </DropdownInput>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="user-in-array-container">
+                        {array.length > 0 && (
+                            array.map((element, key) => {
+                                return (
+                                    <div className="user-in-array" key={key}>
+                                        <TinyAvatar pic={element.picture} />
+                                        <p>{element.pseudo}</p>
+                                        <IoClose onClick={() => removeMemberFromArray(element, array, setArray)} />
+                                    </div>
+                                )
+                            })
+                        )}
+                    </div>
+                    <ClassicInput placeholder="Rechercher un membre..." className="mb-3 w-full" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
+                    <div className="user-selecter">
+                        {project.members && (
+                            <div className="user-displayer">
+                                {project.members.map((element, key) => {
+                                    return (
+                                        <div className="user-display-choice" key={key} onClick={() => addMemberToArray(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
+                                            <MediumAvatar pic={element.picture} />
+                                            <p>{element.pseudo}</p>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        )
-                    })}
-                </div>
+                        )}
+                    </div>
+                </>
             )}
-            <Button text="Ajouter" className="mt-5" disabled={title === "" || title === undefined} onClick={newTask} />
+            <Button text="Ajouter" className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={newTask} />
         </Modal>
     )
 }

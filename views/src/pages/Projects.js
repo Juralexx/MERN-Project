@@ -4,18 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProject } from '../actions/project.action';
 import Sidebar from '../components/project/projects/Sidebar'
 import Header from '../components/project/projects/Header'
-import Title from '../components/project/projects/informations/Title'
-import Location from '../components/project/projects/informations/Location'
-import Category from '../components/project/projects/informations/Category'
-import End from '../components/project/projects/informations/End'
-import State from '../components/project/projects/informations/State'
-import Work from '../components/project/projects/informations/Work';
-import Content from '../components/project/projects/informations/Content';
 import HomeMembers from '../components/project/projects/members/HomeMembers';
 import Members from '../components/project/projects/members/Members';
 import HomeTasks from '../components/project/projects/tasks/HomeTasks';
 import ActivityFeed from '../components/project/projects/activity-feed/ActivityFeed';
 import Tasks from '../components/project/projects/tasks/Tasks';
+import Description from '../components/project/projects/description/Description';
 
 const Projects = ({ websocket, user }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -25,6 +19,7 @@ const Projects = ({ websocket, user }) => {
     const [isManager, setManager] = useState()
     const [isLoading, setLoading] = useState(true)
     const [home, setHome] = useState(true)
+    const [description, setDescription] = useState(false)
     // const [messenger, setMessenger] = useState(false)
     const [members, setMembers] = useState(false)
     const [tasks, setTasks] = useState(false)
@@ -76,24 +71,14 @@ const Projects = ({ websocket, user }) => {
 
     return (
         <div className="dashboard">
-            <Sidebar projects={projects} setProject={setProject} project={project} changeProject={changeProject} isLoading={isLoading} user={user} home={home} setHome={setHome} members={members} setMembers={setMembers} tasks={tasks} setTasks={setTasks} />
+            <Sidebar projects={projects} setProject={setProject} project={project} changeProject={changeProject} isLoading={isLoading} user={user} home={home} setHome={setHome} members={members} description={description} setDescription={setDescription} setMembers={setMembers} tasks={tasks} setTasks={setTasks} />
             <div className="dashboard-content">
                 {project &&
                     <>
                         <Header project={project} websocket={websocket} user={user} />
                         {home &&
                             <div className="grid grid-cols-2 gap-4 py-4 pl-4 pr-2">
-                                <div>
-                                    <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
-                                        <Title project={project} />
-                                        <Category project={project} />
-                                        <Location project={project} />
-                                        <End project={project} />
-                                        <State project={project} />
-                                        <Work project={project} />
-                                        <Content project={project} />
-                                    </div>
-                                </div>
+                                <ActivityFeed project={project} user={user} websocket={websocket} />
                                 <div>
                                     <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
                                         <HomeMembers project={project} setProject={setProject} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
@@ -101,11 +86,11 @@ const Projects = ({ websocket, user }) => {
                                     <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
                                         <HomeTasks project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                                     </div>
-                                    <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 rounded-xl">
-                                        <ActivityFeed project={project} user={user} websocket={websocket} />
-                                    </div>
                                 </div>
                             </div>
+                        }
+                        {description &&
+                            <Description project={project} />
                         }
                         {members &&
                             <Members project={project} setProject={setProject} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />

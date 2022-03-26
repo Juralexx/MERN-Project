@@ -15,6 +15,13 @@ export const MediumAvatar = (props) => {
     )
 }
 
+export const SmallAvatar = (props) => {
+    const { className, pic } = props
+    return (
+        <div className={`${className ? "small-avatar " + className : "small-avatar"}`} style={avatar(pic)}></div>
+    )
+}
+
 export const TinyAvatar = (props) => {
     const { className, pic } = props
     return (

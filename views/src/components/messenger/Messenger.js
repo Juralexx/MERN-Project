@@ -171,7 +171,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
 
                 if (!arrivalMessage) {
                     let array = []
-                    response.data.map((messages, key) => { return array = [...array, { index: key, date: messages.createdAt.substr(0, 10) }] })
+                    response.data.map((messages, key) => { return array = [...array, { index: key, date: messages.createdAt.substring(0, 10) }] })
                     let filteredArray = []
                     array.filter((item) => {
                         let i = filteredArray.findIndex(element => (element.date === item.date));
@@ -388,7 +388,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                                 {messages.map((message, key) => {
                                     return (
                                         <div key={key}>
-                                            {messagesDates.some(element => element.date === message.createdAt.substr(0, 10) && element.index === key) && (
+                                            {messagesDates.some(element => element.date === message.createdAt.substring(0, 10) && element.index === key) && (
                                                 <MessageDate message={message} />
                                             )}
                                             <div ref={lastMessageRef}>

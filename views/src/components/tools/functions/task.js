@@ -47,7 +47,7 @@ export const addMemberToArray = (element, array, setArray) => {
 }
 
 export const removeMemberFromArray = (element, array, setArray) => {
-    let arr = array.filter(member => member.id === element.id)
+    let arr = array.filter(member => member.id !== element.id)
     setArray(arr)
 }
 
@@ -56,9 +56,9 @@ export const removeMemberFromArray = (element, array, setArray) => {
 
 export const isDatePassed = (date) => {
     let today = new Date().toISOString()
-    if (date.substr(0, 10) === today.substring(0, 10)) {
+    if (date.substring(0, 10) === today.substring(0, 10)) {
         return "orange"
-    } else if (date.substr(0, 10) > today.substring(0, 10)) {
+    } else if (date.substring(0, 10) > today.substring(0, 10)) {
         return "green"
     } else {
         return "red"
@@ -68,7 +68,7 @@ export const isDatePassed = (date) => {
 /***************************************************************************************************************************************************/
 /******************************************************************* STATES ************************************************************************/
 
-export const checkState = (element) => {
+export const stateToBackground = (element) => {
     if (element === "todo") {
         return "orange"
     } else if (element === "in progress") {
@@ -91,7 +91,17 @@ export const stateToString = (element) => {
 /***************************************************************************************************************************************************/
 /******************************************************************* STATUS ************************************************************************/
 
-export const checkStatus = (element) => {
+export const statusToBorder = (element) => {
+    if (element === "normal") {
+        return "normal"
+    } else if (element === "important") {
+        return "important"
+    } else if (element === "priority") {
+        return "priority"
+    }
+}
+
+export const statusToBackground = (element) => {
     if (element === "normal") {
         return "blue"
     } else if (element === "important") {

@@ -8,6 +8,16 @@
     -webkit-box-orient : vertical;
 }
 
+.two-lines {
+    text-overflow      : ellipsis;
+    overflow           : hidden;
+    width              : 90%;
+    line-height        : 19px;
+    display            : -webkit-box;
+    -webkit-line-clamp : 2;
+    -webkit-box-orient : vertical;
+}
+
 .three-lines {
     text-overflow      : ellipsis;
     overflow           : hidden;
@@ -47,7 +57,7 @@
     border        : 1px solid var(--content-light);
 
     .tools-choice {
-        min-width     : 300px;
+        min-width     : 220px;
         text-align    : left;
         padding       : 10px;
         color         : var(--text);
@@ -66,8 +76,24 @@
 
 .classic-input {
     display       : block;
-    width         : 300px;
     height        : 48px;
+    padding       : 8px;
+    color         : var(--text);
+    background    : var(--content-light);
+    border-radius : var(--radius);
+    border        : 2px solid rgba(0, 0, 0, 0);
+    outline       : none;
+
+    &:focus {
+        border : 2px solid var(--primary);
+    }
+}
+
+.textarea {
+    display       : block;
+    min-height    : 80px;
+    max-height    : 300px;
+    overflow-y    : auto;
     padding       : 8px;
     color         : var(--text);
     background    : var(--content-light);
@@ -82,7 +108,7 @@
 
 .dropdown-input {
     position      : relative;
-    width         : 200px;
+    min-width     : 200px;
     margin-bottom : 3px;
     cursor        : pointer;
     background    : var(--content-light);
@@ -167,11 +193,35 @@
     margin-right  : 10px;
 }
 
+.small-avatar {
+    height        : 28px;
+    width         : 28px;
+    border-radius : 50px;
+
+    &:nth-child(n+2) {
+        margin-left : -6px;
+    }
+}
+
 .tiny-avatar {
     height        : 20px;
     width         : 20px;
     border-radius : 50px;
     margin-right  : 6px;
+}
+
+.get-difference {
+    position         : relative;
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    height           : 29px;
+    width            : 29px;
+    left             : -10px;
+    padding          : 5px 4px 4px;
+    font-size        : 12px;
+    background-color : var(--content);
+    border-radius    : 20px;
 }
 
 .user-in-array-container {
@@ -182,9 +232,9 @@
     .user-in-array {
         display          : flex;
         align-items      : center;
-        height: 30px;
-        padding          : 0 8px;
-        margin-right     : 4px;
+        height           : 30px;
+        padding          : 4px 8px;
+        margin     : 4px;
         color            : var(--text);
         background-color : var(--primary);
         border-radius    : var(--radius);
@@ -229,3 +279,13 @@
     }
 }
 
+
+.task-avatar {
+    width     : 30px;
+    height    : 30px;
+    border-radius : 30px;
+
+    &:nth-child(n+2) {
+        margin-left : -10px;
+    }
+}

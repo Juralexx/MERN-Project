@@ -3,6 +3,9 @@
 @import 'forms';
 @import 'header';
 
+/****************************************************/
+/*********************** TOOLS **********************/
+
 @import 'tools/tools';
 @import 'tools/btn';
 @import 'tools/modals';
@@ -13,6 +16,9 @@
 @import 'tools/scrollbar';
 @import 'tools/profil-card';
 
+/****************************************************/
+/********************** PROFIL **********************/
+
 @import 'modules/profil/profil';
 @import 'modules/profil/profil-header';
 @import 'modules/profil/profil-nav';
@@ -20,21 +26,31 @@
 @import 'modules/profil/auto-container';
 @import 'modules/profil/profil-img-modal';
 
+/****************************************************/
+/******************* PROJECT PAGE *******************/
+
 @import 'modules/project/add-project';
 @import 'modules/project/myprojects';
 @import 'modules/project/home-project-card';
 @import 'modules/project/home-project-modal';
+
+/****************************************************/
+/********************* DASHBOARD ********************/
 
 @import 'modules/projects/projects';
 @import 'modules/projects/header';
 @import 'modules/projects/members';
 @import 'modules/projects/tasks';
 @import 'modules/projects/kanban';
+@import 'modules/projects/activity-feed';
 
-@import 'modules/messenger/messenger';
+/****************************************************/
+/********************** MODULES *********************/
 
 @import 'modules/navbar';
 @import 'modules/sidebar';
 @import 'modules/notifications';
 @import 'modules/settings-menu';
 @import 'modules/right-menu';
+
+@import 'modules/messenger/messenger';

@@ -8,12 +8,12 @@ export const randomID = (max) => {
 
     const generator = (base, len) => {
         return [...Array(len)]
-        .map(i => base[Math.random() * base.length | 0])
-        .join('');
+            .map(i => base[Math.random() * base.length | 0])
+            .join('');
     }
 
     return generator(baseline, max)
-};
+}
 
 export const dateParser = (num) => {
     let options = { year: "numeric", month: "short", day: "2-digit" }
@@ -30,7 +30,7 @@ export const dateParserWithoutYear = (num) => {
 }
 
 export const ISOtoNavFormat = (date) => {
-    return date.substr(0, 10)
+    return date.substring(0, 10)
 }
 
 export const getHourOnly = (date) => {
@@ -43,7 +43,7 @@ export const keepNewDateOnly = (arrayToMap, setState) => {
     let array = []
     arrayToMap.map((element, key) => {
         return (
-            array = [...array, { index: key, date: element.date.substr(0, 10) }]
+            array = [...array, { index: key, date: element.date.substring(0, 10) }]
         )
     })
     let filteredArray = []
@@ -55,8 +55,33 @@ export const keepNewDateOnly = (arrayToMap, setState) => {
     setState(filteredArray)
 }
 
+export const thisDay = (array) => {
+    return array.filter(element => element.date.substring(0, 10) === new Date().toISOString().substring(0, 10))
+}
+
+export const lastDay = (array) => {
+    return array.filter(element => element.date.substring(0, 10) === new Date(new Date().getTime() - 24*60*60*1000).toISOString().substring(0, 10))
+}
+
+export const timeBetween = (array, days) => {
+    let currentDate = new Date();
+    let currentDateTime = currentDate.getTime();
+    let last30DaysDate = new Date(currentDate.setDate(currentDate.getDate() - days));
+    let last30DaysDateTime = last30DaysDate.getTime();
+
+    return array.filter(element => {
+        const elementDateTime = new Date(element.date).getTime();
+        if (elementDateTime <= currentDateTime && elementDateTime > last30DaysDateTime) {
+            return true;
+        }
+        return false
+    }).sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+    });
+}
+
 export const reverseArray = (array) => {
-    return array.map(array.pop,[...array])
+    return array.map(array.pop, [...array])
 }
 
 export const isEmpty = (value) => {
@@ -480,13 +505,13 @@ export const removeAccents = (string) => {
 };
 
 // function compareDates(dateOne, index, array) {
-//     const firstDate = dateOne.substr(0, 10)
+//     const firstDate = dateOne.substring(0, 10)
 //     if (index === 0) {
 //         setMessagesDates(key => [...key, index])
 //         console.log(messagesDates)
 //         return dateParser(firstDate)
 //     } else if (index > 0 && index < array.length - 2) {
-//         const secondDate = (array[index + 1].createdAt).substr(0, 10)
+//         const secondDate = (array[index + 1].createdAt).substring(0, 10)
 //         if (firstDate === secondDate) { return null }
 //         else {
 //             setMessagesDates(key => [...key, index])
@@ -494,7 +519,7 @@ export const removeAccents = (string) => {
 //             return dateParser(firstDate)
 //         }
 //     } else if (index === array.length - 1) {
-//         const secondDate = (array[index - 1].createdAt).substr(0, 10)
+//         const secondDate = (array[index - 1].createdAt).substring(0, 10)
 //         if (firstDate === secondDate) { return null }
 //         else {
 //             setMessagesDates(key => [...key, index])
@@ -505,18 +530,18 @@ export const removeAccents = (string) => {
 // }
 
 
-// const firstDate = messages.createdAt.substr(0, 10)
+// const firstDate = messages.createdAt.substring(0, 10)
 //                     if (index === 0) {
 //                         return setMessagesDates(key => [...key, index])
 //                     }
 //                     else if (index > 0 && index < array.length - 2) {
-//                         const secondDate = (array[index + 1].createdAt).substr(0, 10)
+//                         const secondDate = (array[index + 1].createdAt).substring(0, 10)
 //                         if (firstDate !== secondDate) {
 //                             return setMessagesDates(key => [...key, index])
 //                         } else return
 //                     }
 //                     else if (index === array.length - 1) {
-//                         const secondDate = (array[index - 1].createdAt).substr(0, 10)
+//                         const secondDate = (array[index - 1].createdAt).substring(0, 10)
 //                         if (firstDate !== secondDate) {
 //                             return setMessagesDates(key => [...key, index])
 //                         } else return

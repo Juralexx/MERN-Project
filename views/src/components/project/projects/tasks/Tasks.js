@@ -10,7 +10,7 @@ import TasksList from './TasksList'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 
 const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
-    const [tasks, setTasks] = useState(reverseArray(project.tasks))
+    const [tasks, setTasks] = useState(project.tasks)
     const [createTask, setCreateTask] = useState(false)
     const [updateTask, setUpdateTask] = useState(false)
     const [showTask, setShowTask] = useState(-1)
@@ -23,6 +23,12 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const dispatch = useDispatch()
     const localStore = localStorage.getItem("taskLayout")
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [end, setEnd] = useState("")
+    const [state, setState] = useState("todo")
+    const [status, setStatus] = useState("normal")
+    const [array, setArray] = useState([])
 
     const handleLayout = () => {
         if (layout === "list") {
@@ -56,7 +62,7 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
         } else if (navbar === 4) {
             setTasks(reverseArray(project.tasks.filter(element => element.state === "done")))
         }
-    }, [navbar])
+    }, [navbar, project.tasks])
 
     return (
         <>
@@ -81,6 +87,7 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         isManager={isManager}
                         tasks={tasks}
                         setTask={setTask}
+                        navbar={navbar}
                         setNavbar={setNavbar}
                         showTask={showTask}
                         setShowTask={setShowTask}
@@ -105,12 +112,32 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         dispatch={dispatch}
                         openTaskMenu={openTaskMenu}
                         setOpenTaskMenu={setOpenTaskMenu}
+                        setCreateTask={setCreateTask}
                         setUpdateTask={setUpdateTask}
                         layout={layout}
+                        setState={setState}
                     />
                 )}
             </div>
-            {<CreateTask open={createTask} setOpen={setCreateTask} project={project} user={user} websocket={websocket} />}
+            {<CreateTask
+                open={createTask}
+                setOpen={setCreateTask}
+                project={project}
+                user={user}
+                websocket={websocket}
+                title={title}
+                setTitle={setTitle}
+                description={description}
+                setDescription={setDescription}
+                end={end}
+                setEnd={setEnd}
+                state={state}
+                setState={setState}
+                status={status}
+                setStatus={setStatus}
+                array={array}
+                setArray={setArray}
+            />}
             {updateTask && <UpdateTask element={getTask} open={updateTask} setOpen={setUpdateTask} project={project} user={user} websocket={websocket} />}
         </>
     )

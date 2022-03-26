@@ -8,7 +8,7 @@ import { GoThreeBars } from 'react-icons/go'
 import { avatar } from '../../tools/functions/useAvatar'
 import { useEffect } from 'react'
 
-const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading, home, setHome, members, setMembers, tasks, setTasks }) => {
+const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading, home, setHome, description, setDescription, members, setMembers, tasks, setTasks }) => {
     const [reduce, setReduce] = useState(false)
     const [submenu, setSubmenu] = useState(0)
     const openSubmenu = (key) => { if (submenu !== key) { setSubmenu(key) } else { setSubmenu(-1) } }
@@ -49,6 +49,7 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
         firstState(true)
         secondState(false)
         thirdState(false)
+        fourthState(false)
     }
 
     return (
@@ -77,19 +78,19 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                                 </div>
                                 {submenu === key && (
                                     <div className={`sidebar-submenu ${addActive(reduce, "reduced")}`}>
-                                        <div className="sidebar-submenu-card" onClick={() => move(setHome, setMembers, setTasks)}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setHome, setMembers, setTasks, setDescription)}>
                                             <div className={`sidebar-submenu-title ${addActive(home, "active")}`}>
                                                 <FiHome />
                                                 <div className="sidebar-submenu-text">Home</div>
                                             </div>
                                         </div>
-                                        <div className="sidebar-submenu-card">
-                                            <div className={`sidebar-submenu-title`}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setDescription, setMembers, setHome, setTasks)}>
+                                            <div className={`sidebar-submenu-title ${addActive(description, "active")}`}>
                                                 <MdOutlineDescription />
                                                 <div className="sidebar-submenu-text">Description</div>
                                             </div>
                                         </div>
-                                        <div className="sidebar-submenu-card" onClick={() => move(setTasks, setMembers, setHome)}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setTasks, setMembers, setHome, setDescription)}>
                                             <div className={`sidebar-submenu-title ${addActive(tasks, "active")}`}>
                                                 <BiTask />
                                                 <div className="sidebar-submenu-text">Tâches</div>
@@ -101,7 +102,7 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                                                 <div className="sidebar-submenu-text">Messenger</div>
                                             </div>
                                         </div>
-                                        <div className="sidebar-submenu-card" onClick={() => move(setMembers, setHome, setTasks)}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setMembers, setHome, setTasks, setDescription)}>
                                             <div className={`sidebar-submenu-title ${addActive(members, "active")}`}>
                                                 <MdGroups />
                                                 <div className="sidebar-submenu-text">Membres</div>
@@ -113,7 +114,7 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                         )
                     })
                 ) : (
-                    [...Array(7)].map((element, key) => {
+                    [...Array(5)].map((element, key) => {
                         return (
                             <div className={`sidebar-skeleton ${addActive(reduce, "reduced")}`} key={key}>
                                 <div className="sidebar-skeleton-card">

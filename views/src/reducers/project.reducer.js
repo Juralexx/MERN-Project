@@ -222,7 +222,9 @@ export default function projectReducer(state = initialState, action) {
             }
         case UPDATE_TASK:
             let e = state.tasks.findIndex(task => task._id === action.payload.task._id)
+            console.log(state.tasks.findIndex(task => task._id === action.payload.task._id))
             state.tasks[e] = action.payload.task
+            console.log(state.tasks[e])
             return {
                 ...state,
                 tasks: state.tasks,

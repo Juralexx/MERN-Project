@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { getDifference } from '../../../tools/functions/function'
-import { checkState, checkStatus, isDatePassed, stateToString, statusToString } from '../../../tools/functions/task'
-import { avatar } from '../../../tools/functions/useAvatar'
+import { stateToBackground, statusToBorder, isDatePassed, stateToString, statusToString, statusToBackground, removeTask } from '../../../tools/functions/task'
 import { dateParser } from '../../../Utils'
+import { HiPlus } from 'react-icons/hi'
+import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { ToolsBtn } from '../../../tools/components/Button'
+import { clickOn } from '../../../tools/functions/useClickOutside'
+import SmallMenu from '../../../tools/components/SmallMenu'
+import { SmallAvatar } from '../../../tools/components/Avatars'
 
-const Kanban = ({ project, user, isAdmin, isManager, setNavbar, tasks, showTask, setShowTask, websocket, dispatch, openTaskMenu, setOpenTaskMenu, taskMenu, setUpdateTask, setTask, layout }) => {
+const Kanban = ({ project, user, isAdmin, isManager, setNavbar, tasks, showTask, setShowTask, websocket, dispatch, openTaskMenu, setOpenTaskMenu, taskMenu, setCreateTask, setUpdateTask, setTask, layout, setState }) => {
+    const [openMenu, setOpenMenu] = useState(-1)
+    const ticketMenu = useRef()
     const todo = tasks.filter(element => element.state === "todo")
     const inProgress = tasks.filter(element => element.state === "in progress")
     const done = tasks.filter(element => element.state === "done")
@@ -13,49 +20,75 @@ const Kanban = ({ project, user, isAdmin, isManager, setNavbar, tasks, showTask,
     return (
         <>
             <div className="dashboard-kanban-header">
-                <div className="dashboard-kanban-header-title"><p>À Traiter</p></div>
-                <div className="dashboard-kanban-header-title"><p>En cours</p></div>
-                <div className="dashboard-kanban-header-title"><p>Terminée</p></div>
+                <div className="dashboard-kanban-header-title">
+                    <div className="title">À Traiter <span>{todo.length}</span></div>
+                    <HiPlus onClick={() => { setState("todo"); setCreateTask(true) }} />
+                </div>
+                <div className="dashboard-kanban-header-title">
+                    <div className="title">En cours <span>{inProgress.length}</span></div>
+                    <HiPlus onClick={() => { setState("in progress"); setCreateTask(true) }} />
+                </div>
+                <div className="dashboard-kanban-header-title">
+                    <div className="title">Terminée <span>{done.length}</span></div>
+                    <HiPlus onClick={() => { setState("done"); setCreateTask(true) }} />
+                </div>
             </div>
-            <div className="flex w-full py-2">
+            <div className="dashboard-kanban">
                 {array.map((arr, i) => {
                     return (
-                        <div className="w-1/3 px-2" key={i}>
+                        <div className="dashboard-kanban-col" key={i}>
                             {arr.map((element, key) => {
                                 return (
-                                    <div className="relative p-3 bg-background_primary_x_light my-3 rounded-lg" key={key} style={{ borderLeft: "3px solid", borderLeftColor: checkStatus(element.status) }}>
-                                        <div className="mb-2">{element.title}</div>
-                                        <div className="flex py-2">
-                                            <div className="text-xs" style={{ background: isDatePassed(element.end) }}>{dateParser(element.end)}</div>
-                                            <div className="text-xs mx-2" style={{ background: checkStatus(element.status) }}>{statusToString(element.status)}</div>
-                                            <div className="text-xs" style={{ background: checkState(element.state) }}>{stateToString(element.state)}</div>
+                                    <div className={`dashboard-kanban-ticket ${statusToBorder(element.status)}`} key={element._id}>
+                                        <div className="dashboard-kanban-ticket-title" ref={ticketMenu}>
+                                            <div className="two-lines">{element.title}</div>
+                                            <ToolsBtn onClick={() => clickOn(openMenu, setOpenMenu, element._id)}><BiDotsHorizontalRounded /></ToolsBtn>
+                                            {openMenu === element._id &&
+                                                <SmallMenu>
+                                                    <div className="tools-choice">Voir</div>
+                                                    <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
+                                                    <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
+                                                    <div className="tools-choice">Archiver</div>
+                                                </SmallMenu>
+                                            }
                                         </div>
-                                        <div className=" py-2">
-                                            {element.description}
+                                        <div className="dashboard-kanban-ticket-status">
+                                            <div className={`details mr-2 ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
+                                            <div className={`details ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
                                         </div>
-                                        {element.members.length > 0 && (
-                                            <div className="mt-2 flex">
-                                                {element.members.length === 1 && (
-                                                    <div className="flex">
-                                                        <div className="task-avatar" style={avatar(element.members[0].picture)}></div>
-                                                        <div className="text-xs flex items-center ml-2">{element.members[0].pseudo}</div>
-                                                    </div>
-                                                )}
-                                                {element.members.length > 1 && element.members.length < 5 && (
-                                                    element.members.map((member, uniquekey) => {
-                                                        return <div className="task-avatar" style={avatar(member.picture)} key={uniquekey}></div>
-                                                    })
-                                                )}
-                                                {element.members.length >= 5 && (
-                                                    element.members.slice(0, 5).map((member, uniquekey) => {
-                                                        return <div className="task-avatar" style={avatar(member.picture)} key={uniquekey}></div>
-                                                    })
-                                                )}
-                                                {element.members.length >= 5 && (
-                                                    <div className="relative dark:bg-background_primary_light rounded-full flex items-center justify-center w-[30px] h-[30px] left-[-10px] text-xs p-1">{getDifference(5, element.members.length)}</div>
-                                                )}
-                                            </div>
-                                        )}
+                                        <div className="dashboard-kanban-ticket-description">{element?.description}</div>
+                                        <div className="dashboard-kanban-ticket-bottom">
+                                            <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                            {element.members.length > 0 && (
+                                                <div className="dashboard-kanban-ticket-members">
+                                                    {element.members.length <= 2 && (
+                                                        <div className="flex">
+                                                            {element.members.map((member, uniquekey) => {
+                                                                return (
+                                                                    <div className="dashboard-kanban-ticket-member" key={uniquekey}>
+                                                                        <SmallAvatar pic={member.picture} />
+                                                                        <div className="pseudo">{member.pseudo}</div>
+                                                                    </div>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    )}
+                                                    {element.members.length > 2 && element.members.length < 5 && (
+                                                        element.members.map((member, uniquekey) => {
+                                                            return <SmallAvatar pic={member.picture} key={uniquekey} />
+                                                        })
+                                                    )}
+                                                    {element.members.length >= 5 && (
+                                                        element.members.slice(0, 5).map((member, uniquekey) => {
+                                                            return <SmallAvatar pic={member.picture} key={uniquekey} />
+                                                        })
+                                                    )}
+                                                    {element.members.length >= 5 && (
+                                                        <div className="get-difference">{getDifference(5, element.members.length)}</div>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 )
                             })}

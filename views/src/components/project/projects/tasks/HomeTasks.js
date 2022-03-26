@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { changeState, checkState, isDatePassed, removeTask, stateToString } from '../../../tools/functions/task'
+import { changeState, stateToBackground, isDatePassed, removeTask, stateToString } from '../../../tools/functions/task'
 import { clickOn, useClickOutside } from '../../../tools/functions/useClickOutside'
 import { reduceString } from '../../../tools/functions/reduceString'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
@@ -67,7 +67,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                             <div className="flex flex-col">{reduceString(element.title, 40)}
                                                 <div className="text-xs">Créée par {element.creator} le {dateParser(element.date)}</div>
                                             </div>
-                                            <div className="text-xs" style={{ background: element.state === "done" && checkState(element.state) }}>{stateToString(element.state)}</div>
+                                            <div className="text-xs" style={{ background: element.state === "done" && stateToBackground(element.state) }}>{stateToString(element.state)}</div>
                                         </div>
                                     </div>
                                     {(isAdmin || isManager) && (

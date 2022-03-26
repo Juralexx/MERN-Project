@@ -51,11 +51,11 @@ export function getMembers(conversation, uid, setState) {
 
 export const highlightIt = (array, element, isInResult, search) => {
     return ({
-        background: array.some(member => member.id === element.id) ? "#6366f1" : "",
+        background: array.some(member => member.id === element.id) ? "#bb86fc" : "",
         display: search ? (isInResult.includes(element) ? "flex" : "none") : ("flex")
     })
 }
 
 export const getDifference = (one, two) => {
-    return "+ " + (two - one)
+    return "+" + (two - one)
 }

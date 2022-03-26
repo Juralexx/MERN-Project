@@ -1,22 +1,123 @@
 .dashboard-kanban-header {
     display    : flex;
     width      : 100%;
-    padding    : 8px 0;
+    padding    : 8px 0 0;
     margin-top : 20px;
 
     .dashboard-kanban-header-title {
-        display          : flex;
-        align-items      : center;
-        justify-content  : center;
-        width            : 33.333333%;
-        padding          : 10px 0 7px;
-        margin           : 0 8px;
-        background-color : rgba(var(--primary-rgb), 0.2);
-        border-bottom    : 1px solid rgba(var(--primary-rgb), 0.6);
-        border-radius    : 8px 8px 0 0;
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        width           : 33.333333%;
+        padding         : 10px 0 7px;
+        margin          : 0 12px;
+        border-radius   : 8px 8px 0 0;
+        font-size       : 500;
+        font-size       : 18px;
+        text-transform  : uppercase;
+        color           : var(--text);
 
-        p {
-            font-size  : 18px;
+        .title {
+            display        : flex;
+            align-items    : center;
+            padding-top    : 4px;
+            letter-spacing : 2px;
+            
+            span {
+                font-size   : 18px;
+                margin-left : 10px;
+                color       : var(--text-tertiary);
+            }
+        }
+
+        svg {
+            height           : 30px;
+            width            : 30px;
+            padding          : 7px;
+            background-color : var(--content-light);
+            border-radius    : 30px;
+            cursor           : pointer;
+
+            &:hover {
+                background-color : var(--content-x-light);
+            }
+        }
+    }
+}
+
+.dashboard-kanban {
+    display : flex;
+    width   : 100%;
+
+    .dashboard-kanban-col {
+        width         : 33.333333%;
+        margin        : 0 12px;
+        border-radius : 0 0 8px 8px;
+    }
+
+    .dashboard-kanban-ticket {
+        position      : relative;
+        border-radius : var(--radius);
+        padding       : 12px;
+        margin        : 12px 0;
+        background    : var(--content-light);
+
+        &.priority {
+            border-left : 3px solid var(--red);
+        }
+        &.important {
+            border-left : 3px solid var(--orange);
+        }
+        &.normal {
+            border-left : 3px solid var(--light-blue);
+        }
+
+        .dashboard-kanban-ticket-title {
+            display         : flex;
+            align-items     : center;
+            justify-content : space-between;
+            margin-bottom   : 10px;
+        }
+
+        .dashboard-kanban-ticket-status {
+            display : flex;
+        }
+
+        .dashboard-kanban-ticket-description {
+            font-size          : 14px;
+            margin             : 20px 0;
+            color              : var(--text-secondary);
+            text-overflow      : ellipsis;
+            overflow           : hidden;
+            width              : 90%;
+            line-height        : 19px;
+            display            : -webkit-box;
+            -webkit-line-clamp : 3;
+            -webkit-box-orient : vertical;
+        }
+
+        .dashboard-kanban-ticket-bottom {
+            display         : flex;
+            align-items     : center;
+            justify-content : space-between;
+
+            .dashboard-kanban-ticket-members {
+                display : flex;
+
+                .dashboard-kanban-ticket-member {
+                    display     : flex;
+                    align-items : center;
+                    margin      : 0 12px;
+
+                    .pseudo {
+                        display     : flex;
+                        align-items : center;
+                        padding-top : 4px;
+                        margin-left : 6px;
+                        font-size   : 12px;
+                    }
+                }
+            }
         }
     }
 }
