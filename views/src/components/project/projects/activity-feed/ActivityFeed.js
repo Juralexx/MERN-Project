@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { dateParser, getHourOnly, keepNewDateOnly, reverseArray, timeBetween } from '../../../Utils'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../../Utils'
+import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { AiFillCloud } from 'react-icons/ai'
-import { ToolsBtn } from '../../../tools/components/Button'
+import { TextButton, ToolsBtn } from '../../../tools/components/Button'
 import SmallMenu from '../../../tools/components/SmallMenu'
+import { RiCalendarTodoLine } from 'react-icons/ri'
 
 const ActivityFeed = ({ project, user, websocket }) => {
     const [dates, setDates] = useState([])
@@ -22,23 +23,31 @@ const ActivityFeed = ({ project, user, websocket }) => {
         if (dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key)) return "no-before"
     }
 
+    const filter = (days) => {
+        setActivities(timeBetween(reversed, days))
+        setDisplay(false)
+    }
+
     return (
         <div className="home-activity-feed">
             <div className="home-activity-feed-header">
-                <h2>Fil d'activité</h2>
-                <ToolsBtn onClick={() => setDisplay(!display)}><BiDotsHorizontalRounded /></ToolsBtn>
-                {display &&
-                    <SmallMenu top="top-1">
-                        <div className="tools-choice" onClick={() => setActivities(timeBetween(reversed, 0))}>Aujourd'hui</div>
-                        <div className="tools-choice" onClick={() => setActivities(timeBetween(reversed, 1))}>Hier</div>
-                        <div className="tools-choice" onClick={() => setActivities(timeBetween(reversed, 7))}>Cette semaine</div>
-                        <div className="tools-choice" onClick={() => setActivities(timeBetween(reversed, 30))}>Ce mois-ci</div>
-                        <div className="tools-choice" onClick={() => setActivities(timeBetween(reversed, 365))}>Cette année</div>
-                    </SmallMenu>
-                }
+                <h2>Fil d'activités <span>{activities.length}</span></h2>
+                <div className="flex">
+                    <TextButton text="Voir tous" className="mr-2" />
+                    <ToolsBtn onClick={() => setDisplay(!display)}><BiDotsVerticalRounded /></ToolsBtn>
+                    {display &&
+                        <SmallMenu top="top-2">
+                            <div className="tools-choice" onClick={() => { setActivities(thisDay(reversed)); setDisplay(false) }}>Aujourd'hui</div>
+                            <div className="tools-choice" onClick={() => { setActivities(lastDay(reversed)); setDisplay(false) }}>Hier</div>
+                            <div className="tools-choice" onClick={() => filter(7)}>Cette semaine</div>
+                            <div className="tools-choice" onClick={() => filter(30)}>Ce mois-ci</div>
+                            <div className="tools-choice" onClick={() => filter(365)}>Cette année</div>
+                        </SmallMenu>
+                    }
+                </div>
             </div>
             <div className="home-activity-feed-container custom-scrollbar">
-                {activities.length > 0 &&
+                {activities.length > 0 ? (
                     activities.map((element, key) => {
                         return (
                             <div className="home-activity-feed-item" key={key}>
@@ -79,7 +88,12 @@ const ActivityFeed = ({ project, user, websocket }) => {
                             </div>
                         )
                     })
-                }
+                ) : (
+                    <div className="empty-array">
+                        <div><RiCalendarTodoLine /></div>
+                        <div>Vous n'avez aucunes activité récentes...</div>
+                    </div>
+                )}
             </div>
         </div>
     )

@@ -81,7 +81,7 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                                         <div className="sidebar-submenu-card" onClick={() => move(setHome, setMembers, setTasks, setDescription)}>
                                             <div className={`sidebar-submenu-title ${addActive(home, "active")}`}>
                                                 <FiHome />
-                                                <div className="sidebar-submenu-text">Home</div>
+                                                <div className="sidebar-submenu-text mt-[2px]">Home</div>
                                             </div>
                                         </div>
                                         <div className="sidebar-submenu-card" onClick={() => move(setDescription, setMembers, setHome, setTasks)}>
@@ -93,7 +93,7 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                                         <div className="sidebar-submenu-card" onClick={() => move(setTasks, setMembers, setHome, setDescription)}>
                                             <div className={`sidebar-submenu-title ${addActive(tasks, "active")}`}>
                                                 <BiTask />
-                                                <div className="sidebar-submenu-text">Tâches</div>
+                                                <div className="sidebar-submenu-text">Tâches <span>{project.tasks.length}</span></div>
                                             </div>
                                         </div>
                                         <div className="sidebar-submenu-card">

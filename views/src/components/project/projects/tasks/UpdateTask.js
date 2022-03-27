@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { changeTask } from '../../../../actions/project.action'
 import Modal from '../../../tools/components/Modal'
-import { ClassicInput, DropdownInput, Textarea } from '../../../tools/components/Inputs'
+import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../../tools/functions/task'
 import { highlightIt } from '../../../tools/functions/function'
@@ -24,7 +24,19 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
     const dispatch = useDispatch()
 
     const updateTask = () => {
-        const task = { _id: element._id, title: title, description: description, state: state, status: status, creatorId: element.creatorId, end: end, members: array, creator: element.creator, creatorPicture: element.creatorPicture, date: element.date }
+        const task = {
+            _id: element._id,
+            title: title,
+            description: description,
+            state: state,
+            status: status,
+            creatorId: element.creatorId,
+            end: new Date(end).toISOString(),
+            members: array,
+            creator: element.creator,
+            creatorPicture: element.creatorPicture,
+            date: element.date
+        }
         const activity = { type: "update-task", who: user.pseudo, task: title, date: new Date().toISOString() }
         dispatch(changeTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)
@@ -72,7 +84,8 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
 
                     <div className="flex items-center mt-4">
                         <div className="mb-2 mt-4 mr-4">Date de fin</div>
-                        <ClassicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
+                        {/* <ClassicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} /> */}
+                        <DatePicker className="top mt-2" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
                     </div>
 
                     <div className="flex w-full">

@@ -1,5 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { DayPicker, useInput } from 'react-day-picker';
+import fr from 'date-fns/locale/fr';
+import 'react-day-picker/dist/style.css';
 import { IoCaretDownOutline } from 'react-icons/io5'
+import { IoClose } from 'react-icons/io5'
+import { FiCalendar } from 'react-icons/fi'
 
 export const ClassicInput = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max } = props
@@ -25,9 +30,9 @@ export const ClassicInput = (props) => {
 }
 
 export const DropdownInput = (props) => {
-    const { type, value, defaultValue, useRef, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max, open } = props
+    const { type, value, defaultValue, useRef, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max, open, clean } = props
     return (
-        <div ref={useRef} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`}>
+        <div ref={useRef} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`} onClick={onClick}>
             <input
                 type={type}
                 name={name}
@@ -37,17 +42,70 @@ export const DropdownInput = (props) => {
                 defaultValue={defaultValue}
                 onChange={onChange}
                 onInput={onInput}
-                onClick={onClick}
                 readOnly={readOnly}
                 disabled={disabled}
                 onKeyPress={onKeyPress}
                 min={min}
                 max={max}
             />
-            <IoCaretDownOutline />
+            {value && value.length > 0 ? (
+                <IoClose className="cross" onClick={clean} />
+            ) : (
+                <IoCaretDownOutline />
+            )}
             {open &&
                 <div className="dropdown-input-choices">
                     {props.children}
+                </div>
+            }
+        </div>
+    )
+}
+
+export const DatePicker = (props) => {
+    const { value, defaultValue, onKeyPress, onChange, onInput, disabled, className, placeholder, selected, onSelect } = props
+    const [open, setOpen] = useState(false)
+
+    const { inputProps, dayPickerProps } = useInput({
+        defaultSelected: new Date(value),
+        fromYear: 2020,
+        toYear: 2022,
+        format: 'dd/MM/yyyy',
+        required: true
+    })
+
+    useEffect(() => {
+        if (selected) setOpen(false)
+    }, [selected])
+
+    return (
+        <div className={`${className ? 'date-picker-container ' + className : 'date-picker-container'}`}>
+            <input
+                placeholder={placeholder}
+                value={value}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                onInput={onInput}
+                onKeyPress={onKeyPress}
+                disabled={disabled}
+                onClick={() => setOpen(!open)}
+                {...inputProps}
+            />
+            <FiCalendar />
+            {open &&
+                <div className="datepicker">
+                    <DayPicker
+                        {...dayPickerProps}
+                        mode="single"
+                        selected={selected}
+                        onSelect={onSelect}
+                        onClick={() => setOpen(false)}
+                        locale={fr}
+                        modifiersClassNames={{
+                            selected: 'selected',
+                            today: 'today'
+                        }}
+                    />
                 </div>
             }
         </div>

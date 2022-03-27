@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground } from '../../../tools/functions/task'
+import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground, randomizeCheckboxID } from '../../../tools/functions/task'
 import { clickOn } from '../../../tools/functions/useClickOutside'
 import { reduceString } from '../../../tools/functions/reduceString'
 import { BiDotsVerticalRounded } from 'react-icons/bi'
@@ -59,7 +59,16 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                     return (
                                         <div className="tasklist-table-item" key={key}>
                                             <div className="tasklist-table-item-left">
-                                                <input type="checkbox" checked={element.state === "done"} className="mr-3" onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                                <div className="check-input mr-2">
+                                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                                    <label htmlFor={randomizeCheckboxID(key)}>
+                                                        <span>
+                                                            <svg width="12px" height="9px" viewBox="0 0 12 9">
+                                                                <polyline points="1 5 4 8 11 1"></polyline>
+                                                            </svg>
+                                                        </span>
+                                                    </label>
+                                                </div>
                                                 <div className="flex justify-between items-center w-full mr-5" onClick={() => clickOn(showTask, setShowTask, element._id)}>
                                                     <div className="flex flex-col">{reduceString(element.title, 60)}</div>
                                                     <div className="flex">
@@ -95,9 +104,18 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
             ) : (
                 tasks.map((element, key) => {
                     return (
-                        <div className={`relative flex justify-between items-center py-3 px-3 cursor-pointer hover:bg-background_primary_x_light rounded-lg ${element.state === "done" ? "line-through" : ""}`} key={key}>
+                        <div className={`relative flex justify-between items-center py-3 px-3 cursor-pointer hover:bg-background_primary_x_light rounded-lg`} key={key}>
                             <div className="flex items-center w-full">
-                                <input type="checkbox" checked={element.state === "done"} className="mr-3" onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                <div className="check-input mr-2">
+                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                    <label htmlFor={randomizeCheckboxID(key)}>
+                                        <span>
+                                            <svg width="12px" height="9px" viewBox="0 0 12 9">
+                                                <polyline points="1 5 4 8 11 1"></polyline>
+                                            </svg>
+                                        </span>
+                                    </label>
+                                </div>
                                 <div className="flex justify-between items-center w-full mr-5" onClick={() => clickOn(showTask, setShowTask, key)}>
                                     <div className="flex flex-col">{reduceString(element.title, 60)}</div>
                                     <div className="flex">

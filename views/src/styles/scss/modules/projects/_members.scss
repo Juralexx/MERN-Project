@@ -10,6 +10,12 @@
         display         : flex;
         justify-content : space-between;
         align-items     : center;
+
+        span {
+            font-size   : 18px;
+            margin-left : 5px;
+            color       : var(--text-tertiary);
+        }
     }
 
     .dashboard-members-tools {
@@ -100,4 +106,64 @@
             margin-right : 20px;
         }
     }
+}
+
+.home-members {
+    position      : relative;
+    padding       : 12px 12px 18px;
+    background    : var(--content-light);
+    color         : var(--text);
+    border-radius : var(--radius);
+    min-height    : 150px;
+    max-height    : 470px;
+
+    .home-members-header {
+        position        : relative;
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        padding         : 6px 12px;
+        margin-bottom   : 8px;
+        border-bottom   : 1px solid rgba(var(--primary-rgb), 0.5);
+
+        h2 {
+            span {
+                margin-left : 8px;
+                font-size   : 16px;
+                color       : var(--text-tertiary);
+            }
+        }
+    }
+
+    .home-members-container {
+        padding    : 0 12px;
+        max-height : 380px;
+        overflow-y : auto;
+
+        .home-members-member {
+            position        : relative;
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+            padding         : 10px 0;
+    
+            .home-members-infos {
+                display     : flex;
+                align-items : center;
+                width       : 25%;
+    
+                .home-members-infos-name {
+    
+                    .role {
+                        font-size : 12px;
+                        color     : var(--text-tertiary);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.add-members-modal {
+    width : 450px;
 }

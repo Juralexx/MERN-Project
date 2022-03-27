@@ -52,8 +52,8 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
     }
 
     return (
-        <Modal open={open} setOpen={setOpen}>
-            <h2>Nouveaux membres</h2>
+        <Modal open={open} setOpen={setOpen} css="add-members-modal">
+            <h2 className="title-border">Nouveaux membres</h2>
             <div className="user-in-array-container">
                 {array.length > 0 && (
                     array.map((element, key) => {
@@ -67,7 +67,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                     })
                 )}
             </div>
-            <ClassicInput placeholder="Rechercher un ami..." className="mb-3" value={searchQuery} onInput={handleInputChange} onChange={searchFriends} type="search" />
+            <ClassicInput placeholder="Rechercher un ami..." className="w-full mb-3" value={searchQuery} onInput={handleInputChange} onChange={searchFriends} type="search" />
             <div className="user-selecter">
                 {friendsFound ? (
                     !isLoading ? (

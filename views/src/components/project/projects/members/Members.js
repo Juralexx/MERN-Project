@@ -49,7 +49,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
         <>
             <div className="dashboard-members">
                 <div className="dashboard-members-title">
-                    <h2>Membres ({project.members.length})</h2>
+                    <h2>Membres <span>{project.members.length}</span></h2>
                     {(isAdmin || isManager) &&
                         <div className="flex">
                             {project.member_requests.length > 0 && <StartIconOutlinedButton text="Demandes en cours" icon={<FaTasks />} onClick={() => setOpenRequests(true)} />}
@@ -58,7 +58,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                     }
                 </div>
                 <div className="dashboard-members-tools">
-                    <ClassicInput type="search" placeholder="Rechercher un membre..." value={searchQuery} onInput={handleInputChange} onChange={searchMember} />
+                    <ClassicInput className="w-[350px]" type="search" placeholder="Rechercher un membre..." value={searchQuery} onInput={handleInputChange} onChange={searchMember} />
                     <DropdownInput useRef={filterMenu} readOnly placeholder={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)}>
                         <div onClick={() => sortByRecent(members, setMembers, setFilter, setDisplay)}>Plus récent au plus ancien</div>
                         <div onClick={() => sortByOld(members, setMembers, setFilter, setDisplay)}>Plus ancien au plus récent</div>

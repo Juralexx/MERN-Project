@@ -10,5 +10,17 @@
         width      : 100%;
         height     : 100%;
         overflow-y : auto;
+
+        .dashboard-content-container {
+            position : relative;
+            width    : 100%;
+            display  : flex;
+            padding  : 16px 6px;
+
+            .dashboard-content-container-col {
+                width   : 50%;
+                padding : 0 10px;
+            }
+        }
     }
 }

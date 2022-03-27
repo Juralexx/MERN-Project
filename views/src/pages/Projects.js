@@ -20,7 +20,7 @@ const Projects = ({ websocket, user }) => {
     const [isLoading, setLoading] = useState(true)
     const [home, setHome] = useState(true)
     const [description, setDescription] = useState(false)
-    // const [messenger, setMessenger] = useState(false)
+    const [messenger, setMessenger] = useState(false)
     const [members, setMembers] = useState(false)
     const [tasks, setTasks] = useState(false)
     const dispatch = useDispatch()
@@ -71,21 +71,19 @@ const Projects = ({ websocket, user }) => {
 
     return (
         <div className="dashboard">
-            <Sidebar projects={projects} setProject={setProject} project={project} changeProject={changeProject} isLoading={isLoading} user={user} home={home} setHome={setHome} members={members} description={description} setDescription={setDescription} setMembers={setMembers} tasks={tasks} setTasks={setTasks} />
+            <Sidebar projects={projects} setProject={setProject} project={project} changeProject={changeProject} isLoading={isLoading} user={user} home={home} setHome={setHome} description={description} setDescription={setDescription}members={members}  setMembers={setMembers} tasks={tasks} setTasks={setTasks} messenger={messenger} setMessenger={setMessenger} />
             <div className="dashboard-content">
                 {project &&
                     <>
-                        <Header project={project} websocket={websocket} user={user} />
+                        <Header project={project} websocket={websocket} user={user} description={description} tasks={tasks} messenger={messenger} members={members} />
                         {home &&
-                            <div className="grid grid-cols-2 gap-4 py-4 pl-4 pr-2">
-                                <ActivityFeed project={project} user={user} websocket={websocket} />
-                                <div>
-                                    <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
-                                        <HomeMembers project={project} setProject={setProject} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
-                                    </div>
-                                    <div className="bg-white dark:bg-background_primary_light text-gray-500 dark:text-slate-300 px-5 mb-5 rounded-xl">
-                                        <HomeTasks project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
-                                    </div>
+                            <div className="dashboard-content-container">
+                                <div className="dashboard-content-container-col">
+                                    <ActivityFeed project={project} user={user} websocket={websocket} />
+                                </div>
+                                <div className="dashboard-content-container-col">
+                                    <HomeMembers project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
+                                    <HomeTasks project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                                 </div>
                             </div>
                         }
