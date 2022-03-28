@@ -1,71 +1,77 @@
 .dashboard-members {
-    width         : 100%;
-    margin        : 20px auto;
-    max-width     : 1440px;
-    padding       : 24px;
-    background    : var(--content);
-    color         : var(--text);
+    position   : relative;
+    width      : 100%;
+    height     : 100%;
+    padding    : 24px;
+    background : var(--content);
+    color      : var(--text);
 
-    .dashboard-members-title {
-        display         : flex;
-        justify-content : space-between;
-        align-items     : center;
+    .dashboard-members-container {
+        margin    : 20px auto;
+        max-width : 1440px;
 
-        span {
-            font-size   : 18px;
-            margin-left : 5px;
-            color       : var(--text-tertiary);
+
+        .dashboard-members-title {
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+    
+            span {
+                font-size   : 18px;
+                margin-left : 5px;
+                color       : var(--text-tertiary);
+            }
         }
-    }
-
-    .dashboard-members-tools {
-        position      : relative;
-        display       : flex;
-        padding       : 20px 0 4px;
-        margin-bottom : 12px;
-    }
-
-    .dashboard-members-table-header {
-        position        : relative;
-        display         : flex;
-        justify-content : space-between;
-        align-items     : center;
-        margin          : 12px 0 8px;
-        border-radius   : var(--radius);
-        background      : var(--content-light);
-
-        .dashboard-members-table-tools {
+    
+        .dashboard-members-tools {
+            position      : relative;
             display       : flex;
-            align-items   : center;
-            padding       : 10px 20px;
-            width         : 25%;
-            cursor        : pointer;
-            border-radius : var(--radius);
-
-            &:hover {
-                background : var(--content-x-light);
+            padding       : 20px 0 4px;
+            margin-bottom : 12px;
+        }
+    
+        .dashboard-members-table-header {
+            position        : relative;
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+            margin          : 12px 0 8px;
+            border-radius   : var(--radius);
+            background      : var(--content-light);
+    
+            .dashboard-members-table-tools {
+                display       : flex;
+                align-items   : center;
+                padding       : 10px 20px;
+                width         : 25%;
+                cursor        : pointer;
+                border-radius : var(--radius);
+    
+                &:hover {
+                    background : var(--content-x-light);
+                }
+    
+                svg {
+                    margin-left : 10px;
+                }
             }
-
-            svg {
-                margin-left : 10px;
+        }
+    
+        .dashboard-members-member {
+            position        : relative;
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+    
+            .dashboard-members-infos {
+                display     : flex;
+                align-items : center;
+                padding     : 10px 20px;
+                width       : 25%;
             }
         }
     }
-
-    .dashboard-members-member {
-        position        : relative;
-        display         : flex;
-        justify-content : space-between;
-        align-items     : center;
-
-        .dashboard-members-infos {
-            display     : flex;
-            align-items : center;
-            padding     : 10px 20px;
-            width       : 25%;
-        }
     }
-}
 
 .member-requests {
     position : relative;
@@ -111,7 +117,7 @@
 .home-members {
     position      : relative;
     padding       : 12px 12px 18px;
-    background    : var(--content-light);
+    background    : var(--content);
     color         : var(--text);
     border-radius : var(--radius);
     min-height    : 150px;
@@ -124,13 +130,17 @@
         align-items     : center;
         padding         : 6px 12px;
         margin-bottom   : 8px;
-        border-bottom   : 1px solid rgba(var(--primary-rgb), 0.5);
+        border-bottom   : 2px solid var(--content-x-light);
 
         h2 {
             span {
-                margin-left : 8px;
-                font-size   : 16px;
-                color       : var(--text-tertiary);
+                display          : inline-block;
+                vertical-align   : middle;
+                font-size        : 14px;
+                padding          : 3px 8px 2px;
+                margin-left      : 8px;
+                border-radius    : 5px;
+                background-color : var(--content-x-light);
             }
         }
     }

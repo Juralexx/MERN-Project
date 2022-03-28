@@ -40,7 +40,7 @@
                 justify-content  : center;
                 padding          : 8px;
                 background-color : var(--content);
-                border-radius    : 50px;
+                border-radius    : 8px;
 
                 svg {
                     height : 20px;
@@ -52,6 +52,15 @@
                 margin-left : 12px;
                 font-size   : 16px;
                 font-weight : 500;
+
+                span {
+                    background-color : var(--content);
+                    height           : 20px;
+                    font-size        : 15px;
+                    padding          : 4px 8px;
+                    margin-left      : 8px;
+                    border-radius    : 5px;
+                }
             }
         }
 
@@ -81,7 +90,7 @@
                 align-items     : center;
                 justify-content : space-between;
                 position        : relative;
-                padding         : 12px 16px;
+                padding         : 10px 16px;
                 color           : var(--text);
                 border-radius   : var(--radius);
                 cursor          : pointer;
@@ -132,7 +141,7 @@
     
             .sidebar-submenu {
                 width   : 100%;
-                padding : 4px 8px 4px 20px;
+                padding : 0 8px 0 20px;
     
                 .sidebar-submenu-card {
                     border-left : 1px solid var(--content-light);
@@ -143,8 +152,8 @@
                         justify-content : flex-start;
                         align-items     : center;
                         font-size       : 16px;
-                        padding         : 12px 16px;
-                        margin-left     : 8px;
+                        padding         : 8px 16px;
+                        margin          : 5px 0 5px 8px;
                         color           : var(--text);
                         cursor          : pointer;
                         border-radius   : var(--radius);
@@ -161,21 +170,29 @@
                             align-items     : center;
 
                             span {
-                                background-color : var(--content-x-light);
                                 height           : 20px;
                                 font-size        : 13px;
                                 padding          : 2px 8px;
                                 margin-left      : 8px;
                                 border-radius    : 5px;
+                                background-color : var(--content-x-light);
                             }
                         }
     
                         &:hover {
-                            background-color : var(--content-light);
+                            background-color : var(--content-x-light);
+
+                            span {
+                                background-color : var(--content-light);
+                            }
                         }
     
                         &.active {
-                            background-color : var(--primary);
+                            background-color : rgba(var(--primary-rgb), 0.6);
+
+                            span {
+                                background-color : rgba(var(--primary-rgb), 0.6);
+                            }
                         }
                     }
                 }

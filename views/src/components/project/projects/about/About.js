@@ -20,12 +20,18 @@ const About = ({ project, user, websocket, isAdmin, isManager }) => {
             <HeaderNavbar about={about} setAbout={setAbout} galery={galery} setGalery={setGalery} actuality={actuality} setActuality={setActuality} faq={faq} setFaq={setFaq} />
             {about &&
                 <div className="dashboard-about-content">
-                    <Title project={project} />
-                    <Category project={project} />
-                    <Location project={project} />
-                    <End project={project} />
-                    <State project={project} />
-                    <Work project={project} />
+                    <div className="dashboard-about-content-inner">
+                        <div className="dashboard-about-col">
+                            <Title project={project} />
+                            <Category project={project} />
+                            <State project={project} />
+                            <Work project={project} />
+                        </div>
+                        <div className="dashboard-about-col">
+                            <Location project={project} />
+                            <End project={project} />
+                        </div>
+                    </div>
                     {/* <Content project={project} /> */}
                 </div>
             }

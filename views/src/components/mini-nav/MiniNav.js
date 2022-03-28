@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { BsFillCaretDownFill, BsChatRightTextFill } from 'react-icons/bs'
-import { IoNotifications } from 'react-icons/io5'
+import { BsFillCaretDownFill } from 'react-icons/bs'
+import { IoNotifications, IoChatboxEllipses } from 'react-icons/io5'
 import SettingsMenu from "./SettingsMenu";
 import NotificationsMenu from "./notifications/Notifications";
 import { avatar } from "../tools/functions/useAvatar";
@@ -32,7 +32,7 @@ const MiniNav = ({ user, websocket }) => {
                 </li>
                 <li className="mini-nav-li">
                     <div className="mini-nav-button">
-                        <BsChatRightTextFill />
+                        <IoChatboxEllipses />
                     </div>
                 </li>
                 <li className="mini-nav-li">

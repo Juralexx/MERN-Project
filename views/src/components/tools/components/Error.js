@@ -8,7 +8,7 @@ export const ErrorCard = (props) => {
             <div className="is-error" ref={useRef} show={show}>
                 <VscError />
                 <div className="is-error-content">
-                    <div className="title">Erreur</div>
+                    {/* <div className="title">Erreur</div> */}
                     <div className="text">{text}</div>
                 </div>
             </div>

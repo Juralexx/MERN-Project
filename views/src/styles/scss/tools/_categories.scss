@@ -1,7 +1,7 @@
 .categories-picker {
     position      : absolute;
     top           : 52px;
-    width         : 500px;
+    width         : 650px;
     display       : flex;
     background    : var(--content-x-light);
     height        : auto;
@@ -12,23 +12,92 @@
     .categories-main {
         display        : flex;
         flex-direction : column;
-        width          : 300px;
-        padding        : 0 10px;
+        width          : 350px;
         margin         : 15px 0;
         border-right   : 1px solid var(--text-tertiary);
 
-        .categories-main-item {
-            padding       : 8px 10px;
-            cursor        : pointer;
-            border-radius : 8px;
-            margin        : 2px 0;
+        .categories-main-inner {
+            position   : relative;
+            padding    : 0 10px;
+            overflow-x : hidden;
 
-            &.active {
-                background : var(--primary);
+            .categories-main-item {
+                position      : relative;
+                display       : flex;
+                align-items   : center;
+                padding       : 10px 10px;
+                cursor        : pointer;
+                border-radius : 5px;
+                margin        : 2px 0;
+
+                .left {
+                    display     : flex;
+                    align-items : center;
+                    svg {
+                        height       : 20px;
+                        width        : 20px;
+                        margin-right : 12px;
+                        color        : var(--text-tertiary);
+                    }
+                }
+
+                .right {
+                    display     : flex;
+                    align-items : center;
+                    svg {
+                        display  : none;
+                        position : absolute;
+                        right    : 10px;
+                        height   : 14px;
+                        width    : 14px;
+                    }
+                }
+    
+                &:hover {
+                    color      : var(--primary);
+                    background : rgba(var(--primary-rgb), 0.1);
+
+                    .right {
+                        svg {
+                            display : block;
+                        }
+                    }
+
+                    .left {
+                        svg {
+                            color : var(--primary);
+                        }
+                    }
+                }
             }
+    
+            &:before {
+                content          : '';
+                position         : absolute;
+                left             : -4px;
+                width            : 8px;
+                height           : 100%;
+                border-radius    : 20px;
+                background-color : transparent;
+                transition       : 0.2s ease;
+            }
+    
+            &.active {
 
-            &:hover {
-                background : var(--primary);
+                .categories-main-item {
+                    color : var(--primary);
+                    background : rgba(var(--primary-rgb), 0.03);
+
+                    .left {
+                        svg {
+                            color : var(--primary);
+                        }
+                    }
+                }
+
+                &:before {
+                    background : var(--primary);
+                }
             }
         }
     }
@@ -42,17 +111,20 @@
         margin         : 15px 0;
 
         .categories-sub-item {
-            padding       : 8px 10px;
+            width         : 200px;
+            padding       : 10px 10px;
             margin        : 2px 0;
             cursor        : pointer;
-            border-radius : 8px;
+            border-radius : 5px;
 
             &.active {
-                background : var(--primary);
+                color      : var(--primary);
+                background : rgba(var(--primary-rgb), 0.1);
             }
 
             &:hover {
-                background : var(--primary);
+                color      : var(--primary);
+                background : rgba(var(--primary-rgb), 0.1);
             }
         }
     }

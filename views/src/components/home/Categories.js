@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { useClickOutside } from '../tools/functions/useClickOutside';
+import { BsFillSunFill, BsFillCaretRightFill } from 'react-icons/bs'
 
 const Categories = ({ open, setOpen, setCategory, category }, props) => {
     const wrapperRef = useRef()
     const [active, setActive] = useState(0)
     useClickOutside(wrapperRef, setOpen, false)
     const isMainActive = (state, classe) => { if (state) { return classe } else { return "" } }
-    const isSubActive = (value) => { if (category === value ) return "active" }
+    const isSubActive = (value) => { if (category === value) return "active" }
 
     const categories = [
         { value: "Category One" },
@@ -29,7 +30,12 @@ const Categories = ({ open, setOpen, setCategory, category }, props) => {
                 <div className="categories-main">
                     {categories.map((category, key) => {
                         return (
-                            <li key={key} className={`categories-main-item ${isMainActive(active === key, "active")}`} onClick={() => setActive(key)}>{category.value}</li>
+                            <div className={`categories-main-inner ${isMainActive(active === key, "active")}`}>
+                                <div key={key} className="categories-main-item" onClick={() => setActive(key)}>
+                                    <div className="left"><BsFillSunFill />{category.value}</div>
+                                    <div className="right"><BsFillCaretRightFill /></div>
+                                </div>
+                            </div>
                         )
                     })}
                 </div>

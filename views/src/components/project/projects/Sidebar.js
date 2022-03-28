@@ -57,11 +57,11 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
             <div className={`sidebar-header ${addActive(reduce, "reduced")}`}>
                 <div className={`sidebar-header-inner ${addActive(reduce, "reduced")}`}>
                     <div className="sidebar-header-icon"><BsFillDiagram3Fill /></div>
-                    <p>Mes Projets ({projects.length})</p>
+                    <p>Mes Projets <span>{projects.length}</span></p>
                 </div>
                 <div className="sidebar-header-toggle" onClick={handleState}><GoThreeBars /></div>
             </div>
-            <div className="sidebar-inner">
+            <div className="sidebar-inner custom-scrollbar">
                 {!isLoading ? (
                     projects.map((element, key) => {
                         return (

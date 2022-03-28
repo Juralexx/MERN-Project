@@ -55,7 +55,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                 <div ref={taskMenu}>
                                     <ToolsBtn onClick={() => setOpenTasksMenu(!openTasksMenu)}><BiDotsVerticalRounded /></ToolsBtn>
                                     {openTasksMenu && (
-                                        <SmallMenu top="top-2">
+                                        <SmallMenu top="top-1">
                                             <div className="tools-choice" onClick={() => setCreateTask(true)}>Créer une nouvelle tâche</div>
                                         </SmallMenu>
                                     )}
@@ -83,15 +83,10 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         return (
                             <div className={`home-tasks-task`} key={key}>
                                 <div className="home-tasks-task-content">
-                                    {/* <input type="checkbox" checked={element.state === "done"} className="mr-3" onChange={() => changeState(element, project, user, websocket, dispatch)} /> */}
                                     <div className="check-input mr-2">
-                                        <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done" } onChange={() => changeState(element, project, user, websocket, dispatch)}/>
+                                        <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, project, user, websocket, dispatch)} />
                                         <label htmlFor={randomizeCheckboxID(key)}>
-                                            <span>
-                                                <svg width="12px" height="9px" viewBox="0 0 12 9">
-                                                    <polyline points="1 5 4 8 11 1"></polyline>
-                                                </svg>
-                                            </span>
+                                            <span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span>
                                         </label>
                                     </div>
                                     <div className="home-tasks-task-content-inner">
@@ -107,7 +102,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                     <div>
                                         <ToolsBtn onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, key)}><BiDotsVerticalRounded /></ToolsBtn>
                                         {openTaskMenu === key && (
-                                            <SmallMenu useRef={taskMenu}>
+                                            <SmallMenu useRef={taskMenu} right="right-10" top="top-2">
                                                 <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
                                                 <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
                                             </SmallMenu>
@@ -119,6 +114,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     })}
                 </div>
             </div>
+
             {<CreateTask open={createTask} setOpen={setCreateTask} project={project} user={user} websocket={websocket} />}
             {updateTask && <UpdateTask element={getTask} open={updateTask} setOpen={setUpdateTask} project={project} user={user} websocket={websocket} />}
         </>

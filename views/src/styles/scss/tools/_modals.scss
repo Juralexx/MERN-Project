@@ -9,7 +9,7 @@
     z-index          : 1600;
     padding          : 20px 30px;
     color            : var(--text);
-    background-color : var(--content);
+    background-color : var(--content-light);
     box-shadow       : var(--shadow-xl);
 
     h2 {
@@ -53,7 +53,7 @@
         }
 
         &:hover {
-            background-color : var(--content-light);
+            background-color : var(--content-x-light);
         }
     }
 
@@ -65,7 +65,7 @@
         .modal-nav-item {
             padding          : 8px 16px;
             cursor           : pointer;
-            background-color : var(--content-light);
+            background-color : var(--content-x-light);
 
             &:hover {
                 background-color : rgba(var(--primary-rgb), 0.3);

@@ -94,9 +94,9 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                 </>
             ) : (
                 <>
-                    <div className="user-in-array-container">
-                        {array.length > 0 && (
-                            array.map((element, key) => {
+                    {array.length > 0 && (
+                        <div className="user-in-array-container">
+                            {array.map((element, key) => {
                                 return (
                                     <div className="user-in-array" key={key}>
                                         <TinyAvatar pic={element.picture} />
@@ -104,9 +104,9 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                                         <IoClose onClick={() => removeMemberFromArray(element, array, setArray)} />
                                     </div>
                                 )
-                            })
-                        )}
-                    </div>
+                            })}
+                        </div>
+                    )}
                     <ClassicInput placeholder="Rechercher un membre..." className="mb-3 w-full" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
                     <div className="user-selecter">
                         {project.members && (

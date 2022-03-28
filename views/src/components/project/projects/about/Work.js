@@ -2,8 +2,9 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { ImCross } from 'react-icons/im'
+import { BsCheckLg } from 'react-icons/bs'
 import { updateWorks } from "../../../../actions/project.action";
-import { Button, SmallToolsBtn } from "../../../tools/components/Button";
+import { Button, SmallToolsBtn, ToolsBtn } from "../../../tools/components/Button";
 import { FaPen } from 'react-icons/fa'
 import { ClassicInput } from "../../../tools/components/Inputs";
 import { BsInboxFill } from "react-icons/bs";
@@ -84,15 +85,15 @@ const Work = ({ project }) => {
 
     return (
         <div className="dashboard-about-content-item">
-            <div className="label">Métiers</div>
+            <div className="flex items-center">
+                <div className="label">Métier(s) recherché(s)</div>
+                {!form && <SmallToolsBtn className="ml-4" onClick={() => setForm(true)}><FaPen /></SmallToolsBtn>}
+            </div>
             <div className="dashboard-about-array">
                 <div className="dashboard-about-array-header">
                     <div className="dashboard-about-array-header-item">Nom</div>
-                    <div className="dashboard-about-array-header-item">Trouvé(s)</div>
-                    <div className="dashboard-about-array-header-item">Recherché(s)</div>
-                    <div className="dashboard-about-array-header-item">
-                        {!form && <SmallToolsBtn onClick={() => setForm(true)}><FaPen /></SmallToolsBtn>}
-                    </div>
+                    <div className="dashboard-about-array-header-item">Trouvé</div>
+                    <div className="dashboard-about-array-header-item">Recherché</div>
                 </div>
                 <div className="dashboard-about-array-content">
                     {!form ? (
@@ -143,7 +144,7 @@ const Work = ({ project }) => {
                                             </div>
 
                                             <ClassicInput className="number-input" type="number" placeholder="Nombre..." min="1" onChange={(e) => { setNumber(e.target.value); setNumberFound("0") }} />
-                                            <Button text="Valider" disabled={work.length < 0} onClick={checkErrors} />
+                                            <ToolsBtn text="Valider" disabled={work.length < 0} onClick={checkErrors}><BsCheckLg /></ToolsBtn>
                                         </div>
 
                                         <p className="submit error"></p>

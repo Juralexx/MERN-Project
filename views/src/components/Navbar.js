@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UidContext } from "./AppContext";
 import MiniNav from "./mini-nav/MiniNav";
-import { AiOutlineHome, AiOutlineUnorderedList } from 'react-icons/ai'
-import { MdOutlineMessage } from 'react-icons/md'
+import { AiFillHome } from 'react-icons/ai'
+import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
 import { IoPersonCircleSharp } from 'react-icons/io5'
 import { RiLoginCircleLine } from 'react-icons/ri'
 import { FaProjectDiagram } from 'react-icons/fa'
@@ -29,20 +29,20 @@ const Navbar = ({ websocket, user }) => {
                             <ul className="nav-ul">
                                 <li className="nav-li">
                                     <NavLink to="/" className={isThisActive}>
-                                        <AiOutlineHome className="nav-icon" />
+                                        <AiFillHome className="nav-icon" />
                                         <p className="nav-p">Accueil</p>
                                     </NavLink>
                                 </li>
                                 <li className="nav-li">
                                     <NavLink to="/recent-searches" className={isThisActive}>
-                                        <AiOutlineUnorderedList className="nav-icon" />
-                                        <p className="nav-p">Mes recherches</p>
+                                        <MdOutlineScreenSearchDesktop className="nav-icon" />
+                                        <p className="nav-p">Recherches</p>
                                     </NavLink>
                                 </li>
                                 <li className="nav-li">
                                     <NavLink to="/projects" className={isThisActive}>
                                         <FaProjectDiagram className="nav-icon" />
-                                        <p className="nav-p">Mes Projets</p>
+                                        <p className="nav-p">Projets</p>
                                     </NavLink>
                                 </li>
                                 <li className="nav-li">
@@ -62,14 +62,14 @@ const Navbar = ({ websocket, user }) => {
                         <ul className="nav-ul">
                             <li className="nav-li">
                                 <NavLink to="/" className={isThisActive}>
-                                    <AiOutlineHome className="nav-icon" />
+                                    <AiFillHome className="nav-icon" />
                                     <p className="nav-p">Accueil</p>
                                 </NavLink>
                             </li>
                             <li className="nav-li">
                                 <NavLink to="/" className={isThisActive}>
-                                    <AiOutlineUnorderedList className="nav-icon" />
-                                    <p className="nav-p">Mes recherches</p>
+                                    <MdOutlineScreenSearchDesktop className="nav-icon" />
+                                    <p className="nav-p">Recherches</p>
                                 </NavLink>
                             </li>
                             <li className="nav-li">

@@ -37,6 +37,8 @@
     border-radius   : 20px;
     color           : var(--text);
     transform       : scale(1);
+    background      : var(--content);
+    border-radius   : 10px;
 
     svg {
         height : 20px;
@@ -44,7 +46,7 @@
     }
 
     &:hover {
-        background-color : var(--content-light);
+        background-color : var(--content-x-light);
     }
 
     &:active {
@@ -62,6 +64,9 @@
     color            : var(--text);
     transform        : scale(1);
     background-color : var(--primary);
+    background       : var(--content-x-light);
+    box-shadow       : var(--shadow-xl);
+    border-radius    : 10px;
 
     svg {
         height : 12px;
@@ -69,7 +74,7 @@
     }
 
     &:hover {
-        background-color : var(--content-light);
+        background-color : var(--content-x-light);
     }
 
     &:active {
@@ -109,13 +114,59 @@
     height        : 48px;
     padding       : 8px;
     color         : var(--text);
-    background    : var(--content-light);
+    background    : var(--content-x-light);
     border-radius : var(--radius);
     border        : 2px solid rgba(0, 0, 0, 0);
     outline       : none;
 
     &:focus {
         border : 2px solid var(--primary);
+    }
+}
+
+.double-icon-input {
+    position    : relative;
+    display     : flex;
+    align-items : center;
+    max-width   : 300px;
+
+    .classic-input {
+        display       : block;
+        height        : 48px;
+        width         : 100%;
+        padding       : 8px 8px 8px 34px;
+        color         : var(--text);
+        background    : var(--content-x-light);
+        border-radius : var(--radius);
+        border        : 2px solid rgba(0, 0, 0, 0);
+        outline       : none;
+    
+        &:focus {
+            border : 2px solid var(--primary);
+        }
+    }
+
+    .start-icon {
+        position : absolute;
+        left     : 10px;
+
+        svg {
+            width  : 22px;
+            height : 22px;
+            color  : #9ca3af;
+        }
+    }
+
+    .end-icon {
+        position   : absolute;
+        right      : 10px;
+
+        svg {
+            width      : 14px;
+            height     : 14px;
+            color      : #9ca3af;
+            margin-top : 2px;
+        }
     }
 }
 
@@ -126,7 +177,7 @@
     overflow-y    : auto;
     padding       : 8px;
     color         : var(--text);
-    background    : var(--content-light);
+    background    : var(--content-x-light);
     border-radius : var(--radius);
     border        : 2px solid rgba(0, 0, 0, 0);
     outline       : none;
@@ -141,14 +192,14 @@
     min-width     : 200px;
     margin-bottom : 3px;
     cursor        : pointer;
-    background    : var(--content-light);
+    background    : var(--content-x-light);
     border-radius : var(--radius);
     z-index       : 1;
 
     input {
         padding            : 10px;
         color              : var(--text);
-        background         : var(--content-light);
+        background         : var(--content-x-light);
         border-radius      : var(--radius);
         border             : 2px solid rgba(0, 0, 0, 0);
         outline            : none;
@@ -192,7 +243,7 @@
         min-width        : 300px;
         margin-top       : 5px;
         padding          : 5px;
-        background-color : var(--content-light);
+        background-color : var(--content-x-light);
         z-index          : 1500;
         box-shadow       : var(--shadow-xl);
         border-radius    : var(--radius);
@@ -200,7 +251,7 @@
         div {
             padding       : 8px 12px;
             cursor        : pointer;
-            background    : var(--content-light);
+            background    : var(--content-x-light);
             border-radius : var(--radius);
 
             &:hover {
@@ -249,19 +300,25 @@
     }
 }
 
+.err {
+    border        : 2px solid var(--red);
+    border-radius : 8px;
+}
+
 .date-picker-container {
-    position   : relative;
-    box-shadow : var(--shadow-lg);
+    position : relative;
+    cursor   : pointer;
     
     input {
         display       : block;
         height        : 48px;
         padding       : 8px;
         color         : var(--text);
-        background    : var(--content-light);
+        background    : var(--content-x-light);
         border-radius : var(--radius);
         border        : 2px solid rgba(0, 0, 0, 0);
         outline       : none;
+        cursor        : pointer;
 
         &:focus {
             border : 2px solid var(--primary);
@@ -282,9 +339,10 @@
         top           : 50px;
         left          : 50%;
         transform     : translateX(-50%);
-        background    : var(--content-light);
+        background    : var(--content-x-light);
         border-radius : 8px;
         z-index       : 2000;
+        box-shadow : var(--shadow-lg);
 
         .rdp {
 
@@ -319,7 +377,7 @@
                 .rdp-nav_button_previous, .rdp-nav_button_next {
                     display       : flex;
                     align-items   : center;
-                    background    : var(--content-x-light);
+                    background    : var(--content-light);
                     border-radius : 10px;
                     margin        : 0 3px;
                     box-shadow    : var(--shadow-lg);
@@ -354,21 +412,21 @@
 .big-avatar {
     min-height    : 40px;
     min-width     : 40px;
-    border-radius : 50px;
+    border-radius : 10px;
     margin-right  : 16px;
 }
 
 .medium-avatar {
     min-height    : 34px;
     min-width     : 34px;
-    border-radius : 50px;
+    border-radius : 8px;
     margin-right  : 10px;
 }
 
 .small-avatar {
     min-height    : 28px;
     min-width     : 28px;
-    border-radius : 50px;
+    border-radius : 6px;
 
     &:nth-child(n+2) {
         margin-left : -6px;
@@ -445,7 +503,7 @@
             border-radius : var(--radius);
 
             &:hover {
-                background : var(--content-light);
+                background : var(--content-x-light);
             }
         }
     }
@@ -465,16 +523,18 @@
     display          : flex;
     align-items      : center;
     padding          : 10px;
-    max-width        : 500px;
+    max-width        : 350px;
     background-color : rgba(var(--red-rgb), 0.4);
     border           : 1px solid var(--red);
     border-left      : 5px solid var(--red);
     font-size        : 14px;
-    margin-top       : 10px;
+    margin-top       : 4px;
     border-radius    : 8px;
 
     .title {
-        font-size : 20px;
+        font-size      : 16px;
+        font-weight    : 600;
+        letter-spacing : 0.6px;
     }
 
     svg {
@@ -487,13 +547,12 @@
 .auto-complete-container {
     position         : absolute;
     padding          : 10px 0;
-    top              : 53px;
     max-height       : 300px;
     overflow         : auto;
     width            : 500px;
     z-index          : 1500;
     border-radius    : var(--radius);
-    box-shadow       : var(--shadow-lg);
+    box-shadow       : var(--shadow-xl);
     background-color : var(--content-light);
 
     .auto-complete-item {
@@ -521,6 +580,64 @@
             width        : 30px;
             height       : 30px;
             margin-right : 20px;
+        }
+    }
+}
+
+.tooltip {
+    position      : absolute;
+    font-size     : 13px;
+    width         : auto;
+    max-width     : 250px;
+    background    : var(--body);
+    padding       : 10px 15px 8px;
+    box-shadow    : var(--shadow-lg);
+    border-radius : 5px;
+    z-index       : 10000;
+    white-space   : nowrap;
+
+    &::before {
+        content          : '';
+        position         : absolute;
+        width            : 0;
+        height           : 0;
+        border           : .5em solid transparent;
+        border-top-color : var(--body);
+    }
+
+    &.top {
+        bottom    : 50px;
+        left      : 50%;
+        transform : translateX(-50%);
+
+        &:before {
+            top       : 100%;
+            left      : 50%;
+            transform : translate(-50%, 0);
+        }
+    }
+
+    &.right {
+        top       : 50%;
+        left      : 40px;
+        transform : translateY(-50%);
+
+        &:before {
+            top       : 50%;
+            left      : -12px;
+            transform : translateY(-50%) rotate(90deg);
+        }
+    }
+
+    &.right {
+        top       : 50%;
+        right     : 40px;
+        transform : translateY(-50%);
+
+        &:before {
+            top       : 50%;
+            right     : -12px;
+            transform : translateY(-50%) rotate(-90deg);
         }
     }
 }

@@ -1,53 +1,57 @@
 import React, { useRef, useState } from 'react'
-import { ClassicInput, ClassicInputEndIcon } from '../../tools/components/Inputs';
+import { ClassicInput, DoubleIconInput } from '../../tools/components/Inputs';
 import { useClickOutside } from "../../tools/functions/useClickOutside";
 import { BsCaretDownFill } from 'react-icons/bs'
+import { BiCategory } from 'react-icons/bi'
 import Categories from '../../home/Categories';
-import { IconButton } from "../../tools/components/Button";
+import { EndIconOutlinedButton } from "../../tools/components/Button";
 import { IoMdArrowRoundForward } from 'react-icons/io'
+import { ErrorCard } from '../../tools/components/Error';
 
-const Title = ({ title, setTitle, category, setCategory, titleError, categoryError, onNext }) => {
+const Title = ({ title, setTitle, category, setCategory, error, setError, isErr, setErr, onNext }) => {
     const [display, setDisplay] = useState(false)
     const wrapperRef = useRef()
+    const errorRef = useRef()
     useClickOutside(wrapperRef, setDisplay, false)
+    const checkErr = (name) => { if (isErr === name) return "err"}
+
+    const checkValues = () => {
+        if (title.length < 10 || title.length > 80) {
+            setErr("title")
+            setError("Le titre de votre projet doit être compris entre 10 et 80 charactères...")
+        } else {
+            if (category.length <= 0) {
+                setErr("category")
+                setError("Veuillez selectionner une catégorie...")
+            } else {
+                setErr(null)
+                onNext()
+            }
+        }
+    }
 
     return (
-        <div className="w-full py-5 px-7 rounded-xl bg-white dark:bg-background_primary shadow-custom dark:shadow-lg text-gray-500 dark:text-slate-300">
-            <h3 className="mb-5">Un titre clair et cours est le meilleur moyen de vous faire repérer !</h3>
-            <div className="w-full">
-                <p className="mb-2">Quel est le titre de votre project ?</p>
-                <ClassicInput
-                    type="text"
-                    name="title"
-                    id="title"
-                    placeholder="Titre du projet"
-                    fullwidth
-                    onChange={(e) => setTitle(e.target.value)} value={title}
-                />
-                <div className="error" ref={titleError}></div>
+        <div className="add-project-card">
+            <h2>Un titre clair et cours est le meilleur moyen de vous faire repérer !</h2>
+            <div className="content-form">
+                <p className="mb-2">Titre</p>
+                <ClassicInput className={`title-input ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle(e.target.value)} value={title} />
+                {isErr === "title" && <ErrorCard useRef={errorRef} show={isErr === "title"} text={error} />}
             </div>
 
             <div className="w-full mt-3">
                 <p className="mb-2">Catégorie</p>
                 <div className="relative" ref={wrapperRef}>
-                    <ClassicInputEndIcon
-                        readOnly
-                        type="text"
-                        name="category"
-                        id="category"
-                        placeholder="Choisissez une categorie"
-                        fullwidth
-                        endIcon={<BsCaretDownFill className="h-[18px] w-[18px] mt-2 text-gray-500" />}
-                        onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)}
-                        value={category}
-                    />
+                    <DoubleIconInput className={`${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
                     {display && (
-                        <Categories open={display} setOpen={setDisplay} setCategory={setCategory} style={{ top: 0 }}/>
+                        <Categories open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
                     )}
                 </div>
             </div>
-            <div className="error" ref={categoryError}></div>
-            <IconButton text="Next" endIcon={<IoMdArrowRoundForward className="w-6 h-6" />} className="mt-4 ml-auto w-[90px]" onClick={onNext} />
+            {isErr === "category" && <ErrorCard useRef={errorRef} show={isErr === "category"} text={error} />}
+            <div className="btn-container">
+                <EndIconOutlinedButton text="Suivant" className="next-btn right" icon={<IoMdArrowRoundForward />} onClick={checkValues} />
+            </div>
         </div>
     )
 }

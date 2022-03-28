@@ -57,6 +57,7 @@ header {
                     cursor          : pointer;
 
                     .nav-link {
+                        position        : relative;
                         display         : flex;
                         flex-direction  : column;
                         align-items     : center;
@@ -65,13 +66,27 @@ header {
                         width           : 100%;
                         padding         : 0 37px 0;
                         color           : var(--text);
-                        border          : 3px solid transparent;
+                        overflow        : hidden;
+
+                        &:before {
+                            content          : '';
+                            position         : absolute;
+                            left             : 50%;
+                            transform        : translateX(-50%);
+                            bottom           : -7px;
+                            width            : 0;
+                            height           : 10px;
+                            border-radius    : 20px;
+                            background-color : transparent;
+                            transition       : 0.2s ease;
+                        }
 
                         .nav-icon {
                             width         : 20px;
                             height        : 20px;
                             margin-bottom : 6px;
                             color         : var(--text);
+                            transition    : 0.2s ease;
                         }
 
                         .nav-p {
@@ -83,18 +98,30 @@ header {
                         }
 
                         &:hover {
-                            border-bottom : 3px solid var(--primary);
 
                             .nav-icon {
-                                color : var(--primary);
+                                color      : var(--primary);
+                                transition : 0.2s ease;
+                            }
+
+                            &:before {
+                                width            : 50px;
+                                transition       : 0.2s ease;
+                                background-color : var(--primary);
                             }
                         }
 
                         &.active {
-                            border-bottom : 3px solid var(--primary);
 
                             .nav-icon {
-                                color : var(--primary);
+                                color      : var(--primary);
+                                transition : 0.2s ease;
+                            }
+
+                            &:before {
+                                width            : 80%;
+                                transition       : 0.2s ease;
+                                background-color : var(--primary);
                             }
                         }
                     }
@@ -144,7 +171,7 @@ header {
             .mini-nav-button {
                 height          : 44px;
                 width           : 44px;
-                background      : var(--content);
+                background      : var(--content-light);
                 display         : flex;
                 align-items     : center;
                 justify-content : center;
@@ -171,14 +198,14 @@ header {
                 }
 
                 &:hover {
-                    background : var(--content-light);
+                    background : var(--content);
                 }
             }
 
             .mini-nav-avatar {
                 width         : 26px;
                 height        : 26px;
-                border-radius : 50px;
+                border-radius : 8px;
                 margin        : 0 auto;
             }
 
