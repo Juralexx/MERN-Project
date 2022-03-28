@@ -18,7 +18,7 @@ const MemberProfil = () => {
       }
     };
     fetch();
-  }, [pseudo]);
+  }, [pseudo, navigate]);
 
   return (
     <>

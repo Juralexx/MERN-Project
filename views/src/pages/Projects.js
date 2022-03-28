@@ -9,7 +9,7 @@ import Members from '../components/project/projects/members/Members';
 import HomeTasks from '../components/project/projects/tasks/HomeTasks';
 import ActivityFeed from '../components/project/projects/activity-feed/ActivityFeed';
 import Tasks from '../components/project/projects/tasks/Tasks';
-import Description from '../components/project/projects/description/Description';
+import About from '../components/project/projects/about/About';
 
 const Projects = ({ websocket, user }) => {
     const projectData = useSelector((state) => state.projectReducer)
@@ -19,7 +19,7 @@ const Projects = ({ websocket, user }) => {
     const [isManager, setManager] = useState()
     const [isLoading, setLoading] = useState(true)
     const [home, setHome] = useState(true)
-    const [description, setDescription] = useState(false)
+    const [about, setAbout] = useState(false)
     const [messenger, setMessenger] = useState(false)
     const [members, setMembers] = useState(false)
     const [tasks, setTasks] = useState(false)
@@ -65,17 +65,19 @@ const Projects = ({ websocket, user }) => {
         setManager(project.manager === user._id)
         setAdmin(project.admins.includes(user._id))
         setHome(true)
+        setAbout(false)
         setMembers(false)
         setTasks(false)
+        setMessenger(false)
     }
 
     return (
         <div className="dashboard">
-            <Sidebar projects={projects} setProject={setProject} project={project} changeProject={changeProject} isLoading={isLoading} user={user} home={home} setHome={setHome} description={description} setDescription={setDescription}members={members}  setMembers={setMembers} tasks={tasks} setTasks={setTasks} messenger={messenger} setMessenger={setMessenger} />
+            <Sidebar projects={projects} setProject={setProject} project={project} changeProject={changeProject} isLoading={isLoading} user={user} home={home} setHome={setHome} about={about} setAbout={setAbout}members={members}  setMembers={setMembers} tasks={tasks} setTasks={setTasks} messenger={messenger} setMessenger={setMessenger} />
             <div className="dashboard-content">
                 {project &&
                     <>
-                        <Header project={project} websocket={websocket} user={user} description={description} tasks={tasks} messenger={messenger} members={members} />
+                        <Header project={project} websocket={websocket} user={user} about={about} tasks={tasks} messenger={messenger} members={members} />
                         {home &&
                             <div className="dashboard-content-container">
                                 <div className="dashboard-content-container-col">
@@ -87,8 +89,8 @@ const Projects = ({ websocket, user }) => {
                                 </div>
                             </div>
                         }
-                        {description &&
-                            <Description project={project} />
+                        {about &&
+                            <About project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                         }
                         {members &&
                             <Members project={project} setProject={setProject} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />

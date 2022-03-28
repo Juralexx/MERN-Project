@@ -1,0 +1,173 @@
+.dashboard-about {
+    position : relative;
+    width    : 100%;
+    color    : var(--text);
+
+    .projects-about-navbar {
+        position         : relative;
+        width            : 100%;
+        padding          : 10px 22px;
+        background-color : var(--content-x-light);
+        
+        .projects-about-navbar-content {
+            display         : flex;
+            align-items     : center;
+            justify-content : flex-start;
+
+            .projects-about-navbar-item {
+                padding   : 2px 15px;
+                font-size : 14px;
+                color     : var(--text-tertiary);
+                cursor    : pointer;
+
+                &:hover {
+                    color : var(--text);
+                }
+
+                &.active {
+                    color : var(--primary);
+                }
+            }
+        }
+    }
+
+    .dashboard-about-content {
+        position : relative;
+        padding  : 10px 30px;
+
+        .dashboard-about-content-inner {
+            display  : flex;
+
+            .dashboard-about-col {
+                width:50%;
+            }
+        }
+    
+        .dashboard-about-content-item {
+            padding   : 8px;
+            font-size : 16px;
+
+            .label {
+                color          : var(--text-secondary);
+                font-size      : 14px;
+                margin-bottom  : 5px;
+                letter-spacing : .5px;
+            }
+
+            .title {
+                margin-right : 15px;
+            }
+
+            .content {
+                display     : flex;
+                align-items : center;
+            }
+
+            .content-form {
+                position    : relative;
+                display     : flex;
+                align-items : center;
+
+                .btn-container {
+                    display : flex;
+
+                }
+
+                .title-input {
+                    width : 400px;
+                    input {
+                        width : 400px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dashboard-about-array {
+    position      : relative;
+    width         : 100%;
+
+    .dashboard-about-array-header {
+        display          : flex;
+        align-items      : center;
+        width            : 100%;
+        padding          : 7px;
+        background-color : var(--content-light);
+        border-radius    : 5px 5px 0 0;
+
+        .dashboard-about-array-header-item {
+            padding : 5px 10px;
+
+            &:nth-child(1) {
+                width : 60%;
+            }
+            &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+                width           : 13.33333%;
+                display         : flex;
+                justify-content : center;
+            }
+        }
+    }
+
+    .dashboard-about-array-content {
+        position : relative;
+
+        .dashboard-about-array-item {
+            display          : flex;
+            align-items      : center;
+            width            : 100%;
+            padding          : 7px;
+            background-color : var(--content-x-light);
+    
+            > div {
+                position : relative;
+                padding  : 5px 10px;
+    
+                &:nth-child(1) {
+                    width : 60%;
+                }
+                &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+                    width           : 13.33333%;
+                    display         : flex;
+                    justify-content : center;
+                }
+
+                input {
+                    width : 100%;
+                }
+            }
+
+            &:last-child {
+                border-radius : 0 0 5px 5px;
+            }
+        }
+
+        .dashboard-about-array-picker {
+            display         : flex;
+            justify-content : flex-end;
+            position        : relative;
+            padding         : 10px 0;
+
+            .searchbar {
+                width       : 600px;
+                display     : flex;
+                align-items : center;
+
+                .search-input {
+                    width : 100%;
+                }
+
+                .number-input {
+                    width  : 134px;
+                    margin : 0 10px;
+                }
+            }
+
+            .auto-complete-container {
+                top    : unset;
+                bottom : 62px;
+            }
+        }
+    }
+}

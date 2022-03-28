@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { updateLocation } from "../../../../../actions/user.action";
@@ -6,7 +6,6 @@ import { deleteLocation } from "../../../../../actions/user.action.delete";
 import Swal from "sweetalert2";
 import { Oval } from 'react-loading-icons'
 import { AiFillHome } from 'react-icons/ai'
-import { debounce } from 'lodash'
 
 const LocationUpdater = () => {
     const userData = useSelector((state) => state.userReducer)

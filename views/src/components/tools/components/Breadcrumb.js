@@ -1,10 +1,10 @@
 import React from 'react'
 import { IoIosArrowForward } from 'react-icons/io'
 
-const Breadcrumb = ({ project, description, tasks, messenger, members }) => {
+const Breadcrumb = ({ project, about, tasks, messenger, members }) => {
 
     const getCrumb = () => {
-        if (description) return "Description"
+        if (about) return "À propos"
         else if (tasks) return "Tâches"
         else if (messenger) return "Messenger"
         else if (members) return "Membres"

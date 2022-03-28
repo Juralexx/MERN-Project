@@ -7,7 +7,7 @@ const Register = () => {
         <div className="h-[100vh] w-full dark:bg-gradient-to-r from-background_primary to-background_primary_light">
             <div className="flex flex-col items-center justify-center mx-auto h-[100vh] pb-[100px] max-w-[500px]">
                 <NavLink to="/">
-                    <img src="/img/logo.png" className="w-[120px] h-auto mx-auto mb-4" />
+                    <img src="/img/logo.png" alt="" className="w-[120px] h-auto mx-auto mb-4" />
                 </NavLink>
                 <div className="p-6 shadow-custom dark:shadow-lg rounded-xl min-w-[400px]">
                     <div className="mb-5 text-center">

@@ -14,7 +14,7 @@ export const getUser = async (userId, setState) => {
 }
 
 export const getState = (project) => {
-    if (project.state = "En préparation") return "bg-orange-400/50 border border-orange-400"
-    if (project.state = "En cours") return "bg-primary"
-    if (project.state = "Terminé") return "bg-green-300"
+    if (project.state === "En préparation") return "bg-orange-400/50 border border-orange-400"
+    if (project.state === "En cours") return "bg-primary"
+    if (project.state === "Terminé") return "bg-green-300"
 }

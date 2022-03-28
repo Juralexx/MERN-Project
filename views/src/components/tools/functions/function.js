@@ -59,3 +59,13 @@ export const highlightIt = (array, element, isInResult, search) => {
 export const getDifference = (one, two) => {
     return "+" + (two - one)
 }
+
+export const stateToString = (element) => {
+    if (element === "worked on") {
+        return "En préparation"
+    } else if (element === "in progress") {
+        return "En cours"
+    } else if (element === "done") {
+        return "Terminée"
+    }
+}

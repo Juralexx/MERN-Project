@@ -30,7 +30,7 @@ export const ClassicInput = (props) => {
 }
 
 export const DropdownInput = (props) => {
-    const { type, value, defaultValue, useRef, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max, open, clean } = props
+    const { type, value, defaultValue, useRef, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max, open, clean, cross } = props
     return (
         <div ref={useRef} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`} onClick={onClick}>
             <input
@@ -48,7 +48,7 @@ export const DropdownInput = (props) => {
                 min={min}
                 max={max}
             />
-            {value && value.length > 0 ? (
+            {(cross || (cross && value && value.length > 0)) ? (
                 <IoClose className="cross" onClick={clean} />
             ) : (
                 <IoCaretDownOutline />
@@ -224,7 +224,7 @@ export const EndIconInput = (props) => {
 }
 
 export const Textarea = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, fullwidth, name, id, className, placeholder, min, max } = props
+    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max } = props
     return (
         <textarea
             type={type}

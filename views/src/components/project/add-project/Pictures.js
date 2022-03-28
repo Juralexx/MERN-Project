@@ -1,7 +1,7 @@
 import React from 'react'
 import { MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto, MdClear } from 'react-icons/md'
 import { coverPicture } from '../../tools/functions/useAvatar'
-import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
+import { IoMdArrowRoundBack } from 'react-icons/io'
 import { IconButton, Button } from '../../tools/components/Button';
 
 const Pictures = ({ files, setFiles, onNext, onBack, handleAddProject }) => {

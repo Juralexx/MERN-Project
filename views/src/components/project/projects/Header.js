@@ -10,7 +10,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { HiLocationMarker } from 'react-icons/hi'
 import { HiCalendar } from 'react-icons/hi'
 
-const Header = ({ project, websocket, user, members, description, messenger, tasks }) => {
+const Header = ({ project, websocket, user, members, about, messenger, tasks }) => {
     const menuRef = useRef()
     const [openMenu, setOpenMenu] = useState(false)
     useClickOutside(menuRef, setOpenMenu, false)
@@ -18,7 +18,7 @@ const Header = ({ project, websocket, user, members, description, messenger, tas
 
     return (
         <div className="dashboard-header">
-            <Breadcrumb project={project} members={members} description={description} messenger={messenger} tasks={tasks} />
+            <Breadcrumb project={project} members={members} about={about} messenger={messenger} tasks={tasks} />
 
             <div className="dashboard-header-top">
                 <div className="dashboard-header-left">

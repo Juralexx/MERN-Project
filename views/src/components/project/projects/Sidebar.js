@@ -8,7 +8,7 @@ import { GoThreeBars } from 'react-icons/go'
 import { avatar } from '../../tools/functions/useAvatar'
 import { useEffect } from 'react'
 
-const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading, home, setHome, description, setDescription, members, setMembers, tasks, setTasks }) => {
+const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading, home, setHome, about, setAbout, members, setMembers, tasks, setTasks }) => {
     const [reduce, setReduce] = useState(false)
     const [submenu, setSubmenu] = useState(0)
     const openSubmenu = (key) => { if (submenu !== key) { setSubmenu(key) } else { setSubmenu(-1) } }
@@ -78,19 +78,19 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                                 </div>
                                 {submenu === key && (
                                     <div className={`sidebar-submenu ${addActive(reduce, "reduced")}`}>
-                                        <div className="sidebar-submenu-card" onClick={() => move(setHome, setMembers, setTasks, setDescription)}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setHome, setMembers, setTasks, setAbout)}>
                                             <div className={`sidebar-submenu-title ${addActive(home, "active")}`}>
                                                 <FiHome />
                                                 <div className="sidebar-submenu-text mt-[2px]">Home</div>
                                             </div>
                                         </div>
-                                        <div className="sidebar-submenu-card" onClick={() => move(setDescription, setMembers, setHome, setTasks)}>
-                                            <div className={`sidebar-submenu-title ${addActive(description, "active")}`}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setAbout, setMembers, setHome, setTasks)}>
+                                            <div className={`sidebar-submenu-title ${addActive(about, "active")}`}>
                                                 <MdOutlineDescription />
-                                                <div className="sidebar-submenu-text">Description</div>
+                                                <div className="sidebar-submenu-text">À propos</div>
                                             </div>
                                         </div>
-                                        <div className="sidebar-submenu-card" onClick={() => move(setTasks, setMembers, setHome, setDescription)}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setTasks, setMembers, setHome, setAbout)}>
                                             <div className={`sidebar-submenu-title ${addActive(tasks, "active")}`}>
                                                 <BiTask />
                                                 <div className="sidebar-submenu-text">Tâches <span>{project.tasks.length}</span></div>
@@ -102,7 +102,7 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                                                 <div className="sidebar-submenu-text">Messenger</div>
                                             </div>
                                         </div>
-                                        <div className="sidebar-submenu-card" onClick={() => move(setMembers, setHome, setTasks, setDescription)}>
+                                        <div className="sidebar-submenu-card" onClick={() => move(setMembers, setHome, setTasks, setAbout)}>
                                             <div className={`sidebar-submenu-title ${addActive(members, "active")}`}>
                                                 <MdGroups />
                                                 <div className="sidebar-submenu-text">Membres</div>

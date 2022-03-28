@@ -99,6 +99,15 @@ export const ToolsBtn = (props) => {
     )
 }
 
+export const SmallToolsBtn = (props) => {
+    const { onClick, className } = props
+    return (
+        <div className={`${className ? "small-tools-btn " + className : "small-tools-btn"}`} onClick={onClick}>
+            {props.children}
+        </div>
+    )
+}
+
 export const IconButton = (props) => {
     const { startIcon, endIcon, text, fullwidth, color, hoverColor, onClick, className } = props
     return (

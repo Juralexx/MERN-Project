@@ -59,7 +59,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                 </div>
                 <div className="dashboard-members-tools">
                     <ClassicInput className="w-[350px]" type="search" placeholder="Rechercher un membre..." value={searchQuery} onInput={handleInputChange} onChange={searchMember} />
-                    <DropdownInput useRef={filterMenu} readOnly placeholder={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)}>
+                    <DropdownInput useRef={filterMenu} cross readOnly placeholder={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)}>
                         <div onClick={() => sortByRecent(members, setMembers, setFilter, setDisplay)}>Plus récent au plus ancien</div>
                         <div onClick={() => sortByOld(members, setMembers, setFilter, setDisplay)}>Plus ancien au plus récent</div>
                         <div onClick={() => sortByRole(members, setMembers, setFilter, setDisplay)}>Par rôle</div>
