@@ -10,9 +10,6 @@ import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
 import './styles/dist/old.css'
 import './styles/dist/style.css'
 import './styles/dist/map.css'
-import './styles/dist/toggle.css'
-import './styles/dist/editor.css'
-import './styles/dist/body.css'
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"

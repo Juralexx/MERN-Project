@@ -7,7 +7,6 @@ import { removeAccents } from "../components/Utils";
 import Title from "../components/project/add-project/Title";
 import Location from "../components/project/add-project/Location";
 import Contributors from "../components/project/add-project/Contributors";
-import Workers from "../components/project/add-project/Workers";
 import End from "../components/project/add-project/End";
 import Description from "../components/project/add-project/Description";
 import Pictures from "../components/project/add-project/Pictures";
@@ -113,7 +112,7 @@ const AddProject = ({ user }) => {
             <div className="add-project-container">
                 <h1>Soumettre un projet</h1>
                 <Stepper activeIndex={step}>
-                    <Stepper.Step key={1}>
+                    <Stepper.Step key={5}>
                         <Stepper.Label>Titre et catégorie</Stepper.Label>
                         <Stepper.Content>
                             <Title
@@ -156,19 +155,6 @@ const AddProject = ({ user }) => {
                             <Contributors
                                 numberofcontributors={numberofcontributors}
                                 setNumberofcontributors={setNumberofcontributors}
-                                isErr={isErr}
-                                setErr={setErr}
-                                error={error}
-                                setError={setError}
-                                onNext={onNext}
-                                onBack={onBack}
-                            />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                    <Stepper.Step key={4}>
-                        <Stepper.Label>Métiers recherchés</Stepper.Label>
-                        <Stepper.Content>
-                            <Workers
                                 workArray={workArray}
                                 setWorkArray={setWorkArray}
                                 isErr={isErr}
@@ -180,7 +166,7 @@ const AddProject = ({ user }) => {
                             />
                         </Stepper.Content>
                     </Stepper.Step>
-                    <Stepper.Step key={5}>
+                    <Stepper.Step key={4}>
                         <Stepper.Label>Date</Stepper.Label>
                         <Stepper.Content>
                             <End
@@ -195,7 +181,7 @@ const AddProject = ({ user }) => {
                             />
                         </Stepper.Content>
                     </Stepper.Step>
-                    <Stepper.Step key={6}>
+                    <Stepper.Step key={1}>
                         <Stepper.Label>Description</Stepper.Label>
                         <Stepper.Content>
                             <Description
@@ -210,7 +196,7 @@ const AddProject = ({ user }) => {
                             />
                         </Stepper.Content>
                     </Stepper.Step>
-                    <Stepper.Step key={7}>
+                    <Stepper.Step key={6}>
                         <Stepper.Label>Photos</Stepper.Label>
                         <Stepper.Content>
                             <Pictures

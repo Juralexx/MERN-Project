@@ -10,47 +10,47 @@ export const Button = (props) => {
 }
 
 export const StartIconButton = (props) => {
-    const { icon, text, fullwidth, onClick, className, disabled } = props
+    const { icon, text, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "btn-icon-start " + className : "btn-icon-start"}`} disabled={disabled}>
             {icon && (icon)}{text}
-        </div>
+        </button>
     )
 }
 
 export const EndIconButton = (props) => {
-    const { icon, text, fullwidth, onClick, className, disabled } = props
+    const { icon, text, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`btn-icon-end ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "btn-icon-end " + className : "btn-icon-end"}`} disabled={disabled}>
             {text}{icon && (icon)}
-        </div>
+        </button>
     )
 }
 
 export const OutlinedButton = (props) => {
     const { text, fullwidth, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`outlined-btn ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`outlined-btn ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
             {text}
-        </div>
+        </button>
     )
 }
 
 export const StartIconOutlinedButton = (props) => {
     const { icon, text, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`${className ? "btn-outlined-icon-start " + className : "btn-outlined-icon-start"}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "btn-outlined-icon-start " + className : "btn-outlined-icon-start"}`} disabled={disabled}>
             {icon && (icon)}{text}
-        </div>
+        </button>
     )
 }
 
 export const EndIconOutlinedButton = (props) => {
     const { icon, text, fullwidth, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`btn-outlined-icon-end ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`btn-outlined-icon-end ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
             {text}{icon && (icon)}
-        </div>
+        </button>
     )
 }
 
@@ -75,9 +75,9 @@ export const StartIconTextButton = (props) => {
 export const EndIconTextButton = (props) => {
     const { icon, text, fullwidth, onClick, className, disabled } = props
     return (
-        <div onClick={onClick} className={`text-btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`text-btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
             {text}{icon && (icon)}
-        </div>
+        </button>
     )
 }
 
@@ -91,11 +91,11 @@ export const IconToggle = (props) => {
 }
 
 export const ToolsBtn = (props) => {
-    const { onClick, className } = props
+    const { onClick, className, disabled } = props
     return (
-        <div className={`${className ? "tools-btn " + className : "tools-btn"}`} onClick={onClick}>
+        <button className={`${className ? "tools-btn " + className : "tools-btn"}`} disabled={disabled} onClick={onClick}>
             {props.children}
-        </div>
+        </button>
     )
 }
 

@@ -4,7 +4,7 @@ import { useClickOutside } from "../../tools/functions/useClickOutside";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { BiCategory } from 'react-icons/bi'
 import Categories from '../../home/Categories';
-import { EndIconOutlinedButton } from "../../tools/components/Button";
+import { EndIconButton } from "../../tools/components/Button";
 import { IoMdArrowRoundForward } from 'react-icons/io'
 import { ErrorCard } from '../../tools/components/Error';
 
@@ -50,7 +50,7 @@ const Title = ({ title, setTitle, category, setCategory, error, setError, isErr,
             </div>
             {isErr === "category" && <ErrorCard useRef={errorRef} show={isErr === "category"} text={error} />}
             <div className="btn-container">
-                <EndIconOutlinedButton text="Suivant" className="next-btn right" icon={<IoMdArrowRoundForward />} onClick={checkValues} />
+                <EndIconButton text="Suivant" className="next-btn right" disabled={title.length < 10 || category.length === 0} icon={<IoMdArrowRoundForward />} onClick={checkValues} />
             </div>
         </div>
     )

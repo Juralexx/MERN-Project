@@ -7,25 +7,31 @@ import { IoClose } from 'react-icons/io5'
 import { FiCalendar } from 'react-icons/fi'
 
 export const ClassicInput = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max } = props
+    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max, cross, onClean } = props
     return (
-        <input
-            className={`${className ? 'classic-input ' + className : 'classic-input'}`}
-            type={type}
-            name={name}
-            id={id}
-            placeholder={placeholder}
-            value={value}
-            defaultValue={defaultValue}
-            onChange={onChange}
-            onInput={onInput}
-            onClick={onClick}
-            readOnly={readOnly}
-            disabled={disabled}
-            onKeyPress={onKeyPress}
-            min={min}
-            max={max}
-        />
+        <div className={`${className ? 'classic-input ' + className : 'classic-input'}`}>
+            <input
+                type={type}
+                name={name}
+                id={id}
+                placeholder={placeholder}
+                value={value}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                onInput={onInput}
+                onClick={onClick}
+                readOnly={readOnly}
+                disabled={disabled}
+                onKeyPress={onKeyPress}
+                min={min}
+                max={max}
+            />
+            {(cross && (cross && value && value.length > 0)) && (
+                <div onClick={onClean} className="svg-container">
+                    <IoClose className="cross" />
+                </div>
+            )}
+        </div>
     )
 }
 
@@ -67,7 +73,7 @@ export const DatePicker = (props) => {
     const [open, setOpen] = useState(false)
 
     const { inputProps, dayPickerProps } = useInput({
-        defaultSelected: new Date(value),
+        defaultSelected: value === "" ? new Date() : new Date(value),
         fromYear: 2020,
         toYear: 2022,
         format: 'dd/MM/yyyy',
@@ -117,7 +123,6 @@ export const DoubleIconInput = (props) => {
     return (
         <div className={`${className ? "double-icon-input " + className : "double-icon-input"}`}>
             <input
-                className="classic-input"
                 type={type}
                 name={name}
                 id={id}
@@ -133,6 +138,41 @@ export const DoubleIconInput = (props) => {
             {startIcon && <div className="start-icon">{startIcon}</div>}
             {text}
             {endIcon && <div className="end-icon">{endIcon}</div>}
+        </div>
+    )
+}
+
+export const NumberInput = (props) => {
+    const { value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, max } = props
+    return (
+        <input
+            className={`${className ? 'number-input ' + className : 'number-input'}`}
+            type="number"
+            name={name}
+            id={id}
+            placeholder={placeholder}
+            value={value}
+            defaultValue={defaultValue}
+            onChange={onChange}
+            onInput={onInput}
+            onClick={onClick}
+            readOnly={readOnly}
+            disabled={disabled}
+            onKeyPress={onKeyPress}
+            min="1"
+            max={max}
+        />
+    )
+}
+
+export const CheckBox = (props) => {
+    const { onChange, name, htmlFor, checked, className, onClick, value } = props
+    return (
+        <div className={`${className ? 'check-input ' + className : 'check-input'}`}>
+            <input type="checkbox" name={name} checked={checked} onClick={onClick} onChange={onChange} value={value} />
+            <label htmlFor={htmlFor}>
+                <span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span>
+            </label>
         </div>
     )
 }

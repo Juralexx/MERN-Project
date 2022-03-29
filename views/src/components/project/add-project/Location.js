@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ClassicInput } from '../../tools/components/Inputs';
 import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
-import { EndIconOutlinedButton, StartIconOutlinedButton, } from '../../tools/components/Button';
+import { EndIconButton, StartIconButton } from '../../tools/components/Button';
 import { SmallLoader } from '../../tools/components/Loader';
 import { BsInboxFill } from 'react-icons/bs';
 import { ErrorCard } from '../../tools/components/Error';
@@ -43,6 +43,14 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
         }
     }
 
+    const clean = () => {
+        setSearchQuery("")
+        setLocation("")
+        setDepartment("")
+        setRegion("")
+        setNewRegion("")
+    }
+
     const checkValues = () => {
         if (location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0) {
             setErr("location")
@@ -59,7 +67,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
             <h2 className="mb-5">Où votre projet se situe-t-il ?</h2>
             <div className="content-form">
                 <p className="mb-2">Localité</p>
-                <ClassicInput className={`title-input ${checkErr("location")}`} type="search" placeholder="Rechercher une adresse..." value={location} onInput={handleInputChange} onChange={searchLocation} />
+                <ClassicInput className={`title-input ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
                 {isErr === "location" && <ErrorCard useRef={errorRef} show={isErr === "location"} text={error} />}
             </div>
             <div tabIndex="0" className="auto-complete-container custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
@@ -89,8 +97,8 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
                 )}
             </div>
             <div className="btn-container">
-                <StartIconOutlinedButton text="Retour" className="next-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconOutlinedButton text="Suivant" className="previous-btn" icon={<IoMdArrowRoundForward />} onClick={checkValues} />
+                <StartIconButton text="Retour" className="next-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
+                <EndIconButton text="Suivant" className="previous-btn" icon={<IoMdArrowRoundForward />} onClick={checkValues} disabled={location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0} />
             </div>
         </div>
     )

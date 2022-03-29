@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../../../tools/editor/EditorToolbar";
-import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateContent } from "../../../../actions/project.action";
 import { RoundedButton, Button } from "../../../tools/components/Button";

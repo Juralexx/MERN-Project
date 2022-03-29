@@ -30,8 +30,8 @@ const Categories = ({ open, setOpen, setCategory, category }, props) => {
                 <div className="categories-main">
                     {categories.map((category, key) => {
                         return (
-                            <div className={`categories-main-inner ${isMainActive(active === key, "active")}`}>
-                                <div key={key} className="categories-main-item" onClick={() => setActive(key)}>
+                            <div className={`categories-main-inner ${isMainActive(active === key, "active")}`} key={key}>
+                                <div className="categories-main-item" onClick={() => setActive(key)}>
                                     <div className="left"><BsFillSunFill />{category.value}</div>
                                     <div className="right"><BsFillCaretRightFill /></div>
                                 </div>

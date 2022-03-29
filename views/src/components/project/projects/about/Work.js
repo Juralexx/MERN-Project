@@ -81,8 +81,6 @@ const Work = ({ project }) => {
         setWorkArray(storedArray)
     }
 
-    console.log(work, number)
-
     return (
         <div className="dashboard-about-content-item">
             <div className="flex items-center">

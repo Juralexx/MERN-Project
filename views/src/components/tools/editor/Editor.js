@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
-import "react-quill/dist/quill.snow.css";
 
 export const Editor = ({ reference }) => {
     const [state, setState] = React.useState({ value: null });
