@@ -66,7 +66,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
         <div className="add-project-card">
             <h2 className="mb-5">Où votre projet se situe-t-il ?</h2>
             <div className="content-form">
-                <p className="mb-2">Localité</p>
+                <p className="title">Localité</p>
                 <ClassicInput className={`title-input ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
                 {isErr === "location" && <ErrorCard useRef={errorRef} show={isErr === "location"} text={error} />}
             </div>
@@ -76,7 +76,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
                         return (
                             <div className="auto-complete-item"
                                 onClick={() => {
-                                    setSelect(`${element.COM_NOM}, ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
+                                    setSelect(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
                                     setLocation(element.COM_NOM)
                                     setDepartment(element.DEP_NOM_NUM)
                                     setRegion(element.REG_NOM_OLD)
@@ -97,8 +97,8 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
                 )}
             </div>
             <div className="btn-container">
-                <StartIconButton text="Retour" className="next-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" className="previous-btn" icon={<IoMdArrowRoundForward />} onClick={checkValues} disabled={location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0} />
+                <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
+                <EndIconButton text="Suivant" className="next-btn" icon={<IoMdArrowRoundForward />} onClick={checkValues} disabled={location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0} />
             </div>
         </div>
     )

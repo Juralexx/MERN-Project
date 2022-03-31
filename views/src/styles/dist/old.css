@@ -4670,12 +4670,14 @@ h5 {
 }
 .add-project .add-project-container .btn-container .next-btn {
   width: 140px;
+  padding-top: 2px;
 }
 .add-project .add-project-container .btn-container .next-btn.right {
   margin-left: auto;
 }
 .add-project .add-project-container .btn-container .previous-btn {
   width: 140px;
+  padding-top: 2px;
 }
 .add-project .add-project-container .btn-container .previous-btn.left {
   margin-right: auto;
@@ -4709,6 +4711,35 @@ h5 {
   left: 0;
   border-radius: 10px;
   background: var(--primary);
+}
+.add-project .add-project-container .add-project-card .title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  max-width: 300px;
+  margin-bottom: 8px;
+}
+.add-project .add-project-container .add-project-card .title span {
+  color: var(--text-secondary);
+  font-size: 10px;
+}
+.add-project .add-project-container .add-project-card .title-infos {
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  color: var(--text-secondary);
+  font-size: 10px;
+  margin-top: 6px;
 }
 .add-project .add-project-container .add-project-card .content-form {
   position: relative;
@@ -4868,6 +4899,106 @@ h5 {
 .works-table .searchbar .auto-complete-container {
   top: 62px;
   width: 100%;
+}
+
+.add-project-card {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  background: var(--content-light);
+  color: var(--text);
+  border-radius: 8px;
+  -webkit-box-shadow: var(--shadow-lg);
+          box-shadow: var(--shadow-lg);
+}
+.add-project-card h2 {
+  position: relative;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 0 0 22px;
+}
+.add-project-card h2:before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: 0;
+  border-radius: 10px;
+  background: var(--primary);
+}
+.add-project-card .add-img-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+.add-project-card .add-img-container .img-input {
+  position: relative;
+  height: 154px;
+  width: 154px;
+  opacity: 0;
+  z-index: 1500;
+  cursor: pointer;
+}
+.add-project-card .add-img-container .img-preview-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  height: 154px;
+  width: 154px;
+  background-color: var(--content-x-light);
+  border-radius: 5px;
+}
+.add-project-card .add-img-container .img-preview-container .img-preview {
+  position: absolute;
+  height: 154px;
+  width: 154px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  top: 0;
+  border-radius: 5px;
+}
+.add-project-card .add-img-container .img-preview-container .img-preview svg {
+  width: 110px;
+  height: 110px;
+}
+.add-project-card .add-img-container .img-preview-container .img-preview.active {
+  border: 3px solid var(--primary);
+}
+.add-project-card .add-img-container .img-preview-container .img-preview.active svg {
+  color: var(--primary);
+}
+.add-project-card .add-img-container .img-preview-container .delete-btn {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  padding: 4px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  background-color: black;
+}
+.add-project-card .add-img-container .img-preview-container .delete-btn svg {
+  width: 26px;
+  height: 26px;
 }
 
 .myprojects-card {

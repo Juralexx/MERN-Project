@@ -7,191 +7,191 @@ import { ImCross } from 'react-icons/im'
 import { avatar } from "../../tools/functions/useAvatar";
 
 const UploadImg = () => {
-  const [file, setFile] = useState();
-  const dispatch = useDispatch();
-  const userData = useSelector((state) => state.userReducer);
-  const error = useSelector((state) => state.errorsReducer.uploadProfilPictureErrors);
+    const [file, setFile] = useState();
+    const dispatch = useDispatch();
+    const userData = useSelector((state) => state.userReducer);
+    const error = useSelector((state) => state.errorsReducer.uploadProfilPictureErrors);
 
-  const [open, setOpen] = useState(false)
-  const modalOpen = () => { setOpen(true) }
-  const modalClose = () => { setOpen(false) }
-  const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
-  const containerClass = open ? 'modal-container modal-container-active show-modal profil-img-modal' : 'modal-container hide-modal'
+    const [open, setOpen] = useState(false)
+    const modalOpen = () => { setOpen(true) }
+    const modalClose = () => { setOpen(false) }
+    const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
+    const containerClass = open ? 'modal-container modal-container-active show-modal profil-img-modal' : 'modal-container hide-modal'
 
-  let editor = ""
-  const [picture, setPicture] = useState({
-    width: 200,
-    height: 200,
-    border: 20,
-    color: [0, 0, 0, 0.7],
-    borderRadius: 200,
-    rotate: 1,
-    zoom: 1.8,
-    croppedImg: file
-  });
-
-  const handleZoom = (event, value) => {
-    setPicture({
-      ...picture,
-      zoom: event.target.value,
+    let editor = ""
+    const [picture, setPicture] = useState({
+        width: 200,
+        height: 200,
+        border: 20,
+        color: [0, 0, 0, 0.7],
+        borderRadius: 200,
+        rotate: 1,
+        zoom: 1.8,
+        croppedImg: file
     });
-  };
-  const handleRotate = (event, value) => {
-    setPicture({
-      ...picture,
-      rotate: event.target.value,
-    });
-  };
 
-  const setEditorRef = (ed) => { editor = ed };
+    const handleZoom = (event, value) => {
+        setPicture({
+            ...picture,
+            zoom: event.target.value,
+        });
+    };
+    const handleRotate = (event, value) => {
+        setPicture({
+            ...picture,
+            rotate: event.target.value,
+        });
+    };
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    if (setEditorRef) {
-      const canvasScaled = editor.getImageScaledToCanvas();
+    const setEditorRef = (ed) => { editor = ed };
 
-      setPicture({
-        ...picture,
-        croppedImg: canvasScaled
-      });
+    const handleSave = (e) => {
+        e.preventDefault();
+        if (setEditorRef) {
+            const canvasScaled = editor.getImageScaledToCanvas();
 
-      const data = new FormData()
-      data.append("userId", userData._id)
-      data.append("file", file)
-      dispatch(uploadProfilPicture(data, userData._id))
+            setPicture({
+                ...picture,
+                croppedImg: canvasScaled
+            });
 
-      if (error) { return error }
-      else {
+            const data = new FormData()
+            data.append("userId", userData._id)
+            data.append("file", file)
+            dispatch(uploadProfilPicture(data, userData._id))
+
+            if (error) { return error }
+            else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Votre image a bien été ajoutée !',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                modalClose()
+                setFile(false)
+                e.stopPropagation();
+            }
+        }
+    };
+
+    const deletePicture = (e) => {
+        e.preventDefault()
         Swal.fire({
-          icon: 'success',
-          title: 'Votre image a bien été ajoutée !',
-          showConfirmButton: false,
-          timer: 1500
+            title: "Etes-vous sur de vouloir supprimer votre photo de profil ?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Supprimer'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteProfilPicture(userData._id, userData.picture))
+                modalClose()
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Votre photo a bien été supprimée !',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         })
-        modalClose()
-        setFile(false)
-        e.stopPropagation();
-      }
     }
-  };
 
-  const deletePicture = (e) => {
-    e.preventDefault()
-    Swal.fire({
-      title: "Etes-vous sur de vouloir supprimer votre photo de profil ?",
-      icon: 'warning',
-      showCancelButton: true,
-      cancelButtonText: 'Annuler',
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Supprimer'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteProfilPicture(userData._id, userData.picture))
-        modalClose()
+    return (
+        <div>
+            <button className="btn-img-edit" onClick={modalOpen}><i className="fas fa-pen"></i></button>
 
-        Swal.fire({
-          icon: 'success',
-          title: 'Votre photo a bien été supprimée !',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
-  }
+            <div className={containerClass}>
+                <div className="modal-inner">
+                    <div className="close-modal" onClick={modalClose}><ImCross /></div>
+                    <div className='header'></div>
+                    <div className='body'>
+                        {!file ? (
+                            <div className="modal-avatar" style={avatar(userData.picture)}></div>
+                        ) : (
+                            <>
+                                <AvatarEditor
+                                    ref={setEditorRef}
+                                    image={file}
+                                    width={picture.width}
+                                    height={picture.height}
+                                    border={picture.border}
+                                    color={picture.color}
+                                    borderRadius={picture.borderRadius}
+                                    rotate={picture.rotate}
+                                    scale={picture.zoom}
+                                />
 
-  return (
-    <div>
-      <button className="btn-img-edit" onClick={modalOpen}><i className="fas fa-pen"></i></button>
+                                {error && <p className="error">{error}</p>}
 
-      <div className={containerClass}>
-        <div className="modal-inner">
-          <div className="close-modal" onClick={modalClose}><ImCross /></div>
-          <div className='header'></div>
-          <div className='body'>
-            {!file ? (
-              <div className="modal-avatar" style={avatar(userData.picture)}></div>
-            ) : (
-              <>
-                <AvatarEditor
-                  ref={setEditorRef}
-                  image={file}
-                  width={picture.width}
-                  height={picture.height}
-                  border={picture.border}
-                  color={picture.color}
-                  borderRadius={picture.borderRadius}
-                  rotate={picture.rotate}
-                  scale={picture.zoom}
-                />
-
-                {error && <p className="error">{error}</p>}
-
-                <div className="range-container">
-                  <label>Zoom</label>
-                  <input
-                    defaultValue={picture.zoom}
-                    name="scale"
-                    type="range"
-                    onChange={handleZoom}
-                    min="1"
-                    max="3"
-                    step="0.01"
-                  />
-                </div>
-                <div className="range-container">
-                  <label>Rotation</label>
-                  <input
-                    defaultValue={picture.rotate}
-                    name="rotate"
-                    type="range"
-                    onChange={handleRotate}
-                    max="360"
-                    step="0.01"
-                  />
-                </div>
-              </>
-            )}
-          </div>
-          <div className='footer'>
-            {!file ? (
-              <form action="" encType="multipart/form-data" className="upload-picture">
-                <div className="modal-container-btn">
-                  {(userData.picture === '/img/random-user.png') ? (
-                    <div className="fileUpload btn btn-primary">
-                      <span>Ajouter une photo</span>
-                      <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
+                                <div className="range-container">
+                                    <label>Zoom</label>
+                                    <input
+                                        defaultValue={picture.zoom}
+                                        name="scale"
+                                        type="range"
+                                        onChange={handleZoom}
+                                        min="1"
+                                        max="3"
+                                        step="0.01"
+                                    />
+                                </div>
+                                <div className="range-container">
+                                    <label>Rotation</label>
+                                    <input
+                                        defaultValue={picture.rotate}
+                                        name="rotate"
+                                        type="range"
+                                        onChange={handleRotate}
+                                        max="360"
+                                        step="0.01"
+                                    />
+                                </div>
+                            </>
+                        )}
                     </div>
-                  ) : (
-                    <>
-                      <div className="fileUpload btn btn-primary">
-                        <span>Modifier ma photo</span>
-                        <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
-                      </div>
-                      <button className="btn btn-primary" onClick={deletePicture} >Supprimer ma photo</button>
-                    </>
-                  )}
+                    <div className='footer'>
+                        {!file ? (
+                            <form action="" encType="multipart/form-data" className="upload-picture">
+                                <div className="modal-container-btn">
+                                    {(userData.picture === '/img/random-user.png') ? (
+                                        <div className="fileUpload btn btn-primary">
+                                            <span>Ajouter une photo</span>
+                                            <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className="fileUpload btn btn-primary">
+                                                <span>Modifier ma photo</span>
+                                                <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
+                                            </div>
+                                            <button className="btn btn-primary" onClick={deletePicture} >Supprimer ma photo</button>
+                                        </>
+                                    )}
+                                </div>
+                            </form>
+                        ) : (
+                            <form action="" encType="multipart/form-data" className="upload-picture">
+                                <div className="modal-container-btn">
+                                    <div className="fileUpload btn btn-primary">
+                                        <span>Changer de photo</span>
+                                        <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
+                                    </div>
+                                    <button className="btn btn-primary" onClick={handleSave} type="button" value={{ file }}>Valider</button>
+                                </div>
+                            </form>
+                        )}
+                    </div>
                 </div>
-              </form>
-            ) : (
-              <form action="" encType="multipart/form-data" className="upload-picture">
-                <div className="modal-container-btn">
-                  <div className="fileUpload btn btn-primary">
-                    <span>Changer de photo</span>
-                    <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onChange={(e) => setFile(e.target.files[0])} />
-                  </div>
-                  <button className="btn btn-primary" onClick={handleSave} type="button" value={{ file }}>Valider</button>
-                </div>
-              </form>
-            )}
-          </div>
+            </div>
+
+            <div className={coverClass} onClick={modalClose}></div>
         </div>
-      </div>
 
-      <div className={coverClass} onClick={modalClose}></div>
-    </div>
-
-  )
+    )
 }
 
 export default UploadImg;

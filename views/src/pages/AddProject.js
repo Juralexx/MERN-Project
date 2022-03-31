@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import axios, { Axios } from "axios";
 // import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Stepper } from '@zendeskgarden/react-accordions'
@@ -13,36 +13,42 @@ import Pictures from "../components/project/add-project/Pictures";
 
 const AddProject = ({ user }) => {
     const [title, setTitle] = useState("")
+    const [url, setUrl] = useState("")
     const [category, setCategory] = useState("")
-    const [end, setEnd] = useState("")
     const [location, setLocation] = useState("")
     const [department, setDepartment] = useState("")
     const [region, setRegion] = useState("")
     const [newRegion, setNewRegion] = useState("")
     const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
+    const [end, setEnd] = useState("")
     const [content, setContent] = useState({})
     const [files, setFiles] = useState([])
+    const [submit, setSubmit] = useState(false)
     // const navigate = useNavigate()
-    const [step, setStep] = useState(0);
-    const onNext = () => setStep(step + 1);
-    const onBack = () => setStep(step - 1);
+    const [step, setStep] = useState(0)
+    const onNext = () => setStep(step + 1)
+    const onBack = () => setStep(step - 1)
     const [error, setError] = useState(null)
     const [isErr, setErr] = useState(null)
 
     const handleAddProject = async (e) => {
         e.preventDefault()
-        if (title === "" || title.length < 10 || title.length > 120) {
-            setErr(true)
-            setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 120 caractères")
+        if (title === "" || title.length < 10 || title.length > 100) {
+            setErr("title")
+            setStep(1)
+            setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 100 caractères")
         } else if (category === "") {
-            setErr(true)
+            setErr("category")
+            setStep(1)
             setError("Veuillez saisir une catégorie")
         } else if (numberofcontributors.value === "" || numberofcontributors.value === 0) {
-            setErr(true)
+            setErr("numberofcontributors")
+            setStep(4)
             setError("Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer")
         } else if (content === "" || content.length < 10) {
-            setErr(true)
+            setErr("content")
+            setStep(5)
             setError("Veuillez ajouter une description")
         } else {
             let newTitle = title.toLowerCase();
@@ -51,9 +57,10 @@ const AddProject = ({ user }) => {
             newTitle = newTitle.replace(/ +/g, " ")
             newTitle = newTitle.trim()
             setTitle(newTitle)
-            let url = newTitle.toLowerCase();
-            url = removeAccents(url)
-            url = url.replace(/ /g, "-")
+            let URL = newTitle.toLowerCase();
+            URL = removeAccents(URL)
+            URL = URL.replace(/ /g, "-")
+            setUrl(URL)
 
             await axios({
                 method: "post",
@@ -63,7 +70,7 @@ const AddProject = ({ user }) => {
                     posterPseudo: user.pseudo,
                     posterAvatar: user.picture,
                     title: title,
-                    titleURL: url,
+                    titleURL: URL,
                     category: category,
                     location: location,
                     department: department,
@@ -73,9 +80,9 @@ const AddProject = ({ user }) => {
                     content: content,
                     numberofcontributors: numberofcontributors,
                     works: workArray,
-                    members: { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "manager", since: new Date().toISOString() },
-                    manager: user._id
-                },
+                    manager: user._id,
+                    members: { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "manager", since: new Date().toISOString() }
+                }
             }).then(async (res) => {
                 if (res.data.errors) {
                     if (res.data.errors.title) setError(res.data.errors.title)
@@ -83,36 +90,48 @@ const AddProject = ({ user }) => {
                     else if (res.data.errors.content) setError(res.data.errors.content)
                     else if (res.data.errors.numberofcontributors) setError(res.data.errors.numberofcontributors)
                 } else {
-                    let formData = new FormData();
-                    for (let i = 0; i < files.length; i++) {
-                        formData.append('files', files[i])
-                    }
-                    await axios({
-                        method: "post",
-                        url: `${process.env.REACT_APP_API_URL}api/project/add/pictures`,
-                        data: { files: files }
-                    }).then(res => {
-                        e.preventDefault()
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Votre projet est en ligne !',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    })
-                    // // const redirection = navigate(`/project/${titleURL}`)
-                    // // setTimeout(redirection, 2000)
+                    setSubmit(true)
+                    //const redirection = navigate(`/project/${titleURL}`)
+                    //setTimeout(redirection, 2000)
                 }
-            }).catch((err) => console.log(err));
+            }).catch((err) => console.log(err))
         }
     }
+
+    useEffect(() => {
+        if (submit) {
+            const sendFiles = async () => {
+                await axios.get(`${process.env.REACT_APP_API_URL}api/project/${url}`)
+                    .then((res) => {
+                        if (files.length > 0) {
+                            let formData = new FormData()
+                            for (let i = 0; i < files.length; i++) {
+                                formData.append('files', files[i])
+                            }
+                            console.log(res.data)
+                            axios.put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${res.data._id}`, formData)
+                                .then(res => {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Votre projet est en ligne !',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    setSubmit(false)
+                                }).catch(err => console.log(err))
+                        }
+                    }).catch((err) => console.log(err))
+            }
+            sendFiles()
+        }
+    }, [submit, files, url])
 
     return (
         <div className="add-project">
             <div className="add-project-container">
                 <h1>Soumettre un projet</h1>
                 <Stepper activeIndex={step}>
-                    <Stepper.Step key={5}>
+                    <Stepper.Step key={1}>
                         <Stepper.Label>Titre et catégorie</Stepper.Label>
                         <Stepper.Content>
                             <Title
@@ -181,7 +200,7 @@ const AddProject = ({ user }) => {
                             />
                         </Stepper.Content>
                     </Stepper.Step>
-                    <Stepper.Step key={1}>
+                    <Stepper.Step key={5}>
                         <Stepper.Label>Description</Stepper.Label>
                         <Stepper.Content>
                             <Description

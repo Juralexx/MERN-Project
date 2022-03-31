@@ -1,7 +1,7 @@
 import {
     CREATE_TASK,
     CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
-    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS
+    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_TITLEURL, UPDATE_WORKS, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES, RECEIVE_DELETE_PICTURES
 } from "../actions/project.action";
 
 const initialState = {}
@@ -11,6 +11,30 @@ export default function projectReducer(state = initialState, action) {
         case GET_PROJECT:
             return action.payload
 
+        case UPDATE_PICTURES:
+            return {
+                ...state,
+                pictures: [...state.tasks, action.payload.pictures],
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_UPDATE_PICTURES:
+            return {
+                ...state,
+                pictures: [...state.tasks, action.payload.pictures],
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case DELETE_PICTURES:
+            return {
+                ...state,
+                pictures: state.pictures.filter(picture => picture !== action.payload.picture),
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_DELETE_PICTURES:
+            return {
+                ...state,
+                pictures: state.pictures.filter(picture => picture !== action.payload.picture),
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
         case UPDATE_STATE:
             return {
                 ...state,

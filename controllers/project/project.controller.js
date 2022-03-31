@@ -21,7 +21,7 @@ export const projectInfo = (req, res) => {
                 console.log('Unknown URL : ' + err)
             }
         }).select()
-};
+}
 
 export const findProject = (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
@@ -35,7 +35,7 @@ export const findProject = (req, res) => {
                 console.log('Unknown URL : ' + err)
             }
         }).select()
-};
+}
 
 export const updateProject = async (req, res) => {
     const { title, titleURL, category, state, location, department, region, new_region, content, numberofcontributors, contributors, picture, end, works, members, tasks } = req.body
@@ -73,7 +73,7 @@ export const updateProject = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ message: err })
     }
-};
+}
 
 export const deleteProject = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {

@@ -43,7 +43,8 @@
             margin-top      : 10px;
 
             .next-btn {
-                width : 140px;
+                width       : 140px;
+                padding-top : 2px;
 
                 &.right {
                     margin-left : auto;
@@ -51,7 +52,8 @@
             }
 
             .previous-btn {
-                width : 140px;
+                width       : 140px;
+                padding-top : 2px;
 
                 &.left {
                     margin-right : auto;
@@ -86,9 +88,30 @@
                 }
             }
 
+            .title {
+                display         : flex;
+                justify-content : space-between;
+                align-items     : flex-end;
+                max-width       : 300px;
+                margin-bottom   : 8px;
+
+                span {
+                    color     : var(--text-secondary);
+                    font-size : 10px;
+                }
+            }
+            .title-infos {
+                width           : 300px;
+                display         : flex;
+                justify-content : flex-end;
+                color           : var(--text-secondary);
+                font-size       : 10px;
+                margin-top      : 6px;
+            }
+
             .content-form {
-                position : relative;
-                width    : 100%;
+                position  : relative;
+                width     : 100%;
             }
 
             input {
@@ -242,6 +265,106 @@
         .auto-complete-container {
             top   : 62px;
             width : 100%;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.add-project-card {
+    position      : relative;
+    width         : 100%;
+    padding       : 20px;
+    background    : var(--content-light);
+    color         : var(--text);
+    border-radius : 8px;
+    box-shadow    : var(--shadow-lg);
+
+    h2 {
+        position      : relative;
+        margin-bottom : 20px;
+        display       : flex;
+        align-items   : center;
+        padding       : 0 0 0 22px;
+
+        &:before {
+            content       : '';
+            position      : absolute;
+            width         : 12px;
+            height        : 12px;
+            left          : 0;
+            border-radius : 10px;
+            background    : var(--primary);
+        }
+    }
+    .add-img-container {
+        display         : flex;
+        justify-content : space-around;
+
+        .img-input {
+            position : relative;
+            height   : 154px;
+            width    : 154px;
+            opacity  : 0;
+            z-index  : 1500;
+            cursor   : pointer;
+        }
+
+        .img-preview-container {
+            display          : flex;
+            position         : relative;
+            height           : 154px;
+            width            : 154px;
+            background-color : var(--content-x-light);
+            border-radius    : 5px;
+
+            .img-preview {
+                position        : absolute;
+                height          : 154px;
+                width           : 154px;
+                display         : flex;
+                flex-direction  : column;
+                align-items     : center;
+                justify-content : center;
+                top             : 0;
+                border-radius   : 5px;
+
+                svg {
+                    width  : 110px;
+                    height : 110px;
+                }
+
+                &.active {
+                    border : 3px solid var(--primary);
+
+                    svg {
+                        color : var(--primary);
+                    }
+                }
+            }
+
+            .delete-btn {
+                position         : absolute;
+                right            : -5px;
+                top              : -5px;
+                padding          : 4px;
+                border-radius    : 50px;
+                color            : white;
+                cursor           : pointer;
+                background-color : black;
+
+                svg {
+                    width  : 26px;
+                    height : 26px;
+                }
+            }
         }
     }
 }

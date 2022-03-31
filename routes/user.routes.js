@@ -6,8 +6,8 @@ import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, dele
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/user/upload.user.controller.js'
 import { acceptFriend, cancelFriendRequest, refuseFriend, sendFriendRequest, deleteFriend } from '../controllers/user/user.friend.js'
 import { addConversationToFavorite, removeConversationFromFavorite, setLastMessageSeen } from '../controllers/user/user.messenger.controller.js'
-import multer from 'multer'
 import { deleteNotification, resetNotifications, setNotificationToSeen } from '../controllers/user/user.notifications.controller.js'
+import multer from 'multer'
 const upload = multer()
 
 userRoutes.post('/register', signUp)

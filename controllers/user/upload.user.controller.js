@@ -14,11 +14,10 @@ export const uploadProfilPicture = async (req, res) => {
         if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") {
             throw Error("invalid file");
         }
-        if (req.file.size > 1000000) {
+        else if (req.file.size > 1000000) {
             throw Error("max size");
         }
-    }
-    catch (err) {
+    } catch (err) {
         const errors = uploadErrors(err);
         return res.status(201).json({ message: errors });
     }
@@ -40,8 +39,7 @@ export const uploadProfilPicture = async (req, res) => {
             (err, docs) => {
                 if (!err) {
                     return res.send(docs);
-                }
-                else {
+                } else {
                     return res.status(500).send({ message: err });
                 }
             }
@@ -62,8 +60,7 @@ export const deleteProfilPicture = async (req, res) => {
             (err, docs) => {
                 if (!err) {
                     return res.send(docs);
-                }
-                else {
+                } else {
                     return res.status(500).send({ message: err });
                 }
             }
@@ -81,7 +78,7 @@ export const uploadCoverPicture = async (req, res) => {
         if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") {
             throw Error("invalid file");
         }
-        if (req.file.size > 1000000) {
+        else if (req.file.size > 1000000) {
             throw Error("max size");
         }
     }
@@ -107,8 +104,7 @@ export const uploadCoverPicture = async (req, res) => {
             (err, docs) => {
                 if (!err) {
                     return res.send(docs);
-                }
-                else {
+                } else {
                     return res.status(500).send({ message: err });
                 }
             }
@@ -119,8 +115,6 @@ export const uploadCoverPicture = async (req, res) => {
 }
 
 export const deleteCoverPicture = async (req, res) => {
-    req.params.id
-
     try {
         UserModel.findOneAndUpdate(
             { _id: req.params.id },
@@ -129,8 +123,7 @@ export const deleteCoverPicture = async (req, res) => {
             (err, docs) => {
                 if (!err) {
                     return res.send(docs);
-                }
-                else {
+                } else {
                     return res.status(500).send({ message: err });
                 }
             }

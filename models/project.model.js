@@ -60,7 +60,7 @@ const ProjectModel = new mongoose.Schema(
         },
 
         numberofcontributors: {
-            type: Number,
+            type: String,
         },
 
         works: {
@@ -74,8 +74,7 @@ const ProjectModel = new mongoose.Schema(
         },
 
         pictures: {
-            type: [],
-            picture: String
+            type: [String]
         },
 
         end: {

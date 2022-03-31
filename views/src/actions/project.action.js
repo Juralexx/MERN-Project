@@ -2,6 +2,12 @@ import axios from "axios";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 export const GET_PROJECT = "GET_PROJECT"
+
+export const UPDATE_PICTURES = "UPDATE_PICTURES"
+export const RECEIVE_UPDATE_PICTURES = "RECEIVE_UPDATE_PICTURES"
+export const DELETE_PICTURES = "DELETE_PICTURES"
+export const RECEIVE_DELETE_PICTURES = "RECEIVE_DELETE_PICTURES"
+
 export const UPDATE_TITLE = "UPDATE_TITLE"
 export const UPDATE_TITLEURL = "UPDATE_TITLEURL"
 export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
@@ -58,6 +64,52 @@ export const getProject = (projectId) => {
             .catch((err) => console.log(err))
     }
 }
+
+/*******************************************************************************************************************************/
+/********************************************************* PICTURES ************************************************************/
+
+export const updateProjectPictures = (projectId, pictures, activity) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/update-pictures/` + projectId,
+            data: { pictures, activity }
+        })
+            .then((res) => {
+                dispatch({ type: UPDATE_PICTURES, payload: { pictures, activity } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveUpdateProjectPictures = (pictures, activity) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_UPDATE_PICTURES, payload: { pictures, activity } })
+    }
+}
+
+export const deleteProjectPictures = (projectId, picture, activity) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/delete-pictures/` + projectId,
+            data: { picture, activity }
+        })
+            .then((res) => {
+                dispatch({ type: DELETE_PICTURES, payload: { picture, activity } })
+            })
+            .catch((err) => console.log(err))
+    }
+}
+
+export const receiveDeleteProjectPictures = (picture, activity) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_DELETE_PICTURES, payload: { picture, activity } })
+    }
+}
+
+/*******************************************************************************************************************************/
+/******************************************************* INFORMATIONS **********************************************************/
 
 export const updateState = (projectId, state) => {
     return async (dispatch) => {

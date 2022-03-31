@@ -42,8 +42,6 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "react-avatar-editor": "^12.0.0",
-    "redux-form": "^8.3.8",
-    "remove-accents": "^0.4.2",
     "socket.io": "^4.4.1",
     "sweetalert2": "^11.3.0",
     "sweetalert2-react-content": "^4.2.0",
@@ -53,7 +51,6 @@
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.8",
-    "browser-sync": "^2.27.7",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^6.1.0",
     "gulp-clean-css": "^4.3.0",

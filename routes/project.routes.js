@@ -1,15 +1,18 @@
 import express from 'express'
 const projectRoutes = express.Router()
-import { createProject, uploadProjectPictures } from '../controllers/project/project.add.controller.js'
+import { createProject } from '../controllers/project/project.add.controller.js'
 import { readProject, projectInfo, updateProject, deleteProject, findProject } from '../controllers/project/project.controller.js'
 import { likeProject, unlikeProject, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
-import { acceptMemberRequest,  cancelMemberRequest,  refuseMemberRequest,  leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
+import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
 import { createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
+import { deletePictures, updatePictures, uploadPictures } from '../controllers/project/project.upload.controller.js'
 import multer from 'multer'
 const upload = multer()
 
 projectRoutes.post('/add', createProject)
-projectRoutes.post('/add/pictures', upload.array('files', 5), uploadProjectPictures)
+projectRoutes.put('/add-pictures/:id', upload.array('files'), uploadPictures)
+projectRoutes.put('/update-pictures/:id', upload.array('files'), updatePictures)
+projectRoutes.put('/delete-pictures/:id', deletePictures)
 
 projectRoutes.get('/', readProject)
 projectRoutes.get('/:titleURL', projectInfo)

@@ -4,9 +4,8 @@ import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 const sass = gulpSass(dartSass);
 import prefix from 'gulp-autoprefixer'
-import minify from 'gulp-clean-css'
+// import minify from 'gulp-clean-css'
 import rename from 'gulp-rename'
-import browserSync from 'browser-sync';
 
 var paths = {
     styles: {
@@ -21,10 +20,10 @@ var paths = {
     }
 };
 
-const server = browserSync.create();
-server.init({
-    baseDir: './views/src/styles/dist/',
-});
+// const server = browserSync.create();
+// server.init({
+//     baseDir: './views/src/styles/dist/',
+// });
 
 function styleCompiler() {
     return src('./views/src/styles/scss/style.scss')
@@ -32,7 +31,7 @@ function styleCompiler() {
         .pipe(prefix('last 2 versions'))
         .pipe(rename('old.css'))
         .pipe(dest(paths.styles.dest))
-        .pipe(server.stream())
+        // .pipe(server.stream())
     // .pipe(sass().on('error', sass.logError))
     // .pipe(prefix('last 2 versions'))
     // .pipe(minify())
@@ -41,7 +40,7 @@ function styleCompiler() {
 
 function watchTask() {
     watch(paths.styles.srcWatched, styleCompiler);
-    watch(paths.styles.dest).on('change', () => server.stream())
+    // watch(paths.styles.dest).on('change', () => server.stream())
 }
 
 export default series(styleCompiler, watchTask);

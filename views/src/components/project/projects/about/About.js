@@ -7,6 +7,7 @@ import State from './State'
 import Work from './Work'
 import Content from './Content'
 import HeaderNavbar from './HeaderNavbar'
+import Galery from './Galery'
 
 const About = ({ project, user, websocket, isAdmin, isManager }) => {
     const [about, setAbout] = useState(true)
@@ -34,6 +35,9 @@ const About = ({ project, user, websocket, isAdmin, isManager }) => {
                     </div>
                     {/* <Content project={project} /> */}
                 </div>
+            }
+            {galery &&
+                <Galery project={project} />
             }
 
         </div>

@@ -143,8 +143,8 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
                 </div>
             </div>
             <div className="btn-container">
-                <StartIconButton text="Retour" className="next-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" disabled={workArray.length === 0 && numberofcontributors === ""} className="previous-btn" icon={<IoMdArrowRoundForward />} onClick={checkErrors} />
+                <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
+                <EndIconButton text="Suivant" disabled={workArray.length === 0 && numberofcontributors === ""} className="next-btn" icon={<IoMdArrowRoundForward />} onClick={checkErrors} />
             </div>
         </div>
     )

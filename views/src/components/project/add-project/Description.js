@@ -9,13 +9,11 @@ const Description = ({ content, setContent, onNext, onBack }) => {
         setContent(editor.getContents());
     }
 
-
-
     return (
         <div className="add-project-card">
             <h2>Il est temps de décrire votre projet en détail !</h2>
             <div className="content-form">
-                <p className="mb-2">Description de votre projet</p>
+                <p className="title min-w-[100%]">Description de votre projet <span>Champ requis</span></p>
                 <div className="text-editor">
                     <EditorToolbar />
                     <ReactQuill
@@ -29,8 +27,8 @@ const Description = ({ content, setContent, onNext, onBack }) => {
                 </div>
             </div>
             <div className="btn-container">
-                <StartIconButton text="Retour" className="next-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" className="previous-btn" icon={<IoMdArrowRoundForward />} onClick={onNext} />
+                <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
+                <EndIconButton text="Suivant" className="next-btn" icon={<IoMdArrowRoundForward />} onClick={onNext} />
             </div>
         </div>
     )
