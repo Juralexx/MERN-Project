@@ -13,7 +13,7 @@ const MemberRequestCard = ({ sentNotification, websocket, user }) => {
 
     const acceptProjectMemberRequest = async () => {
         const member = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
-        await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${sentNotification.projectId}`)
+        await axios.get(`${process.env.REACT_APP_API_URL}api/project/${sentNotification.projectId}`)
             .then(res => {
                 res.data.members.map(member => {
                     return websocket.current.emit("acceptMemberRequest", {

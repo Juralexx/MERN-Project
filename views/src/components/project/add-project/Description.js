@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../../tools/editor/EditorToolbar";
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
 import { EndIconButton, StartIconButton } from '../../tools/components/Button';
 
 const Description = ({ content, setContent, onNext, onBack }) => {
+    const [count, setCount] = useState(0)
+    
     const handleChange = (text, delta, source, editor) => {
-        setContent(editor.getContents());
+        setContent(editor.getContents())
+        setCount(editor.getText().length - 1)
     }
 
     return (
@@ -24,11 +27,12 @@ const Description = ({ content, setContent, onNext, onBack }) => {
                         modules={modules}
                         formats={formats}
                     />
+                    <div className="title-infos ml-auto">{count} / 10 000 caractères</div>
                 </div>
             </div>
             <div className="btn-container">
                 <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" className="next-btn" icon={<IoMdArrowRoundForward />} onClick={onNext} />
+                <EndIconButton text="Suivant" className="next-btn" disabled={count < 10 || count > 10000} icon={<IoMdArrowRoundForward />} onClick={onNext} />
             </div>
         </div>
     )

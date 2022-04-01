@@ -10,7 +10,7 @@ import { convertDeltaToHTML } from '../components/messenger/tools/function';
 
 const Project = () => {
     const uid = useContext(UidContext)
-    const { titleURL } = useParams()
+    const { URL } = useParams()
     const [project, setProject] = useState([])
     const [description, setDescription] = useState([])
     const [isLoading, setLoading] = useState(true)
@@ -20,8 +20,8 @@ const Project = () => {
     useEffect(() => {
         const fetch = async () => {
             try {
-                const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/project/${titleURL}`)
-                if (data.titleURL) {
+                const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URL}`)
+                if (data.URL) {
                     dispatch(getProject(data._id))
                     setProject(data)
                     setDescription(data.content[0])
@@ -32,7 +32,7 @@ const Project = () => {
             }
         };
         fetch()
-    }, [titleURL, navigate, dispatch, uid, project.posterId])
+    }, [URL, navigate, dispatch, uid, project.posterId])
 
     return (
         <div className="container">

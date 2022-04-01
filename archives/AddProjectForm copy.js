@@ -64,7 +64,7 @@ const AddProjectForm = ({ user }) => {
                     posterPseudo: user.pseudo,
                     posterAvatar: user.picture,
                     title: title,
-                    titleURL: url,
+                    URL: url,
                     category: category,
                     location: location,
                     department: department,
@@ -101,7 +101,7 @@ const AddProjectForm = ({ user }) => {
                             timer: 1500
                         })
                     })
-                    // // const redirection = navigate(`/project/${titleURL}`)
+                    // // const redirection = navigate(`/project/${URL}`)
                     // // setTimeout(redirection, 2000)
                 }
             }).catch((err) => console.log(err));

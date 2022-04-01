@@ -80,7 +80,7 @@ const AddProjectForm = () => {
             const lowerTitle = newTitle.toLowerCase();
             const removeaccent = removeAccents(lowerTitle)
             const url = removeaccent.replace(/ /g, "-");
-            const titleURL = url
+            const URL = url
 
             await axios({
                 method: "post",
@@ -90,7 +90,7 @@ const AddProjectForm = () => {
                     posterPseudo: posterPseudo,
                     posterAvatar: posterAvatar,
                     title: title,
-                    titleURL: titleURL,
+                    URL: URL,
                     category: category,
                     location: location,
                     end: end,
@@ -113,7 +113,7 @@ const AddProjectForm = () => {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        const redirection = navigate(`/project/${titleURL}`)
+                        const redirection = navigate(`/project/${URL}`)
                         setTimeout(redirection, 2000)
                     }
                 })

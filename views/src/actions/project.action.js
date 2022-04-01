@@ -9,7 +9,7 @@ export const DELETE_PICTURES = "DELETE_PICTURES"
 export const RECEIVE_DELETE_PICTURES = "RECEIVE_DELETE_PICTURES"
 
 export const UPDATE_TITLE = "UPDATE_TITLE"
-export const UPDATE_TITLEURL = "UPDATE_TITLEURL"
+export const UPDATE_URL = "UPDATE_URL"
 export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
 export const UPDATE_CONTENT = "UPDATE_CONTENT"
 export const UPDATE_LOCATION = "UPDATE_LOCATION"
@@ -57,7 +57,7 @@ export const RECEIVE_DELETE_TASK = "RECEIVE_DELETE_TASK"
 export const getProject = (projectId) => {
     return async (dispatch) => {
         return axios
-            .get(`${process.env.REACT_APP_API_URL}api/project/single/${projectId}`)
+            .get(`${process.env.REACT_APP_API_URL}api/project/${projectId}`)
             .then((res) => {
                 dispatch({ type: GET_PROJECT, payload: res.data })
             })
@@ -139,15 +139,15 @@ export const updateTitle = (projectId, title) => {
     }
 }
 
-export const updateTitleURL = (projectId, titleURL) => {
+export const updateURL = (projectId, URL) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { titleURL }
+            data: { URL }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_TITLEURL, payload: titleURL })
+                dispatch({ type: UPDATE_URL, payload: URL })
             })
             .catch((err) => console.log(err))
     }

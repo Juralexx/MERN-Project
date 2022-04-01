@@ -5,14 +5,14 @@ import mongoose from 'mongoose'
 const projectId = mongoose.Types.ObjectId()
 
 export const createProject = async (req, res) => {
-    const { posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
+    const { posterId, posterPseudo, posterAvatar, title, URL, URLID, category, location, department,
         region, new_region, end, content, numberofcontributors, works, members, manager } = req.body
     const _id = projectId
     const state = "En préparation"
 
     try {
         const project = ProjectModel.create({
-            _id, posterId, posterPseudo, posterAvatar, title, titleURL, category, location, department,
+            _id, posterId, posterPseudo, posterAvatar, title, URL, URLID, category, location, department,
             region, new_region, end, content, numberofcontributors, works, state, members, manager
         })
 

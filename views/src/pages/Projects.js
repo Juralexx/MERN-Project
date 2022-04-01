@@ -27,11 +27,11 @@ const Projects = ({ websocket, user }) => {
 
     useEffect(() => {
         if (Object.keys(user).length > 0 && user.current_projects.length > 0) {
-            const currentProjects = user.current_projects.map(async (project) => {
-                return await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${project}`)
-                    .then((res) => res.data).catch((err) => console.error(err))
+            const currentProjects = user.current_projects.map(async (projectId) => {
+                return await axios.get(`${process.env.REACT_APP_API_URL}api/project/${projectId}`)
+                    .then(res => res.data).catch((err) => console.error(err))
             })
-            Promise.all(currentProjects).then((res) => {
+            Promise.all(currentProjects).then(res => {
                 setProjects(res)
                 setProject(res[0])
                 dispatch(getProject(res[0]._id))

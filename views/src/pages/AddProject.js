@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { Axios } from "axios";
+import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Stepper } from '@zendeskgarden/react-accordions'
@@ -13,7 +13,6 @@ import Pictures from "../components/project/add-project/Pictures";
 
 const AddProject = ({ user }) => {
     const [title, setTitle] = useState("")
-    const [url, setUrl] = useState("")
     const [category, setCategory] = useState("")
     const [location, setLocation] = useState("")
     const [department, setDepartment] = useState("")
@@ -24,7 +23,6 @@ const AddProject = ({ user }) => {
     const [end, setEnd] = useState("")
     const [content, setContent] = useState({})
     const [files, setFiles] = useState([])
-    const [submit, setSubmit] = useState(false)
     // const navigate = useNavigate()
     const [step, setStep] = useState(0)
     const onNext = () => setStep(step + 1)
@@ -34,6 +32,7 @@ const AddProject = ({ user }) => {
 
     const handleAddProject = async (e) => {
         e.preventDefault()
+        e.stopPropagation()
         if (title === "" || title.length < 10 || title.length > 100) {
             setErr("title")
             setStep(1)
@@ -46,21 +45,22 @@ const AddProject = ({ user }) => {
             setErr("numberofcontributors")
             setStep(4)
             setError("Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer")
-        } else if (content === "" || content.length < 10) {
+        } else if (content === "" || content.length < 10 || content.length > 10000) {
             setErr("content")
             setStep(5)
-            setError("Veuillez ajouter une description")
+            setError("Veuillez saisir une description valide, votre description doit faire entre 10 et 10 000 caractères")
         } else {
-            let newTitle = title.toLowerCase();
-            newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
-            newTitle = newTitle.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
-            newTitle = newTitle.replace(/ +/g, " ")
-            newTitle = newTitle.trim()
-            setTitle(newTitle)
-            let URL = newTitle.toLowerCase();
+            let cleanTitle = title.toLowerCase();
+            cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
+            cleanTitle = cleanTitle.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
+            cleanTitle = cleanTitle.replace(/ +/g, " ")
+            cleanTitle = cleanTitle.trim()
+            setTitle(cleanTitle)
+
+            let URL = cleanTitle.toLowerCase();
             URL = removeAccents(URL)
             URL = URL.replace(/ /g, "-")
-            setUrl(URL)
+            let URLID = Math.floor(Math.random() * (9999999999 - 1000000000 + 1)).toString()
 
             await axios({
                 method: "post",
@@ -69,9 +69,11 @@ const AddProject = ({ user }) => {
                     posterId: user._id,
                     posterPseudo: user.pseudo,
                     posterAvatar: user.picture,
-                    title: title,
-                    titleURL: URL,
+                    title: cleanTitle,
+                    URL: URL,
+                    URLID: URLID,
                     category: category,
+                    state: "worked on",
                     location: location,
                     department: department,
                     region: region,
@@ -90,41 +92,30 @@ const AddProject = ({ user }) => {
                     else if (res.data.errors.content) setError(res.data.errors.content)
                     else if (res.data.errors.numberofcontributors) setError(res.data.errors.numberofcontributors)
                 } else {
-                    setSubmit(true)
-                    //const redirection = navigate(`/project/${titleURL}`)
+                    if (files.length > 0) {
+                        await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URLID}/${URL}`)
+                            .then(async (response) => {
+                                let formData = new FormData()
+                                for (let i = 0; i < files.length; i++) {
+                                    formData.append('files', files[i])
+                                }
+                                await axios.put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${response.data._id}`, formData)
+                                    .then(res => {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Votre projet est en ligne !',
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+                                    }).catch(err => console.log(err))
+                            }).catch((err) => console.log(err))
+                    }
+                    //const redirection = navigate(`/project/${URLID}/${URL}`)
                     //setTimeout(redirection, 2000)
                 }
             }).catch((err) => console.log(err))
         }
     }
-
-    useEffect(() => {
-        if (submit) {
-            const sendFiles = async () => {
-                await axios.get(`${process.env.REACT_APP_API_URL}api/project/${url}`)
-                    .then((res) => {
-                        if (files.length > 0) {
-                            let formData = new FormData()
-                            for (let i = 0; i < files.length; i++) {
-                                formData.append('files', files[i])
-                            }
-                            console.log(res.data)
-                            axios.put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${res.data._id}`, formData)
-                                .then(res => {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Votre projet est en ligne !',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    })
-                                    setSubmit(false)
-                                }).catch(err => console.log(err))
-                        }
-                    }).catch((err) => console.log(err))
-            }
-            sendFiles()
-        }
-    }, [submit, files, url])
 
     return (
         <div className="add-project">

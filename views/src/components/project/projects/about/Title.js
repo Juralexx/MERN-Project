@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { updateTitle, updateTitleURL } from "../../../../actions/project.action";
+import { updateTitle, updateURL } from "../../../../actions/project.action";
 import { SmallToolsBtn, Button, TextButton } from "../../../tools/components/Button";
 import { removeAccents } from "../../../Utils";
 import { FaPen } from 'react-icons/fa'
@@ -35,7 +35,7 @@ const Title = ({ project }) => {
             url = url.replace(/ /g, "-")
 
             dispatch(updateTitle(project._id, newTitle))
-            dispatch(updateTitleURL(project._id, url))
+            dispatch(updateURL(project._id, url))
             setForm(false)
             setErr(false)
         }

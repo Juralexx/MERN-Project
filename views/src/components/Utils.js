@@ -60,7 +60,7 @@ export const thisDay = (array) => {
 }
 
 export const lastDay = (array) => {
-    return array.filter(element => element.date.substring(0, 10) === new Date(new Date().getTime() - 24*60*60*1000).toISOString().substring(0, 10))
+    return array.filter(element => element.date.substring(0, 10) === new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString().substring(0, 10))
 }
 
 export const timeBetween = (array, days) => {
@@ -92,6 +92,24 @@ export const isEmpty = (value) => {
         || (typeof value === "string" && value.trim().length === 0)
     );
 };
+
+export const cleanTitleMakeURL = (title, setTitle, setUrl) => {
+    let newTitle = title.toLowerCase();
+    newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
+    newTitle = newTitle.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
+    newTitle = newTitle.replace(/ +/g, " ")
+    newTitle = newTitle.trim()
+    setTitle(newTitle)
+
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    let URL = newTitle.toLowerCase();
+    URL = removeAccents(URL)
+    URL = URL.replace(/ /g, "-")
+    setUrl(getRndInteger(1000000000, 9999999999) + "/" + URL)
+}
 
 let characterMap = {
     "À": "A",
@@ -503,46 +521,3 @@ export const removeAccents = (string) => {
         return characterMap[match];
     });
 };
-
-// function compareDates(dateOne, index, array) {
-//     const firstDate = dateOne.substring(0, 10)
-//     if (index === 0) {
-//         setMessagesDates(key => [...key, index])
-//         console.log(messagesDates)
-//         return dateParser(firstDate)
-//     } else if (index > 0 && index < array.length - 2) {
-//         const secondDate = (array[index + 1].createdAt).substring(0, 10)
-//         if (firstDate === secondDate) { return null }
-//         else {
-//             setMessagesDates(key => [...key, index])
-//             console.log(messagesDates)
-//             return dateParser(firstDate)
-//         }
-//     } else if (index === array.length - 1) {
-//         const secondDate = (array[index - 1].createdAt).substring(0, 10)
-//         if (firstDate === secondDate) { return null }
-//         else {
-//             setMessagesDates(key => [...key, index])
-//             console.log(messagesDates)
-//             return dateParser(firstDate)
-//         }
-//     }
-// }
-
-
-// const firstDate = messages.createdAt.substring(0, 10)
-//                     if (index === 0) {
-//                         return setMessagesDates(key => [...key, index])
-//                     }
-//                     else if (index > 0 && index < array.length - 2) {
-//                         const secondDate = (array[index + 1].createdAt).substring(0, 10)
-//                         if (firstDate !== secondDate) {
-//                             return setMessagesDates(key => [...key, index])
-//                         } else return
-//                     }
-//                     else if (index === array.length - 1) {
-//                         const secondDate = (array[index - 1].createdAt).substring(0, 10)
-//                         if (firstDate !== secondDate) {
-//                             return setMessagesDates(key => [...key, index])
-//                         } else return
-//                     }

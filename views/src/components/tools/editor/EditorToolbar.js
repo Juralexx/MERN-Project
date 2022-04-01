@@ -1,5 +1,6 @@
 import React from "react";
 import { Quill } from "react-quill";
+import BlotFormatter, { AlignAction, DeleteAction, ImageSpec } from 'quill-blot-formatter';
 
 function undoChange() { this.quill.history.undo() }
 function redoChange() { this.quill.history.redo() }
@@ -18,6 +19,13 @@ Font.whitelist = [
     "lucida"
 ];
 Quill.register(Font, true);
+Quill.register('modules/blotFormatter', BlotFormatter);
+
+class CustomImageSpec extends ImageSpec {
+    getActions() {
+        return [AlignAction, DeleteAction];
+    }
+}
 
 export const modules = {
     toolbar: {
@@ -31,7 +39,8 @@ export const modules = {
         delay: 500,
         maxStack: 100,
         userOnly: true
-    }
+    },
+    blotFormatter: {}
 };
 
 export const formats = [
@@ -84,14 +93,14 @@ export const QuillToolbar = () => (
             <button className="ql-strike" />
         </span>
         <span className="ql-formats">
+            <button className="ql-blockquote" />
+            <button className="ql-direction" />
+        </span>
+        <span className="ql-formats">
             <button className="ql-list" value="ordered" />
             <button className="ql-list" value="bullet" />
             <button className="ql-indent" value="-1" />
             <button className="ql-indent" value="+1" />
-        </span>
-        <span className="ql-formats">
-            <button className="ql-blockquote" />
-            <button className="ql-direction" />
         </span>
         <span className="ql-formats">
             <select className="ql-align" />
@@ -104,9 +113,9 @@ export const QuillToolbar = () => (
             <button className="ql-video" />
         </span>
         <span className="ql-formats">
-            {/* <button className="ql-formula" /> */}
-            <button className="ql-code-block" />
             <button className="ql-clean" />
+            {/* <button className="ql-formula" /> */}
+            {/* <button className="ql-code-block" /> */}
         </span>
         <span className="ql-formats">
             <button className="ql-undo">

@@ -23,7 +23,7 @@ export const sendProjectMemberRequest = (membersArray, user, project, websocket,
                 type: "project-member-request",
                 projectId: project._id,
                 projectTitle: project.title,
-                projectUrl: project.titleURL,
+                projectUrl: project.URL,
                 requesterId: user._id,
                 requester: user.pseudo,
                 requesterPicture: user.picture,
@@ -52,7 +52,7 @@ export const cancelProjectMemberRequest = (request, project, websocket, dispatch
 export const acceptProjectMemberRequest = async (notification, user, websocket, dispatch) => {
     const activity = { type: "join-project", who: user.pseudo, date: new Date().toISOString() }
     const member = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
-    await axios.get(`${process.env.REACT_APP_API_URL}api/project/single/${notification.projectId}`)
+    await axios.get(`${process.env.REACT_APP_API_URL}api/project/${notification.projectId}`)
         .then(res => {
             res.data.members.map(async element => {
                 return await websocket.current.emit("acceptMemberRequest", {

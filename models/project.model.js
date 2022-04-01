@@ -7,11 +7,13 @@ const ProjectModel = new mongoose.Schema(
         },
 
         posterPseudo: {
-            type: String
+            type: String,
+            required: true
         },
 
         posterAvatar: {
-            type: String
+            type: String,
+            required: true
         },
 
         state: {
@@ -26,8 +28,17 @@ const ProjectModel = new mongoose.Schema(
             trim: true,
         },
 
-        titleURL: {
+        URL: {
             type: String,
+            required: true,
+            unique: false,
+            trim: true
+        },
+
+        URLID: {
+            type: String,
+            required: true,
+            unique: false,
             trim: true
         },
 

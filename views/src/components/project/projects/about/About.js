@@ -33,7 +33,7 @@ const About = ({ project, user, websocket, isAdmin, isManager }) => {
                             <End project={project} />
                         </div>
                     </div>
-                    {/* <Content project={project} /> */}
+                    <Content project={project} />
                 </div>
             }
             {galery &&

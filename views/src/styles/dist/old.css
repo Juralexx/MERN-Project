@@ -4631,7 +4631,7 @@ h5 {
 }
 .add-project .add-project-container {
   position: relative;
-  width: 1024px;
+  max-width: 1200px;
   height: auto;
   padding: 50px;
   margin: 0 auto;
@@ -4738,7 +4738,7 @@ h5 {
       -ms-flex-pack: end;
           justify-content: flex-end;
   color: var(--text-secondary);
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 6px;
 }
 .add-project .add-project-container .add-project-card .content-form {

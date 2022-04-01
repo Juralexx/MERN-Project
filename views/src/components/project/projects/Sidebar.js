@@ -93,7 +93,7 @@ const Sidebar = ({ user, projects, setProject, project, changeProject, isLoading
                                         <div className="sidebar-submenu-card" onClick={() => move(setTasks, setMembers, setHome, setAbout)}>
                                             <div className={`sidebar-submenu-title ${addActive(tasks, "active")}`}>
                                                 <BiTask />
-                                                <div className="sidebar-submenu-text">Tâches <span>{project.tasks.length}</span></div>
+                                                <div className="sidebar-submenu-text">Tâches <span>{project.tasks?.length}</span></div>
                                             </div>
                                         </div>
                                         <div className="sidebar-submenu-card">

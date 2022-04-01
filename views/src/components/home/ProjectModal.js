@@ -23,7 +23,7 @@ const ProjectModal = ({ project, setOpen, open }) => {
                 </div>
                 <div className="right">
                     <div className="title">
-                        <h2><NavLink to={"/project/" + project.titleURL}>{project.title}</NavLink></h2>
+                        <h2><NavLink to={"/project/" + project.URL}>{project.title}</NavLink></h2>
                         <p>{project.location + ", " + project.department + " - " + project.category}</p>
                     </div>
                     <div className="top">

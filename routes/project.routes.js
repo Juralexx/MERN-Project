@@ -1,7 +1,7 @@
 import express from 'express'
 const projectRoutes = express.Router()
 import { createProject } from '../controllers/project/project.add.controller.js'
-import { readProject, projectInfo, updateProject, deleteProject, findProject } from '../controllers/project/project.controller.js'
+import { AllProjects, findProjectByURL, updateProject, deleteProject, findProjectById } from '../controllers/project/project.controller.js'
 import { likeProject, unlikeProject, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
 import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
 import { createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
@@ -14,9 +14,9 @@ projectRoutes.put('/add-pictures/:id', upload.array('files'), uploadPictures)
 projectRoutes.put('/update-pictures/:id', upload.array('files'), updatePictures)
 projectRoutes.put('/delete-pictures/:id', deletePictures)
 
-projectRoutes.get('/', readProject)
-projectRoutes.get('/:titleURL', projectInfo)
-projectRoutes.get('/single/:id', findProject)
+projectRoutes.get('/', AllProjects)
+projectRoutes.get('/:URLID/:URL', findProjectByURL)
+projectRoutes.get('/:id', findProjectById)
 projectRoutes.put('/:id', updateProject)
 projectRoutes.delete('/:id', deleteProject)
 

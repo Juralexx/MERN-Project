@@ -2,7 +2,7 @@ import ProjectModel from '../../models/project.model.js'
 import mongoose from 'mongoose'
 const ObjectID = mongoose.Types.ObjectId
 
-export const readProject = (req, res) => {
+export const AllProjects = (req, res) => {
     ProjectModel.find((err, docs) => {
         if (!err) {
             res.send(docs)
@@ -12,8 +12,8 @@ export const readProject = (req, res) => {
     })
 }
 
-export const projectInfo = (req, res) => {
-    ProjectModel.findOne({ titleURL: req.params.titleURL },
+export const findProjectByURL = (req, res) => {
+    ProjectModel.findOne({ URLID: req.params.URLID, URL: req.params.URL },
         (err, docs) => {
             if (!err) {
                 res.send(docs)
@@ -23,7 +23,7 @@ export const projectInfo = (req, res) => {
         }).select()
 }
 
-export const findProject = (req, res) => {
+export const findProjectById = (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -38,7 +38,7 @@ export const findProject = (req, res) => {
 }
 
 export const updateProject = async (req, res) => {
-    const { title, titleURL, category, state, location, department, region, new_region, content, numberofcontributors, contributors, picture, end, works, members, tasks } = req.body
+    const { title, URL, category, state, location, department, region, new_region, content, numberofcontributors, contributors, picture, end, works, members, tasks } = req.body
 
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
@@ -49,7 +49,7 @@ export const updateProject = async (req, res) => {
             {
                 $set: {
                     title,
-                    titleURL,
+                    URL,
                     category,
                     state,
                     location,

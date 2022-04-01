@@ -30,7 +30,7 @@ const UserProjects = () => {
                 if (checkarray.length > 0) {
                     const projects = checkarray.map(async (projectID) => {
                         return await axios
-                            .get(`${process.env.REACT_APP_API_URL}api/project/single/${projectID}`)
+                            .get(`${process.env.REACT_APP_API_URL}api/project/${projectID}`)
                             .then((res) => res.data)
                             .catch((e) => console.error(e));
                     })
@@ -73,7 +73,7 @@ const UserProjects = () => {
                                     <div className="myprojects-card" key={key}>
                                         <div className="left" style={projectPicture(element.picture)}></div>
                                         <div className="right">
-                                            <h2><NavLink to={"/project/" + element.titleURL}>{element.title}</NavLink></h2>
+                                            <h2><NavLink to={"/project/" + element.URL}>{element.title}</NavLink></h2>
                                             <div className="pseudo-container">
                                                 <div className="avatar" style={avatar(element.posterAvatar)}></div> <NavLink to={"/" + element.posterPseudo}>{element.posterPseudo}</NavLink>
                                             </div>
