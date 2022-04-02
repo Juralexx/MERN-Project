@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -41,7 +41,7 @@ const AddProject = ({ user }) => {
             setErr("category")
             setStep(1)
             setError("Veuillez saisir une catégorie")
-        } else if (numberofcontributors.value === "" || numberofcontributors.value === 0) {
+        } else if (numberofcontributors < 0 || numberofcontributors === (null || undefined)) {
             setErr("numberofcontributors")
             setStep(4)
             setError("Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer")
@@ -95,25 +95,19 @@ const AddProject = ({ user }) => {
                     if (files.length > 0) {
                         await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URLID}/${URL}`)
                             .then(async (response) => {
+                                console.log(response)
                                 let formData = new FormData()
                                 for (let i = 0; i < files.length; i++) {
                                     formData.append('files', files[i])
                                 }
                                 await axios.put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${response.data._id}`, formData)
-                                    .then(res => {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Votre projet est en ligne !',
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        })
-                                    }).catch(err => console.log(err))
-                            }).catch((err) => console.log(err))
+                                    .then(res => res.data).catch(err => console.log(err))
+                            }).catch(err => console.log(err))
                     }
                     //const redirection = navigate(`/project/${URLID}/${URL}`)
                     //setTimeout(redirection, 2000)
                 }
-            }).catch((err) => console.log(err))
+            }).catch(err => console.log(err))
         }
     }
 

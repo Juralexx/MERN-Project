@@ -871,6 +871,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 0.75rem;
 }
 
+.h-\[300px\] {
+  height: 300px;
+}
+
 .max-h-\[1080px\] {
   max-height: 1080px;
 }
@@ -1025,10 +1029,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .max-w-\[500px\] {
   max-width: 500px;
-}
-
-.max-w-\[1000px\] {
-  max-width: 1000px;
 }
 
 .origin-\[0\] {

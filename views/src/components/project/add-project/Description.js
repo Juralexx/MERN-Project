@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../../tools/editor/EditorToolbar";
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
@@ -6,10 +6,18 @@ import { EndIconButton, StartIconButton } from '../../tools/components/Button';
 
 const Description = ({ content, setContent, onNext, onBack }) => {
     const [count, setCount] = useState(0)
-    
+    const quillRef = useRef()
+
     const handleChange = (text, delta, source, editor) => {
         setContent(editor.getContents())
         setCount(editor.getText().length - 1)
+        // const regexp = new RegExp("fils de pute", 'i');
+        // let isString = content.ops.filter(element => regexp.test(element.insert))
+        quillRef.current.getEditor().on('text-change', () => {
+            if (editor.getLength() > 10000) {
+                quillRef.current.getEditor().deleteText(10000, editor.getLength());
+            }
+        })
     }
 
     return (
@@ -20,6 +28,7 @@ const Description = ({ content, setContent, onNext, onBack }) => {
                 <div className="text-editor">
                     <EditorToolbar />
                     <ReactQuill
+                        ref={quillRef}
                         style={{ height: 300 }}
                         value={content}
                         onChange={handleChange}

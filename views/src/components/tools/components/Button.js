@@ -10,9 +10,9 @@ export const Button = (props) => {
 }
 
 export const StartIconButton = (props) => {
-    const { icon, text, onClick, className, disabled, type } = props
+    const { icon, text, onClick, className, disabled } = props
     return (
-        <button onClick={onClick} className={`${className ? "btn-icon-start " + className : "btn-icon-start"}`} disabled={disabled} type={type}>
+        <button onClick={onClick} className={`${className ? "btn-icon-start " + className : "btn-icon-start"}`} disabled={disabled}>
             {icon && (icon)}{text}
         </button>
     )

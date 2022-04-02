@@ -8,9 +8,12 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url))
 import sharp from 'sharp'
 
+/**********************************************************************************************************************/
+/****************************************************** UPLOAD ********************************************************/
+
 export const uploadPictures = async (req, res) => {
-    const __directory = `${__dirname}/../../views/public/uploads/projects/${req.params.id}`
-    let pictures = []
+    const __directory = `${__dirname}/../../../uploads/projects/${req.params.id}`
+    let pics = []
     let done = 0
 
     if (req.files) {
@@ -20,6 +23,7 @@ export const uploadPictures = async (req, res) => {
 
         req.files.map((file, key) => {
             const fileName = `${req.params.id}-${key}.jpg`;
+            pics.push(`${process.env.SERVER_URL}/uploads/projects/${req.params.id}/${fileName}`)
             new Promise(async () => {
                 await pipeline(
                     file.stream,
@@ -33,7 +37,6 @@ export const uploadPictures = async (req, res) => {
                                 console.error(err)
                             } else {
                                 done++
-                                pictures.push(`/uploads/projects/${req.params.id}/${fileName}`)
                                 if (done === req.files.length) {
                                     req.files.map((file, key) => {
                                         fs.unlink(`${__directory}/${file.originalName}`, (err) => {
@@ -48,24 +51,28 @@ export const uploadPictures = async (req, res) => {
                 })
             })
         })
-    }
 
-    try {
-        await ProjectModel.findByIdAndUpdate(
-            { _id: req.params.id },
-            { $set: { pictures: pictures } },
-            { new: true, upsert: true }
-        )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
-    } catch (err) {
-        return res.status(500).send({ message: err });
+        try {
+            await ProjectModel.findOneAndUpdate(
+                { _id: req.params.id },
+                { $set: { pictures: pics } },
+                { new: true }
+            )
+                .then(docs => { res.send(docs) })
+                .catch(err => { return res.status(500).send({ message: err }) })
+        } catch (err) {
+            return res.status(500).send({ message: err });
+        }
     }
 }
 
+/**********************************************************************************************************************/
+/****************************************************** UPDATE ********************************************************/
+
 export const updatePictures = async (req, res) => {
     const __directory = `${__dirname}/../../views/public/uploads/projects/${req.params.id}`
-    let pictures = []
+    let pics = []
+    let done = 0
 
     if (req.files) {
         if (!fs.existsSync(__directory)) {
@@ -77,6 +84,7 @@ export const updatePictures = async (req, res) => {
 
         array.map(async (file, key) => {
             const fileName = `${req.params.id}-${key}.jpg`;
+            pics.push(`/uploads/projects/${req.params.id}/${fileName}`)
             new Promise(async () => {
                 await pipeline(
                     file.stream,
@@ -90,7 +98,6 @@ export const updatePictures = async (req, res) => {
                                 console.error(err)
                             } else {
                                 done++
-                                pictures.push(`/uploads/projects/${req.params.id}/${fileName}`)
                                 if (done === req.files.length) {
                                     req.files.map((file, key) => {
                                         fs.unlink(`${__directory}/${file.originalName}`, (err) => {
@@ -119,6 +126,9 @@ export const updatePictures = async (req, res) => {
         return res.status(500).send({ message: err });
     }
 }
+
+/**********************************************************************************************************************/
+/****************************************************** DELETE ********************************************************/
 
 export const deletePictures = async (req, res) => {
     const __directory = `${__dirname}/../../views/public/uploads/projects/${req.params.id}`

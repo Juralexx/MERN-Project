@@ -3,7 +3,7 @@ const userRoutes = express.Router()
 import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
 import { getAllUsers, userInfo, updateUser, deleteUser, findUser } from '../controllers/user/user.controller.js'
 import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteGender, deleteUserWebsite, deleteUserLinkedin, deleteUserFacebook, deleteUserInstagram, deleteUserTwitter, deleteUserYoutube } from '../controllers/user/user.controller.delete.js'
-import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/user/upload.user.controller.js'
+import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/user/user.upload.controller.js'
 import { acceptFriend, cancelFriendRequest, refuseFriend, sendFriendRequest, deleteFriend } from '../controllers/user/user.friend.js'
 import { addConversationToFavorite, removeConversationFromFavorite, setLastMessageSeen } from '../controllers/user/user.messenger.controller.js'
 import { deleteNotification, resetNotifications, setNotificationToSeen } from '../controllers/user/user.notifications.controller.js'
@@ -22,8 +22,8 @@ userRoutes.delete('/:id', deleteUser)
 userRoutes.get('/profil/:pseudo', findUser)
 
 userRoutes.post('/upload/:id', upload.single('file'), uploadProfilPicture)
-userRoutes.post('/upload/cover/:id', upload.single('file'), uploadCoverPicture)
 userRoutes.put('/upload/delete/:id', deleteProfilPicture)
+userRoutes.post('/upload/cover/:id', upload.single('file'), uploadCoverPicture)
 userRoutes.put('/upload/delete/cover/:id', deleteCoverPicture)
 
 userRoutes.put('/delete/name/:id', deleteUserName)

@@ -14,6 +14,8 @@ import conversationRoutes from './routes/conversation.routes.js'
 import messageRoutes from './routes/message.routes.js'
 
 const app = express();
+app.use('/uploads', express.static('./uploads'))
+app.use('/files', express.static('./files'))
 
 app.use(cors({
     mode: 'no-cors',
@@ -61,7 +63,7 @@ const server = app.listen(PORT, () => {
 })
 
 /************************************************************************************/
-/************************************** WEBSOCKET ***********************************/
+/*********************************** WEBSOCKET **************************************/
 /************************************************************************************/
 
 import { Server } from "socket.io";

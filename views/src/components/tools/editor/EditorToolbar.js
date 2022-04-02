@@ -1,13 +1,20 @@
 import React from "react";
-import { Quill } from "react-quill";
-import BlotFormatter, { AlignAction, DeleteAction, ImageSpec } from 'quill-blot-formatter';
+import { Quill } from "react-quill"
+import BlotFormatter from 'quill-blot-formatter'
+import MagicUrl from "quill-magic-url/src"
+import { ImageDrop } from 'quill-image-drop-module';
+import { VideoHandler, AttachmentHandler } from "quill-upload";
+
+// register quill-upload
+Quill.register("modules/videoHandler", VideoHandler);
+Quill.register("modules/attachmentHandler", AttachmentHandler);
+
 
 function undoChange() { this.quill.history.undo() }
 function redoChange() { this.quill.history.redo() }
 
 const Size = Quill.import("formats/size");
 Size.whitelist = ["extra-small", "small", "medium", "large"];
-Quill.register(Size, true);
 
 const Font = Quill.import("formats/font");
 Font.whitelist = [
@@ -18,14 +25,12 @@ Font.whitelist = [
     "helvetica",
     "lucida"
 ];
-Quill.register(Font, true);
-Quill.register('modules/blotFormatter', BlotFormatter);
 
-class CustomImageSpec extends ImageSpec {
-    getActions() {
-        return [AlignAction, DeleteAction];
-    }
-}
+Quill.register(Size, true);
+Quill.register(Font, true);
+Quill.register('modules/blotFormatter', BlotFormatter)
+Quill.register('modules/magicUrl', MagicUrl)
+Quill.register('modules/imageDrop', ImageDrop);
 
 export const modules = {
     toolbar: {
@@ -33,15 +38,32 @@ export const modules = {
         handlers: {
             undo: undoChange,
             redo: redoChange
-        }
+        },
+        toolbar: ["image", "video"],
     },
     history: {
         delay: 500,
         maxStack: 100,
         userOnly: true
     },
-    blotFormatter: {}
-};
+    magicUrl: true,
+    blotFormatter: {},
+    imageDrop: true,
+    videoHandler: {
+        upload: (file) => {
+            return new Promise((resolve, reject) => {
+                const fd = new FormData();
+                fd.append("file", file);
+                console.log(file);
+            });
+        }
+    },
+    attachmentHandler: {
+        upload: (file) => {
+            console.log(file)
+        }
+    }
+}
 
 export const formats = [
     "header",

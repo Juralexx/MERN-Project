@@ -41,7 +41,6 @@ const Workers = ({ workArray, setWorkArray, onNext, onBack }) => {
         const response = await axios.get(URL).catch((err) => {
             console.log("Error: ", err)
         })
-
         if (response) {
             if (searchQuery.length >= 2) {
                 setWorksFound(response.data)

@@ -10,15 +10,15 @@ import { ErrorCard } from '../../tools/components/Error';
 
 const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray, setWorkArray, isErr, setErr, error, setError, onNext, onBack }) => {
     const [searchQuery, setSearchQuery] = useState("")
-    const [number, setNumber] = useState("")
+    const [number, setNumber] = useState(0)
     const [work, setWork] = useState("")
-    const wrapperRef = useRef()
-    const errorRef = useRef()
     const [worksFound, setWorksFound] = useState([])
     const [isLoading, setLoading] = useState(false)
-    const [isResponse, setResponse] = useState(true)
+    const [isResponse, setResponse] = useState(false)
     const [display, setDisplay] = useState(false)
-    const isEmpty = !worksFound || worksFound.length === 0
+    const isEmpty = worksFound.length === 0
+    const wrapperRef = useRef()
+    const errorRef = useRef()
     const checkErr = (name) => { if (isErr === name) return "err" }
 
     const setSelect = (value) => { setSearchQuery(value); setDisplay(false); setLoading(false) }
@@ -26,25 +26,28 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
     const searchWork = async () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         else {
-            const response = await axios.get(encodeURI(`${process.env.REACT_APP_API_URL}api/work/${searchQuery}`)).catch((err) => { console.log("Error: ", err) })
+            const response = await axios.get(encodeURI(`${process.env.REACT_APP_API_URL}api/work/${searchQuery}`)).catch(err => console.error(err))
             if (response) {
                 setWorksFound(response.data)
-                setLoading(true)
                 if (searchQuery.length > 2) {
-                    setResponse(true)
                     setDisplay(true)
                     if (isEmpty) {
+                        setLoading(true)
                         setResponse(false)
+                    } else {
                         setLoading(false)
-                        setDisplay(false)
+                        setResponse(true)
                     }
-                } else { setDisplay(false) }
+                } else {
+                    setResponse(false)
+                    setLoading(true)
+                }
             }
         }
     }
 
     const checkArrayErrors = () => {
-        if (work === "" || number === "") {
+        if (work === "" || number === (null || undefined)) {
             setErr("work")
             setError("Veuillez saisir un métier ou un nombre valide...")
         } else {
@@ -65,7 +68,7 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
     }
 
     const checkErrors = () => {
-        if (numberofcontributors === "" || numberofcontributors === 0 || numberofcontributors === "0") {
+        if (numberofcontributors < 0 || numberofcontributors === (null || undefined)) {
             setErr("numberofcontributors")
             setError("Veuillez sélectionner le nombre de personnes recherchées, si vous ne savez pas sélectionnez \"Je ne sais pas encore.")
         } else {
@@ -80,9 +83,9 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
     }
 
     const setUndefined = () => {
-        if (numberofcontributors !== "not-defined") {
-            setNumberofcontributors("not-defined")
-        } else { setNumberofcontributors("") }
+        if (numberofcontributors !== 0) {
+            setNumberofcontributors(0)
+        } else { setNumberofcontributors(null) }
     }
 
     return (
@@ -90,9 +93,9 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
             <h2>Avez-vous besoin d'une équipe ?</h2>
             <p className="mb-2">Nombre de personnes recherchées</p>
             <div className="content-form flex items-center">
-                <NumberInput className={`${checkErr("numberofcontributors")}`} placeholder="Nombre..." onChange={(e) => setNumberofcontributors(e.target.value)} value={numberofcontributors} />
+                <NumberInput className={`${checkErr("numberofcontributors")}`} placeholder="Nombre..." onChange={(e) => setNumberofcontributors(e.target.value)} value={numberofcontributors > 0 ? numberofcontributors : ""} />
                 <div className="flex items-center">
-                    <CheckBox className="ml-4 mr-2" checked={numberofcontributors === "not-defined"} onChange={setUndefined} name="number" htmlFor="number" />
+                    <CheckBox className="ml-4 mr-2" checked={numberofcontributors === 0} onChange={setUndefined} name="number" htmlFor="number" />
                     <div>Je ne sais pas encore</div>
                 </div>
             </div>
@@ -115,9 +118,9 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
                         }
                     </div>
                     <div className="searchbar">
-                        <ClassicInput  className={`search-input ${checkErr("work")}`} type="text" placeholder="Rechercher un métier..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyPress={searchWork} />
+                        <ClassicInput className={`search-input ${checkErr("work")}`} type="text" placeholder="Rechercher un métier..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onInput={searchWork} />
                         <div tabIndex="0" className="auto-complete-container custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
-                            {!isEmpty && display && isResponse && (
+                            {!isEmpty && isResponse && (
                                 worksFound.map((element, key) => {
                                     const choice = `${element.appelation_metier}`;
                                     return (
@@ -125,10 +128,10 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
                                     )
                                 })
                             )}
-                            {(isLoading || (!isEmpty && !display && isLoading)) && (
+                            {(!isEmpty && isLoading) && (
                                 <SmallLoader />
                             )}
-                            {!isResponse && !isLoading && searchQuery.length > 2 && isEmpty && (
+                            {searchQuery.length > 2 && isEmpty && (
                                 <div className="no-result">
                                     <div><BsInboxFill /></div>
                                     <div>Aucun resultat ne correspond à votre recherche...</div>
@@ -136,15 +139,15 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, workArray
                             )}
                         </div>
 
-                        <NumberInput placeholder="Nombre..." onChange={(e) => setNumber(e.target.value)} />
-                        <ToolsBtn text="Valider" disabled={work.length !== "" && (number < 0 || number === "0" || number === "")} onClick={checkArrayErrors}><BsCheckLg /></ToolsBtn>
+                        <NumberInput placeholder="Nombre..." value={number} onChange={(e) => setNumber(e.target.value)} />
+                        <ToolsBtn text="Valider" disabled={work.length !== "" && (number < 0 || number === 0 || number === (null || undefined))} onClick={checkArrayErrors}><BsCheckLg /></ToolsBtn>
                     </div>
                     {isErr === "work" && <ErrorCard useRef={errorRef} show={isErr === "work"} text={error} />}
                 </div>
             </div>
             <div className="btn-container">
                 <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" disabled={workArray.length === 0 && numberofcontributors === ""} className="next-btn" icon={<IoMdArrowRoundForward />} onClick={checkErrors} />
+                <EndIconButton text="Suivant" disabled={workArray.length === 0 && numberofcontributors === (undefined || null)} className="next-btn" icon={<IoMdArrowRoundForward />} onClick={checkErrors} />
             </div>
         </div>
     )
