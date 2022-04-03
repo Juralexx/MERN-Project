@@ -200,7 +200,7 @@ export const IconInput = (props) => {
                 </div>
             }
             {endIcon &&
-                <div className="h-[40px] absolute bottom-0 right-4 flex pl-4 py-[4px]">
+                <div className="end-icon">
                     {endIcon}
                 </div>
             }

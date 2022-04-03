@@ -152,6 +152,22 @@
       "nom_ancienne_region": "Limousin"
     },
     {
+      "code_departement": "2A",
+      "nom_departement": "Corse-du-Sud",
+      "code_nouvelle_region": 94,
+      "nom_nouvelle_region": "Corse",
+      "code_ancienne_region": 94,
+      "nom_ancienne_region": "Corse"
+    },
+    {
+      "code_departement": "2B",
+      "nom_departement": "Haute-Corse",
+      "code_nouvelle_region": 94,
+      "nom_nouvelle_region": "Corse",
+      "code_ancienne_region": 94,
+      "nom_ancienne_region": "Corse"
+    },
+    {
       "code_departement": 21,
       "nom_departement": "Côte-d'Or",
       "code_nouvelle_region": 27,
@@ -222,22 +238,6 @@
       "nom_nouvelle_region": "Bretagne",
       "code_ancienne_region": 53,
       "nom_ancienne_region": "Bretagne"
-    },
-    {
-      "code_departement": "2A",
-      "nom_departement": "Corse-du-Sud",
-      "code_nouvelle_region": 94,
-      "nom_nouvelle_region": "Corse",
-      "code_ancienne_region": 94,
-      "nom_ancienne_region": "Corse"
-    },
-    {
-      "code_departement": "2B",
-      "nom_departement": "Haute-Corse",
-      "code_nouvelle_region": 94,
-      "nom_nouvelle_region": "Corse",
-      "code_ancienne_region": 94,
-      "nom_ancienne_region": "Corse"
     },
     {
       "code_departement": 30,

@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import SignInForm from '../components/log/SignInForm';
-import { UidContext } from '../components/AppContext'
 import { Link } from 'react-router-dom';
 
-const Login = () => {
-    const uid = useContext(UidContext)
+const Login = ({ uid }) => {
 
     if (uid) window.location = '/'
     else return (
@@ -19,7 +17,7 @@ const Login = () => {
                     </div>
                     <SignInForm />
                     <div className="sign-card-bottom">
-                        Par encore compte ?
+                        Par encore de compte ?
                         <Link to="/register">Créer mon compte</Link>
                     </div>
                 </div>

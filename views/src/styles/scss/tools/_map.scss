@@ -1,0 +1,74 @@
+.map-container {
+    max-width       : 350px;
+    margin          : 0 auto;
+    display         : flex;
+    flex-direction  : column;
+    justify-content : center;
+    align-items     : center;
+}
+
+#map-departments {
+    width  : 450px;
+    margin : 0 auto;
+    cursor : ponter;
+
+    path {
+        stroke          : #ffffff;
+        stroke-width    : 2px;
+        stroke-linecap  : round;
+        stroke-linejoin : round;
+        stroke-opacity  : 0.25;
+        fill : rgba(var(--primary-rgb), 0.3);
+        cursor          : pointer;
+        
+        &.active {
+            fill : var(--primary);
+        }
+    }
+
+    g {
+        &:hover {
+            path {
+                fill : rgba(var(--primary-rgb), 0.5);
+            }
+        }
+    }
+
+    g {
+        path {
+            &:hover {
+                fill : var(--primary);
+            }
+        }
+    }
+}
+
+
+
+#map-region {
+    width  : 450px;
+    margin : 0 auto;
+    cursor : pointer;
+
+    path {
+        stroke          : #ffffff;
+        stroke-width    : 2px;
+        stroke-linecap  : round;
+        stroke-linejoin : round;
+        stroke-opacity  : 0.25;
+        fill            : rgba(var(--primary-rgb), 0.3);
+        cursor          : pointer;
+
+        &.active {
+            fill : var(--primary);
+        }
+    }
+
+    g {
+        path {
+            &:hover {
+                fill : var(--primary);
+            }
+        }
+    }
+}

@@ -41,7 +41,8 @@ header {
             right : 50px;
         }
 
-        .nav-container, .nav-container-right {
+        .nav-container,
+        .nav-container-right {
             position        : absolute;
             top             : 0;
             display         : flex;
@@ -225,5 +226,71 @@ header {
                 font-size   : 15px;
             }
         }
+    }
+}
+
+.navbar-form-pages {
+    position        : relative;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    padding         : 10px 20px;
+    margin          : 0 auto;
+
+    .logo-inner {
+        display       : flex;
+        align-items   : center;
+        width         : auto;
+        height        : 100%;
+        padding-right : 25px;
+        border-right  : 2px solid white;
+
+        img {
+            height      : 36px;
+            width       : auto;
+            margin-left : 4px;
+        }
+    }
+
+    .right {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        padding-left    : 25px;
+
+        svg {
+            height       : 30px;
+            width        : 30px;
+            margin-right : 7px;
+        }
+
+        p {
+            font-size : 18px;
+        }
+    }
+}
+
+.move-back {
+    position         : absolute;
+    top              : 7px;
+    left             : 40px;
+    padding          : 8px;
+    background-color : var(--content-light);
+    border-radius    : 30px;
+    cursor           : pointer;
+
+    svg {
+        height : 30px;
+        width  : 30px;
+    }
+
+    a {
+        display : block;
+        height  : 100%;
+        width   : 100%;
+    }
+
+    &:hover {
+        background-color : var(--content);
     }
 }

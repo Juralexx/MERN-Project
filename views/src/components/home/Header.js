@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { useClickOutside } from '../tools/functions/useClickOutside';
 import HeaderNavbar from '../HeaderNavBar'
 import Categories from './Categories'
 import MapModal from '../tools/map/MapModal';
-import { IconButton, TextButton } from '../tools/components/Button';
+import { EndIconButton, TextButton } from '../tools/components/Button';
 import { IoSend } from 'react-icons/io5'
 import { IconInput } from '../tools/components/Inputs';
 import { GoSearch } from 'react-icons/go'
@@ -16,65 +17,67 @@ const Header = () => {
     const [openMapModal, setOpenMapModal] = useState(false)
     const [category, setCategory] = useState("")
     const [location, setLocation] = useState("")
+    const [department, setDepartment] = useState("")
+    const [region, setRegion] = useState("")
+    const categoriesRef = useRef()
+    useClickOutside(categoriesRef, setOpenCategoriesPicker, false)
 
     return (
-        <div className="relative flex justify-center items-center h-[calc(100vh-60px)] max-h-[1080px] dark:bg-gradient-to-r from-background_primary to-background_primary_light">
-            <div className="container px-10">
-                <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="pr-10">
-                        <h1 className="text-dark dark:text-slate-300 text-6xl font-extrabold leading-[1.1]" style={{ fontWeight: "900"}}>
-                            Where <span className="text-primary_light font-bold">all projects</span><br />become <span className="text-title font-bold">reality</span>
-                        </h1>
-                        <p className="mt-2 text-xl dark:text-slate-400 text-slate-500 pr-10">
-                            Circa hos dies Lollianus primae lanuginis adulesce,
-                            Lampadi filius ex praefecto, exploratius causam Maximino spectante,
-                            convictus codicem noxiarum artium nondum per aetatem
-                        </p>
+        <div id="header">
+            <div className="header-container">
+                <div className="header-inner">
+                    <div className="header-inner-left">
+                        <h1>Where <span>all projects</span><br />become <span>reality</span></h1>
+                        <p> Circa hos dies Lollianus primae lanuginis adulesce, lampadi filius ex praefecto, exploratius causam Maximino spectante, convictus codicem noxiarum artium nondum per aetatem</p>
                     </div>
-                    <div className="pt-5">
+                    <div className="header-inner-right">
                         <IconInput
+                            className="is-start-icon"
                             placeholder="Rechercher un projet"
                             type="search"
-                            fullwidth
-                            icon={<GoSearch className="h-[18px] w-[18px] text-gray-500" />}
+                            icon={<GoSearch />}
                         />
-                        <div className="grid grid-cols-2 gap-4 relative py-4">
-                            <div>
+                        <div className="header-input-flex">
+                            <div ref={categoriesRef}>
                                 <IconInput
+                                    className="is-start-icon"
                                     placeholder="Catégorie"
-                                    icon={<BiCategoryAlt className="h-[18px] w-[18px] text-gray-500" />}
-                                    endIcon={<BsCaretDownFill className="h-[14px] w-[14px] mt-1 text-gray-500" />}
+                                    readOnly
+                                    icon={<BiCategoryAlt />}
+                                    endIcon={<BsCaretDownFill />}
                                     onClick={() => setOpenCategoriesPicker(!openCategoriesPicker)}
                                     onChange={() => setCategory(category)}
                                     value={category}
                                 />
-                                <Categories open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
+                                <Categories className="top-[56px]" open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
                             </div>
                             <div>
                                 <IconInput
+                                    className="is-start-icon"
                                     placeholder="Métier"
                                     type="text"
                                     fullwidth
-                                    icon={<MdWork className="h-[18px] w-[18px] text-gray-500" />}
+                                    icon={<MdWork />}
                                 />
                             </div>
                         </div>
                         <IconInput
+                            className="is-start-icon"
                             placeholder="Localisation"
                             type="text"
                             fullwidth
-                            icon={<FaMapMarkerAlt className="h-[18px] w-[18px] text-gray-500" />}
+                            icon={<FaMapMarkerAlt />}
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                         />
-                        <div className="flex flex-row justify-between pt-4">
+                        <div className="btn-container">
                             <TextButton text="Voir la carte" onClick={() => setOpenMapModal(true)} />
-                            <IconButton text="Rechercher" endIcon={<IoSend style={{ width: "16px", height: "16px", marginTop: 1 }} />} />
+                            <EndIconButton className="px-7" text="Rechercher" icon={<IoSend />} />
                         </div>
                     </div>
                 </div>
             </div>
-            <MapModal open={openMapModal} setOpen={setOpenMapModal} location={location} setLocation={setLocation} />
+            <MapModal open={openMapModal} setOpen={setOpenMapModal} location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} />
             <HeaderNavbar />
         </div>
     )

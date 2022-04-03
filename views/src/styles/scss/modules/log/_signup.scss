@@ -10,7 +10,7 @@
         justify-content : center;
         margin          : 0 auto;
         height          : calc(100vh - 60px);
-        width           : 460px;
+        width           : 500px;
         padding-bottom  : 100px;
 
         .header-logo {
@@ -21,10 +21,10 @@
 
         .sign-card {
             width         : 100%;
-            padding       : 24px;
+            padding       : 30px;
             box-shadow    : var(--shadow-xl);
             border-radius : 8px;
-            background    : var(--content-light);
+            background    : var(--content-x-light);
 
             .title {
                 margin-bottom : 20px;
@@ -36,10 +36,11 @@
             }
 
             .dynamic-input {
-                min-width : 100%;
+                min-width  : 100%;
+                background : var(--content-light);
 
                 input {
-                    min-width : 100%;
+                    min-width  : 100%;
                 }
             }
 
@@ -49,6 +50,26 @@
                 right    : 20px;
                 z-index  : 2;
                 color    : var(--green);
+            }
+
+            .forgot-password {
+                width           : 100%;
+                font-size       : 14px;
+                display         : flex;
+                align-items     : center;
+                justify-content : flex-end;
+                padding-top     : 10px;
+
+                a {
+                    color : var(--placeholder);
+                }
+
+                &:hover {
+                    text-decoration : underline;
+                    a {
+                        color : var(--text);
+                    }
+                }
             }
         }
 

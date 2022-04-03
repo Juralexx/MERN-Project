@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { io } from 'socket.io-client'
-import Index from './components/routes/index';
+import Paths from './components/routes/routes';
 import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
@@ -154,11 +154,11 @@ function App() {
     return (
         <UidContext.Provider value={uid}>
             <UserContext.Provider value={user}>
-                <Index websocket={websocket} friends={friends} onlineUsers={onlineUsers} user={user} />
+                <Paths websocket={websocket} friends={friends} onlineUsers={onlineUsers} user={user} uid={uid} />
                 {send && <NotificationCard sentNotification={sentNotification} setSend={setSend} send={send} user={user} websocket={websocket} />}
             </UserContext.Provider>
         </UidContext.Provider>
-    );
+    )
 }
 
 export default App;

@@ -1,22 +1,22 @@
 [
     {
-      "code_region": 01,
+      "code_region": "01",
       "nom_region": "Guadeloupe"
     },
     {
-      "code_region": 02,
+      "code_region": "02",
       "nom_region": "Martinique"
     },
     {
-      "code_region": 03,
+      "code_region": "03",
       "nom_region": "Guyane"
     },
     {
-      "code_region": 04,
+      "code_region": "04",
       "nom_region": "La Réunion"
     },
     {
-      "code_region": 06,
+      "code_region": "06",
       "nom_region": "Mayotte"
     },
     {

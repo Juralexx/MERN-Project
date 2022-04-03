@@ -1,11 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { useClickOutside } from '../tools/functions/useClickOutside';
+import React, { useState } from 'react';
 import { BsFillSunFill, BsFillCaretRightFill } from 'react-icons/bs'
 
 const Categories = ({ open, setOpen, setCategory, category }, props) => {
-    const wrapperRef = useRef()
+    const { className } = props
     const [active, setActive] = useState(0)
-    useClickOutside(wrapperRef, setOpen, false)
     const isMainActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const isSubActive = (value) => { if (category === value) return "active" }
 
@@ -26,7 +24,7 @@ const Categories = ({ open, setOpen, setCategory, category }, props) => {
 
     return (
         open && (
-            <div className={`${props.className ? "categories-picker " + props.className : "categories-picker"}`} ref={wrapperRef}>
+            <div className={`${className ? "categories-picker " + className : "categories-picker"}`}>
                 <div className="categories-main">
                     {categories.map((category, key) => {
                         return (

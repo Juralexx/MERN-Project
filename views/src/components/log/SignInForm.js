@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { Button } from '../tools/components/Button'
 import { DynamicInput } from '../tools/components/Inputs';
 import { ErrorCard } from '../tools/components/Error';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { handleEnterKey } from '../Utils'
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 const SignInForm = () => {
     const [email, setEmail] = useState("");
@@ -59,6 +60,7 @@ const SignInForm = () => {
                     defaultValue={password}
                     endIcon={passwordShown ? <AiFillEyeInvisible /> : <AiFillEye />} endIconClick={() => setPasswordShown(!passwordShown)}
                 />
+                <div className="forgot-password"><Link to="/">Mot de passe oublié</Link></div>
                 {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" />}
             </div>
             <Button text="Connexion" className="mt-6 w-full" onClick={handleLogin} />
