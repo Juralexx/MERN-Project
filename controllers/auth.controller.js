@@ -27,49 +27,46 @@ export const signUp = async (req, res) => {
 
     try {
         const user = await UserModel.create({ pseudo, email, password })
-            // .then((res) => {
-            //     const __directory = `${__dirname}/../../uploads/users/${user._id}`
 
-            //     if (!fs.existsSync(__directory)) {
-            //         fs.mkdirSync(__directory, { recursive: true })
-            //     }
+        const __directory = `${__dirname}/../uploads/users/${user._id}`
+        if (!fs.existsSync(__directory)) {
+            fs.mkdirSync(__directory, { recursive: true })
+        }
 
-            //     const defaultProPic = `${process.env.SERVER_URL}/files/img/random-user.png`
-            //     fs.copyFile(defaultProPic, `${__directory}/${user._id}.jpg`, (err) => {
-            //         if (err) throw err
-            //     })
+        const defaultProPic = `${__dirname}/../files/img/random-user.png`
+        fs.copyFile(defaultProPic, `${__directory}/${user._id}.jpg`, (err) => {
+            if (err) throw err
+        })
 
-            //     const defaultCoverPic = `${process.env.SERVER_URL}/files/img/random-cover.jpg`
-            //     fs.copyFile(defaultCoverPic, `${__directory}/cover-${user._id}.jpg`, (err) => {
-            //         if (err) throw err
-            //     })
+        const defaultCoverPic = `${__dirname}/../files/img/random-cover.jpg`
+        fs.copyFile(defaultCoverPic, `${__directory}/cover-${user._id}.jpg`, (err) => {
+            if (err) throw err
+        })
 
-            //     const ProPicName = `${process.env.SERVER_URL}/uploads/users/${user._id}/${user._id}.jpg`;
-            //     const CoverPicName = `${process.env.SERVER_URL}/uploads/users/${user._id}/cover-${user._id}.jpg`;
+        const ProPicName = `${process.env.SERVER_URL}/uploads/users/${user._id}/${user._id}.jpg`;
+        const CoverPicName = `${process.env.SERVER_URL}/uploads/users/${user._id}/cover-${user._id}.jpg`;
 
-            //     try {
-            //         UserModel.findByIdAndUpdate(
-            //             user._id,
-            //             {
-            //                 $set: {
-            //                     picture: ProPicName,
-            //                     cover_picture: CoverPicName,
-            //                 }
-            //             },
-            //             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
-            //             (err, docs) => {
-            //                 if (!err) {
-            //                     return res.send(docs);
-            //                 } else {
-            //                     return res.status(400).send({ message: err });
-            //                 }
-            //             }
-            //         )
-            //     } catch (err) {
-            //         return res.status(400).send({ message: err });
-            //     }
-            // })
-            res.status(201).json({ user: user._id })
+        try {
+            UserModel.findByIdAndUpdate(
+                user._id,
+                {
+                    $set: {
+                        picture: ProPicName,
+                        cover_picture: CoverPicName,
+                    }
+                },
+                { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+                (err, docs) => {
+                    if (!err) {
+                        return res.status(201).json({ user: user._id })
+                    } else {
+                        return res.status(400).send({ message: err });
+                    }
+                }
+            )
+        } catch (err) {
+            return res.status(400).send({ message: err });
+        }
     }
     catch (err) {
         const errors = signUpErrors(err);

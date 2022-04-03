@@ -79,10 +79,10 @@ export const updatePictures = async (req, res) => {
             fs.mkdirSync(__directory, { recursive: true })
         }
 
-        const files = readdirSync(__directory)
-        let array = files.concat(req.files)
+        const folder = readdirSync(__directory)
+        let files = folder.concat(req.files)
 
-        array.map(async (file, key) => {
+        files.map(async (file, key) => {
             const fileName = `${req.params.id}-${key}.jpg`;
             pics.push(`/uploads/projects/${req.params.id}/${fileName}`)
             new Promise(async () => {

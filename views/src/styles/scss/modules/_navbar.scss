@@ -33,10 +33,17 @@ header {
         }
 
         .nav-container {
+            left      : 50%;
+            transform : translateX(-50%);
+        }
+
+        .nav-container-right {
+            right : 50px;
+        }
+
+        .nav-container, .nav-container-right {
             position        : absolute;
             top             : 0;
-            left            : 50%;
-            transform       : translateX(-50%);
             display         : flex;
             justify-content : space-between;
             width           : auto;

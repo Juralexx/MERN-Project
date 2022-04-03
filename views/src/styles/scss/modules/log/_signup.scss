@@ -1,0 +1,188 @@
+.sign-container {
+    height     : calc(100vh - 60px);
+    width      : 100%;
+    background : var(--content);
+
+    .sign-container-inner {
+        display         : flex;
+        flex-direction  : column;
+        align-items     : center;
+        justify-content : center;
+        margin          : 0 auto;
+        height          : calc(100vh - 60px);
+        width           : 460px;
+        padding-bottom  : 100px;
+
+        .header-logo {
+            width  : 120px;
+            height : auto;
+            margin : 0 auto 20px;
+        }
+
+        .sign-card {
+            width         : 100%;
+            padding       : 24px;
+            box-shadow    : var(--shadow-xl);
+            border-radius : 8px;
+            background    : var(--content-light);
+
+            .title {
+                margin-bottom : 20px;
+                text-align    : center;
+
+                h1 {
+                    color : var(--text);
+                }
+            }
+
+            .dynamic-input {
+                min-width : 100%;
+
+                input {
+                    min-width : 100%;
+                }
+            }
+
+            .validated {
+                position : absolute;
+                top      : 23px;
+                right    : 20px;
+                z-index  : 2;
+                color    : var(--green);
+            }
+        }
+
+        .sign-card-bottom {
+            display         : flex;
+            align-items     : center;
+            width           : 100%;
+            text-align      : center;
+            justify-content : center;
+            color           : var(--text);
+            padding         : 12px 20px 0;
+            margin-top      : 20px;
+            border-radius   : 5px;
+
+            a {
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                margin-left     : 10px;
+                height          : 40px;
+                padding         : 0px 20px;
+                font-size       : 16px;
+                text-align      : center;
+                border-radius   : var(--radius);
+                color           : var(--primary);
+                background      : rgba(var(--primary-rgb), 0.15);
+                cursor          : pointer;
+
+                &:hover {
+                    background : rgba(var(--primary-rgb), 0.30);
+                }
+            }
+        }
+    }
+}
+
+.password-checker {
+    position      : absolute;
+    top           : 108%;
+    width         : 100%;
+    background    : var(--content-x-light);
+    border-radius : 5px;
+    padding       : 15px;
+    box-shadow    : var(--shadow-lg);
+    z-index       : 10;
+
+    .checker-header {
+        color  : var(--text);
+        margin : 10px 0;
+    }
+
+    .checker {
+        display     : flex;
+        align-items : center;
+        padding     : 5px 0;
+
+        p {
+            margin-top : 3px;
+        }
+
+        svg {
+            width        : 22px;
+            height       : 22px;
+            margin-right : 8px;
+        }
+
+        &.is-valid {
+            color : var(--green);
+        }
+
+        &.not-valid {
+            color : var(--red);
+        }
+    }
+}
+
+.password-strength {
+    display       : flex;
+    height        : 30px;
+    margin-bottom : 20px;
+
+    .card {
+        margin-top       : 6px;
+        height           : 18px;
+        width            : 23%;
+        border-radius    : 10px;
+        margin-right     : 5px;
+        background-color : var(--content-light);
+
+        &:nth-child(1) {
+            &.weak {
+                background-color : var(--red);
+            }
+            &.medium {
+                background-color : var(--orange);
+            }
+            &.strong {
+                background-color : var(--green);
+            }
+        }
+        &:nth-child(2) {
+            &.medium {
+                background-color : var(--orange);
+            }
+            &.strong {
+                background-color : var(--green);
+            }
+        }
+        &:nth-child(3) {
+            &.strong {
+                background-color : var(--green);
+            }
+        }
+    }
+
+    .strength {
+        width         : 25%;
+        height        : 30px;
+        padding       : 5px;
+        text-align    : center;
+        border-radius : 5px;
+        margin-left   : auto;
+
+        &.weak {
+            color            : var(--red);
+            background-color : rgba(var(--red-rgb), 0.2);
+        }
+        &.medium {
+            color            : var(--orange);
+            background-color : rgba(var(--orange-rgb), 0.2);
+        }
+        &.strong {
+            color            : var(--green);
+            background-color : rgba(var(--green-rgb), 0.2);
+        }
+    }
+}

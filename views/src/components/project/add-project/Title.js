@@ -37,7 +37,7 @@ const Title = ({ title, setTitle, category, setCategory, error, setError, isErr,
                 <p className="title">Titre <span>Champ requis</span></p>
                 <ClassicInput className={`title-input ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle(e.target.value)} value={title} />
                 <div className="title-infos">{title.length} / 100 caractères</div>
-                {isErr === "title" && <ErrorCard useRef={errorRef} show={isErr === "title"} text={error} />}
+                {isErr === "title" && <ErrorCard useRef={errorRef} display={(isErr === "title").toString()} text={error} />}
             </div>
 
             <div className="content-form mt-4">
@@ -49,7 +49,7 @@ const Title = ({ title, setTitle, category, setCategory, error, setError, isErr,
                     )}
                 </div>
             </div>
-            {isErr === "category" && <ErrorCard useRef={errorRef} show={isErr === "category"} text={error} />}
+            {isErr === "category" && <ErrorCard useRef={errorRef} display={(isErr === "category").toString()} text={error} />}
             <div className="btn-container">
                 <EndIconButton text="Suivant" className="next-btn right" disabled={title.length < 10 || title.length > 100 || category.length === 0} icon={<IoMdArrowRoundForward />} onClick={checkValues} />
             </div>

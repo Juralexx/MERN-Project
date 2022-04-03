@@ -58,7 +58,7 @@ const Title = ({ project }) => {
                             <Button text="Valider" disabled={title === project.title} onClick={handleTitle} />
                         </div>
                     </div>
-                    <ErrorCard useRef={errorRef} show={isErr} text={error} />
+                    <ErrorCard useRef={errorRef} display={isErr} text={error} />
                 </>
             )}
         </div>

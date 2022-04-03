@@ -63,46 +63,52 @@ const Navbar = ({ websocket, user }) => {
                         </>
                     </>
                 ) : (
-                    <div className="nav-container">
-                        <ul className="nav-ul">
-                            <li className="nav-li">
-                                <NavLink to="/" className={isThisActive}>
-                                    <AiFillHome className="nav-icon" />
-                                    <p className="nav-p">Accueil</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-li">
-                                <NavLink to="/" className={isThisActive}>
-                                    <MdOutlineScreenSearchDesktop className="nav-icon" />
-                                    <p className="nav-p">Recherches</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-li">
-                                <NavLink to="/" className={isThisActive}>
-                                    <FaProjectDiagram className="nav-icon" />
-                                    <p className="nav-p">Projets</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-li">
-                                <NavLink to="/messenger" className={isThisActive}>
-                                    <MdOutlineMessage className="nav-icon" />
-                                    <p className="nav-p">Messages</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-li">
-                                <NavLink to="/login" className={isThisActive}>
-                                    <IoPersonCircleSharp className="nav-icon" />
-                                    <p className="nav-p">Se connecter</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-li">
-                                <NavLink to="/register" className={isThisActive}>
-                                    <RiLoginCircleLine className="nav-icon" />
-                                    <p className="nav-p">S'inscrire</p>
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
+                    <>
+                        <div className="nav-container">
+                            <ul className="nav-ul">
+                                <li className="nav-li">
+                                    <NavLink to="/" className={isThisActive}>
+                                        <AiFillHome className="nav-icon" />
+                                        <p className="nav-p">Accueil</p>
+                                    </NavLink>
+                                </li>
+                                <li className="nav-li">
+                                    <NavLink to="/" className={isThisActive}>
+                                        <MdOutlineScreenSearchDesktop className="nav-icon" />
+                                        <p className="nav-p">Recherches</p>
+                                    </NavLink>
+                                </li>
+                                <li className="nav-li">
+                                    <NavLink to="/" className={isThisActive}>
+                                        <FaProjectDiagram className="nav-icon" />
+                                        <p className="nav-p">Projets</p>
+                                    </NavLink>
+                                </li>
+                                <li className="nav-li">
+                                    <NavLink to="/messenger" className={isThisActive}>
+                                        <MdOutlineMessage className="nav-icon" />
+                                        <p className="nav-p">Messages</p>
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="nav-container-right">
+                            <ul className="nav-ul">
+                                <li className="nav-li">
+                                    <NavLink to="/login" className={isThisActive}>
+                                        <IoPersonCircleSharp className="nav-icon" />
+                                        <p className="nav-p">Se connecter</p>
+                                    </NavLink>
+                                </li>
+                                <li className="nav-li">
+                                    <NavLink to="/register" className={isThisActive}>
+                                        <RiLoginCircleLine className="nav-icon" />
+                                        <p className="nav-p">S'inscrire</p>
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </>
                 )}
             </nav>
         </header >

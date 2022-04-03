@@ -13,7 +13,7 @@ import sharp from 'sharp'
 /****************************************************** UPLOAD ********************************************************/
 
 export const uploadProfilPicture = async (req, res) => {
-    const __directory = `${__dirname}/../../../uploads/users/${req.params.id}`
+    const __directory = `${__dirname}/../../uploads/users/${req.params.id}`
     try {
         if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") {
             throw Error("invalid file");
@@ -75,11 +75,11 @@ export const uploadProfilPicture = async (req, res) => {
 /****************************************************** DELETE ********************************************************/
 
 export const deleteProfilPicture = async (req, res) => {
-    const __directory = `${__dirname}/../../../uploads/users/${req.params.id}`
+    const __directory = `${__dirname}/../../uploads/users/${req.params.id}`
 
     fs.unlinkSync(`${__dirname}/${req.params.id}.jpg`)
 
-    const defaultPic = `${process.env.SERVER_URL}/files/img/random-user.png`
+    const defaultPic = `${__dirname}/../../files/img/random-user.png`
 
     fs.copyFile(defaultPic, `${__directory}/${req.params.id}.jpg`, (err) => {
         if (err) throw err
@@ -107,7 +107,7 @@ export const deleteProfilPicture = async (req, res) => {
 /************************************************** UPLOAD COVER ******************************************************/
 
 export const uploadCoverPicture = async (req, res) => {
-    const __directory = `${__dirname}/../../../uploads/users/${req.params.id}`
+    const __directory = `${__dirname}/../../uploads/users/${req.params.id}`
     try {
         if (req.file.detectedMimeType != "image/jpg" && req.file.detectedMimeType != "image/png" && req.file.detectedMimeType != "image/jpeg") {
             throw Error("invalid file");

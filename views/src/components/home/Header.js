@@ -33,7 +33,7 @@ const Header = () => {
                     </div>
                     <div className="pt-5">
                         <IconInput
-                            text="Rechercher un projet"
+                            placeholder="Rechercher un projet"
                             type="search"
                             fullwidth
                             icon={<GoSearch className="h-[18px] w-[18px] text-gray-500" />}
@@ -41,8 +41,7 @@ const Header = () => {
                         <div className="grid grid-cols-2 gap-4 relative py-4">
                             <div>
                                 <IconInput
-                                    text="Catégorie"
-                                    fullwidth
+                                    placeholder="Catégorie"
                                     icon={<BiCategoryAlt className="h-[18px] w-[18px] text-gray-500" />}
                                     endIcon={<BsCaretDownFill className="h-[14px] w-[14px] mt-1 text-gray-500" />}
                                     onClick={() => setOpenCategoriesPicker(!openCategoriesPicker)}
@@ -53,7 +52,7 @@ const Header = () => {
                             </div>
                             <div>
                                 <IconInput
-                                    text="Métier"
+                                    placeholder="Métier"
                                     type="text"
                                     fullwidth
                                     icon={<MdWork className="h-[18px] w-[18px] text-gray-500" />}
@@ -61,7 +60,7 @@ const Header = () => {
                             </div>
                         </div>
                         <IconInput
-                            text="Localisation"
+                            placeholder="Localisation"
                             type="text"
                             fullwidth
                             icon={<FaMapMarkerAlt className="h-[18px] w-[18px] text-gray-500" />}
