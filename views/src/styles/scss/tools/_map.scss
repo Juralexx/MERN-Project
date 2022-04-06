@@ -13,23 +13,23 @@
     cursor : ponter;
 
     path {
-        stroke          : #ffffff;
-        stroke-width    : 2px;
+        stroke          : var(--content-light);
+        stroke-width    : 3px;
         stroke-linecap  : round;
         stroke-linejoin : round;
         stroke-opacity  : 0.25;
-        fill : rgba(var(--primary-rgb), 0.3);
+        fill            : var(--primary-light);
         cursor          : pointer;
         
         &.active {
-            fill : var(--primary);
+            fill : var(--primary-dark);
         }
     }
 
     g {
         &:hover {
             path {
-                fill : rgba(var(--primary-rgb), 0.5);
+                fill : var(--primary);
             }
         }
     }
@@ -37,7 +37,7 @@
     g {
         path {
             &:hover {
-                fill : var(--primary);
+                fill : var(--primary-dark);
             }
         }
     }
@@ -51,16 +51,16 @@
     cursor : pointer;
 
     path {
-        stroke          : #ffffff;
+        stroke          : var(--content-light);
         stroke-width    : 2px;
         stroke-linecap  : round;
         stroke-linejoin : round;
         stroke-opacity  : 0.25;
-        fill            : rgba(var(--primary-rgb), 0.3);
+        fill            : var(--primary-light);
         cursor          : pointer;
 
         &.active {
-            fill : var(--primary);
+            fill : var(--primary-dark);
         }
     }
 

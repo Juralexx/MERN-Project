@@ -36,7 +36,7 @@ const Description = ({ content, setContent, onNext, onBack }) => {
                         modules={modules}
                         formats={formats}
                     />
-                    <div className="title-infos ml-auto">{count} / 10 000 caractères</div>
+                    <div className="field-infos ml-auto">{count} / 10 000 caractères</div>
                 </div>
             </div>
             <div className="btn-container">

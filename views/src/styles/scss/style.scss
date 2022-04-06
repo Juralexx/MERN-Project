@@ -19,6 +19,7 @@
 @import 'tools/user-info-modal';
 @import 'tools/scrollbar';
 @import 'tools/profil-card';
+@import 'tools/masonry';
 
 /****************************************************/
 /*********************** LOG ************************/
@@ -54,6 +55,7 @@
 @import 'modules/projects/kanban';
 @import 'modules/projects/activity-feed';
 @import 'modules/projects/about';
+@import 'modules/projects/edit';
 
 /****************************************************/
 /********************** MODULES *********************/
@@ -63,5 +65,6 @@
 @import 'modules/notifications';
 @import 'modules/settings-menu';
 @import 'modules/right-menu';
+@import 'modules/home';
 
 @import 'modules/messenger/messenger';

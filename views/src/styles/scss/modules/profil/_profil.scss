@@ -80,7 +80,7 @@
     background    : var(--content);
     padding       : 20px 0;
     border-radius : var(--radius);
-    box-shadow    : $box-card;
+    box-shadow    : var(--shadow-xl);
 
     .left {
         width : 30%;

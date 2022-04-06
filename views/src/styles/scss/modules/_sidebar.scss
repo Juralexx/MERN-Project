@@ -134,7 +134,7 @@
                     padding          : 12px 20px;
                     border-radius    : var(--radius);
                     background-color : var(--content);
-                    border           : 1px solid var(--content-light);
+                    border           : 1px solid var(--light-border);
                     font-size        : 16px;
                 }
             }
@@ -146,6 +146,24 @@
                 .sidebar-submenu-card {
                     border-left : 1px solid var(--content-light);
                     margin-left : 8px;
+
+                    a {
+                        display       : block;
+                        margin        : 5px 0 5px 8px;
+                        height        : 100%;
+                        border-radius : 5px;
+                        &.active {
+                            background-color : rgba(var(--primary-rgb), 0.6);
+                            .sidebar-submenu-title {
+                                &:hover {
+                                    background-color : rgba(var(--primary-rgb), 0.6);
+                                    span {
+                                        background-color : rgba(var(--primary-rgb), 0.6);
+                                    }
+                                }
+                            }
+                        }
+                    }
     
                     .sidebar-submenu-title {
                         display         : flex;
@@ -153,7 +171,6 @@
                         align-items     : center;
                         font-size       : 16px;
                         padding         : 8px 16px;
-                        margin          : 5px 0 5px 8px;
                         color           : var(--text);
                         cursor          : pointer;
                         border-radius   : var(--radius);
@@ -184,14 +201,6 @@
 
                             span {
                                 background-color : var(--content-light);
-                            }
-                        }
-    
-                        &.active {
-                            background-color : rgba(var(--primary-rgb), 0.6);
-
-                            span {
-                                background-color : rgba(var(--primary-rgb), 0.6);
                             }
                         }
                     }

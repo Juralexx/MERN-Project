@@ -9,6 +9,7 @@
     top           : 65px;
     right         : 42px;
     z-index       : 1100;
+    border        : 2px solid var(--content-x-light);
 
     .notifications-header {
         display         : flex;

@@ -4,7 +4,7 @@
     height        : 250px;
     background    : var(--content);
     border-radius : var(--radius);
-    box-shadow: $box-card;
+    box-shadow: var(--shadow-xl);
 
     .cover-img {
         position        : relative;

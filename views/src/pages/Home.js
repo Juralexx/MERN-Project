@@ -14,7 +14,7 @@ const Home = ({ websocket, user }) => {
         const fetch = async () => {
             try {
                 await axios.get(`${process.env.REACT_APP_API_URL}api/project/`)
-                    .then((res) => {
+                    .then(res => {
                         setProjects(res.data.sort(() => Math.random() - 0.5))
                         setProjectsByDate(res.data.sort((a, b) => Date.parse(a.createdAt) > Date.parse(b.createdAt) ? -1 : 1))
                         setProjectsByLikes(res.data.sort((a, b) => { return parseInt(a.likers.length) > parseInt(b.likers.length) ? -1 : 1 }))
@@ -24,24 +24,37 @@ const Home = ({ websocket, user }) => {
             } catch (err) { console.error(err) }
         }
         fetch()
-    }, [projects.length, isLoading])
+    }, [projects.length])
 
     return (
         <>
             <Header />
-            <div className="w-full bg-background_light dark:bg-gradient-to-r from-background_primary to-background_primary_light">
-                <div className="container mx-auto">
-                    <p className="text-3xl py-6 text-center text-title dark:text-slate-300">Les plus récent</p>
-                    <ProjectsSwiper projects={projectsByDate} isLoading={isLoading} websocket={websocket} user={user} />
-
-                    <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Tous les projets</p>
-                    <ProjectsSwiper projects={projects} isLoading={isLoading} websocket={websocket} user={user} />
-
-                    <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Les plus aimés</p>
-                    <ProjectsSwiper projects={projectsByLikes} isLoading={isLoading} websocket={websocket} user={user} />
-
-                    <p className="text-3xl py-6 mt-10 text-center text-title dark:text-slate-300">Les plus suivis</p>
-                    <ProjectsSwiper projects={projectsByFollows} isLoading={isLoading} websocket={websocket} user={user} />
+            <div className="home-body">
+                <div className="home-container">
+                    <div className="swiper-container">
+                        <h2>Les plus récent</h2>
+                        <div className="swiper-inner">
+                            <ProjectsSwiper projects={projectsByDate} isLoading={isLoading} websocket={websocket} user={user} />
+                        </div>
+                    </div>
+                    <div className="swiper-container">
+                        <h2>Tous les projets</h2>
+                        <div className="swiper-inner">
+                            <ProjectsSwiper projects={projects} isLoading={isLoading} websocket={websocket} user={user} />
+                        </div>
+                    </div>
+                    <div className="swiper-container">
+                        <h2>Les plus aimés</h2>
+                        <div className="swiper-inner">
+                            <ProjectsSwiper projects={projectsByLikes} isLoading={isLoading} websocket={websocket} user={user} />
+                        </div>
+                    </div>
+                    <div className="swiper-container">
+                        <h2>Les plus suivis</h2>
+                        <div className="swiper-inner">
+                            <ProjectsSwiper projects={projectsByFollows} isLoading={isLoading} websocket={websocket} user={user} />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

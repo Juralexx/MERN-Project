@@ -1,56 +1,97 @@
 .dashboard-header {
-    width           : 100%;
-    padding         : 10px 24px 16px;
-    background      : var(--content-light);
+    width      : 100%;
+    background : var(--content-light);
+    position   : relative;
 
-    .dashboard-header-top {
-        display         : flex;
-        align-items     : center;
-        justify-content : space-between;
+    .dashboard-header-container {
+        width     : 100%;
+        max-width : 1440px;
+        margin    : 0 auto;
+        padding   : 10px 24px 16px;
 
-        .dashboard-header-left {
-            display     : flex;
-            align-items : center;
+        .dashboard-header-top {
+            display         : flex;
+            align-items     : center;
+            justify-content : space-between;
     
-            .dashboard-header-img {
-                height        : 48px;
-                width         : 48px;
-                border-radius : 30px;
-            }
-    
-            .dashboard-header-content {
-                padding : 0 32px;
-    
-                h1 {
-                    font-size     : 20px;
-                    margin-bottom : 2px;
-                    color         : var(--text);
+            .dashboard-header-left {
+                display     : flex;
+                align-items : center;
+        
+                .dashboard-header-img {
+                    height        : 48px;
+                    width         : 48px;
+                    border-radius : 30px;
                 }
-
-                .dashboard-header-content-infos {
-                    display : flex;
-                    align-items : center;
-
-                    .infos {
-                        display      : flex;
-                        align-items  : center;
-                        font-size    : 13px;
-                        color        : var(--text-secondary);
-                        margin-right : 20px;
-
-                        svg {
-                            margin-bottom : 2px;
-                            margin-right  : 3px;
-                            color         : var(--text-tertiary);
+        
+                .dashboard-header-content {
+                    padding : 0 32px;
+        
+                    h1 {
+                        font-size     : 20px;
+                        margin-bottom : 2px;
+                        color         : var(--text);
+                    }
+    
+                    .dashboard-header-content-infos {
+                        display : flex;
+                        align-items : center;
+    
+                        .infos {
+                            display      : flex;
+                            align-items  : center;
+                            font-size    : 13px;
+                            color        : var(--text-secondary);
+                            margin-right : 20px;
+    
+                            svg {
+                                margin-bottom : 2px;
+                                margin-right  : 3px;
+                                color         : var(--text-tertiary);
+                            }
                         }
                     }
                 }
             }
+        
+            .dashboard-header-right {
+                display : flex;
+        
+            }
         }
+    }
     
-        .dashboard-header-right {
-            display : flex;
+
+    .dashboard-header-navbar {
+        position         : relative;
+        width            : 100%;
+        padding          : 10px 22px;
+        background-color : var(--content-x-light);
+        
+        .dashboard-header-navbar-content {
+            display         : flex;
+            align-items     : center;
+            justify-content : flex-start;
+            margin          : 0 auto;
+            padding         : 0 10px;
+            max-width       : 1440px;
+
+            .dashboard-header-navbar-item {
+                padding   : 4px 15px 0;
+                font-size : 16px;
+                color     : var(--text-tertiary);
+                cursor    : pointer;
+
+                a {
+                    &:hover {
+                        color : var(--text-tertiary);
+                    }
     
+                    &.active {
+                        color : var(--primary);
+                    }
+                }
+            }
         }
     }
 

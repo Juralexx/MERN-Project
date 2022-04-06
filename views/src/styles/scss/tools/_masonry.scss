@@ -1,0 +1,43 @@
+.masonry-wrapper {
+    margin-left  : auto;
+    margin-right : auto;
+
+    .masonry {
+        transition   : all .5s ease-in-out;
+        column-count : 3;
+        column-gap   : 20px;
+        column-fill  : initial;
+        padding      : 70px 0 50px;
+
+        .masonry-brick {
+            vertical-align : top;
+            border-radius  : 5px;
+
+            img {
+                max-width           : 100%;
+                vertical-align      : middle;
+                transition          : all .5s ease-in-out;
+                backface-visibility : hidden;
+                border-radius       : 5px;
+            }
+
+            &:hover img {
+                opacity : .75;
+            }
+        }
+    }
+}
+
+/* Masonry on tablets */
+@media only screen and (min-width: 440px) and (max-width: 1023px) {
+    .masonry {
+        column-count : 2;
+    }
+}
+
+/* Masonry on big screens */
+@media only screen and (min-width: 1024px) {
+    .masonry {
+        column-count : 3;
+    }
+}

@@ -23,25 +23,17 @@ const FollowersButton = ({ project, onClick }) => {
     useEffect(() => {
         if (uid) {
             if (project.followers.includes(uid)) {
-                if (followed) {
-                    if (project.followers.length > 1)
-                        setAction(<span>Vous et {project.followers.length - 1}</span>)
-                    if (project.followers.length === 1)
-                        setAction(<span>Vous</span>)
-                    if (project.followers.length === 0)
-                        setAction(<span>Vous</span>)
-                }
-                if (!followed) { setAction(<span>{project.followers.length - 1}</span>) }
+                if (followed)
+                    if (project.followers.length > 1) setAction(<span>Vous et {project.followers.length - 1}</span>)
+                    else if (project.followers.length === 1) setAction(<span>Vous</span>)
+                    else if (project.followers.length === 0) setAction(<span>Vous</span>)
+                if (!followed) setAction(<span>{project.followers.length - 1}</span>)
             } else {
-                if (followed) {
-                    if (project.followers.length > 1)
-                        setAction(<span>Vous et {project.followers.length}</span>)
-                    if (project.followers.length === 1)
-                        setAction(<span>Vous et 1</span>)
-                    if (project.followers.length === 0)
-                        setAction(<span>Vous</span>)
-                }
-                if (!followed) { setAction(<span>{project.followers.length}</span>) }
+                if (followed)
+                    if (project.followers.length > 1) setAction(<span>Vous et {project.followers.length}</span>)
+                    else if (project.followers.length === 1) setAction(<span>Vous et 1</span>)
+                    else if (project.followers.length === 0) setAction(<span>Vous</span>)
+                if (!followed) setAction(<span>{project.followers.length}</span>)
             }
         } else {
             setAction(<span>{project.followers.length}</span>)

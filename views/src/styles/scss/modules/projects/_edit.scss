@@ -1,0 +1,104 @@
+.edit-project {
+    position   : relative;
+    width      : 100%;
+    min-height : 100%;
+    background : var(--content);
+
+    .edit-project-container {
+        position  : relative;
+        max-width : 1440px;
+        height    : auto;
+        padding   : 50px 24px;
+        margin    : 0 auto;
+        color     : var(--text) !important;
+
+        h1 {
+            position      : relative;
+            margin-bottom : 20px;
+            display       : flex;
+            align-items   : center;
+            padding       : 0 0 20px 0;
+        }
+        
+        .title {
+            display         : flex;
+            justify-content : space-between;
+            align-items     : flex-end;
+            max-width       : 300px;
+            margin-bottom   : 8px;
+            font-size       : 16px;
+
+            span {
+                color     : var(--text-secondary);
+                font-size : 12px;
+            }
+        }
+
+        .field-infos {
+            width           : 300px;
+            display         : flex;
+            justify-content : flex-end;
+            color           : var(--text-secondary);
+            font-size       : 14px;
+            margin-top      : 6px;
+        }
+
+        .full {
+            min-width : 100%;
+            input {
+                min-width : 100%;
+            }
+        }
+
+        .small-input {
+            width : 300px;
+            input {
+                width : 300px;
+            }
+        }
+
+        .edit-project-flex-container {
+            display : flex;
+            width   : 100%;
+            margin  : 20px 0;
+
+            .edit-project-flex-content {
+                width : 50%;
+                
+                &:nth-child(1) {
+                    padding : 0 12px 0 0;
+                }
+                &:nth-child(2) {
+                    padding : 0 0 0 12px;
+                }
+            }
+
+        }
+
+        .works-table {
+            min-width : 100%;
+
+            .works-table-content {
+                .works-table-item {
+                    padding : 4px 10px;
+
+                    > div {
+                        &:nth-child(1) {
+                            width : 70%;
+                        }
+        
+                        &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+                            width           : 10%;
+                            display         : flex;
+                            justify-content : center;
+                        }
+        
+                        &:last-child {
+                            border : none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

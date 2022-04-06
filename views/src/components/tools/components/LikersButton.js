@@ -14,32 +14,24 @@ const LikersButton = ({ project, onClick }) => {
     const unlike = () => { dispatch(unlikeProject(project._id, uid)); setLiked(false) }
 
     useEffect(() => {
-        if (project.likers.includes(uid)) { setLiked(true) }
-        else { setLiked(false) }
+        if (project.likers.includes(uid)) setLiked(true)
+        else setLiked(false)
     }, [project.likers, uid])
 
     useEffect(() => {
         if (project.likers.includes(uid)) {
-            if (liked) {
-                if (project.likers.length > 1)
-                    setAction(<span>Vous et {project.likers.length - 1}</span>)
-                if (project.likers.length === 1)
-                    setAction(<span>Vous</span>)
-                if (project.likers.length === 0)
-                    setAction(<span>Vous</span>)
-            }
-            if (!liked) { setAction(<span>{project.likers.length - 1}</span>) }
+            if (liked)
+                if (project.likers.length > 1) setAction(<span>Vous et {project.likers.length - 1}</span>)
+                else if (project.likers.length === 1) setAction(<span>Vous</span>)
+                else if (project.likers.length === 0) setAction(<span>Vous</span>)
+            if (!liked) setAction(<span>{project.likers.length - 1}</span>)
         }
         else {
-            if (liked) {
-                if (project.likers.length > 1)
-                    setAction(<span>Vous et {project.likers.length}</span>)
-                if (project.likers.length === 1)
-                    setAction(<span>Vous et 1</span>)
-                if (project.likers.length === 0)
-                    setAction(<span>Vous</span>)
-            }
-            if (!liked) { setAction(<span>{project.likers.length}</span>) }
+            if (liked)
+                if (project.likers.length > 1) setAction(<span>Vous et {project.likers.length}</span>)
+                else if (project.likers.length === 1) setAction(<span>Vous et 1</span>)
+                else if (project.likers.length === 0) setAction(<span>Vous</span>)
+            if (!liked) setAction(<span>{project.likers.length}</span>)
         }
     }, [liked, project.likers, uid])
 

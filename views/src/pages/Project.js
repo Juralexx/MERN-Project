@@ -8,7 +8,7 @@ import { Loader } from '../components/tools/components/Loader';
 import { UidContext } from '../components/AppContext';
 import { convertDeltaToHTML } from '../components/messenger/tools/function';
 
-const Project = () => {
+const ProjectPage = () => {
     const uid = useContext(UidContext)
     const { URL } = useParams()
     const [project, setProject] = useState([])
@@ -54,4 +54,4 @@ const Project = () => {
     )
 }
 
-export default Project;
+export default ProjectPage;

@@ -28,9 +28,9 @@ export const EndIconButton = (props) => {
 }
 
 export const OutlinedButton = (props) => {
-    const { text, fullwidth, onClick, className, disabled } = props
+    const { text, onClick, className, disabled } = props
     return (
-        <button onClick={onClick} className={`outlined-btn ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "outlined-btn " + className : "outlined-btn"}`} disabled={disabled}>
             {text}
         </button>
     )

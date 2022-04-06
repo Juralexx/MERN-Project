@@ -1,83 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
 import ProjectModal from './ProjectModal';
 import ProfilCard from '../tools/components/ProfilCard';
-import { avatar, projectPicture } from '../tools/functions/useAvatar';
-import { parseDescriptionToInnerHTML } from '../tools/functions/parseDescription';
-import { dateParser } from '../Utils';
-import { getState } from './functions';
 import LikersModal from '../tools/components/LikersModal';
 import FollowersModal from '../tools/components/FollowersModal';
 import FavoriteButton from '../tools/components/FavoriteButton';
-import { MdZoomOutMap } from 'react-icons/md'
-import { BsFillPeopleFill } from 'react-icons/bs'
 import FollowersButton from '../tools/components/FollowersButton';
 import LikersButton from '../tools/components/LikersButton';
+import { projectPicture } from '../tools/functions/useAvatar';
+import { parseDescriptionToInnerHTML } from '../tools/functions/parseDescription';
+import { dateParser } from '../Utils';
+import { stateToBackground, stateToString } from './functions';
+import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im'
+import { MdZoomOutMap } from 'react-icons/md'
+import { BsFillPeopleFill } from 'react-icons/bs'
+import { SmallAvatar } from '../tools/components/Avatars';
 
 const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
+    const [swiper, setSwiper] = React.useState();
     const [openProfilCard, setOpenProfilCard] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
     const [openLikersModal, setOpenLikersModal] = useState(false)
     const [isUser, setUser] = useState()
     const [project, setProject] = useState()
+    const prevRef = useRef()
+    const nextRef = useRef()
 
     const getUser = (userId) => { setUser(userId); setOpenProfilCard(true) }
     const getProject = (project) => { setProject(project); setOpenModal(true) }
 
+    useEffect(() => {
+        if (swiper) {
+            swiper.params.navigation.prevEl = prevRef.current
+            swiper.params.navigation.nextEl = nextRef.current
+            swiper.navigation.init()
+            swiper.navigation.update()
+        }
+    }, [swiper])
+
     return (
         <>
-            {openModal && <ProjectModal project={project} open={openModal} setOpen={setOpenModal} />}
-            {openProfilCard && <ProfilCard isUser={isUser} open={openProfilCard} setOpen={setOpenProfilCard} />}
-            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} websocket={websocket} user={user} />}
-            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} user={user} />}
+            <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
             <Swiper
                 slidesPerView="auto"
-                navigation={true}
                 keyboard={{ enabled: true }}
                 mousewheel={true}
                 modules={[Navigation, Keyboard, Mousewheel]}
-                className="pb-8 pl-5"
+                onSwiper={setSwiper}
+                navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
             >
                 {!isLoading ? (
                     projects.map((element, key) => {
                         return (
-                            <SwiperSlide key={key} className="!w-auto mx-2 min-h-[426px] flex justify-center">
-                                <div className="w-[365px] text-gray-500 dark:text-slate-300 cursor-pointer bg-white dark:bg-background_primary rounded-xl shadow-custom dark:shadow-lg">
-                                    <div className="h-[160px] w-full rounded-t-xl" style={projectPicture('img/paysage-2.jpg')}></div>
-                                    <MdZoomOutMap className="absolute top-2 right-4 w-[24px] h-[24px]" onClick={() => getProject(element)} />
+                            <SwiperSlide key={key} className="swiper-slide">
+                                <div className="swiper-card">
+                                    <div className="swiper-img" style={projectPicture('img/paysage-2.jpg')}></div>
+                                    <MdZoomOutMap className="zoom-it" onClick={() => getProject(element)} />
                                     <FavoriteButton project={element} />
-                                    <div className="py-3 px-4">
-                                        <h3 className="flex flex-col pb-2 border-b border-gray-300/25 dark:border-slate-300/25">
-                                            {element.title}
-                                            <span className="text-slate-500 text-xs">
-                                                {element.location + ", " + element.department + " - " + element.category}
-                                            </span>
-                                        </h3>
-                                        <div className="flex justify-between items-center py-2">
-                                            <div className="flex items-center">
-                                                <BsFillPeopleFill />
-                                                <p className="ml-[6px]">{element.numberofcontributors}</p>
-                                            </div>
-                                            <div className={`${getState(element)} px-3 py-[2px] rounded-full text-[14px]`}>{element.state}</div>
+                                    <div className="swiper-card-body">
+                                        <div className="title"><h3>{element.title}</h3><span>{element.location + ", " + element.department + " - " + element.category}</span></div>
+                                        <div className="swiper-card-head">
+                                            <div className="contributors"><BsFillPeopleFill /><p>{element.numberofcontributors}</p></div>
+                                            <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                                         </div>
-                                        <div dangerouslySetInnerHTML={parseDescriptionToInnerHTML(element)} className="text-justify pb-2"></div>
+                                        <div className="description" dangerouslySetInnerHTML={parseDescriptionToInnerHTML(element)}></div>
 
-                                        <div className="grid grid-cols-5">
-                                            <div className="col-span-3 flex flex-col">
+                                        <div className="swiper-card-footer">
+                                            <div className="footer-left">
                                                 <LikersButton project={element} onClick={() => { setProject(element); setOpenLikersModal(true) }} />
                                                 <FollowersButton project={element} onClick={() => { setProject(element); setOpenFollowersModal(true) }} />
                                             </div>
-                                            <div className="grid col-span-2 grid-cols-3 pt-2 justify-start">
-                                                <div className="col-span-1 flex justify-center">
-                                                    <div className="w-8 h-8 rounded-full" style={avatar(element.posterAvatar)}></div>
+                                            <div className="footer-right">
+                                                <div className="footer-avatar">
+                                                    <SmallAvatar pic={element.posterAvatar} />
                                                 </div>
-                                                <div className="col-span-2 w-full mr-auto">
-                                                    <p className="font-semibold" onClick={() => getUser(element.posterId)}>{element.posterPseudo}</p>
-                                                    <p className="text-slate-500 text-xs">{dateParser(element.createdAt)}</p>
+                                                <div className="footer-name">
+                                                    <p className="name" onClick={() => getUser(element.posterId)}>{element.posterPseudo}</p>
+                                                    <p className="date">{dateParser(element.createdAt)}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -89,32 +92,32 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                 ) : (
                     [...Array(15)].map((element, key) => {
                         return (
-                            <SwiperSlide key={key} className="!w-[382px] min-h-[426px] flex justify-center">
-                                <div className="w-[365px] text-slate-300 cursor-pointer bg-white dark:bg-background_primary rounded-xl shadow-xl">
-                                    <div className="animate-pulse bg-slate-600 dark:bg-slate-700 h-[160px] w-full rounded-t-xl"></div>
-                                    <MdZoomOutMap className="absolute top-2 right-4 w-[24px] h-[24px]" />
-                                    <div className="py-3 px-4">
-                                        <p className="animate-pulse bg-slate-600 dark:bg-slate-700 h-4 w-full pb-2 mb-2 rounded-full"></p>
-                                        <p className="animate-pulse bg-slate-600 dark:bg-slate-700 h-4 w-full pb-2 mb-2 rounded-full"></p>
+                            <SwiperSlide key={key} className="swiper-slide">
+                                <div className="swiper-card">
+                                    <div className="swiper-img animate-pulse bg-slate-600"></div>
+                                    <MdZoomOutMap className="zoom-it" />
+                                    <div className="swiper-card-body">
+                                        <p className="animate-pulse bg-slate-600 h-4 w-full pb-2 mb-2 rounded-full"></p>
+                                        <p className="animate-pulse bg-slate-600 h-4 w-full pb-2 mb-2 rounded-full"></p>
                                         <div className="flex justify-between items-center py-2">
                                             <div className="flex items-center">
                                                 <BsFillPeopleFill />
-                                                <div className="animate-pulse bg-slate-600 dark:bg-slate-700 h-5 w-7 ml-[8px] rounded-full"></div>
+                                                <div className="animate-pulse bg-slate-600 h-5 w-7 ml-[8px] rounded-full"></div>
                                             </div>
-                                            <div className="animate-pulse bg-slate-600 dark:bg-slate-700 px-3 py-[2px] rounded-full w-[130px] h-5"></div>
+                                            <div className="animate-pulse bg-slate-600 rounded-full w-[130px] h-5"></div>
                                         </div>
-                                        <div className="animate-pulse bg-slate-600 dark:bg-slate-700 h-[90px] w-full rounded-xl pb-2"></div>
+                                        <div className="animate-pulse bg-slate-600 h-[90px] w-full rounded-xl pb-2"></div>
 
                                         <div className="grid grid-cols-2 mt-3">
                                             <div className="flex flex-col">
-                                                <div className="animate-pulse bg-slate-600 dark:bg-slate-700 h-5 w-[110px] rounded-full"></div>
-                                                <div className="animate-pulse bg-slate-600 dark:bg-slate-700 h-5 mt-2 w-[110px] rounded-full"></div>
+                                                <div className="animate-pulse bg-slate-600 h-5 w-[110px] rounded-full"></div>
+                                                <div className="animate-pulse bg-slate-600 h-5 mt-2 w-[110px] rounded-full"></div>
                                             </div>
                                             <div className="grid grid-cols-2 justify-end">
-                                                <div className="animate-pulse bg-slate-600 dark:bg-slate-700 w-8 h-8 rounded-full ml-auto mr-2"></div>
+                                                <div className="animate-pulse bg-slate-600 w-8 h-8 rounded-full ml-auto mr-2"></div>
                                                 <div className="w-full">
-                                                    <div className="animate-pulse bg-slate-600 dark:bg-slate-700 w-full h-5 rounded-full"></div>
-                                                    <div className="animate-pulse bg-slate-600 dark:bg-slate-700 w-full h-5 rounded-full mt-2"></div>
+                                                    <div className="animate-pulse bg-slate-600 w-full h-5 rounded-full"></div>
+                                                    <div className="animate-pulse bg-slate-600 w-full h-5 rounded-full mt-2"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,6 +128,12 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                     })
                 )}
             </Swiper>
+            <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
+
+            {openModal && <ProjectModal project={project} open={openModal} setOpen={setOpenModal} />}
+            {openProfilCard && <ProfilCard isUser={isUser} open={openProfilCard} setOpen={setOpenProfilCard} />}
+            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} websocket={websocket} user={user} />}
+            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} user={user} />}
         </>
     )
 }

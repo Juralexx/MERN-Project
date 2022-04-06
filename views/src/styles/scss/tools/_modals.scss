@@ -9,8 +9,9 @@
     z-index          : 1600;
     padding          : 20px 30px;
     color            : var(--text);
-    background-color : var(--content-light);
+    background-color : var(--content);
     box-shadow       : var(--shadow-xl);
+    border           : 2px solid var(--content-x-light);
 
     h2 {
         padding-bottom : 7px;
@@ -40,20 +41,22 @@
     }
 
     .close-modal {
-        position      : absolute;
-        padding       : 5px;
-        top           : 5px;
-        right         : 5px;
-        cursor        : pointer;
-        border-radius : 30px;
+        position         : absolute;
+        padding          : 5px;
+        top              : 5px;
+        right            : 5px;
+        cursor           : pointer;
+        border-radius    : 30px;
+        border           : 2px solid var(--content-light);
+        background-color : var(--content-x-light);
 
         svg {
-            width  : 20px;
-            height : 20px;
+            width  : 28px;
+            height : 28px;
         }
 
         &:hover {
-            background-color : var(--content-x-light);
+            background-color : var(--content-light);
         }
     }
 
@@ -96,5 +99,109 @@
 
     &.modal-cover-active {
         display : block;
+    }
+}
+
+.users-modal {
+    width      : 500px;
+
+    .users-modal-header {
+        display       : flex;
+        align-items   : center;
+        border-bottom : 1px solid var(--light-border);
+        padding       : 0 0 10px;
+
+        svg {
+            width        : 24px;
+            height       : 24px;
+            margin-right : 8px;
+
+            &.like {
+                color : var(--red);
+            }
+            &.follow {
+                color : var(--light-blue);
+            }
+        }
+
+        p {
+            padding-top : 5px;
+        }
+    }
+
+    .users-modal-body {
+        padding    : 10px 0 0;
+        // overflow-y : auto;
+        z-index    : 1;
+
+        .user {
+            position        : relative;
+            width           : 100%;
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+            cursor          : pointer;
+            padding         : 12px 0;
+            
+            .pseudo {
+                margin-left : 8px;
+                padding-top : 8px;
+            }
+        }
+
+        .empty-users {
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            padding         : 12px 0 6px;
+            color           : var(--text);
+            font-size       : 18px;
+    
+            svg {
+                width        : 30px;
+                height       : 30px;
+                margin-right : 20px;
+            }
+        }
+    }
+}
+
+.hovered-card {
+    position : absolute;
+    bottom   : 10px;
+    left     : -120px;
+    padding  : 32px;
+    
+    .hovered-modal-container {
+        background-color : var(--content);
+        padding          : 16px;
+        box-shadow       : var(--shadow-xl);
+        width            : auto;
+        border-radius    : 5px;
+        border           : 2px solid var(--content-x-light);
+
+        .hovered-modal-head {
+            display       : flex;
+            width         : 100%;
+            margin-bottom : 12px;
+
+            .hovered-modal-avatar {
+                width         : 76px;
+                height        : 76px;
+                border-radius : 16px;
+            }
+
+            .left {
+                padding-right : 20px;
+            }
+
+            .right {
+                .hovered-card-name {
+                    font-weight   : 500;
+                    font-size     : 20px;
+                    margin-bottom : 6px;
+                }
+            }
+        }
     }
 }

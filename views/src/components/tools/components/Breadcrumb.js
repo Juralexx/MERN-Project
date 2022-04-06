@@ -1,13 +1,15 @@
 import React from 'react'
 import { IoIosArrowForward } from 'react-icons/io'
+import { useLocation } from 'react-router-dom'
 
-const Breadcrumb = ({ project, about, tasks, messenger, members }) => {
+const Breadcrumb = ({ project }) => {
+    const location = useLocation()
 
     const getCrumb = () => {
-        if (about) return "À propos"
-        else if (tasks) return "Tâches"
-        else if (messenger) return "Messenger"
-        else if (members) return "Membres"
+        if (location.pathname.includes("about")) return "À propos"
+        else if (location.pathname.includes("tasks")) return "Tâches"
+        else if (location.pathname.includes("messenger")) return "Messenger"
+        else if (location.pathname.includes("members")) return "Membres"
         else return "Accueil"
     }
 

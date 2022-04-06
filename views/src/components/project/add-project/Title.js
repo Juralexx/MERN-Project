@@ -35,8 +35,8 @@ const Title = ({ title, setTitle, category, setCategory, error, setError, isErr,
             <h2>Un titre clair et cours est le meilleur moyen de vous faire repérer !</h2>
             <div className="content-form">
                 <p className="title">Titre <span>Champ requis</span></p>
-                <ClassicInput className={`title-input ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle(e.target.value)} value={title} />
-                <div className="title-infos">{title.length} / 100 caractères</div>
+                <ClassicInput className={`small-input ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle(e.target.value)} value={title} />
+                <div className="field-infos">{title.length} / 100 caractères</div>
                 {isErr === "title" && <ErrorCard useRef={errorRef} display={(isErr === "title").toString()} text={error} />}
             </div>
 

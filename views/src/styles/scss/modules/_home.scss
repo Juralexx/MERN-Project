@@ -1,0 +1,222 @@
+.home-body {
+    position   : relative;
+    width      : 100%;
+    background : linear-gradient(to right, var(--body) 30%, var(--content) 100%);
+
+    .home-container {
+        max-width : 1440px;
+        margin    : 0 auto;
+
+        .swiper-container {
+            position : relative;
+            width    : 100%;
+            padding  : 10px 0;
+
+            h2 {
+                position    : relative;
+                margin      : 20px 0;
+                display     : flex;
+                align-items : center;
+                padding     : 0 0 0 30px;
+                font-size   : 34px !important;
+    
+                &:before {
+                    content       : '';
+                    position      : absolute;
+                    width         : 20px;
+                    height        : 20px;
+                    left          : 0;
+                    border-radius : 10px;
+                    background    : var(--primary);
+                }
+            }
+
+            .swiper-inner {
+                position   : relative;
+                width      : 100%;
+                height     : 100%;
+
+                .swiper-button {
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : center;
+                    position        : absolute;
+                    top             : 50%;
+                    transform       : translateY(-50%);
+                    height          : 50px;
+                    width           : 50px;
+                    padding         : 10px;
+                    border-radius   : 14px;
+                    background      : var(--primary);
+                    color           : white;
+                    z-index         : 10;
+                    cursor          : pointer;
+                    box-shadow      : var(--shadow-xl);
+    
+                    svg {
+                        width  : 30px;
+                        height : 30px;
+                    }
+    
+                    &.previous {
+                        left : -34px;
+                    }
+    
+                    &.next {
+                        right : -34px;
+                    }
+                }
+
+                .swiper-slide {
+                    display         : flex;
+                    justify-content : center;
+                    align-items     : center;
+                    width           : auto;
+                    height          : 100%;
+                    margin          : 0 8px;
+
+                    &:nth-child(1) {
+                        margin-left : 0;
+                    }
+                    &:last-child {
+                        margin-right : 0;
+                    }
+
+                    .swiper-card {
+                        width            : 400px;
+                        color            : var(--text);
+                        cursor           : pointer;
+                        background-color : var(--content-light);
+                        box-shadow       : var(--shadow-xl);
+                        border-radius    : 8px;
+
+                        .swiper-img {
+                            height        : 160px;
+                            width         : 100%;
+                            border-radius : 8px 8px 0 0;
+                        }
+
+                        .zoom-it {
+                            position : absolute;
+                            top      : 12px;
+                            right    : 12px;
+                            width    : 24px;
+                            height   : 24px;
+                        }
+
+                        .swiper-card-body {
+                            padding : 12px 16px;
+
+                            .title {
+                                display        : flex;
+                                flex-direction : column;
+                                padding-bottom : 8px;
+                                border-bottom  : 1px solid var(--light-border);
+
+                                h3 {
+                                    text-overflow      : ellipsis;
+                                    overflow           : hidden;
+                                    width              : 100%;
+                                    line-height        : 25px;
+                                    display            : -webkit-box;
+                                    -webkit-line-clamp : 1;
+                                    -webkit-box-orient : vertical;
+                                }
+    
+                                span {
+                                    font-size : 12px;
+                                    color     : var(--text-secondary);
+                                }
+                            }
+
+                            .swiper-card-head {
+                                display         : flex;
+                                justify-content : space-between;
+                                align-items     : center;
+                                padding         : 8px 0;
+
+                                .contributors {
+                                    display     : flex;
+                                    align-items : center;
+
+                                    p {
+                                        margin-left : 6px;
+                                    }
+                                }
+
+                                .state {
+                                    padding       : 2px 12px;
+                                    border-radius : 5px;
+                                    font-size     : 14px;
+
+                                    &.orange {
+                                        background : rgba(var(--orange-rgb), 0.2);
+                                        color      : var(--orange);
+                                    }
+                                    &.blue {
+                                        background : rgba(var(--light-blue-rgb), 0.2);
+                                        color      : var(--light-blue);
+                                    }
+                                    &.green {
+                                        background : rgba(var(--green-rgb), 0.2);
+                                        color      : var(--green);
+                                    }
+                                }
+                            }
+
+                            .description {
+                                padding            : 8px 0;
+                                margin-bottom      : 14px;
+                                text-align         : justify;
+                                height             : 90px;
+                                text-overflow      : ellipsis;
+                                overflow           : hidden;
+                                width              : 100%;
+                                line-height        : 21px;
+                                display            : -webkit-box;
+                                -webkit-line-clamp : 4;
+                                -webkit-box-orient : vertical;
+                            }
+
+                            .swiper-card-footer {
+                                display : flex;
+                                width   : 100%;
+
+                                .footer-left {
+                                    width : 65%;
+                                
+                                }
+
+                                .footer-right {
+                                    width   : 35%;
+                                    display : flex;
+
+                                    .footer-avatar {
+                                        width        : 25%;
+                                        margin-right : 10px;
+
+                                        div {
+                                            width  : 32px;
+                                            height : 32px;
+                                        }
+                                    }
+
+                                    .footer-name {
+                                        width : 75%;
+                                        .name {
+                                            font-size : 500;
+                                        }
+                                        .date {
+                                            color     : var(--text-tertiary);
+                                            font-size : 12px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

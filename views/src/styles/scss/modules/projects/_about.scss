@@ -5,41 +5,9 @@
     color    : var(--text);
     background-color : var(--content);
 
-    .projects-about-navbar {
-        position         : relative;
-        width            : 100%;
-        padding          : 10px 22px;
-        background-color : var(--content-x-light);
-        
-        .projects-about-navbar-content {
-            display         : flex;
-            align-items     : center;
-            justify-content : flex-start;
-            max-width       : 1440px;
-            margin          : 0 auto;
-            padding         : 0 10px;
-
-            .projects-about-navbar-item {
-                padding   : 2px 15px;
-                font-size : 14px;
-                color     : var(--text-tertiary);
-                cursor    : pointer;
-
-                &:hover {
-                    color : var(--text);
-                }
-
-                &.active {
-                    color : var(--primary);
-                }
-            }
-        }
-    }
-
     .dashboard-about-content {
         position  : relative;
         padding   : 10px 20px;
-        height    : 100%;
         max-width : 1440px;
         margin    : 0 auto;
 
@@ -84,7 +52,7 @@
 
                 }
 
-                .title-input {
+                .small-input {
                     width : 300px;
                     input {
                         width : 400px;

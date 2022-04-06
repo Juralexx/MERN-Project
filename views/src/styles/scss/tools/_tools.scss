@@ -94,7 +94,7 @@
     background    : var(--content);
     box-shadow    : var(--shadow-lg);
     border-radius : var(--radius);
-    border        : 1px solid var(--content-light);
+    border        : 2px solid var(--content-light);
 
     .tools-choice {
         min-width     : 220px;
@@ -810,6 +810,7 @@
     border-radius    : var(--radius);
     box-shadow       : var(--shadow-2xl);
     background-color : var(--content-light);
+    border           : 2px solid var(--content-x-light);
 
     .auto-complete-item {
         display     : flex;

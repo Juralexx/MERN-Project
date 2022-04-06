@@ -67,7 +67,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
             <h2 className="mb-5">Où votre projet se situe-t-il ?</h2>
             <div className="content-form">
                 <p className="title">Localité</p>
-                <ClassicInput className={`title-input ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
+                <ClassicInput className={`small-input ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
                 {isErr === "location" && <ErrorCard useRef={errorRef} display={isErr === "location"} text={error} />}
             </div>
             <div tabIndex="0" className="auto-complete-container custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >

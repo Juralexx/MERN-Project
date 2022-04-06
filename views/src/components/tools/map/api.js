@@ -1,6 +1,6 @@
 export const departments = [
     {
-        code_departement: 1,
+        code_departement: "01",
         nom_departement: "Ain",
         code_nouvelle_region: 84,
         nom_nouvelle_region: "Auvergne-Rhône-Alpes",
@@ -8,7 +8,7 @@ export const departments = [
         nom_ancienne_region: "Rhône-Alpes"
     },
     {
-        code_departement: 2,
+        code_departement: "02",
         nom_departement: "Aisne",
         code_nouvelle_region: 32,
         nom_nouvelle_region: "Hauts-de-France",
@@ -16,7 +16,7 @@ export const departments = [
         nom_ancienne_region: "Picardie"
     },
     {
-        code_departement: 3,
+        code_departement: "03",
         nom_departement: "Allier",
         code_nouvelle_region: 84,
         nom_nouvelle_region: "Auvergne-Rhône-Alpes",
@@ -24,7 +24,7 @@ export const departments = [
         nom_ancienne_region: "Rhône-Alpes"
     },
     {
-        code_departement: 4,
+        code_departement: "04",
         nom_departement: "Alpes-de-Haute-Provence",
         code_nouvelle_region: 93,
         nom_nouvelle_region: "Provence-Alpes-Côte d'Azur",
@@ -32,7 +32,7 @@ export const departments = [
         nom_ancienne_region: "Provence-Alpes-Côte d'Azur"
     },
     {
-        code_departement: 5,
+        code_departement: "05",
         nom_departement: "Hautes-Alpes",
         code_nouvelle_region: 93,
         nom_nouvelle_region: "Provence-Alpes-Côte d'Azur",
@@ -40,7 +40,7 @@ export const departments = [
         nom_ancienne_region: "Provence-Alpes-Côte d'Azur"
     },
     {
-        code_departement: 6,
+        code_departement: "06",
         nom_departement: "Alpes-Maritimes",
         code_nouvelle_region: 93,
         nom_nouvelle_region: "Provence-Alpes-Côte d'Azur",
@@ -48,7 +48,7 @@ export const departments = [
         nom_ancienne_region: "Provence-Alpes-Côte d'Azur"
     },
     {
-        code_departement: 7,
+        code_departement: "07",
         nom_departement: "Ardèche",
         code_nouvelle_region: 84,
         nom_nouvelle_region: "Auvergne-Rhône-Alpes",
@@ -56,7 +56,7 @@ export const departments = [
         nom_ancienne_region: "Rhône-Alpes"
     },
     {
-        code_departement: 8,
+        code_departement: "08",
         nom_departement: "Ardennes",
         code_nouvelle_region: 44,
         nom_nouvelle_region: "Grand Est",
@@ -64,7 +64,7 @@ export const departments = [
         nom_ancienne_region: "Champagne-Ardenne"
     },
     {
-        code_departement: 9,
+        code_departement: "09",
         nom_departement: "Ariège",
         code_nouvelle_region: 76,
         nom_nouvelle_region: "Occitanie",
@@ -812,110 +812,164 @@ export const departments = [
 export const regions = [
     {
       code_region: 42,
-      nom_region: "Alsace"
+      nom_region: "Alsace",
+      code_nouvelle_region: 44,
+      nom_nouvelle_region: "Grand Est"
     },
     {
       code_region: 72,
-      nom_region: "Aquitaine"
+      nom_region: "Aquitaine",
+      code_nouvelle_region: 75,
+      nom_nouvelle_region: "Nouvelle-Aquitaine",
     },
     {
       code_region: 83,
-      nom_region: "Auvergne"
+      nom_region: "Auvergne",
+      code_nouvelle_region: 84,
+      nom_nouvelle_region: "Auvergne-Rhône-Alpes",
     },
     {
       code_region: 25,
-      nom_region: "Basse-Normandie"
+      nom_region: "Basse-Normandie",
+      code_nouvelle_region: 28,
+      nom_nouvelle_region: "Normandie",
     },
     {
       code_region: 26,
-      nom_region: "Bourgogne"
+      nom_region: "Bourgogne",
+      code_nouvelle_region: 27,
+      nom_nouvelle_region: "Bourgogne-Franche-Comté",
     },
     {
       code_region: 53,
-      nom_region: "Bretagne"
+      nom_region: "Bretagne",
+      code_nouvelle_region: 53,
+      nom_nouvelle_region: "Bretagne",
     },
     {
       code_region: 24,
-      nom_region: "Centre"
+      nom_region: "Centre",
+      code_nouvelle_region: 24,
+      nom_nouvelle_region: "Centre-Val de Loire",
     },
     {
       code_region: 21,
-      nom_region: "Champagne-Ardenne"
+      nom_region: "Champagne-Ardenne",
+      code_nouvelle_region: 44,
+      nom_nouvelle_region: "Grand Est"
     },
     {
       code_region: 94,
-      nom_region: "Corse"
+      nom_region: "Corse",
+      code_nouvelle_region: 94,
+      nom_nouvelle_region: "Corse",
     },
     {
       code_region: 43,
-      nom_region: "Franche-Comté"
+      nom_region: "Franche-Comté",
+      code_nouvelle_region: 27,
+      nom_nouvelle_region: "Bourgogne-Franche-Comté",
     },
     {
       code_region: "01",
-      nom_region: "Guadeloupe"
+      nom_region: "Guadeloupe",
+      code_nouvelle_region: "01",
+      nom_nouvelle_region: "Guadeloupe",
     },
     {
       code_region: "03",
-      nom_region: "Guyane"
+      nom_region: "Guyane",
+      code_nouvelle_region: "03",
+      nom_nouvelle_region: "Guyane",
     },
     {
       code_region: 23,
-      nom_region: "Haute-Normandie"
+      nom_region: "Haute-Normandie",
+      code_nouvelle_region: 28,
+      nom_nouvelle_region: "Normandie",
     },
     {
       code_region: 11,
-      nom_region: "Île-de-France"
+      nom_region: "Île-de-France",
+      code_nouvelle_region: 11,
+      nom_nouvelle_region: "Île-de-France",
     },
     {
       code_region: "04",
-      nom_region: "La Réunion"
+      nom_region: "La Réunion",
+      code_nouvelle_region: "04",
+      nom_nouvelle_region: "La Réunion"
     },
     {
       code_region: 91,
-      nom_region: "Languedoc-Roussillon"
+      nom_region: "Languedoc-Roussillon",
+      code_nouvelle_region: 76,
+      nom_nouvelle_region: "Occitanie",
     },
     {
       code_region: 74,
-      nom_region: "Limousin"
+      nom_region: "Limousin",
+      code_nouvelle_region: 75,
+      nom_nouvelle_region: "Nouvelle-Aquitaine",
     },
     {
       code_region: 41,
-      nom_region: "Lorraine"
+      nom_region: "Lorraine",
+      code_nouvelle_region: 44,
+      nom_nouvelle_region: "Grand Est"
     },
     {
       code_region: "02",
-      nom_region: "Martinique"
+      nom_region: "Martinique",
+      code_nouvelle_region: "02",
+      nom_nouvelle_region: "Martinique"
     },
     {
       code_region: "06",
-      nom_region: "Mayotte"
+      nom_region: "Mayotte",
+      code_nouvelle_region: "06",
+      nom_nouvelle_region: "Mayotte"
     },
     {
       code_region: 73,
-      nom_region: "Midi-Pyrénées"
+      nom_region: "Midi-Pyrénées",
+      code_nouvelle_region: 76,
+      nom_nouvelle_region: "Occitanie",
     },
     {
       code_region: 31,
-      nom_region: "Nord-Pas-de-Calais"
+      nom_region: "Nord-Pas-de-Calais",
+      code_nouvelle_region: 32,
+      nom_nouvelle_region: "Hauts-de-France",
     },
     {
       code_region: 52,
-      nom_region: "Pays de la Loire"
+      nom_region: "Pays de la Loire",
+      code_nouvelle_region: 52,
+      nom_nouvelle_region: "Pays de la Loire",
     },
     {
       code_region: 22,
-      nom_region: "Picardie"
+      nom_region: "Picardie",
+      code_nouvelle_region: 32,
+      nom_nouvelle_region: "Hauts-de-France",
     },
     {
       code_region: 54,
-      nom_region: "Poitou-Charentes"
+      nom_region: "Poitou-Charentes",
+      code_nouvelle_region: 75,
+      nom_nouvelle_region: "Nouvelle-Aquitaine",
     },
     {
       code_region: 93,
-      nom_region: "Provence-Alpes-Côte d'Azur"
+      nom_region: "Provence-Alpes-Côte d'Azur",
+      code_nouvelle_region: 93,
+      nom_nouvelle_region: "Provence-Alpes-Côte d'Azur",
     },
     {
       code_region: 82,
-      nom_region: "Rhône-Alpes"
+      nom_region: "Rhône-Alpes",
+      code_nouvelle_region: 84,
+      nom_nouvelle_region: "Auvergne-Rhône-Alpes",
     },
 ]

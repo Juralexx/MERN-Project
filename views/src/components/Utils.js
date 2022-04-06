@@ -1,5 +1,6 @@
-/*******************************************************************************************************************************************/
-/********************************************************* GENERATE RANDOM ID **************************************************************/
+/**
+ * Return a randam ID.
+ */
 
 export const randomID = (max) => {
     const allCapsAlpha = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
@@ -18,8 +19,9 @@ export const randomID = (max) => {
     return generator(baseline, max)
 }
 
-/*******************************************************************************************************************************************/
-/******************************************************* CHECK PSEUDO VALIDITY *************************************************************/
+/**
+ * Check pseudo validity.
+ */
 
 export const onlyLettersNumbersAndDashes = (string) => {
     const regexp = new RegExp(/^(\w|-)+$/)
@@ -27,8 +29,9 @@ export const onlyLettersNumbersAndDashes = (string) => {
     else return false
 }
 
-/*******************************************************************************************************************************************/
-/******************************************************** CHECK EMAIL VALIDITY *************************************************************/
+/**
+ * Check email validity.
+ */
 
 export const isEmailValid = (email) => {
     const regexp = new RegExp(/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i)
@@ -36,8 +39,9 @@ export const isEmailValid = (email) => {
     else return false
 }
 
-/*******************************************************************************************************************************************/
-/********************************************************* RETURN DATE PARSED **************************************************************/
+/**
+ * Return date formated : dd mon. YYY.
+ */
 
 export const dateParser = (num) => {
     let options = { year: "numeric", month: "short", day: "2-digit" }
@@ -46,8 +50,9 @@ export const dateParser = (num) => {
     return date.toString()
 }
 
-/*******************************************************************************************************************************************/
-/**************************************************** RETURN DATE PARSED WITHOUT YEAR ******************************************************/
+/**
+ * Return date formated without year.
+ */
 
 export const dateParserWithoutYear = (num) => {
     let options = { month: "short", day: "2-digit" }
@@ -55,16 +60,17 @@ export const dateParserWithoutYear = (num) => {
     let date = new Date(timestamp).toLocaleDateString('fr-FR', options)
     return date.toString()
 }
-
-/*******************************************************************************************************************************************/
-/************************************************** ISO DATE TO NAVIGATEUR INPUT TYPE DATE *************************************************/
+/**
+ * ISO date to navigator date input format.
+ */
 
 export const ISOtoNavFormat = (date) => {
     return date.substring(0, 10)
 }
 
-/*******************************************************************************************************************************************/
-/******************************************************** RETURN EXACTE HOUR (XX:XX) *******************************************************/
+/**
+ * Return hours only : hh:mm.
+ */
 
 export const getHourOnly = (date) => {
     const hours = date.getUTCHours();
@@ -72,8 +78,9 @@ export const getHourOnly = (date) => {
     return (1 + ((hours - 1))) + "h" + minutes.toString().padStart(2, "0");
 }
 
-/*******************************************************************************************************************************************/
-/********************************************************* RETURN NEW DATES ONLY ***********************************************************/
+/**
+ * Map elements in array and return new dates only.
+ */
 
 export const keepNewDateOnly = (arrayToMap, setState) => {
     let array = []
@@ -91,22 +98,25 @@ export const keepNewDateOnly = (arrayToMap, setState) => {
     setState(filteredArray)
 }
 
-/*******************************************************************************************************************************************/
-/***************************************** RETURN ELEMENT IF ELEMENT.DATE IS LESS THAN 24 HOURS AGO ****************************************/
+/**
+ * Return array elements if element.date is less than 24 hours ago.
+ */
 
 export const thisDay = (array) => {
     return array.filter(element => element.date.substring(0, 10) === new Date().toISOString().substring(0, 10))
 }
 
-/*******************************************************************************************************************************************/
-/************************************** RETURN ELEMENT IF ELEMENT.DATE IS BETWEEN 24 AND 48 HOURS AGO **************************************/
+/**
+ * Return array elements if element.date is between 24 and 48 hours ago.
+ */
 
 export const lastDay = (array) => {
     return array.filter(element => element.date.substring(0, 10) === new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString().substring(0, 10))
 }
 
-/*******************************************************************************************************************************************/
-/********************************************** RETURN ELEMENT BETWEEN TODAY AND CHOOSEN DATE **********************************************/
+/**
+ * Return array elements between today and choosen date.
+ */
 
 export const timeBetween = (array, days) => {
     let currentDate = new Date();
@@ -125,15 +135,17 @@ export const timeBetween = (array, days) => {
     });
 }
 
-/*******************************************************************************************************************************************/
-/*************************************************************** REVERSE ARRAY *************************************************************/
+/**
+ * Reverse array order.
+ */
 
 export const reverseArray = (array) => {
     return array.map(array.pop, [...array])
 }
 
-/*******************************************************************************************************************************************/
-/***************************************************** CHECK IF ARRAY OR OBJECT IS EMPTY ***************************************************/
+/**
+ * Check if array or object are empty.
+ */
 
 export const isEmpty = (value) => {
     return (
@@ -144,8 +156,9 @@ export const isEmpty = (value) => {
     );
 };
 
-/*******************************************************************************************************************************************/
-/********************************************************** CONVERT STRING IN URL **********************************************************/
+/**
+ * Convert string  in URL.
+ */
 
 export const cleanTitleMakeURL = (title, setTitle, setUrl) => {
     let newTitle = title.toLowerCase();
@@ -165,8 +178,9 @@ export const cleanTitleMakeURL = (title, setTitle, setUrl) => {
     setUrl(getRndInteger(1000000000, 9999999999) + "/" + URL)
 }
 
-/*******************************************************************************************************************************************/
-/************************************************************ DETECT ENTER KEY *************************************************************/
+/**
+ * Detect Enter key press.
+ */
 
 export const handleEnterKey = (event, func) => {
     if (event.key === 'Enter') {
@@ -174,8 +188,9 @@ export const handleEnterKey = (event, func) => {
     }
 }
 
-/*******************************************************************************************************************************************/
-/************************************************************** REMOVE ACCENT **************************************************************/
+/**
+ * Remove all accents.
+ */
 
 let characterMap = {
     "À": "A",

@@ -6,7 +6,7 @@ import { IconInput } from "../components/Inputs";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { departments, regions } from "./api";
 
-const MapModal = ({ open, setOpen, location, setLocation, department, region, setDepartment, setRegion }) => {
+const MapModal = ({ open, setOpen, location, setLocation, department, setDepartment, region, setRegion, newRegion, setNewRegion }) => {
     const [ByDepartments, setDepartments] = useState(false)
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const [isRegionInResult, setRegionsInResult] = useState([])
@@ -68,7 +68,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, region, se
                             {!searchRegion ? (
                                 regions.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.label); setLocation(element.nom_region); setRegion(element.nom_region); setOpenRegions(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.nom_region); setLocation(element.nom_region); setDepartment(''); setRegion(element.nom_region); setNewRegion(element.nom_nouvelle_region); setOpenRegions(false) }}>
                                             {element.nom_region}
                                         </div>
                                     )
@@ -76,7 +76,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, region, se
                             ) : (
                                 isRegionInResult.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.label); setLocation(element.label); setRegion(element.nom_region); setDepartment(element.nom_departement); setOpenRegions(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.nom_region); setLocation(element.nom_region); setDepartment(''); setRegion(element.nom_region); setNewRegion(element.nom_nouvelle_region); setOpenRegions(false) }}>
                                             {element.nom_region}
                                         </div>
                                     )
@@ -84,7 +84,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, region, se
                             )}
                         </div>
                     }
-                    <MapRegions location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} />
+                    <MapRegions location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} newRegion={newRegion} setNewRegion={setNewRegion} />
                 </div>
             ) : (
                 <div className="relative">
@@ -101,9 +101,8 @@ const MapModal = ({ open, setOpen, location, setLocation, department, region, se
                         <div className="auto-complete-container custom-scrollbar w-full">
                             {!searchDepartment ? (
                                 departments.map((element, key) => {
-                                    console.log(departments)
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.label); setLocation(element.label); setOpenDepartments(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); setLocation(element.nom_departement); setDepartment(element.nom_departement); setRegion(element.nom_ancienne_region); setNewRegion(element.nom_nouvelle_region); setOpenDepartments(false) }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
                                     )
@@ -111,7 +110,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, region, se
                             ) : (
                                 isDepartmentInResult.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.label); setLocation(element.label); setOpenDepartments(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); setLocation(element.nom_departement); setDepartment(element.nom_departement); setRegion(element.nom_ancienne_region); setNewRegion(element.nom_nouvelle_region); setOpenDepartments(false) }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
                                     )
@@ -119,7 +118,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, region, se
                             )}
                         </div>
                     }
-                    <MapDepartments location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion}/>
+                    <MapDepartments location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} newRegion={newRegion} setNewRegion={setNewRegion} />
                 </div>
             )}
         </Modal>

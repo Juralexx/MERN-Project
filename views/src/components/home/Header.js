@@ -19,6 +19,7 @@ const Header = () => {
     const [location, setLocation] = useState("")
     const [department, setDepartment] = useState("")
     const [region, setRegion] = useState("")
+    const [newRegion, setNewRegion] = useState("")
     const categoriesRef = useRef()
     useClickOutside(categoriesRef, setOpenCategoriesPicker, false)
 
@@ -77,7 +78,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <MapModal open={openMapModal} setOpen={setOpenMapModal} location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} />
+            <MapModal open={openMapModal} setOpen={setOpenMapModal} location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} newRegion={newRegion} setNewRegion={setNewRegion} />
             <HeaderNavbar />
         </div>
     )

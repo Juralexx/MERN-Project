@@ -9,12 +9,17 @@ export const getUser = async (userId, setState) => {
     await axios.get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
         .then(res => {
             setState(res.data)
-        })
-        .catch((err) => console.error(err))
+        }).catch((err) => console.error(err))
 }
 
-export const getState = (project) => {
-    if (project.state === "En préparation") return "bg-orange-400/50 border border-orange-400"
-    if (project.state === "En cours") return "bg-primary"
-    if (project.state === "Terminé") return "bg-green-300"
+export const stateToBackground = (project) => {
+    if (project.state === "worked on") return "orange"
+    else if (project.state === "in progress") return "blue"
+    else if (project.state === "done") return "green"
+}
+
+export const stateToString = (element) => {
+    if (element === "worked on") return "En préparation"
+    else if (element === "in progress") return "En cours"
+    else if (element === "done") return "Terminée"
 }

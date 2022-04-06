@@ -14,8 +14,8 @@ import MainInfos from '../profil/about/update/MainInfos'
 import ContactInfos from '../profil/about/update/ContactInfos'
 import Location from '../profil/about/update/Location'
 import AddProject from '../../pages/AddProject'
-import Projects from '../../pages/Projects'
-import Project from '../../pages/Project'
+import Dashboard from '../../pages/Dashboard'
+import ProjectPage from '../../pages/Project'
 import UserProjects from '../../pages/UserProjects'
 import MostLiked from '../../pages/MostLiked'
 import SocialsNetworks from '../profil/about/update/SocialsNetworks'
@@ -30,26 +30,29 @@ function Paths({ websocket, onlineUsers, friends, user, uid }) {
                 <Route path=":pseudo" element={<MemberProfil />} />
                 <Route path="most-liked" element={<MostLiked />} />
                 <Route path=":pseudo/projects" element={<UserProjects />} />
-                <Route path="project/:URL" element={<Project />} />
+                <Route path="project/:URL" element={<ProjectPage />} />
 
                 <Route path="login" element={<Login uid={uid} />} />
                 <Route path="register" element={<Register uid={uid} />} />
+
+                <Route path="projects/*" element={
+                    <ProtectedRoute uid={uid}>
+                        <Dashboard user={user} websocket={websocket} />
+                    </ProtectedRoute>
+                } />
 
                 <Route path="add-project" element={
                     <ProtectedRoute uid={uid}>
                         <AddProject user={user} websocket={websocket} />
                     </ProtectedRoute>
                 } />
-                <Route path="projects" element={
-                    <ProtectedRoute uid={uid}>
-                        <Projects websocket={websocket} user={user} />
-                    </ProtectedRoute>
-                } />
+
                 <Route path="messenger" element={
                     <ProtectedRoute uid={uid}>
                         <Messenger websocket={websocket} friends={friends} onlineUsers={onlineUsers} />
                     </ProtectedRoute>
                 } />
+
                 <Route element={<ProtectedRoute uid={uid} />}>
                     <Route path="profil" element={<Profil user={user} />}>
                         <Route index element={<Main />} />

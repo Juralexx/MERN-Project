@@ -31,15 +31,7 @@ function App() {
         }
         fetchToken()
 
-        if (uid) {
-            dispatch(getUser(uid))
-            // const fetchUser = async () => {
-            //     await axios
-            //         .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
-            //         .then((res) => setUser(res.data))
-            // }
-            // fetchUser()
-        }
+        if (uid) dispatch(getUser(uid))
     }, [uid, dispatch])
 
     useEffect(() => {

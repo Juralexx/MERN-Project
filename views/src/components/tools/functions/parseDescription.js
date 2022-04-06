@@ -5,14 +5,7 @@ export function parseDescriptionToInnerHTML(project) {
     let callback = {}
     let converter = new QuillDeltaToHtmlConverter(description, callback)
     let html = converter.convert(description)
-        if (html.length >= 170) {
-            if (html.substring(169, 170) === " ") {
-                let cleanSpaces = html.replace(html.substring(169, 170), "")
-                html = cleanSpaces.substring(0, 170) + "..."
-            }
-            html = html.substring(0, 170) + "..."
-        }
-        return ({ __html: html })
+    return ({ __html: html })
 }
 
 export function parseDescription(project) {
@@ -20,12 +13,12 @@ export function parseDescription(project) {
     let callback = {}
     let converter = new QuillDeltaToHtmlConverter(description, callback)
     let html = converter.convert(description)
-        if (html.length >= 170) {
-            if (html.substring(169, 170) === " ") {
-                let cleanSpaces = html.replace(html.substring(169, 170), "")
-                html = cleanSpaces.substring(0, 170) + "..."
-            }
-            html = html.substring(0, 170) + "..."
+    if (html.length >= 170) {
+        if (html.substring(169, 170) === " ") {
+            let cleanSpaces = html.replace(html.substring(169, 170), "")
+            html = cleanSpaces.substring(0, 170) + "..."
         }
-        return html
+        html = html.substring(0, 170) + "..."
+    }
+    return html
 }
