@@ -7,7 +7,7 @@ const About = ({ project, user, websocket, isAdmin, isManager }) => {
     return (
         <div className="dashboard-about">
             <div className="dashboard-about-content">
-
+                
             </div>
         </div>
     )

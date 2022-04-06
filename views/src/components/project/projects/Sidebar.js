@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { avatar } from '../../tools/functions/useAvatar'
 import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
 import { BsFillDiagram3Fill, BsFillCaretRightFill } from 'react-icons/bs'
@@ -35,10 +35,12 @@ const Sidebar = ({ user, projects, isLoading }) => {
     return (
         <div className={`sidebar ${addActive(reduced, "reduced")}`}>
             <div className={`sidebar-header ${addActive(reduced, "reduced")}`}>
-                <div className={`sidebar-header-inner ${addActive(reduced, "reduced")}`}>
-                    <div className="sidebar-header-icon"><BsFillDiagram3Fill /></div>
-                    <p>Mes Projets <span>{projects.length}</span></p>
-                </div>
+                <Link to="/projects">
+                    <div className={`sidebar-header-inner ${addActive(reduced, "reduced")}`}>
+                        <div className="sidebar-header-icon"><BsFillDiagram3Fill /></div>
+                        <p>Mes Projets <span>{projects.length}</span></p>
+                    </div>
+                </Link>
                 <div className="sidebar-header-toggle" onClick={handleState}><GoThreeBars /></div>
             </div>
             <div className="sidebar-inner custom-scrollbar">

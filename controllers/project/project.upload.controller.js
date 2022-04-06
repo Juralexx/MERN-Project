@@ -70,7 +70,7 @@ export const uploadPictures = async (req, res) => {
 /****************************************************** UPDATE ********************************************************/
 
 export const updatePictures = async (req, res) => {
-    const __directory = `${__dirname}/../../views/public/uploads/projects/${req.params.id}`
+    const __directory = `${__dirname}/../../../uploads/projects/${req.params.id}`
     let pics = []
     let done = 0
 
@@ -84,7 +84,7 @@ export const updatePictures = async (req, res) => {
 
         files.map(async (file, key) => {
             const fileName = `${req.params.id}-${key}.jpg`;
-            pics.push(`/uploads/projects/${req.params.id}/${fileName}`)
+            pics.push(`${process.env.SERVER_URL}/uploads/projects/${req.params.id}/${fileName}`)
             new Promise(async () => {
                 await pipeline(
                     file.stream,
@@ -131,7 +131,7 @@ export const updatePictures = async (req, res) => {
 /****************************************************** DELETE ********************************************************/
 
 export const deletePictures = async (req, res) => {
-    const __directory = `${__dirname}/../../views/public/uploads/projects/${req.params.id}`
+    const __directory = `${__dirname}/../../../uploads/projects/${req.params.id}`
     let pictures = []
 
     if (!fs.existsSync(__directory)) {
@@ -147,7 +147,7 @@ export const deletePictures = async (req, res) => {
         } else {
             files.map(async (file, key) => {
                 const fileName = `${req.params.id}-${key}.jpg`;
-                pictures.push(`/uploads/projects/${req.params.id}/${fileName}`)
+                pics.push(`${process.env.SERVER_URL}/uploads/projects/${req.params.id}/${fileName}`)
                 await pipeline(
                     file.stream,
                     fs.createWriteStream(`${__directory}/${fileName}`)

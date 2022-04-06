@@ -38,7 +38,7 @@ export const findProjectById = (req, res) => {
 }
 
 export const updateProject = async (req, res) => {
-    const { title, URL, category, state, location, department, region, new_region, content, numberofcontributors, contributors, picture, end, works, members, tasks } = req.body
+    const { title, URL, category, state, location, department, region, new_region, description, content, numberofcontributors, end, works } = req.body
 
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
@@ -56,14 +56,11 @@ export const updateProject = async (req, res) => {
                     department,
                     region,
                     new_region,
+                    description,
                     content,
                     numberofcontributors,
-                    contributors,
-                    picture,
                     end,
-                    works,
-                    members,
-                    tasks
+                    works
                 }
             },
             { new: true, upsert: true, setDefaultsOnInsert: true },

@@ -8,7 +8,7 @@ const Galery = ({ project }) => {
                 {project.pictures.map((element, key) => {
                     return (
                         <div class="masonry-brick">
-                            <img src={element} alt="Cherry plant" title="Cherry plant" />
+                            <img src={element} alt={project.title} title={project.title} />
                         </div>
                     )
                 })}

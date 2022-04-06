@@ -1,47 +1,34 @@
-import React, { useState, useRef } from 'react'
-import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "../../tools/editor/EditorToolbar";
+import React, { useRef, useState } from 'react'
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
-import { EndIconButton, StartIconButton } from '../../tools/components/Button';
+import { EndIconButton, StartIconButton } from '../../tools/components/Button'
+import { ErrorCard } from '../../tools/components/Error'
+import { Textarea } from '../../tools/components/Inputs'
 
-const Description = ({ content, setContent, onNext, onBack }) => {
-    const [count, setCount] = useState(0)
-    const quillRef = useRef()
-
-    const handleChange = (text, delta, source, editor) => {
-        setContent(editor.getContents())
-        setCount(editor.getText().length - 1)
-        // const regexp = new RegExp("fils de pute", 'i');
-        // let isString = content.ops.filter(element => regexp.test(element.insert))
-        quillRef.current.getEditor().on('text-change', () => {
-            if (editor.getLength() > 10000) {
-                quillRef.current.getEditor().deleteText(10000, editor.getLength());
-            }
-        })
-    }
+const Description = ({ description, setDescription, error, setError, isErr, setErr, onNext, onBack }) => {
+    const errorRef = useRef()
+    const checkErr = (name) => { if (isErr === name) return "err" }
 
     return (
         <div className="add-project-card">
-            <h2>Il est temps de décrire votre projet en détail !</h2>
-            <div className="content-form">
-                <p className="title min-w-[100%]">Description de votre projet <span>Champ requis</span></p>
-                <div className="text-editor">
-                    <EditorToolbar />
-                    <ReactQuill
-                        ref={quillRef}
-                        style={{ height: 300 }}
-                        value={content}
-                        onChange={handleChange}
-                        placeholder={"Il est temps de décrire votre projet !"}
-                        modules={modules}
-                        formats={formats}
-                    />
-                    <div className="field-infos ml-auto">{count} / 10 000 caractères</div>
+            <h2>Une courte description est le meilleur moyen de vous faire repérer !</h2>
+            <div className="flex-card">
+                <div className="card-left">
+                    <div className="content-form">
+                        <p className="title full">Courte description <span>Champ requis</span></p>
+                        <Textarea className={`full ${checkErr("description")}`} type="text" placeholder="Courte description du projet" onChange={(e) => setDescription((e.target.value).substring(0, 300))} value={description} />
+                        <div className="field-infos full">{description.length} / 300 caractères</div>
+                        {isErr === "description" && <ErrorCard useRef={errorRef} display={(isErr === "description").toString()} text={error} />}
+                    </div>
+                </div>
+                <div className="card-right">
+                    <h3>Courte description du projet</h3>
+                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
                 </div>
             </div>
             <div className="btn-container">
                 <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" className="next-btn" disabled={count < 10 || count > 10000} icon={<IoMdArrowRoundForward />} onClick={onNext} />
+                <EndIconButton text="Suivant" className="next-btn right" disabled={description.length < 10 || description.length > 300} icon={<IoMdArrowRoundForward />} onClick={onNext} />
             </div>
         </div>
     )

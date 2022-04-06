@@ -39,7 +39,7 @@ const Dashboard = ({ websocket, user }) => {
                             setProjects={setProjects}
                         />
                     } />
-                    {Object.keys(user).length > 0 && projects.length > 0 &&
+                    {(Object.keys(user).length > 0 && projects.length > 0) && (
                         <Route path=":URLID/:URL/*" element={
                             <Project
                                 user={user}
@@ -48,7 +48,7 @@ const Dashboard = ({ websocket, user }) => {
                                 setProjects={setProjects}
                             />
                         } />
-                    }
+                    )}
                 </Routes>
             </div>
         </div>

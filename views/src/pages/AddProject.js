@@ -8,16 +8,19 @@ import Title from "../components/project/add-project/Title";
 import Location from "../components/project/add-project/Location";
 import Contributors from "../components/project/add-project/Contributors";
 import End from "../components/project/add-project/End";
-import Description from "../components/project/add-project/Description";
+import Content from "../components/project/add-project/Content";
 import Pictures from "../components/project/add-project/Pictures";
+import Description from "../components/project/add-project/Description";
 
 const AddProject = ({ user }) => {
     const [title, setTitle] = useState("")
+    const [subtitle, setSubtitle] = useState("")
     const [category, setCategory] = useState("")
     const [location, setLocation] = useState("")
     const [department, setDepartment] = useState("")
     const [region, setRegion] = useState("")
     const [newRegion, setNewRegion] = useState("")
+    const [description, setDescription] = useState("")
     const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
     const [end, setEnd] = useState("")
@@ -33,14 +36,22 @@ const AddProject = ({ user }) => {
     const handleAddProject = async (e) => {
         e.preventDefault()
         e.stopPropagation()
-        if (title === "" || title.length < 10 || title.length > 100) {
+        if (title === "" || title.length < 10 || title.length > 60) {
             setErr("title")
             setStep(1)
-            setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 100 caractères")
+            setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères")
+        } else if (subtitle === "" || subtitle.length < 10 || subtitle.length > 100) {
+            setErr("subtitle")
+            setStep(1)
+            setError("Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères")
         } else if (category === "") {
             setErr("category")
             setStep(1)
             setError("Veuillez saisir une catégorie")
+        } else if (description === "" || description.length < 10 || description.length > 300) {
+            setErr("description")
+            setStep(3)
+            setError("Veuillez ajouter une courte description à votre projet")
         } else if (numberofcontributors < 0 || numberofcontributors === (null || undefined)) {
             setErr("numberofcontributors")
             setStep(4)
@@ -72,12 +83,14 @@ const AddProject = ({ user }) => {
                     title: cleanTitle,
                     URL: URL,
                     URLID: URLID,
+                    subtitle: subtitle,
                     category: category,
                     state: "worked on",
                     location: location,
                     department: department,
                     region: region,
                     new_region: newRegion,
+                    description: description,
                     end: end,
                     content: content,
                     numberofcontributors: numberofcontributors,
@@ -122,6 +135,8 @@ const AddProject = ({ user }) => {
                             <Title
                                 title={title}
                                 setTitle={setTitle}
+                                subtitle={subtitle}
+                                setSubtitle={setSubtitle}
                                 category={category}
                                 setCategory={setCategory}
                                 isErr={isErr}
@@ -154,6 +169,20 @@ const AddProject = ({ user }) => {
                         </Stepper.Content>
                     </Stepper.Step>
                     <Stepper.Step key={3}>
+                        <Stepper.Label>Courte description</Stepper.Label>
+                        <Stepper.Content>
+                            <Description
+                                description={description}
+                                setDescription={setDescription}
+                                setErr={setErr}
+                                error={error}
+                                setError={setError}
+                                onNext={onNext}
+                                onBack={onBack}
+                            />
+                        </Stepper.Content>
+                    </Stepper.Step>
+                    <Stepper.Step key={4}>
                         <Stepper.Label>Nombre de personnes</Stepper.Label>
                         <Stepper.Content>
                             <Contributors
@@ -170,7 +199,7 @@ const AddProject = ({ user }) => {
                             />
                         </Stepper.Content>
                     </Stepper.Step>
-                    <Stepper.Step key={4}>
+                    <Stepper.Step key={5}>
                         <Stepper.Label>Date</Stepper.Label>
                         <Stepper.Content>
                             <End
@@ -185,10 +214,10 @@ const AddProject = ({ user }) => {
                             />
                         </Stepper.Content>
                     </Stepper.Step>
-                    <Stepper.Step key={5}>
-                        <Stepper.Label>Description</Stepper.Label>
+                    <Stepper.Step key={6}>
+                        <Stepper.Label>Description détaillé</Stepper.Label>
                         <Stepper.Content>
-                            <Description
+                            <Content
                                 content={content}
                                 setContent={setContent}
                                 isErr={isErr}
@@ -200,7 +229,7 @@ const AddProject = ({ user }) => {
                             />
                         </Stepper.Content>
                     </Stepper.Step>
-                    <Stepper.Step key={6}>
+                    <Stepper.Step key={7}>
                         <Stepper.Label>Photos</Stepper.Label>
                         <Stepper.Content>
                             <Pictures

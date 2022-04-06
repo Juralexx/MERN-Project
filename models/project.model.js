@@ -28,6 +28,12 @@ const ProjectModel = new mongoose.Schema(
             trim: true,
         },
 
+        subtitle: {
+            type: String,
+            unique: false,
+            trim: true,
+        },
+
         URL: {
             type: String,
             required: true,
@@ -62,6 +68,10 @@ const ProjectModel = new mongoose.Schema(
         new_region: {
             type: String,
             default: null,
+        },
+
+        description: {
+            type: String,
         },
 
         content: {

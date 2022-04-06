@@ -74,8 +74,8 @@ export const formats = [
     "underline",
     "align",
     "strike",
-    "blockquote",
-    "background",
+    // "blockquote",
+    // "background",
     "list",
     "bullet",
     "indent",
@@ -114,10 +114,10 @@ export const QuillToolbar = () => (
             <button className="ql-underline" />
             <button className="ql-strike" />
         </span>
-        <span className="ql-formats">
+        {/* <span className="ql-formats">
             <button className="ql-blockquote" />
             <button className="ql-direction" />
-        </span>
+        </span> */}
         <span className="ql-formats">
             <button className="ql-list" value="ordered" />
             <button className="ql-list" value="bullet" />
@@ -126,8 +126,8 @@ export const QuillToolbar = () => (
         </span>
         <span className="ql-formats">
             <select className="ql-align" />
-            <select className="ql-color" />
-            <select className="ql-background" />
+            {/* <select className="ql-color" /> */}
+            {/* <select className="ql-background" /> */}
         </span>
         <span className="ql-formats">
             <button className="ql-link" />

@@ -33,12 +33,15 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
                 if (searchQuery.length > 2) {
                     setResponse(true)
                     setDisplay(true)
+                    setLoading(true)
                     if (isEmpty) {
                         setResponse(false)
                         setLoading(false)
-                        setDisplay(false)
                     }
-                } else { setDisplay(false) }
+                } else {
+                    setDisplay(false)
+                    setLoading(false)
+                }
             }
         }
     }
@@ -65,36 +68,47 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
     return (
         <div className="add-project-card">
             <h2 className="mb-5">Où votre projet se situe-t-il ?</h2>
-            <div className="content-form">
-                <p className="title">Localité</p>
-                <ClassicInput className={`small-input ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
-                {isErr === "location" && <ErrorCard useRef={errorRef} display={isErr === "location"} text={error} />}
-            </div>
-            <div tabIndex="0" className="auto-complete-container custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
-                {!isEmpty && display && isResponse && (
-                    locationsFound.map((element, key) => {
-                        return (
-                            <div className="auto-complete-item"
-                                onClick={() => {
-                                    setSelect(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
-                                    setLocation(element.COM_NOM)
-                                    setDepartment(element.DEP_NOM_NUM)
-                                    setRegion(element.REG_NOM_OLD)
-                                    setNewRegion(element.REG_NOM)
-                                }} key={key}>{`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
-                            </div>
-                        )
-                    })
-                )}
-                {(isLoading || (!isEmpty && !display && isLoading)) && (
-                    <SmallLoader />
-                )}
-                {!isResponse && !isLoading && searchQuery.length > 2 && isEmpty && (
-                    <div className="no-result">
-                        <div><BsInboxFill /></div>
-                        <div>Aucun resultat ne correspond à votre recherche...</div>
+            <div className="flex-card">
+                <div className="card-left">
+                    <div className="content-form">
+                        <p className="title full">Localité <span>Champs requis</span></p>
+                        <ClassicInput className={`full ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
+                        {isErr === "location" && <ErrorCard useRef={errorRef} display={isErr === "location"} text={error} />}
                     </div>
-                )}
+                    <div tabIndex="0" className="auto-complete-container custom-scrollbar full" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
+                        {!isEmpty && display && isResponse && (
+                            locationsFound.map((element, key) => {
+                                return (
+                                    <div className="auto-complete-item"
+                                        onClick={() => {
+                                            setSelect(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
+                                            setLocation(element.COM_NOM)
+                                            setDepartment(element.DEP_NOM_NUM)
+                                            setRegion(element.REG_NOM_OLD)
+                                            setNewRegion(element.REG_NOM)
+                                        }} key={key}>{`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
+                                    </div>
+                                )
+                            })
+                        )}
+                        {isLoading && isEmpty && (
+                            <SmallLoader />
+                        )}
+                        {searchQuery.length > 2 && isEmpty && !isLoading && (
+                            <div className="no-result">
+                                <div><BsInboxFill /></div>
+                                <div>Aucun resultat ne correspond à votre recherche...</div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <div className="card-right">
+                    <h3>Lieu du projet</h3>
+                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+                    <p>Les contributeurs potentiels les verront aussi si votre projet apparaît dans les différentes catégories,
+                        les résultats de recherche ou les e-mails que nous envoyons à notre communauté.</p>
+                </div>
             </div>
             <div className="btn-container">
                 <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />

@@ -8,15 +8,15 @@ export const RECEIVE_UPDATE_PICTURES = "RECEIVE_UPDATE_PICTURES"
 export const DELETE_PICTURES = "DELETE_PICTURES"
 export const RECEIVE_DELETE_PICTURES = "RECEIVE_DELETE_PICTURES"
 
-export const UPDATE_TITLE = "UPDATE_TITLE"
-export const UPDATE_URL = "UPDATE_URL"
-export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
-export const UPDATE_CONTENT = "UPDATE_CONTENT"
-export const UPDATE_LOCATION = "UPDATE_LOCATION"
-export const UPDATE_NUMBEROFCONTRIBUTORS = "UPDATE_NUMBEROFCONTRIBUTORS"
-export const UPDATE_WORKS = "UPDATE_WORKS"
-export const UPDATE_END = "UPDATE_END"
-export const UPDATE_STATE = "UPDATE_STATE"
+// export const UPDATE_TITLE = "UPDATE_TITLE"
+// export const UPDATE_URL = "UPDATE_URL"
+// export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
+// export const UPDATE_CONTENT = "UPDATE_CONTENT"
+// export const UPDATE_LOCATION = "UPDATE_LOCATION"
+// export const UPDATE_NUMBEROFCONTRIBUTORS = "UPDATE_NUMBEROFCONTRIBUTORS"
+// export const UPDATE_WORKS = "UPDATE_WORKS"
+// export const UPDATE_END = "UPDATE_END"
+export const UPDATE_PROJECT = "UPDATE_PROJECT"
 
 export const LIKE = "LIKE"
 export const UNLIKE = "UNLIKE"
@@ -111,136 +111,136 @@ export const receiveDeleteProjectPictures = (picture, activity) => {
 /*******************************************************************************************************************************/
 /******************************************************* INFORMATIONS **********************************************************/
 
-export const updateState = (projectId, state) => {
+export const updateProject = (projectId, title, url, subtitle, category, state, location, department, region, new_region, description, numberofcontributors, end, works, content) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { state }
+            data: { title, url, subtitle, category, state, location, department, region, new_region, description, numberofcontributors, end, works, content }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_STATE, payload: state })
+                dispatch({ type: UPDATE_PROJECT, payload: { title, url, subtitle, category, state, location, department, region, new_region, description, numberofcontributors, end, works, content } })
             })
             .catch((err) => console.log(err))
     }
 }
 
-export const updateTitle = (projectId, title) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { title }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_TITLE, payload: title })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateTitle = (projectId, title) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { title }
+//         })
+//             .then((res) => {
+//                 dispatch({ type: UPDATE_TITLE, payload: title })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
-export const updateURL = (projectId, URL) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { URL }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_URL, payload: URL })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateURL = (projectId, URL) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { URL }
+//         })
+//             .then((res) => {
+//                 dispatch({ type: UPDATE_URL, payload: URL })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
-export const updateCategory = (projectId, category) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { category }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_CATEGORY, payload: category })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateCategory = (projectId, category) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { category }
+//         })
+//             .then((res) => {
+//                 dispatch({ type: UPDATE_CATEGORY, payload: category })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
-export const updateContent = (projectId, content) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { content }
-        })
-            .then((res) => {
-                let callback = {}
-                let deltaOps = res.data.content[0].ops
-                let converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
-                let html = converter.convert(deltaOps)
-                content = html
-                dispatch({ type: UPDATE_CONTENT, payload: content })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateContent = (projectId, content) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { content }
+//         })
+//             .then((res) => {
+//                 let callback = {}
+//                 let deltaOps = res.data.content[0].ops
+//                 let converter = new QuillDeltaToHtmlConverter(deltaOps, callback)
+//                 let html = converter.convert(deltaOps)
+//                 content = html
+//                 dispatch({ type: UPDATE_CONTENT, payload: content })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
-export const updateLocation = (projectId, location, department, region, new_region) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { location, department, region, new_region }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_LOCATION, location: location, department: department, region: region, new_region: new_region })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateLocation = (projectId, location, department, region, new_region) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { location, department, region, new_region }
+//         })
+//             .then((res) => {
+//                 dispatch({ type: UPDATE_LOCATION, location: location, department: department, region: region, new_region: new_region })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
-export const updateNumberofcontributors = (projectId, numberofcontributors) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { numberofcontributors }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_NUMBEROFCONTRIBUTORS, payload: numberofcontributors })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateNumberofcontributors = (projectId, numberofcontributors) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { numberofcontributors }
+//         })
+//             .then((res) => {
+//                 dispatch({ type: UPDATE_NUMBEROFCONTRIBUTORS, payload: numberofcontributors })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
-export const updateWorks = (projectId, works) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { works }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_WORKS, payload: works })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateWorks = (projectId, works) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { works }
+//         })
+//             .then((res) => {
+//                 dispatch({ type: UPDATE_WORKS, payload: works })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
-export const updateEnd = (projectId, end) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-            data: { end }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_END, payload: end })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+// export const updateEnd = (projectId, end) => {
+//     return async (dispatch) => {
+//         await axios({
+//             method: "put",
+//             url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
+//             data: { end }
+//         })
+//             .then((res) => {
+//                 dispatch({ type: UPDATE_END, payload: end })
+//             })
+//             .catch((err) => console.log(err))
+//     }
+// }
 
 /*******************************************************************************************************************************/
 /*********************************************************** LIKE **************************************************************/

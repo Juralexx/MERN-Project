@@ -10,6 +10,7 @@ const Breadcrumb = ({ project }) => {
         else if (location.pathname.includes("tasks")) return "Tâches"
         else if (location.pathname.includes("messenger")) return "Messenger"
         else if (location.pathname.includes("members")) return "Membres"
+        else if (location.pathname.includes("edit")) return "Modifier"
         else return "Accueil"
     }
 

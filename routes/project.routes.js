@@ -10,15 +10,16 @@ import multer from 'multer'
 const upload = multer()
 
 projectRoutes.post('/add', createProject)
-projectRoutes.put('/add-pictures/:id', upload.array('files'), uploadPictures)
-projectRoutes.put('/update-pictures/:id', upload.array('files'), updatePictures)
-projectRoutes.put('/delete-pictures/:id', deletePictures)
 
 projectRoutes.get('/', AllProjects)
 projectRoutes.get('/:URLID/:URL', findProjectByURL)
 projectRoutes.get('/:id', findProjectById)
 projectRoutes.put('/:id', updateProject)
 projectRoutes.delete('/:id', deleteProject)
+
+projectRoutes.put('/add-pictures/:id', upload.array('files'), uploadPictures)
+projectRoutes.put('/update-pictures/:id', upload.array('files'), updatePictures)
+projectRoutes.put('/delete-pictures/:id', deletePictures)
 
 projectRoutes.put('/remove-user/:id', leaveProject)
 projectRoutes.put('/send-member-request/:id', sendMemberRequest)

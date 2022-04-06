@@ -1,0 +1,23 @@
+import React, { useRef, useState } from 'react'
+import { useClickOutside } from '../../../tools/functions/useClickOutside'
+import Categories from '../../../home/Categories'
+import { ErrorCard } from '../../../tools/components/Error'
+import { Textarea } from '../../../tools/components/Inputs'
+import { BiCategory } from 'react-icons/bi'
+import { BsCaretDownFill } from 'react-icons/bs'
+
+const Description = ({ description, setDescription, error, setError, isErr, setErr }) => {
+    const errorRef = useRef()
+    const checkErr = (name) => { if (isErr === name) return "err" }
+
+    return (
+        <div className="content-form">
+            <p className="title full">Courte description du projet <span>Champ requis</span></p>
+            <Textarea className={`full ${checkErr("description")}`} type="text" placeholder="Courte description du projet" onChange={(e) => setDescription((e.target.value).substring(0, 300))} value={description} />
+            <div className="field-infos full">{description.length} / 300 caractères</div>
+            {isErr === "description" && <ErrorCard useRef={errorRef} display={(isErr === "description").toString()} text={error} />}
+        </div>
+    )
+}
+
+export default Description
