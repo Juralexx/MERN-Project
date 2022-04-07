@@ -53,6 +53,10 @@ const ProjectModel = new mongoose.Schema(
             required: true
         },
 
+        tags: {
+            type: [String],
+        },
+
         location: {
             type: String,
             default: null,

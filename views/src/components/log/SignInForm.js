@@ -48,7 +48,7 @@ const SignInForm = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     defaultValue={email}
                 />
-                {isErr === "email" && <ErrorCard useRef={errorRef} display={isErr === "email"} text={error} className="min-w-full" />}
+                {isErr === "email" && <ErrorCard useRef={errorRef} display={isErr === "email"} text={error} className="min-w-full" clean={() => setErr("")} />}
             </div>
             <div className="mb-4">
                 <DynamicInput
@@ -61,7 +61,7 @@ const SignInForm = () => {
                     endIcon={passwordShown ? <AiFillEyeInvisible /> : <AiFillEye />} endIconClick={() => setPasswordShown(!passwordShown)}
                 />
                 <div className="forgot-password"><Link to="/">Mot de passe oublié</Link></div>
-                {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" />}
+                {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" clean={() => setErr("")} />}
             </div>
             <Button text="Connexion" className="mt-6 w-full" onClick={handleLogin} />
         </>

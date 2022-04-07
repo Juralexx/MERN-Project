@@ -6,7 +6,7 @@ import { DoubleIconInput, ClassicInput, Textarea } from '../../../tools/componen
 import { BiCategory } from 'react-icons/bi'
 import { BsCaretDownFill } from 'react-icons/bs'
 
-const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, error, category, setCategory }) => {
+const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, setErr, error, category, setCategory }) => {
     const [display, setDisplay] = useState(false)
     const wrapperRef = useRef()
     const errorRef = useRef()
@@ -19,14 +19,14 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, error, category,
                 <p className="title full">Titre <span>Champ requis</span></p>
                 <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle(e.target.value)} value={title} />
                 <div className="field-infos full">{title.length} / 100 caractères</div>
-                {isErr === "title" && <ErrorCard useRef={errorRef} display={(isErr === "title").toString()} text={error} />}
+                {isErr === "title" && <ErrorCard useRef={errorRef} display={isErr === "title"} text={error} clean={() => setErr("")} />}
             </div>
 
             <div className="content-form mt-4">
                 <p className="title full">Sous-titre <span>Champ requis</span></p>
                 <Textarea className={`full ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 100))} value={subtitle} />
                 <div className="field-infos full">{subtitle.length} / 100 caractères</div>
-                {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={(isErr === "subtitle").toString()} text={error} />}
+                {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={isErr === "subtitle"} text={error} clean={() => setErr("")} />}
             </div>
 
             <div className="content-form mt-4">
@@ -37,7 +37,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, error, category,
                         <Categories open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
                     )}
                 </div>
-                {isErr === "category" && <ErrorCard useRef={errorRef} display={(isErr === "category").toString()} text={error} />}
+                {isErr === "category" && <ErrorCard useRef={errorRef} display={isErr === "category"} text={error} clean={() => setErr("")} />}
             </div>
         </>
     )

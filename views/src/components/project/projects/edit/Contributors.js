@@ -29,7 +29,7 @@ const Contributors = ({ numberofcontributors, setNumberofcontributors, isErr, se
                     <div>Je ne sais pas encore</div>
                 </div>
             </div>
-            {isErr === "numberofcontributors" && <ErrorCard useRef={errorRef} display={isErr === "numberofcontributors"} text={error} />}
+            {isErr === "numberofcontributors" && <ErrorCard useRef={errorRef} display={isErr === "numberofcontributors"} text={error} clean={() => setErr("")} />}
         </>
     )
 }

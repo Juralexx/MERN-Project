@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { updateProject } from '../../../../actions/project.action'
@@ -11,15 +11,16 @@ import End from './End'
 import Location from './Location'
 import Works from './Works'
 import Content from './Content'
-import Pictures from './Pictures'
 import Contributors from './Contributors'
 import Description from './Description'
+import Tags from './Tags'
 
 const Edit = ({ project, user }) => {
     const [title, setTitle] = useState(project.title)
     const [subtitle, setSubtitle] = useState(project.subtitle)
     const [url, setUrl] = useState(project.URL)
     const [category, setCategory] = useState(project.category)
+    const [tags, setTags] = useState(project.tags)
     const [location, setLocation] = useState(project.location)
     const [department, setDepartment] = useState(project.department)
     const [region, setRegion] = useState(project.region)
@@ -30,12 +31,9 @@ const Edit = ({ project, user }) => {
     const [end, setEnd] = useState(ISOtoNavFormat(project.end))
     const [content, setContent] = useState(project.content[0].ops)
     const [state, setState] = useState(project.state)
-    const [pictures, setPictures] = useState([])
-    const [files, setFiles] = useState(project.pictures)
     const [changes, setChanges] = useState(false)
     const [error, setError] = useState(null)
     const [isErr, setErr] = useState(null)
-    const errorRef = useRef()
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -62,7 +60,7 @@ const Edit = ({ project, user }) => {
             if (title !== project.title) {
                 let cleanTitle = title.toLowerCase();
                 cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
-                cleanTitle = cleanTitle.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
+                cleanTitle = cleanTitle.replace(/[&#,+()$~%^.'":*?!;<>{}/\\\\]/g, " ")
                 cleanTitle = cleanTitle.replace(/ +/g, " ")
                 cleanTitle = cleanTitle.trim()
                 setTitle(cleanTitle)
@@ -82,6 +80,7 @@ const Edit = ({ project, user }) => {
                     subtitle: subtitle,
                     category: category,
                     description: description,
+                    tags: tags,
                     state: state,
                     location: location,
                     department: department,
@@ -99,18 +98,7 @@ const Edit = ({ project, user }) => {
                     else if (res.data.errors.content) setError(res.data.errors.content)
                     else if (res.data.errors.numberofcontributors) setError(res.data.errors.numberofcontributors)
                 } else {
-                    dispatch(updateProject(project._id, title, URL, subtitle, category, state, location, department, region, newRegion, description, numberofcontributors, end, workArray, content))
-                    if (files.length > 0) {
-                        await axios.get(`${process.env.REACT_APP_API_URL}api/project/${project.URLID}/${URL}`)
-                            .then(async (response) => {
-                                let formData = new FormData()
-                                for (let i = 0; i < files.length; i++) {
-                                    formData.append('files', files[i])
-                                }
-                                await axios.put(`${process.env.REACT_APP_API_URL}api/project/update-pictures/${response.data._id}`, formData)
-                                    .then(res => res.data).catch(err => console.log(err))
-                            }).catch(err => console.log(err))
-                    }
+                    dispatch(updateProject(project._id, title, URL, subtitle, category, tags, state, location, department, region, newRegion, description, numberofcontributors, end, workArray, content))
                     const redirection = navigate(`/projects/${project.URLID}/${project.URL}/about`)
                     setTimeout(redirection, 2000)
                 }
@@ -179,6 +167,25 @@ const Edit = ({ project, user }) => {
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
                         <div className="edit-project-flex-content-left">
+                            <h2>Tags et référencement</h2>
+                            <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                                Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+                        </div>
+                        <div className="edit-project-flex-content-right">
+                            <Tags
+                                tags={tags}
+                                setTags={setTags}
+                                isErr={isErr}
+                                setErr={setErr}
+                                error={error}
+                                setError={setError}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="edit-container">
+                    <div className="edit-project-flex-container">
+                        <div className="edit-project-flex-content-left">
                             <h2>État du projet</h2>
                             <p>La catégorie et la sous-catégorie principales permettent à vos contributeurs de trouver votre projet.</p>
                         </div>
@@ -207,6 +214,7 @@ const Edit = ({ project, user }) => {
                                 newRegion={newRegion}
                                 setNewRegion={setNewRegion}
                                 isErr={isErr}
+                                setErr={setErr}
                                 error={error}
                             />
                         </div>
@@ -267,13 +275,6 @@ const Edit = ({ project, user }) => {
                         setChanges={setChanges}
                     />
                 </div>
-                <Pictures
-                    files={files}
-                    setFiles={setFiles}
-                    pictures={pictures}
-                    setPictures={setPictures}
-                    projectId={project._id}
-                />
             </div>
         </div>
     )

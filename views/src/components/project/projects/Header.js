@@ -51,14 +51,14 @@ const Header = ({ project, websocket, user }) => {
                 </div>
             </div>
 
-            {(location.pathname.includes("about") || location.pathname.includes("galery") || location.pathname.includes("actuality") || location.pathname.includes("qna")) &&
+            {(location.pathname.includes("about") || location.pathname.includes("gallery") || location.pathname.includes("actuality") || location.pathname.includes("qna")) &&
                 <div className="dashboard-header-navbar">
                     <div className="dashboard-header-navbar-content">
                         <div className="dashboard-header-navbar-item">
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/about`} className={`${isThisActive}`}>À propos</NavLink>
                         </div>
                         <div className="dashboard-header-navbar-item">
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/galery`} className={`${isThisActive}`}>Galerie</NavLink>
+                            <NavLink to={`/projects/${project.URLID}/${project.URL}/gallery`} className={`${isThisActive}`}>Galerie</NavLink>
                         </div>
                         <div className="dashboard-header-navbar-item">
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/actuality`} className={`${isThisActive}`}>Actualités</NavLink>

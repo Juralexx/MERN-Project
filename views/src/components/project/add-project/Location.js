@@ -73,7 +73,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
                     <div className="content-form">
                         <p className="title full">Localité <span>Champs requis</span></p>
                         <ClassicInput className={`full ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
-                        {isErr === "location" && <ErrorCard useRef={errorRef} display={isErr === "location"} text={error} />}
+                        {isErr === "location" && <ErrorCard useRef={errorRef} display={isErr === "location"} text={error} clean={() => setErr("")} />}
                     </div>
                     <div tabIndex="0" className="auto-complete-container custom-scrollbar full" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
                         {!isEmpty && display && isResponse && (

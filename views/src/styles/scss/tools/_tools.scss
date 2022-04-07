@@ -579,7 +579,7 @@
         left          : 50%;
         transform     : translateX(-50%);
         background    : var(--content-x-light);
-        border-radius : 8px;
+        border-radius : 5px;
         z-index       : 2000;
         box-shadow : var(--shadow-lg);
 
@@ -665,7 +665,7 @@
 .medium-avatar {
     min-height    : 34px;
     min-width     : 34px;
-    border-radius : 8px;
+    border-radius : 5px;
     margin-right  : 10px;
 }
 
@@ -770,7 +770,7 @@
     display          : flex;
     align-items      : center;
     padding          : 10px;
-    max-width        : 350px;
+    max-width        : 100%;
     background-color : rgba(var(--red-rgb), 0.4);
     border           : 1px solid var(--red);
     border-left      : 5px solid var(--red);
@@ -895,6 +895,37 @@
             top       : 50%;
             right     : -12px;
             transform : translateY(-50%) rotate(-90deg);
+        }
+    }
+}
+
+.tags-container {
+    display   : flex;
+    flex-wrap : wrap;
+    padding   : 0 0 10px 0;
+
+    .tags {
+        display          : flex;
+        align-items      : center;
+        height           : 30px;
+        padding          : 4px 8px 0;
+        margin           : 4px 4px 4px 0;
+        color            : var(--text);
+        background-color : var(--content-x-light);
+        border-radius    : var(--radius);
+        cursor           : pointer;
+
+        p {
+            margin : 0 !important;
+        }
+    
+        svg {
+            width         : 20px;
+            height        : 20px;
+            padding       : 2px;
+            border-radius : 20px;
+            margin-left   : 5px;
+            margin-top    : -3px;
         }
     }
 }

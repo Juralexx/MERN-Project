@@ -163,7 +163,7 @@ export const isEmpty = (value) => {
 export const cleanTitleMakeURL = (title, setTitle, setUrl) => {
     let newTitle = title.toLowerCase();
     newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
-    newTitle = newTitle.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
+    newTitle = newTitle.replace(/[&#,+()$~%^.'":*?!;<>{}/\\\\]/g, " ")
     newTitle = newTitle.replace(/ +/g, " ")
     newTitle = newTitle.trim()
     setTitle(newTitle)
@@ -184,8 +184,8 @@ export const cleanTitleMakeURL = (title, setTitle, setUrl) => {
 
 export const handleEnterKey = (event, func) => {
     if (event.key === 'Enter') {
-        func()
-    }
+        return func()
+    } else return
 }
 
 /**

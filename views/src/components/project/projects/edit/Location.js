@@ -6,7 +6,7 @@ import { BsInboxFill } from 'react-icons/bs'
 import { SmallLoader } from "../../../tools/components/Loader";
 import { ErrorCard } from "../../../tools/components/Error";
 
-const Location = ({ location, setLocation, department, setDepartment, region, setRegion, newRegion, setNewRegion, isErr, error }) => {
+const Location = ({ location, setLocation, department, setDepartment, region, setRegion, newRegion, setNewRegion, isErr, setErr, error }) => {
     const [searchQuery, setSearchQuery] = useState(location)
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -55,7 +55,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
         <div className="content-form">
             <p className="title full">Localité <span>Champ requis</span></p>
             <ClassicInput className={`full ${checkErr("location")}`} type="text" placeholder="Rechercher une adresse..." value={searchQuery} onInput={handleInputChange} onChange={searchLocation} cross onClean={clean} />
-            {isErr === "location" && <ErrorCard useRef={errorRef} display={isErr === "location"} text={error} />}
+            {isErr === "location" && <ErrorCard useRef={errorRef} display={isErr === "location"} text={error} clean={() => setErr("")} />}
 
             <div tabIndex="0" className="auto-complete-container custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
                 {!isEmpty && display && isResponse && (

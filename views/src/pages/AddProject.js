@@ -16,6 +16,7 @@ const AddProject = ({ user }) => {
     const [title, setTitle] = useState("")
     const [subtitle, setSubtitle] = useState("")
     const [category, setCategory] = useState("")
+    const [tags, setTags] = useState([])
     const [location, setLocation] = useState("")
     const [department, setDepartment] = useState("")
     const [region, setRegion] = useState("")
@@ -63,7 +64,7 @@ const AddProject = ({ user }) => {
         } else {
             let cleanTitle = title.toLowerCase();
             cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
-            cleanTitle = cleanTitle.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
+            cleanTitle = cleanTitle.replace(/[&#,+()$~%^.|_@°=§µ£¤'"`:*?!;<>[\]{}/\\\\]/g, " ")
             cleanTitle = cleanTitle.replace(/ +/g, " ")
             cleanTitle = cleanTitle.trim()
             setTitle(cleanTitle)
@@ -85,6 +86,7 @@ const AddProject = ({ user }) => {
                     URLID: URLID,
                     subtitle: subtitle,
                     category: category,
+                    tags: tags,
                     state: "worked on",
                     location: location,
                     department: department,
@@ -169,11 +171,14 @@ const AddProject = ({ user }) => {
                         </Stepper.Content>
                     </Stepper.Step>
                     <Stepper.Step key={3}>
-                        <Stepper.Label>Courte description</Stepper.Label>
+                        <Stepper.Label>Courte description et tags</Stepper.Label>
                         <Stepper.Content>
                             <Description
                                 description={description}
                                 setDescription={setDescription}
+                                tags={tags}
+                                setTags={setTags}
+                                isErr={isErr}
                                 setErr={setErr}
                                 error={error}
                                 setError={setError}

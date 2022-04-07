@@ -124,7 +124,7 @@ const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
                     <NumberInput placeholder="Nombre..." value={number} onChange={(e) => setNumber(e.target.value)} />
                     <ToolsBtn text="Valider" disabled={work.length !== "" && (number < 0 || number === 0 || number === (null || undefined))} onClick={checkArrayErrors}><BsCheckLg /></ToolsBtn>
                 </div>
-                {isErr === "work" && <ErrorCard useRef={errorRef} display={isErr === "work"} text={error} />}
+                {isErr === "work" && <ErrorCard useRef={errorRef} display={isErr === "work"} text={error} clean={() => setErr("")} />}
             </div>
         </div>
     )

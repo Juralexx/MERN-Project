@@ -42,6 +42,7 @@ export default function projectReducer(state = initialState, action) {
                 subtitle: action.payload.subtitle,
                 URL: action.payload.url,
                 category: action.payload.category,
+                tags: action.payload.tags,
                 state: action.payload.state,
                 location: action.payload.location,
                 department: action.payload.department,

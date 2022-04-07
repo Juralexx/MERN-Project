@@ -48,7 +48,7 @@ const AddProjectForm = ({ user }) => {
         } else {
             let newTitle = title.toLowerCase();
             newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
-            newTitle = newTitle.replace(/[&#,+()$~%.'":*?!<>{}/\\\\]/g, " ")
+            newTitle = newTitle.replace(/[&#,+()$~%^.'":*?!;<>{}/\\\\]/g, " ")
             newTitle = newTitle.replace(/ +/g, " ")
             newTitle = newTitle.trim()
             setTitle(newTitle)

@@ -10,7 +10,7 @@ import ActivityFeed from './activity-feed/ActivityFeed';
 import Tasks from './tasks/Tasks';
 import About from './About';
 import Edit from './edit/Edit';
-import Galery from './Galery';
+import Gallery from './Gallery';
 
 const Project = ({ user, websocket, projects, setProjects }) => {
     const reducer = useSelector(state => state.projectReducer)
@@ -101,8 +101,8 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             isManager={isManager}
                         />
                     } />
-                    <Route path="galery" element={
-                        <Galery
+                    <Route path="gallery" element={
+                        <Gallery
                             user={user}
                             websocket={websocket}
                             project={project}

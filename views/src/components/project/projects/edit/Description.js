@@ -15,7 +15,7 @@ const Description = ({ description, setDescription, error, setError, isErr, setE
             <p className="title full">Courte description du projet <span>Champ requis</span></p>
             <Textarea className={`full ${checkErr("description")}`} type="text" placeholder="Courte description du projet" onChange={(e) => setDescription((e.target.value).substring(0, 300))} value={description} />
             <div className="field-infos full">{description.length} / 300 caractères</div>
-            {isErr === "description" && <ErrorCard useRef={errorRef} display={(isErr === "description").toString()} text={error} />}
+            {isErr === "description" && <ErrorCard useRef={errorRef} display={isErr === "description"} text={error} clean={() => setErr("")} />}
         </div>
     )
 }

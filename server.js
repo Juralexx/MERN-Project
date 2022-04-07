@@ -21,6 +21,7 @@ app.use(cors({
     mode: 'no-cors',
     credentials: true,
     origin: process.env.FRONT_URL,
+    "Access-Control-Allow-Origin": process.env.FRONT_URL,
     'allowedHeaders': ['sessionId', 'Content-Type', 'Authorization'],
     'exposedHeaders': ['sessionId'],
     'methods': 'GET, OPTIONS, HEAD, PUT, PATCH, POST, DELETE',

@@ -67,7 +67,7 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                                             <div className="contributors"><BsFillPeopleFill /><p>{element.numberofcontributors}</p></div>
                                             <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                                         </div>
-                                        <div className="description" dangerouslySetInnerHTML={parseDescriptionToInnerHTML(element)}></div>
+                                        <div className="description">{element.description}</div>
 
                                         <div className="swiper-card-footer">
                                             <div className="footer-left">

@@ -160,19 +160,19 @@ const SignUpForm = () => {
                 <div className="relative mb-4">
                     <DynamicInput type="text" text="Pseudo" placeholder=" " className={`${addErrorClass("pseudo")} ${addSuccesClass("pseudo")}`} onClick={() => setErr(null)} onChange={(e) => setPseudo(e.target.value)} value={pseudo} />
                     {valid.includes("pseudo") && <BsCheckLg className="validated" />}
-                    {isErr === "pseudo" && <ErrorCard useRef={errorRef} display={isErr === "pseudo"} text={error} className="min-w-full" />}
+                    {isErr === "pseudo" && <ErrorCard useRef={errorRef} display={isErr === "pseudo"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
                 <div className="relative mb-4">
                     <DynamicInput type="email" text="Email" placeholder=" " className={`${addErrorClass("email")} ${addSuccesClass("email")}`} onChange={(e) => setEmail(e.target.value)} value={email} />
                     {valid.includes("email") && <BsCheckLg className="validated" />}
-                    {isErr === "email" && <ErrorCard useRef={errorRef} display={isErr === "email"} text={error} className="min-w-full" />}
+                    {isErr === "email" && <ErrorCard useRef={errorRef} display={isErr === "email"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
                 <div className="relative mb-4" ref={passwordRef}>
                     <DynamicInput type={passwordShown ? "text" : "password"} text="Mot de passe" className={`${addErrorClass("password")} ${addSuccesClass("password")}`} placeholder=" " onClick={() => setDisplay(!display)} onChange={(e) => setPassword(e.target.value)} value={password} endIcon={passwordShown ? <AiFillEyeInvisible /> : <AiFillEye />} endIconClick={() => setPasswordShown(!passwordShown)} />
                     {valid.includes("password") && <BsCheckLg className="validated" />}
-                    {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" />}
+                    {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" clean={() => setErr("")} />}
                     {display &&
                         <div className="password-checker">
                             <div className="password-strength">
@@ -194,14 +194,14 @@ const SignUpForm = () => {
                 <div className="relative mb-4">
                     <DynamicInput type="password" text="Confirmation mot de passe" className={`${addErrorClass("confirmed-password")} ${addSuccesClass("confirmed-password")}`} placeholder=" " onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} />
                     {valid.includes("confirmed-password") && <BsCheckLg className="validated" />}
-                    {isErr === "confirmed-password" && <ErrorCard useRef={errorRef} display={isErr === "confirmed-password"} text={error} className="min-w-full" />}
+                    {isErr === "confirmed-password" && <ErrorCard useRef={errorRef} display={isErr === "confirmed-password"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
                 <div className="flex items-center mb-6 mt-4">
                     <CheckBox checked={terms} onChange={() => setTerms(!terms)} />
                     <label htmlFor="terms" className="ml-2 mt-1">J'accepte les <a href="/" target="_blank" rel="noopener noreferrer">conditions générales</a></label>
                 </div>
-                {isErr === "terms" && <ErrorCard useRef={errorRef} display={isErr === "terms"} text={error} className="min-w-full" />}
+                {isErr === "terms" && <ErrorCard useRef={errorRef} display={isErr === "terms"} text={error} className="min-w-full" clean={() => setErr("")} />}
 
                 <Button text="S'inscrire" className="w-full" onClick={handleRegister}
                 disabled={!onlyLettersNumbersAndDashes(pseudo) || pseudo.length <= 4 || pseudo.length >= 20 || !isEmailValid(email) || !secured || password !== confirmPassword || !terms}
