@@ -1,0 +1,119 @@
+.gallery-wrapper {
+    position   : relative;
+    width      : 100%;
+    height     : auto;
+    min-height : 100%;
+    background : var(--content);
+    padding    : 50px;
+
+    .gallery-container {
+        position   : relative;
+        width      : 100%;
+        max-width  : 1440px;
+        margin     : 0 auto;
+
+        .gallery {
+            display               : grid;
+            grid-template-columns : repeat(3, 1fr);
+            width                 : 100%;
+            height                : auto;
+            max-width             : 1024px;
+            grid-gap              : 15px;
+            margin                : 0 auto;
+
+            .gallery-brick {
+                position       : relative;
+                padding-bottom : 100%;
+                z-index        : 1;
+
+                img {
+                    position      : absolute;
+                    top           : 0;
+                    left          : 0;
+                    height        : 100%;
+                    width         : 100%;
+                    object-fit    : cover;
+                    border-radius : 5px;
+                    cursor        : pointer;
+                }
+
+                &:hover {
+                    opacity : .75;
+                }
+
+                .img-tools {
+                    position : absolute;
+                    top      : 0;
+                    right    : 0;
+                    display  : flex;
+                    padding  : 12px;
+                    z-index  : 2;
+
+                    .img-tools-item {
+                        display          : flex;
+                        align-items      : center;
+                        justify-content  : center;
+                        background-color : black;
+                        border-radius    : 50px;
+                        height           : 30px;
+                        width            : 30px;
+                        margin           : 0 3px;
+                        cursor           : pointer;
+
+                        svg {
+                            color : white;
+                        }
+                    }
+                }
+            }
+
+            .gallery-brick-empty {
+                position       : relative;
+                padding-bottom : 100%;
+                background     : var(--content-x-light);
+                border-radius  : 5px;
+
+                svg {
+                    position      : absolute;
+                    top           : 50%;
+                    left          : 50%;
+                    transform     : translate(-50%, -50%);
+                    height        : 40%;
+                    width         : 40%;
+                    object-fit    : cover;
+                    border-radius : 5px;
+                    cursor        : pointer;
+                }
+            }
+        }
+    
+        .dropzone {
+            width           : 100%;
+            max-width       : 500px;
+            display         : flex;
+            flex-direction  : column;
+            align-items     : center;
+            justify-content : center;
+            padding         : 15px 0;
+            margin          : 0 auto 25px;
+            border          : 2px dashed white;
+            border-radius   : 5px;
+    
+            svg {
+                width  : 50px;
+                height : 50px;
+            }
+
+            &:hover, &:focus, &.active {
+                background : var(--content-x-light);
+            }
+
+            &.disabled {
+                opacity: 0.5;
+                &:hover, &:focus, &.active {
+                    background : none;
+                }
+            }
+        }
+    }
+}

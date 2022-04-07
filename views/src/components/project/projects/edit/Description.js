@@ -1,10 +1,6 @@
-import React, { useRef, useState } from 'react'
-import { useClickOutside } from '../../../tools/functions/useClickOutside'
-import Categories from '../../../home/Categories'
+import React, { useRef } from 'react'
 import { ErrorCard } from '../../../tools/components/Error'
 import { Textarea } from '../../../tools/components/Inputs'
-import { BiCategory } from 'react-icons/bi'
-import { BsCaretDownFill } from 'react-icons/bs'
 
 const Description = ({ description, setDescription, error, setError, isErr, setErr }) => {
     const errorRef = useRef()

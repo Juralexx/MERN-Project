@@ -380,6 +380,19 @@ io.on("connect", (socket) => {
         }
     })
 
+    /***********************************************************************************/
+    /************************************ PICTURES *************************************/
+
+    socket.on('updateGallery', ({ receiverId, pictures, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateGallery', {
+                pictures,
+                activity
+            })
+        }
+    })
+
     const removeUser = (socketId) => {
         users = users.filter(user => user.socketId !== socketId)
     }

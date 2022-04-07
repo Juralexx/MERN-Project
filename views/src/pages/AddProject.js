@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { Stepper } from '@zendeskgarden/react-accordions'
 import { removeAccents } from "../components/Utils";
 import Title from "../components/project/add-project/Title";
@@ -110,7 +110,6 @@ const AddProject = ({ user }) => {
                     if (files.length > 0) {
                         await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URLID}/${URL}`)
                             .then(async (response) => {
-                                console.log(response)
                                 let formData = new FormData()
                                 for (let i = 0; i < files.length; i++) {
                                     formData.append('files', files[i])

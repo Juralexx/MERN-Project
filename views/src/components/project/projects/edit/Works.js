@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios';
-import { ClassicInput, NumberInput, CheckBox } from '../../../tools/components/Inputs';
-import { Button, SmallToolsBtn, ToolsBtn } from '../../../tools/components/Button';
+import { ClassicInput, NumberInput } from '../../../tools/components/Inputs';
+import { Button, ToolsBtn } from '../../../tools/components/Button';
 import { SmallLoader } from '../../../tools/components/Loader';
-import { ImCross } from 'react-icons/im';
 import { BsCheckLg, BsInboxFill } from 'react-icons/bs';
 import { ErrorCard } from '../../../tools/components/Error';
 import { useClickOutside } from '../../../tools/functions/useClickOutside';

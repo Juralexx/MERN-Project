@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import { io } from 'socket.io-client'
 import Paths from './components/routes/routes';
 import { UidContext, UserContext } from "./components/AppContext"
@@ -26,12 +26,13 @@ function App() {
                 url: `${process.env.REACT_APP_API_URL}jwtid`,
                 withCredentials: true,
             })
-                .then((res) => { setUid(res.data) })
-                .catch((err) => console.log(err))
+                .then(res => setUid(res.data))
+                .catch(err => console.error(err))
         }
         fetchToken()
 
-        if (uid) dispatch(getUser(uid))
+        if (uid)
+            dispatch(getUser(uid))
     }, [uid, dispatch])
 
     useEffect(() => {

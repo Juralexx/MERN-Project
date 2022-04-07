@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { VscError } from 'react-icons/vsc'
 import { IoCloseOutline } from 'react-icons/io5'
 

@@ -8,7 +8,7 @@
         width     : 100%;
         max-width : 1440px;
         margin    : 0 auto;
-        padding   : 20px 50px;
+        padding   : 10px 50px;
 
         .dashboard-header-top {
             display         : flex;
@@ -66,7 +66,7 @@
     .dashboard-header-navbar {
         position         : relative;
         width            : 100%;
-        padding          : 10px 22px;
+        padding          : 0px 22px;
         background-color : var(--content-x-light);
         
         .dashboard-header-navbar-content {
@@ -78,7 +78,7 @@
             max-width       : 1440px;
 
             .dashboard-header-navbar-item {
-                padding   : 4px 15px 0;
+                padding   : 2px 15px 0;
                 font-size : 16px;
                 color     : var(--text-tertiary);
                 cursor    : pointer;
@@ -101,7 +101,7 @@
         display     : flex;
         align-items : center;
         width       : 100%;
-        padding     : 0 0 16px;
+        padding     : 0 0 10px;
         color       : var(--text-secondary);
         font-size   : 12px;
 

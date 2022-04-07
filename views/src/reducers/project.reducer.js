@@ -1,7 +1,7 @@
 import {
     CREATE_TASK,
-    CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, UPDATE_CATEGORY, UPDATE_CONTENT,
-    UPDATE_END, UPDATE_LOCATION, UPDATE_NUMBEROFCONTRIBUTORS, UPDATE_STATE, UPDATE_TITLE, UPDATE_URL, UPDATE_WORKS, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES, RECEIVE_DELETE_PICTURES, UPDATE_PROJECT
+    CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE,
+    RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES, RECEIVE_DELETE_PICTURES, UPDATE_PROJECT
 } from "../actions/project.action";
 
 const initialState = {}
@@ -14,26 +14,27 @@ export default function projectReducer(state = initialState, action) {
         case UPDATE_PICTURES:
             return {
                 ...state,
-                pictures: [...state.tasks, action.payload.pictures],
-                activity_feed: [...state.activity_feed, action.payload.activity]
+                pictures: [...state.pictures, action.payload.filepath]
             }
         case RECEIVE_UPDATE_PICTURES:
             return {
                 ...state,
-                pictures: [...state.tasks, action.payload.pictures],
-                activity_feed: [...state.activity_feed, action.payload.activity]
+                pictures: [...state.pictures, action.payload.filepath]
             }
         case DELETE_PICTURES:
+            let pics = state.pictures.filter(picture => picture !== action.payload.picture)
+            let newPics = []
+            pics.forEach((pic, key) => {
+                newPics = [...newPics, `${process.env.REACT_APP_API_URL}uploads/projects/${action.payload.projectId}/${action.payload.projectId}-${key}.jpg`]
+            })
             return {
                 ...state,
-                pictures: state.pictures.filter(picture => picture !== action.payload.picture),
-                activity_feed: [...state.activity_feed, action.payload.activity]
+                pictures: newPics,
             }
         case RECEIVE_DELETE_PICTURES:
             return {
                 ...state,
-                pictures: state.pictures.filter(picture => picture !== action.payload.picture),
-                activity_feed: [...state.activity_feed, action.payload.activity]
+                pictures: state.pictures.filter(picture => picture !== action.payload.picture)
             }
         case UPDATE_PROJECT:
             return {
@@ -54,49 +55,6 @@ export default function projectReducer(state = initialState, action) {
                 numberofcontributors: action.payload.numberofcontributors,
                 works: action.payload.works,
             }
-        // case UPDATE_TITLE:
-        //     return {
-        //         ...state,
-        //         title: action.payload
-        //     }
-        // case UPDATE_URL:
-        //     return {
-        //         ...state,
-        //         URL: action.payload
-        //     }
-        // case UPDATE_CATEGORY:
-        //     return {
-        //         ...state,
-        //         category: action.payload
-        //     }
-        // case UPDATE_CONTENT:
-        //     return {
-        //         ...state,
-        //         content: action.payload
-        //     }
-        // case UPDATE_LOCATION:
-        //     return {
-        //         ...state,
-        //         location: action.location,
-        //         department: action.department,
-        //         region: action.region,
-        //         new_region: action.new_region
-        //     }
-        // case UPDATE_NUMBEROFCONTRIBUTORS:
-        //     return {
-        //         ...state,
-        //         numberofcontributors: action.payload
-        //     }
-        // case UPDATE_WORKS:
-        //     return {
-        //         ...state,
-        //         works: action.payload
-        //     }
-        // case UPDATE_END:
-        //     return {
-        //         ...state,
-        //         end: action.payload
-        //     }
 
         /*******************************************************************************************************************************/
         /************************************************************ LIKE *************************************************************/
