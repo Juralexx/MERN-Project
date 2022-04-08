@@ -75,7 +75,7 @@ const Kanban = ({ project, user, isAdmin, isManager, setNavbar, tasks, showTask,
                                                     )}
                                                     {element.members.length > 2 && element.members.length < 5 && (
                                                         element.members.map((member, uniquekey) => {
-                                                            return <SmallAvatar pic={member.picture} key={uniquekey} />
+                                                            return <SmallAvatar pic={member.picture} key={uniquekey} />    
                                                         })
                                                     )}
                                                     {element.members.length >= 5 && (

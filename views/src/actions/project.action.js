@@ -59,12 +59,12 @@ export const getProject = (projectId) => {
 /*******************************************************************************************************************************/
 /********************************************************* PICTURES ************************************************************/
 
-export const updateProjectPictures = (projectId, pictures, filepath) => {
+export const updateProjectPictures = (projectId, formData, pictures) => {
      return async (dispatch) => {
           await axios
-               .put(`${process.env.REACT_APP_API_URL}api/project/update-pictures/${projectId}`, pictures)
-               .then(res => {
-                    dispatch({ type: UPDATE_PICTURES, payload: { filepath } })
+               .put(`${process.env.REACT_APP_API_URL}api/project/update-pictures/${projectId}`, formData)
+               .then(() => {
+                    dispatch({ type: UPDATE_PICTURES, payload: { pictures } })
                })
                .catch(err => console.error(err))
      }
@@ -83,7 +83,7 @@ export const deleteProjectPictures = (projectId, picture) => {
                url: `${process.env.REACT_APP_API_URL}api/project/delete-pictures/` + projectId,
                data: { picture }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: DELETE_PICTURES, payload: { projectId, picture } })
                })
                .catch(err => console.error(err))
@@ -106,7 +106,7 @@ export const updateProject = (projectId, title, url, subtitle, category, tags, s
                url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
                data: { title, url, subtitle, category, tags, state, location, department, region, new_region, description, numberofcontributors, end, works, content }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UPDATE_PROJECT, payload: { title, url, subtitle, category, state, location, department, region, new_region, description, numberofcontributors, end, works, content } })
                })
                .catch(err => console.error(err))
@@ -123,7 +123,7 @@ export const likeProject = (projectId, posterId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/like/` + projectId,
                data: { id: posterId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: LIKE, payload: { projectId, posterId } })
                })
                .catch(err => console.error(err))
@@ -137,7 +137,7 @@ export const unlikeProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/unlike/` + projectId,
                data: { id: userId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UNLIKE, payload: { projectId, userId } })
                })
                .catch(err => console.error(err))
@@ -154,7 +154,7 @@ export const followProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/follow/` + projectId,
                data: { followerId: userId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: FOLLOW, payload: { projectId, userId } })
                })
                .catch(err => console.error(err))
@@ -168,7 +168,7 @@ export const unfollowProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/unfollow/` + projectId,
                data: { followerId: userId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UNFOLLOW, payload: { projectId, userId } })
                })
                .catch(err => console.error(err))
@@ -185,7 +185,7 @@ export const favoriteProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/favorite/` + projectId,
                data: { userId: userId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: FAVORITE, payload: { projectId, userId } })
                })
                .catch(err => console.error(err))
@@ -199,7 +199,7 @@ export const unfavoriteProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/unfavorite/` + projectId,
                data: { userId: userId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UNFAVORITE, payload: { projectId, userId } })
                })
                .catch(err => console.error(err))
@@ -216,7 +216,7 @@ export const sendMemberRequest = (userId, projectId, notification, request) => {
                url: `${process.env.REACT_APP_API_URL}api/project/send-member-request/` + projectId,
                data: { userId, request, notification }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: SEND_MEMBER_REQUEST, payload: { userId, request } })
                })
                .catch(err => console.error(err))
@@ -236,7 +236,7 @@ export const cancelMemberRequest = (userId, projectId, notificationId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/` + projectId,
                data: { userId, notificationId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: CANCEL_MEMBER_REQUEST, payload: { userId } })
                })
                .catch(err => console.error(err))
@@ -256,7 +256,7 @@ export const acceptMemberRequest = (userId, member, projectId, notificationId, a
                url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
                data: { userId, member, notificationId, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, activity } })
                })
                .catch(err => console.error(err))
@@ -276,7 +276,7 @@ export const refuseMemberRequest = (userId, projectId, notificationId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/refuse-member-request/` + projectId,
                data: { userId, notificationId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, notificationId } })
                })
                .catch(err => console.error(err))
@@ -299,7 +299,7 @@ export const setAdmin = (userId, projectId, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/name-admin/` + projectId,
                data: { userId, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: NAME_ADMIN, payload: { userId, activity } })
                })
                .catch(err => console.error(err))
@@ -319,7 +319,7 @@ export const unsetAdmin = (userId, projectId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/remove-admin/` + projectId,
                data: { userId }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UNNAME_ADMIN, payload: { userId } })
                })
                .catch(err => console.error(err))
@@ -342,7 +342,7 @@ export const removeMember = (projectId, memberId, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/remove-user/` + projectId,
                data: { memberId, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId, activity } })
                })
                .catch(err => console.error(err))
@@ -365,7 +365,7 @@ export const createTask = (projectId, task, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/add-task/` + projectId,
                data: { task, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: CREATE_TASK, payload: { task, activity } })
                })
                .catch(err => console.error(err))
@@ -385,7 +385,7 @@ export const changeTask = (projectId, task, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
                data: { taskId: task._id, task, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UPDATE_TASK, payload: { task, activity } })
                })
                .catch(err => console.error(err))
@@ -405,7 +405,7 @@ export const changeTaskState = (projectId, taskId, state, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
                data: { taskId, state, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state, activity } })
                })
                .catch(err => console.error(err))
@@ -425,7 +425,7 @@ export const changeTaskStatus = (projectId, taskId, status, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
                data: { taskId, status, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: UPDATE_TASK_STATUS, payload: { taskId, status, activity } })
                })
                .catch(err => console.error(err))
@@ -445,7 +445,7 @@ export const deleteTask = (projectId, taskId, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/delete-task/` + projectId,
                data: { taskId, activity }
           })
-               .then(res => {
+               .then(() => {
                     dispatch({ type: DELETE_TASK, payload: { taskId, activity } })
                })
                .catch(err => console.error(err))

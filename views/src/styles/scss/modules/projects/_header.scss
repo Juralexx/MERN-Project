@@ -1,7 +1,7 @@
 .dashboard-header {
+    position   : relative;
     width      : 100%;
     background : var(--content-light);
-    position   : relative;
 
     .dashboard-header-container {
         position  : relative;
@@ -11,6 +11,7 @@
         padding   : 10px 50px;
 
         .dashboard-header-top {
+            position        : relative;
             display         : flex;
             align-items     : center;
             justify-content : space-between;

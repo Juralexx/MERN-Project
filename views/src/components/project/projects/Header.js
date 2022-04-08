@@ -42,7 +42,7 @@ const Header = ({ project, websocket, user }) => {
                                 <BiDotsVerticalRounded />
                             </div>
                             {openMenu && (
-                                <SmallMenu top="top-[50px]" right="right-16">
+                                <SmallMenu>
                                     <div className="tools-choice" onClick={() => leaveProject(user, project, websocket, dispatch)}>Quitter le projet</div>
                                 </SmallMenu>
                             )}

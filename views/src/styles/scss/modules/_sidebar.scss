@@ -40,7 +40,7 @@
                 justify-content  : center;
                 padding          : 8px;
                 background-color : var(--content);
-                border-radius    : 8px;
+                border-radius    : 5px;
 
                 svg {
                     height : 20px;
@@ -57,9 +57,9 @@
                     background-color : var(--content);
                     height           : 20px;
                     font-size        : 15px;
-                    padding          : 4px 8px;
+                    padding          : 4px 8px 3px;
                     margin-left      : 8px;
-                    border-radius    : 5px;
+                    border-radius    : 3px;
                 }
             }
         }
@@ -144,8 +144,8 @@
                 padding : 0 8px 0 20px;
     
                 .sidebar-submenu-card {
-                    border-left : 1px solid var(--content-light);
-                    margin-left : 8px;
+                    border-left     : 1px solid var(--content-light);
+                    margin-left     : 8px;
 
                     a {
                         display       : block;
@@ -189,7 +189,7 @@
                             span {
                                 height           : 20px;
                                 font-size        : 13px;
-                                padding          : 2px 8px;
+                                padding          : 1.3px 8px;
                                 margin-left      : 8px;
                                 border-radius    : 5px;
                                 background-color : var(--content-x-light);
@@ -212,6 +212,10 @@
                     .sidebar-submenu-card {
                         border : none;
                         margin : 0;
+
+                        a {
+                            margin-left : 0;
+                        }
     
                         .sidebar-submenu-title {
                             justify-content : center;

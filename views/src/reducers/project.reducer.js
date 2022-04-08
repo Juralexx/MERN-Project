@@ -12,14 +12,22 @@ export default function projectReducer(state = initialState, action) {
             return action.payload
 
         case UPDATE_PICTURES:
+            let new_pictures = []
+            action.payload.pictures.forEach((pic, key) => {
+                new_pictures = [...new_pictures, `${process.env.REACT_APP_API_URL}uploads/projects/${action.payload.projectId}/${action.payload.projectId}-${key}.jpg`]
+            })
             return {
                 ...state,
-                pictures: [...state.pictures, action.payload.filepath]
+                pictures: new_pictures
             }
         case RECEIVE_UPDATE_PICTURES:
+            let new_pics = []
+            action.payload.pictures.forEach((pic, key) => {
+                new_pics = [...new_pics, `${process.env.REACT_APP_API_URL}uploads/projects/${action.payload.projectId}/${action.payload.projectId}-${key}.jpg`]
+            })
             return {
                 ...state,
-                pictures: [...state.pictures, action.payload.filepath]
+                pictures: [...state.pictures, action.payload.pictures]
             }
         case DELETE_PICTURES:
             let pics = state.pictures.filter(picture => picture !== action.payload.picture)

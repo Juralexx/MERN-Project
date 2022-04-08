@@ -32,12 +32,11 @@
     display         : flex;
     align-items     : center;
     justify-content : center;
-    padding         : 10px;
-    border-radius   : 20px;
+    padding         : 7px;
     color           : var(--text);
     transform       : scale(1);
     background      : var(--content);
-    border-radius   : 10px;
+    border-radius   : 5px;
     cursor          : pointer;
 
     svg {
@@ -65,13 +64,12 @@
     justify-content  : center;
     padding          : 8px;
     cursor           : pointer;
-    border-radius    : 8px;
+    border-radius    : 5px;
     color            : var(--text);
     transform        : scale(1);
     background-color : var(--primary);
     background       : var(--content-x-light);
     box-shadow       : var(--shadow-xl);
-    border-radius    : 10px;
 
     svg {
         height : 12px;
@@ -99,7 +97,7 @@
     .tools-choice {
         min-width     : 220px;
         text-align    : left;
-        padding       : 10px;
+        padding       : 6px 10px;
         color         : var(--text);
         cursor        : pointer;
         border-radius : var(--radius);

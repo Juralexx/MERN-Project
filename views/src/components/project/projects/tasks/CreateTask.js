@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createTask } from '../../../../actions/project.action'
 import Modal from '../../../tools/components/Modal'
-import { ClassicInput, DropdownInput, Textarea } from '../../../tools/components/Inputs'
+import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../../tools/functions/task'
 import { highlightIt } from '../../../tools/functions/function'
@@ -16,7 +16,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const dispatch = useDispatch()
 
-    const newTask = async () => {
+    const newTask = () => {
         const task = { title: title, description: description, state: state, status: status, creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
         const activity = { type: "create-task", date: new Date().toISOString(), who: user.pseudo, task: title }
         dispatch(createTask(project._id, task, activity))
@@ -28,7 +28,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                 activity: activity
             })
         })
-        setOpen(false);
+        setOpen(false)
         setTitle("")
         setDescription("")
         setEnd("")
@@ -39,8 +39,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
     const [searchQuery, setSearchQuery] = useState("")
     const [isMemberInResult, setMemberInResult] = useState([])
     const isEmpty = !isMemberInResult || isMemberInResult.length === 0
-    const regexp = new RegExp(searchQuery, 'i');
-    const handleInputChange = (e) => { setSearchQuery(e.target.value) }
+    const regexp = new RegExp(searchQuery, 'i')
     const searchMember = () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         if (searchQuery.length >= 2) {
@@ -63,14 +62,14 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
             {navbar === 1 ? (
                 <>
                     <div className="mb-2">Titre de la tâche</div>
-                    <ClassicInput type="text" className="w-full" placeholder="Titre..." value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <ClassicInput type="text" className="min-w-full" inputClassName="w-full" placeholder="Titre..." value={title} onChange={e => setTitle(e.target.value)} />
 
                     <div className="mb-2 mt-4">Description</div>
-                    <Textarea type="text" className="w-full" placeholder="Description... " value={description} onChange={(e) => setDescription(e.target.value)} />
+                    <Textarea type="text" className="w-full" placeholder="Description... " value={description} onChange={e => setDescription(e.target.value)} />
 
                     <div className="flex items-center mt-4">
                         <div className="mb-2 mt-4 mr-4">Date de fin</div>
-                        <ClassicInput type="date" className="mt-2" value={end} onChange={(e) => setEnd(e.target.value)} />
+                        <DatePicker className="top mt-2 w-[200px]" inputClassName="w-[200px]" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
                     </div>
 
                     <div className="flex w-full">
@@ -107,7 +106,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                             })}
                         </div>
                     )}
-                    <ClassicInput placeholder="Rechercher un membre..." className="mb-3 w-full" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
+                    <ClassicInput placeholder="Rechercher un membre..." className="mb-3 w-full" value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchMember} type="search" />
                     <div className="user-selecter">
                         {project.members && (
                             <div className="user-displayer">

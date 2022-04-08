@@ -89,12 +89,13 @@
         }
 
         .dashboard-kanban-ticket-description {
+            min-height         : 40px;
             font-size          : 14px;
             margin             : 20px 0;
             color              : var(--text-secondary);
             text-overflow      : ellipsis;
             overflow           : hidden;
-            width              : 90%;
+            width              : 100%;
             line-height        : 19px;
             display            : -webkit-box;
             -webkit-line-clamp : 3;

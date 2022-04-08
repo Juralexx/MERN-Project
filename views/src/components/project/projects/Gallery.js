@@ -3,12 +3,11 @@ import FsLightbox from 'fslightbox-react';
 import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone';
 import { ErrorCard } from '../../tools/components/Error';
-import { SmallLoader } from '../../tools/components/Loader';
 import { deleteProjectPictures, updateProjectPictures } from '../../../actions/project.action'
+import { Oval } from 'react-loading-icons'
 import { ImImage } from 'react-icons/im'
 import { IoMdCloudDownload } from 'react-icons/io'
 import { IoTrashSharp } from 'react-icons/io5'
-import { Oval } from 'react-loading-icons'
 
 const Gallery = ({ project, isManager }) => {
      const [toggler, setToggler] = useState(false)
@@ -43,13 +42,14 @@ const Gallery = ({ project, isManager }) => {
                }
           })
           if (i > 0)
-               dispatch(updateProjectPictures(project._id, formData, `${process.env.REACT_APP_API_URL}uploads/projects/${project._id}/${project._id}.jpg`))
+               console.log(pictures)
+               dispatch(updateProjectPictures(project._id, formData, pictures))
      }
 
      const deleteFile = (file) => {
-          setPictures(project.pictures)
           if (!file.includes("blob"))
                dispatch(deleteProjectPictures(project._id, file))
+               setPictures(project.pictures)
      }
 
      return (
