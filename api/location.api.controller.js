@@ -21,4 +21,4 @@ export const findLocation = (req, res) => {
             }
         })
         .limit(15)
-};
+}

@@ -7,7 +7,7 @@ export const getGeolocation = (req, res) => {
         } else {
             console.log('Error to get data : ' + err)
         }
-    }).limit(15)
+    })
 }
 
 export const findGeolocation = (req, res) => {

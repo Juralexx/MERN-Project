@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 import { Stepper } from '@zendeskgarden/react-accordions'
-import { removeAccents } from "../components/Utils";
+import { removeAccents } from '../components/Utils'
 import Title from "../components/project/add-project/Title";
 import Location from "../components/project/add-project/Location";
 import Contributors from "../components/project/add-project/Contributors";
@@ -25,6 +25,8 @@ const AddProject = ({ user }) => {
     const [codeRegion, setCodeRegion] = useState("")
     const [newRegion, setNewRegion] = useState("")
     const [codeNewRegion, setCodeNewRegion] = useState("")
+    const [leafletLoading, setLeafletLoading] = useState(false)
+    const [geoJSON, setGeoJSON] = useState([])
     const [description, setDescription] = useState("")
     const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
@@ -133,6 +135,21 @@ const AddProject = ({ user }) => {
         }
     }
 
+    useEffect(() => {
+        if (location) {
+            const fetchGeolocalisation = async () => {
+                setLeafletLoading(true)
+                await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${location}`)
+                    .then(res => {
+                        if (res.data)
+                            setGeoJSON(res.data.geometry.coordinates)
+                        setInterval(() => setLeafletLoading(false), 1000)
+                    }).catch(err => console.log(err))
+            }
+            fetchGeolocalisation()
+        }
+    }, [location])
+
     return (
         <div className="add-project">
             <div className="add-project-container">
@@ -173,6 +190,8 @@ const AddProject = ({ user }) => {
                                 newRegion={newRegion}
                                 setNewRegion={setNewRegion}
                                 setCodeNewRegion={setCodeNewRegion}
+                                leafletLoading={leafletLoading}
+                                geoJSON={geoJSON}
                                 isErr={isErr}
                                 setErr={setErr}
                                 error={error}

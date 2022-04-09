@@ -6,7 +6,7 @@ import { updateProject } from '../../../../actions/project.action'
 import { geoJSONStructure, geolocToFloat, ISOtoNavFormat, removeAccents } from '../../../Utils'
 import { Button, OutlinedButton } from '../../../tools/components/Button'
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Popup, GeoJSON } from 'react-leaflet'
+import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
 import Title from './Title'
 import State from './State'
 import Tags from './Tags'
@@ -17,6 +17,7 @@ import Content from './Content'
 import Contributors from './Contributors'
 import Description from './Description'
 import { Oval } from 'react-loading-icons'
+import { Icon } from 'leaflet'
 
 const Edit = ({ project }) => {
     const [title, setTitle] = useState(project.title)
@@ -32,13 +33,13 @@ const Edit = ({ project }) => {
     const [codeRegion, setCodeRegion] = useState(project.code_region)
     const [newRegion, setNewRegion] = useState(project.new_region)
     const [codeNewRegion, setCodeNewRegion] = useState(project.code_new_region)
-    const [geoJSON, setGeoJSON] = useState([])
     const [description, setDescription] = useState(project.description)
     const [numberofcontributors, setNumberofcontributors] = useState(project.numberofcontributors)
     const [workArray, setWorkArray] = useState(project.works)
     const [end, setEnd] = useState(ISOtoNavFormat(project.end))
     const [content, setContent] = useState(project.content[0].ops)
     const [state, setState] = useState(project.state)
+    const [geoJSON, setGeoJSON] = useState([])
     const [contentChanged, setContentChanged] = useState(false)
     const [locationChanged, setLocationChanged] = useState(false)
     const [error, setError] = useState(null)
@@ -119,27 +120,28 @@ const Edit = ({ project }) => {
         }
     }
 
+    const myIcon = new Icon({
+        iconUrl: `${process.env.REACT_APP_API_URL}files/img/map-marker.png`,
+        iconSize: [30, 40]
+    })
+
     const [leafletLoading, setLeafletLoading] = useState(true)
 
     useEffect(() => {
         if (project.location || locationChanged) {
-            const fetch = async () => {
+            const fetchGeolocalisation = async () => {
                 setLeafletLoading(true)
                 await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${location}`)
                     .then(res => {
-                        if (res.data) {
+                        if (res.data)
                             setGeoJSON(res.data.geometry.coordinates)
-                            setLocationChanged(false)
-                            setInterval(() => setLeafletLoading(false), 1000)
-                        } else return
+                        setLocationChanged(false)
+                        setInterval(() => setLeafletLoading(false), 1000)
                     }).catch(err => console.log(err))
             }
-            fetch()
+            fetchGeolocalisation()
         }
     }, [project.location, locationChanged])
-
-    //Résoudre probleme : si pas de geoloc dans "locations" retourner department ?
-    // si pas de geolocation dans geo_locations idem
 
     return (
         <div className="edit-project">
@@ -260,26 +262,42 @@ const Edit = ({ project }) => {
                     {!leafletLoading ? (
                         <MapContainer
                             key={!leafletLoading ? location : null}
-                            center={!leafletLoading ? geolocToFloat(geolocalisation) : [46.40253770505156, 2.6509650117509804]}
-                            zoom={12.5}
+                            center={!leafletLoading ? geolocToFloat(geolocalisation) : [46.873467013745916, 2.5836305570248217]}
+                            zoom={12}
                             minZoom={5}
                             whenCreated={map => setInterval(() => { map.invalidateSize() }, 100)}
                             style={{ width: '100%', height: '100%', minHeight: 300 }}
                         >
-                            {geoJSON.length > 0 && !leafletLoading &&
-                                <GeoJSON data-location={location} data={geoJSONStructure(geoJSON)} />
-                            }
-                            <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                            <Popup position={!leafletLoading ? geolocToFloat(geolocalisation) : [46.40253770505156, 2.6509650117509804]}>{location}<br />{department + ", " + region}</Popup>
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                url='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
+                            />
+                            {geoJSON.length > 0 && !leafletLoading ? (
+                                <GeoJSON
+                                    data-location={location}
+                                    data={geoJSONStructure(geoJSON)}
+                                />
+                            ) : (
+                                <Marker style={{ marginBottom: 20 }} position={!leafletLoading ? geolocToFloat(geolocalisation) : [46.873467013745916, 2.5836305570248217]} icon={myIcon}>
+                                    <Popup>{location}<br />{department + ", " + region}</Popup>
+                                </Marker>
+                            )}
                         </MapContainer>
                     ) : (
                         <MapContainer
-                            zoom={12.5}
+                            center={[46.873467013745916, 2.5836305570248217]}
+                            zoom={5}
                             minZoom={5}
-                            whenCreated={map => setInterval(() => { map.invalidateSize() }, 100)}
+                            maxZoom={5}
+                            dragging="false"
                             style={{ width: '100%', height: '100%', minHeight: 300 }}
                         >
-                            <Oval />
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                url='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
+                            />
+                            <div style={{ position: "absolute", top: 0, left: 0, width: '100%', height: '100%', minHeight: 300, backgroundColor: "rgba(255, 255, 255, 0.3)", backdropFilter: "blur(5px)", zIndex: 2000 }}></div>
+                            <Oval style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 60, height: 60, zIndex: 3000 }} strokeWidth="4" stroke="rgba(0, 0, 0, 0.5)" />
                         </MapContainer>
                     )}
                 </div>

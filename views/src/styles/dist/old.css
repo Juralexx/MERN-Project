@@ -5413,7 +5413,7 @@ h5 {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .add-project .add-project-container .add-project-card .flex-card .card-left {
   position: relative;
