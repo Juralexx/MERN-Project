@@ -57,6 +57,10 @@ const ProjectModel = new mongoose.Schema(
             type: [String],
         },
 
+        geolocalisation: {
+            type: String,
+            default: null,
+        },
         location: {
             type: String,
             default: null,
@@ -65,13 +69,22 @@ const ProjectModel = new mongoose.Schema(
             type: String,
             default: null,
         },
+        code_department: {
+            type: Number,
+        },
         region: {
             type: String,
             default: null,
         },
+        code_region: {
+            type: Number,
+        },
         new_region: {
             type: String,
             default: null,
+        },
+        code_new_region: {
+            type: Number,
         },
 
         description: {

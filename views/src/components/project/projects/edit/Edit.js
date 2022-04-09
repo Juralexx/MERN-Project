@@ -1,37 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateProject } from '../../../../actions/project.action'
-import { ISOtoNavFormat, removeAccents } from '../../../Utils'
+import { geoJSONStructure, geolocToFloat, ISOtoNavFormat, removeAccents } from '../../../Utils'
 import { Button, OutlinedButton } from '../../../tools/components/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Popup, GeoJSON } from 'react-leaflet'
 import Title from './Title'
 import State from './State'
-import End from './End'
+import Tags from './Tags'
 import Location from './Location'
+import End from './End'
 import Works from './Works'
 import Content from './Content'
 import Contributors from './Contributors'
 import Description from './Description'
-import Tags from './Tags'
+import { Oval } from 'react-loading-icons'
 
-const Edit = ({ project, user }) => {
+const Edit = ({ project }) => {
     const [title, setTitle] = useState(project.title)
     const [subtitle, setSubtitle] = useState(project.subtitle)
     const [url, setUrl] = useState(project.URL)
     const [category, setCategory] = useState(project.category)
     const [tags, setTags] = useState(project.tags)
+    const [geolocalisation, setGeolocalisation] = useState(project.geolocalisation)
     const [location, setLocation] = useState(project.location)
     const [department, setDepartment] = useState(project.department)
+    const [codeDepartment, setCodeDepartment] = useState(project.code_department)
     const [region, setRegion] = useState(project.region)
+    const [codeRegion, setCodeRegion] = useState(project.code_region)
     const [newRegion, setNewRegion] = useState(project.new_region)
+    const [codeNewRegion, setCodeNewRegion] = useState(project.code_new_region)
+    const [geoJSON, setGeoJSON] = useState([])
     const [description, setDescription] = useState(project.description)
     const [numberofcontributors, setNumberofcontributors] = useState(project.numberofcontributors)
     const [workArray, setWorkArray] = useState(project.works)
     const [end, setEnd] = useState(ISOtoNavFormat(project.end))
     const [content, setContent] = useState(project.content[0].ops)
     const [state, setState] = useState(project.state)
-    const [changes, setChanges] = useState(false)
+    const [contentChanged, setContentChanged] = useState(false)
+    const [locationChanged, setLocationChanged] = useState(false)
     const [error, setError] = useState(null)
     const [isErr, setErr] = useState(null)
     const dispatch = useDispatch()
@@ -82,10 +91,14 @@ const Edit = ({ project, user }) => {
                     description: description,
                     tags: tags,
                     state: state,
+                    geolocalisation: geolocalisation,
                     location: location,
                     department: department,
+                    code_department: codeDepartment,
                     region: region,
+                    code_region: codeRegion,
                     new_region: newRegion,
+                    code_new_region: codeNewRegion,
                     end: end,
                     content: content,
                     numberofcontributors: numberofcontributors,
@@ -98,13 +111,35 @@ const Edit = ({ project, user }) => {
                     else if (res.data.errors.content) setError(res.data.errors.content)
                     else if (res.data.errors.numberofcontributors) setError(res.data.errors.numberofcontributors)
                 } else {
-                    dispatch(updateProject(project._id, title, URL, subtitle, category, tags, state, location, department, region, newRegion, description, numberofcontributors, end, workArray, content))
+                    dispatch(updateProject(project._id, title, URL, subtitle, category, tags, state, geolocalisation, location, department, codeDepartment, region, codeRegion, newRegion, codeNewRegion, description, numberofcontributors, end, workArray, content))
                     const redirection = navigate(`/projects/${project.URLID}/${project.URL}/about`)
                     setTimeout(redirection, 2000)
                 }
             }).catch(err => console.log(err))
         }
     }
+
+    const [leafletLoading, setLeafletLoading] = useState(true)
+
+    useEffect(() => {
+        if (project.location || locationChanged) {
+            const fetch = async () => {
+                setLeafletLoading(true)
+                await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${location}`)
+                    .then(res => {
+                        if (res.data) {
+                            setGeoJSON(res.data.geometry.coordinates)
+                            setLocationChanged(false)
+                            setInterval(() => setLeafletLoading(false), 1000)
+                        } else return
+                    }).catch(err => console.log(err))
+            }
+            fetch()
+        }
+    }, [project.location, locationChanged])
+
+    //Résoudre probleme : si pas de geoloc dans "locations" retourner department ?
+    // si pas de geolocation dans geo_locations idem
 
     return (
         <div className="edit-project">
@@ -113,7 +148,7 @@ const Edit = ({ project, user }) => {
                     <h2>Modification du projet</h2>
                     <div className="flex">
                         <Link to={`/projects/${project.URLID}/${project.URL}/about`}><OutlinedButton text="Annuler" className="mx-2" /></Link>
-                        <Button text="Enregistrer" onClick={handleUpdate} disabled={title === project.title && subtitle === project.subtitle && category === project.category && description === project.description && state === project.state && location === project.location && end === ISOtoNavFormat(project.end) && JSON.stringify(workArray) === JSON.stringify(project.works) && !changes} />
+                        <Button text="Enregistrer" onClick={handleUpdate} disabled={title === project.title && subtitle === project.subtitle && category === project.category && description === project.description && state === project.state && location === project.location && end === ISOtoNavFormat(project.end) && JSON.stringify(workArray) === JSON.stringify(project.works) && !contentChanged} />
                     </div>
                 </div>
                 <div className="edit-container">
@@ -205,20 +240,48 @@ const Edit = ({ project, user }) => {
                         </div>
                         <div className="edit-project-flex-content-right">
                             <Location
+                                project={project}
                                 location={location}
                                 setLocation={setLocation}
-                                department={department}
                                 setDepartment={setDepartment}
-                                region={region}
+                                setCodeDepartment={setCodeDepartment}
                                 setRegion={setRegion}
-                                newRegion={newRegion}
+                                setCodeRegion={setCodeRegion}
                                 setNewRegion={setNewRegion}
+                                setCodeNewRegion={setCodeNewRegion}
+                                setGeolocalisation={setGeolocalisation}
+                                setLocationChanged={setLocationChanged}
                                 isErr={isErr}
                                 setErr={setErr}
                                 error={error}
                             />
                         </div>
                     </div>
+                    {!leafletLoading ? (
+                        <MapContainer
+                            key={!leafletLoading ? location : null}
+                            center={!leafletLoading ? geolocToFloat(geolocalisation) : [46.40253770505156, 2.6509650117509804]}
+                            zoom={12.5}
+                            minZoom={5}
+                            whenCreated={map => setInterval(() => { map.invalidateSize() }, 100)}
+                            style={{ width: '100%', height: '100%', minHeight: 300 }}
+                        >
+                            {geoJSON.length > 0 && !leafletLoading &&
+                                <GeoJSON data-location={location} data={geoJSONStructure(geoJSON)} />
+                            }
+                            <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                            <Popup position={!leafletLoading ? geolocToFloat(geolocalisation) : [46.40253770505156, 2.6509650117509804]}>{location}<br />{department + ", " + region}</Popup>
+                        </MapContainer>
+                    ) : (
+                        <MapContainer
+                            zoom={12.5}
+                            minZoom={5}
+                            whenCreated={map => setInterval(() => { map.invalidateSize() }, 100)}
+                            style={{ width: '100%', height: '100%', minHeight: 300 }}
+                        >
+                            <Oval />
+                        </MapContainer>
+                    )}
                 </div>
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
@@ -271,8 +334,8 @@ const Edit = ({ project, user }) => {
                     <Content
                         content={content}
                         setContent={setContent}
-                        changes={changes}
-                        setChanges={setChanges}
+                        contentChanged={contentChanged}
+                        setContentChanged={setContentChanged}
                     />
                 </div>
             </div>

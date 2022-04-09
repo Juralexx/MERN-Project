@@ -189,6 +189,34 @@ export const handleEnterKey = (event, func) => {
 }
 
 /**
+ * Basique GeoJSON structure for leaflet.
+ */
+
+export const geoJSONStructure = (props) => {
+    return {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": props
+                }
+            }
+        ]
+    }
+}
+
+export const geolocToFloat = (string) => {
+    let lat = string.substr(0, string.indexOf(','))
+    let lon = string.substr(string.indexOf(',') + 1, string.length)
+    lat = parseFloat(lat)
+    lon = parseFloat(lon)
+    return [lat,lon]
+}
+
+/**
  * Remove all accents.
  */
 

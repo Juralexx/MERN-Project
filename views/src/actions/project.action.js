@@ -99,15 +99,15 @@ export const receiveDeleteProjectPictures = (picture) => {
 /*******************************************************************************************************************************/
 /******************************************************* INFORMATIONS **********************************************************/
 
-export const updateProject = (projectId, title, url, subtitle, category, tags, state, location, department, region, new_region, description, numberofcontributors, end, works, content) => {
+export const updateProject = (projectId, title, url, subtitle, category, tags, state, geolocalisation, location, department, code_department, region, code_region, new_region, code_new_region, description, numberofcontributors, end, works, content) => {
      return async (dispatch) => {
           await axios({
                method: "put",
                url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
-               data: { title, url, subtitle, category, tags, state, location, department, region, new_region, description, numberofcontributors, end, works, content }
+               data: { title, url, subtitle, category, tags, state, geolocalisation, location, department, code_department, region, code_region, new_region, code_new_region, description, numberofcontributors, end, works, content }
           })
                .then(() => {
-                    dispatch({ type: UPDATE_PROJECT, payload: { title, url, subtitle, category, state, location, department, region, new_region, description, numberofcontributors, end, works, content } })
+                    dispatch({ type: UPDATE_PROJECT, payload: { title, url, subtitle, category, state, geolocalisation, location, department, code_department, region, code_region, new_region, code_new_region, description, numberofcontributors, end, works, content } })
                })
                .catch(err => console.error(err))
      }

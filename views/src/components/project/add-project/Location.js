@@ -8,7 +8,7 @@ import { SmallLoader } from '../../tools/components/Loader';
 import { BsInboxFill } from 'react-icons/bs';
 import { ErrorCard } from '../../tools/components/Error';
 
-const Location = ({ location, setLocation, department, setDepartment, region, setRegion, newRegion, setNewRegion, onNext, onBack, setErr, setError, isErr, error }) => {
+const Location = ({ geolocalisation, setGeolocalisation, location, setLocation, department, setDepartment, setCodeDepartment, region, setRegion, setCodeRegion, newRegion, setNewRegion, setCodeNewRegion, onNext, onBack, setErr, setError, isErr, error }) => {
     const [searchQuery, setSearchQuery] = useState("")
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -48,6 +48,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
 
     const clean = () => {
         setSearchQuery("")
+        setGeolocalisation("")
         setLocation("")
         setDepartment("")
         setRegion("")
@@ -55,10 +56,9 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
     }
 
     const checkValues = () => {
-        if (location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0) {
+        if (geolocalisation.length <= 0 || location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0) {
             setErr("location")
             setError("Veuillez sélectionner une localité...")
-            console.log(isErr)
         } else {
             setErr(null)
             onNext()
@@ -82,10 +82,14 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
                                     <div className="auto-complete-item"
                                         onClick={() => {
                                             setSelect(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
+                                            setGeolocalisation(element.geolocalisation)
                                             setLocation(element.COM_NOM)
-                                            setDepartment(element.DEP_NOM_NUM)
+                                            setDepartment(element.DEP_NOM)
+                                            setCodeDepartment(element.DEP_CODE)
                                             setRegion(element.REG_NOM_OLD)
+                                            setCodeRegion(element.REG_CODE_OLD)
                                             setNewRegion(element.REG_NOM)
+                                            setCodeNewRegion(element.REG_CODE)
                                         }} key={key}>{`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
                                     </div>
                                 )
@@ -112,7 +116,7 @@ const Location = ({ location, setLocation, department, setDepartment, region, se
             </div>
             <div className="btn-container">
                 <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" className="next-btn" icon={<IoMdArrowRoundForward />} onClick={checkValues} disabled={location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0} />
+                <EndIconButton text="Suivant" className="next-btn" icon={<IoMdArrowRoundForward />} onClick={checkValues} disabled={geolocalisation.length <= 0 || location.length <= 0 || department.length <= 0 || region.length <= 0 || newRegion.length <= 0} />
             </div>
         </div>
     )

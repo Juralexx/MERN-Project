@@ -10,6 +10,7 @@ import userRoutes from './routes/user.routes.js'
 import projectRoutes from './routes/project.routes.js'
 import workRoutes from './api/work.api.routes.js'
 import locationRoutes from './api/location.api.routes.js'
+import geolocationRoutes from './api/geolocations.api.routes.js'
 import conversationRoutes from './routes/conversation.routes.js'
 import messageRoutes from './routes/message.routes.js'
 
@@ -27,12 +28,12 @@ app.use(cors({
     'methods': 'GET, OPTIONS, HEAD, PUT, PATCH, POST, DELETE',
     'preflightContinue': false,
 }))
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '50mb' }))
 app.use(bodyParser.urlencoded({
     extended: false,
     limit: '50mb'
 }))
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }))
 app.use(cookieParser())
 
 app.get('*', checkUser)
@@ -46,21 +47,19 @@ app.use('/api/conversations', conversationRoutes)
 app.use('/api/messages', messageRoutes)
 app.use('/api/work', workRoutes)
 app.use('/api/location', locationRoutes)
+app.use('/api/geolocation', geolocationRoutes)
 
 if (process.env.NODE_ENV !== 'production') {
-    process.once('uncaughtException', function (err) {
-        console.error('FATAL: Uncaught exception.');
-        console.error(err.stack || err);
-        setTimeout(function () {
-            process.exit(1);
-        }, 100);
-    });
+    process.once('uncaughtException', err => {
+        console.error(err.stack || err)
+        setTimeout(() => process.exit(1), 100)
+    })
 }
 
 const PORT = process.env.PORT || 3001
 
 const server = app.listen(PORT, () => {
-    console.log(`Serveur démarré : http://localhost:${PORT}`);
+    console.log(`Serveur démarré : http://localhost:${PORT}`)
 })
 
 /************************************************************************************/

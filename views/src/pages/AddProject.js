@@ -17,10 +17,14 @@ const AddProject = ({ user }) => {
     const [subtitle, setSubtitle] = useState("")
     const [category, setCategory] = useState("")
     const [tags, setTags] = useState([])
+    const [geolocalisation, setGeolocalisation] = useState("")
     const [location, setLocation] = useState("")
     const [department, setDepartment] = useState("")
+    const [codeDepartment, setCodeDepartment] = useState("")
     const [region, setRegion] = useState("")
+    const [codeRegion, setCodeRegion] = useState("")
     const [newRegion, setNewRegion] = useState("")
+    const [codeNewRegion, setCodeNewRegion] = useState("")
     const [description, setDescription] = useState("")
     const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
@@ -88,10 +92,14 @@ const AddProject = ({ user }) => {
                     category: category,
                     tags: tags,
                     state: "worked on",
+                    geolocalisation: geolocalisation,
                     location: location,
                     department: department,
+                    code_department: codeDepartment,
                     region: region,
+                    code_region: codeRegion,
                     new_region: newRegion,
+                    code_new_region: codeNewRegion,
                     description: description,
                     end: end,
                     content: content,
@@ -152,14 +160,19 @@ const AddProject = ({ user }) => {
                         <Stepper.Label>Localisation</Stepper.Label>
                         <Stepper.Content>
                             <Location
+                                geolocalisation={geolocalisation}
+                                setGeolocalisation={setGeolocalisation}
                                 location={location}
                                 setLocation={setLocation}
                                 department={department}
                                 setDepartment={setDepartment}
+                                setCodeDepartment={setCodeDepartment}
                                 region={region}
                                 setRegion={setRegion}
+                                setCodeRegion={setCodeRegion}
                                 newRegion={newRegion}
                                 setNewRegion={setNewRegion}
+                                setCodeNewRegion={setCodeNewRegion}
                                 isErr={isErr}
                                 setErr={setErr}
                                 error={error}

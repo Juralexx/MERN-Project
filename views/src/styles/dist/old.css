@@ -7227,6 +7227,7 @@ h5 {
   width: 300px;
 }
 .edit-project .edit-project-container .edit-container {
+  position: relative;
   width: 100%;
   padding: 40px 0;
   border-top: 1px solid var(--light-border);
@@ -7238,10 +7239,12 @@ h5 {
   width: 100%;
 }
 .edit-project .edit-project-container .edit-container .edit-project-flex-container .edit-project-flex-content-left {
+  position: relative;
   margin: 0 10% 0 0;
   width: 40%;
 }
 .edit-project .edit-project-container .edit-container .edit-project-flex-container .edit-project-flex-content-right {
+  position: relative;
   width: 50%;
 }
 .edit-project .edit-project-container .edit-container h2 {

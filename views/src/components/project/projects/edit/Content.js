@@ -2,14 +2,14 @@ import React, { useState, useRef } from 'react'
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../../../tools/editor/EditorToolbar";
 
-const Content = ({ content, setContent, changes, setChanges }) => {
+const Content = ({ content, setContent, contentChanged, setContentChanged }) => {
     const [count, setCount] = useState(0)
     const quillRef = useRef()
 
     const handleChange = (text, delta, source, editor) => {
         setContent(editor.getContents())
         setCount(editor.getText().length - 1)
-        if (!changes) setChanges(true)
+        if (!contentChanged) setContentChanged(true)
     }
 
     return (

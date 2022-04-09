@@ -5,15 +5,15 @@ import mongoose from 'mongoose'
 const projectId = mongoose.Types.ObjectId()
 
 export const createProject = async (req, res) => {
-    const { posterId, posterPseudo, posterAvatar, title, URL, URLID, category, tags, location, department,
-        region, new_region, description, end, content, numberofcontributors, works, members, manager } = req.body
+    const { posterId, posterPseudo, posterAvatar, title, URL, URLID, category, tags, geolocalisation, location, department, code_department,
+        region,code_region, new_region, code_new_region, description, end, content, numberofcontributors, works, members, manager } = req.body
     const _id = projectId
     const state = "En préparation"
 
     try {
         const project = ProjectModel.create({
-            _id, posterId, posterPseudo, posterAvatar, title, URL, URLID, category, tags, location, department,
-            region, new_region, description, end, content, numberofcontributors, works, state, members, manager
+            _id, posterId, posterPseudo, posterAvatar, title, URL, URLID, category, tags, geolocalisation, location, department, code_department,
+            region, code_region, new_region, code_new_region, description, end, content, numberofcontributors, works, state, members, manager
         })
 
         await UserModel.findByIdAndUpdate(

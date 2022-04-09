@@ -10,7 +10,7 @@ const Tags = ({ tags, setTags, error, setError, isErr, setErr }) => {
     const addTag = (event, element) => {
         if (event.key === 'Enter') {
             if (element.length >= 3) {
-                if (tags.length > 12) {
+                if (tags.length < 12) {
                     let cleanTag = element.replace(/[&#,+()$~%^.|_@°=§µ£¤'"`:*?!;<>[\]{}/\\\\]/g, " ")
                     cleanTag = cleanTag.replace(/ +/g, " ")
                     cleanTag = cleanTag.trim()

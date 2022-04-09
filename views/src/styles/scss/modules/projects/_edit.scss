@@ -58,21 +58,24 @@
         }
 
         .edit-container {
+            position   : relative;
             width      : 100%;
             padding    : 40px 0;
             border-top : 1px solid var(--light-border);
 
             .edit-project-flex-container {
-                display    : flex;
-                width      : 100%;
+                display : flex;
+                width   : 100%;
     
                 .edit-project-flex-content-left {
-                    margin : 0 10% 0 0;
-                    width  : 40%;
+                    position : relative;
+                    margin   : 0 10% 0 0;
+                    width    : 40%;
                 }
     
                 .edit-project-flex-content-right {
-                    width : 50%;
+                    position : relative;
+                    width    : 50%;
                 }
             }
     
