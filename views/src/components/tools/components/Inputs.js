@@ -56,7 +56,7 @@ export const DropdownInput = (props) => {
                 min={min}
                 max={max}
             />
-            {(cross || (cross && value && value.length > 0)) ? (
+            {cross && value && value.length > 0 ? (
                 <IoClose className="cross" onClick={clean} />
             ) : (
                 <IoCaretDownOutline />
@@ -75,7 +75,6 @@ export const DatePicker = (props) => {
     const [open, setOpen] = useState(false)
 
     const { inputProps, dayPickerProps } = useInput({
-        defaultSelected: value === "" ? new Date() : new Date(value),
         fromYear: 2020,
         toYear: 2022,
         format: 'dd/MM/yyyy',
@@ -173,7 +172,7 @@ export const CheckBox = (props) => {
     const { onChange, name, htmlFor, checked, className, inputClassName, onClick, value } = props
     return (
         <div className={`${className ? 'check-input ' + className : 'check-input'}`}>
-            <input type="checkbox" name={name} checked={checked} onClick={onClick} onChange={onChange} value={value} className={inputClassName}/>
+            <input type="checkbox" name={name} checked={checked} onClick={onClick} onChange={onChange} value={value} className={inputClassName} />
             <label htmlFor={htmlFor}>
                 <span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span>
             </label>
@@ -182,7 +181,7 @@ export const CheckBox = (props) => {
 }
 
 export const IconInput = (props) => {
-    const { type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder } = props
+    const { type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, clean } = props
     return (
         <div className={`${className ? "icon-input " + className : "icon-input"}`}>
             <input
@@ -208,6 +207,9 @@ export const IconInput = (props) => {
                 <div className="end-icon">
                     {endIcon}
                 </div>
+            }
+            {cross && value && value.length > 0 &&
+                <IoClose className="cross" onClick={clean} />
             }
         </div>
     )

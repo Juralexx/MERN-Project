@@ -73,7 +73,7 @@
         width            : 100%;
         padding          : 7px;
         background-color : var(--content-x-light);
-        border-radius    : 5px 5px 0 0;
+        border-radius    : 3px 3px 0 0;
 
         .dashboard-about-array-header-item {
             font-weight  : 600;
@@ -139,7 +139,7 @@
             }
 
             &:last-child {
-                border-radius : 0 0 5px 5px;
+                border-radius : 0 0 3px 3px;
             }
         }
 

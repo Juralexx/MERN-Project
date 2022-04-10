@@ -1,14 +1,13 @@
 .dashboard-tasks {
     width      : auto;
     height     : 100%;
-    padding    : 24px;
     background : var(--content);
     color      : var(--text);
 
     .dashboard-tasks-container {
         width     : 100%;
         max-width : 1440px;
-        padding   : 0 50px;
+        padding   : 24px 50px;
         margin    : 0 auto;
 
         .dashboard-tasks-header {

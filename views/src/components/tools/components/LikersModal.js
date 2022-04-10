@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import Modal from "./Modal";

@@ -24,7 +24,7 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
-    const [end, setEnd] = useState(new Date())
+    const [end, setEnd] = useState("")
     const [state, setState] = useState("todo")
     const [status, setStatus] = useState("normal")
     const [array, setArray] = useState([])

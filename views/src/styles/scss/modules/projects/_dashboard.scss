@@ -1,0 +1,28 @@
+.dashboard {
+    position   : relative;
+    display    : flex;
+    width      : 100%;
+    height     : calc(100% - 60px);
+    background : var(--body);
+
+    .dashboard-content {
+        position   : relative;
+        width      : 100%;
+        height     : 100%;
+        overflow-y : auto;
+
+        .dashboard-content-container {
+            position  : relative;
+            width     : 100%;
+            max-width : 1440px;
+            display   : flex;
+            padding   : 16px 50px;
+            margin    : 0 auto;
+
+            .dashboard-content-container-col {
+                width   : 50%;
+                padding : 0 10px;
+            }
+        }
+    }
+}

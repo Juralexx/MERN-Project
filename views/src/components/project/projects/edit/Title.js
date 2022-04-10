@@ -17,15 +17,15 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, setErr, error, c
         <>
             <div className="content-form">
                 <p className="title full">Titre <span>Champ requis</span></p>
-                <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle(e.target.value)} value={title} />
-                <div className="field-infos full">{title.length} / 100 caractères</div>
+                <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle((e.target.value).substring(0, 60))} value={title} />
+                <div className="field-infos full">{title.length} / 60 caractères</div>
                 {isErr === "title" && <ErrorCard useRef={errorRef} display={isErr === "title"} text={error} clean={() => setErr("")} />}
             </div>
 
             <div className="content-form mt-4">
                 <p className="title full">Sous-titre <span>Champ requis</span></p>
-                <Textarea className={`full ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 100))} value={subtitle} />
-                <div className="field-infos full">{subtitle.length} / 100 caractères</div>
+                <Textarea className={`full ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 120))} value={subtitle} />
+                <div className="field-infos full">{subtitle.length} / 120 caractères</div>
                 {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={isErr === "subtitle"} text={error} clean={() => setErr("")} />}
             </div>
 

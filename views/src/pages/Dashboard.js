@@ -30,26 +30,28 @@ const Dashboard = ({ websocket, user }) => {
         <div className="dashboard">
             <Sidebar user={user} projects={projects} isLoading={isLoading} />
             <div className="dashboard-content">
-                <Routes>
-                    <Route index element={
-                        <Projects
-                            user={user}
-                            websocket={websocket}
-                            projects={projects}
-                            setProjects={setProjects}
-                        />
-                    } />
-                    {(Object.keys(user).length > 0 && projects.length > 0) && (
-                        <Route path=":URLID/:URL/*" element={
-                            <Project
+                {!isLoading &&
+                    <Routes>
+                        <Route index element={
+                            <Projects
                                 user={user}
                                 websocket={websocket}
                                 projects={projects}
                                 setProjects={setProjects}
                             />
                         } />
-                    )}
-                </Routes>
+                        {(Object.keys(user).length > 0 && projects.length > 0) && (
+                            <Route path=":URLID/:URL/*" element={
+                                <Project
+                                    user={user}
+                                    websocket={websocket}
+                                    projects={projects}
+                                    setProjects={setProjects}
+                                />
+                            } />
+                        )}
+                    </Routes>
+                }
             </div>
         </div>
     )

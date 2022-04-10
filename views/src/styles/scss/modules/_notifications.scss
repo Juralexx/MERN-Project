@@ -6,8 +6,8 @@
     background    : var(--content);
     box-shadow    : var(--shadow-xl);
     border-radius : var(--radius);
-    top           : 65px;
-    right         : 42px;
+    top           : 55px;
+    right         : 5px;
     z-index       : 1100;
     border        : 2px solid var(--content-x-light);
 
@@ -35,7 +35,7 @@
         border-bottom : 1px solid var(--content-light);
 
         .navlink {
-            padding          : 8px 12px;
+            padding          : 4px 12px;
             cursor           : pointer;
             background-color : var(--content-light);
             border-radius    : 5px;

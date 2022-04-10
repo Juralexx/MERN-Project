@@ -6,8 +6,6 @@ import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
 import { IoPersonCircleSharp } from 'react-icons/io5'
 import { RiLoginCircleLine } from 'react-icons/ri'
 import { FaProjectDiagram } from 'react-icons/fa'
-import { StartIconOutlinedButton } from "./tools/components/Button";
-import { MdOutlineLibraryAdd } from "react-icons/md";
 import { ImArrowLeft2 } from 'react-icons/im'
 
 const Navbar = ({ websocket, user, uid }) => {
@@ -24,9 +22,6 @@ const Navbar = ({ websocket, user, uid }) => {
                                 <div className="logo-inner">
                                     <img src="/img/logo-top.png" alt="" />
                                 </div>
-                            </Link>
-                            <Link to="/add-project" className="ml-10">
-                                <StartIconOutlinedButton text="Ajouter un projet" icon={<MdOutlineLibraryAdd />} />
                             </Link>
                         </div>
 

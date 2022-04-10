@@ -51,9 +51,9 @@ const Edit = ({ project }) => {
         if (title === "" || title.length < 10 || title.length > 60) {
             setErr("title")
             setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères")
-        } else if (subtitle === "" || subtitle.length < 10 || subtitle.length > 100) {
+        } else if (subtitle === "" || subtitle.length < 10 || subtitle.length > 120) {
             setErr("subtitle")
-            setError("Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères")
+            setError("Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 120 caractères")
         } else if (category === "") {
             setErr("category")
             setError("Veuillez saisir une catégorie")

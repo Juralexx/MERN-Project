@@ -9,8 +9,7 @@ import { BsInboxFill } from 'react-icons/bs';
 import { ErrorCard } from '../../tools/components/Error';
 import { geoJSONStructure, geolocToFloat } from '../../Utils'
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
-import { Icon } from 'leaflet';
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import Oval from 'react-loading-icons/dist/components/oval';
 
 const Location = ({ leafletLoading, geoJSON, geolocalisation, setGeolocalisation, location, setLocation, department, setDepartment, setCodeDepartment, region, setRegion, setCodeRegion, newRegion, setNewRegion, setCodeNewRegion, onNext, onBack, setErr, setError, isErr, error }) => {
@@ -68,11 +67,6 @@ const Location = ({ leafletLoading, geoJSON, geolocalisation, setGeolocalisation
             onNext()
         }
     }
-
-    const myIcon = new Icon({
-        iconUrl: `${process.env.REACT_APP_API_URL}files/img/map-marker.png`,
-        iconSize: [30, 40]
-    })
 
     return (
         <div className="add-project-card">
