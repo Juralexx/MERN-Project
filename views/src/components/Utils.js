@@ -20,6 +20,25 @@ export const randomID = (max) => {
 }
 
 /**
+ * Return a randam 24 numbers and letters ID.
+ */
+
+export const randomNbLtID = (max) => {
+    const allLowerAlpha = [..."abcdefghijklmnopqrstuvwxyz"];
+    const allNumbers = [..."0123456789"];
+
+    const baseline = [...allNumbers, ...allLowerAlpha];
+
+    const generator = (base, len) => {
+        return [...Array(len)]
+            .map(i => base[Math.random() * base.length | 0])
+            .join('');
+    }
+
+    return generator(baseline, max)
+}
+
+/**
  * Check pseudo validity.
  */
 

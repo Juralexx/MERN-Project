@@ -6054,7 +6054,7 @@ h5 {
   width: 100%;
   max-height: 400px;
   margin-bottom: 10px;
-  background: var(--content-x-light);
+  background: var(--content-light);
   border-radius: 5px;
 }
 .dashboard-projects .dashboard-projects-content .project-card .project-picture {
@@ -6082,7 +6082,7 @@ h5 {
   color: var(--text-secondary);
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 100%;
+  width: 80%;
   line-height: 22px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -6180,6 +6180,36 @@ h5 {
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+}
+.dashboard-projects .dashboard-projects-content .project-card .project-nav {
+  width: 15%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.dashboard-projects .dashboard-projects-content .project-card .project-nav a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 12px 10px 8px;
+  border-bottom: 1px solid var(--content-x-light);
+  border-radius: 5px 0 0 5px;
+}
+.dashboard-projects .dashboard-projects-content .project-card .project-nav a svg {
+  margin-right: 7px;
+}
+.dashboard-projects .dashboard-projects-content .project-card .project-nav a:hover {
+  background: var(--content-x-light);
+}
+.dashboard-projects .dashboard-projects-content .project-card .project-nav a:hover svg {
+  fill: var(--primary);
 }
 
 .dashboard-header {
@@ -7681,6 +7711,146 @@ h5 {
 }
 .gallery-wrapper .gallery-container .dropzone.disabled:hover, .gallery-wrapper .gallery-container .dropzone.disabled:focus, .gallery-wrapper .gallery-container .dropzone.disabled.active {
   background: none;
+}
+
+.project-actuality {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  background: var(--content);
+  max-width: 1440px;
+}
+.project-actuality .project-actuality-container {
+  position: relative;
+  max-width: 1440px;
+  height: auto;
+  padding: 50px 50px;
+  margin: 0 auto;
+  color: var(--text) !important;
+}
+.project-actuality .project-actuality-container .actuality-container {
+  width: 100%;
+  height: auto;
+  padding: 15px 0;
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content {
+  width: 100%;
+  height: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-bottom: 20px;
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content .actuality-img {
+  position: relative;
+  width: 35%;
+  z-index: 1;
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content .actuality-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content .actuality-description {
+  width: 65%;
+  height: auto;
+  padding: 10px 30px;
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content .actuality-description h3 {
+  font-size: 22px;
+  text-align: left;
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content .actuality-description .date {
+  text-align: left;
+  color: var(--text);
+  font-size: 14px;
+  font-family: "Faktum";
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content .actuality-description .description {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  line-height: 19px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  margin-top: 10px;
+}
+.project-actuality .project-actuality-container .actuality-container .actuality-content .actuality-description .btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 20px 0 0;
+}
+
+.project-add-actuality {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  background: var(--content);
+}
+.project-add-actuality .project-add-actuality-container {
+  position: relative;
+  max-width: 1440px;
+  height: auto;
+  padding: 50px 50px;
+  margin: 0 auto;
+  color: var(--text) !important;
+}
+.project-add-actuality .project-add-actuality-container .title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  max-width: 300px;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+.project-add-actuality .project-add-actuality-container .title span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.project-add-actuality .project-add-actuality-container .field-infos {
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 6px;
+}
+.project-add-actuality .project-add-actuality-container .full {
+  min-width: 100%;
+}
+.project-add-actuality .project-add-actuality-container .full input {
+  min-width: 100%;
+}
+.project-add-actuality .project-add-actuality-container .small-input {
+  width: 300px;
+}
+.project-add-actuality .project-add-actuality-container .small-input input {
+  width: 300px;
 }
 
 /****************************************************/

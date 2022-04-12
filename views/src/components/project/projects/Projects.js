@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react'
+import { NavLink} from 'react-router-dom'
 import { stateToBackground, stateToString } from '../../home/functions'
 import { useClickOutside } from '../../tools/functions/useClickOutside'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
 import { ClassicInput, DropdownInput, IconInput } from '../../tools/components/Inputs'
 import Categories from '../../home/Categories'
-import { BiCategoryAlt } from 'react-icons/bi'
+import { BiCategoryAlt, BiTask } from 'react-icons/bi'
 import { BsCaretDownFill, BsFillPeopleFill } from 'react-icons/bs'
+import { MdGroups, MdOutlineDescription, MdOutlineMessage, MdReadMore } from 'react-icons/md'
 
 const Projects = ({ user, websocket, projects, setProjects }) => {
     const [pros, setPros] = useState(projects)
@@ -70,12 +72,12 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                             <div className="details green">Projects terminés ({(projects.filter(e => e.state === "done")).length})</div>
                         </div>
                         <div>
-                            <DropdownInput useRef={filterMenu} placeholder="Filtrer" cross readOnly value={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)} clean={() => setFilter("")}>
-                                <div onClick={() => sortByRecent(pros, setPros, setFilter, setDisplay)}>Plus récent au plus ancien</div>
-                                <div onClick={() => sortByOld(pros, setPros, setFilter, setDisplay)}>Plus ancien au plus récent</div>
-                                <div onClick={() => sortByWorkedOn(pros, setPros, setFilter, setDisplay)}>En préparation</div>
-                                <div onClick={() => sortByInProgress(pros, setPros, setFilter, setDisplay)}>En cours</div>
-                                <div onClick={() => sortByDone(pros, setPros, setFilter, setDisplay)}>Terminé</div>
+                            <DropdownInput useRef={filterMenu} placeholder="Filtrer" cross readOnly value={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)} clean={() => { setFilter(""); setPros(projects) }}>
+                                <div onClick={() => sortByRecent(projects, setPros, setFilter, setDisplay)}>Plus récent au plus ancien</div>
+                                <div onClick={() => sortByOld(projects, setPros, setFilter, setDisplay)}>Plus ancien au plus récent</div>
+                                <div onClick={() => sortByWorkedOn(projects, setPros, setFilter, setDisplay)}>En préparation</div>
+                                <div onClick={() => sortByInProgress(projects, setPros, setFilter, setDisplay)}>En cours</div>
+                                <div onClick={() => sortByDone(projects, setPros, setFilter, setDisplay)}>Terminé</div>
                             </DropdownInput>
                         </div>
                     </div>
@@ -89,7 +91,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                     <div className="project-card-content">
                                         <div className="project-card-content-top">
                                             <div className="title">
-                                                <h2>{element.title}</h2>
+                                                <h2><NavLink to={`${element.URLID}/${element.URL}`}>{element.title}</NavLink></h2>
                                                 <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                                             </div>
                                             <h3>{element.subtitle}</h3>
@@ -100,7 +102,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                                 return <div key={i}>#{tag}</div>
                                             })}
                                             {element.tags.length > 5 &&
-                                                <div className="more-tags">+ {element.tags.length - 5}</div>
+                                                <div className="more-tags">+{element.tags.length - 5}</div>
                                             }
                                         </div>
                                         <div className="project-card-content-infos">
@@ -108,7 +110,13 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                         </div>
                                         <div className="description">{element.description}</div>
                                     </div>
-                                    <div className="project-nav"></div>
+                                    <div className="project-nav">
+                                        <NavLink to={`${element.URLID}/${element.URL}`}><MdReadMore />Voir</NavLink>
+                                        <NavLink to={`${element.URLID}/${element.URL}/about`}><MdOutlineDescription />À propos</NavLink>
+                                        <NavLink to={`${element.URLID}/${element.URL}/tasks`}><BiTask />Tâches</NavLink>
+                                        <NavLink to={`${element.URLID}/${element.URL}/messenger`}><MdOutlineMessage />Messenger</NavLink>
+                                        <NavLink to={`${element.URLID}/${element.URL}/members`}><MdGroups />Membres</NavLink>
+                                    </div>
                                 </div>
                             )
                         })}

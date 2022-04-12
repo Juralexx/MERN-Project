@@ -174,6 +174,21 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
+        actualities: {
+            type: [],
+            actuality: {
+                _id: String,
+                url: String,
+                title: String,
+                description: String,
+                posterId: String,
+                poster: String,
+                posterPicture: String,
+                date: Date,
+                pictures: [String]
+            }
+        },
+
         activity_feed: {
             type: [],
             activity: {

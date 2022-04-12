@@ -7,6 +7,7 @@ import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, leavePro
 import { createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
 import { deletePictures, updatePictures, uploadPictures } from '../controllers/project/project.upload.controller.js'
 import multer from 'multer'
+import { createActuality, deleteActuality, updateActuality, uploadActualityPictures } from '../controllers/project/project.actuality.controller.js'
 const upload = multer()
 
 projectRoutes.post('/add', createProject)
@@ -33,6 +34,11 @@ projectRoutes.put('/remove-admin/:id', removeAdmin)
 projectRoutes.put('/add-task/:id', createTask)
 projectRoutes.put('/update-task/:id', updateTask)
 projectRoutes.put('/delete-task/:id', deleteTask)
+
+projectRoutes.put('/add-actuality/:id', createActuality)
+projectRoutes.put('/add-actuality-pictures/:id/:actualityId', upload.array('files'), uploadActualityPictures)
+projectRoutes.put('/update-actuality/:id', upload.array('files'), updateActuality)
+projectRoutes.put('/delete-actuality/:id', deleteActuality)
 
 projectRoutes.patch('/follow/:id', follow)
 projectRoutes.patch('/unfollow/:id', unfollow)

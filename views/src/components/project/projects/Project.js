@@ -11,6 +11,8 @@ import Tasks from './tasks/Tasks';
 import About from './About';
 import Edit from './edit/Edit';
 import Gallery from './Gallery';
+import Actualities from './actualities/Actualities';
+import AddActuality from './actualities/AddActuality';
 
 const Project = ({ user, websocket, projects, setProjects }) => {
     const reducer = useSelector(state => state.projectReducer)
@@ -103,6 +105,24 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                     } />
                     <Route path="gallery" element={
                         <Gallery
+                            user={user}
+                            websocket={websocket}
+                            project={project}
+                            isAdmin={isAdmin}
+                            isManager={isManager}
+                        />
+                    } />
+                    <Route path="actuality/*" element={
+                        <Actualities
+                            user={user}
+                            websocket={websocket}
+                            project={project}
+                            isAdmin={isAdmin}
+                            isManager={isManager}
+                        />
+                    } />
+                    <Route path="add-actuality" element={
+                        <AddActuality
                             user={user}
                             websocket={websocket}
                             project={project}

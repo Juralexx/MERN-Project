@@ -48,7 +48,7 @@ const MiniNav = ({ user, websocket }) => {
                     </div>
                 </li>
                 <li className="mini-nav-li">
-                    <div className="mini-nav-button" onClick={() => { setOpenSettingsMenu(!openSettingsMenu); setOpenMessengerMenu(!openMessengerMenu); setOpenNotificationsMenu(false) }}>
+                    <div className="mini-nav-button" onClick={() => { setOpenSettingsMenu(!openSettingsMenu); setOpenMessengerMenu(false); setOpenNotificationsMenu(false) }}>
                         <BsFillCaretDownFill />
                     </div>
                 </li>
