@@ -1,86 +1,110 @@
-.project-actuality {
-    position   : relative;
-    width      : 100%;
-    min-height : 100%;
-    background : var(--content);
-    max-width  : 1440px;
+.actuality-container {
+    width   : 100%;
+    height  : auto;
+    padding : 15px 0;
+    
+    .actuality-content {
+        width          : 100%;
+        height         : auto;
+        display        : flex;
+        flex-direction : row;
+        margin-bottom  : 20px;
 
-    .project-actuality-container {
-        position  : relative;
-        max-width : 1440px;
-        height    : auto;
-        padding   : 50px 50px;
-        margin    : 0 auto;
-        color     : var(--text) !important;
+        .actuality-img {
+            position : relative;
+            width    : 35%;
+            z-index  : 1;
 
-        .actuality-container {
-            width   : 100%;
-            height  : auto;
-            padding : 15px 0;
-          
-            .actuality-content {
-                width          : 100%;
-                height         : auto;
-                display        : flex;
-                flex-direction : row;
-                margin-bottom  : 20px;
-
-                .actuality-img {
-                    position : relative;
-                    width    : 35%;
-                    z-index  : 1;
-
-                    img {
-                        position      : absolute;
-                        top           : 0;
-                        left          : 0;
-                        height        : 100%;
-                        width         : 100%;
-                        object-fit    : cover;
-                        border-radius : 5px;
-                    }
-                }
-
-                .actuality-description {
-                    width   : 65%;
-                    height  : auto;
-                    padding : 10px 30px;
-            
-                    h3 {
-                        font-size  : 22px;
-                        text-align : left;
-                    }
-            
-                    .date {
-                        text-align  : left;
-                        color       : var(--text);
-                        font-size   : 14px;
-                        font-family : 'Faktum';
-                    }
-
-                    .description {
-                        text-overflow      : ellipsis;
-                        overflow           : hidden;
-                        width              : 100%;
-                        line-height        : 19px;
-                        display            : -webkit-box;
-                        -webkit-line-clamp : 4;
-                        -webkit-box-orient : vertical;
-                        text-align         : justify;
-                        margin-top         : 10px;
-                    }
-
-                    .btn-container {
-                        display         : flex;
-                        justify-content : flex-end;
-                        padding         : 20px 0 0;
-                    }
-                }
+            img {
+                position      : absolute;
+                top           : 0;
+                left          : 0;
+                height        : 100%;
+                width         : 100%;
+                object-fit    : cover;
+                border-radius : 5px;
             }
+        }
+
+        .actuality-description {
+            width   : 65%;
+            height  : auto;
+            padding : 0 0 0 30px;
+    
+            h3 {
+                font-size  : 26px;
+                text-align : left;
+            }
+    
+            .date {
+                text-align  : left;
+                color       : var(--text);
+                font-size   : 14px;
+            }
+
+            .description {
+                text-overflow      : ellipsis;
+                overflow           : hidden;
+                width              : 100%;
+                line-height        : 22px;
+                display            : -webkit-box;
+                -webkit-line-clamp : 4;
+                -webkit-box-orient : vertical;
+                text-align         : justify;
+                margin-top         : 10px;
+            }
+
+            .btn-container {
+                display         : flex;
+                justify-content : flex-end;
+                padding         : 20px 0 0;
+            }
+        }
+    }
+    
+    .small-input {
+        width : 300px;
+        input {
+            width : 300px;
         }
     }
 }
 
+.title {
+    display         : flex;
+    justify-content : space-between;
+    align-items     : flex-end;
+    max-width       : 300px;
+    margin-bottom   : 8px;
+    font-size       : 16px;
+
+    span {
+        color     : var(--text-secondary);
+        font-size : 12px;
+    }
+}
+
+.field-infos {
+    width           : 300px;
+    display         : flex;
+    justify-content : flex-end;
+    color           : var(--text-secondary);
+    font-size       : 14px;
+    margin-top      : 6px;
+}
+
+.full {
+    min-width : 100%;
+    input {
+        min-width : 100%;
+    }
+}
+    
+.btn-container {
+    display         : flex;
+    justify-content : flex-end;
+    padding         : 10px 0;
+}
 
 .project-add-actuality {
     position   : relative;

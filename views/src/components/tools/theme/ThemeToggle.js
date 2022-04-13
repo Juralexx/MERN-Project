@@ -22,59 +22,50 @@ const ThemeToggle = () => {
         }
     }
 
-    const classes = {
-        svg: "w-9 h-9 p-2 rounded-full text-slate-500 dark:text-slate-300 bg-slate-100 dark:bg-background_primary_x_light group-hover:bg-white dark:group-hover:bg-background_primary_light",
-        p: "pl-[10px] font-xs text-slate-500 dark:text-slate-300"
-    }
-
     return (
         <>
-            <div className="flex items-center pl-[10px] h-full w-auto">
-                {localStorageTheme === "dark" ? (
-                    <div className="flex items-center">
-                        <BsFillSunFill className={classes.svg} />
-                        <p className={classes.p}>Activer le mode clair</p>
-                    </div>
-                ) : (
-                    <div className="flex items-center">
-                        <BsFillMoonStarsFill className={classes.svg} />
-                        <p className={classes.p}>Activer le mode sombre</p>
-                    </div>
-                )}
-            </div>
-            <div className="flex items-center h-full">
-                {localStorageTheme === "dark" ? (
-                    <ThemeContext.Consumer>
-                        {({ changeTheme }) => (
-                            <label className="switch">
-                                <input type="checkbox" defaultChecked={!checked}
-                                    onClick={() => {
-                                        handleTheme();
-                                        setDarkMode(!darkMode);
-                                        changeTheme(themes.light);
-                                    }}
-                                />
-                                <span className="slider round"></span>
-                            </label>
-                        )}
-                    </ThemeContext.Consumer>
-                ) : (
-                    <ThemeContext.Consumer>
-                        {({ changeTheme }) => (
-                            <label className="switch">
-                                <input type="checkbox" defaultChecked={checked}
-                                    onClick={() => {
-                                        handleTheme();
-                                        setDarkMode(darkMode);
-                                        changeTheme(themes.dark);
-                                    }}
-                                />
-                                <span className="slider round"></span>
-                            </label>
-                        )}
-                    </ThemeContext.Consumer>
-                )}
-            </div>
+            {localStorageTheme === "dark" ? (
+                <div className="settings-menu-li-left">
+                    <BsFillSunFill />
+                    <p>Activer le mode clair</p>
+                </div>
+            ) : (
+                <div className="settings-menu-li-left">
+                    <BsFillMoonStarsFill />
+                    <p>Activer le mode sombre</p>
+                </div>
+            )}
+            {localStorageTheme === "dark" ? (
+                <ThemeContext.Consumer>
+                    {({ changeTheme }) => (
+                        <label className="switch">
+                            <input type="checkbox" defaultChecked={!checked}
+                                onClick={() => {
+                                    handleTheme();
+                                    setDarkMode(!darkMode);
+                                    changeTheme(themes.light);
+                                }}
+                            />
+                            <span className="slider round"></span>
+                        </label>
+                    )}
+                </ThemeContext.Consumer>
+            ) : (
+                <ThemeContext.Consumer>
+                    {({ changeTheme }) => (
+                        <label className="switch">
+                            <input type="checkbox" defaultChecked={checked}
+                                onClick={() => {
+                                    handleTheme();
+                                    setDarkMode(darkMode);
+                                    changeTheme(themes.dark);
+                                }}
+                            />
+                            <span className="slider round"></span>
+                        </label>
+                    )}
+                </ThemeContext.Consumer>
+            )}
         </>
     )
 }

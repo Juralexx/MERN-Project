@@ -169,35 +169,3 @@ export const deletePictures = async (req, res) => {
         }
     })
 }
-
-
-// files.map(async (file, key) => {
-//     const fileName = `${req.params.id}-${key}.jpg`;
-//     pics.push(`${process.env.SERVER_URL}/uploads/projects/${req.params.id}/${fileName}`)
-//     new Promise(async () => {
-//         await pipeline(
-//             file.stream,
-//             fs.createWriteStream(`${__directory}/${file.originalName}`)
-//         ).then(() => {
-//             sharp(`${__directory}/${file.originalName}`)
-//                 .withMetadata()
-//                 .jpeg({ mozjpeg: true, quality: 50 })
-//                 .toFile(`${__directory}/${fileName}`, (err) => {
-//                     if (err) {
-//                         console.error(err)
-//                     } else {
-//                         done++
-//                         if (done === req.files.length) {
-//                             req.files.map((file, key) => {
-//                                 fs.unlink(`${__directory}/${file.originalName}`, (err) => {
-//                                     if (err) {
-//                                         console.error(err)
-//                                     }
-//                                 })
-//                             })
-//                         }
-//                     }
-//                 })
-//         })
-//     })
-// })

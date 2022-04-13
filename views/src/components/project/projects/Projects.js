@@ -64,12 +64,12 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                     </div>
                 </div>
             </div>
-            <div className="dashboard-projects">
-                <div className="dashboard-projects-content">
-                    <div className="dashboard-projects-content-top">
+            <div className="content-container">
+                <div className="content-box">
+                    <div className="dashboard-projects-tools">
                         <div>
-                            <div className="details blue mr-2">Projets en ligne ({(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length})</div>
-                            <div className="details green">Projects terminés ({(projects.filter(e => e.state === "done")).length})</div>
+                            <div className="infos blue mr-2">Projets en ligne ({(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length})</div>
+                            <div className="infos green">Projects terminés ({(projects.filter(e => e.state === "done")).length})</div>
                         </div>
                         <div>
                             <DropdownInput useRef={filterMenu} placeholder="Filtrer" cross readOnly value={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)} clean={() => { setFilter(""); setPros(projects) }}>

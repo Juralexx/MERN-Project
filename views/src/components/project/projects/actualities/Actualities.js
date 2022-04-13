@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Button } from '../../../tools/components/Button'
 import { convertDeltaToHTML } from '../../../tools/functions/function'
@@ -10,8 +10,8 @@ const Actualities = ({ project, user }) => {
     return (
         <Routes>
             <Route index element={
-                <div className="project-actuality">
-                    <div className="project-actuality-container">
+                <div className="content-container">
+                    <div className="content-box">
                         <div className="header flex justify-between mb-5">
                             <h2>Actualités</h2>
                         </div>
@@ -26,7 +26,7 @@ const Actualities = ({ project, user }) => {
                                             <p className="description" dangerouslySetInnerHTML={convertDeltaToHTML(element.description)}></p>
                                             <div className="btn-container">
                                                 <Link to={`${element.url}/edit`}><Button text="Modifier"></Button></Link>
-                                                <Button text="Voir" />
+                                                <Button className="ml-2" text="Voir" />
                                             </div>
                                         </div>
                                     </div>

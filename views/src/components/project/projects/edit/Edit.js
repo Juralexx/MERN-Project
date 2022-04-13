@@ -144,8 +144,8 @@ const Edit = ({ project }) => {
     }, [project.location, locationChanged])
 
     return (
-        <div className="edit-project">
-            <div className="edit-project-container">
+        <div className="content-container edit-project">
+            <div className="content-box">
                 <div className="header flex justify-between mb-5">
                     <h2>Modification du projet</h2>
                     <div className="flex">

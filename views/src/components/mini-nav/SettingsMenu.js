@@ -64,7 +64,7 @@ const SettingsMenu = ({ open }) => {
                         <>
                             <div className="settings-menu-header">
                                 <ImArrowLeft2 onClick={() => { setValue(0) }} />
-                                <div className="title">Affichage</div>
+                                <div className="brand">Affichage</div>
                             </div>
                             <ul className="settings-menu-ul">
                                 <li className="settings-menu-li">

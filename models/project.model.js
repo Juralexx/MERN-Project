@@ -189,6 +189,14 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
+        QNA: {
+            type: [],
+            question: {
+                question: String,
+                response: String
+            }
+        },
+
         activity_feed: {
             type: [],
             activity: {

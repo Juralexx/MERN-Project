@@ -1,0 +1,45 @@
+.content-container {
+    position     : relative;
+    width        : 100%;
+    min-height   : 100%;
+    background   : var(--content);
+    margin-right : auto;
+    margin-left  : auto;
+}
+
+.content-box {
+    position     : relative;
+    max-width    : 1440px;
+    height       : auto;
+    padding      : 50px;
+    margin-right : auto;
+    margin-left  : auto;
+    color        : var(--text);
+}
+
+@media (min-width: 576px) {
+    .content-box {
+        max-width : 576px;
+    }
+}
+@media (min-width: 768px) {
+    .content-box {
+        max-width : 768px;
+    }
+}
+@media (min-width: 992px) {
+    .content-box {
+        max-width : 992px;
+    }
+}
+@media (min-width: 1200px) {
+    .content-box {
+        max-width : 1200px;
+    }
+}
+@media (min-width: 1440px) {
+    .content-box {
+        max-width : 1440px;
+    }
+}
+

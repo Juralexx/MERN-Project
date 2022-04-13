@@ -2,7 +2,7 @@ import ProjectModel from '../../models/project.model.js'
 import mongoose from 'mongoose'
 const ObjectID = mongoose.Types.ObjectId
 
-export const AllProjects = (req, res) => {
+export const allProjects = (req, res) => {
     ProjectModel.find((err, docs) => {
         if (!err) {
             res.send(docs)

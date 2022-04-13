@@ -158,12 +158,12 @@
 
 .add-img-container {
     display         : flex;
-    justify-content : space-around;
+    justify-content : space-between;
 
     .img-input {
         position : relative;
         height   : 200px;
-        width    : 200px;
+        width    : 20%;
         opacity  : 0;
         z-index  : 1500;
         cursor   : pointer;
@@ -173,14 +173,15 @@
         display          : flex;
         position         : relative;
         height           : 200px;
-        width            : 200px;
+        width            : 20%;
+        margin           : 0 7px;
         background-color : var(--content-x-light);
         border-radius    : 5px;
 
         .img-preview {
             position        : absolute;
             height          : 200px;
-            width           : 200px;
+            width           : 100%;
             display         : flex;
             flex-direction  : column;
             align-items     : center;

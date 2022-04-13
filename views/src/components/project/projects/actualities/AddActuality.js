@@ -57,6 +57,7 @@ const AddActuality = ({ project, user }) => {
             setTitle(cleanTitle)
 
             let URL = cleanTitle.toLowerCase();
+            URL = URL.replace(/[&#,+()$~%^.|_@°=§µ£¤"'`*?!;<>[\]{}/\\\\]/g, " ")
             URL = removeAccents(URL)
             URL = URL.replace(/ /g, "-")
 

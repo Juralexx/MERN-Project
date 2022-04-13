@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { IoIosArrowForward } from 'react-icons/io'
 import { useLocation } from 'react-router-dom'
 
 const Breadcrumb = ({ project }) => {
     const location = useLocation()
+
+    console.log(location)
 
     const getCrumb = () => {
         if (location.pathname.includes("about")) return "À propos"
@@ -33,4 +35,4 @@ const Breadcrumb = ({ project }) => {
     )
 }
 
-export default Breadcrumb
+export default memo(Breadcrumb)

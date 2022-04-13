@@ -53,8 +53,8 @@ const Gallery = ({ project, isManager }) => {
      }
 
      return (
-          <div className="gallery-wrapper">
-               <div className="gallery-container">
+          <div className="content-container">
+               <div className="content-box">
                     {isManager &&
                          <>
                               <div {...getRootProps({ className: `dropzone ${isDragActive && "active"} ${pictures.length === 6 && "disabled"}` })}>

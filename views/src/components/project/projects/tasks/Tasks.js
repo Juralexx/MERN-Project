@@ -62,8 +62,8 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
 
     return (
         <>
-            <div className="dashboard-tasks">
-                <div className="dashboard-tasks-container">
+            <div className="content-container">
+                <div className="content-box">
                     <div className="dashboard-tasks-header">
                         <div className="dashboard-tasks-header-left">
                             <h2>Tâches ({project.tasks.length})</h2>

@@ -5,7 +5,7 @@ import { dateParser } from '../../Utils'
 import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { leaveProject } from '../../tools/functions/member';
 import SmallMenu from '../../tools/components/SmallMenu';
-import Breadcrumb from '../../tools/components/Breadcrumb';
+import Breadcrumb from './Breadcrumb';
 import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { HiLocationMarker } from 'react-icons/hi'
 import { HiCalendar } from 'react-icons/hi'
