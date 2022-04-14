@@ -106,55 +106,42 @@
     padding         : 10px 0;
 }
 
-.project-add-actuality {
-    position   : relative;
-    width      : 100%;
-    min-height : 100%;
-    background : var(--content);
+.add-actuality {
 
-    .project-add-actuality-container {
-        position  : relative;
-        max-width : 1440px;
-        height    : auto;
-        padding   : 50px 50px;
-        margin    : 0 auto;
-        color     : var(--text) !important;
-
-        .title {
-            display         : flex;
-            justify-content : space-between;
-            align-items     : flex-end;
-            max-width       : 300px;
-            margin-bottom   : 8px;
-            font-size       : 16px;
-        
-            span {
-                color     : var(--text-secondary);
-                font-size : 12px;
-            }
+    .title {
+        display         : flex;
+        justify-content : space-between;
+        align-items     : flex-end;
+        max-width       : 300px;
+        margin-bottom   : 8px;
+        font-size       : 16px;
+    
+        span {
+            color     : var(--text-secondary);
+            font-size : 12px;
         }
-        
-        .field-infos {
-            width           : 300px;
-            display         : flex;
-            justify-content : flex-end;
-            color           : var(--text-secondary);
-            font-size       : 14px;
-            margin-top      : 6px;
-        }
-        
-        .full {
+    }
+    
+    .field-infos {
+        width           : 300px;
+        display         : flex;
+        justify-content : flex-end;
+        color           : var(--text-secondary);
+        font-size       : 14px;
+        margin-top      : 6px;
+    }
+    
+    .full {
+        min-width : 100%;
+        input {
             min-width : 100%;
-            input {
-                min-width : 100%;
-            }
         }
-        
-        .small-input {
+    }
+    
+    .small-input {
+        width : 300px;
+        input {
             width : 300px;
-            input {
-                width : 300px;
-            }
         }
     }
 }

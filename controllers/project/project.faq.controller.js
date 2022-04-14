@@ -6,7 +6,7 @@ export const createQNA = async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    QNA: QNA,
+                    QNA: req.body.qna,
                     activity_feed: req.body.activity
                 }
             },
@@ -26,9 +26,7 @@ export const updateQNA = async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    "QNA.$": req.body.QNA
-                },
-                $addToSet: {
+                    QNA: req.body.qna,
                     activity_feed: req.body.activity
                 }
             },
@@ -47,8 +45,8 @@ export const deleteQNA = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: {
-                    QNA: { _id: req.body.questionId }
+                $set: {
+                    QNA: []
                 },
                 $addToSet: {
                     activity_feed: req.body.activity

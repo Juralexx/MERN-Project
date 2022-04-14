@@ -5,8 +5,6 @@ import { useLocation } from 'react-router-dom'
 const Breadcrumb = ({ project }) => {
     const location = useLocation()
 
-    console.log(location)
-
     const getCrumb = () => {
         if (location.pathname.includes("about")) return "À propos"
         else if (location.pathname.includes("tasks")) return "Tâches"

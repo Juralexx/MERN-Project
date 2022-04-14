@@ -1,7 +1,7 @@
 import {
     CREATE_TASK,
     CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE,
-    RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES, RECEIVE_DELETE_PICTURES, UPDATE_PROJECT
+    RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES, RECEIVE_DELETE_PICTURES, UPDATE_PROJECT, CREATE_QNA, RECEIVE_CREATE_QNA, RECEIVE_UPDATE_QNA, DELETE_QNA, RECEIVE_DELETE_QNA, UPDATE_QNA, CREATE_ACTUALITY, RECEIVE_CREATE_ACTUALITY, UPDATE_ACTUALITY, RECEIVE_UPDATE_ACTUALITY
 } from "../actions/project.action";
 
 const initialState = {}
@@ -230,9 +230,7 @@ export default function projectReducer(state = initialState, action) {
             }
         case UPDATE_TASK:
             let e = state.tasks.findIndex(task => task._id === action.payload.task._id)
-            console.log(state.tasks.findIndex(task => task._id === action.payload.task._id))
             state.tasks[e] = action.payload.task
-            console.log(state.tasks[e])
             return {
                 ...state,
                 tasks: state.tasks,
@@ -288,6 +286,82 @@ export default function projectReducer(state = initialState, action) {
             return {
                 ...state,
                 tasks: state.tasks.filter(task => task._id !== action.payload.taskId),
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+
+        /*******************************************************************************************************************************/
+        /************************************************************ QNA ***************************************************************/
+
+        case CREATE_QNA:
+            return {
+                ...state,
+                QNA: action.payload.qna,
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_CREATE_QNA:
+            return {
+                ...state,
+                QNA: action.payload.qna,
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case UPDATE_QNA:
+            return {
+                ...state,
+                QNA: action.payload.qna,
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_UPDATE_QNA:
+            return {
+                ...state,
+                QNA: action.payload.qna,
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case DELETE_QNA:
+            return {
+                ...state,
+                QNA: [],
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_DELETE_QNA:
+            return {
+                ...state,
+                QNA: [],
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+
+        /*******************************************************************************************************************************/
+        /******************************************************** ACTUALITY ************************************************************/
+
+        case CREATE_ACTUALITY:
+            return {
+                ...state,
+                actualities: [...state.actualities, action.payload.actuality],
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_CREATE_ACTUALITY:
+            return {
+                ...state,
+                actualities: [...state.actualities, action.payload.actuality],
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case UPDATE_ACTUALITY:
+            let actu = state.actualities.findIndex(e => e._id === action.payload.actualityId)
+            state.actualities[actu].title = action.payload.title
+            state.actualities[actu].url = action.payload.url
+            state.actualities[actu].description = action.payload.description
+            return {
+                ...state,
+                actualities: state.actualities,
+                activity_feed: [...state.activity_feed, action.payload.activity]
+            }
+        case RECEIVE_UPDATE_ACTUALITY:
+            let act = state.actualities.findIndex(e => e._id === action.payload.actualityId)
+            state.actualities[act].title = action.payload.title
+            state.actualities[act].url = action.payload.url
+            state.actualities[act].description = action.payload.description
+            return {
+                ...state,
+                actualities: state.actualities,
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
 

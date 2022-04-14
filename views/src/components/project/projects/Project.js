@@ -13,6 +13,8 @@ import Edit from './edit/Edit';
 import Gallery from './Gallery';
 import Actualities from './actualities/Actualities';
 import AddActuality from './actualities/AddActuality';
+import Qna from './QNA/Qna';
+import AddQna from './QNA/AddQna';
 
 const Project = ({ user, websocket, projects, setProjects }) => {
     const reducer = useSelector(state => state.projectReducer)
@@ -123,6 +125,24 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                     } />
                     <Route path="add-actuality" element={
                         <AddActuality
+                            user={user}
+                            websocket={websocket}
+                            project={project}
+                            isAdmin={isAdmin}
+                            isManager={isManager}
+                        />
+                    } />
+                    <Route path="qna/*" element={
+                        <Qna
+                            user={user}
+                            websocket={websocket}
+                            project={project}
+                            isAdmin={isAdmin}
+                            isManager={isManager}
+                        />
+                    } />
+                    <Route path="add-qna" element={
+                        <AddQna
                             user={user}
                             websocket={websocket}
                             project={project}

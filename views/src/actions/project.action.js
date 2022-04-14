@@ -45,6 +45,20 @@ export const RECEIVE_UPDATE_TASK_STATUS = "RECEIVE_UPDATE_TASK_STATUS"
 export const DELETE_TASK = "DELETE_TASK"
 export const RECEIVE_DELETE_TASK = "RECEIVE_DELETE_TASK"
 
+export const CREATE_QNA = "CREATE_QNA"
+export const RECEIVE_CREATE_QNA = "RECEIVE_CREATE_QNA"
+export const UPDATE_QNA = "UPDATE_QNA"
+export const RECEIVE_UPDATE_QNA = "RECEIVE_UPDATE_QNA"
+export const DELETE_QNA = "DELETE_QNA"
+export const RECEIVE_DELETE_QNA = "RECEIVE_DELETE_QNA"
+
+export const CREATE_ACTUALITY= "CREATE_ACTUALITY"
+export const RECEIVE_CREATE_ACTUALITY = "RECEIVE_CREATE_ACTUALITY"
+export const UPDATE_ACTUALITY = "UPDATE_ACTUALITY"
+export const RECEIVE_UPDATE_ACTUALITY = "RECEIVE_UPDATE_ACTUALITY"
+export const DELETE_ACTUALITY = "DELETE_ACTUALITY"
+export const RECEIVE_DELETE_ACTUALITY = "RECEIVE_DELETE_ACTUALITY"
+
 export const getProject = (projectId) => {
      return async (dispatch) => {
           return axios
@@ -455,5 +469,111 @@ export const deleteTask = (projectId, taskId, activity) => {
 export const receiveDeleteTask = (taskId, activity) => {
      return async (dispatch) => {
           dispatch({ type: RECEIVE_DELETE_TASK, payload: { taskId, activity } })
+     }
+}
+
+/*******************************************************************************************************************************/
+/********************************************************* TASKS ***************************************************************/
+
+export const createQNA = (projectId, qna, activity) => {
+     return async (dispatch) => {
+          await axios({
+               method: "put",
+               url: `${process.env.REACT_APP_API_URL}api/project/add-qna/` + projectId,
+               data: { qna, activity }
+          })
+               .then(() => {
+                    dispatch({ type: CREATE_QNA, payload: { qna, activity } })
+               })
+               .catch(err => console.error(err))
+     }
+}
+
+export const receiveCreateQNA = (qna, activity) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_CREATE_QNA, payload: { qna, activity } })
+     }
+}
+
+export const updateQNA = (projectId, qna, activity) => {
+     return async (dispatch) => {
+          await axios({
+               method: "put",
+               url: `${process.env.REACT_APP_API_URL}api/project/update-qna/` + projectId,
+               data: { qna, activity }
+          })
+               .then(() => {
+                    dispatch({ type: UPDATE_QNA, payload: { qna, activity } })
+               })
+               .catch(err => console.error(err))
+     }
+}
+
+export const receiveUpdateQNA = (qna, activity) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_UPDATE_QNA, payload: { qna, activity } })
+     }
+}
+
+export const deleteQNA = (projectId, activity) => {
+     return async (dispatch) => {
+          await axios({
+               method: "put",
+               url: `${process.env.REACT_APP_API_URL}api/project/delete-qna/` + projectId,
+               data: { activity }
+          })
+               .then(() => {
+                    dispatch({ type: DELETE_QNA, payload: { activity } })
+               })
+               .catch(err => console.error(err))
+     }
+}
+
+export const receiveDeleteQNA = (activity) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_DELETE_QNA, payload: { activity } })
+     }
+}
+
+/*******************************************************************************************************************************/
+/******************************************************* ACTUALITY *************************************************************/
+
+export const createActuality = (projectId, actuality, activity) => {
+     return async (dispatch) => {
+          await axios({
+               method: "put",
+               url: `${process.env.REACT_APP_API_URL}api/project/add-actuality/` + projectId,
+               data: { actuality, activity }
+          })
+               .then(() => {
+                    dispatch({ type: CREATE_ACTUALITY, payload: { actuality, activity } })
+               })
+               .catch(err => console.error(err))
+     }
+}
+
+export const receiveCreateActuality = (actuality, activity) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_CREATE_ACTUALITY, payload: { actuality, activity } })
+     }
+}
+
+export const updateActuality = (projectId, actualityId, title, url, description) => {
+     return async (dispatch) => {
+          await axios({
+               method: "put",
+               url: `${process.env.REACT_APP_API_URL}api/project/update-actuality/` + projectId,
+               data: { actualityId, title, url, description }
+          })
+               .then(() => {
+                    dispatch({ type: UPDATE_ACTUALITY, payload: { actualityId, title, url, description } })
+               })
+               .catch(err => console.error(err))
+     }
+}
+
+export const receiveUpdateActuality = ( actualityId, title, url, description) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_UPDATE_ACTUALITY, payload: { actualityId, title, url, description } })
      }
 }

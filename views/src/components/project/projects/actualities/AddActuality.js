@@ -9,6 +9,9 @@ import { coverPicture } from '../../../tools/functions/useAvatar'
 import { FaCheck } from 'react-icons/fa'
 import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
 import { randomNbLtID, removeAccents } from '../../../Utils'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { createActuality } from '../../../../actions/project.action'
 
 const AddActuality = ({ project, user }) => {
     const [title, setTitle] = useState("")
@@ -19,6 +22,8 @@ const AddActuality = ({ project, user }) => {
     const [count, setCount] = useState(0)
     const quillRef = useRef()
     const [files, setFiles] = useState([])
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleChange = (text, delta, source, editor) => {
         setDescription(editor.getContents())
@@ -72,29 +77,28 @@ const AddActuality = ({ project, user }) => {
                 date: new Date().toISOString()
             }
 
-            await axios({
-                method: "put",
-                url: `${process.env.REACT_APP_API_URL}api/project/add-actuality/${project._id}`,
-                data: { actuality }
-            }).then(async () => {
-                if (files.length > 0) {
-                    let formData = new FormData()
-                    for (let i = 0; i < files.length; i++) {
-                        formData.append('files', files[i])
+            const activity = { type: "add-actuality", who: user.pseudo, actuality: actuality.title, date: new Date().toISOString() }
+            dispatch(createActuality(project._id, actuality, activity))
+                .then(async () => {
+                    if (files.length > 0) {
+                        let formData = new FormData()
+                        for (let i = 0; i < files.length; i++) {
+                            formData.append('files', files[i])
+                        }
+                        await axios
+                            .put(`${process.env.REACT_APP_API_URL}api/project/add-actuality-pictures/${project._id}/${actuality._id}`, formData)
+                            .catch(err => console.log(err))
+
                     }
-                    await axios
-                        .put(`${process.env.REACT_APP_API_URL}api/project/add-actuality-pictures/${project._id}/${actuality._id}`, formData)
-                        .catch(err => console.log(err))
-                    //const redirection = navigate(`/project/${URLID}/${URL}`)
-                    //setTimeout(redirection, 2000)
-                }
-            }).catch(err => console.log(err))
+                }).then(() => {
+                    setTimeout(() => navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.url}`), 2000)
+                }).catch(err => console.log(err))
         }
     }
 
     return (
-        <div className="project-add-actuality">
-            <div className="project-add-actuality-container">
+        <div className="content-container add-actuality">
+            <div className="content-box">
                 <div className="header flex justify-between mb-5">
                     <h2>Ajouter une actualité</h2>
                 </div>

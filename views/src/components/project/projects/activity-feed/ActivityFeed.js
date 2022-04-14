@@ -83,6 +83,24 @@ const ActivityFeed = ({ project, user, websocket }) => {
                                         {element.type === "leave-project" &&
                                             <div><AiFillCloud /><p><span className="mr-1">{element.leaver}</span> a quitté le projet</p></div>
                                         }
+                                        {element.type === "create-qna" &&
+                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a créé une FAQ</p></div>
+                                        }
+                                        {element.type === "update-qna" &&
+                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a modifié une FAQ</p></div>
+                                        }
+                                        {element.type === "delete-qna" &&
+                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a supprimé la FAQ</p></div>
+                                        }
+                                        {element.type === "add-actuality" &&
+                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a ajouté une nouvelle actualité : {element.actuality}</p></div>
+                                        }
+                                        {element.type === "update-actuality" &&
+                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a modifié l'actualité : {element.actuality}</p></div>
+                                        }
+                                        {element.type === "delete-actuality" &&
+                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a supprimé l'actualité : {element.actuality}</p></div>
+                                        }
                                     </div>
                                 </div>
                             </div>

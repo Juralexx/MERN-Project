@@ -209,9 +209,11 @@ const ProjectModel = new mongoose.Schema(
                 task: String,
                 prevState: String,
                 newState: String,
+                /************ actuality **********/
+                actuality: String,
                 /************* admin *************/
                 newAdmin: String,
-                /********* excluse member ********/
+                /********* exclude member ********/
                 excluded: String,
                 /********** leave project ********/
                 leaver: String,

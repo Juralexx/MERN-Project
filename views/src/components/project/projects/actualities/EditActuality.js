@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import EditorToolbar, { formats, modules } from '../../../tools/editor/EditorToolbar'
 import { Button, TextButton } from '../../../tools/components/Button'
@@ -9,6 +9,8 @@ import { ClassicInput } from '../../../tools/components/Inputs'
 import { coverPicture } from '../../../tools/functions/useAvatar'
 import { removeAccents } from '../../../Utils'
 import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
+import { useDispatch } from 'react-redux'
+import { updateActuality } from '../../../../actions/project.action'
 
 const EditActuality = ({ project }) => {
     const { url } = useParams()
@@ -24,6 +26,8 @@ const EditActuality = ({ project }) => {
     const [isErr, setErr] = useState(false)
     const [error, setError] = useState(null)
     const checkErr = (name) => { if (isErr === name) return "err" }
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleChange = (text, delta, source, editor) => {
         setDescription(editor.getContents())
@@ -80,24 +84,27 @@ const EditActuality = ({ project }) => {
                 setUri(URL)
             }
 
-            await axios({
-                method: "put",
-                url: `${process.env.REACT_APP_API_URL}api/project/add-actuality/${project._id}`,
-                data: {
-                    actualityId: actuality._id,
-                    title: title,
-                    url: uri,
-                    description: description
-                }
-            }).then(async () => {
-                if (deletedFiles.length > 0) {
-                    await axios({
-                        method: "put",
-                        url: `${process.env.REACT_APP_API_URL}api/project/delete-actuality-pictures/${project._id}/${actuality._id}`,
-                        data: {
-                            deletedFiles: deletedFiles
-                        }
-                    }).then(async () => {
+            dispatch(updateActuality(project._id, actuality._id, title, uri, description))
+                .then(async () => {
+                    if (deletedFiles.length > 0) {
+                        await axios({
+                            method: "put",
+                            url: `${process.env.REACT_APP_API_URL}api/project/delete-actuality-pictures/${project._id}/${actuality._id}`,
+                            data: {
+                                deletedFiles: deletedFiles
+                            }
+                        }).then(async () => {
+                            if (pictures.length > 0) {
+                                let formData = new FormData()
+                                for (let i = 0; i < pictures.length; i++) {
+                                    formData.append('files', pictures[i])
+                                }
+                                await axios
+                                    .put(`${process.env.REACT_APP_API_URL}api/project/update-actuality-pictures/${project._id}/${actuality._id}`, formData)
+                                    .catch(err => console.log(err))
+                            }
+                        })
+                    } else {
                         if (pictures.length > 0) {
                             let formData = new FormData()
                             for (let i = 0; i < pictures.length; i++) {
@@ -107,19 +114,11 @@ const EditActuality = ({ project }) => {
                                 .put(`${process.env.REACT_APP_API_URL}api/project/update-actuality-pictures/${project._id}/${actuality._id}`, formData)
                                 .catch(err => console.log(err))
                         }
-                    })
-                } else {
-                    if (pictures.length > 0) {
-                        let formData = new FormData()
-                        for (let i = 0; i < pictures.length; i++) {
-                            formData.append('files', pictures[i])
-                        }
-                        await axios
-                            .put(`${process.env.REACT_APP_API_URL}api/project/update-actuality-pictures/${project._id}/${actuality._id}`, formData)
-                            .catch(err => console.log(err))
                     }
-                }
-            }).catch(err => console.log(err))
+                }).then(() => {
+                    console.log(actuality)
+                    setTimeout(() => navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.url}`), 2000)
+                }).catch(err => console.log(err))
         }
     }
 

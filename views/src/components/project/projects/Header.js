@@ -67,7 +67,7 @@ const Header = ({ project, websocket, user }) => {
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/qna`} className={`${isThisActive}`}>FAQ</NavLink>
                         </div>
                         <div className="dashboard-header-navbar-item">
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/edit`} className={`${isThisActive}`}><Button text="Modifier" /></NavLink>
+                            <NavLink to={`/projects/${project.URLID}/${project.URL}/edit`} className={`${isThisActive}`}>Modifier</NavLink>
                         </div>
                     </div>
                 </div>
