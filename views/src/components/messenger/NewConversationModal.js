@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { ImCross } from 'react-icons/im'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { useSelector } from 'react-redux';
 import { avatar } from '../tools/functions/useAvatar';
-import { IconButton } from '../tools/components/Button';
+import { Button } from '../tools/components/Button';
 
 const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket }) => {
     const userData = useSelector((state) => state.userReducer)
@@ -120,7 +119,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
 
     return (
         <>
-            <IconButton text="Nouvelle conversation" endIcon={<AiOutlinePlusCircle />} fullwidth className="mb-[10px] ml-[5px]" onClick={modalOpen}></IconButton>
+            <Button text="Nouvelle conversation" className="mb-[10px] ml-[5px]" onClick={modalOpen} />
             <div className={containerClass + " add-conversation-modal bg-white dark:bg-background_primary shadow-custom dark:shadow-lg" }>
                 <div className="modal-inner">
                     <div className="close-modal" onClick={() => { modalClose(); setArray([]) }}><ImCross /></div>

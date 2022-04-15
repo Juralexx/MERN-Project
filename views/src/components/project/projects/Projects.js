@@ -90,7 +90,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                     </div>
                                     <div className="project-card-content">
                                         <div className="project-card-content-top">
-                                            <div className="title">
+                                            <div className="project-title">
                                                 <h2><NavLink to={`${element.URLID}/${element.URL}`}>{element.title}</NavLink></h2>
                                                 <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                                             </div>

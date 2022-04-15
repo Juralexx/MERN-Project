@@ -11,7 +11,6 @@ import FavoriteButton from '../tools/components/FavoriteButton';
 import FollowersButton from '../tools/components/FollowersButton';
 import LikersButton from '../tools/components/LikersButton';
 import { projectPicture } from '../tools/functions/useAvatar';
-import { parseDescriptionToInnerHTML } from '../tools/functions/parseDescription';
 import { dateParser } from '../Utils';
 import { stateToBackground, stateToString } from './functions';
 import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im'
@@ -46,7 +45,8 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
         <>
             <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
             <Swiper
-                slidesPerView="auto"
+                slidesPerView={3}
+                spaceBetween={20}
                 keyboard={{ enabled: true }}
                 mousewheel={true}
                 modules={[Navigation, Keyboard, Mousewheel]}
@@ -58,11 +58,11 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                         return (
                             <SwiperSlide key={key} className="swiper-slide">
                                 <div className="swiper-card">
-                                    <div className="swiper-img" style={projectPicture('img/paysage-2.jpg')}></div>
+                                    <div className="swiper-img" style={projectPicture('img/paysage-3.jpg')}></div>
                                     <MdZoomOutMap className="zoom-it" onClick={() => getProject(element)} />
                                     <FavoriteButton project={element} />
                                     <div className="swiper-card-body">
-                                        <div className="title"><h3>{element.title}</h3><span>{element.location + ", " + element.department + " - " + element.category}</span></div>
+                                        <div className="card-title"><h3>{element.title}</h3><span>{element.location + ", " + element.department + " - " + element.category}</span></div>
                                         <div className="swiper-card-head">
                                             <div className="contributors"><BsFillPeopleFill /><p>{element.numberofcontributors}</p></div>
                                             <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>

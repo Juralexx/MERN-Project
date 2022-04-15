@@ -6,7 +6,7 @@
     width            : auto;
     min-width        : 340px;
     height           : auto;
-    z-index          : 1600;
+    z-index          : 3600;
     padding          : 20px 30px;
     color            : var(--text);
     background-color : var(--content);
@@ -51,8 +51,8 @@
         background-color : var(--content-x-light);
 
         svg {
-            width  : 28px;
-            height : 28px;
+            width  : 22px;
+            height : 22px;
         }
 
         &:hover {
@@ -203,5 +203,22 @@
                 }
             }
         }
+    }
+}
+
+.warning-modal {
+    .warning-title {
+        font-size : 20px;
+        width     : 90%;
+    }
+
+    .warning-text {
+        padding : 20px 0;
+        color   : var(--text-secondary);
+    }
+
+    .btn-container {
+        margin-top : 10px;
+        padding    : 0;
     }
 }

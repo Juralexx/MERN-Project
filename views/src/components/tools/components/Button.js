@@ -46,9 +46,9 @@ export const StartIconOutlinedButton = (props) => {
 }
 
 export const EndIconOutlinedButton = (props) => {
-    const { icon, text, fullwidth, onClick, className, disabled } = props
+    const { icon, text, onClick, className, disabled } = props
     return (
-        <button onClick={onClick} className={`btn-outlined-icon-end ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "btn-outlined-icon-end " + className : "btn-outlined-icon-end"}`} disabled={disabled}>
             {text}{icon && (icon)}
         </button>
     )
@@ -75,7 +75,7 @@ export const StartIconTextButton = (props) => {
 export const EndIconTextButton = (props) => {
     const { icon, text, fullwidth, onClick, className, disabled } = props
     return (
-        <button onClick={onClick} className={`text-btn-icon-start ${fullwidth ?? "w-full"} ${className ?? className}`} disabled={disabled}>
+        <button onClick={onClick} className={`${className ? "text-btn-icon-end " + className : "text-btn-icon-end"}`} disabled={disabled}>
             {text}{icon && (icon)}
         </button>
     )
@@ -104,41 +104,6 @@ export const SmallToolsBtn = (props) => {
     return (
         <div className={`${className ? "small-tools-btn " + className : "small-tools-btn"}`} onClick={onClick}>
             {props.children}
-        </div>
-    )
-}
-
-export const IconButton = (props) => {
-    const { startIcon, endIcon, text, fullwidth, color, hoverColor, onClick, className } = props
-    return (
-        <div onClick={onClick} className={`h-10 flex justify-between items-center px-5 py-2 rounded-full text-white cursor-pointer
-            ${fullwidth ? "w-full" : "w-auto"}
-            ${color ? `bg-${color}` : "bg-primary"}
-            ${hoverColor ? `hover:bg-${hoverColor}` : "hover:bg-primary_semi_dark"}
-            ${className ? className : null}
-        `}>
-            {startIcon && (
-                <div className="relative h-5 w-5 flex justify-center items-center mr-2">
-                    {startIcon}
-                </div>
-            )}
-            <div className="flex items-center">
-                {text}
-            </div>
-            {endIcon && (
-                <div className="relative h-5 w-5 flex justify-center items-center ml-2">
-                    {endIcon}
-                </div>
-            )}
-        </div>
-    )
-}
-
-export const RoundedButton = (props) => {
-    const { color, hoverColor, icon, onClick, className } = props
-    return (
-        <div onClick={onClick} className={`px-2 py-2 rounded-full bg-${color} hover:bg-${hoverColor} ${className ? className : null} cursor-pointer`}>
-            {icon}
         </div>
     )
 }

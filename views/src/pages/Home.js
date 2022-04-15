@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Header from '../components/home/Header';
 import ProjectsSwiper from '../components/home/ProjectsSwiper';
+import CategoriesSwiper from '../components/home/CategoriesSwiper';
+import TagsSwiper from '../components/home/TagsSwiper';
+import { Link } from 'react-router-dom';
+import { MdArrowRightAlt } from 'react-icons/md';
 
 const Home = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
@@ -20,7 +24,7 @@ const Home = ({ websocket, user }) => {
                         setProjectsByLikes(res.data.sort((a, b) => { return parseInt(a.likers.length) > parseInt(b.likers.length) ? -1 : 1 }))
                         setProjectsByFollows(res.data.sort((a, b) => { return parseInt(a.followers.length) > parseInt(b.followers.length) ? -1 : 1 }))
                         setLoading(false)
-                    })
+                    }).catch(err => console.log(err))
             } catch (err) { console.error(err) }
         }
         fetch()
@@ -30,31 +34,45 @@ const Home = ({ websocket, user }) => {
         <>
             <Header />
             <div className="home-body">
-                <div className="home-container">
+                <div className="content-box">
+                    <CategoriesSwiper />
                     <div className="swiper-container">
-                        <h2>Les plus récent</h2>
+                        <div className="swiper-header">
+                            <h2>Les projets les plus récent</h2>
+                            <Link to="/">Voir plus <MdArrowRightAlt /></Link>
+                        </div>
                         <div className="swiper-inner">
                             <ProjectsSwiper projects={projectsByDate} isLoading={isLoading} websocket={websocket} user={user} />
                         </div>
                     </div>
                     <div className="swiper-container">
-                        <h2>Tous les projets</h2>
+                        <div className="swiper-header">
+                            <h2>Tous les projets</h2>
+                            <Link to="/">Voir plus <MdArrowRightAlt /></Link>
+                        </div>
                         <div className="swiper-inner">
                             <ProjectsSwiper projects={projects} isLoading={isLoading} websocket={websocket} user={user} />
                         </div>
                     </div>
                     <div className="swiper-container">
-                        <h2>Les plus aimés</h2>
+                        <div className="swiper-header">
+                            <h2>Les projets les plus aimés</h2>
+                            <Link to="/">Voir plus <MdArrowRightAlt /></Link>
+                        </div>
                         <div className="swiper-inner">
                             <ProjectsSwiper projects={projectsByLikes} isLoading={isLoading} websocket={websocket} user={user} />
                         </div>
                     </div>
                     <div className="swiper-container">
-                        <h2>Les plus suivis</h2>
+                        <div className="swiper-header">
+                            <h2>Les projets les plus suivis</h2>
+                            <Link to="/">Voir plus <MdArrowRightAlt /></Link>
+                        </div>
                         <div className="swiper-inner">
                             <ProjectsSwiper projects={projectsByFollows} isLoading={isLoading} websocket={websocket} user={user} />
                         </div>
                     </div>
+                    <TagsSwiper />
                 </div>
             </div>
         </>

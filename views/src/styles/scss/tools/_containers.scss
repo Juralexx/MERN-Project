@@ -9,7 +9,7 @@
 
 .content-box {
     position     : relative;
-    max-width    : 1440px;
+    max-width    : 1366px;
     height       : auto;
     padding      : 50px;
     margin-right : auto;
@@ -37,9 +37,9 @@
         max-width : 1200px;
     }
 }
-@media (min-width: 1440px) {
+@media (min-width: 1366px) {
     .content-box {
-        max-width : 1440px;
+        max-width : 1366px;
     }
 }
 

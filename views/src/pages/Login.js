@@ -13,7 +13,7 @@ const Login = ({ uid }) => {
                 </Link>
                 <div className="sign-card">
                     <div className="title">
-                        <h1 className="text-2xl text-gray-500 dark:text-slate-300">Connexion</h1>
+                        <h1>Connexion</h1>
                     </div>
                     <SignInForm />
                     <div className="sign-card-bottom">

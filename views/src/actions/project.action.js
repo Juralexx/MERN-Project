@@ -52,7 +52,7 @@ export const RECEIVE_UPDATE_QNA = "RECEIVE_UPDATE_QNA"
 export const DELETE_QNA = "DELETE_QNA"
 export const RECEIVE_DELETE_QNA = "RECEIVE_DELETE_QNA"
 
-export const CREATE_ACTUALITY= "CREATE_ACTUALITY"
+export const CREATE_ACTUALITY = "CREATE_ACTUALITY"
 export const RECEIVE_CREATE_ACTUALITY = "RECEIVE_CREATE_ACTUALITY"
 export const UPDATE_ACTUALITY = "UPDATE_ACTUALITY"
 export const RECEIVE_UPDATE_ACTUALITY = "RECEIVE_UPDATE_ACTUALITY"
@@ -572,8 +572,28 @@ export const updateActuality = (projectId, actualityId, title, url, description)
      }
 }
 
-export const receiveUpdateActuality = ( actualityId, title, url, description) => {
+export const receiveUpdateActuality = (actualityId, title, url, description) => {
      return async (dispatch) => {
           dispatch({ type: RECEIVE_UPDATE_ACTUALITY, payload: { actualityId, title, url, description } })
+     }
+}
+
+export const deleteActuality = (projectId, actualityId) => {
+     return async (dispatch) => {
+          await axios({
+               method: "put",
+               url: `${process.env.REACT_APP_API_URL}api/project/delete-actuality/` + projectId,
+               data: { actualityId }
+          })
+               .then(() => {
+                    dispatch({ type: DELETE_ACTUALITY, payload: { actualityId } })
+               })
+               .catch(err => console.error(err))
+     }
+}
+
+export const receiveDeleteActuality = (actualityId) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_DELETE_ACTUALITY, payload: { actualityId } })
      }
 }

@@ -6,7 +6,7 @@
     .dashboard-projects-header-container {
         position  : relative;
         width     : 100%;
-        max-width : 1440px;
+        max-width : 1366px;
         margin    : 0 auto;
 
         .dashboard-projects-header-top {
@@ -116,7 +116,7 @@
                 -webkit-box-orient : vertical;
             }
 
-            .title {
+            .project-title {
                 display         : flex;
                 align-items     : center;
                 justify-content : space-between;
@@ -124,7 +124,7 @@
                 h2 {
                     text-overflow      : ellipsis;
                     overflow           : hidden;
-                    width              : 60%;
+                    width              : 75%;
                     line-height        : 28px;
                     display            : -webkit-box;
                     -webkit-line-clamp : 1;

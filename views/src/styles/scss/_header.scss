@@ -1,16 +1,15 @@
 #header {
-    height      : calc(100vh - 60px);
-    max-height  : 1440px;
-    background  : linear-gradient(to right, var(--body) 30%, var(--content) 100%);
     display     : flex;
     align-items : center;
+    height      : auto;
+    background  : linear-gradient(to right, var(--body) 30%, var(--content) 100%);
 
     .header-container {
         display     : flex;
         align-items : center;
         height      : 100%;
-        width       : 1440px;
-        padding     : 50px;
+        width       : 1366px;
+        padding     : 100px 50px 30px;
         margin      : 0 auto;
 
         .header-inner {
