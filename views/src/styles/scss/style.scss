@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'body';
-@import 'forms';
 @import 'header';
 
 /****************************************************/
@@ -41,8 +40,7 @@
 /******************* PROJECT PAGE *******************/
 
 @import 'modules/project/add-project';
-@import 'modules/project/myprojects';
-@import 'modules/project/home-project-modal';
+@import 'modules/project/project-page';
 
 /****************************************************/
 /********************* DASHBOARD ********************/
@@ -68,7 +66,6 @@
 @import 'modules/notifications';
 @import 'modules/settings-menu';
 @import 'modules/messenger';
-@import 'modules/right-menu';
 @import 'modules/home';
 
 @import 'modules/messenger/messenger';

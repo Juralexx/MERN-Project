@@ -1,55 +1,61 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { useParams, useNavigate, NavLink } from 'react-router-dom'
-import axios from "axios";
-import { dateParser } from '../components/Utils';
+import { useParams, useNavigate, Routes, Route } from 'react-router-dom'
 import { getProject } from '../actions/project.action';
-import { Loader } from '../components/tools/components/Loader';
-import { UidContext } from '../components/AppContext';
-import { convertDeltaToHTML } from '../components/messenger/tools/function';
+import Header from '../components/project/project-page/Header';
+import Actualities from '../components/project/project-page/Actualities';
+import Gallery from '../components/project/project-page/Gallery';
+import Qna from '../components/project/project-page/Qna';
 
-const ProjectPage = () => {
-    const uid = useContext(UidContext)
-    const { URL } = useParams()
-    const [project, setProject] = useState([])
-    const [description, setDescription] = useState([])
+const ProjectPage = ({ user, websocket, projects }) => {
+    const { URLID, URL } = useParams()
+    const [project, setProject] = useState()
     const [isLoading, setLoading] = useState(true)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const fetch = async () => {
-            try {
-                const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URL}`)
-                if (data.URL) {
-                    dispatch(getProject(data._id))
-                    setProject(data)
-                    setDescription(data.content[0])
-                    setLoading(false)
-                } else { navigate('/') }
-            } catch (err) {
-                console.error(err)
-            }
-        };
-        fetch()
-    }, [URL, navigate, dispatch, uid, project.posterId])
+        const projet = projects.find(element => element.URLID === URLID && element.URL === URL)
+        setProject(projet)
+        dispatch(getProject(projet._id))
+        setLoading(false)
+    }, [URL, URLID, projects, setProject, dispatch, user._id])
 
     return (
-        <div className="container">
-            {isLoading && <Loader />}
-            {!isLoading && (
-                <div>
-                    <p>{project.title}</p>
-                    <p>Posté par : <NavLink to={"/" + project.posterPseudo}>{project.posterPseudo}</NavLink></p>
-                    <p>{project.category}</p>
-                    <p>{project.location}</p>
-                    <p>Date de fin potentielle : {dateParser(project.end)}</p>
-                    <p>Nombre de personne : {project.numberofcontributors}</p>
-                    <p>Date de création : {dateParser(project.createdAt)}</p>
-                    <p>Dernière modification : {dateParser(project.updatedAt)}</p>
-                    <p dangerouslySetInnerHTML={convertDeltaToHTML(description.ops)}></p>
+        <div className="content-container project-page">
+            <div className="content-box">
+                {!isLoading && <Header project={project} />}
+                <div className="project-page-body">
+                    <Routes>
+                        <Route index element={
+                            <div className="dashboard-content-container">
+
+                            </div>
+                        } />
+                        <Route path="gallery" element={
+                            <Gallery
+                                user={user}
+                                websocket={websocket}
+                                project={project}
+                            />
+                        } />
+                        <Route path="actuality/*" element={
+                            <Actualities
+                                user={user}
+                                websocket={websocket}
+                                project={project}
+                            />
+                        } />
+                        <Route path="qna" element={
+                            <Qna
+                                user={user}
+                                websocket={websocket}
+                                project={project}
+                            />
+                        } />
+                    </Routes>
                 </div>
-            )}
+            </div>
         </div>
     )
 }

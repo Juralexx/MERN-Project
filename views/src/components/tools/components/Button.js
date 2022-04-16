@@ -73,7 +73,7 @@ export const StartIconTextButton = (props) => {
 }
 
 export const EndIconTextButton = (props) => {
-    const { icon, text, fullwidth, onClick, className, disabled } = props
+    const { icon, text, onClick, className, disabled } = props
     return (
         <button onClick={onClick} className={`${className ? "text-btn-icon-end " + className : "text-btn-icon-end"}`} disabled={disabled}>
             {text}{icon && (icon)}

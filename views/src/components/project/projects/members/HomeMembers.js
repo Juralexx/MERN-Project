@@ -28,7 +28,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                 <div className="home-members-header">
                     <h2>Membres <span>{project.members.length}</span></h2>
                     <div className="flex">
-                        <TextButton text="Voir tous" className="mr-2" />
+                        <Link to="members"><TextButton text="Voir tous" className="mr-2" /></Link>
                         {(isAdmin || isManager) &&
                             <div ref={membersMenu}>
                                 <ToolsBtn onClick={() => setOpenMenu(!openMenu)}><BiDotsVerticalRounded /></ToolsBtn>

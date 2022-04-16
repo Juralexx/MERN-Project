@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../../tools/functions/task'
 import { clickOn, useClickOutside } from '../../../tools/functions/useClickOutside'
 import { reduceString } from '../../../tools/functions/reduceString'
@@ -15,7 +16,6 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
     const [createTask, setCreateTask] = useState(false)
     const [updateTask, setUpdateTask] = useState(false)
-    const [showTask, setShowTask] = useState(-1)
     const [getTask, setTask] = useState(null)
     const [navbar, setNavbar] = useState(1)
     const taskMenu = useRef()
@@ -50,7 +50,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     <div className="home-tasks-nav-header-top">
                         <h2>Tâches <span>{tasks.length}</span></h2>
                         <div className="flex">
-                            <TextButton text="Voir tous" className="mr-2" />
+                            <Link to="tasks"><TextButton text="Voir tous" className="mr-2" /></Link>
                             {(isAdmin || isManager) &&
                                 <div ref={taskMenu}>
                                     <ToolsBtn onClick={() => setOpenTasksMenu(!openTasksMenu)}><BiDotsVerticalRounded /></ToolsBtn>
@@ -84,7 +84,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             <div className={`home-tasks-task`} key={key}>
                                 <div className="home-tasks-task-content">
                                     <div className="check-input mr-2">
-                                        <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                        <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
                                         <label htmlFor={randomizeCheckboxID(key)}>
                                             <span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span>
                                         </label>

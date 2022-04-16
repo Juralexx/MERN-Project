@@ -1,7 +1,7 @@
 .home-body {
     position   : relative;
     width      : 100%;
-    background : linear-gradient(to right, var(--body) 30%, var(--content) 100%);
+    background : linear-gradient(to right, var(--content) 30%, var(--content-light) 100%);
 
     .swiper-container {
         position      : relative;

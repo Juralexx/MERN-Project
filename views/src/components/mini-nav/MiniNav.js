@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { avatar } from "../tools/functions/useAvatar";
 import { useClickOutside } from "../tools/functions/useClickOutside";

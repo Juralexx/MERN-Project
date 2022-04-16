@@ -66,6 +66,7 @@
         padding       : 12px;
         margin        : 12px 0;
         background    : var(--content-light);
+        cursor        : pointer;
 
         &.priority {
             border-left : 3px solid var(--red);

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { BsFillSunFill, BsFillCaretRightFill } from 'react-icons/bs'
 
-const Categories = ({ open, setOpen, setCategory, category }, props) => {
-    const { className } = props
+const Categories = ({ open, setOpen, setCategory, category, className }) => {
     const [active, setActive] = useState(0)
     const isMainActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const isSubActive = (value) => { if (category === value) return "active" }

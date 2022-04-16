@@ -60,7 +60,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                         <div className="tasklist-table-item" key={key}>
                                             <div className="tasklist-table-item-left">
                                                 <div className="check-input mr-2">
-                                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
                                                     <label htmlFor={randomizeCheckboxID(key)}>
                                                         <span>
                                                             <svg width="12px" height="9px" viewBox="0 0 12 9">
@@ -107,7 +107,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                         <div className={`relative flex justify-between items-center py-3 px-3 cursor-pointer hover:bg-background_primary_x_light rounded-lg`} key={key}>
                             <div className="flex items-center w-full">
                                 <div className="check-input mr-2">
-                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, project, user, websocket, dispatch)} />
+                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
                                     <label htmlFor={randomizeCheckboxID(key)}>
                                         <span>
                                             <svg width="12px" height="9px" viewBox="0 0 12 9">

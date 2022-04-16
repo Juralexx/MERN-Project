@@ -58,7 +58,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                         }
                     </div>
                     <div className="dashboard-members-tools">
-                        <ClassicInput className="w-[400px]" type="search" placeholder="Rechercher un membre..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchMember} />
+                        <ClassicInput className="w-[400px]" inputClassName="full" type="search" placeholder="Rechercher un membre..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchMember} />
                         <DropdownInput useRef={filterMenu} cross readOnly placeholder={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)}>
                             <div onClick={() => sortByRecent(members, setMembers, setFilter, setDisplay)}>Plus récent au plus ancien</div>
                             <div onClick={() => sortByOld(members, setMembers, setFilter, setDisplay)}>Plus ancien au plus récent</div>

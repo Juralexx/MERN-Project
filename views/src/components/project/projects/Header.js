@@ -10,7 +10,6 @@ import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { HiLocationMarker } from 'react-icons/hi'
 import { HiCalendar } from 'react-icons/hi'
 import { NavLink, useLocation } from 'react-router-dom';
-import { Button } from '../../tools/components/Button';
 
 const Header = ({ project, websocket, user }) => {
     const menuRef = useRef()

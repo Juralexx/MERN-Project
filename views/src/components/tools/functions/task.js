@@ -1,18 +1,17 @@
 import { changeTaskState, deleteTask } from "../../../actions/project.action"
 
-export const changeState = async (element, project, user, websocket, dispatch) => {
-    const state = () => { if (element.state !== "done") { return "done" } else { return "todo" } }
-    const activity = { type: "update-task-state", who: user.pseudo, task: element.title, prevState: stateToString(element.state), newState: stateToString(state()), date: new Date().toISOString() }
+export const changeState = async (element, newState, project, user, websocket, dispatch) => {
+    const activity = { type: "update-task-state", who: user.pseudo, task: element.title, prevState: stateToString(element.state), newState: newState, date: new Date().toISOString() }
     const members = project.members.filter(member => member.id !== user._id)
     members.map(member => {
         return websocket.current.emit('updateTaskState', {
             receiverId: member.id,
             taskId: element._id,
-            state: state(),
+            state: newState,
             activity: activity
         })
     })
-    dispatch(changeTaskState(project._id, element._id, state(), activity))
+    dispatch(changeTaskState(project._id, element._id, newState, activity))
 }
 
 export const removeTask = (task, project, user, websocket, dispatch) => {

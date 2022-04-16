@@ -1,0 +1,95 @@
+.project-page {
+
+    .header {
+        display        : flex;
+        flex-direction : column;
+        align-items    : center;
+        position       : relative;
+        padding        : 20px 50px;
+        width          : 100%;
+        height         : auto;
+        text-align     : center;
+
+        h1 {
+            font-weight   : 500;
+            max-width     : 700px;
+            margin-bottom : 10px;
+        }
+
+        h2 {
+            font-size : 16px !important;
+            max-width : 700px;
+            color     : var(--text-secondary)
+        }
+
+        .infos {
+            display         : flex;
+            justify-content : center;
+            padding         : 20px 0;
+
+            .infos-content {
+                padding : 0 15px;
+
+                a {
+                    color : var(--primary);
+                }
+
+                &:nth-child(1) {
+                    border-right : 1px solid var(--light-border);
+                }
+            }
+        }
+
+        .project-tags {
+            position  : relative;
+            display   : flex;
+            flex-wrap : wrap;
+            max-width : 700px;
+            padding   : 10px 0;
+
+            > div {
+                padding       : 3px 5px;
+                font-size     : 14px;
+                background    : rgba(var(--turquoise-rgb), 0.2);
+                color         : var(--turquoise);
+                border-radius : 5px;
+                margin-right  : 3px;
+            }
+        }
+
+        .actions {
+            display         : flex;
+            justify-content : center;
+            max-width       : 700px;
+            padding         : 20px 0;
+
+            .users-actions {
+                display     : flex;
+                align-items : center;
+                padding     : 0 10px;
+
+                svg {
+                    margin-right : 10px;
+                }
+
+                &.likes {
+                    svg {
+                        color : var(--red);
+                    }
+                }
+
+                &.likes {
+                    svg {
+                        color : var(--red);
+                    }
+                }
+
+                &.follows {
+                    svg {
+                        color : var(--light-blue);
+                    }
+                }
+            }
+        }
+    }
+}

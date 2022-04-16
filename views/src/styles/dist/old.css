@@ -96,8 +96,6 @@ html {
   position: relative;
   font-family: "Segoe UI", sans-serif;
   scroll-behavior: smooth;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 body {
@@ -155,174 +153,6 @@ h5 {
   font-size: 14px !important;
 }
 
-.header-login, .header-register {
-  padding: 30px 0 10px;
-  text-align: center;
-}
-.header-login img, .header-register img {
-  width: 70px;
-  height: auto;
-  margin: 0 auto;
-}
-
-.auth-form, .register-form, .update-form {
-  width: 340px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
-.auth-form .auth-form-header, .auth-form .register-form-header, .auth-form .update-form-header, .register-form .auth-form-header, .register-form .register-form-header, .register-form .update-form-header, .update-form .auth-form-header, .update-form .register-form-header, .update-form .update-form-header {
-  margin-bottom: 15px;
-  color: #c9d1d9;
-  text-align: center;
-  text-shadow: none;
-  background-color: transparent;
-  border: 0;
-}
-.auth-form .auth-form-header h1, .auth-form .register-form-header h1, .auth-form .update-form-header h1, .register-form .auth-form-header h1, .register-form .register-form-header h1, .register-form .update-form-header h1, .update-form .auth-form-header h1, .update-form .register-form-header h1, .update-form .update-form-header h1 {
-  font-size: 26px;
-  font-weight: 300;
-  letter-spacing: 0.7px;
-}
-.auth-form .auth-form-body, .auth-form .register-form-body, .auth-form .update-form-body, .register-form .auth-form-body, .register-form .register-form-body, .register-form .update-form-body, .update-form .auth-form-body, .update-form .register-form-body, .update-form .update-form-body {
-  border-radius: 6px;
-  padding: 20px;
-  font-size: 14px;
-  background-color: var(--content-light);
-  border: 1px solid var(--content-light);
-  color: #c9d1d9;
-}
-.auth-form .auth-form-body label, .auth-form .register-form-body label, .auth-form .update-form-body label, .register-form .auth-form-body label, .register-form .register-form-body label, .register-form .update-form-body label, .update-form .auth-form-body label, .update-form .register-form-body label, .update-form .update-form-body label {
-  display: block;
-  margin-bottom: 7px;
-  font-weight: 400;
-  text-align: left;
-}
-.auth-form .auth-form-body input, .auth-form .register-form-body input, .auth-form .update-form-body input, .register-form .auth-form-body input, .register-form .register-form-body input, .register-form .update-form-body input, .update-form .auth-form-body input, .update-form .register-form-body input, .update-form .update-form-body input {
-  margin-top: 5px;
-  margin-bottom: 15px;
-  display: block;
-  width: 100%;
-  padding: 5px 12px;
-  font-size: 14px;
-  line-height: 20px;
-  border: 1px solid var(--content-light);
-  background-color: var(--input);
-  border-radius: 6px;
-  color: #c9d1d9;
-}
-.auth-form .auth-form-body .btn, .auth-form .register-form-body .btn, .auth-form .update-form-body .btn, .register-form .auth-form-body .btn, .register-form .register-form-body .btn, .register-form .update-form-body .btn, .update-form .auth-form-body .btn, .update-form .register-form-body .btn, .update-form .update-form-body .btn {
-  width: 100%;
-  background: #6366F1;
-  margin-top: 12px;
-}
-.auth-form .auth-form-body .terms-container, .auth-form .register-form-body .terms-container, .auth-form .update-form-body .terms-container, .register-form .auth-form-body .terms-container, .register-form .register-form-body .terms-container, .register-form .update-form-body .terms-container, .update-form .auth-form-body .terms-container, .update-form .register-form-body .terms-container, .update-form .update-form-body .terms-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.auth-form .auth-form-body .terms-container #terms, .auth-form .register-form-body .terms-container #terms, .auth-form .update-form-body .terms-container #terms, .register-form .auth-form-body .terms-container #terms, .register-form .register-form-body .terms-container #terms, .register-form .update-form-body .terms-container #terms, .update-form .auth-form-body .terms-container #terms, .update-form .register-form-body .terms-container #terms, .update-form .update-form-body .terms-container #terms {
-  margin-top: unset;
-  margin-bottom: unset;
-  display: unset;
-  width: unset;
-  padding: unset;
-  margin-right: 10px;
-}
-.auth-form .auth-form-body .terms-container label, .auth-form .register-form-body .terms-container label, .auth-form .update-form-body .terms-container label, .register-form .auth-form-body .terms-container label, .register-form .register-form-body .terms-container label, .register-form .update-form-body .terms-container label, .update-form .auth-form-body .terms-container label, .update-form .register-form-body .terms-container label, .update-form .update-form-body .terms-container label {
-  margin: 0;
-}
-.auth-form .auth-form-body .terms-container label a, .auth-form .register-form-body .terms-container label a, .auth-form .update-form-body .terms-container label a, .register-form .auth-form-body .terms-container label a, .register-form .register-form-body .terms-container label a, .register-form .update-form-body .terms-container label a, .update-form .auth-form-body .terms-container label a, .update-form .register-form-body .terms-container label a, .update-form .update-form-body .terms-container label a {
-  color: #6366F1;
-}
-.auth-form .login-callout, .auth-form .register-callout, .register-form .login-callout, .register-form .register-callout, .update-form .login-callout, .update-form .register-callout {
-  padding: 15px 20px;
-  text-align: center;
-  border: 1px solid var(--content-light);
-  border-radius: 6px;
-  margin-top: 15px;
-  color: #c9d1d9;
-}
-.auth-form .login-callout a, .auth-form .register-callout a, .register-form .login-callout a, .register-form .register-callout a, .update-form .login-callout a, .update-form .register-callout a {
-  color: #6366F1;
-}
-
-.update-form {
-  width: 900px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
-.update-form .update-form-header {
-  margin-bottom: 15px;
-  color: #c9d1d9;
-  text-align: center;
-  text-shadow: none;
-  background-color: transparent;
-  border: 0;
-}
-.update-form .update-form-header h1 {
-  font-size: 26px;
-  font-weight: 300;
-  letter-spacing: 0.7px;
-}
-.update-form .update-form-body {
-  border-radius: 6px;
-  padding: 20px;
-  font-size: 14px;
-  background-color: var(--content-light);
-  border: 1px solid var(--content-light);
-  color: #c9d1d9;
-}
-.update-form .update-form-body #update-form, .update-form .update-form-body #update-email-form, .update-form .update-form-body #update-phone-form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-.update-form .update-form-body #update-form .top, .update-form .update-form-body #update-form .center, .update-form .update-form-body #update-form .bottom, .update-form .update-form-body #update-email-form .top, .update-form .update-form-body #update-email-form .center, .update-form .update-form-body #update-email-form .bottom, .update-form .update-form-body #update-phone-form .top, .update-form .update-form-body #update-phone-form .center, .update-form .update-form-body #update-phone-form .bottom {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.update-form .update-form-body label {
-  display: block;
-  min-width: 120px;
-  padding: 0 20px;
-  font-weight: 400;
-  text-align: left;
-}
-.update-form .update-form-body input {
-  margin-top: 5px;
-  margin-bottom: 15px;
-  display: block;
-  width: 300px;
-  padding: 5px 12px;
-  font-size: 14px;
-  line-height: 20px;
-  border: 1px solid var(--content-light);
-  background-color: var(--input);
-  border-radius: 6px;
-  color: #c9d1d9;
-}
-.update-form .update-form-body .btn {
-  width: 300px;
-  background: #6366F1;
-  margin: 12px auto;
-}
-.update-form .update-form-body .btn:disabled {
-  background: var(--content-light);
-  border: 1px solid var(--content-light);
-}
-
 #header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -331,8 +161,8 @@ h5 {
       -ms-flex-align: center;
           align-items: center;
   height: auto;
-  background: -webkit-gradient(linear, left top, right top, color-stop(30%, var(--body)), to(var(--content)));
-  background: linear-gradient(to right, var(--body) 30%, var(--content) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(30%, var(--content)), to(var(--content-light)));
+  background: linear-gradient(to right, var(--content) 30%, var(--content-light) 100%);
 }
 #header .header-container {
   display: -webkit-box;
@@ -3898,6 +3728,9 @@ h5 {
   -webkit-box-shadow: var(--shadow-lg);
           box-shadow: var(--shadow-lg);
 }
+.categories-picker.right {
+  right: 0;
+}
 .categories-picker .categories-main {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5656,255 +5489,7 @@ h5 {
   width: 100%;
 }
 
-.myprojects-card {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  width: 850px;
-  height: 420px;
-  border-radius: 5px;
-  background: var(--content);
-  margin: 20px auto;
-}
-.myprojects-card .left {
-  position: relative;
-  width: 300px;
-  height: 100%;
-  margin: 0;
-}
-.myprojects-card .right {
-  padding: 20px;
-  width: 500px;
-}
-.myprojects-card .right .pseudo-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-bottom: 10px;
-}
-.myprojects-card .right .pseudo-container .avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  margin-right: 10px;
-}
-.myprojects-card .right > p {
-  margin: 0;
-}
-.myprojects-card .right .description {
-  margin: 10px 0;
-}
-.myprojects-card .right .action-container {
-  width: 100%;
-}
-.myprojects-card .right .action-container .content {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-.myprojects-card .right .action-container .content p {
-  margin: 0;
-}
-.myprojects-card .right .action-container .content .likers-modal-btn {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.myprojects-card .right .action-container .content .likers-modal-btn svg {
-  margin-right: 5px;
-}
-.myprojects-card .right .action-container .action-btn {
-  width: 200px;
-  padding: 10px 0;
-  border-radius: 5px;
-  outline: none;
-  border: none;
-  background: transparent;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  color: var(--text-secondary);
-}
-.myprojects-card .right .action-container .action-btn span {
-  margin-left: 5px;
-}
-.myprojects-card .right .action-container .action-btn:hover {
-  background: #232323;
-}
-
-.project-modal.modal-container {
-  position: fixed;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 700px;
-  height: auto;
-  border-radius: 5px;
-  background: var(--content);
-  color: var(--text-grey);
-  font-size: 14px;
-  cursor: pointer;
-}
-.project-modal.modal-container .left {
-  position: relative;
-  display: block;
-  width: 300px;
-  height: auto;
-  margin: 0;
-  border-radius: 5px 5px 0 0;
-}
-.project-modal.modal-container .left .action-btn-favorite {
-  position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  bottom: 5px;
-  right: 0;
-  background: transparent;
-  border: none;
-  color: white;
-}
-.project-modal.modal-container .left .action-btn-favorite svg {
-  width: 16px;
-  height: 16px;
-}
-.project-modal.modal-container .right {
-  padding: 15px 20px;
-  height: 400px;
-  width: 400px;
-}
-.project-modal.modal-container .right .title {
-  padding: 0 0 10px 0;
-  border-bottom: 1px solid var(--body);
-}
-.project-modal.modal-container .right .title h2 {
-  font-size: 14px;
-  margin: 0;
-}
-.project-modal.modal-container .right .title p {
-  margin: 0;
-  font-size: 11px;
-  color: var(--text-grey);
-}
-.project-modal.modal-container .right .top {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  margin-top: 5px;
-}
-.project-modal.modal-container .right .top div {
-  max-width: 150px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.project-modal.modal-container .right .top div span {
-  font-weight: 600;
-  color: var(--primary);
-}
-.project-modal.modal-container .right .top div svg {
-  margin-right: 5px;
-}
-.project-modal.modal-container .right .top .under-preparation-status {
-  background: rgba(240, 147, 59, 0.7);
-  border: 1px solid rgb(240, 147, 59);
-  font-size: 12px;
-  color: white;
-  padding: 2px 10px;
-  border-radius: 20px;
-}
-.project-modal.modal-container .right .top .in-progress-status {
-  background: rgba(36, 191, 226, 0.7);
-  border: 1px solid rgb(36, 191, 226);
-  font-size: 12px;
-  color: white;
-  padding: 2px 10px;
-  border-radius: 20px;
-}
-.project-modal.modal-container .right .top .completed-status {
-  background: rgba(13, 155, 13, 0.7);
-  border: 1px solid rgb(13, 155, 13);
-  font-size: 12px;
-  color: white;
-  padding: 2px 10px;
-  border-radius: 20px;
-}
-.project-modal.modal-container .right .description {
-  margin: 10px 0;
-  height: 80px;
-}
-.project-modal.modal-container .right .description p {
-  margin: 0;
-  font-size: 14px;
-}
-.project-modal.modal-container .right .bottom {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.project-modal.modal-container .right .bottom .pseudo-container {
-  min-width: 40%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  margin-bottom: 10px;
-}
-.project-modal.modal-container .right .bottom .pseudo-container .avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 4px;
-  margin-right: 7px;
-}
-.project-modal.modal-container .right .bottom .pseudo-container a {
-  font-weight: 600;
-  line-height: 12px;
-}
-.project-modal.modal-container .right .bottom .pseudo-container p {
-  font-size: 12px;
-  line-height: 12px;
-  margin: 0;
-}
-.project-modal.modal-container .right .bottom .action-container {
-  position: relative;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-.project-modal.modal-container .right .bottom .action-container .action {
+.project-page .header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5912,33 +5497,91 @@ h5 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  padding: 20px 50px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+.project-page .header h1 {
+  font-weight: 500;
+  max-width: 700px;
+  margin-bottom: 10px;
+}
+.project-page .header h2 {
+  font-size: 16px !important;
+  max-width: 700px;
+  color: var(--text-secondary);
+}
+.project-page .header .infos {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding: 5px 0;
+  padding: 20px 0;
 }
-.project-modal.modal-container .right .bottom .action-container .action p {
-  margin: 0;
+.project-page .header .infos .infos-content {
+  padding: 0 15px;
+}
+.project-page .header .infos .infos-content a {
+  color: var(--primary);
+}
+.project-page .header .infos .infos-content:nth-child(1) {
+  border-right: 1px solid var(--light-border);
+}
+.project-page .header .project-tags {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  max-width: 700px;
+  padding: 10px 0;
+}
+.project-page .header .project-tags > div {
+  padding: 3px 5px;
   font-size: 14px;
+  background: rgba(var(--turquoise-rgb), 0.2);
+  color: var(--turquoise);
+  border-radius: 5px;
+  margin-right: 3px;
 }
-.project-modal.modal-container .right .bottom .action-container .action .likers-modal-btn {
+.project-page .header .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  max-width: 700px;
+  padding: 20px 0;
+}
+.project-page .header .actions .users-actions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 0 10px;
 }
-.project-modal.modal-container .right .bottom .action-container .action .likers-modal-btn span {
-  font-size: 13px;
+.project-page .header .actions .users-actions svg {
+  margin-right: 10px;
 }
-.project-modal.modal-container .right .bottom .action-container .action .likers-modal-btn svg {
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
+.project-page .header .actions .users-actions.likes svg {
+  color: var(--red);
+}
+.project-page .header .actions .users-actions.likes svg {
+  color: var(--red);
+}
+.project-page .header .actions .users-actions.follows svg {
+  color: var(--light-blue);
 }
 
 /****************************************************/
@@ -6992,6 +6635,7 @@ h5 {
   padding: 12px;
   margin: 12px 0;
   background: var(--content-light);
+  cursor: pointer;
 }
 .dashboard-kanban .dashboard-kanban-ticket.priority {
   border-left: 3px solid var(--red);
@@ -8915,58 +8559,11 @@ header .navbar .nav-container-right .nav-ul .nav-li .nav-link.active:before {
   margin-right: 20px;
 }
 
-.right-menu {
-  position: absolute;
-  height: 100vh;
-  width: 360px;
-  background: var(--content);
-  right: 25px;
-  top: 60px;
-  height: auto;
-  padding: 15px;
-  border-radius: 5px;
-}
-.right-menu h2 {
-  margin-bottom: 20px;
-}
-.right-menu .notification-card {
-  width: 100%;
-  height: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 10px;
-  border-radius: 5px;
-}
-.right-menu .notification-card:hover {
-  background-color: var(--body);
-}
-.right-menu .notification-card .left {
-  padding: 0 10px 0 0;
-}
-.right-menu .notification-card .left .avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 30px;
-}
-.right-menu .notification-card .right p {
-  margin-bottom: 5px;
-  line-height: 18px;
-}
-.right-menu .notification-card .right span {
-  font-size: 14px;
-  color: var(--primary);
-  font-style: italic;
-}
-.right-menu .notification-card .right .btn {
-  margin: 0 5px;
-}
-
 .home-body {
   position: relative;
   width: 100%;
-  background: -webkit-gradient(linear, left top, right top, color-stop(30%, var(--body)), to(var(--content)));
-  background: linear-gradient(to right, var(--body) 30%, var(--content) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(30%, var(--content)), to(var(--content-light)));
+  background: linear-gradient(to right, var(--content) 30%, var(--content-light) 100%);
 }
 .home-body .swiper-container {
   position: relative;

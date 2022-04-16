@@ -59,7 +59,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                 onChange={() => setCategory(category)}
                                 value={category}
                             />
-                            <Categories className="top-[56px]" open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
+                            <Categories className="right" open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                             <div className="infos green">Projects terminés ({(projects.filter(e => e.state === "done")).length})</div>
                         </div>
                         <div>
-                            <DropdownInput useRef={filterMenu} placeholder="Filtrer" cross readOnly value={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)} clean={() => { setFilter(""); setPros(projects) }}>
+                            <DropdownInput useRef={filterMenu} placeholder="Filtrer" cross readOnly value={filter} className="right ml-3" open={display} onClick={() => setDisplay(!display)} clean={() => { setFilter(""); setPros(projects) }}>
                                 <div onClick={() => sortByRecent(projects, setPros, setFilter, setDisplay)}>Plus récent au plus ancien</div>
                                 <div onClick={() => sortByOld(projects, setPros, setFilter, setDisplay)}>Plus ancien au plus récent</div>
                                 <div onClick={() => sortByWorkedOn(projects, setPros, setFilter, setDisplay)}>En préparation</div>
