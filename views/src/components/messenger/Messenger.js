@@ -384,7 +384,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                                 leaveConversation={leaveConversation}
                                 addNewMember={addNewMember}
                             />
-                            <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
+                            <div className="conversation-box-container" ref={convWrapperRef}>
                                 {messages.map((message, key) => {
                                     return (
                                         <div key={key}>
@@ -429,17 +429,15 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             </div>
 
             <div className="online-users-container">
-                <div className="online-users-wrapper">
-                    <h3>Contacts</h3>
-                    <OnlineUsers
-                        onlineUsers={onlineUsers}
-                        currentId={uid}
-                        user={user}
-                        changeCurrentChat={setCurrentChat}
-                        setConversations={setConversations}
-                        conversations={conversations}
-                    />
-                </div>
+                <h3>Contacts</h3>
+                <OnlineUsers
+                    onlineUsers={onlineUsers}
+                    currentId={uid}
+                    user={user}
+                    changeCurrentChat={setCurrentChat}
+                    setConversations={setConversations}
+                    conversations={conversations}
+                />
             </div>
         </div>
     );

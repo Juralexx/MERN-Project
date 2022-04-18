@@ -128,14 +128,14 @@
                                 overflow           : hidden;
                                 width              : 100%;
                                 line-height        : 25px;
-                                font-size          : 18px;
+                                font-size          : 18px !important;
                                 display            : -webkit-box;
                                 -webkit-line-clamp : 1;
                                 -webkit-box-orient : vertical;
                             }
 
                             span {
-                                font-size : 14px;
+                                font-size : 12px;
                                 color     : var(--text-secondary);
                             }
                         }
@@ -179,14 +179,13 @@
                             padding            : 8px 0;
                             margin-bottom      : 14px;
                             font-size          : 14px;
-                            text-align         : justify;
-                            height             : 90px;
+                            height             : 75px;
                             text-overflow      : ellipsis;
                             overflow           : hidden;
                             width              : 100%;
                             line-height        : 21px;
                             display            : -webkit-box;
-                            -webkit-line-clamp : 4;
+                            -webkit-line-clamp : 3;
                             -webkit-box-orient : vertical;
                         }
 
@@ -200,8 +199,9 @@
                             }
 
                             .footer-right {
-                                width   : 35%;
-                                display : flex;
+                                width       : 35%;
+                                display     : flex;
+                                padding-top : 8px;
 
                                 .footer-avatar {
                                     width        : 25%;

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import { Button } from '../tools/components/Button';
+import { ClassicInput } from '../tools/components/Inputs';
 
 const ConversationsMenu = ({ friends, uid, user, setCurrentChat, conversations, changeCurrentChat, getNewMessage, notification, setConversations, websocket }) => {
     const [isConversationInResult, setConversationsInResult] = useState([])
@@ -27,43 +28,41 @@ const ConversationsMenu = ({ friends, uid, user, setCurrentChat, conversations, 
 
     return (
         <div className="conversation-menu">
-            <div className="conversation-menu-wrapper">
-                <div style={{ display: "flex" }}>
-                    <Button  text="Rechercher" fullwidth onClick={() => setOpenConversationsInput(!openConversationsInput)} style={{ width: "100%", margin: "0 5px 10px 0" }}></Button>
-                    <NewConversationModal
-                        friends={friends}
-                        currentId={uid}
-                        changeCurrentChat={setCurrentChat}
-                        websocket={websocket}
-                        setConversations={setConversations}
-                    />
-                </div>
-                {openConversationsInput &&
-                    <input
-                        type="search"
-                        placeholder="Rechercher une conversation..."
-                        className="conversation-menu-input" value={searchQuery}
-                        onInput={handleInputChange}
-                        onChange={searchConversation}
-                    />
-                }
-
-                {conversations.map((element, key) => {
-                    return (
-                        <div key={key}
-                            onClick={() => { changeCurrentChat(element) && setCurrentChat(element) }}
-                            style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}
-                        >
-                            <Conversation
-                                user={user}
-                                conversation={element}
-                                newMessage={getNewMessage}
-                                notification={notification}
-                            />
-                        </div>
-                    )
-                })}
+            <div className="flex">
+                <Button text="Rechercher" onClick={() => setOpenConversationsInput(!openConversationsInput)} />
+                <NewConversationModal
+                    friends={friends}
+                    currentId={uid}
+                    changeCurrentChat={setCurrentChat}
+                    websocket={websocket}
+                    setConversations={setConversations}
+                />
             </div>
+            {openConversationsInput &&
+                <ClassicInput
+                    className="full"
+                    placeholder="Rechercher une conversation..."
+                    value={searchQuery}
+                    onInput={handleInputChange}
+                    onChange={searchConversation}
+                />
+            }
+
+            {conversations.map((element, key) => {
+                return (
+                    <div key={key}
+                        onClick={() => { changeCurrentChat(element) && setCurrentChat(element) }}
+                        style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}
+                    >
+                        <Conversation
+                            user={user}
+                            conversation={element}
+                            newMessage={getNewMessage}
+                            notification={notification}
+                        />
+                    </div>
+                )
+            })}
         </div>
     )
 }

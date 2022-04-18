@@ -2,9 +2,9 @@
     display         : flex;
     align-items     : center;
     justify-content : center;
-    height          : 44px;
+    height          : 40px;
     padding         : 0 30px;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -32,6 +32,10 @@
     &:active {
         transform  : scale(0.95);
     }
+
+    &.half {
+        width : 50%;
+    }
 }
 
 .btn-icon-start {
@@ -40,7 +44,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 0 20px;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -82,7 +86,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 0 20px;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -124,7 +128,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 0px 20px;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -159,7 +163,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 3px 20px 0;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -194,7 +198,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 2px 20px 0;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -235,7 +239,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 2px 20px 0;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -276,7 +280,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 0 20px;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
@@ -317,7 +321,7 @@
     justify-content : center;
     height          : 44px;
     padding         : 0 20px;
-    font-size       : 16px;
+    font-size       : 14px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;

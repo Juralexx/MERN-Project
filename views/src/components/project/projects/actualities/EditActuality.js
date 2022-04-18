@@ -13,8 +13,8 @@ import { useDispatch } from 'react-redux'
 import { updateActuality } from '../../../../actions/project.action'
 
 const EditActuality = ({ project }) => {
-    const { url } = useParams()
-    const actuality = project.actualities.find(actu => actu.url === url)
+    const { urlid, url } = useParams()
+    const actuality = project.actualities.find(actu => actu.url === url && actu.urlid === urlid)
     const [title, setTitle] = useState(actuality.title)
     const [uri, setUri] = useState(actuality.url)
     const [description, setDescription] = useState(actuality.description.ops)

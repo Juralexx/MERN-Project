@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
@@ -11,12 +12,12 @@ import FavoriteButton from '../tools/components/FavoriteButton';
 import FollowersButton from '../tools/components/FollowersButton';
 import LikersButton from '../tools/components/LikersButton';
 import { projectPicture } from '../tools/functions/useAvatar';
+import { SmallAvatar } from '../tools/components/Avatars';
 import { dateParser } from '../Utils';
 import { stateToBackground, stateToString } from './functions';
 import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im'
 import { MdZoomOutMap } from 'react-icons/md'
 import { BsFillPeopleFill } from 'react-icons/bs'
-import { SmallAvatar } from '../tools/components/Avatars';
 
 const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
     const [swiper, setSwiper] = React.useState();
@@ -62,12 +63,14 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                                     <MdZoomOutMap className="zoom-it" onClick={() => getProject(element)} />
                                     <FavoriteButton project={element} />
                                     <div className="swiper-card-body">
-                                        <div className="card-title"><h3>{element.title}</h3><span>{element.location + ", " + element.department + " - " + element.category}</span></div>
+                                        <Link to={"project/" + element.URLID + "/" + element.URL}>
+                                            <div className="card-title"><h3>{element.title}</h3><span>{element.location + ", " + element.department + " - " + element.category}</span></div>
+                                        </Link>
                                         <div className="swiper-card-head">
                                             <div className="contributors"><BsFillPeopleFill /><p>{element.numberofcontributors}</p></div>
                                             <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                                         </div>
-                                        <div className="description">{element.description}</div>
+                                        <div className="description"><p>{element.description}</p></div>
 
                                         <div className="swiper-card-footer">
                                             <div className="footer-left">

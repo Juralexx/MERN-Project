@@ -1,20 +1,18 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { ImCross } from 'react-icons/im'
+import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { avatar } from '../tools/functions/useAvatar';
 import { Button } from '../tools/components/Button';
+import Modal from '../tools/components/Modal';
+import { ClassicInput, Textarea } from '../tools/components/Inputs';
+import { MediumAvatar, TinyAvatar } from '../tools/components/Avatars';
+import { highlightIt } from '../tools/functions/member';
+import { IoClose } from 'react-icons/io5'
 
 const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket }) => {
     const userData = useSelector((state) => state.userReducer)
     const [open, setOpen] = useState(false)
-    const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
-    const containerClass = open ? 'modal-container modal-container-active show-modal' : 'modal-container hide-modal'
-    const modalOpen = () => { setOpen(true) }
-    const modalClose = () => { setOpen(false) }
 
-    const [displayInfos, setDisplayInfos] = useState(false)
-    const [displayMembers, setDisplayMembers] = useState(true)
+    const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState()
     const [description, setDescription] = useState()
     const [friendsFound, setFriendsFound] = useState([])
@@ -28,9 +26,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
                         .then((res) => res.data)
                         .catch((err) => console.error(err))
                 })
-                Promise.all(friendsArray).then((res) => {
-                    setFriendsFound(res)
-                })
+                Promise.all(friendsArray).then((res) => setFriendsFound(res))
             }
         }
         getFriends()
@@ -70,11 +66,10 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
                 })
             })
             setArray([])
-            setDisplayMembers(true)
-            setDisplayInfos(false)
+            setNavbar(1)
             setName()
             setDescription()
-            modalClose()
+            setOpen(false)
         })
     }
 
@@ -101,9 +96,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
     const [searchQuery, setSearchQuery] = useState("")
     const [isFriendInResult, setFriendInResult] = useState([])
     const isEmpty = !isFriendInResult || isFriendInResult.length === 0
-    const regexp = new RegExp(searchQuery, 'i');
-
-    const handleInputChange = (e) => { setSearchQuery(e.target.value) }
+    const regexp = new RegExp(searchQuery, 'i')
 
     const searchFriends = () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
@@ -119,79 +112,69 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
 
     return (
         <>
-            <Button text="Nouvelle conversation" className="mb-[10px] ml-[5px]" onClick={modalOpen} />
-            <div className={containerClass + " add-conversation-modal bg-white dark:bg-background_primary shadow-custom dark:shadow-lg" }>
-                <div className="modal-inner">
-                    <div className="close-modal" onClick={() => { modalClose(); setArray([]) }}><ImCross /></div>
-                    <div className='header'>
-                        <ul>
-                            <li onClick={() => { setDisplayMembers(true); setDisplayInfos(false) }}>Membres</li>
-                            <li onClick={() => { setDisplayInfos(true); setDisplayMembers(false) }}>À propos</li>
-                        </ul>
-                    </div>
-                    {displayMembers && (
-                        <div className='body'>
-                            <div className="display-conversation-users">
+            <Button text="Nouvelle conversation" className="mb-[10px] ml-[5px]" onClick={() => setOpen(true)} />
+            <Modal open={open} setOpen={setOpen} css=" add-conversation-modal">
+                <div className='header'>
+                    <ul>
+                        <li onClick={() => setNavbar(1)}>Membres</li>
+                        <li onClick={() => setNavbar(2)}>À propos</li>
+                    </ul>
+                </div>
+                <div className='body'>
+                    {navbar === 1 ? (
+                        <>
+                            <div className="user-in-array-container">
                                 {array.length > 0 && (
                                     array.map((element, key) => {
                                         return (
-                                            <div className="conversation-user" key={key}>
-                                                <div className="conversation-user-avatar" style={avatar(element.picture)}></div>
+                                            <div className="user-in-array" key={key}>
+                                                <TinyAvatar pic={element.picture} />
                                                 <p>{element.pseudo}</p>
-                                                <ImCross onClick={() => removeUserFromArray(element)} />
+                                                <IoClose onClick={() => removeUserFromArray(element)} />
                                             </div>
                                         )
                                     })
                                 )}
                             </div>
-                            <div>
-                                {open && friendsFound && (
+                            <ClassicInput placeholder="Rechercher un ami..." className="full mb-2" value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchFriends} type="search" />
+                            <div className="user-selecter">
+                                {open && friendsFound &&
                                     <>
-                                        <input placeholder="Rechercher un ami..." className="conversation-menu-input" value={searchQuery} onInput={handleInputChange} onChange={searchFriends} type="search" />
-                                        <div className="display-selection">
+                                        <div className="user-displayer">
                                             {friendsFound.map((element, key) => {
                                                 return (
-                                                    <div className="selected-users"
-                                                        key={key}
-                                                        onClick={() => pushUserInArray(element)}
-                                                        style={{
-                                                            background: array.some(user => user.id === element._id) ? "#6366f1" : "",
-                                                            display: search ? (isFriendInResult.includes(element) ? "flex" : "none") : ("flex")
-                                                        }}>
-
-                                                        <div className="selected-users-avatar" style={avatar(element.picture)}></div>
+                                                    <div className="user-display-choice" key={key} onClick={() => pushUserInArray(element)} style={highlightIt(array, element, isFriendInResult, search)}>
+                                                        <MediumAvatar pic={element.picture} />
                                                         <p>{element.pseudo}</p>
                                                     </div>
                                                 )
                                             })}
                                         </div>
                                     </>
-                                )}
+                                }
                             </div>
-                        </div>
-                    )}
-                    {displayInfos && (
-                        <div className="body">
-                            <div className="left">
+                        </>
+                    ) : (
+                        <>
+                            <div className="add-conversation-bloc">
                                 <div className="title">Nom</div>
                                 <div className="info">
-                                    <input className="conversation-menu-input" onChange={(e) => setName(e.target.value)} placeholder="Nom de la conversation..." />
+                                    <ClassicInput className="full" onChange={(e) => setName(e.target.value)} placeholder="Nom de la conversation..." />
                                 </div>
                             </div>
-                            <div className="left">
+                            <div className="add-conversation-bloc">
                                 <div className="title">Description</div>
                                 <div className="info">
-                                    <textarea className="conversation-menu-input" onChange={(e) => setDescription(e.target.value)} placeholder="Description de la conversation..."></textarea>
+                                    <Textarea className="full" onChange={(e) => setDescription(e.target.value)} placeholder="Description de la conversation..." />
                                 </div>
                             </div>
-                        </div>
+                        </>
                     )}
-                    <div className='footer'>
-                        <button className="btn btn-primary" disabled={array.length < 1} onClick={createNewConversation}>Créer la conversation</button>
-                    </div>
                 </div>
-            </div>
-            <div className={coverClass} onClick={modalClose}></div>
+                <div className='conversation-btn-container'>
+                    <Button text="Créer la conversation" disabled={array.length < 1} onClick={createNewConversation} />
+                </div>
+            </Modal>
         </>
     );
 };

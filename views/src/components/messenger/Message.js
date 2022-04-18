@@ -33,9 +33,6 @@ const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModi
     const showCardHandler = (key) => { setHoveredCard(key); setHovered(true) }
     const hideCardHandler = () => { setHoveredCard(-1); setHovered(false) }
 
-    const showPopupHandler = (key) => { setHoveredPopup(key) }
-    const hidePopupHandler = () => { setHoveredPopup(-1) }
-
     const handleEmoji = async (emoji) => {
         let ids = []
         currentChat.members.map(member => { return ids = [...ids, member.id] })
@@ -122,7 +119,7 @@ const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModi
                     <div className="emoji-container">
                         {emojis.map((emoji, key) => {
                             return (
-                                <div className="emoji" key={key} onMouseEnter={() => showPopupHandler(key)} onMouseLeave={hidePopupHandler}>
+                                <div className="emoji" key={key} onMouseEnter={() => setHoveredPopup(key)} onMouseLeave={setHoveredPopup}>
                                     <Emoji emoji={emoji} size={14} onClick={() => emoji.emoji_sender_id === uid && (deleteEmoji(emoji))} />
                                     {hoveredPopup === key && (
                                         <div className="emoji-popup">

@@ -65,6 +65,7 @@ const AddActuality = ({ project, user }) => {
             URL = URL.replace(/[&#,+()$~%^.|_@°=§µ£¤"'`*?!;<>[\]{}/\\\\]/g, " ")
             URL = removeAccents(URL)
             URL = URL.replace(/ /g, "-")
+            let URLID = Math.floor(Math.random() * (9999999 - 1000000 + 1)).toString()
 
             const actuality = {
                 _id: randomNbLtID(24),
@@ -73,6 +74,7 @@ const AddActuality = ({ project, user }) => {
                 posterPicture: user.picture,
                 title: cleanTitle,
                 url: URL,
+                urlid: URLID,
                 description: description,
                 date: new Date().toISOString()
             }
@@ -91,7 +93,7 @@ const AddActuality = ({ project, user }) => {
 
                     }
                 }).then(() => {
-                    setTimeout(() => navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.url}`), 2000)
+                    setTimeout(() => navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.urlid}/${actuality.url}`), 2000)
                 }).catch(err => console.log(err))
         }
     }
@@ -132,7 +134,7 @@ const AddActuality = ({ project, user }) => {
                             type="file"
                             name="files"
                             multiple
-                            disabled={files.length >= 4}
+                            disabled={files.length >= 3}
                             accept="image/jpeg, image/jpg, image/png, image/gif, image/heic, image/heif, image/tiff, image/webp"
                             onChange={e => setFiles(getFiles(e.target.files))}
                         />

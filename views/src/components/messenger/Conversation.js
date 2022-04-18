@@ -69,57 +69,54 @@ const Conversation = ({ user, conversation, newMessage, notification }) => {
         const removeNotification = () => {
             if (ref.className === "conversation new-notification")
                 ref.className = "conversation"
-                setUnseen()
+            setUnseen()
         }
         ref?.addEventListener('mousedown', removeNotification)
         return () => ref?.removeEventListener('mousedown', removeNotification)
     }, [notification, wrapperRef.current])
 
     return (
-        <>
-            {isResponse && (
-                <div className="conversation" ref={wrapperRef}>
-                    <div className="conversation-img-container">
-                        {convMembers.map((element, key) => {
-                            return (
-                                <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                            )
-                        })}
+        isResponse &&
+        <div className="conversation" ref={wrapperRef}>
+            <div className="conversation-img-container">
+                {convMembers.slice(0, 3).map((element, key) => {
+                    return (
+                        <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                    )
+                })}
+            </div>
+            <div className="conversation-infos">
+                <div className="conversation-infos-top">
+                    <div className="conversation-name">
+                        {convMembers.length === 1 &&
+                            convMembers[0].pseudo
+                        }
+                        {convMembers.length === 2 &&
+                            convMembers[0].pseudo + ", " + convMembers[1].pseudo
+                        }
+                        {convMembers.length === 3 &&
+                            convMembers[0].pseudo + ", " + convMembers[1].pseudo + ", " + convMembers[2].pseudo
+                        }
+                        {convMembers.length > 3 &&
+                            convMembers[0].pseudo + ", " + convMembers[1].pseudo + ", " + convMembers[2].pseudo + " et " + (convMembers.length - 3) + " autres"
+                        }
                     </div>
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-top">
-                            <div className="conversation-name">
-                                {convMembers.length === 1 && (
-                                    <strong>{convMembers[0].pseudo}</strong>
-                                )}
-                                {convMembers.length === 2 && (
-                                    <strong>{convMembers[0].pseudo + ", " + convMembers[1].pseudo}</strong>
-                                )}
-                                {convMembers.length === 3 && (
-                                    <strong>{convMembers[0].pseudo + ", " + convMembers[1].pseudo + ", " + convMembers[2].pseudo}</strong>
-                                )}
-                                {convMembers.length > 3 && (
-                                    <strong>{convMembers[0].pseudo + ", " + convMembers[1].pseudo + ", " + convMembers[2].pseudo + " et " + (convMembers.length - 3) + " autres"}</strong>
-                                )}
-                            </div>
-                            <div className="conversation-date">{date}</div>
-                        </div>
-                        {lastMessageFound ? (
-                            <div className="last-message-wrapper">
-                                <div className="last-message-pseudo">{lastMessageFound.sender_pseudo} :&nbsp;</div>
-                                <div className="last-message" dangerouslySetInnerHTML={convertEditorToHTML(lastMessageFound)}></div>
-                                {unseen && <div className="unseen-messages">{unseen}</div>}
-                            </div>
-                        ) : (
-                            <div className="last-message-wrapper">
-                                <span className="last-message-pseudo"></span>
-                                <span className="last-message"></span>
-                            </div>
-                        )}
-                    </div>
+                    <div className="conversation-date">{date}</div>
                 </div>
-            )}
-        </>
+                {lastMessageFound ? (
+                    <div className="last-message-wrapper">
+                        <div className="last-message-pseudo">{lastMessageFound.sender_pseudo} :&nbsp;</div>
+                        <div className="last-message" dangerouslySetInnerHTML={convertEditorToHTML(lastMessageFound)}></div>
+                        {unseen && <div className="unseen-messages">{unseen}</div>}
+                    </div>
+                ) : (
+                    <div className="last-message-wrapper">
+                        <div className="last-message-pseudo"></div>
+                        <div className="last-message"></div>
+                    </div>
+                )}
+            </div>
+        </div>
     );
 };
 

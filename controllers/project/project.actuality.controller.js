@@ -1,6 +1,6 @@
 import ProjectModel from '../../models/project.model.js'
 import mongoose from 'mongoose'
-import fs, { readdirSync } from 'fs'
+import fs, { readdirSync, rmdir } from 'fs'
 import { promisify } from 'util'
 import stream from 'stream'
 const pipeline = promisify(stream.pipeline)
@@ -70,6 +70,11 @@ export const updateActuality = async (req, res) => {
  */
 
 export const deleteActuality = async (req, res) => {
+    const __directory = `${__dirname}/../../uploads/projects/${req.params.id}/actualities/${req.params.actualityId}`
+    if (!fs.existsSync(__directory)) {
+        rmdir(__directory)
+    }
+
     try {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },

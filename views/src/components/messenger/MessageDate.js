@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { dateParser } from '../Utils'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { useClickOutside } from '../tools/functions/useClickOutside'
@@ -11,8 +11,8 @@ const MessageDate = ({ message }) => {
 
     return (
         <div className="messages-date" ref={wrapperRef}>
-            <p onClick={() => setOpen(!open)}>{dateParser(message.createdAt)} <MdOutlineKeyboardArrowDown /></p>
-            {open && (
+            <div className="date" onClick={() => setOpen(!open)}>{dateParser(message.createdAt)} <MdOutlineKeyboardArrowDown /></div>
+            {open &&
                 <div className="message-date-sort-tools">
                     <ul>
                         <li>Hier</li>
@@ -22,7 +22,7 @@ const MessageDate = ({ message }) => {
                         <li>Accèder à une date spécifique</li>
                     </ul>
                 </div>
-            )}
+            }
         </div>
     )
 }

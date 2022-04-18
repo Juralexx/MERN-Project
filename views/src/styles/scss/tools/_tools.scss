@@ -669,23 +669,23 @@
 }
 
 .big-avatar {
-    min-height    : 40px;
-    min-width     : 40px;
-    border-radius : 10px;
-    margin-right  : 16px;
+    height        : 42px;
+    width         : 42px;
+    border-radius : 50%;
+    margin-right  : 14px;
 }
 
 .medium-avatar {
-    min-height    : 34px;
-    min-width     : 34px;
-    border-radius : 8px;
+    height        : 34px;
+    width         : 34px;
+    border-radius : 50%;
     margin-right  : 10px;
 }
 
 .small-avatar {
-    min-height    : 28px;
-    min-width     : 28px;
-    border-radius : 6px;
+    height        : 28px;
+    width         : 28px;
+    border-radius : 50%;
 
     &:nth-child(n+2) {
         margin-left : -6px;
@@ -695,7 +695,7 @@
 .tiny-avatar {
     height        : 20px;
     width         : 20px;
-    border-radius : 50px;
+    border-radius : 50%;
     margin-right  : 6px;
 }
 

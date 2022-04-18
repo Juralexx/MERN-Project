@@ -10,6 +10,7 @@ import { MdArrowRightAlt } from 'react-icons/md';
 
 const Home = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
+    const [randomized, setRandomized] = useState([])
     const [byDates, setByDates] = useState([])
     const [byLikes, setByLikes] = useState([])
     const [byFollows, setByFollows] = useState([])
@@ -20,10 +21,19 @@ const Home = ({ websocket, user }) => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}api/project/`)
                 .then(res => {
-                    setProjects(res.data.sort(() => Math.random() - 0.5))
-                    setByDates(res.data.sort((a, b) => Date.parse(a.createdAt) > Date.parse(b.createdAt) ? -1 : 1))
-                    setByLikes(res.data.sort((a, b) => { return parseInt(a.likers.length) > parseInt(b.likers.length) ? -1 : 1 }))
-                    setByFollows(res.data.sort((a, b) => { return parseInt(a.followers.length) > parseInt(b.followers.length) ? -1 : 1 }))
+                    setProjects(res.data)
+                    setRandomized(res.data.sort(() => {
+                        return Math.random() - 0.5
+                    }))
+                    setByDates(res.data.sort((a, b) => {
+                        return Date.parse(a.createdAt) > Date.parse(b.createdAt) ? -1 : 1
+                    }))
+                    setByLikes(res.data.sort((a, b) => {
+                        return parseInt(a.likers.length) > parseInt(b.likers.length) ? -1 : 1
+                    }))
+                    setByFollows(res.data.sort((a, b) => {
+                        return parseInt(a.followers.length) > parseInt(b.followers.length) ? -1 : 1
+                    }))
                     setLoading(false)
                 }).catch(err => console.log(err))
         }
@@ -53,7 +63,7 @@ const Home = ({ websocket, user }) => {
                                     <Link to="/">Voir plus <MdArrowRightAlt /></Link>
                                 </div>
                                 <div className="swiper-inner">
-                                    <ProjectsSwiper projects={projects} isLoading={isLoading} websocket={websocket} user={user} />
+                                    <ProjectsSwiper projects={randomized} isLoading={isLoading} websocket={websocket} user={user} />
                                 </div>
                             </div>
                             <div className="swiper-container">

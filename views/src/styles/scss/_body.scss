@@ -1,4 +1,5 @@
 html {
+    min-height      : 100%;
     margin          : 0;
     padding         : 0;
     position        : relative;
@@ -7,6 +8,7 @@ html {
 }
 
 body {
+    min-height       : 100%;
     margin           : 0;
     padding          : 0;
     font-family      : 'Segoe UI', sans-serif;
@@ -23,7 +25,8 @@ body {
     }
     
     p {
-        font-size : 14px;
+        font-size   : 14px;
+        font-weight : 200 !important;
     }
 
     ul, li {
@@ -35,13 +38,6 @@ body {
     position : relative;
     height   : 100vh;
     width    : 100vw;
-}
-
-#main-container {
-    position : relative;
-    height   : 100vh;
-    width    : 100vw;
-    padding  : 15px;
 }
 
 h1 { font-size: 26px !important }

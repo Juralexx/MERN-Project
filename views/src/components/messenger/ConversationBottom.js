@@ -49,7 +49,7 @@ const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMe
                     <ReactQuill
                         onChange={handleNewMessage}
                         value={newMessage}
-                        placeholder={"Envoyer un message..."}
+                        placeholder="Envoyer un message..."
                         modules={modules}
                         formats={formats}
                     />

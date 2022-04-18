@@ -4,11 +4,12 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { deleteActuality } from '../../../../actions/project.action'
 import { convertDeltaToHTML } from '../../../tools/functions/function'
 import { dateParser } from '../../../Utils'
-import { Button } from '../../../tools/components/Button'
+import { Button, EndIconButton } from '../../../tools/components/Button'
 import Warning from '../../../tools/components/Warning'
 import EditActuality from './EditActuality'
+import { MdArrowForward } from 'react-icons/md'
 
-const Actualities = ({ project, user }) => {
+const Actualities = ({ project }) => {
     const [warning, setWarning] = useState(false)
     const dispatch = useDispatch()
 
@@ -35,7 +36,7 @@ const Actualities = ({ project, user }) => {
                                                 <div className="date">{dateParser(element.date)}</div>
                                                 <p className="description" dangerouslySetInnerHTML={convertDeltaToHTML(element.description)}></p>
                                                 <div className="btn-container">
-                                                    <Button text="Voir" />
+                                                    <Link to={`/project/${project.URLID}/${project.URL}/actuality/${element.urlid}/${element.url}`}><EndIconButton icon={<MdArrowForward />} text="Voir" /></Link>
                                                     <Link to={`${element.url}/edit`} className="mx-2"><Button text="Modifier"></Button></Link>
                                                     <Button text="Supprimer" onClick={() => setWarning(true)} />
                                                 </div>
@@ -56,7 +57,7 @@ const Actualities = ({ project, user }) => {
                 </div>
             } />
 
-            <Route path=":url/edit" element={
+            <Route path=":urlid/:url/edit" element={
                 <EditActuality
                     project={project}
                 />
