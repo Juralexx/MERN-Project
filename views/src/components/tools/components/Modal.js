@@ -5,16 +5,17 @@ const Modal = (props) => {
     const { open, setOpen, css } = props
     const coverClass = open ? 'modal-cover modal-cover-active' : 'modal-cover'
     const containerClass = open ? `modal-container modal-container-active show-modal ${css ? css : null}` : 'modal-container hide-modal'
-    const modalClose = () => { setOpen(false)  }
+    const modalClose = () => { setOpen(false) }
 
     return (
-        <>
+        open &&
+        <div className="modal-wrapper">
             <div className={containerClass}>
                 <div className="close-modal" onClick={() => modalClose()}><IoClose /></div>
                 {props.children}
             </div>
             <div className={coverClass} onClick={modalClose}></div>
-        </>
+        </div>
     )
 }
 

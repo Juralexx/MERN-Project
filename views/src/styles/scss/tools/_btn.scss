@@ -1,25 +1,19 @@
-.btn-first {
+.btn {
+    height          : 36px;
     display         : flex;
     align-items     : center;
     justify-content : center;
-    height          : 40px;
-    padding         : 0 30px;
-    font-size       : 14px;
+    padding         : 0 20px;
+    font-size       : 13px;
     text-align      : center;
     text-decoration : none;
     text-transform  : none;
     border          : none;
     outline         : none;
     border-radius   : var(--radius);
-    color           : white !important;
-    background      : var(--primary);
     cursor          : pointer;
     white-space     : nowrap;
     transform       : scale(1);
-
-    &:hover {
-        background : var(--primary-dark);
-    }
 
     &:disabled {
         opacity : 0.5;
@@ -31,6 +25,15 @@
 
     &:active {
         transform  : scale(0.95);
+    }
+}
+
+.btn-first {
+    color      : white !important;
+    background : var(--primary);
+
+    &:hover {
+        background : var(--primary-dark);
     }
 
     &.half {
@@ -39,23 +42,8 @@
 }
 
 .btn-icon-start {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 0 20px;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
-    text-transform  : none;
-    border          : none;
-    outline         : none;
-    border-radius   : var(--radius);
-    color           : white !important;
-    background      : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
+    color      : white !important;
+    background : var(--primary);
 
     svg {
         height       : 18px;
@@ -63,41 +51,15 @@
         margin-right : 5px;
     }
 
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
     &:hover {
         background : var(--primary-dark);
-    }
-
-    &:active {
-        transform  : scale(0.95);
     }
 }
 
 .btn-icon-end {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 0 20px;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
-    text-transform  : none;
-    border          : none;
-    outline         : none;
-    border-radius   : var(--radius);
-    color           : white !important;
-    background      : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
+    border-radius : var(--radius);
+    color         : white !important;
+    background    : var(--primary);
 
     svg {
         height      : 18px;
@@ -105,110 +67,33 @@
         margin-left : 8px;
     }
 
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
     &:hover {
         background : var(--primary-dark);
-    }
-
-    &:active {
-        transform  : scale(0.95);
     }
 }
 
 .text-btn {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 0px 20px;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
-    text-transform  : none;
-    border          : none;
-    outline         : none;
-    border-radius   : var(--radius);
-    color           : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
+    color : var(--primary);
 
     &:hover {
         background : rgba(var(--primary-rgb), 0.15);
     }
-
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
-    &:active {
-        transform  : scale(0.95);
-    }
 }
 
 .outlined-btn {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 3px 20px 0;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
-    text-transform  : none;
-    border          : 1px solid var(--primary);
-    outline         : none;
-    border-radius   : var(--radius);
-    color           : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
+    border : 1px solid var(--primary);
+    color  : var(--primary);
 
     &:hover {
         background : rgba(var(--primary-rgb), 0.10);
     }
-
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
-    &:active {
-        transform  : scale(0.95);
-    }
 }
 
 .btn-outlined-icon-end {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 2px 20px 0;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
     text-transform  : none;
     border          : 1px solid var(--primary);
-    outline         : none;
     border-radius   : var(--radius);
     color           : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
 
     svg {
         height      : 18px;
@@ -219,37 +104,12 @@
     &:hover {
         background : rgba(var(--primary-rgb), 0.10);
     }
-
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
-    &:active {
-        transform  : scale(0.95);
-    }
 }
 
 .btn-outlined-icon-start {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 2px 20px 0;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
-    text-transform  : none;
     border          : 1px solid var(--primary);
-    outline         : none;
     border-radius   : var(--radius);
     color           : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
 
     svg {
         height       : 18px;
@@ -257,40 +117,14 @@
         margin-right : 10px;
     }
 
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
     &:hover {
         background : rgba(var(--primary-rgb), 0.10);
-    }
-
-    &:active {
-        transform  : scale(0.95);
     }
 }
 
 .text-btn-icon-start {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 0 20px;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
-    text-transform  : none;
-    border          : none;
-    outline         : none;
-    border-radius   : var(--radius);
-    color           : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
+    border-radius : var(--radius);
+    color         : var(--primary);
 
     svg {
         height       : 18px;
@@ -298,40 +132,13 @@
         margin-right : 5px;
     }
 
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
     &:hover {
         background : rgba(var(--primary-rgb), 0.10);
-    }
-
-    &:active {
-        transform  : scale(0.95);
     }
 }
 
 .text-btn-icon-end {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    height          : 44px;
-    padding         : 0 20px;
-    font-size       : 14px;
-    text-align      : center;
-    text-decoration : none;
-    text-transform  : none;
-    border          : none;
-    outline         : none;
-    border-radius   : var(--radius);
-    color           : var(--primary);
-    cursor          : pointer;
-    white-space     : nowrap;
-    transform       : scale(1);
+    color : var(--primary);
 
     svg {
         height      : 18px;
@@ -339,20 +146,8 @@
         margin-left : 5px;
     }
 
-    &:disabled {
-        opacity : 0.5;
-
-        &:hover {
-            background : var(--primary);
-        }
-    }
-
     &:hover {
         background : rgba(var(--primary-rgb), 0.10);
-    }
-
-    &:active {
-        transform  : scale(0.95);
     }
 }
 
@@ -373,5 +168,87 @@
 
     &:active {
         transform  : scale(0.95);
+    }
+}
+
+.tools-btn {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    height          : 34px;
+    width           : 34px;
+    min-height      : 34px;
+    min-width       : 34px;
+    color           : var(--text);
+    transform       : scale(1);
+    border-radius   : 5px;
+    cursor          : pointer;
+
+    svg {
+        height : 20px;
+        width  : 20px;
+        cursor : pointer;
+    }
+
+    &:disabled {
+        opacity : 0.5;
+    }
+
+    &:hover {
+        background-color : var(--content-x-light);
+    }
+
+    &:active {
+        transform  : scale(0.95);
+    }
+}
+
+.small-tools-btn {
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    padding          : 8px;
+    cursor           : pointer;
+    border-radius    : 5px;
+    color            : var(--text);
+    transform        : scale(1);
+    background-color : var(--primary);
+    background       : var(--content-x-light);
+    box-shadow       : var(--shadow-xl);
+
+    svg {
+        height : 12px;
+        width  : 12px;
+    }
+
+    &:hover {
+        background-color : var(--content-x-light);
+    }
+
+    &:active {
+        transform  : scale(0.95);
+    }
+}
+
+.tools-menu {
+    position      : absolute;
+    padding       : 8px;
+    z-index       : 100000;
+    background    : var(--content);
+    box-shadow    : var(--shadow-lg);
+    border-radius : var(--radius);
+    border        : 2px solid var(--content-light);
+
+    .tools-choice {
+        min-width     : 220px;
+        text-align    : left;
+        padding       : 6px 10px;
+        color         : var(--text);
+        cursor        : pointer;
+        border-radius : var(--radius);
+
+        &:hover {
+            background : var(--content-light);
+        }
     }
 }

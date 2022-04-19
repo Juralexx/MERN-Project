@@ -42,6 +42,8 @@ export const UPDATE_TASK_STATE = "UPDATE_TASK_STATE"
 export const RECEIVE_UPDATE_TASK_STATE = "RECEIVE_UPDATE_TASK_STATE"
 export const UPDATE_TASK_STATUS = "UPDATE_TASK_STATUS"
 export const RECEIVE_UPDATE_TASK_STATUS = "RECEIVE_UPDATE_TASK_STATUS"
+export const COMMENT_TASK = "COMMENT_TASK"
+export const RECEIVE_COMMENT_TASK = "RECEIVE_COMMENT_TASK"
 export const DELETE_TASK = "DELETE_TASK"
 export const RECEIVE_DELETE_TASK = "RECEIVE_DELETE_TASK"
 
@@ -77,9 +79,7 @@ export const updateProjectPictures = (projectId, formData, pictures) => {
      return async (dispatch) => {
           await axios
                .put(`${process.env.REACT_APP_API_URL}api/project/update-pictures/${projectId}`, formData)
-               .then(() => {
-                    dispatch({ type: UPDATE_PICTURES, payload: { pictures } })
-               })
+               .then(() => dispatch({ type: UPDATE_PICTURES, payload: { pictures } }))
                .catch(err => console.error(err))
      }
 }
@@ -97,9 +97,7 @@ export const deleteProjectPictures = (projectId, picture) => {
                url: `${process.env.REACT_APP_API_URL}api/project/delete-pictures/` + projectId,
                data: { picture }
           })
-               .then(() => {
-                    dispatch({ type: DELETE_PICTURES, payload: { projectId, picture } })
-               })
+               .then(() => dispatch({ type: DELETE_PICTURES, payload: { projectId, picture } }))
                .catch(err => console.error(err))
      }
 }
@@ -120,9 +118,7 @@ export const updateProject = (projectId, title, url, subtitle, category, tags, s
                url: `${process.env.REACT_APP_API_URL}api/project/` + projectId,
                data: { title, url, subtitle, category, tags, state, geolocalisation, location, department, code_department, region, code_region, new_region, code_new_region, description, numberofcontributors, end, works, content }
           })
-               .then(() => {
-                    dispatch({ type: UPDATE_PROJECT, payload: { title, url, subtitle, category, state, geolocalisation, location, department, code_department, region, code_region, new_region, code_new_region, description, numberofcontributors, end, works, content } })
-               })
+               .then(() => dispatch({ type: UPDATE_PROJECT, payload: { title, url, subtitle, category, state, geolocalisation, location, department, code_department, region, code_region, new_region, code_new_region, description, numberofcontributors, end, works, content } }))
                .catch(err => console.error(err))
      }
 }
@@ -137,9 +133,7 @@ export const likeProject = (projectId, posterId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/like/` + projectId,
                data: { id: posterId }
           })
-               .then(() => {
-                    dispatch({ type: LIKE, payload: { projectId, posterId } })
-               })
+               .then(() => dispatch({ type: LIKE, payload: { projectId, posterId } }))
                .catch(err => console.error(err))
      }
 }
@@ -151,9 +145,7 @@ export const unlikeProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/unlike/` + projectId,
                data: { id: userId }
           })
-               .then(() => {
-                    dispatch({ type: UNLIKE, payload: { projectId, userId } })
-               })
+               .then(() => dispatch({ type: UNLIKE, payload: { projectId, userId } }))
                .catch(err => console.error(err))
      }
 }
@@ -168,9 +160,7 @@ export const followProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/follow/` + projectId,
                data: { followerId: userId }
           })
-               .then(() => {
-                    dispatch({ type: FOLLOW, payload: { projectId, userId } })
-               })
+               .then(() => dispatch({ type: FOLLOW, payload: { projectId, userId } }))
                .catch(err => console.error(err))
      }
 }
@@ -182,9 +172,7 @@ export const unfollowProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/unfollow/` + projectId,
                data: { followerId: userId }
           })
-               .then(() => {
-                    dispatch({ type: UNFOLLOW, payload: { projectId, userId } })
-               })
+               .then(() => dispatch({ type: UNFOLLOW, payload: { projectId, userId } }))
                .catch(err => console.error(err))
      }
 }
@@ -199,9 +187,7 @@ export const favoriteProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/favorite/` + projectId,
                data: { userId: userId }
           })
-               .then(() => {
-                    dispatch({ type: FAVORITE, payload: { projectId, userId } })
-               })
+               .then(() => dispatch({ type: FAVORITE, payload: { projectId, userId } }))
                .catch(err => console.error(err))
      }
 }
@@ -213,9 +199,7 @@ export const unfavoriteProject = (projectId, userId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/unfavorite/` + projectId,
                data: { userId: userId }
           })
-               .then(() => {
-                    dispatch({ type: UNFAVORITE, payload: { projectId, userId } })
-               })
+               .then(() => dispatch({ type: UNFAVORITE, payload: { projectId, userId } }))
                .catch(err => console.error(err))
      }
 }
@@ -230,9 +214,7 @@ export const sendMemberRequest = (userId, projectId, notification, request) => {
                url: `${process.env.REACT_APP_API_URL}api/project/send-member-request/` + projectId,
                data: { userId, request, notification }
           })
-               .then(() => {
-                    dispatch({ type: SEND_MEMBER_REQUEST, payload: { userId, request } })
-               })
+               .then(() => dispatch({ type: SEND_MEMBER_REQUEST, payload: { userId, request } }))
                .catch(err => console.error(err))
      }
 }
@@ -250,9 +232,7 @@ export const cancelMemberRequest = (userId, projectId, notificationId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/` + projectId,
                data: { userId, notificationId }
           })
-               .then(() => {
-                    dispatch({ type: CANCEL_MEMBER_REQUEST, payload: { userId } })
-               })
+               .then(() => dispatch({ type: CANCEL_MEMBER_REQUEST, payload: { userId } }))
                .catch(err => console.error(err))
      }
 }
@@ -270,9 +250,7 @@ export const acceptMemberRequest = (userId, member, projectId, notificationId, a
                url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
                data: { userId, member, notificationId, activity }
           })
-               .then(() => {
-                    dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, activity } })
-               })
+               .then(() => dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -290,9 +268,7 @@ export const refuseMemberRequest = (userId, projectId, notificationId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/refuse-member-request/` + projectId,
                data: { userId, notificationId }
           })
-               .then(() => {
-                    dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, notificationId } })
-               })
+               .then(() => dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, notificationId } }))
                .catch(err => console.error(err))
      }
 }
@@ -313,9 +289,7 @@ export const setAdmin = (userId, projectId, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/name-admin/` + projectId,
                data: { userId, activity }
           })
-               .then(() => {
-                    dispatch({ type: NAME_ADMIN, payload: { userId, activity } })
-               })
+               .then(() => dispatch({ type: NAME_ADMIN, payload: { userId, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -333,9 +307,7 @@ export const unsetAdmin = (userId, projectId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/remove-admin/` + projectId,
                data: { userId }
           })
-               .then(() => {
-                    dispatch({ type: UNNAME_ADMIN, payload: { userId } })
-               })
+               .then(() => dispatch({ type: UNNAME_ADMIN, payload: { userId } }))
                .catch(err => console.error(err))
      }
 }
@@ -356,9 +328,7 @@ export const removeMember = (projectId, memberId, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/remove-user/` + projectId,
                data: { memberId, activity }
           })
-               .then(() => {
-                    dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId, activity } })
-               })
+               .then(() => dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -379,9 +349,7 @@ export const createTask = (projectId, task, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/add-task/` + projectId,
                data: { task, activity }
           })
-               .then(() => {
-                    dispatch({ type: CREATE_TASK, payload: { task, activity } })
-               })
+               .then(() => dispatch({ type: CREATE_TASK, payload: { task, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -399,9 +367,7 @@ export const changeTask = (projectId, task, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
                data: { taskId: task._id, task, activity }
           })
-               .then(() => {
-                    dispatch({ type: UPDATE_TASK, payload: { task, activity } })
-               })
+               .then(() => dispatch({ type: UPDATE_TASK, payload: { task, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -419,9 +385,7 @@ export const changeTaskState = (projectId, taskId, state, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
                data: { taskId, state, activity }
           })
-               .then(() => {
-                    dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state, activity } })
-               })
+               .then(() => dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -439,9 +403,7 @@ export const changeTaskStatus = (projectId, taskId, status, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
                data: { taskId, status, activity }
           })
-               .then(() => {
-                    dispatch({ type: UPDATE_TASK_STATUS, payload: { taskId, status, activity } })
-               })
+               .then(() => dispatch({ type: UPDATE_TASK_STATUS, payload: { taskId, status, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -452,6 +414,24 @@ export const receiveChangeTaskStatus = (taskId, status, activity) => {
      }
 }
 
+export const commentTask = (projectId, taskId, comment) => {
+     return async (dispatch) => {
+          await axios({
+               method: "put",
+               url: `${process.env.REACT_APP_API_URL}api/project/comment-task/` + projectId,
+               data: { taskId, comment }
+          })
+               .then(() => dispatch({ type: COMMENT_TASK, payload: { taskId, comment } }))
+               .catch(err => console.error(err))
+     }
+}
+
+export const receiveCommentTask = (taskId, comment) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_COMMENT_TASK, payload: { taskId, comment } })
+     }
+}
+
 export const deleteTask = (projectId, taskId, activity) => {
      return async (dispatch) => {
           await axios({
@@ -459,9 +439,7 @@ export const deleteTask = (projectId, taskId, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/delete-task/` + projectId,
                data: { taskId, activity }
           })
-               .then(() => {
-                    dispatch({ type: DELETE_TASK, payload: { taskId, activity } })
-               })
+               .then(() => dispatch({ type: DELETE_TASK, payload: { taskId, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -473,7 +451,7 @@ export const receiveDeleteTask = (taskId, activity) => {
 }
 
 /*******************************************************************************************************************************/
-/********************************************************* TASKS ***************************************************************/
+/*********************************************************** QNA ***************************************************************/
 
 export const createQNA = (projectId, qna, activity) => {
      return async (dispatch) => {
@@ -482,9 +460,7 @@ export const createQNA = (projectId, qna, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/add-qna/` + projectId,
                data: { qna, activity }
           })
-               .then(() => {
-                    dispatch({ type: CREATE_QNA, payload: { qna, activity } })
-               })
+               .then(() => dispatch({ type: CREATE_QNA, payload: { qna, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -502,9 +478,7 @@ export const updateQNA = (projectId, qna, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/update-qna/` + projectId,
                data: { qna, activity }
           })
-               .then(() => {
-                    dispatch({ type: UPDATE_QNA, payload: { qna, activity } })
-               })
+               .then(() => dispatch({ type: UPDATE_QNA, payload: { qna, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -522,9 +496,7 @@ export const deleteQNA = (projectId, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/delete-qna/` + projectId,
                data: { activity }
           })
-               .then(() => {
-                    dispatch({ type: DELETE_QNA, payload: { activity } })
-               })
+               .then(() => dispatch({ type: DELETE_QNA, payload: { activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -545,9 +517,7 @@ export const createActuality = (projectId, actuality, activity) => {
                url: `${process.env.REACT_APP_API_URL}api/project/add-actuality/` + projectId,
                data: { actuality, activity }
           })
-               .then(() => {
-                    dispatch({ type: CREATE_ACTUALITY, payload: { actuality, activity } })
-               })
+               .then(() => dispatch({ type: CREATE_ACTUALITY, payload: { actuality, activity } }))
                .catch(err => console.error(err))
      }
 }
@@ -565,9 +535,7 @@ export const updateActuality = (projectId, actualityId, title, url, description)
                url: `${process.env.REACT_APP_API_URL}api/project/update-actuality/` + projectId,
                data: { actualityId, title, url, description }
           })
-               .then(() => {
-                    dispatch({ type: UPDATE_ACTUALITY, payload: { actualityId, title, url, description } })
-               })
+               .then(() => dispatch({ type: UPDATE_ACTUALITY, payload: { actualityId, title, url, description } }))
                .catch(err => console.error(err))
      }
 }
@@ -585,9 +553,7 @@ export const deleteActuality = (projectId, actualityId) => {
                url: `${process.env.REACT_APP_API_URL}api/project/delete-actuality/` + projectId,
                data: { actualityId }
           })
-               .then(() => {
-                    dispatch({ type: DELETE_ACTUALITY, payload: { actualityId } })
-               })
+               .then(() => dispatch({ type: DELETE_ACTUALITY, payload: { actualityId } }))
                .catch(err => console.error(err))
      }
 }

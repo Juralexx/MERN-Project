@@ -1,28 +1,30 @@
-.dashboard-kanban-header {
+.kanban-header {
     display   : flex;
     width     : 100%;
     padding   : 8px 0 0;
     margin    : 20px auto 0;
     max-width : 1366px;
 
-    .dashboard-kanban-header-title {
+    .kanban-header-title {
         display         : flex;
         align-items     : center;
         justify-content : space-between;
         width           : 33.333333%;
         padding         : 10px 0 7px;
-        margin          : 0 12px;
         border-radius   : 8px 8px 0 0;
-        font-size       : 500;
-        font-size       : 18px;
+        font-size       : 16px;
         text-transform  : uppercase;
         color           : var(--text);
 
-        .title {
+        &:nth-child(2) {
+            margin : 0 20px;
+        }
+
+        .col-title {
             display        : flex;
             align-items    : center;
             padding-top    : 4px;
-            letter-spacing : 2px;
+            letter-spacing : 1px;
             
             span {
                 font-size   : 18px;
@@ -46,21 +48,22 @@
     }
 }
 
-.dashboard-kanban {
+.kanban {
     display   : flex;
     width     : 100%;
     margin    : 0 auto;
     max-width : 1366px;
 
-    .dashboard-kanban-col {
-        width         : 33.333333%;
+    .kanban-col {
+        width : 33.333333%;
+        width : 100%;
 
         &:nth-child(2) {
             margin : 0 20px;
         }
     }
 
-    .dashboard-kanban-ticket {
+    .kanban-ticket {
         position      : relative;
         border-radius : var(--radius);
         padding       : 12px;
@@ -78,20 +81,20 @@
             border-left : 3px solid var(--light-blue);
         }
 
-        .dashboard-kanban-ticket-title {
+        .kanban-ticket-title {
             display         : flex;
             align-items     : center;
             justify-content : space-between;
             margin-bottom   : 10px;
         }
 
-        .dashboard-kanban-ticket-status {
+        .kanban-ticket-status {
             display : flex;
         }
 
-        .dashboard-kanban-ticket-description {
+        .kanban-ticket-description {
             min-height         : 40px;
-            font-size          : 14px;
+            font-size          : 13px;
             margin             : 20px 0;
             color              : var(--text-secondary);
             text-overflow      : ellipsis;
@@ -103,25 +106,27 @@
             -webkit-box-orient : vertical;
         }
 
-        .dashboard-kanban-ticket-bottom {
+        .kanban-ticket-bottom {
             display         : flex;
             align-items     : center;
             justify-content : space-between;
 
-            .dashboard-kanban-ticket-members {
+            .kanban-ticket-members {
                 display : flex;
 
-                .dashboard-kanban-ticket-member {
+                .kanban-ticket-member {
                     display     : flex;
                     align-items : center;
-                    margin      : 0 12px;
+                    margin      : 0 3px;
 
                     .pseudo {
-                        display     : flex;
-                        align-items : center;
-                        padding-top : 4px;
-                        margin-left : 6px;
-                        font-size   : 12px;
+                        display          : flex;
+                        align-items      : center;
+                        padding          : 3px 8px;
+                        font-size        : 12px;
+                        background-color : rgba(var(--light-blue-rgb), 0.6);
+                        border-radius    : 3px;
+                        color            : white;
                     }
                 }
             }

@@ -17,7 +17,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
     const dispatch = useDispatch()
 
     const newTask = () => {
-        const task = { title: title, description: description, state: state, status: status, creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString() }
+        const task = { title: title, description: description, state: state, status: status, creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString(), comments: [] }
         const activity = { type: "create-task", date: new Date().toISOString(), who: user.pseudo, task: title }
         dispatch(createTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)

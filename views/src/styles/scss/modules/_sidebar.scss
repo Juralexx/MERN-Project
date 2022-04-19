@@ -4,7 +4,7 @@
     width      : 350px;
     background : var(--content);
     box-shadow : var(--shadow-left);
-    z-index    : 1500;
+    z-index    : 1600;
     overflow-y : hidden;
 
     &.reduced {
@@ -189,7 +189,7 @@
                             span {
                                 height           : 20px;
                                 font-size        : 13px;
-                                padding          : 1.3px 8px;
+                                padding          : 1px 8px;
                                 margin-left      : 8px;
                                 border-radius    : 5px;
                                 background-color : var(--content-x-light);

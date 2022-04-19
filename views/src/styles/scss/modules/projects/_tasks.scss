@@ -10,7 +10,7 @@
         .dashboard-tasks-nav {
             display     : flex;
             margin-left : 28px;
-            font-size   : 15px;
+            font-size   : 14px;
 
             .dashboard-tasks-nav-item {
                 display         : flex;
@@ -22,10 +22,10 @@
                 cursor          : pointer;
 
                 &:nth-child(1) {
-                    border-radius : 5px 0 0 5px;
+                    border-radius : 3px 0 0 3px;
                 }
                 &:nth-child(2) {
-                    border-radius : 0 8px 8px 0;
+                    border-radius : 0 3px 3px 0;
                 }
 
                 &.active {
@@ -58,10 +58,10 @@
         }
 
         &:nth-child(1) {
-            border-radius : 5px 0 0 5px;
+            border-radius : 3px 0 0 3px;
         }
         &:nth-child(4) {
-            border-radius : 0 5px 5px 0;
+            border-radius : 0 3px 3px 0;
         }
     }
 }
@@ -70,10 +70,11 @@
     display         : flex;
     align-items     : center;
     justify-content : center;
-    height          : 30px;
-    width           : 90px;
+    height          : 26px;
+    min-width       : 74px;
+    width           : auto;
     font-size       : 12px;
-    padding         : 7px 10px 5px;
+    padding         : 5px 10px 4px;
     border-radius   : 3px;
 
     &.blue {
@@ -111,12 +112,13 @@
         cursor           : pointer;
 
         p {
-            font-size      : 18px;
+            font-size      : 16px;
             text-transform : uppercase;
-            width          : 105px;
         }
 
         span {
+            font-size   : 15px;
+            padding-top : 1px;
             margin-left : 10px;
             color       : var(--text-tertiary);
         }
@@ -278,7 +280,7 @@
                 height          : 30px;
                 width           : 64px;
                 font-size       : 12px;
-                padding         : 7px 5px 5px;
+                padding         : 5px 5px 4px;
                 border-radius   : 5px;
         
                 &.blue {
@@ -302,6 +304,66 @@
     }
 }
 
-.create-task-modal {
+.create-task-modal, .update-task-modal, .task-modal {
     width : 500px;
+}
+
+.task-modal {
+    .task-modal-header {
+        padding-bottom : 20px;
+        border-bottom  : 1px solid var(--light-border);
+
+        p {
+            color : var(--text-secondary);
+        }
+
+        .pseudo {
+            display          : flex;
+            align-items      : center;
+            height           : 26px;
+            padding          : 3px 8px;
+            font-size        : 12px;
+            background-color : rgba(var(--light-blue-rgb), 0.6);
+            border-radius    : 3px;
+            color            : white;
+        }
+    }
+
+    .task-modal-description {
+        padding : 20px 0;
+    }
+
+    .add-comment-container {
+        padding    : 20px 0 0;
+        border-top : 1px solid var(--light-border);
+    }
+
+    .comments-container {
+        border-top : 1px solid var(--light-border);
+
+        .comment {
+            padding       : 20px 0;
+            border-bottom : 1px solid var(--light-border);
+
+            .comment-header {
+                display         : flex;
+                justify-content : space-between;
+                margin-bottom   : 6px;
+            }
+    
+            .comment-body {
+                padding       : 15px 20px;
+                background    : var(--content-x-light);
+                border-radius : 3px;
+            }
+
+            &:last-child {
+                border-bottom : none;
+            }
+        }
+
+        .is-empty {
+            padding : 20px 0 0;
+        }
+    }
 }

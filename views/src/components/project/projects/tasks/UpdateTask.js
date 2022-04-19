@@ -66,8 +66,8 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
     }
 
     return (
-        <Modal open={open} setOpen={setOpen} css="w-[500px]">
-            <h2>Créer une nouvelle tâche</h2>
+        <Modal open={open} setOpen={setOpen} css="update-task-modal">
+            <h2>Modifier la tâche</h2>
 
             <div className="modal-nav">
                 <div className={`modal-nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
@@ -139,7 +139,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                     </div>
                 </>
             )}
-            <Button text="Ajouter" className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={updateTask} />
+            <Button text="Enregistrer" className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={updateTask} />
         </Modal>
     )
 }

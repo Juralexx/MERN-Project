@@ -8,12 +8,13 @@ import UpdateTask from './UpdateTask'
 import Kanban from './Kanban'
 import TasksList from './TasksList'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import TaskModal from './TaskModal'
 
 const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
     const [createTask, setCreateTask] = useState(false)
     const [updateTask, setUpdateTask] = useState(false)
-    const [showTask, setShowTask] = useState(-1)
+    const [openTask, setOpenTask] = useState(false)
     const [getTask, setTask] = useState(null)
     const [navbar, setNavbar] = useState(1)
     const [layout, setLayout] = useState("kanban")
@@ -85,11 +86,10 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             isAdmin={isAdmin}
                             isManager={isManager}
                             tasks={tasks}
+                            setOpenTask={setOpenTask}
                             setTask={setTask}
                             navbar={navbar}
                             setNavbar={setNavbar}
-                            showTask={showTask}
-                            setShowTask={setShowTask}
                             openTaskMenu={openTaskMenu}
                             setOpenTaskMenu={setOpenTaskMenu}
                             setUpdateTask={setUpdateTask}
@@ -101,17 +101,12 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             isAdmin={isAdmin}
                             isManager={isManager}
                             tasks={tasks}
+                            setOpenTask={setOpenTask}
                             setTask={setTask}
-                            setNavbar={setNavbar}
-                            showTask={showTask}
-                            setShowTask={setShowTask}
                             websocket={websocket}
                             dispatch={dispatch}
-                            openTaskMenu={openTaskMenu}
-                            setOpenTaskMenu={setOpenTaskMenu}
                             setCreateTask={setCreateTask}
                             setUpdateTask={setUpdateTask}
-                            layout={layout}
                             setState={setState}
                         />
                     )}
@@ -144,6 +139,17 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     element={getTask}
                     open={updateTask}
                     setOpen={setUpdateTask}
+                />
+            }
+
+            {openTask &&
+                <TaskModal
+                    task={getTask}
+                    project={project}
+                    open={openTask}
+                    setOpen={setOpenTask}
+                    setUpdateTask={setUpdateTask}
+                    user={user}
                 />
             }
         </>

@@ -4,7 +4,7 @@ import { createProject } from '../controllers/project/project.add.controller.js'
 import { allProjects, findProjectByURL, updateProject, deleteProject, findProjectById } from '../controllers/project/project.controller.js'
 import { likeProject, unlikeProject, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
 import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
-import { createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
+import { commentTask, createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
 import { deletePictures, updatePictures, uploadPictures } from '../controllers/project/project.upload.controller.js'
 import { createActuality, deleteActuality, deleteActualityPictures, updateActuality, updateActualityPictures, uploadActualityPictures } from '../controllers/project/project.actuality.controller.js'
 import { createQNA, deleteQNA, updateQNA } from '../controllers/project/project.faq.controller.js'
@@ -35,6 +35,7 @@ projectRoutes.put('/remove-admin/:id', removeAdmin)
 projectRoutes.put('/add-task/:id', createTask)
 projectRoutes.put('/update-task/:id', updateTask)
 projectRoutes.put('/delete-task/:id', deleteTask)
+projectRoutes.put('/comment-task/:id', commentTask)
 
 projectRoutes.put('/add-actuality/:id', createActuality)
 projectRoutes.put('/update-actuality/:id', upload.array('files'), updateActuality)

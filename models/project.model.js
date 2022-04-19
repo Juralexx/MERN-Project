@@ -170,6 +170,16 @@ const ProjectModel = new mongoose.Schema(
                         pseudo: String,
                         picture: String,
                     }
+                },
+                comments: {
+                    type: [],
+                    comment: {
+                        _id: String,
+                        poster: String,
+                        posterId: String,
+                        text: String,
+                        date: String,
+                    }
                 }
             }
         },

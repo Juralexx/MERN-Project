@@ -15,8 +15,8 @@ export const createTask = async (req, res) => {
             },
             { new: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -46,8 +46,8 @@ export const updateTask = async (req, res) => {
             },
             { new: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -68,8 +68,30 @@ export const deleteTask = async (req, res) => {
             },
             { new: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(400).send({ message: err }) })
+    }
+    catch (err) {
+        return res.status(400).json({ message: err });
+    }
+}
+
+export const commentTask = async (req, res) => {
+    try {
+        await ProjectModel.updateOne(
+            {
+                _id: req.params.id,
+                tasks: { $elemMatch: { _id: req.body.taskId } }
+            },
+            {
+                $set: {
+                    "tasks.$.comments": req.body.comment,
+                }
+            },
+            { new: true },
+        )
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
         return res.status(400).json({ message: err });
