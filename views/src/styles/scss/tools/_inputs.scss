@@ -322,7 +322,6 @@
 .dropdown-input {
     position      : relative;
     min-width     : 200px;
-    margin-bottom : 3px;
     cursor        : pointer;
     background    : var(--content-x-light);
     border-radius : var(--radius);
@@ -337,6 +336,7 @@
         outline            : none;
         cursor             : pointer;
         width              : 90%;
+        height             : 100%;
         text-overflow      : ellipsis;
         overflow           : hidden;
         display            : -webkit-box;

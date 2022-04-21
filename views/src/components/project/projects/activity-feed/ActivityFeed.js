@@ -32,7 +32,7 @@ const ActivityFeed = ({ project, user, websocket }) => {
         <div className="home-activity-feed">
             <div className="home-activity-feed-header">
                 <h2>Fil d'activités <span>{activities.length}</span></h2>
-                <div className="flex">
+                <div className="flex items-center">
                     <TextButton text="Voir tous" className="mr-2" />
                     <ToolsBtn onClick={() => setDisplay(!display)}><BiDotsVerticalRounded /></ToolsBtn>
                     {display &&

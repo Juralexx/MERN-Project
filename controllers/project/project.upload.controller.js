@@ -59,7 +59,7 @@ export const uploadPictures = async (req, res) => {
                 { $set: { pictures: pics } },
                 { new: true }
             )
-                .then(docs => { res.send(docs) })
+                .then(docs => res.send(docs))
                 .catch(err => { return res.status(500).send({ message: err }) })
         } catch (err) {
             return res.status(500).send({ message: err });
@@ -117,7 +117,7 @@ export const updatePictures = async (req, res) => {
                         { $set: { pictures: pics } },
                         { new: true, upsert: true }
                     )
-                        .then(docs => { res.send(docs) })
+                        .then(docs => res.send(docs))
                         .catch(err => { return res.status(400).send({ message: err }) })
                 } catch (err) {
                     return res.status(400).send({ message: err })
@@ -162,7 +162,7 @@ export const deletePictures = async (req, res) => {
                 { $set: { pictures: pics } },
                 { new: true, upsert: true }
             )
-                .then(docs => { res.send(docs) })
+                .then(docs => res.send(docs))
                 .catch(err => { return res.status(500).send({ message: err }) })
         } catch (err) {
             return res.status(500).send({ message: err });

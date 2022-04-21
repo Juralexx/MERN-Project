@@ -41,7 +41,10 @@ const CategoriesSwiper = () => {
         <div className="home-category">
             <h2>Les catégories les plus populaires</h2>
             <div className="category-swiper">
-                <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
+                <div className="nav-buttons">
+                    <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
+                    <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
+                </div>
                 <Swiper
                     slidesPerView={6}
                     keyboard={{ enabled: true }}
@@ -62,7 +65,6 @@ const CategoriesSwiper = () => {
                         )
                     })}
                 </Swiper>
-                <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
             </div>
         </div>
     )

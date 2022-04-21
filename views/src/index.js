@@ -7,8 +7,8 @@ import { applyMiddleware, createStore } from "redux"
 import thunk from "redux-thunk"
 import rootReducer from './reducers'
 import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
-import './styles/dist/old.css'
 import './styles/dist/style.css'
+import './styles/dist/old.css'
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"
@@ -27,9 +27,9 @@ ReactDOM.render(
         </Provider>
     </React.StrictMode>,
     document.getElementById('main')
-);
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()

@@ -30,7 +30,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                     <div className="flex">
                         <Link to="members"><TextButton text="Voir tous" className="mr-2" /></Link>
                         {(isAdmin || isManager) &&
-                            <div ref={membersMenu}>
+                            <div ref={membersMenu} className="flex items-center">
                                 <ToolsBtn onClick={() => setOpenMenu(!openMenu)}><BiDotsVerticalRounded /></ToolsBtn>
                                 {openMenu && (
                                     <SmallMenu top="top-1">

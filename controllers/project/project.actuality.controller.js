@@ -154,7 +154,7 @@ export const uploadActualityPictures = async (req, res) => {
                 },
                 { new: true },
             )
-                .then(docs => { res.send(docs) })
+                .then(docs => res.send(docs))
                 .catch(err => { return res.status(500).send({ message: err }) })
         } catch (err) {
             return res.status(500).send({ message: err });
@@ -222,7 +222,7 @@ export const updateActualityPictures = async (req, res) => {
                         },
                         { new: true, upsert: true },
                     )
-                        .then(docs => { res.send(docs) })
+                        .then(docs => res.send(docs))
                         .catch(err => { return res.status(400).send({ message: err }) })
                 } catch (err) {
                     return res.status(400).send({ message: err })
@@ -281,7 +281,7 @@ export const deleteActualityPictures = async (req, res) => {
                 },
                 { new: true, upsert: true },
             )
-                .then(docs => { res.send(docs) })
+                .then(docs => res.send(docs))
                 .catch(err => { return res.status(500).send({ message: err }) })
         } catch (err) {
             return res.status(500).send({ message: err });

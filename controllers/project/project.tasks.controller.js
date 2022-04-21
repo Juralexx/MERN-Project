@@ -15,7 +15,7 @@ export const createTask = async (req, res) => {
             },
             { new: true },
         )
-            .then(docs => { res.send(docs) })
+            .then(docs => res.send(docs))
             .catch(err => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
@@ -46,7 +46,7 @@ export const updateTask = async (req, res) => {
             },
             { new: true },
         )
-            .then(docs => { res.send(docs) })
+            .then(docs => res.send(docs))
             .catch(err => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
@@ -68,7 +68,7 @@ export const deleteTask = async (req, res) => {
             },
             { new: true },
         )
-            .then(docs => { res.send(docs) })
+            .then(docs => res.send(docs))
             .catch(err => { return res.status(400).send({ message: err }) })
     }
     catch (err) {
@@ -84,13 +84,13 @@ export const commentTask = async (req, res) => {
                 tasks: { $elemMatch: { _id: req.body.taskId } }
             },
             {
-                $set: {
+                $addToSet: {
                     "tasks.$.comments": req.body.comment,
                 }
             },
             { new: true },
         )
-            .then(docs => { res.send(docs) })
+            .then(docs => res.send(docs))
             .catch(err => { return res.status(400).send({ message: err }) })
     }
     catch (err) {

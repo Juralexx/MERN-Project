@@ -108,7 +108,7 @@
         width            : 100%;
         padding          : 13px 35px 10px;
         background-color : var(--content-light);
-        border-radius    : 5px;
+        border-radius    : 3px;
         cursor           : pointer;
 
         p {
@@ -139,18 +139,66 @@
         display         : flex;
         justify-content : space-between;
         align-items     : center;
-        padding         : 12px;
+        padding         : 5px 10px;
         cursor          : pointer;
-        border-radius   : 5px;
+        border-radius   : 3px;
 
         &:hover {
             background-color : var(--content-x-light);
         }
         
-        .tasklist-table-item-left {
-            display     : flex;
-            align-items : center;
-            width       : 100%;
+        .tasklist-table-item-body {
+            width : 100%;
+
+            .tasklist-table-item-top {
+                width           : 100%;
+                display         : flex;
+                justify-content : space-between;
+                padding         : 5px 2px;
+            }
+
+            .tasklist-table-item-bottom {
+                display     : flex;
+                align-items : center;
+                width       : 100%;
+                padding     : 5px 2px;
+
+                .tasklist-table-item-members {
+                    display     : flex;
+                    margin-left : 10px;
+    
+                    .tasklist-table-item-member {
+                        display     : flex;
+                        align-items : center;
+                        margin      : 0 3px;
+    
+                        .pseudo {
+                            display          : flex;
+                            align-items      : center;
+                            padding          : 4px 8px;
+                            font-size        : 12px;
+                            background-color : rgba(var(--light-blue-rgb), 0.6);
+                            border-radius    : 3px;
+                            color            : white;
+                        }
+                    }
+                }
+            }
+
+            .tasklist-table-item-tools {
+                display     : flex;
+                align-items : center;
+
+                svg {
+                    width  : 18px;
+                    height : 18px;
+                }
+
+                span {
+                    font-size    : 16px;
+                    margin-left : 4px;
+                }
+            }
         }
     }
 }
@@ -248,16 +296,14 @@
             padding         : 10px 0;
 
             .home-tasks-task-content {
-                display     : flex;
-                align-items : center;
-                width       : 100%;
+                width : 100%;
 
                 .home-tasks-task-content-inner {
                     display         : flex;
                     align-items     : center;
                     justify-content : space-between;
                     width           : 100%;
-                    padding-right   : 5px;
+                    padding         : 3px 0;
 
                     .title {
                         margin-top         : 3px;
@@ -271,17 +317,37 @@
                         -webkit-box-orient : vertical;
                     }
                 }
+
+                .home-tasks-task-members {
+                    display     : flex;
+                    margin-left : 10px;
+    
+                    .home-tasks-task-member {
+                        display     : flex;
+                        align-items : center;
+                        margin      : 0 3px;
+    
+                        .pseudo {
+                            display          : flex;
+                            align-items      : center;
+                            padding          : 4px 8px;
+                            font-size        : 12px;
+                            background-color : rgba(var(--light-blue-rgb), 0.6);
+                            border-radius    : 3px;
+                            color            : white;
+                        }
+                    }
+                }
             }
 
             .details {
                 display         : flex;
                 align-items     : center;
                 justify-content : center;
-                height          : 30px;
-                width           : 64px;
-                font-size       : 12px;
-                padding         : 5px 5px 4px;
-                border-radius   : 5px;
+                min-width       : 64px;
+                font-size       : 10px;
+                padding         : 3px 3px 1px;
+                border-radius   : 3px;
         
                 &.blue {
                     background : rgba(var(--blue-rgb), 0.2);
@@ -302,10 +368,6 @@
             }
         }
     }
-}
-
-.create-task-modal, .update-task-modal, .task-modal {
-    width : 500px;
 }
 
 .task-modal {

@@ -9,7 +9,8 @@ const Warning = (props) => {
     const modalClose = () => { setOpen(false) }
 
     return (
-        <>
+        open &&
+        <div className="modal-wrapper">
             <div className={containerClass}>
                 <div className="close-modal" onClick={() => modalClose()}><IoClose /></div>
                 <div className="warning-title">{title}</div>
@@ -21,7 +22,7 @@ const Warning = (props) => {
                 </div>
             </div>
             <div className={coverClass} onClick={modalClose}></div>
-        </>
+        </div>
     )
 }
 

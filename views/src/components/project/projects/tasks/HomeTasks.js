@@ -11,9 +11,13 @@ import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import { TextButton, ToolsBtn } from '../../../tools/components/Button'
 import { DropdownInput } from '../../../tools/components/Inputs'
+import { MdOutlineMessage } from 'react-icons/md'
+import TaskModal from './TaskModal'
+import { getDifference } from '../../../tools/functions/function'
 
 const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
+    const [openTask, setOpenTask] = useState(false)
     const [createTask, setCreateTask] = useState(false)
     const [updateTask, setUpdateTask] = useState(false)
     const [getTask, setTask] = useState(null)
@@ -52,7 +56,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         <div className="flex">
                             <Link to="tasks"><TextButton text="Voir tous" className="mr-2" /></Link>
                             {(isAdmin || isManager) &&
-                                <div ref={taskMenu}>
+                                <div ref={taskMenu} className="flex items-center">
                                     <ToolsBtn onClick={() => setOpenTasksMenu(!openTasksMenu)}><BiDotsVerticalRounded /></ToolsBtn>
                                     {openTasksMenu && (
                                         <SmallMenu top="top-1">
@@ -82,39 +86,65 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     {tasks.map((element, key) => {
                         return (
                             <div className={`home-tasks-task`} key={key}>
+                                <div className="check-input mr-2">
+                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
+                                    <label htmlFor={randomizeCheckboxID(key)}><span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span></label>
+                                </div>
                                 <div className="home-tasks-task-content">
-                                    <div className="check-input mr-2">
-                                        <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
-                                        <label htmlFor={randomizeCheckboxID(key)}>
-                                            <span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span>
-                                        </label>
-                                    </div>
                                     <div className="home-tasks-task-content-inner">
-                                        <div className="title">{reduceString(element.title, 40)}</div>
-                                        <div className="flex">
-                                            <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
-                                            <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
-                                            <div className={`details ${isDatePassed(element.end)}`}>{dateParserWithoutYear(element.end)}</div>
+                                        <div className="flex items-center">{reduceString(element.title, 60)}</div>
+                                        <div className="home-tasks-task-tools">
+                                            {element.comments.length > 0 &&
+                                                <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
+                                            }
+                                            <ToolsBtn className="ml-2" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, element._id)}><BiDotsVerticalRounded /></ToolsBtn>
+                                            {openTaskMenu === element._id &&
+                                                <SmallMenu useRef={taskMenu}>
+                                                    <div className="tools-choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
+                                                    <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
+                                                    {(isAdmin || isManager) && <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                </SmallMenu>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="flex">
+                                        <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
+                                        <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
+                                        <div className={`details ${isDatePassed(element.end)}`}>{dateParserWithoutYear(element.end)}</div>
+                                        <div className="home-tasks-task-members">
+                                            {element.members.length <= 5 && (
+                                                <div className="flex">
+                                                    {element.members.map((member, uniquekey) => {
+                                                        return (
+                                                            <div className="home-tasks-task-member" key={uniquekey}>
+                                                                <div className="pseudo">{member.pseudo.substring(0, 3)}</div>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            )}
+                                            {element.members.length > 5 && (
+                                                element.members.slice(0, 5).map((member, uniquekey) => {
+                                                    return (
+                                                        <div className="home-tasks-task-member" key={uniquekey}>
+                                                            <div className="pseudo">{member.pseudo.substring(0, 3)}</div>
+                                                        </div>
+                                                    )
+                                                })
+                                            )}
+                                            {element.members.length > 5 && (
+                                                <div className="get-difference">{getDifference(5, element.members.length)}</div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
-                                {(isAdmin || isManager) && (
-                                    <div>
-                                        <ToolsBtn onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, key)}><BiDotsVerticalRounded /></ToolsBtn>
-                                        {openTaskMenu === key && (
-                                            <SmallMenu useRef={taskMenu} right="right-10" top="top-2">
-                                                <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
-                                                <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
-                                            </SmallMenu>
-                                        )}
-                                    </div>
-                                )}
                             </div>
                         )
                     })}
                 </div>
             </div>
 
+            {openTask && <TaskModal task={getTask} project={project} open={openTask} setOpen={setOpenTask} setUpdateTask={setUpdateTask} user={user} />}
             {<CreateTask open={createTask} setOpen={setCreateTask} project={project} user={user} websocket={websocket} />}
             {updateTask && <UpdateTask element={getTask} open={updateTask} setOpen={setUpdateTask} project={project} user={user} websocket={websocket} />}
         </>

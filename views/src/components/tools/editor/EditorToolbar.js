@@ -47,7 +47,6 @@ export const modules = {
         userOnly: true
     },
     magicUrl: true,
-    blotFormatter: {},
     imageDrop: true,
     videoHandler: {
         upload: (file) => {

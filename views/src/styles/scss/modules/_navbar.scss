@@ -42,8 +42,7 @@ header {
             right : 50px;
         }
 
-        .nav-container,
-        .nav-container-right {
+        .nav-container, .nav-container-right {
             position        : absolute;
             top             : 0;
             display         : flex;
@@ -217,8 +216,8 @@ header {
             .mini-nav-avatar {
                 width         : 23px;
                 height        : 23px;
-                border-radius : 6px;
-                margin        : 0 auto 3px;
+                border-radius : 50%;
+                margin        : 0 auto 5px;
             }
 
             .mini-nav-pseudo {

@@ -44,7 +44,10 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
 
     return (
         <>
-            <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
+            <div className="nav-buttons">
+                <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
+                <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
+            </div>
             <Swiper
                 slidesPerView={3}
                 spaceBetween={20}
@@ -131,7 +134,6 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                     })
                 )}
             </Swiper>
-            <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
 
             {openModal && <ProjectModal project={project} open={openModal} setOpen={setOpenModal} />}
             {openProfilCard && <ProfilCard isUser={isUser} open={openProfilCard} setOpen={setOpenProfilCard} />}

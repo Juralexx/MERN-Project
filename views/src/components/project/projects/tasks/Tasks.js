@@ -141,7 +141,6 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     setOpen={setUpdateTask}
                 />
             }
-
             {openTask &&
                 <TaskModal
                     task={getTask}

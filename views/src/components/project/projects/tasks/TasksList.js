@@ -7,6 +7,9 @@ import SmallMenu from '../../../tools/components/SmallMenu'
 import { dateParser } from '../../../Utils'
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { RiCalendarTodoLine } from 'react-icons/ri'
+import { MdOutlineMessage } from 'react-icons/md'
+import { ToolsBtn } from '../../../tools/components/Button'
+import { getDifference } from '../../../tools/functions/function'
 
 const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, setOpenTask, showTask, setShowTask, websocket, dispatch, openTaskMenu, setOpenTaskMenu, taskMenu, setUpdateTask, setTask }) => {
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
@@ -46,8 +49,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                         <div className={`tasklist-table ${isOpen(display, uniquekey)}`} key={uniquekey}>
                             <div className="tasklist-table-header" onClick={() => closeArray(display, setDisplay, uniquekey)}>
                                 <div className="flex">
-                                    <p>{returnTitle(uniquekey)}</p>
-                                    <span>{arr.length}</span>
+                                    <p>{returnTitle(uniquekey)} <span>{arr.length}</span></p>
                                 </div>
                                 <div><IoCaretDownOutline /></div>
                             </div>
@@ -55,34 +57,58 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                 arr.map((element, key) => {
                                     return (
                                         <div className="tasklist-table-item" key={key}>
-                                            <div className="tasklist-table-item-left">
-                                                <div className="check-input mr-2">
-                                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
-                                                    <label htmlFor={randomizeCheckboxID(key)}>
-                                                        <span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span>
-                                                    </label>
+                                            <div className="check-input mr-2">
+                                                <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
+                                                <label htmlFor={randomizeCheckboxID(key)}><span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span></label>
+                                            </div>
+                                            <div className="tasklist-table-item-body" onClick={() => clickOn(showTask, setShowTask, element._id)}>
+                                                <div className="tasklist-table-item-top">
+                                                    <div className="flex items-center">{reduceString(element.title, 60)}</div>
+                                                    <div className="tasklist-table-item-tools">
+                                                        {element.comments.length > 0 &&
+                                                            <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
+                                                        }
+                                                        <ToolsBtn className="ml-2" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, element._id)}><BiDotsVerticalRounded /></ToolsBtn>
+                                                        {openTaskMenu === element._id &&
+                                                            <SmallMenu useRef={taskMenu}>
+                                                                <div className="tools-choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
+                                                                <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
+                                                                {(isAdmin || isManager) && <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                            </SmallMenu>
+                                                        }
+                                                    </div>
                                                 </div>
-                                                <div className="flex justify-between items-center w-full mr-5" onClick={() => clickOn(showTask, setShowTask, element._id)}>
-                                                    <div className="flex flex-col">{reduceString(element.title, 60)}</div>
-                                                    <div className="flex">
-                                                        <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
-                                                        <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
-                                                        <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                                <div className="tasklist-table-item-bottom">
+                                                    <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
+                                                    <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
+                                                    <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                                    <div className="tasklist-table-item-members">
+                                                        {element.members.length <= 5 && (
+                                                            <div className="flex">
+                                                                {element.members.map((member, uniquekey) => {
+                                                                    return (
+                                                                        <div className="tasklist-table-item-member" key={uniquekey}>
+                                                                            <div className="pseudo">{member.pseudo.substring(0, 3)}</div>
+                                                                        </div>
+                                                                    )
+                                                                })}
+                                                            </div>
+                                                        )}
+                                                        {element.members.length > 5 && (
+                                                            element.members.slice(0, 5).map((member, uniquekey) => {
+                                                                return (
+                                                                    <div className="tasklist-table-item-member" key={uniquekey}>
+                                                                        <div className="pseudo">{member.pseudo.substring(0, 3)}</div>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        )}
+                                                        {element.members.length > 5 && (
+                                                            <div className="get-difference">{getDifference(5, element.members.length)}</div>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
-                                            {(isAdmin || isManager) && (
-                                                <div>
-                                                    <BiDotsVerticalRounded className="h-5 w-5 cursor-pointer" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, element._id)} />
-                                                    {openTaskMenu === element._id && (
-                                                        <SmallMenu useRef={taskMenu}>
-                                                            <div className="tools-choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
-                                                            <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
-                                                            <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
-                                                        </SmallMenu>
-                                                    )}
-                                                </div>
-                                            )}
                                         </div>
                                     )
                                 })
@@ -99,38 +125,59 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                 tasks.map((element, key) => {
                     return (
                         <div className="tasklist-table" key={key}>
-                            <div className="tasklist-table-item">
-                                <div className="tasklist-table-item-left">
-                                    <div className="check-input mr-2">
-                                        <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
-                                        <label htmlFor={randomizeCheckboxID(key)}>
-                                            <span>
-                                                <svg width="12px" height="9px" viewBox="0 0 12 9">
-                                                    <polyline points="1 5 4 8 11 1"></polyline>
-                                                </svg>
-                                            </span>
-                                        </label>
+                            <div className="tasklist-table-item" key={key}>
+                                <div className="check-input mr-2">
+                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
+                                    <label htmlFor={randomizeCheckboxID(key)}><span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span></label>
+                                </div>
+                                <div className="tasklist-table-item-body" onClick={() => clickOn(showTask, setShowTask, element._id)}>
+                                    <div className="tasklist-table-item-top">
+                                        <div className="flex items-center">{reduceString(element.title, 60)}</div>
+                                        <div className="tasklist-table-item-tools">
+                                            {element.comments.length > 0 &&
+                                                <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
+                                            }
+                                            <ToolsBtn className="ml-2" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, element._id)}><BiDotsVerticalRounded /></ToolsBtn>
+                                            {openTaskMenu === element._id &&
+                                                <SmallMenu useRef={taskMenu}>
+                                                    <div className="tools-choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
+                                                    <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
+                                                    {(isAdmin || isManager) && <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                </SmallMenu>
+                                            }
+                                        </div>
                                     </div>
-                                    <div className="flex justify-between items-center w-full mr-5" onClick={() => clickOn(showTask, setShowTask, key)}>
-                                        <div className="flex flex-col">{reduceString(element.title, 60)}</div>
-                                        <div className="flex">
-                                            <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
-                                            <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
-                                            <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                    <div className="tasklist-table-item-bottom">
+                                        <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
+                                        <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
+                                        <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                        <div className="tasklist-table-item-members">
+                                            {element.members.length <= 5 && (
+                                                <div className="flex">
+                                                    {element.members.map((member, uniquekey) => {
+                                                        return (
+                                                            <div className="tasklist-table-item-member" key={uniquekey}>
+                                                                <div className="pseudo">{member.pseudo.substring(0, 3)}</div>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            )}
+                                            {element.members.length > 5 && (
+                                                element.members.slice(0, 5).map((member, uniquekey) => {
+                                                    return (
+                                                        <div className="tasklist-table-item-member" key={uniquekey}>
+                                                            <div className="pseudo">{member.pseudo.substring(0, 3)}</div>
+                                                        </div>
+                                                    )
+                                                })
+                                            )}
+                                            {element.members.length > 5 && (
+                                                <div className="get-difference">{getDifference(5, element.members.length)}</div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
-                                {(isAdmin || isManager) && (
-                                    <div>
-                                        <BiDotsVerticalRounded className="h-5 w-5 cursor-pointer" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, key)} />
-                                        {openTaskMenu === key && (
-                                            <SmallMenu useRef={taskMenu}>
-                                                <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
-                                                <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
-                                            </SmallMenu>
-                                        )}
-                                    </div>
-                                )}
                             </div>
                         </div>
                     )
