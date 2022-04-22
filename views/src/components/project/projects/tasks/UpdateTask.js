@@ -77,7 +77,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
             {navbar === 1 ? (
                 <>
                     <div className="mb-2">Titre de la tâche</div>
-                    <ClassicInput type="text" className="min-w-full" inputClassName="w-full" placeholder="Titre..." value={title} onChange={e => setTitle(e.target.value)} />
+                    <ClassicInput type="text" className="full" inputClassName="w-full" placeholder="Titre..." value={title} onChange={e => setTitle(e.target.value)} />
 
                     <div className="mb-2 mt-4">Description</div>
                     <Textarea type="text" className="w-full" placeholder="Description... " value={description} onChange={e => setDescription(e.target.value)} />
@@ -85,10 +85,10 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                     <div className="flex items-center mt-4">
                         <div className="mb-2 mt-4 mr-4">Date de fin</div>
                         {/* <ClassicInput type="date" className="mt-2" value={end} onChange={e => setEnd(e.target.value)} /> */}
-                        <DatePicker className="top mt-2 w-[200px]" inputClassName="w-[200px]" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
+                        <DatePicker className="top mt-2" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
                     </div>
 
-                    <div className="flex w-full">
+                    <div className="flex w-full mb-10">
                         <div className="w-1/2">
                             <div className="mb-2 mt-4">État</div>
                             <DropdownInput className="w-full" readOnly open={displayStatus} value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)}>
@@ -122,7 +122,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                             })
                         )}
                     </div>
-                    <ClassicInput placeholder="Rechercher un membre..." className="mb-3 w-full" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
+                    <ClassicInput placeholder="Rechercher un membre..." className="mb-3 full" value={searchQuery} onInput={handleInputChange} onChange={searchMember} type="search" />
                     <div className="user-selecter">
                         {project.members && (
                             <div className="user-displayer">

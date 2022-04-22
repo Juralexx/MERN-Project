@@ -46,7 +46,7 @@ const Home = ({ websocket, user }) => {
             <Routes>
                 <Route index element={
                     <>
-                        <Header />
+                        <Header user={user} />
                         <div className="home-body">
                             <div className="content-box">
                                 <CategoriesSwiper />

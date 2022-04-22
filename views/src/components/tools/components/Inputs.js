@@ -181,7 +181,7 @@ export const CheckBox = (props) => {
 }
 
 export const IconInput = (props) => {
-    const { type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, clean } = props
+    const { type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, onClean } = props
     return (
         <div className={`${className ? "icon-input " + className : "icon-input"}`}>
             <input
@@ -208,9 +208,11 @@ export const IconInput = (props) => {
                     {endIcon}
                 </div>
             }
-            {cross && value && value.length > 0 &&
-                <IoClose className="cross" onClick={clean} />
-            }
+            {(cross && (cross && value && value.length > 0)) && (
+                <div onClick={onClean} className="svg-container">
+                    <IoClose className="cross" />
+                </div>
+            )}
         </div>
     )
 }
