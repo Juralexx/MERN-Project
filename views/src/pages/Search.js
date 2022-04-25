@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { BiSearchAlt } from 'react-icons/bi'
-import { BsCaretDownFill } from 'react-icons/bs'
-import { FaUserShield } from 'react-icons/fa'
-import { IoAlbums, IoSend } from 'react-icons/io5'
+import { useClickOutside } from '../components/tools/functions/useClickOutside'
 import CategoriesPicker from '../components/home/CategoriesPicker'
 import LocationsAutocomplete from '../components/home/LocationsAutocomplete'
 import { EndIconButton, TextButton } from '../components/tools/components/Button'
@@ -10,8 +7,11 @@ import Card from '../components/tools/components/Card'
 import FollowersModal from '../components/tools/components/FollowersModal'
 import { IconInput } from '../components/tools/components/Inputs'
 import LikersModal from '../components/tools/components/LikersModal'
-import { useClickOutside } from '../components/tools/functions/useClickOutside'
 import MapModal from '../components/tools/map/MapModal'
+import { BiSearchAlt } from 'react-icons/bi'
+import { BsCaretDownFill } from 'react-icons/bs'
+import { FaUserShield } from 'react-icons/fa'
+import { IoAlbums, IoSend } from 'react-icons/io5'
 
 const Search = ({ websocket, projects, user, search, results, setResults, category, setCategory, location, setLocation, recentLocations, setRecentLocations, aroundLocation, setAroundLocation }) => {
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
@@ -34,48 +34,50 @@ const Search = ({ websocket, projects, user, search, results, setResults, catego
             <div className="search-page">
                 <div className="search-header">
                     <div className="content-box">
-                        <div className="header-input-flex">
-                            <IconInput
-                                className="is-start-icon"
-                                placeholder="Rechercher un projet"
-                                type="search"
-                                icon={<BiSearchAlt />}
-                            />
-                            <div ref={categoriesRef} className="relative">
+                        <div className="search-header-inner">
+                            <div className="header-input-flex">
                                 <IconInput
                                     className="is-start-icon"
-                                    inputClassName="cursor-pointer"
-                                    placeholder="Catégorie"
-                                    readOnly
-                                    icon={<IoAlbums />}
-                                    endIcon={<BsCaretDownFill />}
-                                    onClick={() => setOpenCategories(!openCategories)}
-                                    onChange={() => setCategory(category)}
-                                    value={category}
+                                    placeholder="Rechercher un projet"
+                                    type="search"
+                                    icon={<BiSearchAlt />}
                                 />
-                                <CategoriesPicker className="top-[56px]" open={openCategories} setOpen={setOpenCategories} category={category} setCategory={setCategory} />
+                                <div ref={categoriesRef} className="relative">
+                                    <IconInput
+                                        className="is-start-icon"
+                                        inputClassName="cursor-pointer"
+                                        placeholder="Catégorie"
+                                        readOnly
+                                        icon={<IoAlbums />}
+                                        endIcon={<BsCaretDownFill />}
+                                        onClick={() => setOpenCategories(!openCategories)}
+                                        onChange={() => setCategory(category)}
+                                        value={category}
+                                    />
+                                    <CategoriesPicker className="top-[56px]" open={openCategories} setOpen={setOpenCategories} category={category} setCategory={setCategory} />
+                                </div>
                             </div>
-                        </div>
-                        <div className="header-input-flex">
-                            <IconInput
-                                className="is-start-icon"
-                                placeholder="Métier"
-                                type="text"
-                                fullwidth
-                                icon={<FaUserShield />}
-                            />
-                            <LocationsAutocomplete
-                                location={location}
-                                setLocation={setLocation}
-                                recentLocations={recentLocations}
-                                setRecentLocations={setRecentLocations}
-                                aroundLocation={aroundLocation}
-                                setAroundLocation={setAroundLocation}
-                            />
-                        </div>
-                        <div className="btn-container">
-                            <TextButton text="Voir la carte" onClick={() => setOpenMapModal(true)} />
-                            <EndIconButton className="px-7" text="Rechercher" icon={<IoSend />} onClick={search} />
+                            <div className="header-input-flex">
+                                <IconInput
+                                    className="is-start-icon"
+                                    placeholder="Métier"
+                                    type="text"
+                                    fullwidth
+                                    icon={<FaUserShield />}
+                                />
+                                <LocationsAutocomplete
+                                    location={location}
+                                    setLocation={setLocation}
+                                    recentLocations={recentLocations}
+                                    setRecentLocations={setRecentLocations}
+                                    aroundLocation={aroundLocation}
+                                    setAroundLocation={setAroundLocation}
+                                />
+                            </div>
+                            <div className="btn-container">
+                                <TextButton text="Voir la carte" onClick={() => setOpenMapModal(true)} />
+                                <EndIconButton className="px-7" text="Rechercher" icon={<IoSend />} onClick={search} />
+                            </div>
                         </div>
                     </div>
                 </div>
