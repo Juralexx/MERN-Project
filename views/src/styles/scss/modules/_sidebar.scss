@@ -1,14 +1,16 @@
 .sidebar {
     position   : relative;
     height     : 100%;
-    width      : 350px;
+    min-width  : 280px;
+    max-width  : 280px;
     background : var(--content);
     box-shadow : var(--shadow-left);
     z-index    : 1600;
     overflow-y : hidden;
 
     &.reduced {
-        width : 80px;
+        max-width : 80px;
+        min-width : 80px;
     }
 
     .sidebar-header {
@@ -20,7 +22,7 @@
         padding-right   : 16px;
         height          : 70px;
         color           : var(--text);
-        background      : var(--content-light);
+        background      : var(--footer);
 
         &.reduced {
             justify-content : center;
@@ -84,151 +86,112 @@
         .sidebar-container {
             width   : 100%;
             padding : 4px 8px;
-    
+
             .sidebar-title {
                 display         : flex;
                 align-items     : center;
                 justify-content : space-between;
                 position        : relative;
                 padding         : 10px 16px;
-                color           : var(--text);
+                color           : var(--text-secondary);
                 border-radius   : var(--radius);
                 cursor          : pointer;
-    
+
                 &:hover {
-                    background-color : var(--content-light);
+                    color : var(--primary);
                 }
-    
+
                 &.reduced {
                     justify-content : center;
                 }
-    
+
                 .sidebar-title-inner {
                     display     : flex;
                     align-items : center;
-    
+
                     .sidebar-img {
-                        width         : 28px;
-                        height        : 28px;
+                        width         : 30px;
+                        height        : 30px;
                         border-radius : 50px;
-    
+                        border        : 2px solid var(--light-border);
+
                     }
-    
+
                     .sidebar-name {
-                        font-size    : 16px;
+                        font-size    : 14px;
                         padding-left : 12px;
-    
+
                         &.reduced {
                             display : none;
                         }
                     }
                 }
-    
-                .sidebar-hover-card {
-                    position         : absolute;
-                    left             : 115%;
-                    top              : 50%;
-                    width            : auto;
-                    min-width        : 200px;
-                    transform        : translateY(-50%);
-                    padding          : 12px 20px;
-                    border-radius    : var(--radius);
-                    background-color : var(--content);
-                    border           : 1px solid var(--light-border);
-                    font-size        : 16px;
-                }
             }
-    
-            .sidebar-submenu {
-                width   : 100%;
-                padding : 0 8px 0 20px;
-    
-                .sidebar-submenu-card {
-                    border-left     : 1px solid var(--content-light);
-                    margin-left     : 8px;
 
-                    a {
-                        display       : block;
-                        margin        : 5px 0 5px 8px;
-                        height        : 100%;
-                        border-radius : 5px;
-                        &.active {
-                            background-color : rgba(var(--primary-rgb), 0.6);
-                            .sidebar-submenu-title {
-                                &:hover {
-                                    background-color : rgba(var(--primary-rgb), 0.6);
-                                    span {
-                                        background-color : rgba(var(--primary-rgb), 0.6);
-                                    }
-                                }
-                            }
+            .sidebar-submenu {
+                padding     : 0 8px 0 0;
+                margin-left : 30px;
+                border-left : 1px solid var(--light-border);
+
+                a {
+                    display         : flex;
+                    justify-content : flex-start;
+                    align-items     : center;
+                    position        : relative;
+                    margin          : 5px 0;
+                    padding         : 8px 16px;
+                    height          : 100%;
+                    width           : 100%;
+                    font-size       : 14px;
+                    color           : var(--text-secondary);
+                    border-radius   : var(--radius);
+                    cursor          : pointer;
+
+                    &.active {
+                        color : var(--primary);
+                    }
+
+                    svg {
+                        width        : 20px;
+                        height       : 20px;
+                        margin-right : 8px;
+                    }
+    
+                    .sidebar-submenu-text {
+                        display     : flex;
+                        align-items : center;
+    
+                        span {
+                            height           : 20px;
+                            font-size        : 13px;
+                            padding          : 1px 8px;
+                            margin-left      : 8px;
+                            border-radius    : 5px;
+                            background-color : var(--content-x-light);
                         }
                     }
     
-                    .sidebar-submenu-title {
-                        display         : flex;
-                        justify-content : flex-start;
-                        align-items     : center;
-                        font-size       : 16px;
-                        padding         : 8px 16px;
-                        color           : var(--text);
-                        cursor          : pointer;
-                        border-radius   : var(--radius);
-                        max-height      : 48px;
-    
+                    &:hover {
+                        color : var(--primary);
+                    }
+                }
+
+                &.reduced {
+                    padding : 4px;
+                    border  : none;
+                    margin  : 0;
+
+                    a {
+                        margin-left     : 0;
+                        justify-content : center;
+                        padding         : 8px 4px;
+
                         svg {
-                            width        : 20px;
-                            height       : 20px;
-                            margin-right : 8px;
+                            margin : 0;
                         }
 
                         .sidebar-submenu-text {
-                            display         : flex;
-                            align-items     : center;
-
-                            span {
-                                height           : 20px;
-                                font-size        : 13px;
-                                padding          : 1px 8px;
-                                margin-left      : 8px;
-                                border-radius    : 5px;
-                                background-color : var(--content-x-light);
-                            }
-                        }
-    
-                        &:hover {
-                            background-color : var(--content-x-light);
-
-                            span {
-                                background-color : var(--content-light);
-                            }
-                        }
-                    }
-                }
-    
-                &.reduced {
-                    padding : 4px;
-    
-                    .sidebar-submenu-card {
-                        border : none;
-                        margin : 0;
-
-                        a {
-                            margin-left : 0;
-                        }
-    
-                        .sidebar-submenu-title {
-                            justify-content : center;
-                            margin          : 5px 0;
-                            padding         : 10px 4px;
-    
-                            svg {
-                                margin : 0;
-                            }
-    
-                            .sidebar-submenu-text {
-                                display : none;
-                            }
+                            display : none;
                         }
                     }
                 }
@@ -246,7 +209,7 @@
         width           : 100%;
         height          : 70px;
         color           : var(--text);
-        background      : var(--content-light);
+        background      : var(--footer);
 
         .sidebar-bottom-inner {
             display     : flex;
@@ -312,6 +275,7 @@
         &.reduced {
             .sidebar-skeleton-card {
                 justify-content : center;
+
                 .sidebar-skeleton-text {
                     display : none;
                 }

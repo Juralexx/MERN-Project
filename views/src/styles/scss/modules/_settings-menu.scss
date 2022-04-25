@@ -2,7 +2,7 @@
     width         : 300px;
     height        : auto;
     position      : absolute;
-    background    : var(--content);
+    background    : var(--content-light);
     border-radius : 5px;
     top           : 55px;
     right         : 5px;
@@ -62,7 +62,7 @@
 
                 p {
                     margin    : 0 0 0 10px;
-                    font-size : 15px;
+                    font-size : 14px;
                 }
 
                 svg {

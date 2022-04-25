@@ -3,7 +3,7 @@
     width         : auto;
     padding       : 10px 15px;
     position      : absolute;
-    background    : var(--content);
+    background    : var(--content-light);
     box-shadow    : var(--shadow-xl);
     border-radius : var(--radius);
     top           : 55px;
@@ -77,12 +77,12 @@
         padding : 10px 0;
 
         .empty-messages {
-            display     : flex;
-            align-items : center;
-            justify-content: center;
-            padding     : 0 8px;
-            color       : var(--text);
-            font-size   : 18px;
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            padding         : 0 8px;
+            color           : var(--text);
+            font-size       : 14px;
     
             svg {
                 width        : 30px;

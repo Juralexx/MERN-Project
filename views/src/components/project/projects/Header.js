@@ -54,19 +54,19 @@ const Header = ({ project, websocket, user }) => {
                 <div className="dashboard-header-navbar">
                     <div className="dashboard-header-navbar-content">
                         <div className="dashboard-header-navbar-item">
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/about`} className={`${isThisActive}`}>À propos</NavLink>
+                            <NavLink to={`/projects/${project.URLID}/${project.URL}/about`} className={isThisActive}>À propos</NavLink>
                         </div>
                         <div className="dashboard-header-navbar-item">
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/gallery`} className={`${isThisActive}`}>Galerie</NavLink>
+                            <NavLink to={`/projects/${project.URLID}/${project.URL}/gallery`} className={isThisActive}>Galerie</NavLink>
                         </div>
                         <div className="dashboard-header-navbar-item">
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/actuality`} className={`${isThisActive}`}>Actualités</NavLink>
+                            <NavLink to={`/projects/${project.URLID}/${project.URL}/actuality`} className={isThisActive}>Actualités</NavLink>
                         </div>
                         <div className="dashboard-header-navbar-item">
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/qna`} className={`${isThisActive}`}>FAQ</NavLink>
+                            <NavLink to={`/projects/${project.URLID}/${project.URL}/qna`} className={isThisActive}>FAQ</NavLink>
                         </div>
                         <div className="dashboard-header-navbar-item">
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/edit`} className={`${isThisActive}`}>Modifier</NavLink>
+                            <NavLink to={`/projects/${project.URLID}/${project.URL}/edit`} className={isThisActive}>Modifier</NavLink>
                         </div>
                     </div>
                 </div>

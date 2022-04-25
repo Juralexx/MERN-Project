@@ -1,7 +1,7 @@
 .one-line {
     text-overflow      : ellipsis;
     overflow           : hidden;
-    width              : 90%;
+    width              : 85%;
     line-height        : 19px;
     display            : -webkit-box;
     -webkit-line-clamp : 1;
@@ -166,64 +166,6 @@
     }
 }
 
-.tooltip {
-    position      : absolute;
-    font-size     : 13px;
-    width         : auto;
-    max-width     : 250px;
-    background    : var(--body);
-    padding       : 10px 15px 8px;
-    box-shadow    : var(--shadow-lg);
-    border-radius : 5px;
-    z-index       : 10000;
-    white-space   : nowrap;
-
-    &::before {
-        content          : '';
-        position         : absolute;
-        width            : 0;
-        height           : 0;
-        border           : .5em solid transparent;
-        border-top-color : var(--body);
-    }
-
-    &.top {
-        bottom    : 50px;
-        left      : 50%;
-        transform : translateX(-50%);
-
-        &:before {
-            top       : 100%;
-            left      : 50%;
-            transform : translate(-50%, 0);
-        }
-    }
-
-    &.right {
-        top       : 50%;
-        left      : 40px;
-        transform : translateY(-50%);
-
-        &:before {
-            top       : 50%;
-            left      : -12px;
-            transform : translateY(-50%) rotate(90deg);
-        }
-    }
-
-    &.right {
-        top       : 50%;
-        right     : 40px;
-        transform : translateY(-50%);
-
-        &:before {
-            top       : 50%;
-            right     : -12px;
-            transform : translateY(-50%) rotate(-90deg);
-        }
-    }
-}
-
 .tags-container {
     display   : flex;
     flex-wrap : wrap;
@@ -233,11 +175,12 @@
         display          : flex;
         align-items      : center;
         height           : 30px;
-        padding          : 4px 8px 0;
+        padding          : 1px 4px 0;
         margin           : 4px 4px 4px 0;
         color            : var(--text);
         background-color : var(--content-x-light);
         border-radius    : var(--radius);
+        border           : 1px solid var(--light-border);
         cursor           : pointer;
 
         p {
@@ -250,7 +193,6 @@
             padding       : 2px;
             border-radius : 20px;
             margin-left   : 5px;
-            margin-top    : -3px;
         }
     }
 }

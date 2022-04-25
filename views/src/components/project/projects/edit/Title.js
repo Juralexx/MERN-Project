@@ -15,29 +15,54 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, setErr, error, c
 
     return (
         <>
-            <div className="content-form">
-                <p className="title full">Titre <span>Champ requis</span></p>
-                <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle((e.target.value).substring(0, 60))} value={title} />
-                <div className="field-infos full">{title.length} / 60 caractères</div>
-                {isErr === "title" && <ErrorCard useRef={errorRef} display={isErr === "title"} text={error} clean={() => setErr("")} />}
-            </div>
-
-            <div className="content-form mt-4">
-                <p className="title full">Sous-titre <span>Champ requis</span></p>
-                <Textarea className={`full ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 120))} value={subtitle} />
-                <div className="field-infos full">{subtitle.length} / 120 caractères</div>
-                {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={isErr === "subtitle"} text={error} clean={() => setErr("")} />}
-            </div>
-
-            <div className="content-form mt-4">
-                <p className="title full">Catégorie <span>Champ requis</span></p>
-                <div className="relative" ref={wrapperRef}>
-                    <DoubleIconInput className={`full ${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
-                    {display && (
-                        <CategoriesPicker open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
-                    )}
+            <div className="edit-project-flex-container">
+                <div className="edit-project-flex-content-left">
+                    <h3>Titre du projet</h3>
+                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
                 </div>
-                {isErr === "category" && <ErrorCard useRef={errorRef} display={isErr === "category"} text={error} clean={() => setErr("")} />}
+                <div className="edit-project-flex-content-right">
+                    <div className="content-form">
+                        <p className="title full">Titre <span>Champ requis</span></p>
+                        <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle((e.target.value).substring(0, 60))} value={title} />
+                        <div className="field-infos full">{title.length} / 60 caractères</div>
+                        {isErr === "title" && <ErrorCard useRef={errorRef} display={isErr === "title"} text={error} clean={() => setErr("")} />}
+                    </div>
+                </div>
+            </div>
+            <div className="edit-project-flex-container mt-4">
+                <div className="edit-project-flex-content-left">
+                    <h3>Sous-titre du projet</h3>
+                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+                </div>
+                <div className="edit-project-flex-content-right">
+                    <div className="content-form">
+                        <p className="title full">Sous-titre <span>Champ requis</span></p>
+                        <Textarea className={`full ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 120))} value={subtitle} />
+                        <div className="field-infos full">{subtitle.length} / 120 caractères</div>
+                        {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={isErr === "subtitle"} text={error} clean={() => setErr("")} />}
+                    </div>
+                </div>
+            </div>
+            <div className="edit-project-flex-container mt-4">
+                <div className="edit-project-flex-content-left">
+                    <h3>Catégorie</h3>
+                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+                </div>
+                <div className="edit-project-flex-content-right">
+                    <div className="content-form">
+                        <p className="title full">Catégorie <span>Champ requis</span></p>
+                        <div className="relative" ref={wrapperRef}>
+                            <DoubleIconInput className={`full ${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
+                            {display && (
+                                <CategoriesPicker open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
+                            )}
+                        </div>
+                        {isErr === "category" && <ErrorCard useRef={errorRef} display={isErr === "category"} text={error} clean={() => setErr("")} />}
+                    </div>
+                </div>
             </div>
         </>
     )

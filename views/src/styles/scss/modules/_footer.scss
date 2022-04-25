@@ -2,7 +2,8 @@
     position         : relative;
     width            : 100%;
     height           : auto;
-    background-color : var(--content);
+    background-color : var(--footer);
+    padding-top      : 20px;
 
     .content-box {
         padding : 0 50px;
@@ -38,15 +39,15 @@
         }
     }
 
-    .footer-locations {
+    .footer-content {
         display       : flex;
         padding       : 20px 0;
         border-bottom : 1px solid var(--light-border);
 
-        .footer-locations-col {
+        .footer-content-col {
             width : 25%;
 
-            .footer-locations-bloc {
+            .footer-content-bloc {
                 display        : flex;
                 flex-direction : column;
                 margin-bottom  : 10px;
@@ -57,10 +58,15 @@
                     color : var(--text-secondary);
                 }
 
-                .region-title {
+                .footer-title {
                     color          : var(--text);
                     text-transform : uppercase;
+                    font-weight    : 700;
                     margin-bottom  : 5px;
+                }
+
+                img {
+                    max-width : 200px;
                 }
             }
         }

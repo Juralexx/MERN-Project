@@ -10,10 +10,9 @@ import { GoThreeBars } from 'react-icons/go'
 const Sidebar = ({ user, projects, isLoading }) => {
     const [reduced, setReduced] = useState(false)
     const [submenu, setSubmenu] = useState(0)
-    const [hoverCard, setHoverCard] = useState(-1)
     const localStore = localStorage.getItem("sideState")
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
-    const isThisActive = (isActive) => (!isActive ? "" : "active")
+    const isThisActive = ({ isActive }) => (!isActive ? "" : "active")
 
     const handleState = () => {
         if (!reduced) {
@@ -48,59 +47,40 @@ const Sidebar = ({ user, projects, isLoading }) => {
                     projects.map((element, key) => {
                         return (
                             <div className="sidebar-container" key={key}>
-                                <NavLink to={`${element.URLID}/${element.URL}`} className={`${isThisActive}`}>
-                                    <div className={`sidebar-title ${addActive(reduced, "reduced")}`} onClick={() => setSubmenu(key)} onMouseEnter={() => setHoverCard(key)} onMouseLeave={() => setHoverCard(-1)}>
+                                <NavLink to={`${element.URLID}/${element.URL}`} className={isThisActive}>
+                                    <div className={`sidebar-title ${addActive(reduced, "reduced")}`} onClick={() => setSubmenu(key)}>
                                         <div className="sidebar-title-inner">
                                             <div className="sidebar-img" style={avatar(element.pictures[0])}></div>
                                             <div className={`sidebar-name ${addActive(reduced, "reduced")} one-line`}>{element.title}</div>
                                         </div>
                                         <div className={`${reduced ? "hidden" : ""}`}><BsFillCaretRightFill /></div>
-                                        {reduced && hoverCard === key && (
-                                            <div className="sidebar-hover-card">{element.title}</div>
-                                        )}
                                     </div>
                                 </NavLink>
                                 {submenu === key && (
                                     <div className={`sidebar-submenu ${addActive(reduced, "reduced")}`}>
-                                        <div className="sidebar-submenu-card">
-                                            <NavLink to={`${element.URLID}/${element.URL}/about`} className={`${isThisActive}`}>
-                                                <div className="sidebar-submenu-title">
-                                                    <MdOutlineDescription />
-                                                    <div className="sidebar-submenu-text">À propos</div>
-                                                </div>
-                                            </NavLink>
-                                        </div>
-                                        <div className="sidebar-submenu-card">
-                                            <NavLink to={`${element.URLID}/${element.URL}/tasks`} className={`${isThisActive}`}>
-                                                <div className="sidebar-submenu-title">
-                                                    <BiTask />
-                                                    <div className="sidebar-submenu-text">Tâches <span>{element.tasks?.length}</span></div>
-                                                </div>
-                                            </NavLink>
-                                        </div>
-                                        <div className="sidebar-submenu-card">
-                                            <NavLink to={`${element.URLID}/${element.URL}/messenger`} className={`${isThisActive}`}>
-                                                <div className="sidebar-submenu-title">
-                                                    <MdOutlineMessage />
-                                                    <div className="sidebar-submenu-text">Messenger</div>
-                                                </div>
-                                            </NavLink>
-                                        </div>
-                                        <div className="sidebar-submenu-card">
-                                            <NavLink to={`${element.URLID}/${element.URL}/members`} className={`${isThisActive}`}>
-                                                <div className="sidebar-submenu-title">
-                                                    <MdGroups />
-                                                    <div className="sidebar-submenu-text">Membres</div>
-                                                </div>
-                                            </NavLink>
-                                        </div>
+                                        <NavLink to={`${element.URLID}/${element.URL}/about`} className={isThisActive}>
+                                            <MdOutlineDescription />
+                                            <div className="sidebar-submenu-text">À propos</div>
+                                        </NavLink>
+                                        <NavLink to={`${element.URLID}/${element.URL}/tasks`} className={isThisActive}>
+                                            <BiTask />
+                                            <div className="sidebar-submenu-text">Tâches <span>{element.tasks?.length}</span></div>
+                                        </NavLink>
+                                        <NavLink to={`${element.URLID}/${element.URL}/messenger`} className={isThisActive}>
+                                            <MdOutlineMessage />
+                                            <div className="sidebar-submenu-text">Messenger</div>
+                                        </NavLink>
+                                        <NavLink to={`${element.URLID}/${element.URL}/members`} className={isThisActive}>
+                                            <MdGroups />
+                                            <div className="sidebar-submenu-text">Membres</div>
+                                        </NavLink>
                                     </div>
                                 )}
                             </div>
                         )
                     })
                 ) : (
-                    [...Array(5)].map((element, key) => {
+                    [...Array(5)].map((_, key) => {
                         return (
                             <div className={`sidebar-skeleton ${addActive(reduced, "reduced")}`} key={key}>
                                 <div className="sidebar-skeleton-card">

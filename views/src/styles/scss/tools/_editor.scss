@@ -38,6 +38,7 @@
     text-align    : left;
     white-space   : pre-wrap;
     word-wrap     : break-word;
+    border        : 1px solid var(--light-border);
 }
 .ql-editor > * {
     cursor : text;
@@ -436,8 +437,8 @@
 .ql-snow .ql-toolbar .ql-picker-item:hover,
 .ql-snow.ql-toolbar .ql-picker-item.ql-selected,
 .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
-    color      : white;
-    background : var(--content-x-light);
+    color      : var(--text);
+    background : var(--footer);
 }
 .ql-snow.ql-toolbar button:hover .ql-fill,
 .ql-snow .ql-toolbar button:hover .ql-fill,
@@ -467,7 +468,7 @@
 .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
 .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
 .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
-    fill : white;
+    fill : var(--text);
 }
 .ql-snow.ql-toolbar button:hover .ql-stroke,
 .ql-snow .ql-toolbar button:hover .ql-stroke,
@@ -497,7 +498,7 @@
 .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
 .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
 .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
-    stroke : white;
+    stroke : var(--text);
 }
 @media (pointer: coarse) {
     .ql-snow.ql-toolbar button:hover:not(.ql-active),
@@ -854,7 +855,6 @@
     background-color : #000;
 }
 .ql-toolbar.ql-snow {
-    border      : 1px solid #ccc;
     box-sizing  : border-box;
     font-family : 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     padding     : 4px 8px;
@@ -949,22 +949,22 @@
     content : "Enter video:";
 }
 .ql-snow a {
-    color : white;
+    color : var(--text);
 }
-    .ql-container.ql-snow {
+.ql-container.ql-snow {
     border : 1px solid #ccc;
 }
 .text-editor .ql-toolbar .ql-formats .ql-picker,
 .text-editor .ql-toolbar .ql-formats .ql-stroke,
 .text-editor .ql-toolbar .ql-formats .ql-formula {
-    color  : white;
-    stroke : white;
+    color  : var(--text);
+    stroke : var(--text);
 }
 
 .text-editor .ql-toolbar .ql-formats .ql-fill {
-    fill : white;
+    fill : var(--text);
     &:hover {
-        fill  : white;
+        fill  : var(--text);
     }
 }
 .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
@@ -976,8 +976,8 @@
 .text-editor .ql-toolbar .ql-formats:hover .ql-picker .ql-picker-label,
 .text-editor .ql-toolbar .ql-formats:hover .ql-picker-options .ql-picker-item,
 .text-editor .ql-toolbar .ql-formats:hover .ql-formula {
-    color  : white;
-    stroke : white;
+    color  : var(--text);
+    stroke : var(--text);
 }
 .quill .ql-container.ql-snow {
     border        : none;
@@ -985,11 +985,12 @@
     border-radius : 0 0 3px 3px;
 }
 .ql-editor:before {
-    color : white;
+    color : var(--text);
 }
 .ql-toolbar.ql-snow {
-    border        : 3px solid var(--content-x-light);
-    border-radius : 5px 5px 0 0;
+    border           : 1px solid var(--light-border);
+    border-radius    : 5px 5px 0 0;
+    background-color : var(--footer);
 }
 .ql-size, .ql-header, .ql-font {
     &.ql-picker {
@@ -1006,9 +1007,8 @@
     height        : 28px;
     padding       : 5px;
     border-radius : 5px;
-    color         : white;
     &:hover {
-        background : var(--content-x-light);
+        background : var(--footer);
     }
 }
 .ql-formats {

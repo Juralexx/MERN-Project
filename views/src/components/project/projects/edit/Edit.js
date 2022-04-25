@@ -147,45 +147,30 @@ const Edit = ({ project }) => {
         <div className="content-container edit-project">
             <div className="content-box">
                 <div className="header flex justify-between mb-5">
-                    <h2>Modification du projet</h2>
+                    <h3>Modification du projet</h3>
                     <div className="flex">
                         <Link to={`/projects/${project.URLID}/${project.URL}/about`}><OutlinedButton text="Annuler" className="mx-2" /></Link>
                         <Button text="Enregistrer" onClick={handleUpdate} disabled={title === project.title && subtitle === project.subtitle && category === project.category && description === project.description && state === project.state && location === project.location && end === ISOtoNavFormat(project.end) && JSON.stringify(workArray) === JSON.stringify(project.works) && !contentChanged} />
                     </div>
                 </div>
                 <div className="edit-container">
-                    <div className="edit-project-flex-container">
-                        <div className="edit-project-flex-content-left">
-                            <h2>Titre du projet</h2>
-                            <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
-                                Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
-                            <h2>Sous-titre du projet</h2>
-                            <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
-                                Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
-                            <h2>Catégorie</h2>
-                            <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
-                                Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
-                        </div>
-                        <div className="edit-project-flex-content-right">
-                            <Title
-                                title={title}
-                                setTitle={setTitle}
-                                subtitle={subtitle}
-                                setSubtitle={setSubtitle}
-                                category={category}
-                                setCategory={setCategory}
-                                isErr={isErr}
-                                setErr={setErr}
-                                error={error}
-                                setError={setError}
-                            />
-                        </div>
-                    </div>
+                    <Title
+                        title={title}
+                        setTitle={setTitle}
+                        subtitle={subtitle}
+                        setSubtitle={setSubtitle}
+                        category={category}
+                        setCategory={setCategory}
+                        isErr={isErr}
+                        setErr={setErr}
+                        error={error}
+                        setError={setError}
+                    />
                 </div>
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
                         <div className="edit-project-flex-content-left">
-                            <h2>Courte description du projet</h2>
+                            <h3>Courte description du projet</h3>
                             <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                                 Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
                         </div>
@@ -204,7 +189,7 @@ const Edit = ({ project }) => {
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
                         <div className="edit-project-flex-content-left">
-                            <h2>Tags et référencement</h2>
+                            <h3>Tags et référencement</h3>
                             <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                                 Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
                         </div>
@@ -223,7 +208,7 @@ const Edit = ({ project }) => {
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
                         <div className="edit-project-flex-content-left">
-                            <h2>État du projet</h2>
+                            <h3>État du projet</h3>
                             <p>La catégorie et la sous-catégorie principales permettent à vos contributeurs de trouver votre projet.</p>
                         </div>
                         <div className="edit-project-flex-content-right">
@@ -237,7 +222,7 @@ const Edit = ({ project }) => {
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
                         <div className="edit-project-flex-content-left">
-                            <h2>Lieu du projet</h2>
+                            <h3>Lieu du projet</h3>
                             <p>Saisissez l'emplacement géographique qui correspond au mieux à votre projet.</p>
                         </div>
                         <div className="edit-project-flex-content-right">
@@ -304,7 +289,7 @@ const Edit = ({ project }) => {
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
                         <div className="edit-project-flex-content-left">
-                            <h2>Date de fin prévu (facultatif)</h2>
+                            <h3>Date de fin prévu (facultatif)</h3>
                             <p>Vous recevrez des conseils quant au moment où les étapes qui durent plusieurs jours doivent être terminées.
                                 Cette date reste modifiable jusqu'au moment où vous lancez votre projet (ce qui se fait manuellement).</p>
                         </div>
@@ -319,7 +304,7 @@ const Edit = ({ project }) => {
                 <div className="edit-container">
                     <div className="edit-project-flex-container">
                         <div className="edit-project-flex-content-left">
-                            <h2>Nombre de personnes et compétences recherchées</h2>
+                            <h3>Nombre de personnes et compétences recherchées</h3>
                             <p>Saisissez l'emplacement géographique qui correspond au mieux à votre projet.</p>
                             <p>Les contributeurs potentiels les verront aussi si votre projet apparaît dans les différentes catégories,
                                 les résultats de recherche ou les e-mails que nous envoyons à notre communauté.</p>
@@ -345,7 +330,7 @@ const Edit = ({ project }) => {
                     />
                 </div>
                 <div className="edit-container">
-                    <h2>Description</h2>
+                    <h3>Description</h3>
                     <p>Décrivez ce que vous souhaitez financier en évoquant l'importance que votre projet revêt à vos yeux et comment vous comptez le réaliser.
                         Parlez aussi un peu de vous. Une description complète informe les contributeurs sur l'ensemble de votre projet.
                         Si possible, ajoutez des images pour montrer votre travail et les récompenses que vous comptez produire.</p>

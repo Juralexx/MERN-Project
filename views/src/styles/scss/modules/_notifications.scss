@@ -3,7 +3,7 @@
     width         : auto;
     padding       : 16px 8px;
     position      : absolute;
-    background    : var(--content);
+    background    : var(--content-light);
     box-shadow    : var(--shadow-xl);
     border-radius : var(--radius);
     top           : 55px;
@@ -56,7 +56,7 @@
         justify-content: center;
         padding     : 0 8px;
         color       : var(--text);
-        font-size   : 18px;
+        font-size   : 14px;
 
         svg {
             width        : 30px;

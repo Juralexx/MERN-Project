@@ -40,7 +40,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
     return (
         <>
             <div className="dashboard-projects-header">
-                <div className="dashboard-projects-header-container">
+                <div className="content-box">
                     <div className="dashboard-projects-header-top">
                         <h1>Mes projects <span>{projects.length}</span></h1>
                     </div>
@@ -94,7 +94,6 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                                 <h2><NavLink to={`${element.URLID}/${element.URL}`}>{element.title}</NavLink></h2>
                                                 <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                                             </div>
-                                            <h3>{element.subtitle}</h3>
                                             <div className="location">{element.location} - {element.department} ({element.code_department}) - {element.region} | {element.category}</div>
                                         </div>
                                         <div className="project-tags">

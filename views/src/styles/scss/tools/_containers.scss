@@ -12,34 +12,80 @@
     position     : relative;
     max-width    : 1366px;
     height       : auto;
-    padding      : 40px;
+    padding      : 30px;
     margin-right : auto;
     margin-left  : auto;
     color        : var(--text);
 }
 
-@media (min-width: 576px) {
+@media (max-width: 576px) {
     .content-box {
-        max-width : 576px;
+        max-width : 516px;
     }
 }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .content-box {
-        max-width : 768px;
+        max-width : 708px;
     }
 }
-@media (min-width: 992px) {
+@media (max-width: 992px) {
     .content-box {
-        max-width : 992px;
+        max-width : 932px;
     }
 }
-@media (min-width: 1200px) {
+@media (max-width: 1200px) {
     .content-box {
-        max-width : 1200px;
+        max-width : 1140px;
+    }
+}
+@media (max-width: 1366px) {
+    .content-box {
+        max-width : 1306px;
     }
 }
 @media (min-width: 1366px) {
     .content-box {
+        max-width : 1366px;
+    }
+}
+
+.box {
+    position     : relative;
+    max-width    : 1366px;
+    height       : auto;
+    padding      : 0 30px;
+    margin-right : auto;
+    margin-left  : auto;
+    color        : var(--text);
+}
+
+@media (max-width: 576px) {
+    .box {
+        max-width : 516px;
+    }
+}
+@media (max-width: 768px) {
+    .box {
+        max-width : 708px;
+    }
+}
+@media (max-width: 992px) {
+    .box {
+        max-width : 932px;
+    }
+}
+@media (max-width: 1200px) {
+    .box {
+        max-width : 1140px;
+    }
+}
+@media (max-width: 1366px) {
+    .box {
+        max-width : 1306px;
+    }
+}
+@media (min-width: 1366px) {
+    .box {
         max-width : 1366px;
     }
 }

@@ -27,7 +27,7 @@
             letter-spacing : 1px;
             
             span {
-                font-size   : 18px;
+                font-size   : 16px;
                 margin-left : 10px;
                 color       : var(--text-tertiary);
             }
@@ -37,9 +37,10 @@
             height           : 30px;
             width            : 30px;
             padding          : 7px;
-            background-color : var(--content-light);
+            background-color : var(--footer);
             border-radius    : 30px;
             cursor           : pointer;
+            border           : 1px solid var(--light-border);
 
             &:hover {
                 background-color : var(--content-x-light);
@@ -68,7 +69,8 @@
         border-radius : var(--radius);
         padding       : 12px;
         margin        : 12px 0;
-        background    : var(--content-light);
+        background    : var(--footer);
+        border        : 1px solid var(--light-border);
         cursor        : pointer;
 
         &.priority {

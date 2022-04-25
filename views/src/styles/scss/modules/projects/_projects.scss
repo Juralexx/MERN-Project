@@ -3,45 +3,37 @@
     width      : 100%;
     background : var(--content-light);
 
-    .dashboard-projects-header-container {
-        position  : relative;
-        width     : 100%;
-        max-width : 1366px;
-        margin    : 0 auto;
+    .dashboard-projects-header-top {
+        position : relative;
+        width    : 100%;
+        padding  : 0 0 20px;
 
-        .dashboard-projects-header-top {
-            position : relative;
-            width    : 100%;
-            padding  : 30px 50px 20px;
-
-            h1 {
-                span {
-                    font-size     : 20px;
-                    color         : var(--text-secondary);
-                    margin-left   : 10px;
-                    background    : var(--content-x-light);
-                    padding       : 1px 6px 0;
-                    border-radius : 5px;
-                }
+        h1 {
+            span {
+                font-size     : 20px;
+                color         : var(--text-secondary);
+                margin-left   : 10px;
+                background    : var(--content-x-light);
+                padding       : 1px 6px 0;
+                border-radius : 5px;
             }
         }
+    }
 
-        .dashboard-projects-header-bottom {
-            display         : flex;
-            align-items     : center;
-            justify-content : space-between;
-            padding         : 5px 50px 20px;
+    .dashboard-projects-header-bottom {
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
 
-            .dashboard-projects-header-bottom-left {
-                position     : relative;
-                width        : 70%;
-                margin-right : 20px;
-            }
+        .dashboard-projects-header-bottom-left {
+            position     : relative;
+            width        : 70%;
+            margin-right : 20px;
+        }
 
-            .dashboard-projects-header-bottom-right {
-                position : relative;
-                width    : 30%;
-            }
+        .dashboard-projects-header-bottom-right {
+            position : relative;
+            width    : 30%;
         }
     }
 }
@@ -78,9 +70,10 @@
     display       : flex;
     width         : 100%;
     max-height    : 400px;
-    margin-bottom : 10px;
+    margin-bottom : 20px;
     background    : var(--content-light);
     border-radius : 5px;
+    box-shadow    : var(--shadow-light);
 
     .project-picture {
         position       : relative;
@@ -104,18 +97,6 @@
         width    : 60%;
 
         .project-card-content-top {
-            h3 {
-                font-size          : 16px !important;
-                color              : var(--text-secondary);
-                text-overflow      : ellipsis;
-                overflow           : hidden;
-                width              : 80%;
-                line-height        : 22px;
-                display            : -webkit-box;
-                -webkit-line-clamp : 1;
-                -webkit-box-orient : vertical;
-            }
-
             .project-title {
                 display         : flex;
                 align-items     : center;
@@ -125,11 +106,12 @@
                     text-overflow      : ellipsis;
                     overflow           : hidden;
                     width              : 75%;
-                    line-height        : 28px;
+                    font-size          : 18px;
+                    line-height        : 24px;
                     display            : -webkit-box;
                     -webkit-line-clamp : 1;
                     -webkit-box-orient : vertical;
-                    margin-bottom      : 5px;
+                    margin-bottom      : 2px;
                 }
 
                 .state {
@@ -154,7 +136,7 @@
 
             .location {
                 font-size   : 14px;
-                color       : var(--text-tertiary);
+                color       : var(--text-secondary);
                 line-height : 22px;
             }
         }
@@ -182,9 +164,9 @@
 
             > div {
                 padding       : 3px 5px;
-                font-size     : 14px;
-                background    : rgba(var(--turquoise-rgb), 0.2);
-                color         : var(--turquoise);
+                font-size     : 13px;
+                background    : rgba(var(--xblue-rgb), 0.2);
+                color         : var(--xblue);
                 border-radius : 5px;
                 margin-right  : 3px;
             }
@@ -193,7 +175,6 @@
         .description {
             font-size          : 14px;
             padding            : 8px 0;
-            margin-bottom      : 14px;
             text-align         : justify;
             height             : 90px;
             text-overflow      : ellipsis;
@@ -203,6 +184,7 @@
             display            : -webkit-box;
             -webkit-line-clamp : 4;
             -webkit-box-orient : vertical;
+            color              : var(--text-secondary);
         }
     }
 

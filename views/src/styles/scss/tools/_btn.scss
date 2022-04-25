@@ -62,8 +62,8 @@
     background    : var(--primary);
 
     svg {
-        height      : 18px;
-        width       : 18px;
+        height      : 14px;
+        width       : 14px;
         margin-left : 8px;
     }
 
@@ -237,7 +237,7 @@
     background    : var(--content);
     box-shadow    : var(--shadow-lg);
     border-radius : var(--radius);
-    border        : 2px solid var(--content-light);
+    border        : 2px solid var(--border-light);
 
     .tools-choice {
         min-width     : 220px;

@@ -36,23 +36,24 @@ const ProjectPage = ({ user, websocket, projects }) => {
     }
 
     return (
+        !isLoading &&
         <div className="content-container project-page">
-            {!isLoading && <Header project={project} />}
+            <Header project={project} />
             <div className="project-page-body">
-                <div className="project-navbar">
-                    <div className="project-navbar-content">
-                        <div className="project-navbar-item">
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={`${isThisActive}`}>À propos</NavLink>
-                        </div>
-                        <div className="project-navbar-item">
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={`${isThisActive}`}>Galerie</NavLink>
-                        </div>
-                        <div className="project-navbar-item">
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={`${isThisActive}`}>Actualités</NavLink>
-                        </div>
-                        <div className="project-navbar-item">
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={`${isThisActive}`}>FAQ</NavLink>
-                        </div>
+                <div className="box">
+                    <div className="project-navbar">
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={isThisActive}>
+                            À propos
+                        </NavLink>
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isThisActive}>
+                            Galerie <span>{project.pictures.length}</span>
+                        </NavLink>
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isThisActive}>
+                            Actualités <span>{project.actualities.length}</span>
+                        </NavLink>
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isThisActive}>
+                            FAQ <span>{project.QNA.length}</span>
+                        </NavLink>
                     </div>
                 </div>
                 <div className="content-box">
@@ -88,6 +89,18 @@ const ProjectPage = ({ user, websocket, projects }) => {
                             }
                         </div>
                     </div>
+                    {project.tags.length > 0 &&
+                        <div className="explore-more">
+                            <h3>Explorer plus de projets</h3>
+                            <div className="explore-more-tags">
+                                {project.tags.map((element, key) => {
+                                    return (
+                                        <div className="tag" key={key}><span>#</span> {element}</div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

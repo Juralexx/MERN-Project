@@ -56,7 +56,8 @@
     .gallery-brick-empty {
         position       : relative;
         padding-bottom : 100%;
-        background     : var(--content-x-light);
+        background     : var(--footer);
+        border         : 2px solid var(--light-border);
         border-radius  : 5px;
 
         svg {
@@ -69,6 +70,7 @@
             object-fit    : cover;
             border-radius : 5px;
             cursor        : pointer;
+            color         : var(--text);
         }
     }
 }
@@ -82,7 +84,7 @@
     justify-content : center;
     padding         : 15px 0;
     margin          : 0 auto 25px;
-    border          : 2px dashed white;
+    border          : 2px dashed var(--text-secondary);
     border-radius   : 5px;
 
     svg {
@@ -91,7 +93,7 @@
     }
 
     &:hover, &:focus, &.active {
-        background : var(--content-x-light);
+        background : var(--footer);
     }
 
     &.disabled {

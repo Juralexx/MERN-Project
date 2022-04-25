@@ -5,64 +5,82 @@ import { centre, drom, est, nord, ouest, sud_est, sud_ouest } from '../api/regio
 const Footer = () => {
     return (
         <div id="footer">
-            <div className="footer-slider">
-                <div className="footer-slide-track">
-                    {categories.map((category, key) => {
-                        return (
-                            <div className="footer-slide" key={key}>
-                                <p>{category.name}</p>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
             <div className="content-box">
-                <div className="footer-locations">
-                    <div className="footer-locations-col">
-                        <div className="footer-locations-bloc">
-                            <div className="region-title">Ouest</div>
+                <div className="footer-content">
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo-top.png`} />
+                        </div>
+                    </div>
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Catégories</div>
+                            {categories.slice(0, 4).map((e, key) => {
+                                return <a href="/" key={key}>{e.name}</a>
+                            })}
+                        </div>
+                    </div>
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            {categories.slice(4, 10).map((e, key) => {
+                                return <a href="/" key={key}>{e.name}</a>
+                            })}
+                        </div>
+                    </div>
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            {categories.slice(10, categories.length).map((e, key) => {
+                                return <a href="/" key={key}>{e.name}</a>
+                            })}
+                        </div>
+                    </div>
+                </div>
+                <div className="footer-content">
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Ouest</div>
                             {ouest.map((e, key) => {
                                 return <a href="/" key={key}>{e.nom_region}</a>
                             })}
                         </div>
-                        <div className="footer-locations-bloc">
-                            <div className="region-title">Sud-Ouest</div>
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Sud-Ouest</div>
                             {sud_ouest.map((e, key) => {
                                 return <a href="/" key={key}>{e.nom_region}</a>
                             })}
                         </div>
                     </div>
-                    <div className="footer-locations-col">
-                        <div className="footer-locations-bloc">
-                            <div className="region-title">Sud-Est</div>
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Sud-Est</div>
                             {sud_est.map((e, key) => {
                                 return <a href="/" key={key}>{e.nom_region}</a>
                             })}
                         </div>
-                        <div className="footer-locations-bloc">
-                            <div className="region-title">Est</div>
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Est</div>
                             {est.map((e, key) => {
                                 return <a href="/" key={key}>{e.nom_region}</a>
                             })}
                         </div>
                     </div>
-                    <div className="footer-locations-col">
-                        <div className="footer-locations-bloc">
-                            <div className="region-title">Nord</div>
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Nord</div>
                             {nord.map((e, key) => {
                                 return <a href="/" key={key}>{e.nom_region}</a>
                             })}
                         </div>
-                        <div className="footer-locations-bloc">
-                            <div className="region-title">Centre</div>
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Centre</div>
                             {centre.map((e, key) => {
                                 return <a href="/" key={key}>{e.nom_region}</a>
                             })}
                         </div>
                     </div>
-                    <div className="footer-locations-col">
-                        <div className="footer-locations-bloc">
-                            <div className="region-title">Drom</div>
+                    <div className="footer-content-col">
+                        <div className="footer-content-bloc">
+                            <div className="footer-title">Drom</div>
                             {drom.map((e, key) => {
                                 return <a href="/" key={key}>{e.nom_region}</a>
                             })}

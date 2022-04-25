@@ -68,19 +68,19 @@ const Navbar = ({ websocket, user, uid }) => {
                                             </NavLink>
                                         </li>
                                         <li className="nav-li">
-                                            <NavLink to="/searches" className={isThisActive}>
+                                            <NavLink to="/login" className={isThisActive}>
                                                 <MdOutlineScreenSearchDesktop className="nav-icon" />
                                                 <p className="nav-p">Recherches</p>
                                             </NavLink>
                                         </li>
                                         <li className="nav-li">
-                                            <NavLink to="/projects" className={isThisActive}>
+                                            <NavLink to="/login" className={isThisActive}>
                                                 <FaProjectDiagram className="nav-icon" />
                                                 <p className="nav-p">Projets</p>
                                             </NavLink>
                                         </li>
                                         <li className="nav-li">
-                                            <NavLink to="/messenger" className={isThisActive}>
+                                            <NavLink to="/login" className={isThisActive}>
                                                 <MdOutlineMessage className="nav-icon" />
                                                 <p className="nav-p">Messages</p>
                                             </NavLink>

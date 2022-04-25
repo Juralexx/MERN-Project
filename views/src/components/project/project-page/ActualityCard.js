@@ -28,7 +28,7 @@ const ActualityCard = ({ project }) => {
                 <Link to={`/project/${project.URLID}/${project.URL}/actuality`}><h3>Actualités</h3></Link>
                 <div className="swiper-button next" ref={nextRef}><MdOutlineKeyboardArrowRight /></div>
             </div>
-            <div className="card">
+            <div>
                 <Swiper
                     slidesPerView={1}
                     keyboard={{ enabled: true }}
