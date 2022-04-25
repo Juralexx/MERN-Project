@@ -754,10 +754,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 25%;
 }
 
-.w-\[200px\] {
-  width: 200px;
-}
-
 .w-1\/2 {
   width: 50%;
 }
@@ -768,6 +764,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .min-w-\[100\%\] {
   min-width: 100%;
+}
+
+.min-w-\[500px\] {
+  min-width: 500px;
 }
 
 .translate-y-\[-50\%\] {

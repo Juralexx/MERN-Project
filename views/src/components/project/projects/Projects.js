@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { NavLink} from 'react-router-dom'
-import { stateToBackground, stateToString } from '../../home/functions'
 import { useClickOutside } from '../../tools/functions/useClickOutside'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
 import { ClassicInput, DropdownInput, IconInput } from '../../tools/components/Inputs'
-import Categories from '../../home/Categories'
+import CategoriesPicker from '../../home/CategoriesPicker'
 import { BiCategoryAlt, BiTask } from 'react-icons/bi'
 import { BsCaretDownFill, BsFillPeopleFill } from 'react-icons/bs'
 import { MdGroups, MdOutlineDescription, MdOutlineMessage, MdReadMore } from 'react-icons/md'
+import { stateToBackground, stateToString } from '../../tools/functions/function'
 
 const Projects = ({ user, websocket, projects, setProjects }) => {
     const [pros, setPros] = useState(projects)
@@ -59,7 +59,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                 onChange={() => setCategory(category)}
                                 value={category}
                             />
-                            <Categories className="right" open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
+                            <CategoriesPicker className="right min-w-[500px] " open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
                         </div>
                     </div>
                 </div>

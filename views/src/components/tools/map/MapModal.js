@@ -6,7 +6,7 @@ import { IconInput } from "../components/Inputs";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { departments, regions } from "./api";
 
-const MapModal = ({ open, setOpen, location, setLocation, department, setDepartment, region, setRegion, newRegion, setNewRegion }) => {
+const MapModal = ({ open, setOpen, location, setLocation }) => {
     const [ByDepartments, setDepartments] = useState(false)
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const [isRegionInResult, setRegionsInResult] = useState([])
@@ -15,7 +15,6 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
     const [regionQuery, setRegionQuery] = useState("")
     const regexp = new RegExp(regionQuery, 'i')
 
-    const handleRegionChange = (e) => { setRegionQuery(e.target.value) }
     const searchRegions = () => {
         if (!regionQuery || regionQuery.trim() === "") { setSearchRegion(false) }
         else if (regionQuery.length >= 2) {
@@ -33,8 +32,6 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
     const [departmentQuery, setDepartmentQuery] = useState("")
     const depexp = new RegExp(departmentQuery, 'i')
 
-    const handleDepartmentChange = (e) => { setDepartmentQuery(e.target.value) }
-
     const searchDepartments = () => {
         if (!departmentQuery || departmentQuery.trim() === "") { setSearchDepartment(false) }
         else if (departmentQuery.length >= 2) {
@@ -44,6 +41,30 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
         } else {
             setSearchDepartment(false)
         }
+    }
+
+    const addDepartment = (value) => {
+        const dep = {
+            type: "department",
+            department: value.nom_departement,
+            department_code: value.code_department,
+            region: value.nom_ancienne_region,
+            region_code: value.code_ancienne_region,
+            new_region: value.nom_nouvelle_region,
+            new_region_code: value.code_nouvelle_region
+        }
+        setLocation(locations => [...locations, dep])
+    }
+
+    const addRegion = (value) => {
+        const reg = {
+            type: "region",
+            region: value.nom_region,
+            region_code: value.code_region,
+            new_region: value.nom_nouvelle_region,
+            new_region_code: value.code_nouvelle_region
+        }
+        setLocation(locations => [...locations, reg])
     }
 
     return (
@@ -59,7 +80,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                         placeholder="Région"
                         endIcon={<BsCaretDownFill />}
                         value={regionQuery}
-                        onChange={handleRegionChange}
+                        onChange={e => setRegionQuery(e.target.value)}
                         onInput={searchRegions}
                         onClick={() => setOpenRegions(!openRegions)}
                     />
@@ -68,7 +89,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                             {!searchRegion ? (
                                 regions.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.nom_region); setLocation(element.nom_region); setDepartment(''); setRegion(element.nom_region); setNewRegion(element.nom_nouvelle_region); setOpenRegions(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.nom_region); addRegion(element); setOpenRegions(false) }}>
                                             {element.nom_region}
                                         </div>
                                     )
@@ -76,7 +97,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                             ) : (
                                 isRegionInResult.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.nom_region); setLocation(element.nom_region); setDepartment(''); setRegion(element.nom_region); setNewRegion(element.nom_nouvelle_region); setOpenRegions(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setRegionQuery(element.nom_region); addRegion(element); setOpenRegions(false) }}>
                                             {element.nom_region}
                                         </div>
                                     )
@@ -84,7 +105,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                             )}
                         </div>
                     }
-                    <MapRegions location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} newRegion={newRegion} setNewRegion={setNewRegion} />
+                    <MapRegions location={location} setLocation={setLocation} />
                 </div>
             ) : (
                 <div className="relative">
@@ -93,7 +114,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                         placeholder="Département"
                         endIcon={<BsCaretDownFill />}
                         value={departmentQuery}
-                        onChange={handleDepartmentChange}
+                        onChange={e => setDepartmentQuery(e.target.value)}
                         onInput={searchDepartments}
                         onClick={() => setOpenDepartments(!openDepartments)}
                     />
@@ -102,7 +123,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                             {!searchDepartment ? (
                                 departments.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); setLocation(element.nom_departement); setDepartment(element.nom_departement); setRegion(element.nom_ancienne_region); setNewRegion(element.nom_nouvelle_region); setOpenDepartments(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); addDepartment(element); setOpenDepartments(false) }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
                                     )
@@ -110,7 +131,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                             ) : (
                                 isDepartmentInResult.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); setLocation(element.nom_departement); setDepartment(element.nom_departement); setRegion(element.nom_ancienne_region); setNewRegion(element.nom_nouvelle_region); setOpenDepartments(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); addDepartment(element); setOpenDepartments(false) }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
                                     )
@@ -118,7 +139,7 @@ const MapModal = ({ open, setOpen, location, setLocation, department, setDepartm
                             )}
                         </div>
                     }
-                    <MapDepartments location={location} setLocation={setLocation} department={department} setDepartment={setDepartment} region={region} setRegion={setRegion} newRegion={newRegion} setNewRegion={setNewRegion} />
+                    <MapDepartments location={location} setLocation={setLocation} />
                 </div>
             )}
         </Modal>

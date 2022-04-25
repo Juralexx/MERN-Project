@@ -1,15 +1,27 @@
 import React from "react";
 
-const MapDepartments = ({ location, setLocation, department, setDepartment, region, setRegion, newRegion, setNewRegion }) => {
-    const addActiveClass = (element) => {
-        if (location === element || department === element) return "active"
+const MapDepartments = ({ location, setLocation }) => {
+
+    const addActiveClass = (value) => {
+        location.map(element => {
+            if (element.type === "department" && element.region === value)
+                return "active"
+            else
+                return "neutral"
+        })
     }
 
     const getLocation = (e) => {
-        setLocation(e.target.dataset.department)
-        setDepartment(e.target.dataset.department)
-        setRegion(e.target.dataset.region)
-        setNewRegion(e.target.dataset.newregion)
+        const dep = {
+            type: "department",
+            department: e.target.dataset.department,
+            department_code: e.target.dataset.numdepartment,
+            region: e.target.dataset.region,
+            region_code: e.target.dataset.coderegion,
+            new_region: e.target.dataset.newregion,
+            new_region_code: e.target.dataset.codenewregion
+        }
+        setLocation(locations => [...locations, dep])
     }
 
     return (

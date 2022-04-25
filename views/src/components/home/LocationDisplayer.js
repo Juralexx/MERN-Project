@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BsGeoFill } from 'react-icons/bs'
 import { GiFrance } from 'react-icons/gi'
 import { IoClose } from 'react-icons/io5'
@@ -8,8 +8,22 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayLocation, aroundLocation, setAroundLocation }) => {
+    const [sliderKey, setSliderKey] = useState(0)
 
-    const deleteItem = (value) => { setLocation(locations => locations.filter(e => e.COM_NOM !== value.COM_NOM)) }
+    const deleteItem = (value) => {
+        if (value.type === "city")
+            setLocation(locations => locations.filter(e => e.location !== value.location))
+        else if (value.type === "department")
+            setLocation(locations => locations.filter(e => e.type === "department" && e.department !== value.department))
+        else
+            setLocation(locations => locations.filter(e => e.type === "region" && e.region !== value.region))
+    }
+
+    const getDistance = (key) => {
+        const distance = [0, 5, 10, 20, 50, 100, 200]
+        setAroundLocation(distance[key])
+        setSliderKey(key)
+    }
 
     return (
         <div className="location-search-displayer">
@@ -21,7 +35,18 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                             <div className="locations-selected">
                                 {location.map((element, key) => {
                                     return (
-                                        <div className="locations-selected-item" key={key}>{element.COM_NOM} ({element.DEP_CODE})<IoClose onClick={() => deleteItem(element)} /></div>
+                                        <div className="locations-selected-item" key={key}>
+                                            {element.type === "city" &&
+                                                <p>{element.location} ({element.department_code})</p>
+                                            }
+                                            {element.type === "department" &&
+                                                <p>{element.department} ({element.department_code})</p>
+                                            }
+                                            {element.type === "region" &&
+                                                <p>{element.region}</p>
+                                            }
+                                            <IoClose onClick={() => deleteItem(element)} />
+                                        </div>
                                     )
                                 })}
                             </div>
@@ -32,7 +57,18 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                             <h4>Localisations récentes</h4>
                             {recentLocations.map((element, key) => {
                                 return (
-                                    <div className="locations-search-item" key={key} onClick={() => setLocation([element])}><FaMapMarkerAlt /> <p>{element.COM_NOM} ({element.DEP_CODE})</p></div>
+                                    <div className="locations-search-item" key={key} onClick={() => setLocation(locations => [...locations, element])}>
+                                        <FaMapMarkerAlt />
+                                        {element.type === "city" &&
+                                            <p>{element.location} ({element.department_code})</p>
+                                        }
+                                        {element.type === "department" &&
+                                            <p>{element.department} ({element.department_code})</p>
+                                        }
+                                        {element.type === "region" &&
+                                            <p>{element.region}</p>
+                                        }
+                                    </div>
                                 )
                             })}
                         </>
@@ -41,17 +77,16 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
             }
             {location.length === 1 &&
                 <div className="location-range">
-                    <h4>Dans un rayon de {aroundLocation} km</h4>
+                    <h4>Dans un rayon de <span>{aroundLocation}</span> km</h4>
                     <div className="range">
                         <Slider
                             min={0}
-                            max={200}
+                            max={6}
                             defaultValue={0}
-                            marks={{ 0: 0, 33.33: 5, 66.66: 10, 99.99: 20, 133.33: 50, 166.66: 100, 200: 200 }}
+                            marks={{ 0: "0km", 1: "5km", 2: "10km", 3: "20km", 4: "50km", 5: "100km", 6: "200km" }}
                             step={null}
-                            value={aroundLocation}
-                            onChange={e => setAroundLocation(e)}
-                            dotStyle={{ display: "none" }}
+                            value={sliderKey}
+                            onChange={e => getDistance(e)}
                         />
                     </div>
                 </div>
@@ -61,8 +96,8 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                 <div className="locations-search-item"><GiFrance /> <p>Toute la France</p></div>
             </div>
             <div className="locations-search-bottom">
-                <TextButton text="Effacer" />
-                <TextButton text="Valider" />
+                <TextButton text="Effacer" onClick={() => { setLocation([]); setSliderKey(0); setAroundLocation(0)}}/>
+                <TextButton text="Valider" onClick={() => setDisplayLocation(false)} />
             </div>
         </div>
     )

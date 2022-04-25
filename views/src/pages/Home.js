@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Header from '../components/home/Header';
 import ProjectsSwiper from '../components/home/ProjectsSwiper';
 import CategoriesSwiper from '../components/home/CategoriesSwiper';
 import TagsSwiper from '../components/home/TagsSwiper';
 import ProjectPage from './Project';
-import { MdArrowRightAlt } from 'react-icons/md';
 import Footer from '../components/Footer';
+import Search from './Search';
+import { MdArrowRightAlt } from 'react-icons/md';
 
 const Home = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
@@ -41,12 +42,40 @@ const Home = ({ websocket, user }) => {
         fetch()
     }, [projects.length])
 
+    /*************************************************************************************************/
+    /**************************************** RECHERCHE **********************************************/
+
+    const [category, setCategory] = useState("")
+    const [location, setLocation] = useState([])
+    const [recentLocations, setRecentLocations] = useState([])
+    const [aroundLocation, setAroundLocation] = useState(0)
+    const [results, setResults] = useState([])
+    const navigate = useNavigate()
+
+    const search = () => {
+        localStorage.setItem("search:locations", JSON.stringify(location))
+        setLocation([])
+        setResults(projects)
+        navigate("/search/a")
+    }
+
     return (
         <>
             <Routes>
                 <Route index element={
                     <>
-                        <Header user={user} />
+                        <Header
+                            user={user}
+                            search={search}
+                            category={category}
+                            setCategory={setCategory}
+                            location={location}
+                            setLocation={setLocation}
+                            recentLocations={recentLocations}
+                            setRecentLocations={setRecentLocations}
+                            aroundLocation={aroundLocation}
+                            setAroundLocation={setAroundLocation}
+                        />
                         <div className="home-body">
                             <div className="content-box">
                                 <CategoriesSwiper />
@@ -92,13 +121,33 @@ const Home = ({ websocket, user }) => {
                     </>
                 } />
                 {projects.length > 0 &&
-                    <Route path="project/:URLID/:URL/*" element={
-                        <ProjectPage
-                            user={user}
-                            websocket={websocket}
-                            projects={projects}
-                        />
-                    } />
+                    <>
+                        <Route path="project/:URLID/:URL/*" element={
+                            <ProjectPage
+                                user={user}
+                                websocket={websocket}
+                                projects={projects}
+                            />
+                        } />
+                        <Route path="search/*" element={
+                            <Search
+                                user={user}
+                                websocket={websocket}
+                                search={search}
+                                results={results}
+                                setResults={setResults}
+                                projects={projects}
+                                category={category}
+                                setCategory={setCategory}
+                                location={location}
+                                setLocation={setLocation}
+                                recentLocations={recentLocations}
+                                setRecentLocations={setRecentLocations}
+                                aroundLocation={aroundLocation}
+                                setAroundLocation={setAroundLocation}
+                            />
+                        } />
+                    </>
                 }
             </Routes>
             <Footer />

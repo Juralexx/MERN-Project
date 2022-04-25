@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useClickOutside } from '../../../tools/functions/useClickOutside'
-import Categories from '../../../home/Categories'
+import CategoriesPicker from '../../../home/CategoriesPicker'
 import { ErrorCard } from '../../../tools/components/Error'
 import { DoubleIconInput, ClassicInput, Textarea } from '../../../tools/components/Inputs'
 import { BiCategory } from 'react-icons/bi'
@@ -34,7 +34,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, setErr, error, c
                 <div className="relative" ref={wrapperRef}>
                     <DoubleIconInput className={`full ${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
                     {display && (
-                        <Categories open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
+                        <CategoriesPicker open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
                     )}
                 </div>
                 {isErr === "category" && <ErrorCard useRef={errorRef} display={isErr === "category"} text={error} clean={() => setErr("")} />}

@@ -2,17 +2,17 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { favoriteProject, unfavoriteProject } from '../../../actions/project.action';
-import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
 import { IconToggle } from './Button';
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
 
 const FavoriteButton = ({ project }) => {
     const uid = useContext(UidContext)
-    const dispatch = useDispatch()
     const [favorite, setFavorite] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        if (project.favorites.includes(uid)) { setFavorite(true) }
-        else { setFavorite(false) }
+        if (project.favorites.includes(uid)) setFavorite(true)
+        else setFavorite(false)
     }, [project.favorites, uid])
 
     const addFavorite = () => {
@@ -26,21 +26,24 @@ const FavoriteButton = ({ project }) => {
 
     return (
         <>
-            {!uid && (
-                <div className="absolute top-[120px] right-2">
-                    <IconToggle icon={<AiOutlineStar className="w-6 h-6 fill-yellow-400" />} />
+            {!uid &&
+                <div className="favorite-toggle">
+                    <p>Ajouter au favoris</p>
+                    <IconToggle icon={<AiOutlineStar />} />
                 </div>
-            )}
-            {uid && !favorite && (
-                <div className="absolute top-[120px] right-2">
-                    <IconToggle icon={<AiOutlineStar className="w-6 h-6 fill-yellow-400" />} onClick={addFavorite} />
+            }
+            {uid && !favorite &&
+                <div className="favorite-toggle" onClick={addFavorite}>
+                    <p>Ajouter au favoris</p>
+                    <IconToggle icon={<AiOutlineStar />} />
                 </div>
-            )}
-            {uid && favorite && (
-                <div className="absolute top-[120px] right-2">
-                    <IconToggle icon={<AiFillStar className="w-6 h-6 fill-yellow-400" />} onClick={pullFavorite} />
+            }
+            {uid && favorite &&
+                <div className="favorite-toggle" onClick={pullFavorite}>
+                    <p>Retirer des favoris</p>
+                    <IconToggle icon={<AiFillStar />} />
                 </div>
-            )}
+            }
         </>
     )
 }

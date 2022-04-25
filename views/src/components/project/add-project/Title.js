@@ -3,7 +3,7 @@ import { ClassicInput, DoubleIconInput, Textarea } from '../../tools/components/
 import { useClickOutside } from "../../tools/functions/useClickOutside";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { BiCategory } from 'react-icons/bi'
-import Categories from '../../home/Categories';
+import CategoriesPicker from '../../home/CategoriesPicker';
 import { EndIconButton } from "../../tools/components/Button";
 import { IoMdArrowRoundForward } from 'react-icons/io'
 import { ErrorCard } from '../../tools/components/Error';
@@ -77,7 +77,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
                         <div className="relative" ref={wrapperRef}>
                             <DoubleIconInput className={`full ${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
                             {display && (
-                                <Categories open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
+                                <CategoriesPicker open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
                             )}
                         </div>
                         {isErr === "category" && <ErrorCard useRef={errorRef} display={isErr === "category"} text={error} clean={() => setErr("")} />}

@@ -133,3 +133,90 @@
         }
     }
 }
+
+.categories-container {
+    position      : absolute;
+    top           : 56px;
+    width         : 100%;
+    background    : var(--content-x-light);
+    height        : auto;
+    z-index       : 1500;
+    border-radius : var(--radius);
+    box-shadow    : var(--shadow-lg);
+
+    h4 {
+        text-transform   : uppercase;
+        padding          : 15px 20px 0;
+    }
+
+    .categories-inner {
+        display : flex;
+
+        .categories-col {
+            display        : flex;
+            flex-direction : column;
+            width          : 25%;
+            padding        : 10px 20px;
+
+            .categories-item {
+                position    : relative;
+                display     : flex;
+                align-items : center;
+                width       : auto;
+                padding     : 6px 0;
+                cursor      : pointer;
+                color       : var(--text-secondary);
+                transition  : .2s ease;
+            
+                svg {
+                    opacity     : 0;
+                    margin-left : 4px;
+                    transition  : .2s ease;
+                }
+    
+                &:hover {
+                    padding-left : 5px;
+                    color        : var(--primary);
+                    svg {
+                        opacity     : 1;
+                        margin-left : 8px;
+                        transition  : .2s ease;
+                    }
+                }
+
+                &.active {
+                    color : var(--primary);
+                }
+            }
+        }
+    }
+
+    .categories-bottom-link {
+        text-transform   : uppercase;
+        padding          : 15px 20px;
+        background-color : var(--content-light);
+
+        a {
+            display     : flex;
+            align-items : center;
+            transition  : .2s ease;
+            
+            svg {
+                margin-left : 7px;
+            }
+
+            &:hover {
+                padding-left : 5px;
+                color        : var(--primary);
+                transition   : .2s ease;
+                svg {
+                    margin-left : 12px;
+                }
+            }
+        }
+    }
+
+    &.right {
+        right : 0;
+    }
+}

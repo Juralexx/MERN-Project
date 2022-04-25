@@ -11,7 +11,6 @@ import ActualityCard from '../components/project/project-page/ActualityCard';
 import GalleryCard from '../components/project/project-page/GalleryCard';
 import MapCard from '../components/project/project-page/MapCard';
 import Actuality from '../components/project/project-page/Actuality';
-import Footer from '../components/Footer';
 
 const ProjectPage = ({ user, websocket, projects }) => {
     const { URLID, URL } = useParams()
