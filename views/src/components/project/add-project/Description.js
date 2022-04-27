@@ -1,11 +1,9 @@
 import React, { useRef } from 'react'
-import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
 import { IoClose } from 'react-icons/io5'
-import { EndIconButton, StartIconButton } from '../../tools/components/Button'
 import { ErrorCard } from '../../tools/components/Error'
 import { ClassicInput, Textarea } from '../../tools/components/Inputs'
 
-const Description = ({ description, setDescription, tags, setTags, error, setError, isErr, setErr, onNext, onBack }) => {
+const Description = ({ description, setDescription, tags, setTags, error, setError, isErr, setErr }) => {
     const errorRef = useRef()
     const checkErr = (name) => { if (isErr === name) { return "err" } else return "" }
 
@@ -41,7 +39,7 @@ const Description = ({ description, setDescription, tags, setTags, error, setErr
 
     return (
         <div className="add-project-card">
-            <h2>Une courte description est le meilleur moyen de vous faire repérer !</h2>
+            <h3>Courte description et tags</h3>
             <div className="flex-card">
                 <div className="card-left">
                     <div className="content-form">
@@ -66,8 +64,8 @@ const Description = ({ description, setDescription, tags, setTags, error, setErr
                             <div className="tags-container">
                                 {tags.map((element, key) => {
                                     return (
-                                        <div className="tags" key={key}>
-                                            <p>{"#" + element}</p>
+                                        <div className="tag" key={key}>
+                                            <span>#</span> {element}
                                             <IoClose onClick={() => removeTag(element)} />
                                         </div>
                                     )
@@ -84,11 +82,6 @@ const Description = ({ description, setDescription, tags, setTags, error, setErr
                     <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
                 </div>
-            </div>
-
-            <div className="btn-container">
-                <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <EndIconButton text="Suivant" className="next-btn right" disabled={description.length < 10 || description.length > 300} icon={<IoMdArrowRoundForward />} onClick={onNext} />
             </div>
         </div>
     )

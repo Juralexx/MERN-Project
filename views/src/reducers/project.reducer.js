@@ -64,7 +64,6 @@ export default function projectReducer(state = initialState, action) {
                 description: action.payload.description,
                 end: action.payload.end,
                 content: action.payload.content,
-                numberofcontributors: action.payload.numberofcontributors,
                 works: action.payload.works,
             }
 

@@ -1,12 +1,11 @@
 .search-page {
     position         : relative;
     width            : 100%;
-    height           : 100%;
     background-color : var(--content-x-light);
 
     .search-header {
         position         : relative;
-        background-color : var(--footer);
+        background-color : var(--light);
 
         .search-header-inner {
             max-width : 1000px;
@@ -53,9 +52,15 @@
         }
 
         .results-content {
-            width        : 100%;
-            column-count : 3;
-            column-width : 33.33%;
+            display         : flex;
+            justify-content : space-between;
+            flex-wrap       : wrap;
+            width           : 100%;
+            min-height   : 100%;
+
+            .card {
+                max-width  : 424px;
+            }
         }
     }
 }

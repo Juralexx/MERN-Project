@@ -10,10 +10,10 @@
     text-transform  : none;
     border          : none;
     outline         : none;
-    border-radius   : var(--radius);
     cursor          : pointer;
     white-space     : nowrap;
     transform       : scale(1);
+    box-shadow      : var(--shadow-tiny);
 
     &:disabled {
         opacity : 0.5;
@@ -25,6 +25,7 @@
 
     &:active {
         transform  : scale(0.95);
+        box-shadow : inset var(--shadow-tiny);
     }
 }
 
@@ -73,7 +74,8 @@
 }
 
 .text-btn {
-    color : var(--primary);
+    color      : var(--primary);
+    box-shadow : none;
 
     &:hover {
         background : rgba(var(--primary-rgb), 0.15);
@@ -125,6 +127,7 @@
 .text-btn-icon-start {
     border-radius : var(--radius);
     color         : var(--primary);
+    box-shadow    : none;
 
     svg {
         height       : 18px;
@@ -138,7 +141,8 @@
 }
 
 .text-btn-icon-end {
-    color : var(--primary);
+    color      : var(--primary);
+    box-shadow : none;
 
     svg {
         height      : 18px;
@@ -181,7 +185,7 @@
     min-width       : 30px;
     color           : var(--text);
     transform       : scale(1);
-    border-radius   : 5px;
+    border-radius   : var(--radius);
     cursor          : pointer;
 
     svg {
@@ -209,7 +213,7 @@
     justify-content  : center;
     padding          : 8px;
     cursor           : pointer;
-    border-radius    : 5px;
+    border-radius    : var(--radius);
     color            : var(--text);
     transform        : scale(1);
     background-color : var(--primary);

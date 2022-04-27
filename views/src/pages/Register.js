@@ -1,6 +1,7 @@
 import React from 'react';
 import SignUpForm from '../components/log/SignUpForm';
 import { Link } from 'react-router-dom';
+import FooterLight from '../components/FooterLight';
 
 const Register = ({ uid }) => {
     
@@ -20,6 +21,7 @@ const Register = ({ uid }) => {
                     </div>
                 </div>
             </div>
+            <FooterLight />
         </div>
     );
 }

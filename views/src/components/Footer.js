@@ -5,7 +5,7 @@ import { centre, drom, est, nord, ouest, sud_est, sud_ouest } from '../api/regio
 const Footer = () => {
     return (
         <div id="footer">
-            <div className="content-box">
+            <div className="box">
                 <div className="footer-content">
                     <div className="footer-content-col">
                         <div className="footer-content-bloc">
@@ -88,7 +88,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="content-box">
+            <div className="box">
                 <div className="footer-bottom">
                     <div className="footer-bottom-left">
                         <a href="/">Conditions d'utilisation</a>
@@ -96,6 +96,9 @@ const Footer = () => {
                         <a href="/">Politique en matière de cookies</a>
                     </div>
                     <div className="footer-bottom-right">
+                        <div className="footer-logo">
+                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} />
+                        </div>
                         <div>Redux Ltd. © 2022</div>
                     </div>
                 </div>

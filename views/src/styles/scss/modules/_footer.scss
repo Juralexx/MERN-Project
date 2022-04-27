@@ -1,13 +1,10 @@
 #footer {
     position         : relative;
+    bottom           : 0px;
     width            : 100%;
     height           : auto;
-    background-color : var(--footer);
-    padding-top      : 20px;
-
-    .content-box {
-        padding : 0 50px;
-    }
+    background-color : var(--x-light);
+    padding          : 10px 0;
 
     .footer-slider {
         background : var(--content-light);
@@ -32,7 +29,6 @@
             0% {
                 transform : translateX(0);
             }
-        
             100% {
                 transform : translateX(calc(-150px * 7.5))
             }
@@ -77,8 +73,27 @@
         justify-content : space-between;
         padding         : 20px 0;
 
+        .footer-bottom-left {
+            display     : flex;
+            align-items : center;
+        }
+
         a {
             padding-right : 20px;
+        }
+
+        .footer-bottom-right {
+            display     : flex;
+            align-items : center;
+            font-size   : 16px;
+            color       : var(--text-secondary);
+            .footer-logo {
+                img {
+                    width        : 30px;
+                    height       : 30px;
+                    margin-right : 10px;
+                }
+            }
         }
     }
 }

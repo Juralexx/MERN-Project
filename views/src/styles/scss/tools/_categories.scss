@@ -31,7 +31,7 @@
                 align-items   : center;
                 padding       : 10px 10px;
                 cursor        : pointer;
-                border-radius : 5px;
+                border-radius : var(--radius);
                 margin        : 2px 0;
 
                 .left {
@@ -119,7 +119,7 @@
             padding       : 10px 10px;
             margin        : 2px 0;
             cursor        : pointer;
-            border-radius : 5px;
+            border-radius : var(--radius);
 
             &.active {
                 color      : var(--primary);
@@ -166,6 +166,7 @@
                 padding     : 6px 0;
                 cursor      : pointer;
                 color       : var(--text-secondary);
+                white-space : nowrap;
                 transition  : .2s ease;
             
                 svg {
@@ -194,7 +195,7 @@
     .categories-bottom-link {
         text-transform : uppercase;
         padding        : 15px 20px;
-        background     : var(--footer);
+        background     : var(--light);
 
         a {
             display     : flex;
@@ -213,6 +214,12 @@
                     margin-left : 12px;
                 }
             }
+        }
+    }
+
+    &.no-bottom {
+        .categories-bottom-link {
+            display : none;
         }
     }
 

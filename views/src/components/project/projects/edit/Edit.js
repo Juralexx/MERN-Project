@@ -14,7 +14,6 @@ import Location from './Location'
 import End from './End'
 import Works from './Works'
 import Content from './Content'
-import Contributors from './Contributors'
 import Description from './Description'
 import { Oval } from 'react-loading-icons'
 import { Icon } from 'leaflet'
@@ -34,7 +33,6 @@ const Edit = ({ project }) => {
     const [newRegion, setNewRegion] = useState(project.new_region)
     const [codeNewRegion, setCodeNewRegion] = useState(project.code_new_region)
     const [description, setDescription] = useState(project.description)
-    const [numberofcontributors, setNumberofcontributors] = useState(project.numberofcontributors)
     const [workArray, setWorkArray] = useState(project.works)
     const [end, setEnd] = useState(ISOtoNavFormat(project.end))
     const [content, setContent] = useState(project.content[0].ops)
@@ -60,9 +58,6 @@ const Edit = ({ project }) => {
         } else if (description === "" || description.length < 10 || description.length > 300) {
             setErr("description")
             setError("Veuillez ajouter une courte description à votre projet")
-        } else if (numberofcontributors < 0 || numberofcontributors === (null || undefined)) {
-            setErr("numberofcontributors")
-            setError("Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer")
         } else if (content === "" || content.length < 10 || content.length > 10000) {
             setErr("content")
             setError("Veuillez saisir une description valide, votre description doit faire entre 10 et 10 000 caractères")
@@ -102,7 +97,6 @@ const Edit = ({ project }) => {
                     code_new_region: codeNewRegion,
                     end: end,
                     content: content,
-                    numberofcontributors: numberofcontributors,
                     works: workArray,
                 }
             }).then(async res => {
@@ -110,9 +104,8 @@ const Edit = ({ project }) => {
                     if (res.data.errors.title) setError(res.data.errors.title)
                     else if (res.data.errors.category) setError(res.data.errors.category)
                     else if (res.data.errors.content) setError(res.data.errors.content)
-                    else if (res.data.errors.numberofcontributors) setError(res.data.errors.numberofcontributors)
                 } else {
-                    dispatch(updateProject(project._id, title, URL, subtitle, category, tags, state, geolocalisation, location, department, codeDepartment, region, codeRegion, newRegion, codeNewRegion, description, numberofcontributors, end, workArray, content))
+                    dispatch(updateProject(project._id, title, URL, subtitle, category, tags, state, geolocalisation, location, department, codeDepartment, region, codeRegion, newRegion, codeNewRegion, description, end, workArray, content))
                     const redirection = navigate(`/projects/${project.URLID}/${project.URL}/about`)
                     setTimeout(redirection, 2000)
                 }
@@ -252,6 +245,7 @@ const Edit = ({ project }) => {
                             minZoom={5}
                             whenCreated={map => setInterval(() => { map.invalidateSize() }, 100)}
                             style={{ width: '100%', height: '100%', minHeight: 300 }}
+                            className="mt-3"
                         >
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -276,6 +270,7 @@ const Edit = ({ project }) => {
                             maxZoom={5}
                             dragging="false"
                             style={{ width: '100%', height: '100%', minHeight: 300 }}
+                            className="mt-3"
                         >
                             <TileLayer
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -310,14 +305,7 @@ const Edit = ({ project }) => {
                                 les résultats de recherche ou les e-mails que nous envoyons à notre communauté.</p>
                         </div>
                         <div className="edit-project-flex-content-right">
-                            <Contributors
-                                numberofcontributors={numberofcontributors}
-                                setNumberofcontributors={setNumberofcontributors}
-                                isErr={isErr}
-                                setErr={setErr}
-                                error={error}
-                                setError={setError}
-                            />
+                            
                         </div>
                     </div>
                     <Works

@@ -1,11 +1,17 @@
 import React from 'react'
-import { MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto, MdClear } from 'react-icons/md'
+import { useDropzone } from 'react-dropzone';
 import { coverPicture } from '../../tools/functions/useAvatar'
-import { IoMdArrowRoundBack } from 'react-icons/io'
-import { FaCheck } from 'react-icons/fa'
-import { StartIconButton } from '../../tools/components/Button';
+import { IoMdCloudDownload } from 'react-icons/io';
+import { MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto, MdClear, MdOutlineFileUpload } from 'react-icons/md'
+import { IoTrash } from 'react-icons/io5';
 
-const Pictures = ({ files, setFiles, onNext, onBack, handleAddProject }) => {
+const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        accept: 'image/jpeg, image/jpg, image/png, image/gif, image/tiff, image/bmp',
+        maxSize: 5000000,
+        onDrop: file => setMainPic(file)
+    })
 
     const removePicture = (index) => {
         const array = files.slice()
@@ -19,15 +25,41 @@ const Pictures = ({ files, setFiles, onNext, onBack, handleAddProject }) => {
 
     return (
         <div className="add-project-card">
-            <h2>De belles images vous donne plus de visibilité !</h2>
-            <div className="flex-card mb-5">
-                <div>
-                    <h3>Images du projet</h3>
+            <div className="flex-card">
+                <div className="card-left">
+                    <h3>Image principale du projet</h3>
                     <p>Ajoutez une image qui représente clairement votre projet. Choisissez une image qui supportera d'être redimensionnée.
                         Elle sera visible sur votre page de projet, sur le site et les applications mobiles Kickstarter et sur les réseaux sociaux.<br />
                         Votre image doit faire au moins 1024x576 pixels. Elle sera recadrée au format 16:9.<br />
                         À proscrire : les bannières, les badges et le texte. Ces éléments seraient illisibles à petit format et pourraient être pénalisés par l'algorithme Facebook,
                         tout en diminuant vos chances de figurer sur la page d'accueil et dans les lettres d'information de Kickstarter.</p>
+                </div>
+                <div className="card-right">
+                    {mainPic.length === 0 ? (
+                        <div {...getRootProps({ className: `img-dropzone ${isDragActive && "active"}` })}>
+                            <input {...getInputProps()} name="files" />
+                            <IoMdCloudDownload />
+                            <p>Déposez une image ici ou sélectionnez un fichier.<br />
+                                <span>Format acceptés : JPG, PNG, GIF, TIFF ou BMP, inférieurs à 5 Mo.</span>
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="img-displayer" >
+                            <div className="main-img" style={coverPicture(URL.createObjectURL(mainPic[0]))}></div>
+                            <div className="main-img-btns">
+                                <button {...getRootProps()}><input {...getInputProps()} name="files" /><MdOutlineFileUpload /></button>
+                                <button onClick={() => setMainPic([])}><IoTrash /></button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+            <div className="flex-card !mt-10">
+                <div className="card-left">
+                    <h3>Ajouter plus d'images</h3>
+                    <p>Ajoutez une image qui représente clairement votre projet. Choisissez une image qui supportera d'être redimensionnée.
+                        Elle sera visible sur votre page de projet, sur le site et les applications mobiles Kickstarter et sur les réseaux sociaux.<br />
+                        Votre image doit faire au moins 1024x576 pixels. Elle sera recadrée au format 16:9.</p>
                 </div>
             </div>
             <div className="add-img-container">
@@ -37,13 +69,17 @@ const Pictures = ({ files, setFiles, onNext, onBack, handleAddProject }) => {
                         type="file"
                         name="files"
                         multiple
-                        disabled={files.length >= 4}
+                        disabled={files.length >= 3}
                         accept="image/jpeg, image/jpg, image/png, image/gif, image/heic, image/heif, image/tiff, image/webp"
                         onChange={e => setFiles(getFiles(e.target.files))}
                     />
-                    <div className="img-preview active"><MdOutlineAddPhotoAlternate /></div>
+                    <div className="img-preview active">
+                        <div className="svg-container">
+                            <MdOutlineAddPhotoAlternate />
+                        </div>
+                    </div>
                 </div>
-                {[...Array(4)].map((element, key) => {
+                {[...Array(3)].map((_, key) => {
                     return (
                         <div className="img-preview-container" key={key}>
                             {files.length > key ? (
@@ -51,15 +87,15 @@ const Pictures = ({ files, setFiles, onNext, onBack, handleAddProject }) => {
                                     <div className="delete-btn" onClick={() => removePicture(key)}><MdClear /></div>
                                 </div>
                             ) : (
-                                <div className="img-preview"><MdOutlineInsertPhoto /></div>
+                                <div className="img-preview">
+                                    <div className="svg-container">
+                                        <MdOutlineInsertPhoto />
+                                    </div>
+                                </div>
                             )}
                         </div>
                     )
                 })}
-            </div>
-            <div className="btn-container">
-                <StartIconButton text="Retour" className="previous-btn" icon={<IoMdArrowRoundBack />} onClick={onBack} />
-                <StartIconButton text="Valider" className="next-btn" icon={<FaCheck />} onClick={handleAddProject} />
             </div>
         </div>
     )

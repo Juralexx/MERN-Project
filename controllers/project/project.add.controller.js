@@ -5,15 +5,60 @@ import mongoose from 'mongoose'
 const projectId = mongoose.Types.ObjectId()
 
 export const createProject = async (req, res) => {
-    const { posterId, posterPseudo, posterAvatar, title, URL, URLID, category, tags, geolocalisation, location, department, code_department,
-        region,code_region, new_region, code_new_region, description, end, content, numberofcontributors, works, members, manager } = req.body
+    const {
+        posterId,
+        posterPseudo,
+        posterAvatar,
+        title,
+        URL,
+        URLID,
+        category,
+        tags,
+        geolocalisation,
+        location,
+        department,
+        code_department,
+        region,
+        code_region,
+        new_region,
+        code_new_region,
+        description,
+        end,
+        content,
+        works,
+        members,
+        manager
+    } = req.body
     const _id = projectId
     const state = "En préparation"
 
     try {
         const project = ProjectModel.create({
-            _id, posterId, posterPseudo, posterAvatar, title, URL, URLID, category, tags, geolocalisation, location, department, code_department,
-            region, code_region, new_region, code_new_region, description, end, content, numberofcontributors, works, state, members, manager
+            _id,
+            posterId,
+            posterPseudo,
+            posterAvatar,
+            title,
+            URL,
+            URLID,
+            category,
+            tags,
+            geolocalisation,
+            location,
+            department,
+            code_department,
+            region,
+            code_region,
+            new_region,
+            code_new_region,
+            description,
+            end,
+            content,
+            works,
+            qna,
+            state,
+            members,
+            manager
         })
 
         await UserModel.findByIdAndUpdate(
@@ -22,22 +67,18 @@ export const createProject = async (req, res) => {
                 $addToSet: {
                     current_projects: projectId,
                     created_projects: projectId
-                },
-                $inc: {
-                    number_of_current_projects: 1,
-                    number_of_created_projects: 1
                 }
             },
             { news: true },
         )
-            .then((docs) => {
+            .then(docs => {
                 res.status(201).json({ project: project._id })
             })
             .catch((err) => {
                 return res.status(400).send({ message: err })
             })
     } catch (err) {
-        const errors = projectErrors(err);
+        const errors = projectErrors(err)
         res.status(200).json({ errors })
     }
 }

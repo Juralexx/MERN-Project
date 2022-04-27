@@ -97,10 +97,6 @@ const ProjectModel = new mongoose.Schema(
             unique: false,
         },
 
-        numberofcontributors: {
-            type: String,
-        },
-
         works: {
             type: [],
             name: String,

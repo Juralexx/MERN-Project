@@ -17,6 +17,7 @@ import AddProject from '../../pages/AddProject'
 import Dashboard from '../../pages/Dashboard'
 import SocialsNetworks from '../profil/about/update/SocialsNetworks'
 import Messenger from '../messenger/Messenger'
+import { Footer } from 'react-day-picker'
 
 function Paths({ websocket, onlineUsers, friends, user, uid }) {
     return (

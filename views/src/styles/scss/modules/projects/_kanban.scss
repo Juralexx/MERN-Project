@@ -24,10 +24,10 @@
             display        : flex;
             align-items    : center;
             padding-top    : 4px;
-            letter-spacing : 1px;
+            letter-spacing : .5px;
             
             span {
-                font-size   : 16px;
+                font-size   : 14px;
                 margin-left : 10px;
                 color       : var(--text-tertiary);
             }
@@ -37,10 +37,10 @@
             height           : 30px;
             width            : 30px;
             padding          : 7px;
-            background-color : var(--footer);
+            background-color : var(--light);
             border-radius    : 30px;
             cursor           : pointer;
-            border           : 1px solid var(--light-border);
+            box-shadow    : var(--shadow-tiny);
 
             &:hover {
                 background-color : var(--content-x-light);
@@ -66,11 +66,11 @@
 
     .kanban-ticket {
         position      : relative;
-        border-radius : var(--radius);
         padding       : 12px;
         margin        : 12px 0;
-        background    : var(--footer);
-        border        : 1px solid var(--light-border);
+        background    : var(--light);
+        border-radius : var(--radius);
+        box-shadow    : var(--shadow-tiny);
         cursor        : pointer;
 
         &.priority {
@@ -127,7 +127,7 @@
                         padding          : 3px 8px;
                         font-size        : 12px;
                         background-color : rgba(var(--light-blue-rgb), 0.6);
-                        border-radius    : 3px;
+                        border-radius    : var(--radius);
                         color            : white;
                     }
                 }

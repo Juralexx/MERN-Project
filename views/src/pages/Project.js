@@ -38,7 +38,7 @@ const ProjectPage = ({ user, websocket, projects }) => {
     return (
         !isLoading &&
         <div className="content-container project-page">
-            <Header project={project} />
+            <Header user={user} project={project} />
             <div className="project-page-body">
                 <div className="box">
                     <div className="project-navbar">

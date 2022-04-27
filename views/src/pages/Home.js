@@ -49,6 +49,8 @@ const Home = ({ websocket, user }) => {
     const [location, setLocation] = useState([])
     const [recentLocations, setRecentLocations] = useState([])
     const [aroundLocation, setAroundLocation] = useState(0)
+    const [date, setDate] = useState("")
+    const [state, setState] = useState("")
     const [results, setResults] = useState([])
     const navigate = useNavigate()
 
@@ -75,6 +77,10 @@ const Home = ({ websocket, user }) => {
                             setRecentLocations={setRecentLocations}
                             aroundLocation={aroundLocation}
                             setAroundLocation={setAroundLocation}
+                            state={state}
+                            setState={setState}
+                            date={date}
+                            setDate={setDate}
                         />
                         <div className="home-body">
                             <div className="content-box">
@@ -135,8 +141,6 @@ const Home = ({ websocket, user }) => {
                                 websocket={websocket}
                                 search={search}
                                 results={results}
-                                setResults={setResults}
-                                projects={projects}
                                 category={category}
                                 setCategory={setCategory}
                                 location={location}
@@ -145,6 +149,10 @@ const Home = ({ websocket, user }) => {
                                 setRecentLocations={setRecentLocations}
                                 aroundLocation={aroundLocation}
                                 setAroundLocation={setAroundLocation}
+                                state={state}
+                                setState={setState}
+                                date={date}
+                                setDate={setDate}
                             />
                         } />
                     </>

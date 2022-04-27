@@ -15,7 +15,7 @@
 
             &:hover {
                 background    : var(--content-x-light);
-                border-radius : 5px;
+                border-radius : var(--radius);
             }
 
             &.new-notification {
@@ -154,7 +154,7 @@
                     width         : 200px;
                     background    : var(--content);
                     padding       : 10px 0;
-                    border-radius : 5px;
+                    border-radius : var(--radius);
                     z-index       : 10;
 
                     button {
@@ -218,7 +218,7 @@
                 padding       : 20px 0;
                 font-size     : 14px;
                 color         : white;
-                border-radius : 5px;
+                border-radius : var(--radius);
                 z-index       : 11;
 
                 ul {
@@ -243,7 +243,7 @@
             display       : flex;
             padding       : 15px 20px;
             width         : 100%;
-            border-radius : 5px;
+            border-radius : var(--radius);
 
             &:hover {
                 background : var(--content);
@@ -255,7 +255,7 @@
                 .message-img {
                     width         : 38px;
                     height        : 38px;
-                    border-radius : 5px;
+                    border-radius : var(--radius);
                     margin-right  : 10px;
                 }
             }
@@ -333,7 +333,7 @@
                 right         : 10px;
                 top           : -10px;
                 padding       : 5px 10px;
-                border-radius : 5px;
+                border-radius : var(--radius);
                 background    : var(--body);
                 cursor        : pointer;
 
@@ -343,7 +343,7 @@
                     justify-content : center;
                     padding         : 5px;
                     margin          : 0 5px;
-                    border-radius   : 5px;
+                    border-radius   : var(--radius);
 
                     svg {
                         width  : 14px;
@@ -368,7 +368,7 @@
                     button {
                         width         : 100%;
                         background    : var(--body);
-                        border-radius : 5px;
+                        border-radius : var(--radius);
                         padding       : 5px 10px;
                         border        : none;
                         color         : white;
@@ -386,7 +386,7 @@
 
                 .ql-toolbar.ql-snow, .ql-container.ql-snow {
                     border        : 1px solid white;
-                    border-radius : 5px;
+                    border-radius : var(--radius);
                     margin-bottom : 3px;
                 }
                 .ql-snow .ql-stroke, .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
@@ -444,7 +444,7 @@
             align-items     : center;
             justify-content : space-between;
             color           : white;
-            border-radius   : 5px;
+            border-radius   : var(--radius);
             border          : 1px solid white;
             background      : var(--content);
         }
@@ -461,7 +461,7 @@
             padding       : 3px 10px;
             background    : rgba(var(--primary-rgb), 086);
             color         : white;
-            border-radius : 5px;
+            border-radius : var(--radius);
 
             svg {
                 margin-left: 10px;
@@ -527,7 +527,7 @@
         justify-content : space-between;
         position        : relative;
         padding         : 10px 15px;
-        border-radius   : 5px;
+        border-radius   : var(--radius);
         cursor          : pointer;
 
         .online-user {
@@ -574,7 +574,7 @@
             left          : -155px;
             top           : 0px;
             background    : var(--content);
-            border-radius : 5px;
+            border-radius : var(--radius);
             padding       : 10px 0;
 
             ul {
@@ -605,12 +605,12 @@
     position        : absolute;
     bottom          : 30px;
     background      : var(--body);
-    border-radius   : 5px;
+    border-radius   : var(--radius);
     padding         : 7px;
 
     span {
         padding       : 7px;
-        border-radius : 5px;
+        border-radius : var(--radius);
         background    : var(--content);
     }
 
@@ -773,7 +773,7 @@
                         height        : 36px;
                         width         : 36px;
                         margin-right  : 10px;
-                        border-radius : 5px;
+                        border-radius : var(--radius);
                     }
                 }
             }
@@ -790,7 +790,7 @@
     background    : var(--content);
     z-index       : 1000000000;
     font-size     : 13px;
-    border-radius : 5px;
+    border-radius : var(--radius);
 
     .top {
         display : flex;

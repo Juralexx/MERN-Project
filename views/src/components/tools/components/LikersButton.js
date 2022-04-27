@@ -19,42 +19,46 @@ const LikersButton = ({ project, onClick }) => {
     }, [project.likers, uid])
 
     useEffect(() => {
-        if (project.likers.includes(uid)) {
-            if (liked)
-                if (project.likers.length > 1) setAction(<span>Vous et {project.likers.length - 1}</span>)
-                else if (project.likers.length === 1) setAction(<span>Vous</span>)
-                else if (project.likers.length === 0) setAction(<span>Vous</span>)
-            if (!liked) setAction(<span>{project.likers.length - 1}</span>)
-        }
-        else {
-            if (liked)
-                if (project.likers.length > 1) setAction(<span>Vous et {project.likers.length}</span>)
-                else if (project.likers.length === 1) setAction(<span>Vous et 1</span>)
-                else if (project.likers.length === 0) setAction(<span>Vous</span>)
-            if (!liked) setAction(<span>{project.likers.length}</span>)
+        if (uid) {
+            if (project.likers.includes(uid)) {
+                if (liked)
+                    if (project.likers.length > 1) setAction(`Vous et  ${project.likers.length - 1}`)
+                    else if (project.likers.length === 1) setAction("Vous")
+                    else if (project.likers.length === 0) setAction("Vous")
+                if (!liked) setAction(project.likers.length - 1)
+            }
+            else {
+                if (liked)
+                    if (project.likers.length > 1) setAction(`Vous et  ${project.likers.length}`)
+                    else if (project.likers.length === 1) setAction("Vous et 1")
+                    else if (project.likers.length === 0) setAction("Vous")
+                if (!liked) setAction(project.likers.length)
+            }
+        } else {
+            setAction(project.likers.length)
         }
     }, [liked, project.likers, uid])
 
     return (
         <>
-            {uid === null && (
-                <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} hoverColor="bg-title/50" />
+            {uid === null &&
+                <div className="action-btn like">
+                    <IconToggle icon={<IoHeartOutline />} />
                     <p>{action}</p>
                 </div>
-            )}
-            {uid && !liked && (
-                <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeartOutline className="w-6 h-6 stroke-title" />} hoverColor="bg-title/50" onClick={like} />
+            }
+            {uid && !liked &&
+                <div className="action-btn like">
+                    <IconToggle icon={<IoHeartOutline />} onClick={like} />
                     <p onClick={onClick}>{action}</p>
                 </div>
-            )}
-            {uid && liked && (
-                <div className="relative flex items-center">
-                    <IconToggle icon={<IoHeart className="w-6 h-6 fill-title" />} color="title" onClick={unlike} />
+            }
+            {uid && liked &&
+                <div className="action-btn like">
+                    <IconToggle icon={<IoHeart />} onClick={unlike} />
                     <p onClick={onClick}>{action}</p>
                 </div>
-            )}
+            }
         </>
     )
 }

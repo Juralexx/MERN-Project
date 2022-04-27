@@ -24,8 +24,8 @@
     align-items     : center;
     margin          : 12px 0 8px;
     border-radius   : var(--radius);
-    background      : var(--footer);
-    border          : 1px solid var(--light-border);
+    background      : var(--xx-light);
+    box-shadow      : var(--shadow-tiny);
 
     .dashboard-members-table-tools {
         display       : flex;
@@ -109,26 +109,22 @@
     background    : var(--content);
     color         : var(--text);
     border-radius : var(--radius);
-    border        : 1px solid var(--light-border);
+    box-shadow    : var(--shadow-tiny);
 
     .home-members-header {
         position        : relative;
         display         : flex;
         justify-content : space-between;
         align-items     : center;
-        padding         : 6px 12px;
+        padding         : 0 12px 6px;
         margin-bottom   : 8px;
         border-bottom   : 2px solid var(--content-x-light);
 
-        h2 {
+        h3 {
             span {
-                display          : inline-block;
-                vertical-align   : middle;
-                font-size        : 14px;
-                padding          : 3px 8px 2px;
-                margin-left      : 8px;
-                border-radius    : 5px;
-                background-color : var(--content-x-light);
+                font-size   : 14px;
+                margin-left : 4px;
+                color       : var(--text-secondary);
             }
         }
     }

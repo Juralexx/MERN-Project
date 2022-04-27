@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-// import Swal from "sweetalert2";
-import { Stepper } from '@zendeskgarden/react-accordions'
 import { removeAccents } from '../components/Utils'
 import Title from "../components/project/add-project/Title";
 import Location from "../components/project/add-project/Location";
@@ -11,6 +10,13 @@ import End from "../components/project/add-project/End";
 import Content from "../components/project/add-project/Content";
 import Pictures from "../components/project/add-project/Pictures";
 import Description from "../components/project/add-project/Description";
+import Qna from "../components/project/add-project/Qna";
+import FooterLight from "../components/FooterLight";
+import { Button, EndIconButton, StartIconButton, StartIconOutlinedButton } from "../components/tools/components/Button";
+import { BsFillEyeFill, BsChatLeftQuote } from "react-icons/bs";
+import { MdOutlineDescription, MdOutlinePhotoLibrary } from 'react-icons/md'
+import { RiBook3Line, RiTeamLine } from 'react-icons/ri'
+import { HiOutlineArrowNarrowRight, HiOutlineArrowNarrowLeft } from 'react-icons/hi'
 
 const AddProject = ({ user }) => {
     const [title, setTitle] = useState("")
@@ -28,45 +34,51 @@ const AddProject = ({ user }) => {
     const [leafletLoading, setLeafletLoading] = useState(false)
     const [geoJSON, setGeoJSON] = useState([])
     const [description, setDescription] = useState("")
-    const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
     const [end, setEnd] = useState("")
     const [content, setContent] = useState({})
+    const [mainPic, setMainPic] = useState([])
     const [files, setFiles] = useState([])
-    // const navigate = useNavigate()
-    const [step, setStep] = useState(0)
-    const onNext = () => setStep(step + 1)
-    const onBack = () => setStep(step - 1)
+    const [qna, setQna] = useState([])
     const [error, setError] = useState(null)
     const [isErr, setErr] = useState(null)
+    const [nav, setNav] = useState(0)
+    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
+    // const navigate = useNavigate()
 
-    const handleAddProject = async (e) => {
-        e.preventDefault()
-        e.stopPropagation()
+    const handleAddProject = async () => {
         if (title === "" || title.length < 10 || title.length > 60) {
             setErr("title")
-            setStep(1)
             setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères")
+            setNav(0)
         } else if (subtitle === "" || subtitle.length < 10 || subtitle.length > 100) {
             setErr("subtitle")
-            setStep(1)
             setError("Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères")
+            setNav(0)
         } else if (category === "") {
             setErr("category")
-            setStep(1)
             setError("Veuillez saisir une catégorie")
+            setNav(0)
         } else if (description === "" || description.length < 10 || description.length > 300) {
             setErr("description")
-            setStep(3)
             setError("Veuillez ajouter une courte description à votre projet")
-        } else if (numberofcontributors < 0 || numberofcontributors === (null || undefined)) {
-            setErr("numberofcontributors")
-            setStep(4)
-            setError("Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer")
-        } else if (content === "" || content.length < 10 || content.length > 10000) {
+            setNav(0)
+        } else if (content === "" || content.length < 10 || content.length > 100000) {
             setErr("content")
-            setStep(5)
             setError("Veuillez saisir une description valide, votre description doit faire entre 10 et 10 000 caractères")
+            setNav(1)
+        } else if (qna.length > 0) {
+            for (let i = 0; i < qna.length; i++) {
+                if (qna[i].question === "" || qna[i].question.length < 10 || qna[i].question.length > 100) {
+                    setErr(`question-${i}`)
+                    setError("Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères")
+                    setNav(4)
+                } else if (qna[i].answer === "" || qna[i].answer.length < 10 || qna[i].answer.length > 4000) {
+                    setErr(`answer-${i}`)
+                    setError("Veuillez ajouter une reponse valide à votre question")
+                    setNav(4)
+                }
+            }
         } else {
             let cleanTitle = title.toLowerCase();
             cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
@@ -105,7 +117,6 @@ const AddProject = ({ user }) => {
                     description: description,
                     end: end,
                     content: content,
-                    numberofcontributors: numberofcontributors,
                     works: workArray,
                     manager: user._id,
                     members: { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "manager", since: new Date().toISOString() }
@@ -115,21 +126,20 @@ const AddProject = ({ user }) => {
                     if (res.data.errors.title) setError(res.data.errors.title)
                     else if (res.data.errors.category) setError(res.data.errors.category)
                     else if (res.data.errors.content) setError(res.data.errors.content)
-                    else if (res.data.errors.numberofcontributors) setError(res.data.errors.numberofcontributors)
                 } else {
-                    if (files.length > 0) {
+                    let pictures = mainPic.concat(files)
+                    if (pictures.length > 0) {
                         await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URLID}/${URL}`)
                             .then(async (response) => {
                                 let formData = new FormData()
-                                for (let i = 0; i < files.length; i++) {
-                                    formData.append('files', files[i])
+                                for (let i = 0; i < pictures.length; i++) {
+                                    formData.append('files', pictures[i])
                                 }
                                 await axios.put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${response.data._id}`, formData)
                                     .then(res => res.data).catch(err => console.log(err))
                             }).catch(err => console.log(err))
                     }
-                    //const redirection = navigate(`/project/${URLID}/${URL}`)
-                    //setTimeout(redirection, 2000)
+                    //setTimeout(navigate(`/project/${URLID}/${URL}`), 2000)
                 }
             }).catch(err => console.log(err))
         }
@@ -151,13 +161,54 @@ const AddProject = ({ user }) => {
     }, [location])
 
     return (
-        <div className="add-project">
-            <div className="add-project-container">
-                <h1>Soumettre un projet</h1>
-                <Stepper activeIndex={step}>
-                    <Stepper.Step key={1}>
-                        <Stepper.Label>Titre et catégorie</Stepper.Label>
-                        <Stepper.Content>
+        <>
+            <div className="content-container add-project">
+                <div className="add-project-header">
+                    <div className="add-project-header-top">
+                        <div className="logo-container">
+                            <Link to="/">
+                                <div className="logo-inner">
+                                    <img src={`${process.env.REACT_APP_API_URL}files/img/logo-top.png`} alt="" />
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="header-top-right">
+                            <StartIconOutlinedButton text="Aperçu" icon={<BsFillEyeFill />} />
+                            <Button text="Enregistrer et publier" onClick={handleAddProject} />
+                        </div>
+                    </div>
+                    <div className="add-project-header-bottom">
+                        <div className="header-bottom-container">
+                            <div className={`header-bottom-item ${addActive(nav === 0, "active")}`} onClick={() => setNav(0)}>
+                                <MdOutlineDescription />
+                                <p>Les bases</p>
+                            </div>
+                            <div className={`header-bottom-item ${addActive(nav === 1, "active")}`} onClick={() => setNav(1)}>
+                                <RiBook3Line />
+                                <p>Description</p>
+                            </div>
+                            <div className={`header-bottom-item ${addActive(nav === 2, "active")}`} onClick={() => setNav(2)}>
+                                <MdOutlinePhotoLibrary />
+                                <p>Galerie</p>
+                            </div>
+                            <div className={`header-bottom-item ${addActive(nav === 3, "active")}`} onClick={() => setNav(3)}>
+                                <RiTeamLine />
+                                <p>Équipe</p>
+                            </div>
+                            <div className={`header-bottom-item ${addActive(nav === 4, "active")}`} onClick={() => setNav(4)}>
+                                <BsChatLeftQuote />
+                                <p>FAQ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="content-box">
+                    {nav === 0 &&
+                        <>
+                            <div className="titles-container">
+                                <h1>Commençons par les bases</h1>
+                                <h2>Facilitez la tâche de ceux qui veulent en savoir plus.</h2>
+                            </div>
                             <Title
                                 title={title}
                                 setTitle={setTitle}
@@ -168,26 +219,16 @@ const AddProject = ({ user }) => {
                                 isErr={isErr}
                                 setErr={setErr}
                                 error={error}
-                                setError={setError}
-                                onNext={onNext}
                             />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                    <Stepper.Step key={2}>
-                        <Stepper.Label>Localisation</Stepper.Label>
-                        <Stepper.Content>
                             <Location
                                 geolocalisation={geolocalisation}
                                 setGeolocalisation={setGeolocalisation}
                                 location={location}
                                 setLocation={setLocation}
-                                department={department}
                                 setDepartment={setDepartment}
                                 setCodeDepartment={setCodeDepartment}
-                                region={region}
                                 setRegion={setRegion}
                                 setCodeRegion={setCodeRegion}
-                                newRegion={newRegion}
                                 setNewRegion={setNewRegion}
                                 setCodeNewRegion={setCodeNewRegion}
                                 leafletLoading={leafletLoading}
@@ -195,15 +236,7 @@ const AddProject = ({ user }) => {
                                 isErr={isErr}
                                 setErr={setErr}
                                 error={error}
-                                setError={setError}
-                                onNext={onNext}
-                                onBack={onBack}
                             />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                    <Stepper.Step key={3}>
-                        <Stepper.Label>Courte description et tags</Stepper.Label>
-                        <Stepper.Content>
                             <Description
                                 description={description}
                                 setDescription={setDescription}
@@ -213,78 +246,101 @@ const AddProject = ({ user }) => {
                                 setErr={setErr}
                                 error={error}
                                 setError={setError}
-                                onNext={onNext}
-                                onBack={onBack}
                             />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                    <Stepper.Step key={4}>
-                        <Stepper.Label>Nombre de personnes</Stepper.Label>
-                        <Stepper.Content>
+                            <End
+                                end={end}
+                                setEnd={setEnd}
+                            />
+                            <div className="btn-container">
+                                <EndIconButton text="Suivant : Description" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(1)} />
+                            </div>
+                        </>
+                    }
+                    {nav === 1 &&
+                        <>
+                            <div className="titles-container">
+                                <h1>Il est temps de décrire votre projet en détail !</h1>
+                                <h2>Qu'est-ce qui donnera envie à votre public de se rassembler autour de votre projet ? Ici, clarté, concision et précision sont de mise.</h2>
+                            </div>
+                            <Content
+                                content={content}
+                                setContent={setContent}
+                            />
+                            <div className="btn-container">
+                                <StartIconButton text="Retour : Les bases" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(0)} />
+                                <EndIconButton text="Suivant : Galerie" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(2)} />
+                            </div>
+                        </>
+                    }
+                    {nav === 2 &&
+                        <>
+                            <div className="titles-container">
+                                <h1>De belles images vous donne plus de visibilité !</h1>
+                                <h2>Ajoutez des images qui représente clairement votre projet.</h2>
+                            </div>
+                            <Pictures
+                                mainPic={mainPic}
+                                setMainPic={setMainPic}
+                                files={files}
+                                setFiles={setFiles}
+                            />
+                            <div className="btn-container">
+                                <StartIconButton text="Retour : Description" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(1)} />
+                                <EndIconButton text="Suivant : Équipe" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(3)} />
+                            </div>
+                        </>
+                    }
+                    {nav === 3 &&
+                        <>
+                            <div className="titles-container">
+                                <h1>Compétences recherchées</h1>
+                                <h2>Séléctionnez les compétences que vous recherchez et décrivez pourquoi.</h2>
+                                {workArray.length === 0 &&
+                                    <Button text="Rechercher des compétences" className="mx-auto mt-8" onClick={() => setWorkArray([{ name: "", number: "", numberFound: "", description: "" }])} />
+                                }
+                            </div>
                             <Contributors
-                                numberofcontributors={numberofcontributors}
-                                setNumberofcontributors={setNumberofcontributors}
                                 workArray={workArray}
                                 setWorkArray={setWorkArray}
                                 isErr={isErr}
                                 setErr={setErr}
                                 error={error}
                                 setError={setError}
-                                onNext={onNext}
-                                onBack={onBack}
                             />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                    <Stepper.Step key={5}>
-                        <Stepper.Label>Date</Stepper.Label>
-                        <Stepper.Content>
-                            <End
-                                end={end}
-                                setEnd={setEnd}
+                            <div className="btn-container">
+                                <StartIconButton text="Retour : Galerie" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(2)} />
+                                <EndIconButton text="Suivant : FAQ" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(4)} />
+                            </div>
+                        </>
+                    }
+                    {nav === 4 &&
+                        <>
+                            <div className="titles-container">
+                                <h1>Foire aux questions</h1>
+                                <h2>Répondez aux questions que votre public pourrait se poser.</h2>
+                                {qna.length === 0 &&
+                                    <Button text="Démarrer une foire aux questions" className="mx-auto mt-8" onClick={() => setQna([{ question: "", answer: "" }])} />
+                                }
+                            </div>
+                            <Qna
+                                qna={qna}
+                                setQna={setQna}
                                 isErr={isErr}
                                 setErr={setErr}
                                 error={error}
                                 setError={setError}
-                                onNext={onNext}
-                                onBack={onBack}
                             />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                    <Stepper.Step key={6}>
-                        <Stepper.Label>Description détaillé</Stepper.Label>
-                        <Stepper.Content>
-                            <Content
-                                content={content}
-                                setContent={setContent}
-                                isErr={isErr}
-                                setErr={setErr}
-                                error={error}
-                                setError={setError}
-                                onNext={onNext}
-                                onBack={onBack}
-                            />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                    <Stepper.Step key={7}>
-                        <Stepper.Label>Photos</Stepper.Label>
-                        <Stepper.Content>
-                            <Pictures
-                                files={files}
-                                setFiles={setFiles}
-                                isErr={isErr}
-                                setErr={setErr}
-                                error={error}
-                                setError={setError}
-                                onNext={onNext}
-                                onBack={onBack}
-                                handleAddProject={handleAddProject}
-                            />
-                        </Stepper.Content>
-                    </Stepper.Step>
-                </Stepper>
+                            <div className="btn-container">
+                                <StartIconButton text="Retour : Équipe" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(3)} />
+                                <Button text="Enregistrer et publier" onClick={handleAddProject} />
+                            </div>
+                        </>
+                    }
+                </div>
             </div>
-        </div>
-    );
+            <FooterLight />
+        </>
+    )
 }
 
-export default AddProject;
+export default AddProject

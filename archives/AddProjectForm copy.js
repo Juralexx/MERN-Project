@@ -20,7 +20,6 @@ const AddProjectForm = ({ user }) => {
     const [department, setDepartment] = useState("")
     const [region, setRegion] = useState("")
     const [newRegion, setNewRegion] = useState("")
-    const [numberofcontributors, setNumberofcontributors] = useState("")
     const [workArray, setWorkArray] = useState([])
     const [content, setContent] = useState({})
     const [files, setFiles] = useState([])
@@ -39,9 +38,6 @@ const AddProjectForm = ({ user }) => {
         } else if (category === "") {
             setErr(true)
             setError("Veuillez saisir une catégorie")
-        } else if (numberofcontributors.value === "" || numberofcontributors.value === 0) {
-            setErr(true)
-            setError("Veuillez indiquer de combien de personne vous avez besoin, si vous ne savez pas merci de l'indiquer")
         } else if (content === "" || content.length < 10) {
             setErr(true)
             setError("Veuillez ajouter une description")
@@ -72,7 +68,6 @@ const AddProjectForm = ({ user }) => {
                     new_region: newRegion,
                     end: end,
                     content: content,
-                    numberofcontributors: numberofcontributors,
                     works: workArray,
                     members: { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "manager", since: new Date().toISOString() },
                     manager: user._id
@@ -82,7 +77,6 @@ const AddProjectForm = ({ user }) => {
                     if (res.data.errors.title) setError(res.data.errors.title)
                     else if (res.data.errors.category) setError(res.data.errors.category)
                     else if (res.data.errors.content) setError(res.data.errors.content)
-                    else if (res.data.errors.numberofcontributors) setError(res.data.errors.numberofcontributors)
                 } else {
                     let formData = new FormData();
                     for (let i = 0; i < files.length; i++) {
@@ -147,8 +141,6 @@ const AddProjectForm = ({ user }) => {
         {
             content:
                 <Contributors
-                    numberofcontributors={numberofcontributors}
-                    setNumberofcontributors={setNumberofcontributors}
                     isErr={isErr}
                     setErr={setErr}
                     error={error}

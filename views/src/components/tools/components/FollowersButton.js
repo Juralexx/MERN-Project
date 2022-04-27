@@ -7,59 +7,58 @@ import { IconToggle } from "./Button";
 
 const FollowersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)
-    const dispatch = useDispatch()
     const [followed, setFollowed] = useState(false)
     const [action, setAction] = useState("")
+    const dispatch = useDispatch()
     const follow = () => { dispatch(followProject(project._id, uid)); setFollowed(true) }
     const unfollow = () => { dispatch(unfollowProject(project._id, uid)); setFollowed(false) }
 
     useEffect(() => {
-        if (uid) {
+        if (uid)
             if (project.followers.includes(uid)) { setFollowed(true) }
             else { setFollowed(false) }
-        }
     }, [project.followers, uid])
 
     useEffect(() => {
         if (uid) {
             if (project.followers.includes(uid)) {
                 if (followed)
-                    if (project.followers.length > 1) setAction(<span>Vous et {project.followers.length - 1}</span>)
-                    else if (project.followers.length === 1) setAction(<span>Vous</span>)
-                    else if (project.followers.length === 0) setAction(<span>Vous</span>)
-                if (!followed) setAction(<span>{project.followers.length - 1}</span>)
+                    if (project.followers.length > 1) setAction(`Vous et  ${project.followers.length - 1}`)
+                    else if (project.followers.length === 1) setAction("Vous")
+                    else if (project.followers.length === 0) setAction("Vous")
+                if (!followed) setAction(project.followers.length - 1)
             } else {
                 if (followed)
-                    if (project.followers.length > 1) setAction(<span>Vous et {project.followers.length}</span>)
-                    else if (project.followers.length === 1) setAction(<span>Vous et 1</span>)
-                    else if (project.followers.length === 0) setAction(<span>Vous</span>)
-                if (!followed) setAction(<span>{project.followers.length}</span>)
+                    if (project.followers.length > 1) setAction(`Vous et  ${project.followers.length}`)
+                    else if (project.followers.length === 1) setAction("Vous et 1")
+                    else if (project.followers.length === 0) setAction("Vous")
+                if (!followed) setAction(project.followers.length)
             }
         } else {
-            setAction(<span>{project.followers.length}</span>)
+            setAction(project.followers.length)
         }
     }, [followed, project.followers, uid])
 
     return (
         <>
-            {uid === null && (
-                <div className="relative flex items-center">
-                    <IconToggle icon={<MdOutlineBookmarkBorder className="w-6 h-6 fill-follow" />} color="yellow-400" />
+            {uid === null &&
+                <div className="action-btn follow">
+                    <IconToggle icon={<MdOutlineBookmarkBorder />} />
                     <p>{action}</p>
                 </div>
-            )}
-            {uid && !followed && (
-                <div className="relative flex items-center">
-                    <IconToggle icon={<MdOutlineBookmarkBorder className="w-6 h-6 fill-follow" />} color="yellow-400" onClick={follow} />
+            }
+            {uid && !followed &&
+                <div className="action-btn follow">
+                    <IconToggle icon={<MdOutlineBookmarkBorder />} onClick={follow} />
                     <p onClick={onClick}>{action}</p>
                 </div>
-            )}
-            {uid && followed && (
-                <div className="relative flex items-center">
-                    <IconToggle icon={<MdOutlineBookmark className="w-6 h-6 fill-follow" />} color="yellow-400" onClick={unfollow} />
+            }
+            {uid && followed &&
+                <div className="action-btn follow">
+                    <IconToggle icon={<MdOutlineBookmark />} onClick={unfollow} />
                     <p onClick={onClick}>{action}</p>
                 </div>
-            )}
+            }
         </>
     )
 }

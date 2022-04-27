@@ -66,27 +66,31 @@ export const modules = {
 
 export const formats = [
     "header",
-    "font",
-    "size",
     "bold",
     "italic",
     "underline",
-    "align",
-    "strike",
-    // "blockquote",
-    // "background",
-    "list",
-    "bullet",
-    "indent",
     "link",
     "image",
     "color",
-    "code-block"
+    "code-block",
+    "strike",
+    "list",
+    "bullet",
+    // "font",
+    // "size",
+    // "align",
+    // "blockquote",
+    // "background",
+    // "indent",
 ];
 
 export const QuillToolbar = () => (
     <div id="toolbar">
         <span className="ql-formats">
+            <button className="ql-header" label="Titre" value="1" />
+            <button className="ql-header" label="Titre" value="2" />
+        </span>
+        {/* <span className="ql-formats">
             <select className="ql-font" defaultValue="arial">
                 <option value="arial">Arial</option>
                 <option value="comic-sans">Comic Sans</option>
@@ -106,7 +110,7 @@ export const QuillToolbar = () => (
                 <option value="2">Sous-titre</option>
                 <option value="1">Titre</option>
             </select>
-        </span>
+        </span> */}
         <span className="ql-formats">
             <button className="ql-bold" />
             <button className="ql-italic" />
@@ -120,14 +124,14 @@ export const QuillToolbar = () => (
         <span className="ql-formats">
             <button className="ql-list" value="ordered" />
             <button className="ql-list" value="bullet" />
-            <button className="ql-indent" value="-1" />
-            <button className="ql-indent" value="+1" />
+            {/* <button className="ql-indent" value="-1" />
+            <button className="ql-indent" value="+1" /> */}
         </span>
-        <span className="ql-formats">
+        {/* <span className="ql-formats">
             <select className="ql-align" />
-            {/* <select className="ql-color" /> */}
-            {/* <select className="ql-background" /> */}
-        </span>
+            <select className="ql-color" />
+            <select className="ql-background" />
+        </span> */}
         <span className="ql-formats">
             <button className="ql-link" />
             <button className="ql-image" />

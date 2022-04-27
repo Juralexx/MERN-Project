@@ -8,9 +8,9 @@
         height        : auto;
         margin-bottom : 20px;
         padding       : 25px;
-        border        : 1px solid var(--light-border);
         background    : var(--content-x-light);
         cursor        : pointer;
+        box-shadow    : var(--shadow-tiny);
 
         .actuality-header {
             padding-bottom : 20px;
@@ -38,7 +38,7 @@
                             padding       : 2px 5px;
                             background    : var(--light-blue);
                             color         : white;
-                            border-radius : 3px;
+                            border-radius : var(--radius);
                             margin-left   : 8px;
                         }
                     }
@@ -64,7 +64,7 @@
                 height        : 100%;
                 width         : 100%;
                 object-fit    : cover;
-                border-radius : 5px;
+                border-radius : var(--radius);
             }
         }
 
@@ -151,7 +151,7 @@
                             padding       : 2px 5px;
                             background    : var(--light-blue);
                             color         : white;
-                            border-radius : 3px;
+                            border-radius : var(--radius);
                             margin-left   : 8px;
                         }
                     }

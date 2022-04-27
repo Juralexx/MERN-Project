@@ -82,9 +82,9 @@ export const EndIconTextButton = (props) => {
 }
 
 export const IconToggle = (props) => {
-    const { color, icon, onClick, className } = props
+    const { icon, onClick, className } = props
     return (
-        <div onClick={onClick} className={`icon-toggle text-${color} hover:bg-${color}/25 ${className ?? className}`}>
+        <div onClick={onClick} className={`${className ? "icon-toggle " + className : "icon-toggle"}`}>
             {icon}
         </div>
     )

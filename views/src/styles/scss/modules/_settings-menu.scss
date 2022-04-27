@@ -3,7 +3,7 @@
     height        : auto;
     position      : absolute;
     background    : var(--content-light);
-    border-radius : 5px;
+    border-radius : var(--radius);
     top           : 55px;
     right         : 5px;
     z-index       : 1100;
@@ -28,10 +28,10 @@
             padding       : 7px;
             border-radius : 30px;
             cursor        : pointer;
-            background    : var(--content-light);;
+            background    : var(--x-light);
 
             &:hover {
-                background : var(--content-light);;
+                background : var(--light);
                 
                 path {
                     fill : var(--primary);
@@ -82,8 +82,8 @@
                 width       : auto;
 
                 svg {
-                    height        : 36px;
-                    width         : 36px;
+                    height        : 30px;
+                    width         : 30px;
                     padding       : 7px;
                     border-radius : 30px;
                     margin-right  : 5px;
@@ -91,7 +91,7 @@
             }
 
             &:hover {
-                background  : var(--content-light);
+                background  : var(--x-light);
                 border-left : 3px solid var(--primary);
 
                 svg {
@@ -108,6 +108,7 @@
                 width    : 60px;
                 height   : 28px;
                 margin : 0 10px 0 0;
+                transform: scale(0.8);
 
                 input { 
                     opacity : 0;

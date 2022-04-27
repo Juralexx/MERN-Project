@@ -2,26 +2,38 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useClickOutside } from '../components/tools/functions/useClickOutside'
 import CategoriesPicker from '../components/home/CategoriesPicker'
 import LocationsAutocomplete from '../components/home/LocationsAutocomplete'
-import { EndIconButton, TextButton } from '../components/tools/components/Button'
+import { EndIconButton, StartIconTextButton } from '../components/tools/components/Button'
 import Card from '../components/tools/components/Card'
 import FollowersModal from '../components/tools/components/FollowersModal'
-import { IconInput } from '../components/tools/components/Inputs'
+import { DropdownInput, IconInput } from '../components/tools/components/Inputs'
 import LikersModal from '../components/tools/components/LikersModal'
 import MapModal from '../components/tools/map/MapModal'
 import { BiSearchAlt } from 'react-icons/bi'
 import { BsCaretDownFill } from 'react-icons/bs'
 import { FaUserShield } from 'react-icons/fa'
 import { IoAlbums, IoSend } from 'react-icons/io5'
+import { GiFrance } from 'react-icons/gi'
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
-const Search = ({ websocket, projects, user, search, results, setResults, category, setCategory, location, setLocation, recentLocations, setRecentLocations, aroundLocation, setAroundLocation }) => {
+const Search = ({ websocket, user, search, results, category, setCategory, location, setLocation, recentLocations, setRecentLocations, aroundLocation, setAroundLocation, date, setDate, state, setState }) => {
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
     const [openLikersModal, setOpenLikersModal] = useState(false)
+    const [openMapModal, setOpenMapModal] = useState(false)
+    const [moreFilters, setMoreFilters] = useState(false)
     const [project, setProject] = useState()
 
     const [openCategories, setOpenCategories] = useState(false)
-    const [openMapModal, setOpenMapModal] = useState(false)
     const categoriesRef = useRef()
     useClickOutside(categoriesRef, setOpenCategories, false)
+
+    const datesMenu = useRef()
+    const [byDate, setByDate] = useState(false)
+    useClickOutside(datesMenu, setByDate, false)
+
+    const stateMenu = useRef()
+    const [byState, setByState] = useState(false)
+    useClickOutside(stateMenu, setByState, false)
+
     const locationsStored = localStorage.getItem("search:locations")
 
     useEffect(() => {
@@ -74,8 +86,26 @@ const Search = ({ websocket, projects, user, search, results, setResults, catego
                                     setAroundLocation={setAroundLocation}
                                 />
                             </div>
+                            {moreFilters &&
+                                <div className="header-input-flex">
+                                    <DropdownInput useRef={datesMenu} readOnly placeholder="Date de mise en ligne" value={date} open={byDate} onClick={() => setByDate(!byDate)} cross clean={() => setDate("")}>
+                                        <div onClick={() => setDate("Moins d'un jour")}>Moins d'un jour</div>
+                                        <div onClick={() => setDate("Moins d'une semaine")}>Moins d'une semaine</div>
+                                        <div onClick={() => setDate("Moins d'un mois")}>Moins d'un mois</div>
+                                        <div onClick={() => setDate("Moins d'un an")}>Moins d'un an</div>
+                                    </DropdownInput>
+                                    <DropdownInput useRef={stateMenu} readOnly placeholder="État" value={state} open={byState} onClick={() => setByState(!byState)} cross clean={() => setState("")}>
+                                        <div onClick={() => setState("En préparation")}>En préparation</div>
+                                        <div onClick={() => setState("En cours")}>En cours</div>
+                                        <div onClick={() => setState("Terminé")}>Terminé</div>
+                                    </DropdownInput>
+                                </div>
+                            }
                             <div className="btn-container">
-                                <TextButton text="Voir la carte" onClick={() => setOpenMapModal(true)} />
+                                <div className="flex">
+                                    <StartIconTextButton text="Voir la carte" className="mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
+                                    <StartIconTextButton text={!moreFilters ? "Plus de filtres" : "Moins de filtres"} icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
+                                </div>
                                 <EndIconButton className="px-7" text="Rechercher" icon={<IoSend />} onClick={search} />
                             </div>
                         </div>

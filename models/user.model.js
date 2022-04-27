@@ -164,28 +164,16 @@ const UserModel = new mongoose.Schema(
             default: 0,
         },
 
-        current_projects: { type: [String] },
-
-        number_of_current_projects: {
-            type: Number,
-            min: 0,
-            default: 0
+        current_projects: {
+            type: [String]
         },
 
-        completed_projects: { type: [String] },
-
-        number_of_completed_projects: {
-            type: Number,
-            min: 0,
-            default: 0
+        completed_projects: {
+            type: [String]
         },
 
-        created_projects: { type: [String] },
-
-        number_of_created_projects: {
-            type: Number,
-            min: 0,
-            default: 0
+        created_projects: {
+            type: [String]
         },
 
         follows: {

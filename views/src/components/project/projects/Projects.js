@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useClickOutside } from '../../tools/functions/useClickOutside'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
 import { ClassicInput, DropdownInput, IconInput } from '../../tools/components/Inputs'
@@ -59,7 +59,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                 onChange={() => setCategory(category)}
                                 value={category}
                             />
-                            <CategoriesPicker className="right min-w-[500px] " open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
+                            <CategoriesPicker className="right no-bottom" open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
                         </div>
                     </div>
                 </div>
@@ -98,15 +98,17 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                         </div>
                                         <div className="project-tags">
                                             {element.tags.slice(0, 5).map((tag, i) => {
-                                                return <div key={i}>#{tag}</div>
+                                                return <div className="tag" key={i}><span>#</span> {tag}</div>
                                             })}
                                             {element.tags.length > 5 &&
                                                 <div className="more-tags">+{element.tags.length - 5}</div>
                                             }
                                         </div>
-                                        <div className="project-card-content-infos">
-                                            <div className="contributors"><BsFillPeopleFill /><p>{element.numberofcontributors}</p></div>
-                                        </div>
+                                        {element.works &&
+                                            <div className="project-card-content-infos">
+                                                <div className="contributors"><BsFillPeopleFill /><p>{element.works.length}</p></div>
+                                            </div>
+                                        }
                                         <div className="description">{element.description}</div>
                                     </div>
                                     <div className="project-nav">

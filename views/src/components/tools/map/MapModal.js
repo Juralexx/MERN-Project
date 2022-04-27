@@ -85,7 +85,7 @@ const MapModal = ({ open, setOpen, location, setLocation }) => {
                         onClick={() => setOpenRegions(!openRegions)}
                     />
                     {openRegions &&
-                        <div className="auto-complete-container custom-scrollbar w-full">
+                        <div className="auto-complete-container custom-scrollbar full">
                             {!searchRegion ? (
                                 regions.map((element, key) => {
                                     return (
@@ -119,7 +119,7 @@ const MapModal = ({ open, setOpen, location, setLocation }) => {
                         onClick={() => setOpenDepartments(!openDepartments)}
                     />
                     {openDepartments &&
-                        <div className="auto-complete-container custom-scrollbar w-full">
+                        <div className="auto-complete-container custom-scrollbar full">
                             {!searchDepartment ? (
                                 departments.map((element, key) => {
                                     return (

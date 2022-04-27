@@ -53,7 +53,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
             <div className="home-tasks mt-5">
                 <div className="home-tasks-header">
                     <div className="home-tasks-nav-header-top">
-                        <h2>Tâches <span>{tasks.length}</span></h2>
+                        <h3>Tâches <span>{tasks.length}</span></h3>
                         <div className="flex">
                             <Link to="tasks"><TextButton text="Voir tous" className="mr-2" /></Link>
                             {(isAdmin || isManager) &&

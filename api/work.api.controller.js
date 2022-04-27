@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import WorkApiModel from './work.api.model.js';
 
 export const getWorks = (req, res) => {
@@ -21,4 +20,5 @@ export const findWork = (req, res) => {
                 console.log(err)
             }
         })
+        .limit(40)
 };

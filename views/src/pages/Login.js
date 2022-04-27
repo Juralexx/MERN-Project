@@ -1,6 +1,7 @@
 import React from 'react';
 import SignInForm from '../components/log/SignInForm';
 import { Link } from 'react-router-dom';
+import FooterLight from '../components/FooterLight';
 
 const Login = ({ uid }) => {
 
@@ -22,6 +23,7 @@ const Login = ({ uid }) => {
                     </div>
                 </div>
             </div>
+            <FooterLight />
         </div>
     )
 }

@@ -45,10 +45,12 @@
                 padding          : 4px 12px;
                 cursor           : pointer;
                 background-color : var(--content-light);
-                border-radius    : 5px;
+                border-radius    : var(--radius);
+                box-shadow    : var(--shadow-tiny);
 
                 &.active {
                     background-color : var(--primary);
+                    color            : white;
                 }
 
                 &:nth-child(2) {

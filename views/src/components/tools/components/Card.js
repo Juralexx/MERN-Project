@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { dateParser } from '../../Utils';
 import { stateToBackground, stateToString } from '../functions/function';
 import { projectPicture } from '../functions/useAvatar';
-import { SmallAvatar } from './Avatars';
 import FavoriteButton from './FavoriteButton'
 import FollowersButton from './FollowersButton'
 import LikersButton from './LikersButton'
@@ -25,7 +24,9 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal }
                     </div>
                 </Link>
                 <div className="card-head">
-                    <div className="contributors"><BsFillPeopleFill /><p>{element.numberofcontributors}</p></div>
+                    {element.works.length > 0 &&
+                        <div className="contributors"><BsFillPeopleFill /><p>{element.works.length}</p></div>
+                    }
                     <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                 </div>
                 <div className="description"><p>{element.description}</p></div>
@@ -35,12 +36,9 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal }
                         <FollowersButton project={element} onClick={() => { setProject(element); setOpenFollowersModal(true) }} />
                     </div>
                     <div className="footer-right">
-                        <div className="footer-avatar">
-                            <SmallAvatar pic={element.posterAvatar} />
-                        </div>
                         <div className="footer-name">
-                            <p className="name">{element.posterPseudo}</p>
-                            <p className="date">{dateParser(element.createdAt)}</p>
+                            <p className="name">par <Link to={`/${element.posterPseudo}`}>{element.posterPseudo}</Link></p>
+                            <p className="date">le {dateParser(element.createdAt)}</p>
                         </div>
                     </div>
                 </div>

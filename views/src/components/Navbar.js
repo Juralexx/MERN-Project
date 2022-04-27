@@ -13,6 +13,7 @@ const Navbar = ({ websocket, user, uid }) => {
     const location = useLocation()
 
     return (
+        location.pathname !== "/add-project" &&
         <header>
             <nav className="navbar">
                 {location.pathname !== "/register" && location.pathname !== "/login" ? (

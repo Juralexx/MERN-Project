@@ -26,7 +26,7 @@
 
         canvas {
             margin        : 20px auto;
-            border-radius : 5px;
+            border-radius : var(--radius);
         }
 
         .range-container {

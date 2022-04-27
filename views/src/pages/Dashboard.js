@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/project/projects/Sidebar'
 import Projects from '../components/project/projects/Projects';
 import Project from '../components/project/projects/Project';
+import FooterLight from '../components/FooterLight';
 
 const Dashboard = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
@@ -52,6 +53,7 @@ const Dashboard = ({ websocket, user }) => {
                         )}
                     </Routes>
                 }
+                <FooterLight />
             </div>
         </div>
     )
