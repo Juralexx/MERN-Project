@@ -1,7 +1,7 @@
 .dashboard-projects-header {
     position   : relative;
     width      : 100%;
-    background : var(--content-light);
+    background : var(--xx-light);
 
     .dashboard-projects-header-top {
         position : relative;
@@ -94,7 +94,7 @@
     .project-card-content {
         position : relative;
         padding  : 10px 20px;
-        width    : 60%;
+        width    : 75%;
 
         .project-card-content-top {
             .project-title {
@@ -157,35 +157,6 @@
             }
         }
 
-        .project-tags {
-            position : relative;
-            padding  : 10px 0;
-            display  : flex;
-
-            > div {
-                display          : flex;
-                align-items      : center;
-                padding          : 0 10px;
-                margin           : 0 5px;
-                border-radius    : var(--radius);
-                color            : var(--text-secondary);
-                background-color : var(--content-x-light);
-                box-shadow       : var(--shadow-tiny);
-                font-size        : 13px;
-
-                span {
-                    color        : var(--primary);
-                    font-weight  : 700;
-                    font-size    : 17px;
-                    margin-right : 5px;
-                }
-
-                &:nth-child(1) {
-                    margin-left : 0;
-                }
-            }
-        }
-
         .description {
             font-size          : 14px;
             padding            : 8px 0;
@@ -199,29 +170,6 @@
             -webkit-line-clamp : 4;
             -webkit-box-orient : vertical;
             color              : var(--text-secondary);
-        }
-    }
-
-    .project-nav {
-        width          : 15%;
-        display        : flex;
-        flex-direction : column;
-        a {
-            display       : flex;
-            align-items   : center;
-            padding       : 12px 10px 8px;
-            border-bottom : 1px solid var(--content-x-light);
-            border-radius : var(--radius) 0 0 var(--radius);
-            svg {
-                margin-right : 7px;
-            }
-
-            &:hover {
-                background : var(--content-x-light);
-                svg {
-                    fill : var(--primary);
-                }
-            }
         }
     }
 }

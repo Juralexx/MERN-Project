@@ -12,8 +12,7 @@ export const likeProject = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $addToSet: { likers: req.body.id },
-                $inc: { likes: 1 }
+                $addToSet: { likers: req.body.id }
             },
             { new: true },
         )
@@ -22,8 +21,7 @@ export const likeProject = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.id },
             {
-                $addToSet: { projects_liked: req.params.id },
-                $inc: { likes: 1 }
+                $addToSet: { projects_liked: req.params.id }
             },
             { news: true },
         )
@@ -44,8 +42,7 @@ export const unlikeProject = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { likers: req.body.id },
-                $inc: { likes: -1 }
+                $pull: { likers: req.body.id }
             },
             { new: true },
         )
@@ -54,8 +51,7 @@ export const unlikeProject = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.id },
             {
-                $pull: { projects_liked: req.params.id },
-                $inc: { likes: -1 }
+                $pull: { projects_liked: req.params.id }
             },
             { news: true },
         )
@@ -76,8 +72,7 @@ export const follow = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $addToSet: { followers: req.body.followerId },
-                $inc: { follows: 1 }
+                $addToSet: { followers: req.body.followerId }
             },
             { new: true, upsert: true },
         )
@@ -86,8 +81,7 @@ export const follow = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.followerId },
             {
-                $addToSet: { following: req.params.id },
-                $inc: { follows: 1 }
+                $addToSet: { following: req.params.id }
             },
             { new: true, upsert: true },
         )
@@ -108,8 +102,7 @@ export const unfollow = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { followers: req.body.followerId },
-                $inc: { follows: -1 }
+                $pull: { followers: req.body.followerId }
             },
             { new: true, upsert: true },
         )
@@ -118,8 +111,7 @@ export const unfollow = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.followerId },
             {
-                $pull: { following: req.params.id },
-                $inc: { follows: -1 }
+                $pull: { following: req.params.id }
             },
             { new: true, upsert: true },
         )

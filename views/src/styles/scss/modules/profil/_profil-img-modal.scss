@@ -1,16 +1,5 @@
-.profil-img-modal {
-    position      : absolute;
-    border-radius : 6px;
-    background    : var(--content);
-    width         : auto;
-    height        : auto;
-    left          : 50%;
-    top           : 50%;
-    transform     : translate(-50%, -50%);
-    display       : none;
-    z-index       : 1050;
-
-    .modal-avatar {
+.profil_img_modal {
+    .modal_avatar {
         width         : 160px;
         height        : 160px;
         border-radius : 80px;
@@ -19,48 +8,104 @@
         left          : 30px;
     }
 
-    .body {
+    .profil_img_modal_body {
         display        : flex;
         flex-direction : column;
         height         : 100%;
 
-        canvas {
-            margin        : 20px auto;
-            border-radius : var(--radius);
+        h3 {
+            text-align  : center;
+            font-weight : 600;
+            margin-top  : 20px;
         }
 
-        .range-container {
+        p {
+            text-align : center;
+            margin-top : 10px;
+        }
+
+        canvas {
+            margin        : 10px auto;
+            border-radius : var(--radius);
+            border-radius : 50%;
+        }
+
+        .range_container {
             display     : flex;
             align-items : center;
-            width       : 280px;
-            margin      : 0 auto;
+            width       : 240px;
+            margin      : 5px auto;
 
             label {
-                margin : 0 10px 0 0;
-                width  : 60px;
+                margin      : 0 0 0 0;
+                width       : 70px;
+                font-weight : 600;
             }
 
             input[type=range] {
-                width : 200px;
+                -webkit-appearance : none;
+                -moz-appearance    : none;
+                appearance         : none;
+                &:focus {
+                    outline : none;
+                }
+                &::-webkit-slider-thumb {
+                    -webkit-appearance : none;
+                }
+                &::-moz-range-thumb {
+                    border : none;
+                }
+            }
+
+            .range_style {
+                width            : 170px;
+                height           : 24px;
+                border-radius    : 10px;
+                background-color : transparent;
+                @mixin track-style {
+                    display       : flex;
+                    align-items   : center;
+                    height        : 10px;
+                    border-radius : 10px;
+                    box-shadow    : inset -2px -2px 8px white, inset 2px 2px 8px rgba(var(--primary-rgb), 1);
+                }
+                @mixin thumb-style {
+                    position         : relative;
+                    top              : -50%;
+                    width            : 20px;
+                    height           : 20px;
+                    background-color : var(--primary);
+                    background-image : linear-gradient(-45deg, rgba(white, 0.4), rgba(white, 0.2));
+                    border-radius    : 50%;
+                    box-shadow       : -1px -1px 2px white, 1px 1px 2px rgba(white, 0.3);
+                }
+                &::-webkit-slider-runnable-track {
+                    @include track-style;
+                }
+                &::-webkit-slider-thumb {
+                    @include thumb-style;
+                }
+                &::-moz-range-track {
+                    @include track-style;
+                }
+                &::-moz-range-thumb {
+                    @include thumb-style;
+                }
             }
         }
     }
 
     .footer {
         position   : relative;
-        margin-top : 50px;
+        margin-top : 20px;
         width      : 100%;
 
-        .modal-container-btn {
+        .modal_container_btn {
             display         : flex;
             flex-direction  : row-reverse;
             justify-content : space-between;
             align-items     : center;
             width           : 100%;
-
-            .btn {
-                min-width : 100px;
-            }
         }
     }
 }

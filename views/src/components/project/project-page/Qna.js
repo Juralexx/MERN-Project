@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md'
+import { MdKeyboardArrowRight, MdKeyboardArrowDown, MdOutlineNotificationsActive } from 'react-icons/md'
+import NoContent from './NoContent'
 
-const Qna = ({ project }) => {
+const Qna = ({ project, user }) => {
     const [displayed, setDislayed] = useState([])
 
     const openAnswer = (key) => {
@@ -14,21 +15,25 @@ const Qna = ({ project }) => {
             <div className="content-header">
                 <h2>Foire aux questions</h2>
             </div>
-            {project.QNA.map((element, key) => {
-                return (
-                    <div className="qna-page-accordion" key={key} onClick={() => openAnswer(key)}>
-                        <div className="qna-page-accordion-question">
-                            {element.question}
-                            {displayed.includes(key) ?  <MdKeyboardArrowDown /> : <MdKeyboardArrowRight /> }
-                        </div>
-                        {displayed.includes(key) &&
-                            <div className="qna-page-accordion-answer">
-                                {element.answer}
+            {project.QNA.length > 0 ? (
+                project.QNA.map((element, key) => {
+                    return (
+                        <div className="accordion" key={key} onClick={() => openAnswer(key)}>
+                            <div className="accordion_top">
+                                {element.question}
+                                {displayed.includes(key) ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
                             </div>
-                        }
-                    </div>
-                )
-            })}
+                            {displayed.includes(key) &&
+                                <div className="accordion_body">
+                                    {element.answer}
+                                </div>
+                            }
+                        </div>
+                    )
+                })
+            ) : (
+                <NoContent user={user} project={project} icon={<MdOutlineNotificationsActive />} mainText="Recevez les news du projet directement dans vos notifications !" text="Suivez le projet pour être tenu au courant de son avancement." />
+            )}
         </>
     )
 }

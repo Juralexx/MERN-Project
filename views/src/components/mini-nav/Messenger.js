@@ -19,22 +19,22 @@ const MessengerMenu = ({ open, setOpen, user, websocket }) => {
                 <div className="messages-header-inner">
                     <div className="title">Messenger</div>
                     <div className="menu">
-                        <div className="tools-btn"><HiPencilAlt /></div>
-                        <Link to={"/messenger"}><div className="tools-btn" onClick={() => setOpen(false)}><AiOutlineFullscreen /></div></Link>
-                        <div className="tools-btn" onClick={() => setOpenMenu(!openMenu)}><BsThreeDots /></div>
+                        <div className="tools_btn"><HiPencilAlt /></div>
+                        <Link to={"/messenger"}><div className="tools_btn" onClick={() => setOpen(false)}><AiOutlineFullscreen /></div></Link>
+                        <div className="tools_btn" onClick={() => setOpenMenu(!openMenu)}><BsThreeDots /></div>
                     </div>
                 </div>
                 {openMenu &&
                     <SmallMenu>
-                        <div className="tools-choice">Tout marquer comme lu</div>
-                        <div className="tools-choice">Voir toutes les messages</div>
+                        <div className="tools_choice">Tout marquer comme lu</div>
+                        <div className="tools_choice">Voir toutes les messages</div>
                     </SmallMenu>
                 }
                 <div className="messages-navbar">
                     <div className={`navlink ${showUnread ? "" : "active"}`}>Tout</div>
                     <div className={`navlink ${showUnread ? "active" : ""}`}>Non lu</div>
                 </div>
-                <IconInput className="is-start-icon" placeholder="Rechercher un projet" icon={<GoSearch />} cross/>
+                <IconInput className="is-start_icon" placeholder="Rechercher un projet" icon={<GoSearch />} cross/>
             </div>
             <div className="messenger-menu-content">
                 {!showUnread &&

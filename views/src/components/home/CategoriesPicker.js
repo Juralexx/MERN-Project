@@ -15,47 +15,47 @@ const CategoriesPicker = ({ open, setOpen, setCategory, category, className }) =
 
     return (
         open &&
-        <div className={`${className ? "categories-container " + className : "categories-container"}`}>
+        <div className={`${className ? "categories_container " + className : "categories_container"}`}>
             <h4>Catégories</h4>
-            <div className="categories-inner">
-                <div className="categories-col">
+            <div className="categories_inner">
+                <div className="categories_col">
                     {categories.slice(0, 4).map((category, key) => {
                         return (
-                            <div className={`categories-item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
+                            <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
                                 {category.name} <ImArrowRight2 />
                             </div>
                         )
                     })}
                 </div>
-                <div className="categories-col">
+                <div className="categories_col">
                     {categories.slice(4, 8).map((category, key) => {
                         return (
-                            <div className={`categories-item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
+                            <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
                                 {category.name} <ImArrowRight2 />
                             </div>
                         )
                     })}
                 </div>
-                <div className="categories-col">
+                <div className="categories_col">
                     {categories.slice(8, 12).map((category, key) => {
                         return (
-                            <div className={`categories-item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
+                            <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
                                 {category.name} <ImArrowRight2 />
                             </div>
                         )
                     })}
                 </div>
-                <div className="categories-col">
+                <div className="categories_col">
                     {categories.slice(12, categories.length).map((category, key) => {
                         return (
-                            <div className={`categories-item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
+                            <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
                                 {category.name} <ImArrowRight2 />
                             </div>
                         )
                     })}
                 </div>
             </div>
-            <div className="categories-bottom-link">
+            <div className="categories_bottom_link">
                 <Link to="/">Voir tous les projets <ImArrowRight2 /></Link>
             </div>
         </div>

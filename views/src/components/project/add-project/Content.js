@@ -40,7 +40,7 @@ const Content = ({ content, setContent }) => {
                         modules={modules}
                         formats={formats}
                     />
-                    <div className="field-infos ml-auto">{count} / 100 000 caractères</div>
+                    <div className="field_infos ml-auto">{count} / 100 000 caractères</div>
                 </div>
             </div>
         </div>

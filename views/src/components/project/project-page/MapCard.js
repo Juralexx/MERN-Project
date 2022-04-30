@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { geoJSONStructure, geolocToFloat } from '../../Utils'
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import Oval from 'react-loading-icons/dist/components/oval';
-import axios from 'axios';
 
 const MapCard = ({ project }) => {
     const [leafletLoading, setLeafletLoading] = useState(false)
@@ -30,7 +30,7 @@ const MapCard = ({ project }) => {
             <div className="card-title">
                 <Link to={`/project/${project.URLID}/${project.URL}/actuality`}><h3>{project.location} ({project.code_department})</h3></Link>
             </div>
-            <div className="card">
+            <div className="card-body">
                 <MapContainer
                     key={!leafletLoading ? project.location : null}
                     center={!leafletLoading && project.geolocalisation.length > 0 ? geolocToFloat(project.geolocalisation) : [46.873467013745916, 2.5836305570248217]}

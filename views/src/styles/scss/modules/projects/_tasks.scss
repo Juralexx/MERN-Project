@@ -3,7 +3,7 @@
     justify-content : space-between;
     align-items     : center;
 
-    .dashboard-tasks-header-left {
+    .dashboard-tasks-header_left {
         display     : flex;
         align-items : center;
 
@@ -378,7 +378,7 @@
 }
 
 .task-modal {
-    .task-modal-header {
+    .task-modal_header {
         padding-bottom : 20px;
         border-bottom  : 1px solid var(--light-border);
 

@@ -1,0 +1,33 @@
+.accordion {
+    width         : 100%;
+    height        : auto;
+    margin-bottom : 20px;
+    padding       : 10px 20px;
+    border        : 1px solid var(--light-border);
+    cursor        : pointer;
+
+    &:hover {
+        border : 1px solid var(--primary);
+    }
+
+    .accordion_top {
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        padding         : 10px 0;
+        font-size       : 16px;
+        font-weight     : 500;
+
+        svg {
+            width  : 26px;
+            height : 26px;
+        }
+    }
+
+    .accordion_body {
+        max-width  : 95%;
+        padding    : 10px 0;
+        color      : var(--text-secondary);
+        text-align : justify;
+    }
+}

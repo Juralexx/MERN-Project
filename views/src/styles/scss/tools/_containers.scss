@@ -1,4 +1,4 @@
-.content-container {
+.content_container {
     position     : relative;
     width        : 100%;
     height       : auto;
@@ -8,7 +8,7 @@
     margin-left  : auto;
 }
 
-.content-box {
+.content_box {
     position     : relative;
     height       : auto;
     padding      : 30px;
@@ -18,32 +18,32 @@
 }
 
 @media (max-width: 576px) {
-    .content-box {
+    .content_box {
         max-width : 516px;
     }
 }
 @media (max-width: 768px) {
-    .content-box {
+    .content_box {
         max-width : 708px;
     }
 }
 @media (max-width: 992px) {
-    .content-box {
+    .content_box {
         max-width : 932px;
     }
 }
 @media (max-width: 1200px) {
-    .content-box {
+    .content_box {
         max-width : 1140px;
     }
 }
 @media (max-width: 1366px) {
-    .content-box {
+    .content_box {
         max-width : 1306px;
     }
 }
 @media (min-width: 1366px) {
-    .content-box {
+    .content_box {
         max-width : 1366px;
     }
 }

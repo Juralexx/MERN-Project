@@ -100,7 +100,7 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
         <div ref={wrapperRef} className="relative">
             {displayLocation || location.length === 0 ? (
                 <IconInput
-                    className="is-start-icon"
+                    className="is-start_icon"
                     placeholder="Rechercher une localité"
                     type="text"
                     icon={<FaMapMarkerAlt />}
@@ -110,11 +110,11 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
                     onClick={() => setDisplayLocation(true)}
                 />
             ) : (
-                <div className="locations-displayer" onClick={() => setDisplayLocation(!displayLocation)} ref={locationsDisplayerRef}>
-                    <div className="start-icon"><FaMapMarkerAlt /></div>
+                <div className="locations_displayer" onClick={() => setDisplayLocation(!displayLocation)} ref={locationsDisplayerRef}>
+                    <div className="start_icon"><FaMapMarkerAlt /></div>
                     {locationsToDisplay.map((element, key) => {
                         return (
-                            <div className="locations-item" key={key} ref={ref => locationsRefs[key] = ref}>
+                            <div className="locations_item" key={key} ref={ref => locationsRefs[key] = ref}>
                                 {element.type === "city" &&
                                     <p>{element.location} ({element.department_code})</p>
                                 }
@@ -129,7 +129,7 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
                         )
                     })}
                     {tooLong &&
-                        <div className="is-more-locations">+ {location.length - locationsToDisplay.length}</div>
+                        <div className="is_more_locations">+ {location.length - locationsToDisplay.length}</div>
                     }
                 </div>
             )}

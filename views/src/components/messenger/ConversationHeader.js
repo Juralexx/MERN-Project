@@ -47,11 +47,11 @@ const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConve
                     {openConvMenu &&
                         <SmallMenu>
                             {favorite ? (
-                                <div className="tools-choice" onClick={removeFavorite}>Retirer des favoris</div>
+                                <div className="tools_choice" onClick={removeFavorite}>Retirer des favoris</div>
                             ) : (
-                                <div className="tools-choice" onClick={addFavorite}>Ajouter aux favoris</div>
+                                <div className="tools_choice" onClick={addFavorite}>Ajouter aux favoris</div>
                             )}
-                            {currentChat.owner === uid && <div className="tools-choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
+                            {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
                         </SmallMenu>
                     }
                 </div>
@@ -98,11 +98,11 @@ const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConve
                     {openConvMenu &&
                         <SmallMenu>
                             {favorite ? (
-                                <div className="tools-choice" onClick={removeFavorite}>Retirer des favoris</div>
+                                <div className="tools_choice" onClick={removeFavorite}>Retirer des favoris</div>
                             ) : (
-                                <div className="tools-choice" onClick={addFavorite}>Ajouter aux favoris</div>
+                                <div className="tools_choice" onClick={addFavorite}>Ajouter aux favoris</div>
                             )}
-                            {currentChat.owner === uid && <div className="tools-choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
+                            {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
                         </SmallMenu>
                     }
                 </div>

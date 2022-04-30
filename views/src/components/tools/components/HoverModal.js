@@ -6,14 +6,14 @@ import { Button } from "./Button";
 const HoverModal = ({ user, style }) => {
 
     return (
-        <div className="hovered-card" style={style}>
-            <div className="hovered-modal-container">
-                <div className="hovered-modal-head">
+        <div className="hovered_card" style={style}>
+            <div className="hovered-modal_container">
+                <div className="hovered-modal_head">
                     <div className="left">
-                        <Link to={"/" + user.pseudo}><div className="hovered-modal-avatar" style={avatar(user.picture)}></div></Link>
+                        <Link to={"/" + user.pseudo}><div className="hovered-modal_avatar" style={avatar(user.picture)}></div></Link>
                     </div>
                     <div className="right">
-                        <div className="hovered-card-name">
+                        <div className="hovered_card-name">
                             <Link to={"/" + user.pseudo}>{user.pseudo}</Link>
                         </div>
                         {user.location && <p>{user.location}</p>}

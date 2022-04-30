@@ -63,10 +63,10 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
 
     return (
         <>
-            <div className="content-container">
-                <div className="content-box">
+            <div className="content_container">
+                <div className="content_box">
                     <div className="dashboard-tasks-header">
-                        <div className="dashboard-tasks-header-left">
+                        <div className="dashboard-tasks-header_left">
                             <h2>Tâches <span>({project.tasks.length})</span></h2>
                             <div className="dashboard-tasks-nav">
                                 <div className={`dashboard-tasks-nav-item ${addActive(layout === "kanban", "active")}`} onClick={handleLayout}>Kanban</div>

@@ -1,11 +1,5 @@
 .project-page {
     .header {
-        position       : relative;
-        padding        : 50px 50px 20px;
-        width          : 100%;
-        height         : auto;
-        border-bottom  : 1px solid var(--light-border);
-
         .header-top {
             margin     : 0px auto;
             padding    : 0 0 30px;
@@ -15,28 +9,69 @@
             h1 {
                 font-size   : 36px;
                 font-weight : 800;
+                text-align : center;
             }
 
             p {
                 font-size : 16px;
+                text-align : center;
             }
         }
 
         .header-inner {
-            display   : flex;
-            min-width : 100%;
+            position : relative;
+            display  : flex;
+            width    : 100%;
+            padding  : 0 30px 10px;
 
-            .header-left {
+            &:before {
+                position         : absolute;
+                content          : '';
+                bottom           : 0;
+                width            : 100%;
+                left             : 50%;
+                transform        : translateX(-50%);
+                height           : 65%;
+                background-color : var(--x-light);
+                border           : 1px solid var(--light-border);
+            }
+
+            .header_left {
                 position : relative;
-                height   : 380px;
+                height   : auto;
                 width    : 55%;
+                
+                .header-img {
+                    height : 350px;
+                    width  : 100%;
+                }
+
+                .header_right-bottom {
+                    padding         : 10px 0;
+                    color           : var(--text-secondary);
+                    display         : flex;
+                    justify-content : space-between;
+
+                    a {
+                        display     : flex;
+                        align-items : center;
+                        font-weight : 600;
+                        font-size   : 16px;
+                        color       : var(--text);
+                        margin-top  : 5px;
+
+                        div {
+                            margin-right : 5px;
+                        }
+                    }
+                }
             }
     
-            .header-right {
+            .header_right {
                 position        : relative;
                 display         : flex;
                 flex-direction  : column;
-                justify-content : center;
+                justify-content : flex-start;
                 width           : 45%;
                 padding-left    : 30px;
 
@@ -48,25 +83,18 @@
                     margin      : 0 auto;
                 }
 
-                p {
-                    margin-top : 20px;
-                    color      : var(--text-secondary);
-
-                    a {
-                        font-weight : 600;
-                        color       : var(--text);
-                    }
-                }
-
                 .infos {
-                    padding : 20px 0;
+                    padding : 10px 0;
 
                     .infos-content {
                         display     : flex;
                         align-items : center;
                         padding     : 2px 0;
                         color       : var(--text);
-                        font-weight : 600;
+
+                        a, span {
+                            font-weight : 600;
+                        }
 
                         svg {
                             margin-right : 7px;
@@ -74,67 +102,49 @@
                         }
                     }
                 }
-        
-                .project-tags {
-                    position        : relative;
-                    display         : flex;
-                    flex-wrap       : wrap;
-                    padding         : 10px 0;
-        
-                    .tag {
-                        display          : flex;
-                        align-items      : center;
-                        padding          : 0 10px;
-                        margin           : 5px;
-                        border-radius    : var(--radius);
-                        color            : var(--text-secondary);
-                        background-color : var(--content-x-light);
-                        box-shadow       : var(--shadow-tiny);
-        
-                        span {
-                            color        : var(--primary);
-                            font-weight  : 700;
-                            font-size    : 18px;
-                            margin-right : 5px;
-                        }
-                    }
+
+                .join-btn {
+                    height           : 48px;
+                    color            : white;
+                    font-weight      : 600;
+                    text-transform   : uppercase;
+                    font-size        : 14px;
+                    background-color : var(--primary);
+                    margin           : 10px 0;
                 }
-        
-                .actions {
-                    display         : flex;
-                    padding         : 20px 0 0;
-                    font-size       : 14px;
-        
-                    .action-btn {
-                        display          : flex;
-                        align-items      : center;
-                        padding          : 0 14px;
-                        margin           : 0 10px;
-                        font-weight      : 700;
-                        border-radius    : var(--radius);
-                        box-shadow       : var(--shadow-tiny);
-                        color            : var(--text-secondary);
-                        background-color : var(--content-x-light);
-        
-                        svg {
-                            width        : 22px;
-                            height       : 22px;
-                            margin-left : 10px;
-                        }
-        
-                        &.like {
-                            svg {
-                                color : var(--red);
-                            }
-                        }
-        
-                        &.follow {
-                            svg {
-                                color : var(--green);
-                            }
-                        }
-                    }
-                }
+            }
+        }
+    }
+
+    .actions {
+        display   : flex;
+        padding   : 20px 0 0;
+        font-size : 14px;
+    }
+
+    .action-btn {
+        width            : 50%;
+        font-weight      : 700;
+        border-radius    : var(--radius);
+        color            : var(--text-secondary);
+        background-color : var(--content-x-light);
+
+        svg {
+            width       : 22px;
+            height      : 22px;
+            margin-left : 10px;
+        }
+
+        &.like {
+            svg {
+                color : var(--red);
+            }
+        }
+
+        &.follow {
+            margin-left : 10px;
+            svg {
+                color : var(--green);
             }
         }
     }
@@ -142,53 +152,22 @@
     .project-page-body {
         position   : relative;
         width      : 100%;
-        min-height : 100%;
-        background : var(--content-x-light);
-
-        .project-navbar {
-            display         : flex;
-            align-items     : center;
-            justify-content : flex-start;
-            padding         : 10px 0;
-            margin          : 0 auto;
-            border-bottom   : 1px solid var(--light-border);
-
-            a {
-                padding     : 10px 20px;
-                font-size   : 16px;
-                font-weight : 600;
-                color       : var(--text);
-                cursor      : pointer;
-
-                span {
-                    font-size   : 13px;
-                    color       : var(--text-tertiary);
-                    margin-left : 3px;
-                }
-
-                &:hover {
-                    color : var(--primary);
-                }
-
-                &.active {
-                    color : var(--primary);
-                }
-            }
-        }
+        height     : 100%;
+        background : var(--content-light);
 
         .project-page-content {
             display : flex;
             width   : 100%;
 
             .content {
-                width         : 70%;
+                width         : 72%;
                 padding-right : 3%;
 
                 .content-header {
-                    margin-bottom : 20px;
-
+                    margin-bottom : 30px;
                     h2 {
                         font-size : 26px !important;
+                        font-weight   : 600;
                     }
                 }
 
@@ -201,45 +180,28 @@
                     font-size : 16px;
                 }
 
-                .qna-page-accordion {
-                    width         : 100%;
-                    height        : auto;
-                    margin-bottom : 20px;
-                    padding       : 10px 20px;
-                    border        : 1px solid var(--light-border);
-                    cursor        : pointer;
-
-                    &:hover {
-                        background-color : var(--content-x-light);
-                    }
-
-                    .qna-page-accordion-question {
-                        display         : flex;
-                        align-items     : center;
-                        justify-content : space-between;
-                        padding         : 10px 0;
-                        font-size       : 16px;
-                        font-weight     : 500;
-
-                        svg {
-                            width  : 26px;
-                            height : 26px;
+                .img-container {
+                    display   : flex;
+                    flex-wrap : wrap;
+                    .img-item {
+                        width  : 50%;
+                        height : 300px;
+                        padding : 5px;
+                        div {
+                            height : 100%;
+                            width  : 100%;
                         }
-                    }
-
-                    .qna-page-accordion-answer {
-                        max-width  : 95%;
-                        padding    : 10px 0;
-                        color      : var(--text-secondary);
-                        text-align : justify;
                     }
                 }
             }
 
             .content-cards {
-                position : sticky;
-                width    : 30%;
-                height   : 100%;
+                position       : sticky;
+                width          : 28%;
+                top            : 90px;
+                overflow-y     : auto;
+                padding-bottom : 80px;
+                padding-right  : 5px;
 
                 .project-page-card {
                     display          : flex;
@@ -248,16 +210,22 @@
                     margin-bottom    : 20px;
                     border-radius    : var(--radius);
                     background-color : var(--content-x-light);
-                    box-shadow       : var(--shadow-tiny);
+                    border           : 1px solid var(--light-border);
+
+                    &:hover {
+                        border : 1px solid var(--primary);
+                    }
 
                     .card-title {
                         display         : flex;
                         justify-content : space-between;
-                        margin-bottom   : 30px;
 
                         h3 {
-                            text-align  : center;
-                            font-weight : 500;
+                            font-size      : 18px;
+                            text-align     : center;
+                            font-weight    : 700;
+                            letter-spacing : 0.5px;
+                            color          : var(--primary);
                         }
 
                         .swiper-button {
@@ -268,53 +236,44 @@
                             width           : 28px;
                             padding         : 2px;
                             border-radius   : var(--radius);
-                            background      : var(--primary);
-                            color           : white;
+                            box-shadow      : var(--shadow-tiny);
+                            color           : var(--primary);
                             z-index         : 10;
                             cursor          : pointer;
+                            border          : 1px solid var(--primary);
+
+                            &:hover {
+                                color            : white;
+                                background-color : var(--primary);
+                            }
 
                             svg {
                                 width  : 24px;
                                 height : 24px;
                             }
+                        }
+                    }
 
-                            &.previous {
-                                left : -24px;
-                            }
-
-                            &.next {
-                                right : -24px;
-                            }
+                    .card-body {
+                        margin-top : 30px;
+                        h4 {
+                            font-weight : 600;
                         }
                     }
 
                     .actuality-slide {
-
                         h4 {
-                            text-overflow      : ellipsis;
-                            overflow           : hidden;
-                            width              : 100%;
-                            line-height        : 21px;
-                            display            : -webkit-box;
-                            -webkit-line-clamp : 2;
-                            -webkit-box-orient : vertical;
+                            @include line-clamp(100%, 21px, 2);
                             text-align         : center;
                             margin-bottom      : 20px;
                         }
-
-                        >div {
-                            text-overflow      : ellipsis;
-                            overflow           : hidden;
-                            width              : 100%;
-                            line-height        : 21px;
-                            display            : -webkit-box;
-                            -webkit-line-clamp : 7;
-                            -webkit-box-orient : vertical;
+                        > div {
+                            @include line-clamp(100%, 21px, 5);
                         }
                     }
 
                     .gallery-slide {
-                        >div {
+                        > div {
                             height : 200px;
                         }
                     }

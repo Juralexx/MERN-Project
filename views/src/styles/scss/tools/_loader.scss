@@ -5,7 +5,7 @@
     height   : 100vh;
     z-index  : 1000;
 
-    .loader-inner { 
+    .loader_inner { 
         position         : absolute;
         height           : 190px;
         width            : 190px;
@@ -21,7 +21,7 @@
         border           : 2px solid var(--primary);
         backdrop-filter  : blur(6px);
         
-        .loader-animation {
+        .loader_animation {
             display             : inline-block;
             position            : relative;
             height              : 70px;
@@ -64,7 +64,7 @@
         }
     }
 
-    .loader-blurry {
+    .loader_blurry {
         position        : absolute;
         top             : 0;
         width           : 100vw;
@@ -101,7 +101,7 @@
     padding         : 50px 0;
     z-index         : 1000;
         
-        .loader-animation {
+        .loader_animation {
             display             : inline-block;
             position            : relative;
             height              : 54px;

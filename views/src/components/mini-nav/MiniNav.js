@@ -9,6 +9,7 @@ import NotificationsMenu from "./notifications/Notifications";
 import MessengerMenu from "./Messenger";
 import { BsFillCaretDownFill } from 'react-icons/bs'
 import { IoNotifications, IoChatboxEllipses } from 'react-icons/io5'
+import { MdMessage } from "react-icons/md";
 
 const MiniNav = ({ user, websocket }) => {
     const [openSettingsMenu, setOpenSettingsMenu] = useState(false)
@@ -27,16 +28,17 @@ const MiniNav = ({ user, websocket }) => {
 
     return (
         <div className="mini-nav" ref={wrapperRef}>
-            <ul className="mini-nav-ul">
+            <ul className="mini-nav_ul">
                 <li className="mini-nav-li">
                     <NavLink to="/profil" className="mini-nav-a">
                         <div className="mini-nav-avatar" style={avatar(user.picture)}></div>
                         <p className="mini-nav-pseudo">{user.pseudo}</p>
                     </NavLink>
                 </li>
+                <div className="bordered"></div>
                 <li className="mini-nav-li">
                     <div className="mini-nav-button" onClick={() => { setOpenMessengerMenu(!openMessengerMenu); setOpenNotificationsMenu(false); setOpenSettingsMenu(false) }}>
-                        <IoChatboxEllipses />
+                        <MdMessage />
                     </div>
                 </li>
                 <li className="mini-nav-li">

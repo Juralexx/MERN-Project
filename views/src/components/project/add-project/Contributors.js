@@ -94,7 +94,7 @@ const Contributors = ({ workArray, setWorkArray, isErr, setErr, error, setError 
         <div className="add-project-card">
             {workArray.map((element, key) => {
                 return (
-                    <div className="qna-form mb-4" key={key}>
+                    <div className="mb-4" key={key}>
                         <div className="header flex mb-5">
                             <h3 className="mr-4">Métier n°{key + 1}</h3>
                             <Button text="Supprimer" onClick={() => deleteItem(key)} />
@@ -135,7 +135,7 @@ const Contributors = ({ workArray, setWorkArray, isErr, setErr, error, setError 
                             <div className="content-form mt-4">
                                 <p className="title full">Description</p>
                                 <Textarea className={`full ${checkErr(`work-${key}`)}`} type="text" placeholder="Pourquoi recherchez vous cette compétence ?" onChange={e => handleDescription(e.target.value, key)} value={element.description} />
-                                <div className="field-infos full">
+                                <div className="field_infos full">
                                     {element.description.length} / 1000 caractères
                                 </div>
                             </div>

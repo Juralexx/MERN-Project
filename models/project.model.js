@@ -100,19 +100,25 @@ const ProjectModel = new mongoose.Schema(
         works: {
             type: [],
             name: String,
-            numberFound: {
-                type: Number,
-                default: "0"
-            },
-            number: Number
+            number: Number,
+            numberFound: Number,
+            description: String
         },
 
         pictures: {
             type: [String]
         },
 
+        start: {
+            type: Date
+        },
+
         end: {
             type: Date
+        },
+
+        networks: {
+            type: [],
         },
 
         members: {
@@ -225,19 +231,11 @@ const ProjectModel = new mongoose.Schema(
                 leaver: String,
             }
         },
-
-        follows: {
-            type: Number,
-            default: 0
-        },
+        
         followers: {
             type: [String]
         },
-
-        likes: {
-            type: Number,
-            default: 0
-        },
+        
         likers: {
             type: [String]
         },

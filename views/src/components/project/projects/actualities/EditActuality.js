@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import EditorToolbar, { formats, modules } from '../../../tools/editor/EditorToolbar'
-import { Button, TextButton } from '../../../tools/components/Button'
+import { Button } from '../../../tools/components/Button'
 import { ErrorCard } from '../../../tools/components/Error'
 import { ClassicInput } from '../../../tools/components/Inputs'
 import { coverPicture } from '../../../tools/functions/useAvatar'
@@ -123,15 +123,15 @@ const EditActuality = ({ project }) => {
     }
 
     return (
-        <div className="content-container">
-            <div className="content-box">
+        <div className="content_container">
+            <div className="content_box">
                 <div className="header flex justify-between mb-5">
                     <h2>Modifier l'actualité : {title}</h2>
                 </div>
                 <div className="content-form">
                     <p className="title full">Titre <span>Champ requis</span></p>
                     <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre de l'actualité" onChange={(e) => setTitle((e.target.value).substring(0, 100))} value={title} />
-                    <div className="field-infos full">{title.length} / 100 caractères</div>
+                    <div className="field_infos full">{title.length} / 100 caractères</div>
                     {isErr === "title" && <ErrorCard display={isErr === "title"} text={error} clean={() => setErr("")} />}
                 </div>
 
@@ -147,7 +147,7 @@ const EditActuality = ({ project }) => {
                             modules={modules}
                             formats={formats}
                         />
-                        <div className="field-infos ml-auto">{count} / 4000 caractères</div>
+                        <div className="field_infos ml-auto">{count} / 4000 caractères</div>
                     </div>
                 </div>
 
@@ -158,13 +158,17 @@ const EditActuality = ({ project }) => {
                             type="file"
                             name="files"
                             multiple
-                            disabled={files.length >= 4}
+                            disabled={files.length >= 3}
                             accept="image/jpeg, image/jpg, image/png, image/gif, image/heic, image/heif, image/tiff, image/webp"
                             onChange={e => getFiles(e.target.files)}
                         />
-                        <div className="img-preview active"><MdOutlineAddPhotoAlternate /></div>
+                        <div className="img-preview active">
+                            <div className="svg_container">
+                                <MdOutlineAddPhotoAlternate />
+                            </div>
+                        </div>
                     </div>
-                    {[...Array(4)].map((element, key) => {
+                    {[...Array(3)].map((element, key) => {
                         return (
                             <div className="img-preview-container" key={key}>
                                 {files.length > key ? (
@@ -178,15 +182,19 @@ const EditActuality = ({ project }) => {
                                         </div>
                                     )
                                 ) : (
-                                    <div className="img-preview"><MdOutlineInsertPhoto /></div>
+                                    <div className="img-preview">
+                                        <div className="svg_container">
+                                            <MdOutlineInsertPhoto />
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         )
                     })}
                 </div>
-                <div className="btn-container">
-                    <Link to={`/projects/${project.URLID}/${project.URL}/actuality`}><TextButton text="Annuler" /></Link>
-                    <Button text="Valider" onClick={handleActuality} />
+                <div className="btn_container">
+                    <Link to={`/projects/${project.URLID}/${project.URL}/actuality`}><Button text="Annuler" /></Link>
+                    <Button text="Valider" className="ml-2" onClick={handleActuality} />
                 </div>
             </div>
         </div>

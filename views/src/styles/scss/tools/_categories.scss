@@ -1,4 +1,4 @@
-.categories-picker {
+.categories_picker {
     position      : absolute;
     top           : 56px;
     width         : 650px;
@@ -13,19 +13,19 @@
         right : 0;
     }
 
-    .categories-main {
+    .categories_main {
         display        : flex;
         flex-direction : column;
         width          : 350px;
         margin         : 15px 0;
         border-right   : 1px solid var(--text-tertiary);
 
-        .categories-main-inner {
+        .categories_main_inner {
             position   : relative;
             padding    : 0 10px;
             overflow-x : hidden;
 
-            .categories-main-item {
+            .categories_main_item {
                 position      : relative;
                 display       : flex;
                 align-items   : center;
@@ -88,7 +88,7 @@
     
             &.active {
 
-                .categories-main-item {
+                .categories_main_item {
                     color : var(--primary);
                     background : rgba(var(--primary-rgb), 0.03);
 
@@ -106,7 +106,7 @@
         }
     }
 
-    .categories-sub {
+    .categories_sub {
         padding        : 0;
         display        : flex;
         flex-direction : column;
@@ -114,7 +114,7 @@
         padding        : 0 10px;
         margin         : 15px 0;
 
-        .categories-sub-item {
+        .categories_sub_item {
             width         : 200px;
             padding       : 10px 10px;
             margin        : 2px 0;
@@ -134,7 +134,7 @@
     }
 }
 
-.categories-container {
+.categories_container {
     position      : absolute;
     top           : 56px;
     width         : 100%;
@@ -149,16 +149,16 @@
         padding          : 15px 20px 0;
     }
 
-    .categories-inner {
+    .categories_inner {
         display : flex;
 
-        .categories-col {
+        .categories_col {
             display        : flex;
             flex-direction : column;
             width          : 25%;
             padding        : 10px 20px;
 
-            .categories-item {
+            .categories_item {
                 position    : relative;
                 display     : flex;
                 align-items : center;
@@ -192,7 +192,7 @@
         }
     }
 
-    .categories-bottom-link {
+    .categories_bottom_link {
         text-transform : uppercase;
         padding        : 15px 20px;
         background     : var(--light);
@@ -217,8 +217,8 @@
         }
     }
 
-    &.no-bottom {
-        .categories-bottom-link {
+    &.no_bottom {
+        .categories_bottom_link {
             display : none;
         }
     }

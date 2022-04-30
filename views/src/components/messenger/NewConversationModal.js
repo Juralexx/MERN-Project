@@ -123,11 +123,11 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
                 <div className='body'>
                     {navbar === 1 ? (
                         <>
-                            <div className="user-in-array-container">
+                            <div className="user_in_array-container">
                                 {array.length > 0 && (
                                     array.map((element, key) => {
                                         return (
-                                            <div className="user-in-array" key={key}>
+                                            <div className="user_in_array" key={key}>
                                                 <TinyAvatar pic={element.picture} />
                                                 <p>{element.pseudo}</p>
                                                 <IoClose onClick={() => removeUserFromArray(element)} />
@@ -137,13 +137,13 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
                                 )}
                             </div>
                             <ClassicInput placeholder="Rechercher un ami..." className="full mb-2" value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchFriends} type="search" />
-                            <div className="user-selecter">
+                            <div className="user_selecter">
                                 {open && friendsFound &&
                                     <>
-                                        <div className="user-displayer">
+                                        <div className="user_displayer">
                                             {friendsFound.map((element, key) => {
                                                 return (
-                                                    <div className="user-display-choice" key={key} onClick={() => pushUserInArray(element)} style={highlightIt(array, element, isFriendInResult, search)}>
+                                                    <div className="user_display_choice" key={key} onClick={() => pushUserInArray(element)} style={highlightIt(array, element, isFriendInResult, search)}>
                                                         <MediumAvatar pic={element.picture} />
                                                         <p>{element.pseudo}</p>
                                                     </div>
@@ -171,7 +171,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
                         </>
                     )}
                 </div>
-                <div className='conversation-btn-container'>
+                <div className='conversation-btn_container'>
                     <Button text="Créer la conversation" disabled={array.length < 1} onClick={createNewConversation} />
                 </div>
             </Modal>

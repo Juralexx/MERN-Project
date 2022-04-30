@@ -26,16 +26,16 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
     }
 
     return (
-        <div className="location-search-displayer">
+        <div className="location_search_displayer">
             {(location.length > 0 || recentLocations.length > 0) &&
-                <div className="locations-search-top">
+                <div className="locations_search_top">
                     {location.length > 0 &&
                         <>
                             <h4>Localisations sélectionnées</h4>
-                            <div className="locations-selected">
+                            <div className="locations_selected">
                                 {location.map((element, key) => {
                                     return (
-                                        <div className="locations-selected-item" key={key}>
+                                        <div className="locations_selected_item" key={key}>
                                             {element.type === "city" &&
                                                 <p>{element.location} ({element.department_code})</p>
                                             }
@@ -57,7 +57,7 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                             <h4>Localisations récentes</h4>
                             {recentLocations.map((element, key) => {
                                 return (
-                                    <div className="locations-search-item" key={key} onClick={() => setLocation(locations => [...locations, element])}>
+                                    <div className="locations_search_item" key={key} onClick={() => setLocation(locations => [...locations, element])}>
                                         <FaMapMarkerAlt />
                                         {element.type === "city" &&
                                             <p>{element.location} ({element.department_code})</p>
@@ -76,7 +76,7 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                 </div>
             }
             {location.length === 1 &&
-                <div className="location-range">
+                <div className="location_range">
                     <h4>Dans un rayon de <span>{aroundLocation}</span> km</h4>
                     <div className="range">
                         <Slider
@@ -91,11 +91,11 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                     </div>
                 </div>
             }
-            <div className="locations-search-body">
-                <div className="locations-search-item"><BsGeoFill /> <p>Autour de moi</p></div>
-                <div className="locations-search-item"><GiFrance /> <p>Toute la France</p></div>
+            <div className="locations_search_body">
+                <div className="locations_search_item"><BsGeoFill /> <p>Autour de moi</p></div>
+                <div className="locations_search_item"><GiFrance /> <p>Toute la France</p></div>
             </div>
-            <div className="locations-search-bottom">
+            <div className="locations_search_bottom">
                 <TextButton text="Effacer" onClick={() => { setLocation([]); setSliderKey(0); setAroundLocation(0)}}/>
                 <TextButton text="Valider" onClick={() => setDisplayLocation(false)} />
             </div>

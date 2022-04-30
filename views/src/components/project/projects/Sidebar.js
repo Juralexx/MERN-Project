@@ -51,7 +51,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                                     <div className={`sidebar-title ${addActive(reduced, "reduced")}`} onClick={() => setSubmenu(key)}>
                                         <div className="sidebar-title-inner">
                                             <div className="sidebar-img" style={avatar(element.pictures[0])}></div>
-                                            <div className={`sidebar-name ${addActive(reduced, "reduced")} one-line`}>{element.title}</div>
+                                            <div className={`sidebar-name ${addActive(reduced, "reduced")} one_line`}>{element.title}</div>
                                         </div>
                                         <div className={`${reduced ? "hidden" : ""}`}><BsFillCaretRightFill /></div>
                                     </div>
@@ -99,7 +99,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                         <div className="sidebar-bottom-avatar" style={avatar(user.picture)}></div>
                         <div className="sidebar-bottom-pseudo">{user.pseudo}</div>
                     </div>
-                    <div className={`${reduced ? "hidden" : "flex"} tools-btn`}><BiDotsVerticalRounded /></div>
+                    <div className={`${reduced ? "hidden" : "flex"} tools_btn`}><BiDotsVerticalRounded /></div>
                 </div>
             }
         </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MiniNav from "./mini-nav/MiniNav";
-import { AiFillHome } from 'react-icons/ai'
+import { AiOutlineHome } from 'react-icons/ai'
 import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
 import { IoPersonCircleSharp } from 'react-icons/io5'
 import { RiLoginCircleLine } from 'react-icons/ri'
-import { FaProjectDiagram } from 'react-icons/fa'
+import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
 
 const Navbar = ({ websocket, user, uid }) => {
@@ -29,10 +29,10 @@ const Navbar = ({ websocket, user, uid }) => {
                         {uid ? (
                             <>
                                 <div className="nav-container">
-                                    <ul className="nav-ul">
+                                    <ul className="nav_ul">
                                         <li className="nav-li">
                                             <NavLink to="/" className={isThisActive}>
-                                                <AiFillHome className="nav-icon" />
+                                                <AiOutlineHome className="nav-icon" />
                                                 <p className="nav-p">Accueil</p>
                                             </NavLink>
                                         </li>
@@ -44,7 +44,7 @@ const Navbar = ({ websocket, user, uid }) => {
                                         </li>
                                         <li className="nav-li">
                                             <NavLink to="/projects" className={isThisActive}>
-                                                <FaProjectDiagram className="nav-icon" />
+                                                <MdOutlineInsertChart className="nav-icon" />
                                                 <p className="nav-p">Projets</p>
                                             </NavLink>
                                         </li>
@@ -61,10 +61,10 @@ const Navbar = ({ websocket, user, uid }) => {
                         ) : (
                             <>
                                 <div className="nav-container">
-                                    <ul className="nav-ul">
+                                    <ul className="nav_ul">
                                         <li className="nav-li">
                                             <NavLink to="/" className={isThisActive}>
-                                                <AiFillHome className="nav-icon" />
+                                                <AiOutlineHome className="nav-icon" />
                                                 <p className="nav-p">Accueil</p>
                                             </NavLink>
                                         </li>
@@ -76,7 +76,7 @@ const Navbar = ({ websocket, user, uid }) => {
                                         </li>
                                         <li className="nav-li">
                                             <NavLink to="/login" className={isThisActive}>
-                                                <FaProjectDiagram className="nav-icon" />
+                                                <MdOutlineInsertChart className="nav-icon" />
                                                 <p className="nav-p">Projets</p>
                                             </NavLink>
                                         </li>
@@ -89,7 +89,7 @@ const Navbar = ({ websocket, user, uid }) => {
                                     </ul>
                                 </div>
                                 <div className="nav-container-right">
-                                    <ul className="nav-ul">
+                                    <ul className="nav_ul">
                                         <li className="nav-li">
                                             <NavLink to="/login" className={isThisActive}>
                                                 <IoPersonCircleSharp className="nav-icon" />

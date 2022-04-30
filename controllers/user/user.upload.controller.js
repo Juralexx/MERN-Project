@@ -9,8 +9,9 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import sharp from 'sharp'
 
-/**********************************************************************************************************************/
-/****************************************************** UPLOAD ********************************************************/
+/**
+ * Upload profil picture
+ */
 
 export const uploadProfilPicture = async (req, res) => {
     const __directory = `${__dirname}/../../uploads/users/${req.params.id}`
@@ -103,8 +104,9 @@ export const deleteProfilPicture = async (req, res) => {
     // }
 }
 
-/**********************************************************************************************************************/
-/************************************************** UPLOAD COVER ******************************************************/
+/**
+ * Upload cover picture
+ */
 
 export const uploadCoverPicture = async (req, res) => {
     const __directory = `${__dirname}/../../uploads/users/${req.params.id}`
@@ -163,14 +165,21 @@ export const uploadCoverPicture = async (req, res) => {
     }
 }
 
-/**********************************************************************************************************************/
-/*************************************************** DELETE COVER *****************************************************/
+/**
+ * Delete cover picture
+ */
 
 export const deleteCoverPicture = async (req, res) => {
+    const __directory = `${__dirname}/../../uploads/users/${req.params.id}`
+
     try {
         UserModel.findOneAndUpdate(
             { _id: req.params.id },
-            { $set: { cover_picture: "/img/random-cover.jpg" } },
+            {
+                $set: {
+                    cover_picture: `${process.env.SERVER_URL}api/files/img/random-cover.jpg`
+                }
+            },
             { new: true, upsert: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) {
@@ -181,7 +190,7 @@ export const deleteCoverPicture = async (req, res) => {
             }
         );
 
-        fs.unlinkSync(`${__dirname}/../views/public/uploads/cover/${req.params.id}.jpg`)
+        fs.unlinkSync(`${__directory}/cover-${req.params.id}.jpg`)
 
     } catch (err) {
         return res.status(400).send({ message: err });

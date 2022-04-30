@@ -163,7 +163,7 @@ const Message = ({ message, own, uniqueKey, uid, currentChat, websocket, setModi
 
                 {openToolsMenu && hovered && (
                     message.sender === uid && (
-                        <div className="message-tools-menu">
+                        <div className="message-tools_menu">
                             <button onClick={() => { deleteMessage(message); setHovered(false) }}>Supprimer le message</button>
                             <button onClick={() => { setMessageToModify(uniqueKey) }}>Modifier le message</button>
                         </div>

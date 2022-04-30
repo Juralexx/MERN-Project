@@ -36,23 +36,23 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
 
     return (
         <div id="header">
-            <div className="content-box">
-                <div className="header-container">
-                    <div className="header-left">
+            <div className="content_box">
+                <div className="header_container">
+                    <div className="header_left">
                         <h1>Where <span>all projects</span><br />become <span>reality</span></h1>
                         <p> Circa hos dies Lollianus primae lanuginis adulesce, lampadi filius ex praefecto, exploratius causam Maximino spectante, convictus codicem noxiarum artium nondum per aetatem</p>
                     </div>
-                    <div className="header-right">
+                    <div className="header_right">
                         <IconInput
-                            className="is-start-icon"
+                            className="is-start_icon"
                             placeholder="Rechercher un projet"
                             type="search"
                             icon={<BiSearchAlt />}
                         />
-                        <div className="header-input-flex">
+                        <div className="header_input_flex">
                             <div ref={categoriesRef}>
                                 <IconInput
-                                    className="is-start-icon"
+                                    className="is-start_icon"
                                     inputClassName="cursor-pointer"
                                     placeholder="Catégorie"
                                     readOnly
@@ -66,7 +66,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                             </div>
                             <div>
                                 <IconInput
-                                    className="is-start-icon"
+                                    className="is-start_icon"
                                     placeholder="Métier"
                                     type="text"
                                     fullwidth
@@ -83,7 +83,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                             setAroundLocation={setAroundLocation}
                         />
                         {moreFilters &&
-                            <div className="header-input-flex">
+                            <div className="header_input_flex">
                                 <DropdownInput useRef={datesMenu} readOnly placeholder="Date de mise en ligne" value={date} open={byDate} onClick={() => setByDate(!byDate)} cross clean={() => setDate("")}>
                                     <div onClick={() => setDate("Moins d'un jour")}>Moins d'un jour</div>
                                     <div onClick={() => setDate("Moins d'une semaine")}>Moins d'une semaine</div>
@@ -97,7 +97,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                                 </DropdownInput>
                             </div>
                         }
-                        <div className="btn-container">
+                        <div className="btn_container">
                             <div className="flex">
                                 <StartIconTextButton text="Voir la carte" className="mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
                                 <StartIconTextButton text={!moreFilters ? "Plus de filtres" : "Moins de filtres"} icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />

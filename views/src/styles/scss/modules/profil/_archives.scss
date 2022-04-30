@@ -1,0 +1,362 @@
+.profil-edit-container {
+    position      : relative;
+    display       : flex;
+    width         : 100%;
+    height        : auto;
+    margin        : 20px 0;
+    background    : var(--content);
+    padding       : 20px 0;
+    border-radius : var(--radius);
+    box-shadow    : var(--shadow-xl);
+
+    .left {
+        width : 30%;
+
+        h5 {
+            padding : 0 0 10px 15px;
+            color   : var(--text-secondary);
+        }
+    }
+
+    .right {
+        position    : relative;
+        width       : 100%;
+        padding     : 0 20px;
+        border-left : 1px solid var(--body);
+
+        h5 {
+            padding : 0 0 10px 10px;
+            margin  : 0;
+            color   : var(--text-secondary);
+        }
+
+        .user-info {
+            display         : flex;
+            align-items     : center;
+            justify-content : space-between;
+            min-height      : 40px;
+
+            p {
+                display     : flex;
+                align-items : center;
+                margin      : 0;
+                font-size   : 15px;
+                line-height : 15px;
+
+                span {
+                    display     : flex;
+                    align-items : center;
+                    margin-top  : 4px;
+                }
+
+                svg {
+                    margin-right : 10px;
+                    color        : var(var(--svg));
+                }
+            }
+            
+            .btn_container {
+                display         : flex;
+                align-items     : center;
+                justify-content : flex-end;
+
+                .btn-edit {
+                    width         : 32px;
+                    height        : 32px;
+                    padding       : 6px;
+                    border-radius : 30px;
+                    margin        : 0 5px;
+                }
+            }
+
+            .add-btn {
+                background : transparent;
+                color      : var(--primary);
+                border     : none;
+                outline    : none;
+                padding    : 0;
+
+                &:hover {
+                    text-decoration : underline;
+                }
+
+                svg {
+                    path {
+                        fill : var(--primary);
+                    }
+                }
+            }
+
+            .user-info-edit {
+                display        : flex;
+                flex-direction : column;
+                width          : 100%;
+                padding        : 10px;
+                margin         : 10px 0;
+                background     : var(--content-light);;
+                border-radius  : var(--radius);
+
+                input {
+                    border        : 1px solid transparent;
+                    padding       : 10px;
+                    border-radius : var(--radius);
+                    color         : var(--text);
+
+                    &:hover {
+                        border : 1px solid var(--text);;
+                    }
+                }
+
+                .btn_container {
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : flex-end;
+                    padding         : 7px 0 5px;
+
+                    .btn {
+                        margin : 0 5px;
+                    }
+                }
+
+                .gender-updater {
+                    display : flex;
+
+                    div {
+                        display     : flex;
+                        align-items : center;
+                        width       : 130px;
+
+                        label {
+                            margin : 0;
+                        }
+
+                        .option-input {
+                            appearance    : none;
+                            position      : relative;
+                            height        : 17px;
+                            width         : 17px;
+                            transition    : all 0.15s ease-out 0s;
+                            background    : #cbd1d8;
+                            border        : none;
+                            color         : #fff;
+                            cursor        : pointer;
+                            display       : inline-block;
+                            margin-right  : 0.5rem;
+                            padding       : 0;
+                            outline       : none;
+                            position      : relative;
+                            border-radius : 20px;
+                            z-index       : 1000;
+
+                            &:hover {
+                                background : #9faab7;
+                            }
+
+                            &:checked {
+                                background : var(--primary);
+
+                                &:before {
+                                    height      : 17px;
+                                    width       : 17px;
+                                    position    : absolute;
+                                    content     : '✔';
+                                    display     : inline-block;
+                                    text-align  : center;
+                                    line-height : 17px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .bio {
+            display        : flex;
+            flex-direction : column;
+            width          : 100%;
+            padding        : 10px;
+            border-radius  : var(--radius);
+
+            p {
+                padding       : 20px 10px;
+                background    : var(--content-light);
+                border-radius : var(--radius);
+            }
+
+            textarea {
+                border        : 1px solid transparent;
+                padding       : 10px;
+                border-radius : var(--radius);
+                color         : var(--text);
+
+                &:hover {
+                    border : 1px solid var(--text);
+                }
+            }
+
+            .btn_container {
+                display         : flex;
+                align-items     : center;
+                justify-content : flex-end;
+                padding         : 7px 0 5px;
+
+                .btn {
+                    margin : 0 5px;
+                }
+            }
+        }
+
+        .lastname {
+            margin-left : 33px;
+        }
+    }
+    
+
+    svg {
+        height       : 22px;
+        width        : 22px;
+        margin-right : 5px;
+    }
+}
+    
+    .user-info {
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        min-height      : 40px;
+
+        p {
+            display     : flex;
+            align-items : center;
+            margin      : 0;
+            font-size   : 15px;
+            line-height : 15px;
+
+            span {
+                display     : flex;
+                align-items : center;
+                margin-top  : 4px;
+            }
+
+            svg {
+                margin-right : 10px;
+                color        : var(var(--svg));
+            }
+        }
+        
+        .btn_container {
+            display         : flex;
+            align-items     : center;
+            justify-content : flex-end;
+
+            .btn-edit {
+                width         : 32px;
+                height        : 32px;
+                padding       : 6px;
+                border-radius : 30px;
+                margin        : 0 5px;
+            }
+        }
+
+        .add-btn {
+            background : transparent;
+            color      : var(--primary);
+            border     : none;
+            outline    : none;
+            padding    : 0;
+
+            &:hover {
+                text-decoration : underline;
+            }
+
+            svg {
+                path {
+                    fill : var(--primary);
+                }
+            }
+        }
+
+        .user-info-edit {
+            display        : flex;
+            flex-direction : column;
+            width          : 100%;
+            padding        : 10px;
+            margin         : 10px 0;
+            background     : var(--content-light);;
+            border-radius  : var(--radius);
+
+            input {
+                border        : 1px solid transparent;
+                padding       : 10px;
+                border-radius : var(--radius);
+                color         : var(--text);
+
+                &:hover {
+                    border : 1px solid var(--text);;
+                }
+            }
+
+            .btn_container {
+                display         : flex;
+                align-items     : center;
+                justify-content : flex-end;
+                padding         : 7px 0 5px;
+
+                .btn {
+                    margin : 0 5px;
+                }
+            }
+
+            .gender-updater {
+                display : flex;
+
+                div {
+                    display     : flex;
+                    align-items : center;
+                    width       : 130px;
+
+                    label {
+                        margin : 0;
+                    }
+
+                    .option-input {
+                        appearance    : none;
+                        position      : relative;
+                        height        : 17px;
+                        width         : 17px;
+                        transition    : all 0.15s ease-out 0s;
+                        background    : #cbd1d8;
+                        border        : none;
+                        color         : #fff;
+                        cursor        : pointer;
+                        display       : inline-block;
+                        margin-right  : 0.5rem;
+                        padding       : 0;
+                        outline       : none;
+                        position      : relative;
+                        border-radius : 20px;
+                        z-index       : 1000;
+
+                        &:hover {
+                            background : #9faab7;
+                        }
+
+                        &:checked {
+                            background : var(--primary);
+
+                            &:before {
+                                height      : 17px;
+                                width       : 17px;
+                                position    : absolute;
+                                content     : '✔';
+                                display     : inline-block;
+                                text-align  : center;
+                                line-height : 17px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }

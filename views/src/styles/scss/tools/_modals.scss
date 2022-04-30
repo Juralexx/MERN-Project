@@ -1,4 +1,4 @@
-.modal-wrapper {
+.modal_wrapper {
     position   : fixed;
     top        : 0;
     right      : 0;
@@ -9,7 +9,7 @@
     overflow-y : auto;
     z-index    : 3600;
 
-    .modal-container {
+    .modal_container {
         position         : relative;
         margin           : auto;
         width            : 600px;
@@ -27,22 +27,22 @@
             margin-bottom  : 10px;
             font-size      : 18px !important;
     
-            &.title-border {
+            &.title_border {
                 border-bottom : 1px solid var(--text-tertiary);
             }
         }
     
-        &.hide-modal {
+        &.hide_modal {
             opacity    : 0;
             visibility : hidden;
             transform  : scale(1.1) translate(-47%, -50%);
             transition : visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
         }
     
-        &.modal-container-active {
+        &.modal_container-active {
             display : block;
     
-            &.show-modal {
+            &.show_modal {
                 opacity    : 1;
                 visibility : visible;
                 transform  : scale(1);
@@ -50,7 +50,7 @@
             }
         }
     
-        .close-modal {
+        .close_modal {
             position         : absolute;
             padding          : 5px;
             top              : 7px;
@@ -68,12 +68,12 @@
             }
         }
     
-        .modal-nav {
+        .modal_nav {
             display       : flex;
             min-width     : 100%;
             margin-bottom : 20px;
     
-            .modal-nav-item {
+            .modal_nav-item {
                 padding          : 8px 16px;
                 cursor           : pointer;
                 background-color : var(--content-x-light);
@@ -94,7 +94,7 @@
         }
     }
     
-    .modal-cover {
+    .modal_cover {
         position   : fixed;
         top        : 0;
         bottom     : 0;
@@ -104,16 +104,16 @@
         z-index    : 1599;
         display    : none;
     
-        &.modal-cover-active {
+        &.modal_cover-active {
             display : block;
         }
     }
 }
 
-.users-modal {
+.users_modal {
     width : 500px;
 
-    .users-modal-header {
+    .users_modal-header {
         display       : flex;
         align-items   : center;
         border-bottom : 1px solid var(--light-border);
@@ -137,7 +137,7 @@
         }
     }
 
-    .users-modal-body {
+    .users_modal-body {
         padding    : 10px 0 0;
         // overflow-y : auto;
         z-index    : 1;
@@ -157,7 +157,7 @@
             }
         }
 
-        .empty-users {
+        .empty_users {
             display         : flex;
             align-items     : center;
             justify-content : center;
@@ -174,13 +174,13 @@
     }
 }
 
-.hovered-card {
+.hovered_card {
     position : absolute;
     bottom   : 10px;
     left     : -120px;
     padding  : 32px;
     
-    .hovered-modal-container {
+    .hovered-modal_container {
         background-color : var(--content);
         padding          : 16px;
         box-shadow       : var(--shadow-xl);
@@ -188,12 +188,12 @@
         border-radius    : var(--radius);
         border           : 2px solid var(--content-x-light);
 
-        .hovered-modal-head {
+        .hovered-modal_head {
             display       : flex;
             width         : 100%;
             margin-bottom : 12px;
 
-            .hovered-modal-avatar {
+            .hovered-modal_avatar {
                 width         : 76px;
                 height        : 76px;
                 border-radius : 16px;
@@ -204,7 +204,7 @@
             }
 
             .right {
-                .hovered-card-name {
+                .hovered_card-name {
                     font-weight   : 500;
                     font-size     : 20px;
                     margin-bottom : 6px;
@@ -214,18 +214,18 @@
     }
 }
 
-.warning-modal {
-    .warning-title {
+.warning_modal {
+    .warning_title {
         font-size : 20px;
         width     : 90%;
     }
 
-    .warning-text {
+    .warning_text {
         padding : 20px 0;
         color   : var(--text-secondary);
     }
 
-    .btn-container {
+    .btn_container {
         margin-top : 10px;
         padding    : 0;
     }

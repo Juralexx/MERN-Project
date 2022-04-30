@@ -1,15 +1,19 @@
 import React from 'react'
 import { DatePicker } from '../../tools/components/Inputs'
 
-const End = ({ end, setEnd }) => {
+const End = ({ start, setStart, end, setEnd }) => {
     return (
         <div className="add-project-card">
             <h3>Date de fin ou de déroulement</h3>
             <div className="flex-card">
-                <div className="card-left">
-                    <p className="title">Date de fin potentielle</p>
-                    <div className="content-form">
-                        <DatePicker className="top mt-2" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
+                <div className="card-left flex">
+                    <div>
+                        <p className="title">Date de fin potentielle</p>
+                        <DatePicker className="top" placeholder="JJ/MM/AAAA" value={start} selected={start} onSelect={setStart} />
+                    </div>
+                    <div>
+                        <p className="title">Date de fin potentielle</p>
+                        <DatePicker className="top ml-2" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
                     </div>
                 </div>
                 <div className="card-right">

@@ -357,13 +357,13 @@
                     display     : flex;
                     align-items : center;
 
-                    .icon-toggle {
+                    .icon_toggle {
                         margin-right : 8px;
                         box-shadow   : var(--shadow-tiny);
                     }
 
                     &.like {
-                        .icon-toggle {
+                        .icon_toggle {
                             background-color : rgba(var(--red-rgb), 0.1);
                         }
                         svg {
@@ -372,14 +372,14 @@
                         }
 
                         &:hover {
-                            .icon-toggle {
+                            .icon_toggle {
                                 background-color : rgba(var(--red-rgb), 0.15);
                             }
                         }
                     }
                     &.follow {
                         margin-top : 10px;
-                        .icon-toggle {
+                        .icon_toggle {
                             background-color : rgba(var(--green-rgb), 0.1);
                         }
                         svg {
@@ -388,7 +388,7 @@
                         }
 
                         &:hover {
-                            .icon-toggle {
+                            .icon_toggle {
                                 background-color : rgba(var(--green-rgb), 0.15);
                             }
                         }

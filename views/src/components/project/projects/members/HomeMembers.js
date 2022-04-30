@@ -34,8 +34,8 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                 <ToolsBtn onClick={() => setOpenMenu(!openMenu)}><BiDotsVerticalRounded /></ToolsBtn>
                                 {openMenu && (
                                     <SmallMenu top="top-1">
-                                        <div className="tools-choice" onClick={() => setAddMembers(true)}>Ajouter des membres</div>
-                                        {project.member_requests.length > 0 && <div className="tools-choice" onClick={() => setOpenRequests(true)}>Voir les demandes en cours</div>}
+                                        <div className="tools_choice" onClick={() => setAddMembers(true)}>Ajouter des membres</div>
+                                        {project.member_requests.length > 0 && <div className="tools_choice" onClick={() => setOpenRequests(true)}>Voir les demandes en cours</div>}
                                     </SmallMenu>
                                 )}
                             </div>

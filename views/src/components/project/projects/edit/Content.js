@@ -10,6 +10,12 @@ const Content = ({ content, setContent, contentChanged, setContentChanged }) => 
         setContent(editor.getContents())
         setCount(editor.getText().length - 1)
         if (!contentChanged) setContentChanged(true)
+
+        quillRef?.current?.getEditor().on('text-change', () => {
+            if (editor.getLength() > 100000) {
+                quillRef.current.getEditor().deleteText(100000, editor.getLength());
+            }
+        })
     }
 
     return (
@@ -21,11 +27,11 @@ const Content = ({ content, setContent, contentChanged, setContentChanged }) => 
                     ref={quillRef}
                     defaultValue={content}
                     onChange={handleChange}
-                    placeholder={"Décrivez votre projet..."}
+                    placeholder="Décrivez votre projet..."
                     modules={modules}
                     formats={formats}
                 />
-                <div className="field-infos ml-auto">{count} / 10 000 caractères</div>
+                <div className="field_infos ml-auto">{count} / 100 000 caractères</div>
             </div>
         </div>
     )

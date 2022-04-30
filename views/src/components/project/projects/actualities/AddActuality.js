@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
 import ReactQuill from 'react-quill'
-import { StartIconButton } from '../../../tools/components/Button'
+import { Button, StartIconButton } from '../../../tools/components/Button'
 import { ErrorCard } from '../../../tools/components/Error'
 import { ClassicInput } from '../../../tools/components/Inputs'
 import EditorToolbar, { formats, modules } from '../../../tools/editor/EditorToolbar'
@@ -10,7 +10,7 @@ import { FaCheck } from 'react-icons/fa'
 import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
 import { randomNbLtID, removeAccents } from '../../../Utils'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { createActuality } from '../../../../actions/project.action'
 
 const AddActuality = ({ project, user }) => {
@@ -99,15 +99,15 @@ const AddActuality = ({ project, user }) => {
     }
 
     return (
-        <div className="content-container add-actuality">
-            <div className="content-box">
+        <div className="content_container add-actuality">
+            <div className="content_box">
                 <div className="header flex justify-between mb-5">
                     <h2>Ajouter une actualité</h2>
                 </div>
                 <div className="content-form">
                     <p className="title full">Titre <span>Champ requis</span></p>
                     <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre de l'actualité" onChange={(e) => setTitle((e.target.value).substring(0, 100))} value={title} />
-                    <div className="field-infos full">{title.length} / 100 caractères</div>
+                    <div className="field_infos full">{title.length} / 100 caractères</div>
                     {isErr === "title" && <ErrorCard display={isErr === "title"} text={error} clean={() => setErr("")} />}
                 </div>
 
@@ -123,7 +123,7 @@ const AddActuality = ({ project, user }) => {
                             modules={modules}
                             formats={formats}
                         />
-                        <div className="field-infos ml-auto">{count} / 4000 caractères</div>
+                        <div className="field_infos ml-auto">{count} / 4000 caractères</div>
                     </div>
                 </div>
 
@@ -138,9 +138,13 @@ const AddActuality = ({ project, user }) => {
                             accept="image/jpeg, image/jpg, image/png, image/gif, image/heic, image/heif, image/tiff, image/webp"
                             onChange={e => setFiles(getFiles(e.target.files))}
                         />
-                        <div className="img-preview active"><MdOutlineAddPhotoAlternate /></div>
+                        <div className="img-preview active">
+                            <div className="svg_container">
+                                <MdOutlineAddPhotoAlternate />
+                            </div>
+                        </div>
                     </div>
-                    {[...Array(4)].map((element, key) => {
+                    {[...Array(3)].map((_, key) => {
                         return (
                             <div className="img-preview-container" key={key}>
                                 {files.length > key ? (
@@ -148,14 +152,19 @@ const AddActuality = ({ project, user }) => {
                                         <div className="delete-btn" onClick={() => removePicture(key)}><MdClear /></div>
                                     </div>
                                 ) : (
-                                    <div className="img-preview"><MdOutlineInsertPhoto /></div>
+                                    <div className="img-preview">
+                                        <div className="svg_container">
+                                            <MdOutlineInsertPhoto />
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         )
                     })}
                 </div>
-                <div className="btn-container">
-                    <StartIconButton text="Valider" className="next-btn" icon={<FaCheck />} onClick={handleActuality} />
+                <div className="btn_container">
+                    <NavLink to={`/projects/${project.URLID}/${project.URL}/actuality`}><Button text="Annuler" /></NavLink>
+                    <StartIconButton text="Valider et publier" className="next-btn ml-2" icon={<FaCheck />} onClick={handleActuality} />
                 </div>
             </div>
         </div>

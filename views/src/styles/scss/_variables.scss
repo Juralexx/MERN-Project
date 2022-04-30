@@ -4,7 +4,7 @@
     --content-light   : #ffffff;
     --content-x-light : #ffffff;
     --navbar          : #ffffff;
-    --text            : #2f2f2f;
+    --text            : #232221;
     --text-secondary  : #7a7a7a;
     --text-tertiary   : #aaa9a9;
     --svg             : #abb9c9;
@@ -15,7 +15,7 @@
     --light           : #F6F7FE;
     --x-light         : #F6F7FE;
     --xx-light        : #ffffff;
-    --navbar-txt      : #434343;
+    --navbar-txt      : #232221;
     --mini-nav-btn    : #eef0fc;
     --color-skeleton  : rgb(203, 213, 225);
     --shadow-light    : 0 5px 50px 0px rgb(0 0 0 / 0.07),    0 8px 10px -6px rgb(0 0 0 / 0.07);
@@ -47,10 +47,10 @@
 }
 
 :root, .dark {
-    --primary         : #95b1f3;
-    --primary-rgb     : 149, 177, 243;
-    --primary-light   : #A7BDF2;
-    --primary-dark    : #7b9ff3;
+    --primary         : #18A5D6;
+    --primary-rgb     : 24, 165, 214;
+    --primary-light   : #53bee2;
+    --primary-dark    : #158bb2;
     --blue            : #4470ff ;
     --blue-rgb        : 68,  112, 255;
     --xblue           : #7471fc ;
@@ -91,6 +91,16 @@
     --shadow-lg       : 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl       : 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     --shadow-2xl      : 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+    --facebook  : #1a478a;
+    --instagram : #c72a9d;
+    --twitter   : #55acef;
+    --snapchat  : #fffc00;
+    --youtube   : #e91e00;
+    --twitch    : #9147ff;
+    --pinterest : #cb2229;
+    --linkedin  : #007bb6;
+    --website   : var(--primary);
 }
 
 // --primary         : #9692ff;

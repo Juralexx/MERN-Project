@@ -53,8 +53,8 @@ const Gallery = ({ project, isManager }) => {
      }
 
      return (
-          <div className="content-container">
-               <div className="content-box">
+          <div className="content_container">
+               <div className="content_box">
                     {isManager &&
                          <>
                               <div {...getRootProps({ className: `dropzone ${isDragActive && "active"} ${pictures.length === 6 && "disabled"}` })}>
@@ -82,7 +82,7 @@ const Gallery = ({ project, isManager }) => {
                                    </div>
                               )
                          })}
-                         {[...Array(6 - pictures.length)].map((element, key) => {
+                         {[...Array(6 - pictures.length)].map((_, key) => {
                               return (
                                    <div className="gallery-brick-empty" key={key}>
                                         {areLoading.includes(pictures.length + key) ? (
@@ -94,11 +94,6 @@ const Gallery = ({ project, isManager }) => {
                               )
                          })}
                     </div>
-                    <FsLightbox
-                         toggler={toggler}
-                         sources={pictures}
-                         types={[...Array(pictures.length)].fill('image')}
-                    />
                </div>
           </div>
      )

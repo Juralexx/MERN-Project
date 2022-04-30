@@ -7,17 +7,11 @@ import Register from '../../pages/Register'
 import Navbar from '../Navbar'
 import Profil from '../../pages/Profil'
 import MemberProfil from '../members/MemberProfil'
-import Main from '../profil/main/Main'
-import About from '../profil/about/About'
-import Bio from '../profil/about/update/Bio'
-import MainInfos from '../profil/about/update/MainInfos'
-import ContactInfos from '../profil/about/update/ContactInfos'
-import Location from '../profil/about/update/Location'
+import Main from '../profil/Main'
+import About from '../profil/About'
 import AddProject from '../../pages/AddProject'
 import Dashboard from '../../pages/Dashboard'
-import SocialsNetworks from '../profil/about/update/SocialsNetworks'
 import Messenger from '../messenger/Messenger'
-import { Footer } from 'react-day-picker'
 
 function Paths({ websocket, onlineUsers, friends, user, uid }) {
     return (
@@ -52,11 +46,7 @@ function Paths({ websocket, onlineUsers, friends, user, uid }) {
                     <Route path="profil" element={<Profil user={user} />}>
                         <Route index element={<Main />} />
                         <Route path="about" element={<About />}>
-                            <Route index element={<MainInfos />} />
-                            <Route path="contact" element={<ContactInfos />} />
-                            <Route path="bio" element={<Bio />} />
-                            <Route path="location" element={<Location />} />
-                            <Route path="socials-networks" element={<SocialsNetworks />} />
+
                         </Route>
                     </Route>
                 </Route>

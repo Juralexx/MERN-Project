@@ -46,11 +46,11 @@ const Tags = ({ tags, setTags, error, setError, isErr, setErr }) => {
         <div className="content-form">
             <p className="title full">Tags</p>
             {tags.length > 0 && (
-                <div className="tags-container">
+                <div className="project-tags">
                     {tags.map((element, key) => {
                         return (
-                            <div className="tags" key={key}>
-                                <p>{"#" + element}</p>
+                            <div className="tag" key={key}>
+                                <span>#</span> {element}
                                 <IoClose onClick={() => removeTag(element)} />
                             </div>
                         )
@@ -58,7 +58,7 @@ const Tags = ({ tags, setTags, error, setError, isErr, setErr }) => {
                 </div>
             )}
             <ClassicInput className={`full ${checkErr("tags")}`} type="text" placeholder="Ajouter des tags" onKeyPress={e => addTag(e, e.target.value)} />
-            <div className="field-infos full">{tags.length} / 12</div>
+            <div className="field_infos full">{tags.length} / 12</div>
             {isErr === "tags" && <ErrorCard useRef={errorRef} display={isErr === "tags"} text={error} clean={() => setErr("")} />}
         </div>
     )

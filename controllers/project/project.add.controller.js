@@ -23,11 +23,13 @@ export const createProject = async (req, res) => {
         new_region,
         code_new_region,
         description,
+        start,
         end,
         content,
         works,
         members,
-        manager
+        manager,
+        networks
     } = req.body
     const _id = projectId
     const state = "En préparation"
@@ -52,13 +54,15 @@ export const createProject = async (req, res) => {
             new_region,
             code_new_region,
             description,
+            start,
             end,
             content,
             works,
             qna,
             state,
             members,
-            manager
+            manager,
+            networks
         })
 
         await UserModel.findByIdAndUpdate(

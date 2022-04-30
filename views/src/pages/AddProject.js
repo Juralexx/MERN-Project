@@ -17,6 +17,7 @@ import { BsFillEyeFill, BsChatLeftQuote } from "react-icons/bs";
 import { MdOutlineDescription, MdOutlinePhotoLibrary } from 'react-icons/md'
 import { RiBook3Line, RiTeamLine } from 'react-icons/ri'
 import { HiOutlineArrowNarrowRight, HiOutlineArrowNarrowLeft } from 'react-icons/hi'
+import Networks from "../components/project/add-project/Networks";
 
 const AddProject = ({ user }) => {
     const [title, setTitle] = useState("")
@@ -35,11 +36,13 @@ const AddProject = ({ user }) => {
     const [geoJSON, setGeoJSON] = useState([])
     const [description, setDescription] = useState("")
     const [workArray, setWorkArray] = useState([])
+    const [start, setStart] = useState("")
     const [end, setEnd] = useState("")
     const [content, setContent] = useState({})
     const [mainPic, setMainPic] = useState([])
     const [files, setFiles] = useState([])
     const [qna, setQna] = useState([])
+    const [networks, setNetworks] = useState([])
     const [error, setError] = useState(null)
     const [isErr, setErr] = useState(null)
     const [nav, setNav] = useState(0)
@@ -67,16 +70,41 @@ const AddProject = ({ user }) => {
             setErr("content")
             setError("Veuillez saisir une description valide, votre description doit faire entre 10 et 10 000 caractères")
             setNav(1)
+        } else if (workArray.length > 0) {
+            for (let i = 0; i < workArray.length; i++) {
+                if (workArray[i].name === "" || workArray[i].number === (null || undefined)) {
+                    setErr(`work-${i}`)
+                    setError("Veuillez saisir un métier ou un nombre valide...")
+                    setNav(3)
+                    break
+                } else {
+                    if (workArray[i].number === 0) {
+                        setErr(`work-${i}`)
+                        setError("Le nombre de personnes recherchées ne peut pas être de 0")
+                        setNav(3)
+                        break
+                    } else {
+                        if (JSON.stringify(workArray).includes(JSON.stringify(workArray[i].work))) {
+                            setErr(`work-${i}`)
+                            setError("Vous avez déjà sélectionné ce métier...")
+                            setNav(3)
+                            break
+                        }
+                    }
+                }
+            }
         } else if (qna.length > 0) {
             for (let i = 0; i < qna.length; i++) {
                 if (qna[i].question === "" || qna[i].question.length < 10 || qna[i].question.length > 100) {
                     setErr(`question-${i}`)
                     setError("Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères")
                     setNav(4)
+                    break
                 } else if (qna[i].answer === "" || qna[i].answer.length < 10 || qna[i].answer.length > 4000) {
                     setErr(`answer-${i}`)
                     setError("Veuillez ajouter une reponse valide à votre question")
                     setNav(4)
+                    break
                 }
             }
         } else {
@@ -115,13 +143,16 @@ const AddProject = ({ user }) => {
                     new_region: newRegion,
                     code_new_region: codeNewRegion,
                     description: description,
-                    end: end,
                     content: content,
+                    start: start,
+                    end: end,
                     works: workArray,
+                    qna: qna,
+                    networks: networks,
                     manager: user._id,
                     members: { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "manager", since: new Date().toISOString() }
                 }
-            }).then(async (res) => {
+            }).then(async res => {
                 if (res.data.errors) {
                     if (res.data.errors.title) setError(res.data.errors.title)
                     else if (res.data.errors.category) setError(res.data.errors.category)
@@ -130,13 +161,15 @@ const AddProject = ({ user }) => {
                     let pictures = mainPic.concat(files)
                     if (pictures.length > 0) {
                         await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URLID}/${URL}`)
-                            .then(async (response) => {
+                            .then(async response => {
                                 let formData = new FormData()
                                 for (let i = 0; i < pictures.length; i++) {
                                     formData.append('files', pictures[i])
                                 }
-                                await axios.put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${response.data._id}`, formData)
-                                    .then(res => res.data).catch(err => console.log(err))
+                                await axios
+                                    .put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${response.data._id}`, formData)
+                                    .then(res => res.data)
+                                    .catch(err => console.log(err))
                             }).catch(err => console.log(err))
                     }
                     //setTimeout(navigate(`/project/${URLID}/${URL}`), 2000)
@@ -162,7 +195,7 @@ const AddProject = ({ user }) => {
 
     return (
         <>
-            <div className="content-container add-project">
+            <div className="content_container add-project">
                 <div className="add-project-header">
                     <div className="add-project-header-top">
                         <div className="logo-container">
@@ -202,7 +235,7 @@ const AddProject = ({ user }) => {
                         </div>
                     </div>
                 </div>
-                <div className="content-box">
+                <div className="content_box">
                     {nav === 0 &&
                         <>
                             <div className="titles-container">
@@ -248,10 +281,20 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <End
+                                start={start}
+                                setStart={setStart}
                                 end={end}
                                 setEnd={setEnd}
                             />
-                            <div className="btn-container">
+                            <Networks
+                                networks={networks}
+                                setNetworks={setNetworks}
+                                isErr={isErr}
+                                setErr={setErr}
+                                error={error}
+                                setError={setError}
+                            />
+                            <div className="btn_container">
                                 <EndIconButton text="Suivant : Description" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(1)} />
                             </div>
                         </>
@@ -266,7 +309,7 @@ const AddProject = ({ user }) => {
                                 content={content}
                                 setContent={setContent}
                             />
-                            <div className="btn-container">
+                            <div className="btn_container">
                                 <StartIconButton text="Retour : Les bases" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(0)} />
                                 <EndIconButton text="Suivant : Galerie" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(2)} />
                             </div>
@@ -284,7 +327,7 @@ const AddProject = ({ user }) => {
                                 files={files}
                                 setFiles={setFiles}
                             />
-                            <div className="btn-container">
+                            <div className="btn_container">
                                 <StartIconButton text="Retour : Description" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(1)} />
                                 <EndIconButton text="Suivant : Équipe" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(3)} />
                             </div>
@@ -307,7 +350,7 @@ const AddProject = ({ user }) => {
                                 error={error}
                                 setError={setError}
                             />
-                            <div className="btn-container">
+                            <div className="btn_container">
                                 <StartIconButton text="Retour : Galerie" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(2)} />
                                 <EndIconButton text="Suivant : FAQ" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(4)} />
                             </div>
@@ -330,7 +373,7 @@ const AddProject = ({ user }) => {
                                 error={error}
                                 setError={setError}
                             />
-                            <div className="btn-container">
+                            <div className="btn_container">
                                 <StartIconButton text="Retour : Équipe" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(3)} />
                                 <Button text="Enregistrer et publier" onClick={handleAddProject} />
                             </div>

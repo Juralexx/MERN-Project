@@ -54,9 +54,9 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
         <Modal open={open} setOpen={setOpen} css="create-task-modal">
             <h2>Créer une nouvelle tâche</h2>
 
-            <div className="modal-nav">
-                <div className={`modal-nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
-                <div className={`modal-nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
+            <div className="modal_nav">
+                <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
+                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
             </div>
 
             {navbar === 1 ? (
@@ -94,10 +94,10 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
             ) : (
                 <>
                     {array.length > 0 && (
-                        <div className="user-in-array-container">
+                        <div className="user_in_array-container">
                             {array.map((element, key) => {
                                 return (
-                                    <div className="user-in-array" key={key}>
+                                    <div className="user_in_array" key={key}>
                                         <TinyAvatar pic={element.picture} />
                                         <p>{element.pseudo}</p>
                                         <IoClose onClick={() => removeMemberFromArray(element, array, setArray)} />
@@ -107,12 +107,12 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                         </div>
                     )}
                     <ClassicInput placeholder="Rechercher un membre..." className="full" value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchMember} type="search" />
-                    <div className="user-selecter">
+                    <div className="user_selecter">
                         {project.members && (
-                            <div className="user-displayer">
+                            <div className="user_displayer">
                                 {project.members.map((element, key) => {
                                     return (
-                                        <div className="user-display-choice" key={key} onClick={() => addMemberToArray(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
+                                        <div className="user_display_choice" key={key} onClick={() => addMemberToArray(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
                                             <MediumAvatar pic={element.picture} />
                                             <p>{element.pseudo}</p>
                                         </div>

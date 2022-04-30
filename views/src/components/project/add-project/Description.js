@@ -45,7 +45,7 @@ const Description = ({ description, setDescription, tags, setTags, error, setErr
                     <div className="content-form">
                         <p className="title full">Courte description <span>Champ requis</span></p>
                         <Textarea className={`full ${checkErr("description")}`} type="text" placeholder="Courte description du projet" onChange={e => setDescription((e.target.value).substring(0, 300))} value={description} />
-                        <div className="field-infos full">{description.length} / 300 caractères</div>
+                        <div className="field_infos full">{description.length} / 300 caractères</div>
                         {isErr === "description" && <ErrorCard useRef={errorRef} display={isErr === "description"} text={error} clean={() => setErr("")} />}
                     </div>
                 </div>
@@ -73,7 +73,7 @@ const Description = ({ description, setDescription, tags, setTags, error, setErr
                             </div>
                         )}
                         <ClassicInput className={`full ${checkErr("tags")}`} type="text" placeholder="Ajouter des tags" onKeyPress={e => addTag(e, e.target.value)} />
-                        <div className="field-infos full">{tags.length} / 12</div>
+                        <div className="field_infos full">{tags.length} / 12</div>
                         {isErr === "tags" && <ErrorCard useRef={errorRef} display={isErr === "tags"} text={error} clean={() => setErr("")} />}
                     </div>
                 </div>

@@ -23,12 +23,12 @@ const Categories = ({ open, setOpen, setCategory, category, className }) => {
 
     return (
         open && (
-            <div className={`${className ? "categories-picker " + className : "categories-picker"}`}>
-                <div className="categories-main">
+            <div className={`${className ? "categories_picker " + className : "categories_picker"}`}>
+                <div className="categories_main">
                     {categories.map((category, key) => {
                         return (
-                            <div className={`categories-main-inner ${isMainActive(active === key, "active")}`} key={key}>
-                                <div className="categories-main-item" onClick={() => setActive(key)}>
+                            <div className={`categories_main_inner ${isMainActive(active === key, "active")}`} key={key}>
+                                <div className="categories_main_item" onClick={() => setActive(key)}>
                                     <div className="left"><BsFillSunFill />{category.value}</div>
                                     <div className="right"><BsFillCaretRightFill /></div>
                                 </div>
@@ -37,57 +37,57 @@ const Categories = ({ open, setOpen, setCategory, category, className }) => {
                     })}
                 </div>
 
-                <div className="categories-sub">
+                <div className="categories_sub">
                     {active === 0 && (
                         <>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
                         </>
                     )}
                     {active === 1 && (
                         <>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
                         </>
                     )}
                     {active === 2 && (
                         <>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory four")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory four">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory five")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory five">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory four")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory four">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory five")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory five">Subcategory three</div>
                         </>
                     )}
                     {active === 3 && (
                         <>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
                         </>
                     )}
                     {active === 4 && (
                         <>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
                         </>
                     )}
                     {active === 5 && (
                         <>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory four")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory four">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory four")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory four">Subcategory three</div>
                         </>
                     )}
                     {active === 6 && (
                         <>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory four")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory four">Subcategory two</div>
-                            <div className={`categories-sub-item ${isSubActive("Subcategory five")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory five">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory one")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory one">Subcategory one</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory two")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory two">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory three")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory three">Subcategory three</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory four")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory four">Subcategory two</div>
+                            <div className={`categories_sub_item ${isSubActive("Subcategory five")}`} onClick={(e) => handleCategory(e)} data-category="Subcategory five">Subcategory three</div>
                         </>
                     )}
                 </div>

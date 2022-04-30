@@ -28,7 +28,7 @@ export const ClassicInput = (props) => {
                 max={max}
             />
             {(cross && (cross && value && value.length > 0)) && (
-                <div onClick={onClean} className="svg-container">
+                <div onClick={onClean} className="svg_container">
                     <IoClose className="cross" />
                 </div>
             )}
@@ -138,7 +138,7 @@ export const DoubleIconInput = (props) => {
                 readOnly={readOnly}
                 disabled={disabled}
             />
-            {startIcon && <div className="start-icon">{startIcon}</div>}
+            {startIcon && <div className="start_icon">{startIcon}</div>}
             {text}
             {endIcon && <div className="end-icon">{endIcon}</div>}
         </div>
@@ -199,7 +199,7 @@ export const IconInput = (props) => {
                 disabled={disabled}
             />
             {icon &&
-                <div className="start-icon">
+                <div className="start_icon">
                     {icon}
                 </div>
             }
@@ -209,7 +209,7 @@ export const IconInput = (props) => {
                 </div>
             }
             {(cross && (cross && value && value.length > 0)) && (
-                <div onClick={onClean} className="svg-container">
+                <div onClick={onClean} className="svg_container">
                     <IoClose className="cross" />
                 </div>
             )}
@@ -261,7 +261,7 @@ export const DynamicInput = (props) => {
             />
             <label>{text}</label>
             {startIcon &&
-                <div className="start-icon">
+                <div className="start_icon">
                     {startIcon}
                 </div>
             }

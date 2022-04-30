@@ -59,11 +59,11 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                 <Header project={project} websocket={websocket} user={user} />
                 <Routes>
                     <Route index element={
-                        <div className="dashboard-content-container">
-                            <div className="dashboard-content-container-col">
+                        <div className="dashboard-content_container">
+                            <div className="dashboard-content_container-col">
                                 <ActivityFeed project={project} user={user} websocket={websocket} />
                             </div>
-                            <div className="dashboard-content-container-col">
+                            <div className="dashboard-content_container-col">
                                 <HomeMembers project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                                 <HomeTasks project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                             </div>
@@ -123,15 +123,29 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             isManager={isManager}
                         />
                     } />
-                    <Route path="add-actuality" element={
-                        <AddActuality
-                            user={user}
-                            websocket={websocket}
-                            project={project}
-                            isAdmin={isAdmin}
-                            isManager={isManager}
-                        />
-                    } />
+
+                    {project.actualities.length === 0 ? (
+                        <Route path="add-actuality" element={
+                            <AddActuality
+                                user={user}
+                                websocket={websocket}
+                                project={project}
+                                isAdmin={isAdmin}
+                                isManager={isManager}
+                            />
+                        } />
+                    ) : (
+                        <Route path="add-actuality" element={
+                            <Actualities
+                                user={user}
+                                websocket={websocket}
+                                project={project}
+                                isAdmin={isAdmin}
+                                isManager={isManager}
+                            />
+                        } />
+                    )}
+                    
                     <Route path="qna/*" element={
                         <Qna
                             user={user}
@@ -141,15 +155,28 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             isManager={isManager}
                         />
                     } />
-                    <Route path="add-qna" element={
-                        <AddQna
-                            user={user}
-                            websocket={websocket}
-                            project={project}
-                            isAdmin={isAdmin}
-                            isManager={isManager}
-                        />
-                    } />
+
+                    {project.QNA.length === 0 ? (
+                        <Route path="add-qna" element={
+                            <AddQna
+                                user={user}
+                                websocket={websocket}
+                                project={project}
+                                isAdmin={isAdmin}
+                                isManager={isManager}
+                            />
+                        } />
+                    ) : (
+                        <Route path="add-qna" element={
+                            <Qna
+                                user={user}
+                                websocket={websocket}
+                                project={project}
+                                isAdmin={isAdmin}
+                                isManager={isManager}
+                            />
+                        } />
+                    )}
                 </Routes>
             </>
         )

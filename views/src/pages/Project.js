@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { useParams, Routes, Route, NavLink } from 'react-router-dom'
+import { NavLink, useParams, Routes, Route } from 'react-router-dom'
 import { getProject } from '../actions/project.action';
 import { convertDeltaToHTML } from '../components/tools/functions/function'
 import Header from '../components/project/project-page/Header';
@@ -11,80 +11,103 @@ import ActualityCard from '../components/project/project-page/ActualityCard';
 import GalleryCard from '../components/project/project-page/GalleryCard';
 import MapCard from '../components/project/project-page/MapCard';
 import Actuality from '../components/project/project-page/Actuality';
+import Works from '../components/project/project-page/Works';
+import QnaCard from '../components/project/project-page/QnaCard';
+import Networks from '../components/project/project-page/Networks';
+import { Button } from '../components/tools/components/Button';
 
-const ProjectPage = ({ user, websocket, projects }) => {
+const ProjectPage = ({ user, projects }) => {
     const { URLID, URL } = useParams()
     const [project, setProject] = useState({})
     const [isLoading, setLoading] = useState(true)
-    const isThisActive = ({ isActive }) => (!isActive ? "" : "active")
-    const cardsContainer = useRef()
+    const isActive = ({ isActive }) => (!isActive ? "" : "active")
     const dispatch = useDispatch()
 
     useEffect(() => {
         if (Object.keys(project).length === 0) {
-            const projet = projects.find(element => element.URLID === URLID && element.URL === URL)
+            const projet = projects.find(e => e.URLID === URLID && e.URL === URL)
             setProject(projet)
             dispatch(getProject(projet._id))
             setLoading(false)
         }
     }, [URL, URLID, projects, project, setProject, dispatch])
 
-    const getTop = () => {
-        let clientHeight = cardsContainer?.current?.clientHeight
+    const getHeight = () => {
         let screenHeight = document.documentElement.clientHeight
-        return screenHeight - clientHeight
+        return screenHeight
     }
+
+    const [displayBtn, setDisplayBtn] = useState("none")
+    const navRef = useRef()
+
+    useEffect(() => {
+        if (navRef?.current?.getBoundingClientRect().top > 200) {
+            window.addEventListener('scroll', () => {
+                if (navRef?.current?.getBoundingClientRect().top < 200) {
+                    setDisplayBtn("block")
+                } else setDisplayBtn("none")
+            })
+        }
+    }, [navRef.current])
 
     return (
         !isLoading &&
-        <div className="content-container project-page">
+        <div className="content_container project-page">
             <Header user={user} project={project} />
             <div className="project-page-body">
-                <div className="box">
-                    <div className="project-navbar">
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={isThisActive}>
-                            À propos
-                        </NavLink>
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isThisActive}>
-                            Galerie <span>{project.pictures.length}</span>
-                        </NavLink>
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isThisActive}>
-                            Actualités <span>{project.actualities.length}</span>
-                        </NavLink>
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isThisActive}>
-                            FAQ <span>{project.QNA.length}</span>
-                        </NavLink>
+                <div className="content_nav-sticky" ref={navRef}>
+                    <div className="box">
+                        <div className="content_nav">
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={isActive}>À propos</NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/researches`} className={isActive}>Recherches <span>{project.works.length}</span></NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isActive}>Galerie <span>{project.pictures.length}</span></NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isActive}>Actualités <span>{project.actualities.length}</span></NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isActive}>FAQ <span>{project.QNA.length}</span></NavLink>
+                            <Button text="Rejoindre le projet" className="ml-auto" style={{ display: displayBtn }} />
+                        </div>
                     </div>
                 </div>
-                <div className="content-box">
+                <div className="content_box">
                     <div className="project-page-content">
                         <div className="content">
                             {!isLoading &&
                                 <Routes>
                                     <Route index element={
-                                        <div dangerouslySetInnerHTML={convertDeltaToHTML(project.content[0])}></div>
+                                        <>
+                                            <div className="content-header">
+                                                <h2>À propos du projet</h2>
+                                            </div>
+                                            <div dangerouslySetInnerHTML={convertDeltaToHTML(project.content[0])}></div>
+                                            {project.networks.length > 0 &&
+                                                <Networks project={project} />
+                                            }
+                                        </>
+                                    } />
+                                    <Route path="researches" element={
+                                        <Works user={user} project={project} />
                                     } />
                                     <Route path="gallery" element={
-                                        <Gallery user={user} websocket={websocket} project={project} />
+                                        <Gallery user={user} project={project} />
                                     } />
                                     <Route path="actuality" element={
-                                        <Actualities user={user} websocket={websocket} project={project} />
+                                        <Actualities user={user} project={project} />
                                     } />
                                     <Route path="actuality/:urlid/:url" element={
-                                        <Actuality user={user} websocket={websocket} project={project} />
+                                        <Actuality user={user} project={project} />
                                     } />
                                     <Route path="qna" element={
-                                        <Qna user={user} websocket={websocket} project={project} />
+                                        <Qna user={user} project={project} />
                                     } />
                                 </Routes>
                             }
                         </div>
-                        <div className="content-cards" ref={cardsContainer} style={{ top: cardsContainer.current && getTop() }}>
+                        <div className="content-cards" style={{ maxHeight: getHeight() }}>
                             {!isLoading &&
                                 <>
-                                    <MapCard project={project} />
-                                    <ActualityCard project={project} />
-                                    <GalleryCard project={project} />
+                                    <MapCard project={project} user={user} />
+                                    <ActualityCard project={project} user={user} />
+                                    <QnaCard project={project} user={user} />
+                                    <GalleryCard project={project} user={user} />
                                 </>
                             }
                         </div>

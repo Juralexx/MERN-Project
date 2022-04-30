@@ -4,8 +4,6 @@ import { useClickOutside } from "../../tools/functions/useClickOutside";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { BiCategory } from 'react-icons/bi'
 import CategoriesPicker from '../../home/CategoriesPicker';
-import { EndIconButton } from "../../tools/components/Button";
-import { IoMdArrowRoundForward } from 'react-icons/io'
 import { ErrorCard } from '../../tools/components/Error';
 
 const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, error, isErr, setErr }) => {
@@ -23,7 +21,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
                     <div className="content-form">
                         <p className="title full">Titre <span>Champ requis</span></p>
                         <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre du projet" onChange={(e) => setTitle((e.target.value).substring(0, 60))} value={title} />
-                        <div className="field-infos full">{title.length} / 60 caractères</div>
+                        <div className="field_infos full">{title.length} / 60 caractères</div>
                         {isErr === "title" && <ErrorCard useRef={errorRef} display={isErr === "title"} text={error} clean={() => setErr("")} />}
                     </div>
                 </div>
@@ -39,7 +37,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
                     <div className="content-form">
                         <p className="title full">Sous-titre <span>Champ requis</span></p>
                         <Textarea className={`full small ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 100))} value={subtitle} />
-                        <div className="field-infos full">{subtitle.length} / 100 caractères</div>
+                        <div className="field_infos full">{subtitle.length} / 100 caractères</div>
                         {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={isErr === "subtitle"} text={error} clean={() => setErr("")} />}
                     </div>
                 </div>
@@ -57,7 +55,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
                         <div className="relative" ref={wrapperRef}>
                             <DoubleIconInput className={`full ${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
                             {display && (
-                                <CategoriesPicker className="no-bottom" open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
+                                <CategoriesPicker className="no_bottom" open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
                             )}
                         </div>
                         {isErr === "category" && <ErrorCard useRef={errorRef} display={isErr === "category"} text={error} clean={() => setErr("")} />}

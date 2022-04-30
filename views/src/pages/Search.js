@@ -45,18 +45,18 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
         <>
             <div className="search-page">
                 <div className="search-header">
-                    <div className="content-box">
+                    <div className="content_box">
                         <div className="search-header-inner">
-                            <div className="header-input-flex">
+                            <div className="header_input_flex">
                                 <IconInput
-                                    className="is-start-icon"
+                                    className="is-start_icon"
                                     placeholder="Rechercher un projet"
                                     type="search"
                                     icon={<BiSearchAlt />}
                                 />
                                 <div ref={categoriesRef} className="relative">
                                     <IconInput
-                                        className="is-start-icon"
+                                        className="is-start_icon"
                                         inputClassName="cursor-pointer"
                                         placeholder="Catégorie"
                                         readOnly
@@ -69,9 +69,9 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                                     <CategoriesPicker className="top-[56px]" open={openCategories} setOpen={setOpenCategories} category={category} setCategory={setCategory} />
                                 </div>
                             </div>
-                            <div className="header-input-flex">
+                            <div className="header_input_flex">
                                 <IconInput
-                                    className="is-start-icon"
+                                    className="is-start_icon"
                                     placeholder="Métier"
                                     type="text"
                                     fullwidth
@@ -87,7 +87,7 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                                 />
                             </div>
                             {moreFilters &&
-                                <div className="header-input-flex">
+                                <div className="header_input_flex">
                                     <DropdownInput useRef={datesMenu} readOnly placeholder="Date de mise en ligne" value={date} open={byDate} onClick={() => setByDate(!byDate)} cross clean={() => setDate("")}>
                                         <div onClick={() => setDate("Moins d'un jour")}>Moins d'un jour</div>
                                         <div onClick={() => setDate("Moins d'une semaine")}>Moins d'une semaine</div>
@@ -101,7 +101,7 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                                     </DropdownInput>
                                 </div>
                             }
-                            <div className="btn-container">
+                            <div className="btn_container">
                                 <div className="flex">
                                     <StartIconTextButton text="Voir la carte" className="mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
                                     <StartIconTextButton text={!moreFilters ? "Plus de filtres" : "Moins de filtres"} icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
@@ -112,7 +112,7 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                     </div>
                 </div>
                 <div className="results-container">
-                    <div className="content-box">
+                    <div className="content_box">
                         <div className="results-top">Resultats de votre recherche <span>({results.length} projets)</span></div>
                         <div className="results-content">
                             {results.map((element, key) => {

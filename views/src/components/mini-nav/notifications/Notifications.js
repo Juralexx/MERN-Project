@@ -19,14 +19,14 @@ const NotificationsMenu = ({ open, user, websocket }) => {
         <div className="notifications-menu">
             <div className="notifications-header">
                 <div className="title">Notifications</div>
-                <div className="tools-btn" onClick={() => setOpenMenu(!openMenu)}>
+                <div className="tools_btn" onClick={() => setOpenMenu(!openMenu)}>
                     <BsThreeDots />
                 </div>
             </div>
             {openMenu && (
                 <SmallMenu>
-                    <div className="tools-choice">Tout marquer comme lu</div>
-                    <div className="tools-choice">Voir toutes les notifications</div>
+                    <div className="tools_choice">Tout marquer comme lu</div>
+                    <div className="tools_choice">Voir toutes les notifications</div>
                 </SmallMenu>
             )}
             <div className="notifications-navbar">

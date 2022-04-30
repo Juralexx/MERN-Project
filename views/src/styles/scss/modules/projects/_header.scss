@@ -1,9 +1,9 @@
 .dashboard-header {
     position   : relative;
     width      : 100%;
-    background : var(--light);
+    background : var(--x-light);
 
-    .dashboard-header-container {
+    .dashboard-header_container {
         position  : relative;
         width     : 100%;
         max-width : 1366px;
@@ -16,7 +16,7 @@
             align-items     : center;
             justify-content : space-between;
     
-            .dashboard-header-left {
+            .dashboard-header_left {
                 display     : flex;
                 align-items : center;
         
@@ -56,7 +56,7 @@
                 }
             }
         
-            .dashboard-header-right {
+            .dashboard-header_right {
                 display : flex;
         
             }
@@ -64,12 +64,12 @@
     }
     
 
-    .dashboard-header-navbar {
+    .dashboard-header_navbar {
         position         : relative;
         width            : 100%;
         background-color : var(--content-x-light);
         
-        .dashboard-header-navbar-content {
+        .dashboard-header_navbar-content {
             display         : flex;
             align-items     : center;
             justify-content : flex-start;
@@ -77,7 +77,7 @@
             max-width       : 1366px;
             padding         : 0px 50px;
 
-            .dashboard-header-navbar-item {
+            .dashboard-header_navbar-item {
                 padding   : 10px 30px 10px 0;
                 font-size : 16px;
                 color     : var(--text-tertiary);

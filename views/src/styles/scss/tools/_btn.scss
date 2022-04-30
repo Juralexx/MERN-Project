@@ -29,7 +29,7 @@
     }
 }
 
-.btn-first {
+.btn_first {
     color      : white !important;
     background : var(--primary);
 
@@ -42,7 +42,7 @@
     }
 }
 
-.btn-icon-start {
+.btn_icon_start {
     color      : white !important;
     background : var(--primary);
 
@@ -57,7 +57,7 @@
     }
 }
 
-.btn-icon-end {
+.btn_icon_end {
     border-radius : var(--radius);
     color         : white !important;
     background    : var(--primary);
@@ -73,7 +73,7 @@
     }
 }
 
-.text-btn {
+.text_btn {
     color      : var(--primary);
     box-shadow : none;
 
@@ -82,7 +82,7 @@
     }
 }
 
-.outlined-btn {
+.outlined_btn {
     border : 1px solid var(--primary);
     color  : var(--primary);
 
@@ -91,7 +91,7 @@
     }
 }
 
-.btn-outlined-icon-end {
+.btn_outlined_icon_end {
     text-transform  : none;
     border          : 1px solid var(--primary);
     border-radius   : var(--radius);
@@ -108,7 +108,7 @@
     }
 }
 
-.btn-outlined-icon-start {
+.btn_outlined_icon_start {
     border          : 1px solid var(--primary);
     border-radius   : var(--radius);
     color           : var(--primary);
@@ -124,7 +124,7 @@
     }
 }
 
-.text-btn-icon-start {
+.text_btn_icon_start {
     border-radius : var(--radius);
     color         : var(--primary);
     box-shadow    : none;
@@ -140,7 +140,7 @@
     }
 }
 
-.text-btn-icon-end {
+.text_btn_icon_end {
     color      : var(--primary);
     box-shadow : none;
 
@@ -155,7 +155,7 @@
     }
 }
 
-.icon-toggle {
+.icon_toggle {
     display         : flex;
     align-items     : center;
     justify-content : center;
@@ -175,7 +175,7 @@
     }
 }
 
-.tools-btn {
+.tools_btn {
     display         : flex;
     align-items     : center;
     justify-content : center;
@@ -198,16 +198,12 @@
         opacity : 0.5;
     }
 
-    &:hover {
-        background-color : var(--content-x-light);
-    }
-
     &:active {
         transform  : scale(0.95);
     }
 }
 
-.small-tools-btn {
+.small_tools_btn {
     display          : flex;
     align-items      : center;
     justify-content  : center;
@@ -225,16 +221,12 @@
         width  : 12px;
     }
 
-    &:hover {
-        background-color : var(--content-x-light);
-    }
-
     &:active {
         transform  : scale(0.95);
     }
 }
 
-.tools-menu {
+.tools_menu {
     position      : absolute;
     padding       : 8px;
     z-index       : 100000;
@@ -243,7 +235,7 @@
     border-radius : var(--radius);
     border        : 2px solid var(--border-light);
 
-    .tools-choice {
+    .tools_choice {
         min-width     : 220px;
         text-align    : left;
         padding       : 6px 10px;

@@ -9,7 +9,7 @@
     top           : 55px;
     right         : 5px;
     z-index       : 1100;
-    border        : 2px solid var(--content-x-light);
+    border        : 2px solid var(--x-light);
 
     .messages-header {
         width         : 100%;
@@ -64,7 +64,7 @@
             input {
                 padding : 0 12px 0 36px;
             }
-            .start-icon {
+            .start_icon {
                 padding : 0 0 0 12px;
                 svg {
                     width  : 16px;

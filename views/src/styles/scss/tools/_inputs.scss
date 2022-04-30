@@ -26,7 +26,7 @@
         }
     }
 
-    .svg-container {
+    .svg_container {
         position      : absolute;
         bottom        : 10px;
         right         : 10px;
@@ -103,13 +103,13 @@
         z-index          : 0;
     }
 
-    &.is-start-icon {
+    &.is-start_icon {
         input {
             padding : 6px 12px 4px 50px;
         }
     }
 
-    .start-icon {
+    .start_icon {
         height           : 100%;
         position         : absolute;
         bottom           : 0;
@@ -143,7 +143,7 @@
         }
     }
 
-    .svg-container {
+    .svg_container {
         position      : absolute;
         bottom        : 10px;
         right         : 10px;
@@ -223,7 +223,7 @@
         }
     }
 
-    .start-icon {
+    .start_icon {
         position : absolute;
         left     : 10px;
 
@@ -426,7 +426,7 @@
     .dropdown-input-choices {
         position         : absolute;
         left             : 0;
-        min-width        : 300px;
+        width            : 100%;
         margin-top       : 5px;
         padding          : 5px;
         background-color : var(--content-x-light);

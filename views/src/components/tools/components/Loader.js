@@ -3,10 +3,10 @@ import React from 'react';
 export const Loader = () => {
     return (
         <div id="loader">
-            <div className="loader-inner">
-                <span className="loader-animation"></span>
+            <div className="loader_inner">
+                <span className="loader_animation"></span>
             </div>
-            <div className="loader-blurry"></div>
+            <div className="loader_blurry"></div>
         </div>
     )
 }
@@ -14,7 +14,7 @@ export const Loader = () => {
 export const SmallLoader = () => {
     return (
         <div id="small-loader">
-            <span className="loader-animation"></span>
+            <span className="loader_animation"></span>
             <p>Chargement...</p>
         </div>
     )

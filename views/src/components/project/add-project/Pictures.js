@@ -74,7 +74,7 @@ const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
                         onChange={e => setFiles(getFiles(e.target.files))}
                     />
                     <div className="img-preview active">
-                        <div className="svg-container">
+                        <div className="svg_container">
                             <MdOutlineAddPhotoAlternate />
                         </div>
                     </div>
@@ -88,7 +88,7 @@ const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
                                 </div>
                             ) : (
                                 <div className="img-preview">
-                                    <div className="svg-container">
+                                    <div className="svg_container">
                                         <MdOutlineInsertPhoto />
                                     </div>
                                 </div>

@@ -21,7 +21,7 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
 
     return (
         <Modal open={open} setOpen={setOpen} css="task-modal">
-            <div className="task-modal-header">
+            <div className="task-modal_header">
                 <h3>{task.title}</h3>
                 <p>Créée par {task.creator} le {dateParser(task.date)} à {getHourOnly(new Date(task.date))}</p>
                 <div className="flex mt-2">
@@ -41,12 +41,12 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
                 </div>
             }
             {!addComment ? (
-                <div className="btn-container">
+                <div className="btn_container">
                     <Button text="Commenter" className="mr-1" onClick={() => setAddComment(true)} />
                     <Button text="Modifier" onClick={() => { setUpdateTask(true); setOpen(false) }} />
                 </div>
             ) : (
-                <div className="btn-container">
+                <div className="btn_container">
                     <Button text="Enregistrer" className="mr-1" onClick={handleComment} />
                     <Button text="Annuler" onClick={() => setAddComment(false)} />
                 </div>

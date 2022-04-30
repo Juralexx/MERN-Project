@@ -61,7 +61,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                     <ToolsBtn onClick={() => setOpenTasksMenu(!openTasksMenu)}><BiDotsVerticalRounded /></ToolsBtn>
                                     {openTasksMenu && (
                                         <SmallMenu top="top-1">
-                                            <div className="tools-choice" onClick={() => setCreateTask(true)}>Créer une nouvelle tâche</div>
+                                            <div className="tools_choice" onClick={() => setCreateTask(true)}>Créer une nouvelle tâche</div>
                                         </SmallMenu>
                                     )}
                                 </div>
@@ -102,9 +102,9 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                                 <ToolsBtn className="ml-2" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, element._id)}><BiDotsVerticalRounded /></ToolsBtn>
                                                 {openTaskMenu === element._id &&
                                                     <SmallMenu useRef={taskMenu}>
-                                                        <div className="tools-choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
-                                                        <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
-                                                        {(isAdmin || isManager) && <div className="tools-choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                        <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
+                                                        <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
+                                                        {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
                                                     </SmallMenu>
                                                 }
                                             </div>
@@ -135,7 +135,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                                     })
                                                 )}
                                                 {element.members.length > 5 && (
-                                                    <div className="get-difference">{getDifference(5, element.members.length)}</div>
+                                                    <div className="get_difference">{getDifference(5, element.members.length)}</div>
                                                 )}
                                             </div>
                                         </div>

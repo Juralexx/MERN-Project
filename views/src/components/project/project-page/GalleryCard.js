@@ -4,10 +4,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdOutlinePhotoLibrary } from 'react-icons/md';
 import { coverPicture } from '../../tools/functions/useAvatar';
+import NoContent from './NoContent';
 
-const GalleryCard = ({ project }) => {
+const GalleryCard = ({ project, user }) => {
     const [swiper, setSwiper] = useState()
     const prevRef = useRef()
     const nextRef = useRef()
@@ -23,31 +24,39 @@ const GalleryCard = ({ project }) => {
 
     return (
 
-        <div className="project-page-card">
+        <div className="project-page-card gallery_card">
             <div className="card-title">
-                <div className="swiper-button previous" ref={prevRef}><MdOutlineKeyboardArrowLeft /></div>
                 <Link to={`/project/${project.URLID}/${project.URL}/gallery`}><h3>Galerie</h3></Link>
-                <div className="swiper-button next" ref={nextRef}><MdOutlineKeyboardArrowRight /></div>
+                {project.pictures.length > 1 &&
+                    <div className="flex">
+                        <div className="swiper-button previous mr-1" ref={prevRef}><MdOutlineKeyboardArrowLeft /></div>
+                        <div className="swiper-button next" ref={nextRef}><MdOutlineKeyboardArrowRight /></div>
+                    </div>
+                }
             </div>
-            <div className="card">
-                <Swiper
-                    slidesPerView={1}
-                    keyboard={{ enabled: true }}
-                    mousewheel={true}
-                    loop="true"
-                    onSwiper={setSwiper}
-                    modules={[Navigation, Keyboard, Mousewheel]}
-                    navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
-                >
-                    {project.pictures.map((element, key) => {
-                        return (
-                            <SwiperSlide key={key} className="gallery-slide">
-                                <div style={coverPicture(element)}></div>
-                            </SwiperSlide>
-                        )
-                    })}
-                </Swiper>
-            </div>
+            {project.pictures.length > 1 ? (
+                <div className="card-body">
+                    <Swiper
+                        slidesPerView={1}
+                        keyboard={{ enabled: true }}
+                        mousewheel={true}
+                        loop="true"
+                        onSwiper={setSwiper}
+                        modules={[Navigation, Keyboard, Mousewheel]}
+                        navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
+                    >
+                        {project.pictures.map((element, key) => {
+                            return (
+                                <SwiperSlide key={key} className="gallery-slide">
+                                    <div style={coverPicture(element)}></div>
+                                </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                </div>
+            ) : (
+                <NoContent className="gallery_card" project={project} user={user} icon={<MdOutlinePhotoLibrary />} text="Suivez le projet pour savoir quand des photos seront ajoutées !" />
+            )}
         </div>
     )
 }

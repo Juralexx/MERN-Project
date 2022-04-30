@@ -21,11 +21,11 @@ const Header = ({ project, websocket, user }) => {
 
     return (
         <div className="dashboard-header">
-            <div className="dashboard-header-container">
+            <div className="dashboard-header_container">
                 <Breadcrumb project={project} />
 
                 <div className="dashboard-header-top">
-                    <div className="dashboard-header-left">
+                    <div className="dashboard-header_left">
                         <div className="dashboard-header-img" style={avatar(project.pictures[0])}></div>
                         <div className="dashboard-header-content">
                             <h1>{project.title}</h1>
@@ -36,13 +36,13 @@ const Header = ({ project, websocket, user }) => {
                         </div>
                     </div>
                     <div>
-                        <div className="dashboard-header-right">
-                            <div ref={menuRef} className="tools-btn" onClick={() => setOpenMenu(!openMenu)}>
+                        <div className="dashboard-header_right">
+                            <div ref={menuRef} className="tools_btn" onClick={() => setOpenMenu(!openMenu)}>
                                 <BiDotsVerticalRounded />
                             </div>
                             {openMenu && (
                                 <SmallMenu>
-                                    <div className="tools-choice" onClick={() => leaveProject(user, project, websocket, dispatch)}>Quitter le projet</div>
+                                    <div className="tools_choice" onClick={() => leaveProject(user, project, websocket, dispatch)}>Quitter le projet</div>
                                 </SmallMenu>
                             )}
                         </div>
@@ -51,21 +51,21 @@ const Header = ({ project, websocket, user }) => {
             </div>
 
             {(location.pathname.includes("about") || location.pathname.includes("gallery") || location.pathname.includes("actuality") || location.pathname.includes("qna")) &&
-                <div className="dashboard-header-navbar">
-                    <div className="dashboard-header-navbar-content">
-                        <div className="dashboard-header-navbar-item">
+                <div className="dashboard-header_navbar">
+                    <div className="dashboard-header_navbar-content">
+                        <div className="dashboard-header_navbar-item">
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/about`} className={isThisActive}>À propos</NavLink>
                         </div>
-                        <div className="dashboard-header-navbar-item">
+                        <div className="dashboard-header_navbar-item">
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/gallery`} className={isThisActive}>Galerie</NavLink>
                         </div>
-                        <div className="dashboard-header-navbar-item">
+                        <div className="dashboard-header_navbar-item">
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/actuality`} className={isThisActive}>Actualités</NavLink>
                         </div>
-                        <div className="dashboard-header-navbar-item">
+                        <div className="dashboard-header_navbar-item">
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/qna`} className={isThisActive}>FAQ</NavLink>
                         </div>
-                        <div className="dashboard-header-navbar-item">
+                        <div className="dashboard-header_navbar-item">
                             <NavLink to={`/projects/${project.URLID}/${project.URL}/edit`} className={isThisActive}>Modifier</NavLink>
                         </div>
                     </div>

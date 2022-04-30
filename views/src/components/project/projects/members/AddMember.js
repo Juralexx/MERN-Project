@@ -53,12 +53,12 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
 
     return (
         <Modal open={open} setOpen={setOpen} css="add-members-modal">
-            <h2 className="title-border">Nouveaux membres</h2>
-            <div className="user-in-array-container">
+            <h2 className="title_border">Nouveaux membres</h2>
+            <div className="user_in_array-container">
                 {array.length > 0 && (
                     array.map((element, key) => {
                         return (
-                            <div className="user-in-array" key={key}>
+                            <div className="user_in_array" key={key}>
                                 <TinyAvatar pic={element.picture} />
                                 <p>{element.pseudo}</p>
                                 <IoClose onClick={() => removeMemberFromArray(element, array, setArray)} />
@@ -68,13 +68,13 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                 )}
             </div>
             <ClassicInput placeholder="Rechercher un ami..." className="w-full mb-3" value={searchQuery} onInput={handleInputChange} onChange={searchFriends} type="search" />
-            <div className="user-selecter">
+            <div className="user_selecter">
                 {friendsFound ? (
                     !isLoading ? (
-                        <div className="user-displayer">
+                        <div className="user_displayer">
                             {friendsFound.map((element, key) => {
                                 return (
-                                    <div className="user-display-choice" key={key} onClick={() => addMemberToArray(element, user, array, setArray)} style={highlightIt(array, element, isFriendInResult, search)}>
+                                    <div className="user_display_choice" key={key} onClick={() => addMemberToArray(element, user, array, setArray)} style={highlightIt(array, element, isFriendInResult, search)}>
                                         <MediumAvatar pic={element.picture} />
                                         <p>{element.pseudo}</p>
                                     </div>
@@ -82,7 +82,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                             })}
                         </div>
                     ) : (
-                        <div className="user-selecter">
+                        <div className="user_selecter">
                             <SmallLoader />
                         </div>
                     )

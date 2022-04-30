@@ -46,8 +46,8 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
 
     return (
         <>
-            <div className="content-container">
-                <div className="content-box">
+            <div className="content_container">
+                <div className="content_box">
                     <div className="dashboard-members-title">
                         <h2>Membres <span>{project.members.length}</span></h2>
                         {(isAdmin || isManager) &&

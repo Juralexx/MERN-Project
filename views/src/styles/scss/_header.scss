@@ -4,14 +4,14 @@
     height      : auto;
     background  : linear-gradient(to right, var(--content) 30%, var(--content-light) 100%);
 
-    .header-container {
+    .header_container {
         width       : 100%;
         display     : flex;
         align-items : center;
         position    : relative;
         padding     : 30px 0 30px;
 
-        .header-left {
+        .header_left {
             width         : 50%;
             padding-right : 20px;
 
@@ -32,12 +32,12 @@
             }
         }
 
-        .header-right {
+        .header_right {
             width        : 50%;
             padding-left : 20px;
             position     : relative;
 
-            .header-input-flex {
+            .header_input_flex {
                 position : relative;
                 display  : flex;
                 width    : 100%;
@@ -54,7 +54,7 @@
                 }
             }
 
-            .btn-container {
+            .btn_container {
                 display         : flex;
                 justify-content : space-between;
                 align-items     : center;
@@ -62,20 +62,20 @@
         }
     }
 
-    .header-nav {
+    .header_nav {
         position : absolute;
         left     : 0;
         bottom   : 20px;
         width    : 100%;
         height   : 60px;
 
-        .header-nav-ul {
+        .header_nav_ul {
             position        : relative;
             display         : flex;
             justify-content : center;
             align-items     : center;
             
-            .header-nav-li {
+            .header_nav_li {
                 display         : flex;
                 height          : 60px;
                 padding         : 0 12px;
@@ -112,16 +112,15 @@
     }
 }
 
-.map-modal {
-
-    .map-modal-nav {
+.map_modal {
+    .map_modal_nav {
         display       : flex;
         position      : relative;
         width         : 100%;
         margin-bottom : 16px;
         border-bottom : 1px solid var(--light-border);
 
-        .map-modal-nav-item {
+        .map_modal_nav_item {
             position      : relative;
             height        : 100%;
             width         : 50%;
@@ -164,9 +163,7 @@
     }
 }
 
-
-
-.locations-displayer {
+.locations_displayer {
     display       : flex;
     position      : relative;
     width         : 100%;
@@ -178,7 +175,7 @@
     border-radius : var(--radius);
     overflow-x    : hidden;
 
-    .start-icon {
+    .start_icon {
         height           : 100%;
         position         : absolute;
         left             : 0;
@@ -196,13 +193,13 @@
         }
     }
 
-    .locations-item {
+    .locations_item {
         display       : inline-flex;
-        border-radius : var(--radius);
         max-width     : 100%;
         padding       : 5px 5px 5px 15px;
         margin        : 2px;
         background    : var(--content-light);
+        border-radius : var(--radius);
         white-space   : nowrap;
 
         svg {
@@ -216,7 +213,7 @@
         }
     }
 
-    .is-more-locations {
+    .is_more_locations {
         padding       : 5px 10px;
         margin        : 2px;
         background    : var(--content-light);
@@ -224,16 +221,16 @@
     }
 }
 
-.location-search-displayer {
+.location_search_displayer {
     position      : absolute;
-    background    : var(--content-x-light);
     width         : 100%;
     height        : auto;
     padding       : 5px 20px;
-    border-radius : var(--radius);
     margin-top    : 3px;
-    z-index       : 1000;
+    background    : var(--content-x-light);
+    border-radius : var(--radius);
     box-shadow    : var(--shadow-xl);
+    z-index       : 1000;
 
     h4 {
         margin-bottom : 10px;
@@ -243,15 +240,15 @@
         }
     }
 
-    .locations-search-body {
+    .locations_search_body {
         padding : 7px 0;
     }
 
-    .locations-search-item {
+    .locations_search_item {
         display : flex;
         padding : 7px 0;
-        cursor  : pointer;
         color   : var(--text-secondary);
+        cursor  : pointer;
 
         svg {
             width        : 16px;
@@ -262,7 +259,7 @@
         }
     }
 
-    .location-range {
+    .location_range {
         padding       : 10px 0 13px;
         border-bottom : 1px solid var(--light-border);
 
@@ -280,23 +277,23 @@
         }
     }
 
-    .locations-search-bottom {
+    .locations_search_bottom {
         display         : flex;
         justify-content : flex-end;
         padding-top     : 5px;
         border-top      : 1px solid var(--light-border);
     }
 
-    .locations-search-top {
+    .locations_search_top {
         padding       : 10px 0;
         border-bottom : 1px solid var(--light-border);
 
-        .locations-selected {
+        .locations_selected {
             display   : flex;
             padding   : 5px 0;
             flex-wrap : wrap;
 
-            .locations-selected-item {
+            .locations_selected_item {
                 display       : inline-flex;
                 border-radius : var(--radius);
                 max-width     : 100%;

@@ -24,7 +24,7 @@ const MemberRequest = ({ notification, user, websocket, onClick }) => {
                 <div className="right">
                     {!notification.state && (
                         <div className="body">
-                            <div className="text-sm text-gray-500 three-lines dark:text-slate-300" style={{ display: "-webkit-box", WebkitLineClamp: 3 }}>
+                            <div className="text-sm text-gray-500 three_lines dark:text-slate-300" style={{ display: "-webkit-box", WebkitLineClamp: 3 }}>
                                 <strong><NavLink to={'/' + notification.requester}>{notification.requester}</NavLink></strong> vous invite a rejoindre le projet&nbsp;: {notification.projectTitle}<br />
                             </div>
                             <div className="text-primary text-sm">il y a {formatDistance(new Date(notification.date), new Date(), { locale: fr })}</div>

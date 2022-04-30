@@ -69,12 +69,12 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
 
     return (
         <>
-            <Modal open={open} setOpen={setOpen} css='users-modal'>
-                <div className="users-modal-header">
+            <Modal open={open} setOpen={setOpen} css='users_modal'>
+                <div className="users_modal-header">
                     <IoHeart className="like" />
                     <p>Soutenu par {project.likers.length} personnes</p>
                 </div>
-                <div className="users-modal-body">
+                <div className="users_modal-body">
                     {open && (
                         project.likers.length > 0 ? (
                             <>
@@ -93,7 +93,7 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
                                 })}
                             </>
                         ) : (
-                            <div className="empty-users">
+                            <div className="empty_users">
                                 <div><IoHeartDislike /></div>
                                 <div>Personne n'a encore soutenu ce projet</div>
                             </div>

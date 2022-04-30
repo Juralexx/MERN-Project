@@ -4,9 +4,8 @@ import { useClickOutside } from '../../tools/functions/useClickOutside'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
 import { ClassicInput, DropdownInput, IconInput } from '../../tools/components/Inputs'
 import CategoriesPicker from '../../home/CategoriesPicker'
-import { BiCategoryAlt, BiTask } from 'react-icons/bi'
+import { BiCategoryAlt } from 'react-icons/bi'
 import { BsCaretDownFill, BsFillPeopleFill } from 'react-icons/bs'
-import { MdGroups, MdOutlineDescription, MdOutlineMessage, MdReadMore } from 'react-icons/md'
 import { stateToBackground, stateToString } from '../../tools/functions/function'
 
 const Projects = ({ user, websocket, projects, setProjects }) => {
@@ -40,7 +39,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
     return (
         <>
             <div className="dashboard-projects-header">
-                <div className="content-box">
+                <div className="content_box">
                     <div className="dashboard-projects-header-top">
                         <h1>Mes projects <span>{projects.length}</span></h1>
                     </div>
@@ -50,7 +49,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                         </div>
                         <div className="dashboard-projects-header-bottom-right" ref={categoriesRef}>
                             <IconInput
-                                className="is-start-icon"
+                                className="is-start_icon"
                                 placeholder="Catégorie"
                                 readOnly
                                 icon={<BiCategoryAlt />}
@@ -59,13 +58,13 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                 onChange={() => setCategory(category)}
                                 value={category}
                             />
-                            <CategoriesPicker className="right no-bottom" open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
+                            <CategoriesPicker className="right no_bottom" open={openCategoriesPicker} setOpen={setOpenCategoriesPicker} category={category} setCategory={setCategory} />
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="content-container">
-                <div className="content-box">
+            <div className="content_container">
+                <div className="content_box">
                     <div className="dashboard-projects-tools">
                         <div>
                             <div className="infos blue mr-2">Projets en ligne ({(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length})</div>
@@ -110,13 +109,6 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                                             </div>
                                         }
                                         <div className="description">{element.description}</div>
-                                    </div>
-                                    <div className="project-nav">
-                                        <NavLink to={`${element.URLID}/${element.URL}`}><MdReadMore />Voir</NavLink>
-                                        <NavLink to={`${element.URLID}/${element.URL}/about`}><MdOutlineDescription />À propos</NavLink>
-                                        <NavLink to={`${element.URLID}/${element.URL}/tasks`}><BiTask />Tâches</NavLink>
-                                        <NavLink to={`${element.URLID}/${element.URL}/messenger`}><MdOutlineMessage />Messenger</NavLink>
-                                        <NavLink to={`${element.URLID}/${element.URL}/members`}><MdGroups />Membres</NavLink>
                                     </div>
                                 </div>
                             )

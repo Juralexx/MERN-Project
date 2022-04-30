@@ -56,9 +56,8 @@ export const uploadCoverPicture = (data, userId) => {
                 } else {
                     return axios
                         .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
-                        .then((res) => {
+                        .then(res => {
                             dispatch({ type: UPLOAD_COVER_PICTURE, payload: res.data.cover_picture })
-                            console.log(res)
                         })
                 }
             })
@@ -73,12 +72,8 @@ export const deleteCoverPicture = (userId, cover_picture) => {
             url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/cover/${userId}` + userId,
             data: { cover_picture },
         })
-            .then((res) => {
-                return axios
-                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
-                    .then((res) => {
-                        dispatch({ type: DELETE_COVER_PICTURE, payload: "/img/random-cover.jpg" })
-                    })
+            .then(() => {
+                dispatch({ type: DELETE_COVER_PICTURE, payload: `${process.env.REACT_APP_API_URL}api/files/img/random-cover.jpg` })
             })
             .catch((err) => console.log(err))
     }

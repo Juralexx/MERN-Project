@@ -1,95 +1,44 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useClickOutside } from '../../tools/functions/useClickOutside'
 import { deleteCoverPicture, uploadCoverPicture } from "../../../actions/user.action.upload";
-import Swal from "sweetalert2";
-import { BsThreeDots } from 'react-icons/bs'
+import { ToolsBtn } from '../../tools/components/Button'
+import SmallMenu from '../../tools/components/SmallMenu'
+import { BiDotsHorizontalRounded } from 'react-icons/bi'
 
-const UploadCoverImg = () => {
+const UploadCoverImg = ({ user }) => {
     const [file, setFile] = useState();
     const [isOpen, setOpen] = useState(false)
-    const dispatch = useDispatch();
-    const userData = useSelector((state) => state.userReducer);
-    const error = useSelector((state) => state.errorsReducer.uploadProfilPictureErrors);
+    const toolRef = useRef()
+    useClickOutside(toolRef, setOpen, false)
+    const dispatch = useDispatch()
+    // const error = useSelector((state) => state.errorsReducer.uploadProfilPictureErrors)
 
     const handleSave = (e) => {
-        e.preventDefault();
-        const data = new FormData()
-        data.append("userId", userData._id)
+        let data = new FormData()
+        data.append("userId", user._id)
         data.append("file", file)
-        dispatch(uploadCoverPicture(data, userData._id));
-
-        if (!error) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Votre image a bien été ajoutée !',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Une erreur s\'est produite...',
-                html: 'Votre image de couverture ne doit pas excéder 1Mo.<br> Les formats acceptés sont : .jpg, .jpeg et .png',
-                showCloseButton: true,
-                confirmButtonText: 'Compris'
-            })
-        }
-        setFile(false)
-        e.stopPropagation();
+        dispatch(uploadCoverPicture(data, user._id));
+        setFile(null)
     }
 
-    const deletePicture = (e) => {
-        e.preventDefault()
-        Swal.fire({
-            title: "Etes-vous sur de vouloir supprimer votre photo de profil ?",
-            icon: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Annuler',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Supprimer'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                dispatch(deleteCoverPicture(userData._id, userData.picture))
-
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Votre photo a bien été supprimée !',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
+    const deletePicture = () => {
+        dispatch(deleteCoverPicture(user._id, user.picture))
     }
 
     return (
-        <>
-            {(userData.cover_picture === "/img/random-cover.jpg") ? (
-                <div className="btn-cover-edit">
-                    <div className="fileUpload btn btn-primary">
-                        <span>Ajouter une photo de couverture</span>
-                        <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
+        <div ref={toolRef} className="relative w-full h-full" right="60px">
+            <ToolsBtn className="cover_picture_tools" onClick={() => setOpen(!isOpen)}><BiDotsHorizontalRounded /></ToolsBtn>
+            {isOpen &&
+                <SmallMenu>
+                    <div className="tools_choice relative file_upload">
+                        <p>Modifier ma photo</p>
+                        <input type="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
                     </div>
-                </div>
-            ) : (
-                <>
-                    <div className="btn-menu-cover-img">
-                        <button className="dot-button" onClick={() => setOpen(!isOpen)}><BsThreeDots /></button>
-                    </div>
-                    {isOpen && (
-                        <div className="cover-img-menu">
-                            <div className="fileUpload btn-menu">
-                                <p>Modifier ma photo</p>
-                                <input type="file" id="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
-                            </div>
-                            <div className="btn-menu" onClick={deletePicture}>
-                                <p>Supprimer ma photo</p>
-                            </div>
-                        </div>
-                    )}
-                </>
-            )}
-        </>
+                    <div className="tools_choice" onClick={deletePicture}>Supprimer ma photo</div>
+                </SmallMenu>
+            }
+        </div>
     )
 }
 

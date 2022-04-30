@@ -83,7 +83,7 @@ const Home = ({ websocket, user }) => {
                             setDate={setDate}
                         />
                         <div className="home-body">
-                            <div className="content-box">
+                            <div className="content_box">
                                 <CategoriesSwiper />
                                 <div className="swiper-container">
                                     <div className="swiper-header">
@@ -131,7 +131,6 @@ const Home = ({ websocket, user }) => {
                         <Route path="project/:URLID/:URL/*" element={
                             <ProjectPage
                                 user={user}
-                                websocket={websocket}
                                 projects={projects}
                             />
                         } />

@@ -143,7 +143,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
                                 <div className="info">{conversation.owner.pseudo}</div>
                             </div>
                         </div>
-                        <div className="conversation-btn-container">
+                        <div className="conversation-btn_container">
                             <Button text="Quitter" onClick={() => { leaveConversation(conversation, uid); setOpen(false) }} />
                             {conversation.owner.id === uid && <Button text="Supprimer" onClick={() => { deleteConversation(conversation); setOpen(false) }} />}
                         </div>

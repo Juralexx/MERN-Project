@@ -37,11 +37,11 @@ const ActivityFeed = ({ project, user, websocket }) => {
                     <ToolsBtn onClick={() => setDisplay(!display)}><BiDotsVerticalRounded /></ToolsBtn>
                     {display &&
                         <SmallMenu top="top-1">
-                            <div className="tools-choice" onClick={() => { setActivities(thisDay(reversed)); setDisplay(false) }}>Aujourd'hui</div>
-                            <div className="tools-choice" onClick={() => { setActivities(lastDay(reversed)); setDisplay(false) }}>Hier</div>
-                            <div className="tools-choice" onClick={() => filter(7)}>Cette semaine</div>
-                            <div className="tools-choice" onClick={() => filter(30)}>Ce mois-ci</div>
-                            <div className="tools-choice" onClick={() => filter(365)}>Cette année</div>
+                            <div className="tools_choice" onClick={() => { setActivities(thisDay(reversed)); setDisplay(false) }}>Aujourd'hui</div>
+                            <div className="tools_choice" onClick={() => { setActivities(lastDay(reversed)); setDisplay(false) }}>Hier</div>
+                            <div className="tools_choice" onClick={() => filter(7)}>Cette semaine</div>
+                            <div className="tools_choice" onClick={() => filter(30)}>Ce mois-ci</div>
+                            <div className="tools_choice" onClick={() => filter(365)}>Cette année</div>
                         </SmallMenu>
                     }
                 </div>

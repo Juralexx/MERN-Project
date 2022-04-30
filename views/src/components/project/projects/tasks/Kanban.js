@@ -65,15 +65,15 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
                                                                 {...provided.dragHandleProps}
                                                             >
                                                                 <div className="kanban-ticket-title" ref={ticketMenu}>
-                                                                    <div className="two-lines">{element.title}</div>
+                                                                    <div className="two_lines">{element.title}</div>
                                                                     {element.comments.length > 0 && <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" />{element.comments.length}</div>}
                                                                     <ToolsBtn onClick={() => clickOn(openMenu, setOpenMenu, element._id)}><BiDotsHorizontalRounded /></ToolsBtn>
                                                                     {openMenu === element._id &&
                                                                         <SmallMenu>
-                                                                            <div className="tools-choice" onClick={() => { setTask(element); setOpenTask(true); setOpenMenu(-1) }}>Voir</div>
-                                                                            <div className="tools-choice">Commenter</div>
-                                                                            <div className="tools-choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenMenu(-1) }}>Modifier</div>
-                                                                            <div className="tools-choice" onClick={() => { removeTask(element, project, user, websocket, dispatch); setOpenMenu(-1) }}>Supprimer</div>
+                                                                            <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true); setOpenMenu(-1) }}>Voir</div>
+                                                                            <div className="tools_choice">Commenter</div>
+                                                                            <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenMenu(-1) }}>Modifier</div>
+                                                                            <div className="tools_choice" onClick={() => { removeTask(element, project, user, websocket, dispatch); setOpenMenu(-1) }}>Supprimer</div>
                                                                         </SmallMenu>
                                                                     }
                                                                 </div>
@@ -107,7 +107,7 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
                                                                                 })
                                                                             )}
                                                                             {element.members.length > 5 && (
-                                                                                <div className="get-difference">{getDifference(5, element.members.length)}</div>
+                                                                                <div className="get_difference">{getDifference(5, element.members.length)}</div>
                                                                             )}
                                                                         </div>
                                                                     )}
