@@ -46,28 +46,6 @@ export const deleteUserLastname = async (req, res) => {
     }
 };
 
-export const deleteGender = async (req, res) => {
-
-    if (!ObjectID.isValid(req.params.id))
-        return res.status(400).send("ID unknown : " + req.params.id);
-
-    try {
-        await UserModel.findOneAndUpdate(
-            { _id: req.params.id },
-            {
-                $set: {
-                    gender: "Non défini",
-                },
-            },
-            { new: true, upsert: true, setDefaultsOnInsert: true },
-        )
-            .then((docs) => { return res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
-    } catch (err) {
-        return res.status(500).json({ message: err });
-    }
-};
-
 export const deleteUserWork = async (req, res) => {
 
     if (!ObjectID.isValid(req.params.id))

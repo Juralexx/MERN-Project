@@ -39,7 +39,7 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
     useEffect(() => {
         if (locationsStored && JSON.parse(locationsStored).length > 0)
             setRecentLocations(JSON.parse(locationsStored))
-    }, [locationsStored])
+    }, [locationsStored, setRecentLocations])
 
     return (
         <>
@@ -49,14 +49,14 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                         <div className="search-header-inner">
                             <div className="header_input_flex">
                                 <IconInput
-                                    className="is-start_icon"
+                                    className="is_start_icon"
                                     placeholder="Rechercher un projet"
                                     type="search"
                                     icon={<BiSearchAlt />}
                                 />
                                 <div ref={categoriesRef} className="relative">
                                     <IconInput
-                                        className="is-start_icon"
+                                        className="is_start_icon"
                                         inputClassName="cursor-pointer"
                                         placeholder="Catégorie"
                                         readOnly
@@ -71,7 +71,7 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                             </div>
                             <div className="header_input_flex">
                                 <IconInput
-                                    className="is-start_icon"
+                                    className="is_start_icon"
                                     placeholder="Métier"
                                     type="text"
                                     fullwidth

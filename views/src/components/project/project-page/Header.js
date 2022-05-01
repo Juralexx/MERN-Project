@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { dateParser } from '../../Utils'
 import { projectPicture } from '../../tools/functions/useAvatar'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../../actions/project.action'

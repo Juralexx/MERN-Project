@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { DayPicker, useInput } from 'react-day-picker';
 import fr from 'date-fns/locale/fr';
 import 'react-day-picker/dist/style.css';
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { IoClose } from 'react-icons/io5'
 import { FiCalendar } from 'react-icons/fi'
+import { useClickOutside } from '../functions/useClickOutside';
 
 export const ClassicInput = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
@@ -37,9 +38,13 @@ export const ClassicInput = (props) => {
 }
 
 export const DropdownInput = (props) => {
-    const { type, value, defaultValue, useRef, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, open, clean, cross } = props
+    const { type, value, defaultValue, onKeyPress, onChange, onInput, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, clean, cross } = props
+    const [open, setOpen] = useState(false)
+    const ref = useRef()
+    useClickOutside(ref, setOpen, false)
+
     return (
-        <div ref={useRef} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`} onClick={onClick}>
+        <div ref={ref} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`}>
             <input
                 className={inputClassName}
                 type={type}
@@ -48,6 +53,7 @@ export const DropdownInput = (props) => {
                 placeholder={placeholder}
                 value={value}
                 defaultValue={defaultValue}
+                onClick={() => setOpen(!open)}
                 onChange={onChange}
                 onInput={onInput}
                 readOnly={readOnly}

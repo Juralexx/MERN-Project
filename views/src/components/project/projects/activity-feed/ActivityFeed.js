@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../../Utils'
-import { BiDotsVerticalRounded } from 'react-icons/bi'
-import { AiFillCloud } from 'react-icons/ai'
-import { TextButton, ToolsBtn } from '../../../tools/components/Button'
-import SmallMenu from '../../../tools/components/SmallMenu'
+import { TextButton } from '../../../tools/components/Button'
+import ToolsMenu from '../../../tools/components/ToolsMenu'
 import { RiCalendarTodoLine } from 'react-icons/ri'
+import { AiFillCloud } from 'react-icons/ai'
 
 const ActivityFeed = ({ project, user, websocket }) => {
     const [dates, setDates] = useState([])
     const [activities, setActivities] = useState([])
-    const [display, setDisplay] = useState(false)
     const reversed = reverseArray(project.activity_feed)
 
     useEffect(() => {
@@ -23,27 +21,19 @@ const ActivityFeed = ({ project, user, websocket }) => {
         if (dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key)) return "no-before"
     }
 
-    const filter = (days) => {
-        setActivities(timeBetween(reversed, days))
-        setDisplay(false)
-    }
-
     return (
         <div className="home-activity-feed">
             <div className="home-activity-feed-header">
                 <h3>Fil d'activités <span>{activities.length}</span></h3>
                 <div className="flex items-center">
                     <TextButton text="Voir tous" className="mr-2" />
-                    <ToolsBtn onClick={() => setDisplay(!display)}><BiDotsVerticalRounded /></ToolsBtn>
-                    {display &&
-                        <SmallMenu top="top-1">
-                            <div className="tools_choice" onClick={() => { setActivities(thisDay(reversed)); setDisplay(false) }}>Aujourd'hui</div>
-                            <div className="tools_choice" onClick={() => { setActivities(lastDay(reversed)); setDisplay(false) }}>Hier</div>
-                            <div className="tools_choice" onClick={() => filter(7)}>Cette semaine</div>
-                            <div className="tools_choice" onClick={() => filter(30)}>Ce mois-ci</div>
-                            <div className="tools_choice" onClick={() => filter(365)}>Cette année</div>
-                        </SmallMenu>
-                    }
+                    <ToolsMenu>
+                        <div className="tools_choice" onClick={() => setActivities(thisDay(reversed))}>Aujourd'hui</div>
+                        <div className="tools_choice" onClick={() => setActivities(lastDay(reversed))}>Hier</div>
+                        <div className="tools_choice" onClick={() => setActivities(timeBetween(reversed, 7))}>Cette semaine</div>
+                        <div className="tools_choice" onClick={() => setActivities(timeBetween(reversed, 30))}>Ce mois-ci</div>
+                        <div className="tools_choice" onClick={() => setActivities(timeBetween(reversed, 365))}>Cette année</div>
+                    </ToolsMenu>
                 </div>
             </div>
             <div className="home-activity-feed-container custom-scrollbar">

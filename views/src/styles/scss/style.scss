@@ -15,7 +15,7 @@
 @import 'tools/loader';
 @import 'tools/map';
 @import 'tools/modals';
-@import 'tools/no_content';
+@import 'tools/no-content';
 @import 'tools/scrollbar';
 @import 'tools/tools';
 
@@ -27,9 +27,7 @@
 
 @import 'modules/profil/profil';
 @import 'modules/profil/profil-header';
-@import 'modules/profil/profil-edit-nav';
 @import 'modules/profil/profil-img-modal';
-@import 'modules/profil/archives';
 
 /* Project page */
 
@@ -61,6 +59,6 @@
 @import 'modules/home';
 @import 'modules/footer';
 @import 'modules/search';
-@import 'modules/content_nav';
+@import 'modules/content-nav';
 
 @import 'modules/messenger/messenger';

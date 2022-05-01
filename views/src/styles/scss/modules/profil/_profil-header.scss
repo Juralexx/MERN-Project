@@ -2,7 +2,6 @@
     position   : relative;
     width      : 100%;
     background-color : var(--x-light);
-    z-index    : 10;
 
     .profil_cover_img {
         position : relative;
@@ -14,7 +13,9 @@
             position : absolute;
             top      : 20px;
             right    : 40px;
-            color    : white;
+            svg {
+                color : white;
+            }
         }
 
         &:hover {
@@ -48,15 +49,16 @@
     }
 
     .pseudo_header {
-        position : absolute;
-        top      : -55px;
-        left     : 210px;
+        position    : absolute;
+        top         : -55px;
+        left        : 210px;
+        display     : flex;
+        align-items : center;
 
         p {
             font-size : 36px;
             color     : var(--white);
         }
-
     }
 
     .content_nav {
@@ -64,6 +66,10 @@
         a {
             padding     : 15px 20px;
             font-weight : 400;
+        }
+
+        button {
+            margin-left : 20px;
         }
     }
 }

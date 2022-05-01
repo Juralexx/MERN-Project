@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useClickOutside } from '../../../tools/functions/useClickOutside'
 import { dateParser } from '../../../Utils'
 import { checkDateSort, getRole, sortByAlpha, sortByOld, sortByRecent, sortByRole } from '../../../tools/functions/member'
 import AddMember from './AddMember'
@@ -8,22 +7,16 @@ import MemberMenu from './MemberMenu'
 import MembersRequests from './MembersRequests'
 import { StartIconOutlinedButton, ToolsBtn } from '../../../tools/components/Button'
 import { ClassicInput, DropdownInput } from '../../../tools/components/Inputs'
+import { BigAvatar } from '../../../tools/components/Avatars'
 import { MdOutlineMessage } from 'react-icons/md'
 import { FaRegUser, FaTasks } from 'react-icons/fa'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import { CgArrowAlignV } from 'react-icons/cg'
-import { BigAvatar } from '../../../tools/components/Avatars'
 
 const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
     const [members, setMembers] = useState(project.members)
     const [addMembers, setAddMembers] = useState(false)
     const [openRequests, setOpenRequests] = useState(false)
-    const [openMemberMenu, setOpenMemberMenu] = useState(-1)
-    const memberMenu = useRef()
-    useClickOutside(memberMenu, setOpenMemberMenu, -1)
-    const filterMenu = useRef()
-    const [display, setDisplay] = useState(false)
-    useClickOutside(filterMenu, setDisplay, false)
     const [filter, setFilter] = useState("Filtrer")
     const [isByRecent, setIsByRecent] = useState(false)
 
@@ -59,17 +52,17 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                     </div>
                     <div className="dashboard-members-tools">
                         <ClassicInput className="w-[400px]" inputClassName="full" type="search" placeholder="Rechercher un membre..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchMember} />
-                        <DropdownInput useRef={filterMenu} cross readOnly placeholder={filter} className="ml-3" open={display} onClick={() => setDisplay(!display)}>
-                            <div onClick={() => sortByRecent(members, setMembers, setFilter, setDisplay)}>Plus récent au plus ancien</div>
-                            <div onClick={() => sortByOld(members, setMembers, setFilter, setDisplay)}>Plus ancien au plus récent</div>
-                            <div onClick={() => sortByRole(members, setMembers, setFilter, setDisplay)}>Par rôle</div>
-                            <div onClick={() => sortByAlpha(members, setMembers, setFilter, setDisplay)}>Ordre alphabétique</div>
+                        <DropdownInput cross readOnly placeholder={filter} className="ml-3">
+                            <div onClick={() => sortByRecent(members, setMembers, setFilter)}>Plus récent au plus ancien</div>
+                            <div onClick={() => sortByOld(members, setMembers, setFilter)}>Plus ancien au plus récent</div>
+                            <div onClick={() => sortByRole(members, setMembers, setFilter)}>Par rôle</div>
+                            <div onClick={() => sortByAlpha(members, setMembers, setFilter)}>Ordre alphabétique</div>
                         </DropdownInput>
                     </div>
                     <div className="dashboard-members-table-header">
-                        <div className="dashboard-members-table-tools" onClick={() => sortByAlpha(members, setMembers, setFilter, setDisplay)}>Nom <CgArrowAlignV /></div>
-                        <div className="dashboard-members-table-tools" onClick={() => sortByRole(members, setMembers, setFilter, setDisplay)}>Rôle <CgArrowAlignV /></div>
-                        <div className="dashboard-members-table-tools" onClick={() => checkDateSort(isByRecent, setIsByRecent, members, setMembers, setFilter, setDisplay)}>Membre depuis <CgArrowAlignV /></div>
+                        <div className="dashboard-members-table-tools" onClick={() => sortByAlpha(members, setMembers, setFilter)}>Nom <CgArrowAlignV /></div>
+                        <div className="dashboard-members-table-tools" onClick={() => sortByRole(members, setMembers, setFilter)}>Rôle <CgArrowAlignV /></div>
+                        <div className="dashboard-members-table-tools" onClick={() => checkDateSort(isByRecent, setIsByRecent, members, setMembers, setFilter)}>Membre depuis <CgArrowAlignV /></div>
                         <div className="w-1/4"></div>
                     </div>
                     {members.map((element, key) => {
@@ -87,9 +80,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                             <ToolsBtn><MdOutlineMessage /></ToolsBtn>
                                             <ToolsBtn className="mx-2"><Link to={"/" + element.pseudo}><FaRegUser /></Link></ToolsBtn>
                                             {(isManager || isAdmin) && element.role !== "manager" &&
-                                                <div ref={memberMenu}>
-                                                    <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} user={user} open={openMemberMenu} setOpen={setOpenMemberMenu} uniqueKey={key} />
-                                                </div>
+                                                <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} user={user} />
                                             }
                                         </>
                                     }

@@ -7,20 +7,20 @@
     padding    : 100px 0 30px;
     overflow-x : hidden;
     overflow-y : auto;
-    z-index    : 3600;
+    z-index    : 100000000000;
 
     .modal_container {
         position         : relative;
         margin           : auto;
         width            : 600px;
         height           : auto;
-        z-index          : 3600;
         padding          : 15px 20px;
         color            : var(--text);
         background-color : var(--content);
         border-radius    : var(--radius);
         box-shadow       : var(--shadow-xl);
         border           : 1px solid var(--content-x-light);
+        z-index          : 100000000000;
     
         h2 {
             padding-bottom : 7px;
@@ -101,11 +101,12 @@
         left       : 0;
         right      : 0;
         background : rgba(0, 0, 0, 0.5);
-        z-index    : 1599;
+        z-index    : 100000;
         display    : none;
     
         &.modal_cover-active {
             display : block;
+            z-index : 100000;
         }
     }
 }

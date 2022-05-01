@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useClickOutside } from '../../../tools/functions/useClickOutside'
 import { reverseArray } from '../../../Utils'
 import { StartIconOutlinedButton } from '../../../tools/components/Button'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import Kanban from './Kanban'
 import TasksList from './TasksList'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
 import TaskModal from './TaskModal'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
 
 const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
@@ -18,9 +17,6 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [getTask, setTask] = useState(null)
     const [navbar, setNavbar] = useState(1)
     const [layout, setLayout] = useState("kanban")
-    const taskMenu = useRef()
-    const [openTaskMenu, setOpenTaskMenu] = useState(-1)
-    useClickOutside(taskMenu, setOpenTaskMenu, -1)
     const localStore = localStorage.getItem("taskLayout")
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const [title, setTitle] = useState("")
@@ -86,12 +82,9 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             isAdmin={isAdmin}
                             isManager={isManager}
                             tasks={tasks}
-                            setOpenTask={setOpenTask}
                             setTask={setTask}
                             navbar={navbar}
                             setNavbar={setNavbar}
-                            openTaskMenu={openTaskMenu}
-                            setOpenTaskMenu={setOpenTaskMenu}
                             setUpdateTask={setUpdateTask}
                         />
                     ) : (

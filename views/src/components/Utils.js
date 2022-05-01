@@ -42,6 +42,16 @@ export const randomNbLtID = (max) => {
  * Check pseudo validity.
  */
 
+ export const onlyLettersSpacesAndDashes = (string) => {
+    const regexp = new RegExp(/^[A-Za-z\s\-]+$/)
+    if (regexp.test(string)) return true
+    else return false
+}
+
+/**
+ * Check if a string contains only letters, numbers and dashes validity.
+ */
+
 export const onlyLettersNumbersAndDashes = (string) => {
     const regexp = new RegExp(/^(\w|-)+$/)
     if (regexp.test(string)) return true

@@ -47,11 +47,6 @@ const UserModel = new mongoose.Schema(
             },
         },
 
-        gender: {
-            type: String,
-            default: 'Non défini',
-        },
-
         lastname: {
             type: String,
             trim: true,
@@ -61,19 +56,13 @@ const UserModel = new mongoose.Schema(
             },
         },
 
-        location: { type: String, },
-
-        department: { type: String, },
-
-        region: { type: String, },
-
-        new_region: { type: String, },
-
-        country: { type: String, },
+        location: {
+            type: Object,
+        },
 
         picture: {
             type: String,
-            default: "http://localhost:3001/files/img/random-user.png"
+            default: "http://localhost:3001/files/img/random-user.jpg"
         },
 
         cover_picture: {
@@ -99,19 +88,13 @@ const UserModel = new mongoose.Schema(
             },
         },
 
-        bio: { type: String },
+        bio: {
+            type: String
+        },
 
-        website: { type: String },
-
-        facebook: { type: String },
-
-        instagram: { type: String },
-
-        twitter: { type: String },
-
-        youtube: { type: String },
-
-        linkedin: { type: String },
+        networks: {
+            type: [],
+        },
 
         friends: {
             type: [],

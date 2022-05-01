@@ -1,26 +1,18 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useClickOutside } from '../../../tools/functions/useClickOutside'
 import { getRole } from '../../../tools/functions/member'
 import AddMember from './AddMember'
 import MembersRequests from './MembersRequests'
 import MemberMenu from './MemberMenu'
-import SmallMenu from '../../../tools/components/SmallMenu'
 import { TextButton, ToolsBtn } from '../../../tools/components/Button'
 import { MediumAvatar } from '../../../tools/components/Avatars'
 import { MdOutlineMessage } from 'react-icons/md'
-import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { FaRegUser } from 'react-icons/fa'
+import ToolsMenu from '../../../tools/components/ToolsMenu'
 
 const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)
     const [openRequests, setOpenRequests] = useState(false)
-    const [openMenu, setOpenMenu] = useState(false)
-    const [openMemberMenu, setOpenMemberMenu] = useState(-1)
-    const memberMenu = useRef()
-    useClickOutside(memberMenu, setOpenMemberMenu, -1)
-    const membersMenu = useRef()
-    useClickOutside(membersMenu, setOpenMenu, false)
 
     return (
         <>
@@ -30,15 +22,10 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                     <div className="flex">
                         <Link to="members"><TextButton text="Voir tous" className="mr-2" /></Link>
                         {(isAdmin || isManager) &&
-                            <div ref={membersMenu} className="flex items-center">
-                                <ToolsBtn onClick={() => setOpenMenu(!openMenu)}><BiDotsVerticalRounded /></ToolsBtn>
-                                {openMenu && (
-                                    <SmallMenu top="top-1">
-                                        <div className="tools_choice" onClick={() => setAddMembers(true)}>Ajouter des membres</div>
-                                        {project.member_requests.length > 0 && <div className="tools_choice" onClick={() => setOpenRequests(true)}>Voir les demandes en cours</div>}
-                                    </SmallMenu>
-                                )}
-                            </div>
+                            <ToolsMenu>
+                                <div className="tools_choice" onClick={() => setAddMembers(true)}>Ajouter des membres</div>
+                                {project.member_requests.length > 0 && <div className="tools_choice" onClick={() => setOpenRequests(true)}>Voir les demandes en cours</div>}
+                            </ToolsMenu>
                         }
                     </div>
                 </div>
@@ -59,9 +46,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                         <>
                                             <ToolsBtn><MdOutlineMessage /></ToolsBtn>
                                             <ToolsBtn className="mx-2"><Link to={"/" + element.pseudo}><FaRegUser /></Link></ToolsBtn>
-                                            <div ref={memberMenu}>
-                                                <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} user={user} open={openMemberMenu} setOpen={setOpenMemberMenu} uniqueKey={key} />
-                                            </div>
+                                            <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} user={user} />
                                         </>
                                     }
                                 </div>

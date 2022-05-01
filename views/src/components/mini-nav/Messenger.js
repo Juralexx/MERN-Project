@@ -34,7 +34,7 @@ const MessengerMenu = ({ open, setOpen, user, websocket }) => {
                     <div className={`navlink ${showUnread ? "" : "active"}`}>Tout</div>
                     <div className={`navlink ${showUnread ? "active" : ""}`}>Non lu</div>
                 </div>
-                <IconInput className="is-start_icon" placeholder="Rechercher un projet" icon={<GoSearch />} cross/>
+                <IconInput className="is_start_icon" placeholder="Rechercher un projet" icon={<GoSearch />} cross/>
             </div>
             <div className="messenger-menu-content">
                 {!showUnread &&

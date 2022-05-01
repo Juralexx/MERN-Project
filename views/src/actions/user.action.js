@@ -1,22 +1,9 @@
 import axios from "axios";
 
 export const GET_USER = "GET_USER"
-export const UPDATE_PSEUDO = "UPDATE_PSEUDO"
+export const UPDATE_USER = "UPDATE_USER"
 export const UPDATE_EMAIL = "UPDATE_EMAIL"
-export const UPDATE_NAME = "UPDATE_NAME"
-export const UPDATE_LASTNAME = "UPDATE_LASTNAME"
-export const UPDATE_GENDER = "UPDATE_GENDER"
-export const UPDATE_LOCATION = "UPDATE_LOCATION"
-export const UPDATE_WORK = "UPDATE_WORK"
-export const UPDATE_PHONE = "UPDATE_PHONE"
-export const UPDATE_BIO = "UPDATE_BIO"
 export const UPDATE_THEME = "UPDATE_THEME"
-export const UPDATE_WEBSITE = "UPDATE_WEBSITE"
-export const UPDATE_FACEBOOK = "UPDATE_FACEBOOK"
-export const UPDATE_INSTAGRAM = "UPDATE_INSTAGRAM"
-export const UPDATE_TWITTER = "UPDATE_TWITTER"
-export const UPDATE_YOUTUBE = "UPDATE_YOUTUBE"
-export const UPDATE_LINKEDIN = "UPDATE_LINKEDIN"
 
 export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS"
 export const SET_NOTIFICATION_SEEN = "SET_NOTIFICATION_SEEN"
@@ -31,6 +18,10 @@ export const RECEIVE_ACCEPT_FRIEND_REQUEST = "RECEIVE_ACCEPT_FRIEND_REQUEST"
 export const REFUSE_FRIEND_REQUEST = "REFUSE_FRIEND_REQUEST"
 export const RECEIVE_REFUSE_FRIEND_REQUEST = "RECEIVE_REFUSE_FRIEND_REQUEST"
 
+/**
+ * Get user
+ */
+
 export const getUser = (uid) => {
     return async (dispatch) => {
         await axios
@@ -42,19 +33,35 @@ export const getUser = (uid) => {
     }
 }
 
-export const updatePseudo = (userId, pseudo) => {
+/**
+ * Update user informations
+ */
+
+ export const updateUser = (userId, name, lastname, work, bio, location, phone, networks) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { pseudo }
+            data: {
+                name: name,
+                lastname: lastname,
+                work: work,
+                bio: bio,
+                location: location,
+                phone: phone,
+                networks: networks
+            }
         })
             .then((res) => {
-                dispatch({ type: UPDATE_PSEUDO, payload: { pseudo } })
+                dispatch({ type: UPDATE_USER, payload: { name, lastname, work, bio, location, phone, networks } })
             })
             .catch((err) => console.log(err))
     }
 }
+
+/**
+ * Update email
+ */
 
 export const updateEmail = (userId, email) => {
     return async (dispatch) => {
@@ -70,115 +77,9 @@ export const updateEmail = (userId, email) => {
     }
 }
 
-export const updateName = (userId, name) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { name },
-        })
-            .then((res) => {
-                return axios
-                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
-                    .then((res) => {
-                        dispatch({ type: UPDATE_NAME, payload: name })
-                    })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateLastname = (userId, lastname) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { lastname },
-        })
-            .then((res) => {
-                return axios
-                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
-                    .then((res) => {
-                        dispatch({ type: UPDATE_LASTNAME, payload: lastname })
-                    })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateGender = (userId, gender) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { gender },
-        })
-            .then((res) => {
-                return axios
-                    .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
-                    .then((res) => {
-                        dispatch({ type: UPDATE_GENDER, payload: gender })
-                    })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateLocation = (userId, location, department, region, new_region) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { location, department, region, new_region }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_LOCATION, location: location, department: department, region: region, new_region: new_region })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateWork = (userId, work) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { work }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_WORK, payload: work })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updatePhone = (userId, phone) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { phone }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_PHONE, payload: phone })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateBio = (userId, bio) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { bio }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_BIO, payload: bio })
-            })
-            .catch((err) => console.log(err))
-    }
-}
+/**
+ * Update theme
+ */
 
 export const updateTheme = (userId, theme) => {
     return async (dispatch) => {
@@ -194,92 +95,12 @@ export const updateTheme = (userId, theme) => {
     }
 }
 
-export const updateWebsite = (userId, website) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { website }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_WEBSITE, payload: website })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateFacebook = (userId, facebook) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { facebook }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_FACEBOOK, payload: facebook })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateInstagram = (userId, instagram) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { instagram }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_INSTAGRAM, payload: instagram })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateTwitter = (userId, twitter) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { twitter }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_TWITTER, payload: twitter })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateYoutube = (userId, youtube) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { youtube }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_YOUTUBE, payload: youtube })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-export const updateLinkedin = (userId, linkedin) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
-            data: { linkedin }
-        })
-            .then((res) => {
-                dispatch({ type: UPDATE_LINKEDIN, payload: linkedin })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
 /*******************************************************************************************************************************/
 /******************************************************* NOTIFICATIONS *********************************************************/
+
+/**
+ * Set notifications to 0
+ */
 
 export const removeNotifications = (userId) => {
     return async (dispatch) => {
@@ -294,6 +115,10 @@ export const removeNotifications = (userId) => {
     }
 }
 
+/**
+ * Set seen state to a notification
+ */
+
 export const setNotificationToSeen = (userId, notificationId) => {
     return async (dispatch) => {
         await axios({
@@ -307,6 +132,10 @@ export const setNotificationToSeen = (userId, notificationId) => {
             .catch((err) => console.log(err))
     }
 }
+
+/**
+ * Delete a notification
+ */
 
 export const deleteNotification = (userId, notificationId) => {
     return async (dispatch) => {
@@ -325,6 +154,10 @@ export const deleteNotification = (userId, notificationId) => {
 /*******************************************************************************************************************************/
 /***************************************************** FRIEND REQUEST **********************************************************/
 
+/**
+ * Send a friend request
+ */
+
 export const sendFriendRequest = (friendId, userId, notification) => {
     return async (dispatch) => {
         await axios({
@@ -339,11 +172,19 @@ export const sendFriendRequest = (friendId, userId, notification) => {
     }
 }
 
+/**
+ * Receive the friend request
+ */
+
 export const receiveFriendRequest = (notification) => {
     return async (dispatch) => {
         dispatch({ type: RECEIVE_FRIEND_REQUEST, payload: { notification } })
     }
 }
+
+/**
+ * Cancel a friend request
+ */
 
 export const cancelFriendRequest = (friendId, userId, type) => {
     return async (dispatch) => {
@@ -359,11 +200,19 @@ export const cancelFriendRequest = (friendId, userId, type) => {
     }
 }
 
+/**
+ * Receive the canceled friend request
+ */
+
 export const receiveCancelFriendRequest = (type, requesterId) => {
     return async (dispatch) => {
         dispatch({ type: RECEIVE_CANCEL_FRIEND_REQUEST, payload: { type, requesterId } })
     }
 }
+
+/**
+ * Accept friend request
+ */
 
 export const acceptFriendRequest = (requesterId, userId, type, notification) => {
     return async (dispatch) => {
@@ -379,11 +228,19 @@ export const acceptFriendRequest = (requesterId, userId, type, notification) => 
     }
 }
 
+/**
+ * Receive friend request acceptation
+ */
+
 export const receiveAcceptFriendRequest = (friend) => {
     return async (dispatch) => {
         dispatch({ type: RECEIVE_ACCEPT_FRIEND_REQUEST, payload: { friend } })
     }
 }
+
+/**
+ * Refuse the friend request
+ */
 
 export const refuseFriendRequest = (requesterId, userId, type, notification) => {
     return async (dispatch) => {
@@ -398,6 +255,10 @@ export const refuseFriendRequest = (requesterId, userId, type, notification) => 
             .catch((err) => console.log(err))
     }
 }
+
+/**
+ * Receive friend request refus
+ */
 
 export const receiveRefuseFriendRequest = (friendId) => {
     return async (dispatch) => {

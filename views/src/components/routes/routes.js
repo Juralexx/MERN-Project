@@ -7,8 +7,6 @@ import Register from '../../pages/Register'
 import Navbar from '../Navbar'
 import Profil from '../../pages/Profil'
 import MemberProfil from '../members/MemberProfil'
-import Main from '../profil/Main'
-import About from '../profil/About'
 import AddProject from '../../pages/AddProject'
 import Dashboard from '../../pages/Dashboard'
 import Messenger from '../messenger/Messenger'
@@ -42,14 +40,11 @@ function Paths({ websocket, onlineUsers, friends, user, uid }) {
                     </ProtectedRoute>
                 } />
 
-                <Route element={<ProtectedRoute uid={uid} />}>
-                    <Route path="profil" element={<Profil user={user} />}>
-                        <Route index element={<Main />} />
-                        <Route path="about" element={<About />}>
-
-                        </Route>
-                    </Route>
-                </Route>
+                <Route path="profil/*" element={
+                    <ProtectedRoute uid={uid}>
+                        <Profil user={user} />
+                    </ProtectedRoute>
+                } />
 
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>

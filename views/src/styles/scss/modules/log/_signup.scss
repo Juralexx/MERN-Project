@@ -1,7 +1,7 @@
 .sign-container {
     height     : calc(100vh - 60px);
     width      : 100%;
-    background : var(--content);
+    background : var(--content-light);
 
     .sign-container-inner {
         display         : flex;
@@ -22,7 +22,7 @@
         .sign-card {
             width         : 100%;
             padding       : 30px;
-            box-shadow    : var(--shadow-xl);
+            box-shadow    : var(--shadow-tiny);
             border-radius : var(--radius);
             background    : var(--content-x-light);
 
@@ -83,25 +83,6 @@
             padding         : 12px 20px 0;
             margin-top      : 20px;
             border-radius   : var(--radius);
-
-            a {
-                display         : flex;
-                align-items     : center;
-                justify-content : center;
-                margin-left     : 10px;
-                height          : 40px;
-                padding         : 0px 20px;
-                font-size       : 16px;
-                text-align      : center;
-                border-radius   : var(--radius);
-                color           : var(--primary);
-                background      : rgba(var(--primary-rgb), 0.15);
-                cursor          : pointer;
-
-                &:hover {
-                    background : rgba(var(--primary-rgb), 0.30);
-                }
-            }
         }
     }
 }
@@ -126,10 +107,6 @@
         align-items : center;
         padding     : 5px 0;
 
-        p {
-            margin-top : 3px;
-        }
-
         svg {
             width        : 22px;
             height       : 22px;
@@ -148,16 +125,16 @@
 
 .password-strength {
     display       : flex;
+    align-items   : center;
     height        : 30px;
-    margin-bottom : 20px;
+    margin-bottom : 10px;
 
     .card {
-        margin-top       : 6px;
-        height           : 18px;
+        height           : 14px;
         width            : 23%;
-        border-radius    : 10px;
+        border-radius    : var(--radius);
         margin-right     : 5px;
-        background-color : var(--content-light);
+        background-color : var(--xx-light);
 
         &:nth-child(1) {
             &.weak {

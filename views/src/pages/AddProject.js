@@ -198,9 +198,9 @@ const AddProject = ({ user }) => {
             <div className="content_container add-project">
                 <div className="add-project-header">
                     <div className="add-project-header-top">
-                        <div className="logo-container">
+                        <div className="logo_container">
                             <Link to="/">
-                                <div className="logo-inner">
+                                <div className="logo_inner">
                                     <img src={`${process.env.REACT_APP_API_URL}files/img/logo-top.png`} alt="" />
                                 </div>
                             </Link>

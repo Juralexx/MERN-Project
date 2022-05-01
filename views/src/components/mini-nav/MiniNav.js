@@ -8,7 +8,7 @@ import SettingsMenu from "./SettingsMenu";
 import NotificationsMenu from "./notifications/Notifications";
 import MessengerMenu from "./Messenger";
 import { BsFillCaretDownFill } from 'react-icons/bs'
-import { IoNotifications, IoChatboxEllipses } from 'react-icons/io5'
+import { IoNotifications } from 'react-icons/io5'
 import { MdMessage } from "react-icons/md";
 
 const MiniNav = ({ user, websocket }) => {
@@ -27,30 +27,30 @@ const MiniNav = ({ user, websocket }) => {
     }
 
     return (
-        <div className="mini-nav" ref={wrapperRef}>
-            <ul className="mini-nav_ul">
-                <li className="mini-nav-li">
-                    <NavLink to="/profil" className="mini-nav-a">
-                        <div className="mini-nav-avatar" style={avatar(user.picture)}></div>
-                        <p className="mini-nav-pseudo">{user.pseudo}</p>
+        <div className="mini_nav" ref={wrapperRef}>
+            <ul className="mini_nav-ul">
+                <li className="mini_nav-li">
+                    <NavLink to="/profil" className="mini_nav-a">
+                        <div className="mini_nav-avatar" style={avatar(user.picture)}></div>
+                        <p className="mini_nav-pseudo">{user.pseudo}</p>
                     </NavLink>
                 </li>
                 <div className="bordered"></div>
-                <li className="mini-nav-li">
-                    <div className="mini-nav-button" onClick={() => { setOpenMessengerMenu(!openMessengerMenu); setOpenNotificationsMenu(false); setOpenSettingsMenu(false) }}>
+                <li className="mini_nav-li">
+                    <div className="mini_nav-button" onClick={() => { setOpenMessengerMenu(!openMessengerMenu); setOpenNotificationsMenu(false); setOpenSettingsMenu(false) }}>
                         <MdMessage />
                     </div>
                 </li>
-                <li className="mini-nav-li">
-                    <div className="mini-nav-button" onClick={resetNotifications}>
+                <li className="mini_nav-li">
+                    <div className="mini_nav-button" onClick={resetNotifications}>
                         {user.unseen_notifications > 0 && (
                             <div className="mini-badge">{user.unseen_notifications}</div>
                         )}
                         <IoNotifications />
                     </div>
                 </li>
-                <li className="mini-nav-li">
-                    <div className="mini-nav-button" onClick={() => { setOpenSettingsMenu(!openSettingsMenu); setOpenMessengerMenu(false); setOpenNotificationsMenu(false) }}>
+                <li className="mini_nav-li">
+                    <div className="mini_nav-button" onClick={() => { setOpenSettingsMenu(!openSettingsMenu); setOpenMessengerMenu(false); setOpenNotificationsMenu(false) }}>
                         <BsFillCaretDownFill />
                     </div>
                 </li>

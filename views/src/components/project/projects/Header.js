@@ -1,20 +1,15 @@
-import React, { useState, useRef } from 'react'
+import React from 'react'
 import { useDispatch } from "react-redux";
 import { avatar } from '../../tools/functions/useAvatar'
 import { dateParser } from '../../Utils'
-import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { leaveProject } from '../../tools/functions/member';
-import SmallMenu from '../../tools/components/SmallMenu';
 import Breadcrumb from './Breadcrumb';
-import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { HiLocationMarker } from 'react-icons/hi'
 import { HiCalendar } from 'react-icons/hi'
 import { NavLink, useLocation } from 'react-router-dom';
+import ToolsMenu from '../../tools/components/ToolsMenu';
 
 const Header = ({ project, websocket, user }) => {
-    const menuRef = useRef()
-    const [openMenu, setOpenMenu] = useState(false)
-    useClickOutside(menuRef, setOpenMenu, false)
     const dispatch = useDispatch()
     const location = useLocation()
     const isThisActive = ({ isActive }) => (!isActive ? "" : "active")
@@ -37,14 +32,9 @@ const Header = ({ project, websocket, user }) => {
                     </div>
                     <div>
                         <div className="dashboard-header_right">
-                            <div ref={menuRef} className="tools_btn" onClick={() => setOpenMenu(!openMenu)}>
-                                <BiDotsVerticalRounded />
-                            </div>
-                            {openMenu && (
-                                <SmallMenu>
-                                    <div className="tools_choice" onClick={() => leaveProject(user, project, websocket, dispatch)}>Quitter le projet</div>
-                                </SmallMenu>
-                            )}
+                            <ToolsMenu>
+                                <div className="tools_choice" onClick={() => leaveProject(user, project, websocket, dispatch)}>Quitter le projet</div>
+                            </ToolsMenu>
                         </div>
                     </div>
                 </div>

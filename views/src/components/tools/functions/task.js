@@ -123,36 +123,32 @@ export const statusToString = (element) => {
 /***************************************************************************************************************************************************/
 /**************************************************************** SORTED ARRAY *********************************************************************/
 
-export const sortByCreationDate = (tasks, setTasks, setFilter, setDisplay) => {
+export const sortByCreationDate = (tasks, setTasks, setFilter) => {
     const array = tasks.sort((a, b) => { return new Date(b.date) - new Date(a.date) })
     setTasks(array)
     setFilter("Par date de création")
-    setDisplay(false)
 }
 
-export const sortByEndDate = (tasks, setTasks, setFilter, setDisplay) => {
+export const sortByEndDate = (tasks, setTasks, setFilter) => {
     const array = tasks.sort((a, b) => { return new Date(a.end) - new Date(b.end) })
     setTasks(array)
     setFilter("Par date de fin")
-    setDisplay(false)
 }
 
-export const sortByState = (tasks, setTasks, setFilter, setDisplay) => {
+export const sortByState = (tasks, setTasks, setFilter) => {
     const todo = tasks.filter(element => element.state === "todo")
     const inProgress = tasks.filter(element => element.state === "in progress")
     const done = tasks.filter(element => element.state === "done")
     setTasks(todo.concat(inProgress, done))
     setFilter("Par état")
-    setDisplay(false)
 }
 
-export const sortByStatus = (tasks, setTasks, setFilter, setDisplay) => {
+export const sortByStatus = (tasks, setTasks, setFilter) => {
     const normal = tasks.filter(element => element.status === "normal")
     const important = tasks.filter(element => element.status === "important")
     const priority = tasks.filter(element => element.status === "priority")
     setTasks(priority.concat(important, normal))
     setFilter("Par status")
-    setDisplay(false)
 }
 
 /***************************************************************************************************************************************************/

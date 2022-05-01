@@ -45,38 +45,6 @@
     }
 }
 
-.tasklist-nav {
-    position    : relative;
-    display     : flex;
-    align-items : center;
-    margin      : 20px auto;
-    max-width   : 1366px;
-
-    .tasklist-nav-item {
-        display         : flex;
-        justify-content : center;
-        align-items     : center;
-        width           : auto;
-        padding         : 3px 16px 2px;
-        height          : 36px;
-        background      : var(--xx-light);
-        cursor          : pointer;
-        box-shadow      : var(--shadow-tiny);
-
-        &.active {
-            background : var(--primary);
-            color      : white;
-        }
-
-        &:nth-child(1) {
-            border-radius : var(--radius) 0 0 var(--radius);
-        }
-        &:nth-child(4) {
-            border-radius : 0 var(--radius) var(--radius) 0;
-        }
-    }
-}
-
 .details {
     display         : flex;
     align-items     : center;

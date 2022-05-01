@@ -1,16 +1,13 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import { getDifference } from '../../../tools/functions/function'
 import { stateToBackground, statusToBorder, isDatePassed, stateToString, statusToString, statusToBackground, removeTask, changeState } from '../../../tools/functions/task'
 import { dateParser } from '../../../Utils'
 import { HiPlus } from 'react-icons/hi'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import { ToolsBtn } from '../../../tools/components/Button'
-import { clickOn } from '../../../tools/functions/useClickOutside'
-import SmallMenu from '../../../tools/components/SmallMenu'
 import { DragDropContext } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { MdOutlineMessage } from 'react-icons/md'
+import ToolsMenu from '../../../tools/components/ToolsMenu'
 
 const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch, setCreateTask, setUpdateTask, setTask, setOpenTask, setState }) => {
     const todo = tasks.filter(element => element.state === "todo")
@@ -18,8 +15,6 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
     const done = tasks.filter(element => element.state === "done")
     const array = [todo, inProgress, done]
     const names = ["todo", "in progress", "done"]
-    const [openMenu, setOpenMenu] = useState(-1)
-    const ticketMenu = useRef()
     const [dragged, setDragged] = useState(false)
     const [selected, setSelected] = useState(null)
     const [toState, setToState] = useState("")
@@ -64,18 +59,15 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
                                                                 {...provided.draggableProps}
                                                                 {...provided.dragHandleProps}
                                                             >
-                                                                <div className="kanban-ticket-title" ref={ticketMenu}>
+                                                                <div className="kanban-ticket-title">
                                                                     <div className="two_lines">{element.title}</div>
                                                                     {element.comments.length > 0 && <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" />{element.comments.length}</div>}
-                                                                    <ToolsBtn onClick={() => clickOn(openMenu, setOpenMenu, element._id)}><BiDotsHorizontalRounded /></ToolsBtn>
-                                                                    {openMenu === element._id &&
-                                                                        <SmallMenu>
-                                                                            <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true); setOpenMenu(-1) }}>Voir</div>
-                                                                            <div className="tools_choice">Commenter</div>
-                                                                            <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenMenu(-1) }}>Modifier</div>
-                                                                            <div className="tools_choice" onClick={() => { removeTask(element, project, user, websocket, dispatch); setOpenMenu(-1) }}>Supprimer</div>
-                                                                        </SmallMenu>
-                                                                    }
+                                                                    <ToolsMenu>
+                                                                        <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
+                                                                        <div className="tools_choice">Commenter</div>
+                                                                        <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
+                                                                        <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch) }>Supprimer</div>
+                                                                    </ToolsMenu>
                                                                 </div>
                                                                 <div className="kanban-ticket-status">
                                                                     <div className={`details mr-2 ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>

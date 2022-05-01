@@ -49,7 +49,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                         </div>
                         <div className="dashboard-projects-header-bottom-right" ref={categoriesRef}>
                             <IconInput
-                                className="is-start_icon"
+                                className="is_start_icon"
                                 placeholder="Catégorie"
                                 readOnly
                                 icon={<BiCategoryAlt />}

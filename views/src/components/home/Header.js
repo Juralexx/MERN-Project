@@ -32,7 +32,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
     useEffect(() => {
         if (locationsStored && JSON.parse(locationsStored).length > 0)
             setRecentLocations(JSON.parse(locationsStored))
-    }, [locationsStored])
+    }, [locationsStored, setRecentLocations])
 
     return (
         <div id="header">
@@ -44,7 +44,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                     </div>
                     <div className="header_right">
                         <IconInput
-                            className="is-start_icon"
+                            className="is_start_icon"
                             placeholder="Rechercher un projet"
                             type="search"
                             icon={<BiSearchAlt />}
@@ -52,7 +52,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                         <div className="header_input_flex">
                             <div ref={categoriesRef}>
                                 <IconInput
-                                    className="is-start_icon"
+                                    className="is_start_icon"
                                     inputClassName="cursor-pointer"
                                     placeholder="Catégorie"
                                     readOnly
@@ -66,7 +66,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                             </div>
                             <div>
                                 <IconInput
-                                    className="is-start_icon"
+                                    className="is_start_icon"
                                     placeholder="Métier"
                                     type="text"
                                     fullwidth

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import FsLightbox from 'fslightbox-react';
 import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone';
 import { ErrorCard } from '../../tools/components/Error';

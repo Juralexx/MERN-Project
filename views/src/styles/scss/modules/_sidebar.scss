@@ -1,12 +1,13 @@
 .sidebar {
-    position   : relative;
-    height     : 100%;
-    min-width  : 280px;
-    max-width  : 280px;
-    background : var(--content);
-    box-shadow : var(--shadow-left);
-    z-index    : 1600;
-    overflow-y : hidden;
+    position     : relative;
+    height       : 100%;
+    min-width    : 280px;
+    max-width    : 280px;
+    background   : var(--content);
+    box-shadow   : var(--shadow-left);
+    z-index      : 800;
+    overflow-y   : hidden;
+    border-right : 2px solid var(--primary);
 
     &.reduced {
         max-width : 80px;

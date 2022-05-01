@@ -175,6 +175,29 @@
     }
 }
 
+.small_tools_btn {
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    padding          : 8px;
+    cursor           : pointer;
+    border-radius    : var(--radius);
+    color            : var(--text);
+    transform        : scale(1);
+    background-color : var(--primary);
+    background       : var(--content-x-light);
+    box-shadow       : var(--shadow-xl);
+
+    svg {
+        height : 12px;
+        width  : 12px;
+    }
+
+    &:active {
+        transform  : scale(0.95);
+    }
+}
+
 .tools_btn {
     display         : flex;
     align-items     : center;
@@ -203,39 +226,25 @@
     }
 }
 
-.small_tools_btn {
-    display          : flex;
-    align-items      : center;
-    justify-content  : center;
-    padding          : 8px;
-    cursor           : pointer;
-    border-radius    : var(--radius);
-    color            : var(--text);
-    transform        : scale(1);
-    background-color : var(--primary);
-    background       : var(--content-x-light);
-    box-shadow       : var(--shadow-xl);
-
-    svg {
-        height : 12px;
-        width  : 12px;
-    }
-
-    &:active {
-        transform  : scale(0.95);
+.tools_box {
+    position : relative;
+    .tools_menu {
+        right : 30px;
     }
 }
 
 .tools_menu {
     position      : absolute;
     padding       : 8px;
-    z-index       : 100000;
+    z-index       : 700;
     background    : var(--content);
     box-shadow    : var(--shadow-lg);
     border-radius : var(--radius);
     border        : 2px solid var(--border-light);
 
     .tools_choice {
+        display       : flex;
+        align-items   : center;
         min-width     : 220px;
         text-align    : left;
         padding       : 6px 10px;
@@ -243,8 +252,17 @@
         cursor        : pointer;
         border-radius : var(--radius);
 
-        &:hover {
-            background : var(--content-light);
+        svg {
+            height       : 18px;
+            width        : 18px;
+            margin-right : 5px;
         }
+
+        &:hover {
+            color            : var(--primary);
+            background-color : var(--x-light);
+        }
+
+
     }
 }

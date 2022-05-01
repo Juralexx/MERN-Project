@@ -100,7 +100,7 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
         <div ref={wrapperRef} className="relative">
             {displayLocation || location.length === 0 ? (
                 <IconInput
-                    className="is-start_icon"
+                    className="is_start_icon"
                     placeholder="Rechercher une localité"
                     type="text"
                     icon={<FaMapMarkerAlt />}

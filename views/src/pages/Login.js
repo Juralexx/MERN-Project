@@ -2,6 +2,7 @@ import React from 'react';
 import SignInForm from '../components/log/SignInForm';
 import { Link } from 'react-router-dom';
 import FooterLight from '../components/FooterLight';
+import { TextButton } from '../components/tools/components/Button';
 
 const Login = ({ uid }) => {
 
@@ -19,7 +20,7 @@ const Login = ({ uid }) => {
                     <SignInForm />
                     <div className="sign-card-bottom">
                         Par encore de compte ?
-                        <Link to="/register">Créer mon compte</Link>
+                        <Link to="/register"><TextButton text="Inscription" className="ml-2" /></Link>
                     </div>
                 </div>
             </div>

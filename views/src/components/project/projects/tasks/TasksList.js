@@ -2,16 +2,14 @@ import React, { useState } from 'react'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground, randomizeCheckboxID } from '../../../tools/functions/task'
 import { clickOn } from '../../../tools/functions/useClickOutside'
 import { reduceString } from '../../../tools/functions/reduceString'
-import { BiDotsVerticalRounded } from 'react-icons/bi'
-import SmallMenu from '../../../tools/components/SmallMenu'
 import { dateParser } from '../../../Utils'
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { RiCalendarTodoLine } from 'react-icons/ri'
 import { MdOutlineMessage } from 'react-icons/md'
-import { ToolsBtn } from '../../../tools/components/Button'
 import { getDifference } from '../../../tools/functions/function'
+import ToolsMenu from '../../../tools/components/ToolsMenu'
 
-const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, setOpenTask, showTask, setShowTask, websocket, dispatch, openTaskMenu, setOpenTaskMenu, taskMenu, setUpdateTask, setTask }) => {
+const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, showTask, setShowTask, websocket, dispatch, setUpdateTask, setTask }) => {
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const todo = tasks.filter(element => element.state === "todo")
     const inProgress = tasks.filter(element => element.state === "in progress")
@@ -37,11 +35,11 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
 
     return (
         <>
-            <div className="tasklist-nav">
-                <div className={`tasklist-nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
-                <div className={`tasklist-nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
-                <div className={`tasklist-nav-item ${addActive(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
-                <div className={`tasklist-nav-item ${addActive(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminées</div>
+            <div className="content_nav !my-4">
+                <div className={`${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
+                <div className={`${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
+                <div className={`${addActive(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
+                <div className={`${addActive(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminées</div>
             </div>
             {navbar === 1 ? (
                 array.map((arr, uniquekey) => {
@@ -68,14 +66,11 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                                         {element.comments.length > 0 &&
                                                             <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
                                                         }
-                                                        <ToolsBtn className="ml-2" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, element._id)}><BiDotsVerticalRounded /></ToolsBtn>
-                                                        {openTaskMenu === element._id &&
-                                                            <SmallMenu useRef={taskMenu}>
-                                                                <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
-                                                                <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
-                                                                {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
-                                                            </SmallMenu>
-                                                        }
+                                                        <ToolsMenu>
+                                                            <div className="tools_choice" onClick={() => setTask(element)}>Voir</div>
+                                                            <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
+                                                            {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                        </ToolsMenu>
                                                     </div>
                                                 </div>
                                                 <div className="tasklist-table-item-bottom">
@@ -137,14 +132,11 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                             {element.comments.length > 0 &&
                                                 <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
                                             }
-                                            <ToolsBtn className="ml-2" onClick={() => clickOn(openTaskMenu, setOpenTaskMenu, element._id)}><BiDotsVerticalRounded /></ToolsBtn>
-                                            {openTaskMenu === element._id &&
-                                                <SmallMenu useRef={taskMenu}>
-                                                    <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
-                                                    <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true); setOpenTaskMenu(false) }}>Modifier</div>
-                                                    {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
-                                                </SmallMenu>
-                                            }
+                                            <ToolsMenu>
+                                                <div className="tools_choice" onClick={() => setTask(element)}>Voir</div>
+                                                <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
+                                                {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                            </ToolsMenu>
                                         </div>
                                     </div>
                                     <div className="tasklist-table-item-bottom">

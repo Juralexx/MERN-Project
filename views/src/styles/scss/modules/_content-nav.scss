@@ -5,7 +5,7 @@
     height           : 60px;
     background-color : var(--content-x-light);
     border-bottom    : 1px solid var(--light-border);
-    z-index          : 10000000;
+    z-index          : 850;
 
     a, div {
         height : 100%;
@@ -17,6 +17,7 @@
     align-items     : center;
     justify-content : flex-start;
     margin          : 0 auto;
+    border-bottom   : 1px solid var(--light-border);
 
     a, div {
         position    : relative;
@@ -24,7 +25,7 @@
         align-items : center;
         padding     : 10px 20px;
         font-size   : 16px;
-        font-weight : 600;
+        font-weight : 500;
         color       : var(--text);
         cursor      : pointer;
         overflow    : hidden;
@@ -63,6 +64,12 @@
                 width            : 80%;
                 transition       : 0.2s ease;
                 background-color : var(--primary);
+            }
+        }
+
+        &.no-decoration {
+            &:before {
+                content : none;
             }
         }
     }

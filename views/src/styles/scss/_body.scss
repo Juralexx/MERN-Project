@@ -3,7 +3,7 @@ html {
     margin          : 0;
     padding         : 0;
     position        : relative;
-    font-family     : 'Segoe UI', sans-serif;
+    font-family     : 'Lato', sans-serif;
     scroll-behavior : smooth;
 }
 
@@ -12,7 +12,7 @@ body {
     min-height       : 100%;
     margin           : 0;
     padding          : 0;
-    font-family      : 'Segoe UI', sans-serif;
+    font-family      : 'Lato', sans-serif;
     scroll-behavior  : smooth;
     background-color : var(--body);
     color            : var(--text);
@@ -40,11 +40,21 @@ body {
     width    : 100vw;
 }
 
-h1 { font-size: 26px }
-h2 { font-size: 24px }
-h3 { font-size: 20px }
-h4 { font-size: 16px }
-h5 { font-size: 14px }
+h1 {
+    font-size: 26px
+}
+h2 {
+    font-size: 24px
+}
+h3 {
+    font-size: 20px
+}
+h4 {
+    font-size: 16px
+}
+h5 {
+    font-size: 14px
+}
 
 h1, h2, h3, h4, h5 {
     font-weight : 500;

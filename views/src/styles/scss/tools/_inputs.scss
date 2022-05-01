@@ -18,7 +18,7 @@
         z-index       : 10;
 
         &::placeholder {
-            color : var(--text-secondary);
+            color : var(--placeholder);
         }
     
         &:focus {
@@ -33,7 +33,7 @@
         padding       : 5px;
         border-radius : 20px;
         cursor        : pointer;
-        z-index       : 100000;
+        z-index       : 700;
 
         svg {
             height   : 16px;
@@ -88,7 +88,7 @@
         }
 
         &::placeholder {
-            color : var(--text-secondary);
+            color : var(--placeholder);
         }
     }
 
@@ -103,7 +103,7 @@
         z-index          : 0;
     }
 
-    &.is-start_icon {
+    &.is_start_icon {
         input {
             padding : 6px 12px 4px 50px;
         }
@@ -150,7 +150,7 @@
         padding       : 5px;
         border-radius : 20px;
         cursor        : pointer;
-        z-index       : 100000;
+        z-index       : 700;
 
         svg {
             height   : 16px;
@@ -190,7 +190,7 @@
     }
 
     &::placeholder {
-        color : var(--text-secondary);
+        color : var(--placeholder);
     }
 }
 
@@ -219,7 +219,7 @@
         }
 
         &::placeholder {
-            color : var(--text-secondary);
+            color : var(--placeholder);
         }
     }
 
@@ -364,7 +364,7 @@
     }
 
     &::placeholder {
-        color : var(--text-secondary);
+        color : var(--placeholder);
     }
 
     &.small {
@@ -398,7 +398,7 @@
         -webkit-box-orient : vertical;
 
         &::placeholder {
-            color : var(--text-secondary);
+            color : var(--placeholder);
         }
 
         &:focus {
@@ -430,7 +430,7 @@
         margin-top       : 5px;
         padding          : 5px;
         background-color : var(--content-x-light);
-        z-index          : 1500;
+        z-index          : 700;
         box-shadow       : var(--shadow-xl);
         border-radius    : var(--radius);
 
@@ -517,7 +517,7 @@
         }
 
         &::placeholder {
-            color : var(--text-secondary);
+            color : var(--placeholder);
         }
     }
 
@@ -537,7 +537,7 @@
         transform     : translateX(-50%);
         background    : var(--input);
         border-radius : var(--radius);
-        z-index       : 2000;
+        z-index       : 700;
         box-shadow : var(--shadow-lg);
 
         .rdp {
@@ -617,7 +617,7 @@
     max-height       : 300px;
     overflow         : auto;
     width            : 500px;
-    z-index          : 1500;
+    z-index          : 700;
     border-radius    : var(--radius);
     box-shadow       : var(--shadow-2xl);
     background-color : var(--content-light);

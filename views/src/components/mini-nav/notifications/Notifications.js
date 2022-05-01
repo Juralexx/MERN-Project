@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import FriendRequest from "./FriendRequest";
 import MemberRequest from "./MemberRequest";
-import { BsThreeDots } from 'react-icons/bs'
-import SmallMenu from "../../tools/components/SmallMenu";
 import { setNotifSeen } from "../../tools/functions/notifications";
 import { IoMdNotificationsOff } from 'react-icons/io'
+import ToolsMenu from "../../tools/components/ToolsMenu";
 
 const NotificationsMenu = ({ open, user, websocket }) => {
-    const [openMenu, setOpenMenu] = useState(false)
     const [showUnread, setShowUnread] = useState(false)
     const [unread, setUnread] = useState([])
     const dispatch = useDispatch()
@@ -19,16 +17,11 @@ const NotificationsMenu = ({ open, user, websocket }) => {
         <div className="notifications-menu">
             <div className="notifications-header">
                 <div className="title">Notifications</div>
-                <div className="tools_btn" onClick={() => setOpenMenu(!openMenu)}>
-                    <BsThreeDots />
-                </div>
-            </div>
-            {openMenu && (
-                <SmallMenu>
+                <ToolsMenu>
                     <div className="tools_choice">Tout marquer comme lu</div>
                     <div className="tools_choice">Voir toutes les notifications</div>
-                </SmallMenu>
-            )}
+                </ToolsMenu>
+            </div>
             <div className="notifications-navbar">
                 <div className={`navlink ${showUnread ? "" : "active"}`} onClick={() => setShowUnread(false)}>Tout</div>
                 <div className={`navlink ${showUnread ? "active" : ""}`} onClick={() => setShowUnread(true)}>Non lu</div>

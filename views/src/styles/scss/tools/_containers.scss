@@ -88,3 +88,42 @@
     }
 }
 
+.small-box {
+    position     : relative;
+    height       : auto;
+    padding      : 0 30px;
+    margin-right : auto;
+    margin-left  : auto;
+    color        : var(--text);
+}
+
+@media (max-width: 576px) {
+    .small-box {
+        max-width : 516px;
+    }
+}
+@media (max-width: 768px) {
+    .small-box {
+        max-width : 576px;
+    }
+}
+@media (max-width: 992px) {
+    .small-box {
+        max-width : 768px;
+    }
+}
+@media (max-width: 1200px) {
+    .small-box {
+        max-width : 992px;
+    }
+}
+@media (max-width: 1366px) {
+    .small-box {
+        max-width : 1200px;
+    }
+}
+@media (min-width: 1366px) {
+    .small-box {
+        max-width : 1200px;
+    }
+}
