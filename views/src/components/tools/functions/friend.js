@@ -1,4 +1,4 @@
-import { acceptFriendRequest, cancelFriendRequest, refuseFriendRequest, sendFriendRequest } from "../../../actions/user.action"
+import { acceptFriendRequest, cancelFriendRequest, deleteFriend, refuseFriendRequest, sendFriendRequest } from "../../../actions/user.action"
 import { randomID } from "../../Utils"
 
 export const sendRequest = (friend, user, websocket, dispatch) => {
@@ -35,4 +35,12 @@ export const refuseRequest = (request, user, websocket, dispatch) => {
     })
     Object.assign(request, { state: "refused" })
     dispatch(refuseFriendRequest(request.requesterId, user._id, request.type, request))
+}
+
+export const removeFriend = (userId, friendId, websocket, dispatch) => {
+    websocket.current.emit("deleteFriend", {
+        userId: userId,
+        receiverId: friendId
+    })
+    dispatch(deleteFriend(userId, friendId))
 }

@@ -3,11 +3,11 @@ import { changeState, stateToBackground, isDatePassed, removeTask, stateToString
 import { clickOn } from '../../../tools/functions/useClickOutside'
 import { reduceString } from '../../../tools/functions/reduceString'
 import { dateParser } from '../../../Utils'
+import { getDifference } from '../../../tools/functions/function'
+import ToolsMenu from '../../../tools/components/ToolsMenu'
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { RiCalendarTodoLine } from 'react-icons/ri'
 import { MdOutlineMessage } from 'react-icons/md'
-import { getDifference } from '../../../tools/functions/function'
-import ToolsMenu from '../../../tools/components/ToolsMenu'
 
 const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, showTask, setShowTask, websocket, dispatch, setUpdateTask, setTask }) => {
     const addActive = (state, classe) => { if (state) { return classe } else { return "" } }

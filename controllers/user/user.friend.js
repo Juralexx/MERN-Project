@@ -182,14 +182,14 @@ export const deleteFriend = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { friends: req.body.userId },
+                $pull: { friends: req.body.friendId },
             },
             { new: true, upsert: true },
         )
             .catch((err) => { return res.status(400).send({ message: err }) })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.userId },
+            { _id: req.body.friendId },
             {
                 $pull: { friends: req.params.id },
             },

@@ -76,7 +76,7 @@ const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => 
                                 <div className="network" key={key}>
                                     <div className="flex items-center w-[80%] relative">
                                         {returnSVG(element.type)}
-                                        <a href={element.url} target="_blank" className="ml-4">{element.url}</a>
+                                        <a href={element.url} target="_blank" rel="noreferrer" className="ml-4">{element.url}</a>
                                     </div>
                                     <IoClose className='cursor-pointer' onClick={() => deleteItem(key)} />
                                 </div>

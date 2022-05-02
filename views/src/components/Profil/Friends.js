@@ -1,24 +1,29 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { BiSearchAlt } from 'react-icons/bi'
-import Oval from 'react-loading-icons/dist/components/oval'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import { IconInput } from '../tools/components/Inputs'
 import { SmallLoader } from '../tools/components/Loader'
 import ToolsMenu from '../tools/components/ToolsMenu'
 import { coverPicture } from '../tools/functions/useAvatar'
+import { removeFriend } from '../tools/functions/friend'
 import { dateParser } from '../Utils'
+import { BiSearchAlt } from 'react-icons/bi'
+import Warning from '../tools/components/Warning'
 
-const Friends = ({ user }) => {
+const Friends = ({ user, websocket }) => {
     const [friends, setFriends] = useState([])
     const [isLoading, setLoading] = useState(true)
+    const [warning, setWarning] = useState(-1)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [search, setSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [isResults, setResults] = useState([])
     const isEmpty = !isResults || isResults.length === 0
     const regexp = new RegExp(searchQuery, 'i')
-    const searchProject = () => {
+    const searchFriends = () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         if (searchQuery.length > 2) {
             const response = friends.filter(f => regexp.test(f.pseudo))
@@ -53,33 +58,47 @@ const Friends = ({ user }) => {
     }
 
     return (
-        <div className="content_box contacts_page">
+        <div className="profil_page">
             <div className="search_header">
-                <h1>Contacts</h1>
-                <IconInput className="is_start_icon" icon={<BiSearchAlt />} placeholder="Rechercher un contact..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchProject} cross clean={() => setSearchQuery("")} />
+                <h2>Contacts <span>{user?.friends?.length}</span></h2>
+                <IconInput className="is_start_icon" icon={<BiSearchAlt />} placeholder="Rechercher un contact..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchFriends} cross clean={() => setSearchQuery("")} />
             </div>
-            <div className="contacts_page-body">
+            <div className="profil_page-body">
                 {!isLoading ? (
-                    friends.map((element, key) => {
-                        return (
-                            <div className="card contact_card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
-                                <div className="contact_card-left" style={coverPicture(element.picture)}></div>
-                                <div className="contact_card-right">
-                                    <div className="card-infos">
-                                        <Link to={"/" + element.pseudo} className="pseudo">{element.pseudo}</Link>
-                                        <p>depuis le {dateParser(since(element))}</p>
-                                        <p>{element.created_projects.length} projects crées • {element.current_projects.length} projects en cours</p>
+                    friends.length > 0 ? (
+                        friends.map((element, key) => {
+                            return (
+                                <div className="card contact_card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
+                                    <div className="contact_card-left" style={coverPicture(element.picture)}></div>
+                                    <div className="contact_card-right">
+                                        <div className="card-infos">
+                                            <Link to={"/" + element.pseudo} className="pseudo">{element.pseudo}</Link>
+                                            <p>depuis le {dateParser(since(element))}</p>
+                                            <p>{element.created_projects.length} projects crées • {element.projects.length} projects en cours</p>
+                                        </div>
+                                        <ToolsMenu>
+                                            <div className="tools_choice" onClick={() => navigate("/" + element.pseudo)}>Voir le profil</div>
+                                            <div className="tools_choice">Contacter</div>
+                                            <div className="tools_choice">Inviter à rejoindre un projet</div>
+                                            <div className="tools_choice" onClick={() => setWarning(key)}>Supprimer des contacts</div>
+                                        </ToolsMenu>
+                                        <Warning
+                                            open={warning === key}
+                                            setOpen={setWarning}
+                                            title={`Etes-vous sur de vouloir supprimer ${element.pseudo} de vos contacts ?`}
+                                            text={`${element.pseudo} sera définitivement supprimé de vos contacts ?`}
+                                            onValidate={() => { removeFriend(user._id, element._id, websocket, dispatch); setWarning(false) }}
+                                        />
                                     </div>
-                                    <ToolsMenu>
-                                        <div className="tools_choice">Voir le profil</div>
-                                        <div className="tools_choice">Contacter</div>
-                                        <div className="tools_choice">Inviter à rejoindre un projet</div>
-                                        <div className="tools_choice">Supprimer des contacts</div>
-                                    </ToolsMenu>
                                 </div>
-                            </div>
-                        )
-                    })
+                            )
+                        })
+                    ) : (
+                        <div className="empty-content">
+                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} alt="Vous n'avez aucun contact à afficher..." />
+                            <p>Vous n'avez aucun contact à afficher...</p>
+                        </div>
+                    )
                 ) : (
                     <div className="loading-container">
                         <SmallLoader />

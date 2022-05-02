@@ -29,7 +29,7 @@ export default function ThemeContextWrapper(props) {
         if (localStorageTheme !== null && localStorageTheme === "light") {
             document.body.classList.remove('dark');
         } else {
-            document.body.classList.add('light');
+            document.body.classList.add('dark');
         }
     }
 

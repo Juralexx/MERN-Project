@@ -246,6 +246,15 @@ export const geolocToFloat = (string) => {
 }
 
 /**
+ * Remove choosen characters from string
+ */
+
+export const replaceStr = (char, str) => {
+    const string = str.replace(char, '')
+    return string
+}
+
+/**
  * Remove all accents.
  */
 

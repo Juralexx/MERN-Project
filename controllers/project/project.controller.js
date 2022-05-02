@@ -110,3 +110,5 @@ export const deleteProject = async (req, res) => {
         return res.status(500).json({ message: err })
     }
 }
+
+// supprimer des tout les utilisateurs qui ont liké, suivi ou en favoris l'id du projet

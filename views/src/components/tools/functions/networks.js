@@ -23,3 +23,13 @@ export const returnNetworkText = (type) => {
     else if (type === "linkedin") return "Suivez-nous sur LinkedIn"
     else return "Visitez notre site web"
 }
+
+export const replaceHTTP = (str) => {
+    if (str.includes('https://')) {
+        let string = str.replace('https://', '')
+        return string
+    } else if (str.includes('http://')) {
+        const string = str.replace('http://', '')
+        return string
+    }
+}

@@ -147,11 +147,7 @@ const UserModel = new mongoose.Schema(
             default: 0,
         },
 
-        current_projects: {
-            type: [String]
-        },
-
-        completed_projects: {
+        projects: {
             type: [String]
         },
 
@@ -159,11 +155,15 @@ const UserModel = new mongoose.Schema(
             type: [String]
         },
 
-        following: {
+        completed_projects: {
             type: [String]
         },
 
-        projects_liked: {
+        followed: {
+            type: [String]
+        },
+
+        liked: {
             type: [String]
         },
 

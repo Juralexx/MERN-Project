@@ -71,12 +71,12 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                             <div className="infos green">Projects terminés ({(projects.filter(e => e.state === "done")).length})</div>
                         </div>
                         <div>
-                            <DropdownInput useRef={filterMenu} placeholder="Filtrer" cross readOnly value={filter} className="right ml-3" open={display} onClick={() => setDisplay(!display)} clean={() => { setFilter(""); setPros(projects) }}>
-                                <div onClick={() => sortByRecent(projects, setPros, setFilter, setDisplay)}>Plus récent au plus ancien</div>
-                                <div onClick={() => sortByOld(projects, setPros, setFilter, setDisplay)}>Plus ancien au plus récent</div>
-                                <div onClick={() => sortByWorkedOn(projects, setPros, setFilter, setDisplay)}>En préparation</div>
-                                <div onClick={() => sortByInProgress(projects, setPros, setFilter, setDisplay)}>En cours</div>
-                                <div onClick={() => sortByDone(projects, setPros, setFilter, setDisplay)}>Terminé</div>
+                            <DropdownInput placeholder="Filtrer" cross readOnly value={filter} className="right ml-3" open={display} clean={() => { setFilter(""); setPros(projects) }}>
+                                <div onClick={() => sortByRecent(projects, setPros, setFilter)}>Plus récent au plus ancien</div>
+                                <div onClick={() => sortByOld(projects, setPros, setFilter)}>Plus ancien au plus récent</div>
+                                <div onClick={() => sortByWorkedOn(projects, setPros, setFilter)}>En préparation</div>
+                                <div onClick={() => sortByInProgress(projects, setPros, setFilter)}>En cours</div>
+                                <div onClick={() => sortByDone(projects, setPros, setFilter)}>Terminé</div>
                             </DropdownInput>
                         </div>
                     </div>

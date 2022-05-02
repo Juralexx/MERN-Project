@@ -68,7 +68,7 @@ export const DropdownInput = (props) => {
                 <IoCaretDownOutline />
             )}
             {open &&
-                <div className="dropdown-input-choices">
+                <div className="dropdown-input-choices" onClick={() => setOpen(false)}>
                     {props.children}
                 </div>
             }

@@ -30,7 +30,7 @@ const MiniNav = ({ user, websocket }) => {
         <div className="mini_nav" ref={wrapperRef}>
             <ul className="mini_nav-ul">
                 <li className="mini_nav-li">
-                    <NavLink to="/profil" className="mini_nav-a">
+                    <NavLink to="/profil" className={({ isActive }) => (!isActive ? "mini_nav-a" : "mini_nav-a active")}>
                         <div className="mini_nav-avatar" style={avatar(user.picture)}></div>
                         <p className="mini_nav-pseudo">{user.pseudo}</p>
                     </NavLink>

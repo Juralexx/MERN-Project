@@ -1,11 +1,12 @@
 .profil_container {
-    position : relative;
-    width    : 100%;
-    height   : 100%;
 
     h1 {
         font-size : 30px;
-        padding   : 10px 0;
+    }
+
+    .header {
+        padding-bottom : 20px;
+        border-bottom  : 1px solid var(--light-border);
     }
 
     .profil_flex {
@@ -62,6 +63,49 @@
         }
     }
 
+    .profil_content {
+        display        : flex;
+        padding-bottom : 100px;
+
+        .profil_card {
+            width         : 300px;
+            flex          : 0 0 300px;
+            padding-right : 20px;
+            color         : var(--text-secondary);
+
+            .profil_card-header {
+                padding-bottom : 20px;
+                border-bottom  : 1px solid var(--light-border);
+
+                .pseudo_header {
+                    font-size     : 24px;
+                    font-weight   : 600;
+                    color         : var(--text);
+                    margin-bottom : 10px;
+                }
+    
+                p {
+                    display     : flex;
+                    align-items : center;
+                    line-height : 24px;
+    
+                    svg {
+                        margin-right : 5px;
+                        color        : var(--primary);
+                    }
+                }
+            }
+
+            .profil_card-body {
+                padding-top : 20px;
+
+                .networks {
+                    padding-top : 20px;
+                }
+            }
+        }
+    }
+
     .networks-item {
         display     : flex;
         align-items : center;
@@ -74,6 +118,7 @@
             padding       : 7px;
             color         : white;
             border-radius : 3px;
+            flex          : 0 0 30px;
 
             &.facebook {
                 background-color : var(--facebook);
@@ -109,12 +154,24 @@
         }
     }
 
-    .contacts_page {
+    .profil_page {
+        position     : relative;
+        width        : 100%;
+        padding-left : 20px;
+        
         .search_header {
             position        : relative;
             display         : flex;
             align-items     : center;
             justify-content : space-between;
+
+            h2 {
+                span {
+                    font-size   : 18px;
+                    color       : var(--text-secondary);
+                    margin-left : 8px;
+                }
+            }
 
             .icon-input {
                 width     : 40%;
@@ -125,18 +182,20 @@
             }
         }
 
-        .contacts_page-body {
+        .profil_page-body {
             display         : flex;
             justify-content : space-between;
             margin-top      : 30px;
+            flex-wrap       : wrap;
             columns         : 2;
+
             .contact_card {
                 width   : 49%;
                 padding : 15px;
 
                 .contact_card-left {
-                    min-height        : 80px;
-                    min-width         : 80px;
+                    min-height    : 80px;
+                    min-width     : 80px;
                     border-radius : 8px;
                 }
                 .contact_card-right {
@@ -162,13 +221,14 @@
             .loading-container {
                 width   : 100%;
                 padding : 50px 0;
+
                 .icon-loading {
-                    margin : 0 auto;
-                    height : 70px;
-                    width  : 70px;
-                    color  : var(--primary);
-                    fill  : var(--primary);
-                    z-index: 100;
+                    margin  : 0 auto;
+                    height  : 70px;
+                    width   : 70px;
+                    color   : var(--primary);
+                    fill    : var(--primary);
+                    z-index : 100;
                 }
             }
         }

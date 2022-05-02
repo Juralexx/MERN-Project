@@ -1,4 +1,4 @@
-import { ACCEPT_FRIEND_REQUEST, DELETE_NOTIFICATION, GET_USER, RECEIVE_ACCEPT_FRIEND_REQUEST, RECEIVE_CANCEL_FRIEND_REQUEST, RECEIVE_FRIEND_REQUEST, RECEIVE_REFUSE_FRIEND_REQUEST, REFUSE_FRIEND_REQUEST, RESET_NOTIFICATIONS, SET_NOTIFICATION_SEEN, UPDATE_EMAIL, UPDATE_THEME, UPDATE_USER } from "../actions/user.action";
+import { ACCEPT_FRIEND_REQUEST, DELETE_FRIEND, DELETE_NOTIFICATION, GET_USER, RECEIVE_ACCEPT_FRIEND_REQUEST, RECEIVE_CANCEL_FRIEND_REQUEST, RECEIVE_DELETE_FRIEND, RECEIVE_FRIEND_REQUEST, RECEIVE_REFUSE_FRIEND_REQUEST, REFUSE_FRIEND_REQUEST, RESET_NOTIFICATIONS, SET_NOTIFICATION_SEEN, UPDATE_EMAIL, UPDATE_THEME, UPDATE_USER } from "../actions/user.action";
 import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action.upload";
 import { CANCEL_SENT_FRIEND_REQUEST, SEND_FRIEND_REQUEST } from "../actions/user.action";
 import { ACCEPT_MEMBER_REQUEST, RECEIVE_CANCEL_MEMBER_REQUEST, RECEIVE_MEMBER_REQUEST, REFUSE_MEMBER_REQUEST, REMOVE_PROJECT_FROM_MEMBER } from "../actions/project.action";
@@ -55,8 +55,9 @@ export default function userReducer(state = initialState, action) {
                 theme: action.payload,
             }
 
-        /*******************************************************************************************************************************/
-        /****************************************************** NOTIFICATIONS **********************************************************/
+        /**
+         * NOTIFICATIONS
+         */
 
         case RESET_NOTIFICATIONS:
             return {
@@ -76,8 +77,9 @@ export default function userReducer(state = initialState, action) {
                 notifications: state.notifications.filter(notif => notif._id !== action.payload.notificationId)
             }
 
-        /*******************************************************************************************************************************/
-        /****************************************************** FRIEND ACTION **********************************************************/
+        /**
+         * FRIEND ACTIONS
+         */
 
         case SEND_FRIEND_REQUEST:
             return {
@@ -123,6 +125,16 @@ export default function userReducer(state = initialState, action) {
                 ...state,
                 friend_request_sent: state.friend_request_sent.filter(request => request.friend !== action.payload.friendId)
             }
+        case DELETE_FRIEND:
+            return {
+                ...state,
+                friends: state.friends.filter(f => f.friend !== action.payload.friendId)
+            }
+        case RECEIVE_DELETE_FRIEND:
+            return {
+                ...state,
+                friends: state.friends.filter(f => f.friend !== action.payload.userId)
+            }
 
         /***************************************************************************************************************************/
         /************************************************** MEMBER REQUEST ******************************************************* */
@@ -144,7 +156,7 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 unseen_notifications: decrementNotifIfUpperZero(),
-                current_projects: [...state.current_projects, action.payload.projectId]
+                projects: [...state.projects, action.payload.projectId]
             }
         case REFUSE_MEMBER_REQUEST:
             return {
@@ -155,7 +167,7 @@ export default function userReducer(state = initialState, action) {
         case REMOVE_PROJECT_FROM_MEMBER:
             return {
                 ...state,
-                current_projects: state.current_projects.filter(project => project !== action.payload.projectId),
+                projects: state.projects.filter(project => project !== action.payload.projectId),
             }
 
         default:

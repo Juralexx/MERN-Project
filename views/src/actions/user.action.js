@@ -17,6 +17,8 @@ export const ACCEPT_FRIEND_REQUEST = "ACCEPT_FRIEND_REQUEST"
 export const RECEIVE_ACCEPT_FRIEND_REQUEST = "RECEIVE_ACCEPT_FRIEND_REQUEST"
 export const REFUSE_FRIEND_REQUEST = "REFUSE_FRIEND_REQUEST"
 export const RECEIVE_REFUSE_FRIEND_REQUEST = "RECEIVE_REFUSE_FRIEND_REQUEST"
+export const DELETE_FRIEND = "DELETE_FRIEND"
+export const RECEIVE_DELETE_FRIEND = "RECEIVE_DELETE_FRIEND"
 
 /**
  * Get user
@@ -29,7 +31,7 @@ export const getUser = (uid) => {
             .then((res) => {
                 dispatch({ type: GET_USER, payload: res.data })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
@@ -52,7 +54,7 @@ export const getUser = (uid) => {
                 networks: networks
             }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: UPDATE_USER, payload: { name, lastname, work, bio, location, phone, networks } })
             })
             .catch((err) => console.log(err))
@@ -70,7 +72,7 @@ export const updateEmail = (userId, email) => {
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { email }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: UPDATE_EMAIL, payload: email })
             })
             .catch((err) => console.log(err))
@@ -88,7 +90,7 @@ export const updateTheme = (userId, theme) => {
             url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
             data: { theme }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: UPDATE_THEME, payload: theme })
             })
             .catch((err) => console.log(err))
@@ -108,7 +110,7 @@ export const removeNotifications = (userId) => {
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/reset-notifications/` + userId,
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: RESET_NOTIFICATIONS, payload: { notifications: "0" } })
             })
             .catch((err) => console.log(err))
@@ -126,7 +128,7 @@ export const setNotificationToSeen = (userId, notificationId) => {
             url: `${process.env.REACT_APP_API_URL}api/user/notification-seen/` + userId,
             data: { userId, notificationId }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: SET_NOTIFICATION_SEEN, payload: { notificationId } })
             })
             .catch((err) => console.log(err))
@@ -144,7 +146,7 @@ export const deleteNotification = (userId, notificationId) => {
             url: `${process.env.REACT_APP_API_URL}api/user/delete-notification/` + userId,
             data: { userId, notificationId }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: DELETE_NOTIFICATION, payload: { notificationId } })
             })
             .catch((err) => console.log(err))
@@ -165,7 +167,7 @@ export const sendFriendRequest = (friendId, userId, notification) => {
             url: `${process.env.REACT_APP_API_URL}api/user/send-friend-request/` + userId,
             data: { friendId, notification }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: SEND_FRIEND_REQUEST, payload: { friendId, userId } })
             })
             .catch((err) => console.log(err))
@@ -193,7 +195,7 @@ export const cancelFriendRequest = (friendId, userId, type) => {
             url: `${process.env.REACT_APP_API_URL}api/user/cancel-friend-request/` + userId,
             data: { friendId, type }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: CANCEL_SENT_FRIEND_REQUEST, payload: { friendId, userId } })
             })
             .catch((err) => console.log(err))
@@ -221,7 +223,7 @@ export const acceptFriendRequest = (requesterId, userId, type, notification) => 
             url: `${process.env.REACT_APP_API_URL}api/user/accept-friend-request/` + userId,
             data: { requesterId, type }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { requesterId, userId, notification } })
             })
             .catch((err) => console.log(err))
@@ -249,7 +251,7 @@ export const refuseFriendRequest = (requesterId, userId, type, notification) => 
             url: `${process.env.REACT_APP_API_URL}api/user/refuse-friend-request/` + userId,
             data: { requesterId, type }
         })
-            .then((res) => {
+            .then(() => {
                 dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { requesterId, userId, notification } })
             })
             .catch((err) => console.log(err))
@@ -263,5 +265,33 @@ export const refuseFriendRequest = (requesterId, userId, type, notification) => 
 export const receiveRefuseFriendRequest = (friendId) => {
     return async (dispatch) => {
         dispatch({ type: RECEIVE_REFUSE_FRIEND_REQUEST, payload: { friendId } })
+    }
+}
+
+/**
+ * Delete friend
+ */
+
+ export const deleteFriend = (userId, friendId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/delete-friend/` + userId,
+            data: { friendId }
+        })
+            .then(() => {
+                dispatch({ type: DELETE_FRIEND, payload: { friendId } })
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+/**
+ * Receive delete friend
+ */
+
+ export const receiveDeleteFriend = (friendId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_DELETE_FRIEND, payload: { friendId } })
     }
 }

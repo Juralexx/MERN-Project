@@ -5,8 +5,10 @@ const About = ({ user }) => {
     const noContent = <em>Non renseigné</em>
 
     return (
-        <div className="content_box">
-            <h1>À propos</h1>
+        <div className="profil_page">
+            <div className="header">
+                <h2>À propos</h2>
+            </div>
             <div className="profil_flex">
                 <div className="profil_flex-left">
                     <h3>Informations générales</h3>

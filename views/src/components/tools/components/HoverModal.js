@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { avatar } from "../../tools/functions/useAvatar";
 import { Button } from "./Button";
 
-const HoverModal = ({ user, style }) => {
+const HoverModal = ({ user, style, open }) => {
 
     return (
+        open &&
         <div className="hovered_card" style={style}>
             <div className="hovered-modal_container">
                 <div className="hovered-modal_head">
@@ -16,9 +17,9 @@ const HoverModal = ({ user, style }) => {
                         <div className="hovered_card-name">
                             <Link to={"/" + user.pseudo}>{user.pseudo}</Link>
                         </div>
-                        {user.location && <p>{user.location}</p>}
+                        {user.location && <p>{user.location.COM_NOM}</p>}
                         <p>{user.created_projects.length} projets créés</p>
-                        <p>{user.current_projects.length} projets en cours</p>
+                        <p>A participé à {user.projects.length} projets</p>
                     </div>
                 </div>
                 <div className="flex mt-5">

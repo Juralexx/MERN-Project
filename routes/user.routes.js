@@ -43,7 +43,7 @@ userRoutes.put('/send-friend-request/:id', sendFriendRequest)
 userRoutes.put('/cancel-friend-request/:id', cancelFriendRequest)
 userRoutes.put('/accept-friend-request/:id', acceptFriend)
 userRoutes.put('/refuse-friend-request/:id', refuseFriend)
-userRoutes.put('/delete/friend/:id', deleteFriend)
+userRoutes.put('/delete-friend/:id', deleteFriend)
 
 userRoutes.put('/conversation/add-favorite/:id', addConversationToFavorite)
 userRoutes.put('/conversation/remove-favorite/:id', removeConversationFromFavorite)

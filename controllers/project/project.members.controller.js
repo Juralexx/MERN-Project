@@ -94,7 +94,7 @@ export const acceptMemberRequest = async (req, res) => {
             { _id: req.body.userId },
             {
                 $addToSet: {
-                    current_projects: req.params.id
+                    projects: req.params.id
                 },
                 $pull: {
                     notifications: {
@@ -223,7 +223,7 @@ export const leaveProject = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.memberId },
             {
-                $pull: { current_projects: req.params.id }
+                $pull: { projects: req.params.id }
             },
             { news: true },
         )

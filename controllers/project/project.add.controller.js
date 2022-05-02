@@ -69,7 +69,7 @@ export const createProject = async (req, res) => {
             { _id: req.body.posterId },
             {
                 $addToSet: {
-                    current_projects: projectId,
+                    projects: projectId,
                     created_projects: projectId
                 }
             },

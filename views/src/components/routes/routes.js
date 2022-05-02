@@ -42,7 +42,7 @@ function Paths({ websocket, onlineUsers, friends, user, uid }) {
 
                 <Route path="profil/*" element={
                     <ProtectedRoute uid={uid}>
-                        <Profil user={user} />
+                        <Profil user={user} websocket={websocket} />
                     </ProtectedRoute>
                 } />
 

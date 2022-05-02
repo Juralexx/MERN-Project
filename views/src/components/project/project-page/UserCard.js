@@ -22,7 +22,7 @@ const UserCard = ({ project }) => {
             <div className="user-title">{user.pseudo}</div>
             <div className="user-informations">
                 <p><span>•</span> {user.created_projects.length} projets créés</p>
-                <p><span>•</span> Participe à {user.current_projects.length} projets</p>
+                <p><span>•</span> A Participé à {user.projects.length} projets</p>
                 {user.bio && <p>{user.bio}</p>}
             </div>
         </div>

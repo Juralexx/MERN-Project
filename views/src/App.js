@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { io } from 'socket.io-client'
 import Paths from './components/routes/routes';
 import { UidContext, UserContext } from "./components/AppContext"
-import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
+import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 
@@ -81,6 +81,9 @@ function App() {
         websocket.current.on("refuseFriendRequest", data => {
             dispatch(receiveRefuseFriendRequest(data.userId))
         })
+        websocket.current.on("deleteFriend", data => {
+            dispatch(receiveDeleteFriend(data.userId))
+        })
         websocket.current.on("memberRequest", data => {
             dispatch(receiveMemberRequest(data.notification))
             setSentNotification(data.notification)
@@ -128,6 +131,7 @@ function App() {
             websocket.current.off("cancelFriendRequest")
             websocket.current.off("acceptFriendRequest")
             websocket.current.off("refuseFriendRequest")
+            websocket.current.off("deleteFriend")
             websocket.current.off("memberRequest")
             websocket.current.off("cancelMemberRequest")
             websocket.current.off("acceptMemberRequest")

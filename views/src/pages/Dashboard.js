@@ -13,8 +13,8 @@ const Dashboard = ({ websocket, user }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (Object.keys(user).length > 0 && user.current_projects.length > 0) {
-            const currents = user.current_projects.map(async (projectId) => {
+        if (Object.keys(user).length > 0 && user.projects.length > 0) {
+            const currents = user.projects.map(async (projectId) => {
                 return await axios
                     .get(`${process.env.REACT_APP_API_URL}api/project/${projectId}`)
                     .then(res => res.data)

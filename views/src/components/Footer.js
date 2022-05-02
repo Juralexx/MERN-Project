@@ -9,7 +9,7 @@ const Footer = () => {
                 <div className="footer-content">
                     <div className="footer-content-col">
                         <div className="footer-content-bloc">
-                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo-top.png`} />
+                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo-top.png`} alt="" />
                         </div>
                     </div>
                     <div className="footer-content-col">
@@ -97,7 +97,7 @@ const Footer = () => {
                     </div>
                     <div className="footer-bottom-right">
                         <div className="footer-logo">
-                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} />
+                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} alt="" />
                         </div>
                         <div>Redux Ltd. © 2022</div>
                     </div>

@@ -8,7 +8,7 @@
     
      input {
         display       : block;
-        height        : 46px;
+        height        : 44px;
         padding       : 8px 12px;
         color         : var(--input-text);
         background    : var(--input);
@@ -58,7 +58,7 @@
 .icon-input {
     position      : relative;
     width         : 100%;
-    height        : 46px;
+    height        : 44px;
     color         : var(--input-text);
     background    : var(--input);
     border-radius : var(--radius);
@@ -174,7 +174,7 @@
 
 .number-input {
     display       : block;
-    height        : 46px;
+    height        : 44px;
     max-width     : 100px;
     padding       : 8px;
     color         : var(--input-text);
@@ -203,7 +203,7 @@
 
     input {
         display       : block;
-        height        : 46px;
+        height        : 44px;
         width         : 100%;
         padding       : 8px 8px 8px 40px;
         color         : var(--input-text);
@@ -375,6 +375,7 @@
 .dropdown-input {
     position      : relative;
     min-width     : 200px;
+    height        : 44px;
     cursor        : pointer;
     background    : var(--input);
     border-radius : var(--radius);
@@ -399,18 +400,6 @@
 
         &::placeholder {
             color : var(--placeholder);
-        }
-
-        &:focus {
-            border : 2px solid var(--primary);
-        }
-    }
-
-    &:hover {
-        background : var(--content-x-light);
-
-        input {
-            background : var(--content-x-light);
         }
     }
 
@@ -439,6 +428,11 @@
             cursor        : pointer;
             color         : var(--text-secondary);
             border-radius : var(--radius);
+
+            &:hover {
+                color            : var(--primary);
+                background-color : var(--light);
+            }
         }
     }
 
@@ -501,7 +495,7 @@
     
     input {
         display       : block;
-        height        : 46px;
+        height        : 44px;
         width         : 100%;
         padding       : 8px;
         color         : var(--input-text);

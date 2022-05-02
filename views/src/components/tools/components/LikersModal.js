@@ -81,7 +81,7 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
                                 {liker.map((element, key) => {
                                     return (
                                         <div className="user" key={key} onMouseLeave={() => setHoveredCard(-1)}>
-                                            <HoverModal user={element} style={{ display: hoveredCard === key ? 'block' : 'none' }} />
+                                            <HoverModal user={element} open={hoveredCard === key} />
                                             <Link to={"/" + element.pseudo} className="flex" onMouseEnter={() => setHoveredCard(key)} onClick={() => setHoveredCard(key)} >
                                                 <MediumAvatar pic={element.picture} />
                                                 <p className="pseudo">{element.pseudo}</p>

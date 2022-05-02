@@ -12,7 +12,7 @@ const FooterLight = () => {
                     </div>
                     <div className="footer-bottom-right">
                         <div className="footer-logo">
-                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} />
+                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} alt="" />
                         </div>
                         <div>Redux Ltd. © 2022</div>
                     </div>

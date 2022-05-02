@@ -200,7 +200,7 @@ io.on("connect", (socket) => {
     })
 
     /***********************************************************************************/
-    /******************************** FRIEND REQUEST ***********************************/
+    /************************************* FRIEND **************************************/
 
     socket.on('friendRequest', ({ notification, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
@@ -234,6 +234,15 @@ io.on("connect", (socket) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('refuseFriendRequest', {
+                userId
+            })
+        }
+    })
+
+    socket.on('deleteFriend', ({ userId, receiverId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('deleteFriend', {
                 userId
             })
         }
