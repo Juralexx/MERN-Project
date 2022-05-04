@@ -9,8 +9,9 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 import { signUpErrors, signInErrors } from './../utils/error.utils.js'
 
-/**********************************************************************************************************************/
-/********************************************** CREATE UNIQUE TOKEN ***************************************************/
+/**
+ * Create unique token
+ */
 
 const maxAge = 3000 * 24 * 60 * 60 * 1000
 const createToken = (id) => {
@@ -19,8 +20,9 @@ const createToken = (id) => {
     })
 }
 
-/**********************************************************************************************************************/
-/****************************************************** SIGNUP ********************************************************/
+/**
+ * Signup
+ */
 
 export const signUp = async (req, res) => {
     const { pseudo, email, password } = req.body
@@ -74,8 +76,9 @@ export const signUp = async (req, res) => {
     }
 }
 
-/**********************************************************************************************************************/
-/****************************************************** SIGNIN ********************************************************/
+/**
+ * Signin
+ */
 
 export const signIn = async (req, res) => {
     const { email, password } = req.body
@@ -92,7 +95,11 @@ export const signIn = async (req, res) => {
     }
 }
 
-export const logOut = async (req, res) => {
+/**
+ * Logout
+ */
+
+export const logout = async (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 })
     res.redirect('/')
 }

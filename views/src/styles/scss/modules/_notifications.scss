@@ -3,11 +3,11 @@
     width         : auto;
     padding       : 10px 15px;
     position      : absolute;
+    top           : 55px;
+    right         : 5px;
     background    : var(--content-light);
     box-shadow    : var(--shadow-xl);
     border-radius : var(--radius);
-    top           : 55px;
-    right         : 5px;
     z-index       : 800;
     border        : 2px solid var(--x-light);
 
@@ -64,5 +64,20 @@
             height       : 30px;
             margin-right : 20px;
         }
+    }
+}
+
+/**
+* QUERIES
+*/
+
+@media(max-width: 576px) {
+    .notifications-menu {
+        position : fixed;
+        width    : 100vw;
+        height   : 100vh;
+        top      : 60px;
+        left     : 0;
+        right    : 0;
     }
 }

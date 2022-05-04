@@ -20,6 +20,7 @@
         }
 
         .sign-card {
+            position      : relative;
             width         : 100%;
             padding       : 30px;
             box-shadow    : var(--shadow-tiny);
@@ -87,6 +88,32 @@
     }
 }
 
+/**
+* QUERIES
+*/
+
+@media(max-width:576px) {
+    .sign-container {
+        width : 100vw;
+        .sign-container-inner {
+            justify-content : flex-start;
+            padding         : 50px 20px 0;
+            width           : 100vw;
+            .sign-card {
+                box-shadow : none;
+                padding    : 0;
+            }
+            .header-logo {
+                display : none;
+            }
+        }
+    }
+}
+
+/**
+* Password checker modal
+*/
+
 .password-checker {
     position      : absolute;
     top           : 108%;
@@ -129,14 +156,13 @@
     height        : 30px;
     margin-bottom : 10px;
 
-    .card {
+    .strength-item {
         height           : 14px;
-        width            : 23%;
-        border-radius    : var(--radius);
-        margin-right     : 5px;
-        background-color : var(--xx-light);
+        width            : 24%;
+        background-color : var(--light);
 
         &:nth-child(1) {
+            border-radius : var(--radius ) 0 0 var(--radius );
             &.weak {
                 background-color : var(--red);
             }
@@ -156,6 +182,7 @@
             }
         }
         &:nth-child(3) {
+            border-radius : 0 var(--radius ) var(--radius ) 0;
             &.strong {
                 background-color : var(--green);
             }

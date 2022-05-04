@@ -58,7 +58,7 @@ const Friends = ({ user, websocket }) => {
     }
 
     return (
-        <div className="profil_page">
+        <div className="profil_page col-12 col-lg-9 relative lg:!pl-7">
             <div className="search_header">
                 <h2>Contacts <span>{user?.friends?.length}</span></h2>
                 <IconInput className="is_start_icon" icon={<BiSearchAlt />} placeholder="Rechercher un contact..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchFriends} cross clean={() => setSearchQuery("")} />

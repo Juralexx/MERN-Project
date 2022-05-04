@@ -187,7 +187,7 @@ export const CheckBox = (props) => {
 }
 
 export const IconInput = (props) => {
-    const { type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, onClean } = props
+    const { type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, onClean, endIconClick } = props
     return (
         <div className={`${className ? "icon-input " + className : "icon-input"}`}>
             <input
@@ -210,7 +210,7 @@ export const IconInput = (props) => {
                 </div>
             }
             {endIcon &&
-                <div className="end-icon">
+                <div className="end-icon" onClick={endIconClick}>
                     {endIcon}
                 </div>
             }

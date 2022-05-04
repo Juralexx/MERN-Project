@@ -16,7 +16,6 @@ const SignUpForm = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [secured, setSecured] = useState(false)
     const [passwordShown, setPasswordShown] = useState(false)
     const [display, setDisplay] = useState(false)
     const passwordRef = useRef()
@@ -25,42 +24,6 @@ const SignUpForm = () => {
     const [error, setError] = useState("")
     const [isErr, setErr] = useState(null)
     const errorRef = useRef()
-    const [valid, setValid] = useState([])
-    const [strength, setStrength] = useState(0)
-
-    const [isLength, setLength] = useState(false)
-    const [isUppercase, setUppercase] = useState(false)
-    const [isLowercase, setLowercase] = useState(false)
-    const [isNumeric, setNumeric] = useState(false)
-    const [isChars, setChars] = useState(false)
-
-    useEffect(() => {
-        if (/[a-z]/.test(password)) { setLowercase(true) } else setLowercase(false)
-        if (/[A-Z]/.test(password)) { setUppercase(true) } else setUppercase(false)
-        if (/[0-9]/.test(password)) { setNumeric(true) } else setNumeric(false)
-        if (/[!@#$%^&*]/.test(password)) { setChars(true) } else setChars(false)
-        if (password.length >= 8 && password.length <= 20) { setLength(true) } else setLength(false)
-
-        if (isLength && isUppercase && isLowercase && isNumeric && isChars) {
-            setSecured(true)
-            setDisplay(false)
-        } else setSecured(false)
-    }, [password, isLength, isUppercase, isLowercase, isNumeric, isChars])
-
-    useEffect(() => {
-        if (onlyLettersNumbersAndDashes(pseudo) && pseudo.length >= 4 && pseudo.length <= 20) {
-            setValid((arr) => [...arr, "pseudo"])
-        } else setValid((arr) => arr.filter(element => element !== "pseudo"))
-        if (isEmailValid(email)) {
-            setValid((arr) => [...arr, "email"])
-        } else setValid((arr) => arr.filter(element => element !== "email"))
-        if (secured) {
-            setValid((arr) => [...arr, "password"])
-        } else setValid((arr) => arr.filter(element => element !== "password"))
-        if (password !== "" && password === confirmPassword) {
-            setValid((arr) => [...arr, "confirmed-password"])
-        } else setValid((arr) => arr.filter(element => element !== "confirmed-password"))
-    }, [pseudo, email, secured, password, confirmPassword])
 
     const handleRegister = async () => {
         if (!onlyLettersNumbersAndDashes(pseudo) || pseudo.length < 4 || pseudo.length > 20) {
@@ -111,9 +74,46 @@ const SignUpForm = () => {
         }
     }
 
+    const [secured, setSecured] = useState(false)
+    const [valid, setValid] = useState([])
+    const [strength, setStrength] = useState(0)
+    const [isLength, setLength] = useState(false)
+    const [isUppercase, setUppercase] = useState(false)
+    const [isLowercase, setLowercase] = useState(false)
+    const [isNumeric, setNumeric] = useState(false)
+    const [isChars, setChars] = useState(false)
+
+    useEffect(() => {
+        if (/[a-z]/.test(password)) { setLowercase(true) } else setLowercase(false)
+        if (/[A-Z]/.test(password)) { setUppercase(true) } else setUppercase(false)
+        if (/[0-9]/.test(password)) { setNumeric(true) } else setNumeric(false)
+        if (/[!@#$%^&*]/.test(password)) { setChars(true) } else setChars(false)
+        if (password.length >= 8 && password.length <= 20) { setLength(true) } else setLength(false)
+
+        if (isLength && isUppercase && isLowercase && isNumeric && isChars) {
+            setSecured(true)
+            setDisplay(false)
+        } else setSecured(false)
+    }, [password, isLength, isUppercase, isLowercase, isNumeric, isChars])
+
+    useEffect(() => {
+        if (onlyLettersNumbersAndDashes(pseudo) && pseudo.length >= 4 && pseudo.length <= 20) {
+            setValid((arr) => [...arr, "pseudo"])
+        } else setValid((arr) => arr.filter(element => element !== "pseudo"))
+        if (isEmailValid(email)) {
+            setValid((arr) => [...arr, "email"])
+        } else setValid((arr) => arr.filter(element => element !== "email"))
+        if (secured) {
+            setValid((arr) => [...arr, "password"])
+        } else setValid((arr) => arr.filter(element => element !== "password"))
+        if (password !== "" && password === confirmPassword) {
+            setValid((arr) => [...arr, "confirmed-password"])
+        } else setValid((arr) => arr.filter(element => element !== "confirmed-password"))
+    }, [pseudo, email, secured, password, confirmPassword])
+
     useEffect(() => {
         let count = []
-        let chars = (password).toString().match(/[!@#$%^&*]/g)
+        let chars = password.toString().match(/[!@#$%^&*]/g)
         let lowercase = password.match(/[a-z]/g)
         let uppercase = password.match(/[A-Z]/g)
         let numeric = password.match(/[0-9]/g)
@@ -151,34 +151,34 @@ const SignUpForm = () => {
 
     const addErrorClass = (name) => { if (isErr === name) { return "err" } else { return "" } }
     const validateParameter = (value) => { if (value) { return "is-valid" } else { return "not-valid" } }
-    const addSuccesClass = (value) => { if (valid.includes(value)) return "succes" }
+    const addSuccessClass = (value) => { if (valid.includes(value)) return "succes" }
     const returnSVG = (value) => { if (value) { return <IoCheckmarkCircleOutline /> } else return <IoCloseCircleOutline /> }
 
     return (
         !submitted ? (
             <>
                 <div className="relative mb-4">
-                    <DynamicInput type="text" text="Pseudo" placeholder=" " className={`${addErrorClass("pseudo")} ${addSuccesClass("pseudo")}`} onClick={() => setErr(null)} onChange={(e) => setPseudo(e.target.value)} value={pseudo} />
+                    <DynamicInput type="text" text="Pseudo" placeholder=" " className={`${addErrorClass("pseudo")} ${addSuccessClass("pseudo")}`} onClick={() => setErr(null)} onChange={(e) => setPseudo(e.target.value)} value={pseudo} />
                     {valid.includes("pseudo") && <BsCheckLg className="validated" />}
                     {isErr === "pseudo" && <ErrorCard useRef={errorRef} display={isErr === "pseudo"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
                 <div className="relative mb-4">
-                    <DynamicInput type="email" text="Email" placeholder=" " className={`${addErrorClass("email")} ${addSuccesClass("email")}`} onChange={(e) => setEmail(e.target.value)} value={email} />
+                    <DynamicInput type="email" text="Email" placeholder=" " className={`${addErrorClass("email")} ${addSuccessClass("email")}`} onChange={(e) => setEmail(e.target.value)} value={email} />
                     {valid.includes("email") && <BsCheckLg className="validated" />}
                     {isErr === "email" && <ErrorCard useRef={errorRef} display={isErr === "email"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
                 <div className="relative mb-4" ref={passwordRef}>
-                    <DynamicInput type={passwordShown ? "text" : "password"} text="Mot de passe" className={`${addErrorClass("password")} ${addSuccesClass("password")}`} placeholder=" " onClick={() => setDisplay(!display)} onChange={(e) => setPassword(e.target.value)} value={password} endIcon={passwordShown ? <AiFillEyeInvisible /> : <AiFillEye />} endIconClick={() => setPasswordShown(!passwordShown)} />
+                    <DynamicInput type={passwordShown ? "text" : "password"} text="Mot de passe" className={`${addErrorClass("password")} ${addSuccessClass("password")}`} placeholder=" " onClick={() => setDisplay(!display)} onChange={(e) => setPassword(e.target.value)} value={password} endIcon={passwordShown ? <AiFillEyeInvisible /> : <AiFillEye />} endIconClick={() => setPasswordShown(!passwordShown)} />
                     {valid.includes("password") && <BsCheckLg className="validated" />}
                     {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" clean={() => setErr("")} />}
                     {display &&
                         <div className="password-checker">
                             <div className="password-strength">
-                                <div className={`card ${addPasswordStrength()}`}></div>
-                                <div className={`card ${addPasswordStrength()}`}></div>
-                                <div className={`card ${addPasswordStrength()}`}></div>
+                                <div className={`strength-item ${addPasswordStrength()}`}></div>
+                                <div className={`strength-item ${addPasswordStrength()}`}></div>
+                                <div className={`strength-item ${addPasswordStrength()}`}></div>
                                 <div className={`strength ${addPasswordStrength()}`}>{addPasswordStrengthText()}</div>
                             </div>
                             <div className="checker-header">Votre mot de passe doit inclure : </div>
@@ -192,7 +192,7 @@ const SignUpForm = () => {
                 </div>
 
                 <div className="relative mb-4">
-                    <DynamicInput type="password" text="Confirmation mot de passe" className={`${addErrorClass("confirmed-password")} ${addSuccesClass("confirmed-password")}`} placeholder=" " onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} />
+                    <DynamicInput type="password" text="Confirmation mot de passe" className={`${addErrorClass("confirmed-password")} ${addSuccessClass("confirmed-password")}`} placeholder=" " onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} />
                     {valid.includes("confirmed-password") && <BsCheckLg className="validated" />}
                     {isErr === "confirmed-password" && <ErrorCard useRef={errorRef} display={isErr === "confirmed-password"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>

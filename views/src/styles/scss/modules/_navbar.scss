@@ -1,6 +1,6 @@
 header {
     position : relative;
-    width    : 100%;
+    width    : 100vw;
     height   : 60px;
     z-index  : 800;
 
@@ -8,14 +8,17 @@ header {
         position      : fixed;
         display       : flex;
         height        : 60px;
-        width         : 100%;
+        width         : 100vw;
         background    : var(--navbar);
         box-shadow    : var(--shadow-light);
         border-bottom : 2px solid var(--primary);
         z-index       : 800;
 
         .logo_container {
-            position        : relative;
+            position        : absolute;
+            top             : 0;
+            left            : 0;
+            height          : 100%;
             display         : flex;
             justify-content : space-between;
             align-items     : center;
@@ -27,7 +30,13 @@ header {
                 width       : auto;
                 height      : 100%;
 
-                img {
+                .logo-main {
+                    height      : 36px;
+                    width       : auto;
+                    margin-left : 4px;
+                }
+
+                .logo-small {
                     height      : 36px;
                     width       : auto;
                     margin-left : 4px;
@@ -35,18 +44,12 @@ header {
             }
         }
 
-        .nav_container {
-            left      : 50%;
-            transform : translateX(-50%);
-        }
-
         .nav_container-right {
             right : 50px;
         }
 
         .nav_container, .nav_container-right {
-            position        : absolute;
-            top             : 0;
+            position        : relative;
             display         : flex;
             justify-content : space-between;
             width           : auto;
@@ -56,8 +59,6 @@ header {
             .nav_ul {
                 position : relative;
                 display  : flex;
-                margin   : 0;
-                padding  : 0;
 
                 .nav_li {
                     display         : flex;
@@ -65,7 +66,6 @@ header {
                     justify-content : center;
                     align-items     : center;
                     height          : 100%;
-                    min-width       : 80px;
                     color           : var(--text);
                     cursor          : pointer;
 
@@ -112,12 +112,10 @@ header {
                         }
 
                         &:hover {
-
                             .nav_icon {
                                 color      : var(--primary);
                                 transition : 0.2s ease;
                             }
-
                             &:before {
                                 width            : 50px;
                                 transition       : 0.2s ease;
@@ -126,12 +124,10 @@ header {
                         }
 
                         &.active {
-
                             .nav_icon {
                                 color      : var(--primary);
                                 transition : 0.2s ease;
                             }
-
                             &:before {
                                 width            : 80%;
                                 transition       : 0.2s ease;
@@ -145,141 +141,116 @@ header {
     }
 }
 
-.mini_nav {
-    position     : absolute;
-    top          : 0;
-    right        : 0;
-    height       : 60px;
-    width        : auto;
-    display      : flex;
-    margin-right : 20px;
+/**
+* QUERIES
+*/
 
-    .mini_nav-ul {
-        position        : relative;
-        display         : flex;
-        justify-content : center;
-        align-items     : center;
-        margin          : 0;
-        padding         : 0;
-
-        .mini_nav-li {
-            position        : relative;
-            display         : flex;
-            height          : 100%;
-            min-width       : 43px;
-            justify-content : center;
-            align-items     : center;
-            cursor          : pointer;
-
-            .mini_nav-a {
-                position        : relative;
-                height          : 100%;
-                width           : 100%;
-                display         : flex;
-                flex-direction  : column;
-                align-items     : center;
-                justify-content : center;
-                padding         : 0 12px;
-                color           : var(--navbar-txt);
-                overflow        : hidden;
-
-                &:before {
-                    content          : '';
-                    position         : absolute;
-                    left             : 50%;
-                    transform        : translateX(-50%);
-                    bottom           : -7px;
-                    width            : 0;
-                    height           : 10px;
-                    border-radius    : 20px;
-                    background-color : transparent;
-                    transition       : 0.2s ease;
-                }
-
-                &:hover {
-
-                    .nav_icon {
-                        color      : var(--primary);
-                        transition : 0.2s ease;
-                    }
-
-                    &:before {
-                        width            : 50px;
-                        transition       : 0.2s ease;
-                        background-color : var(--primary);
-                    }
-                }
-
-                &.active {
-
-                    .nav_icon {
-                        color      : var(--primary);
-                        transition : 0.2s ease;
-                    }
-
-                    &:before {
-                        width            : 80%;
-                        transition       : 0.2s ease;
-                        background-color : var(--primary);
+@media(max-width: 1200px) {
+    header {
+        .navbar {
+            .nav_container {
+                .nav_ul {
+                    .nav_li {
+                        .nav_link {
+                            padding : 0 15px 0;
+                        }
                     }
                 }
             }
-
-            .mini_nav-button {
-                height          : 36px;
-                width           : 36px;
-                background      : var(--mini_nav-btn);
-                display         : flex;
-                align-items     : center;
-                justify-content : center;
-                border-radius   : 50px;
-
-                svg {
-                    width  : 15px;
-                    height : 15px;
-                    color  : var(--navbar-txt);
-                }
-
-                .mini-badge {
-                    position         : absolute;
-                    top              : 5px;
-                    right            : 0;
-                    display          : flex;
-                    align-items      : center;
-                    justify-content  : center;
-                    height           : 20px;
-                    width            : 20px;
-                    border-radius    : 20px;
-                    background-color : var(--primary);
-                    color            : white;
-                }
-
-                &:hover {
-                    background : var(--mini_nav-btn);
-                }
-            }
-
-            .mini_nav-avatar {
-                width         : 22px;
-                height        : 22px;
-                border-radius : 50%;
-                margin        : 0 auto 2px;
-            }
-
-            .mini_nav-pseudo {
-                line-height : 13px;
-                font-size   : 13px;
-            }
-        }
-
-        .bordered {
-            width         : 2px;
-            height        : 30px;
-            background    : var(--light-border);
-            margin : 0 10px;
         }
     }
 }
+
+@media(max-width: 768px) {
+    header {
+        .navbar {
+            .logo_container {
+                padding-left : 5px;
+            }
+            .nav_container {
+                position   : absolute;
+                top        : 60px;
+                left       : 0;
+                right      : 0;
+                height     : unset;
+                max-height : 0;
+                visibility : hidden;
+                width      : 100%;
+                background : var(--navbar);
+                box-shadow : var(--shadow-lg);
+                overflow: hidden;
+                &.open {
+                    max-height : 800px;
+                    visibility : visible;
+                }
+                .nav_ul {
+                    flex-direction : column;
+                    width          : 100%;
+                    padding        : 10px;
+                    .nav_li {
+                        justify-content : flex-start;
+                        height          : auto;
+                        padding         : 15px 0;
+                        .nav_link {
+                            flex-direction  : row;
+                            justify-content : flex-start;
+                            padding         : 0 15px 0;
+                            &:before {
+                                content : none;
+                            }
+                            &.active {
+                                &:before {
+                                    content : none;
+                                }
+                            }
+                            .nav_icon {
+                                margin-right  : 7px;
+                                margin-bottom : 0;
+                                font-size     : 16px;
+                            }
+                        }
+                    }
+                }
+            }
+            .nav_container-right {
+                margin-left  : auto;
+                margin-right : 0;
+                .nav_ul {
+                    .register {
+                        display : none;
+                    }
+                    .nav_li {
+                        .nav_link {
+                            padding:0 10px;
+                            &:before {
+                                content : none;
+                            }
+                            &.active {
+                                &:before {
+                                    content : none;
+                                }
+                            }
+                            .nav_icon {
+                                margin-bottom : 0;
+                                height        : 30px;
+                                width         : 44px;
+                                border-right  : 1px solid var(--light-border);
+                                padding        : 0 9px;
+                            }
+                            .nav_p {
+                                display : none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+* Connexion/register pages navbar
+*/
 
 .navbar_form_pages {
     position        : relative;
@@ -295,9 +266,16 @@ header {
         width         : auto;
         height        : 100%;
         padding-right : 25px;
-        border-right  : 2px solid white;
+        border-right  : 2px solid var(--light-border);
 
-        img {
+        .logo-main {
+            height      : 36px;
+            width       : auto;
+            margin-left : 4px;
+        }
+
+        .logo-small {
+            display     : none;
             height      : 36px;
             width       : auto;
             margin-left : 4px;
@@ -325,9 +303,9 @@ header {
 .move-back {
     position         : absolute;
     top              : 7px;
-    left             : 40px;
+    left             : 30px;
     padding          : 8px;
-    background-color : var(--content-light);
+    background-color : var(--x-light);
     border-radius    : 30px;
     cursor           : pointer;
 
@@ -344,5 +322,32 @@ header {
 
     &:hover {
         background-color : var(--content);
+    }
+}
+
+/**
+* QUERIES
+*/
+
+@media(max-width: 576px) {
+    .navbar_form_pages {
+        .logo_inner {
+            padding-right : 15px;
+            .logo-main {
+                display : none;
+            }
+            .logo-small {
+                display : block;
+            }
+        }
+        .right {
+            padding-left : 15px;
+            p {
+                font-size : 16px;
+            }
+        }
+    }
+    .move-back {
+        left : 10px;
     }
 }

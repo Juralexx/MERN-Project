@@ -33,7 +33,10 @@ const SignInForm = () => {
                         setError(res.data.errors.password)
                     }
                 }
-            } else window.location = '/'
+            } else {
+                localStorage.setItem("auth", true)
+                window.location = '/'
+            }
         }).catch((err) => console.log(err))
     }
 

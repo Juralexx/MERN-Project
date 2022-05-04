@@ -1,6 +1,6 @@
 import express from 'express'
 const userRoutes = express.Router()
-import { signIn, signUp, logOut } from '../controllers/auth.controller.js'
+import { signIn, signUp, logout } from '../controllers/auth.controller.js'
 import { getAllUsers, userInfo, updateUser, deleteUser, findUser } from '../controllers/user/user.controller.js'
 import { deleteUserBio, deleteUserName, deleteUserWork, deleteUserLastname, deleteUserPhone, deleteUserLocation, deleteUserWebsite, deleteUserLinkedin, deleteUserFacebook, deleteUserInstagram, deleteUserTwitter, deleteUserYoutube } from '../controllers/user/user.controller.delete.js'
 import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProfilPicture } from '../controllers/user/user.upload.controller.js'
@@ -12,7 +12,7 @@ const upload = multer()
 
 userRoutes.post('/register', signUp)
 userRoutes.post('/login', signIn)
-userRoutes.get('/logout', logOut)
+userRoutes.get('/logout', logout)
 userRoutes.put('/profil/edit', updateUser)
 
 userRoutes.get('/', getAllUsers)

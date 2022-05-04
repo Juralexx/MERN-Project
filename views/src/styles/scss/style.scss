@@ -5,6 +5,7 @@
 
 /* Tools */
 
+@import 'tools/classes';
 @import 'tools/accordion';
 @import 'tools/btn';
 @import 'tools/categories';
@@ -53,6 +54,7 @@
 /* Modules */
 
 @import 'modules/navbar';
+@import 'modules/mini-nav';
 @import 'modules/sidebar';
 @import 'modules/notifications';
 @import 'modules/settings-menu';

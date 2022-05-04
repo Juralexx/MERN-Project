@@ -23,25 +23,25 @@ function Paths({ websocket, onlineUsers, friends, user, uid }) {
                 <Route path="register" element={<Register uid={uid} />} />
 
                 <Route path="projects/*" element={
-                    <ProtectedRoute uid={uid}>
+                    <ProtectedRoute>
                         <Dashboard user={user} websocket={websocket} />
                     </ProtectedRoute>
                 } />
 
                 <Route path="add-project" element={
-                    <ProtectedRoute uid={uid}>
+                    <ProtectedRoute>
                         <AddProject user={user} websocket={websocket} />
                     </ProtectedRoute>
                 } />
 
                 <Route path="messenger" element={
-                    <ProtectedRoute uid={uid}>
+                    <ProtectedRoute>
                         <Messenger websocket={websocket} friends={friends} onlineUsers={onlineUsers} />
                     </ProtectedRoute>
                 } />
 
                 <Route path="profil/*" element={
-                    <ProtectedRoute uid={uid}>
+                    <ProtectedRoute>
                         <Profil user={user} websocket={websocket} />
                     </ProtectedRoute>
                 } />
@@ -49,7 +49,7 @@ function Paths({ websocket, onlineUsers, friends, user, uid }) {
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>
-    );
+    )
 }
 
 export default Paths;

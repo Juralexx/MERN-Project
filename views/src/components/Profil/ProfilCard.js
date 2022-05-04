@@ -9,19 +9,19 @@ import { FaUserShield } from "react-icons/fa";
 
 const ProfilCard = ({ user }) => {
     return (
-        <div className="profil_card">
-            <div className="profil_card-header">
-                <div className="pseudo_header">{user?.pseudo}</div>
+        <div className="col-12 col-lg-3 md:pr-5 secondary mb-8">
+            <div className="pb-5 border-b">
+                <div className="f-24 bold txt-prim mb-2">{user?.pseudo}</div>
                 <NavLink to="/profil/edit">
                     <StartIconButton icon={<MdOutlineEditNote />} text="Modifier mon profil" className="mb-2" />
                 </NavLink>
-                <p><MdOutlineCalendarToday />inscrit le {dateParser(user.createdAt)}</p>
-                <p><HiOutlineLocationMarker /> {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})</p>
-                <p><FaUserShield /> {user?.work}</p>
+                <p className="flex items-center mb-1"><MdOutlineCalendarToday className="mr-2 primary" />inscrit le {dateParser(user.createdAt)}</p>
+                <p className="flex items-center mb-1"><HiOutlineLocationMarker className="mr-2 primary" /> {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})</p>
+                <p className="flex items-center"><FaUserShield className="mr-2 primary" /> {user?.work}</p>
             </div>
-            <div className="profil_card-body">
+            <div className="pt-5">
                 <div className="three_lines">{user?.bio}</div>
-                <div className="networks">
+                <div className="networks pt-5">
                     {user?.networks?.map((e, i) => {
                         return (
                             <div className="networks-item" key={i}>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -18,17 +18,31 @@ import { IoClose } from 'react-icons/io5';
 import EditPassword from './EditPassword';
 
 const Edit = ({ user }) => {
-    const [name, setName] = useState(user?.name)
+    const [name, setName] = useState(user.name)
     const [lastname, setLastname] = useState(user.lastname)
     const [work, setWork] = useState(user.work)
     const [bio, setBio] = useState(user.bio)
     const [phone, setPhone] = useState(user.phone)
-    const [networks, setNetworks] = useState(user?.networks || [])
+    const [networks, setNetworks] = useState(user.networks)
+    const [password, setPassword] = useState(user.password)
+    const [newPassword, setNewPassword] = useState()
+    const [confirmedNewPassword, setConfirmedNewPassword] = useState()
     const [error, setError] = useState(null)
     const [isErr, setErr] = useState(null)
     const checkErr = (name) => { if (isErr === name) return "err" }
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user) {
+            setName(user.name)
+            setLastname(user.lastname)
+            setWork(user.work)
+            setBio(user.bio)
+            setPhone(user.phone)
+            setNetworks(user.networks)
+        }
+    }, [user])
 
     const [location, setLocation] = useState(user.location?.COM_NOM)
     const [searchQuery, setSearchQuery] = useState(user.location?.COM_NOM || "")
@@ -124,150 +138,161 @@ const Edit = ({ user }) => {
 
     return (
         <>
-            <div className="content_container">
-                <div className="simple_nav !my-4">
-                    <NavLink to="/profil/edit" className="w-1/2">Mon compte</NavLink>
-                    <NavLink to="password" className="w-1/2">Mot de passe</NavLink>
-                </div>
-                <Routes>
-                    <Route index element={
-                        <>
-                            <div className="profil_flex">
-                                <div className="profil_flex-left">
-                                    <h3>Informations générales</h3>
-                                </div>
-                                <div className="profil_flex-right">
-                                    <div className="profil_info_flex">
-                                        <div className="profil_info">
-                                            <p className="title_info">Pseudo</p>
-                                            <div className="info flex items-center"><MdLockOutline className="mr-1" />{user.pseudo}</div>
-                                        </div>
-                                        <div className="profil_info">
-                                            <p className="title_info">Métier</p>
-                                            <ClassicInput className={`full ${checkErr("work")}`} type="text" placeholder="Métier..." onChange={e => setWork(e.target.value)} value={work} />
-                                            {isErr === "work" && <ErrorCard display={isErr === "work"} text={error} clean={() => setErr("")} />}
-                                        </div>
+            <div className="content_nav !my-4">
+                <NavLink to="/profil/edit">Mon compte</NavLink>
+                <NavLink to="password">Mot de passe</NavLink>
+            </div>
+            <Routes>
+                <Route index element={
+                    <>
+                        <div className="row py-6 border-b">
+                            <div className="col-12 col-lg-3 mb-5">
+                                <h3 className="txt-ter">Informations générales</h3>
+                            </div>
+                            <div className="col-12 col-lg-9">
+                                <div className="row">
+                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
+                                        <p className="txt-ter mb-1">Pseudo</p>
+                                        <div className="flex items-center"><MdLockOutline className="mr-1" />{user.pseudo}</div>
                                     </div>
-                                    <div className="profil_info_flex">
-                                        <div className="profil_info">
-                                            <p className="title_info">Prénom</p>
-                                            <ClassicInput className={`full ${checkErr("name")}`} type="text" placeholder="Prénom..." onChange={e => setName(e.target.value)} value={name} />
-                                            {isErr === "name" && <ErrorCard display={isErr === "name"} text={error} clean={() => setErr("")} />}
+                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
+                                        <p className="txt-ter mb-1">Métier</p>
+                                        <ClassicInput className={`full ${checkErr("work")}`} type="text" placeholder="Métier..." onChange={e => setWork(e.target.value)} value={work} />
+                                        {isErr === "work" && <ErrorCard display={isErr === "work"} text={error} clean={() => setErr("")} />}
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
+                                        <p className="txt-ter mb-1">Prénom</p>
+                                        <ClassicInput className={`full ${checkErr("name")}`} type="text" placeholder="Prénom..." onChange={e => setName(e.target.value)} value={name} />
+                                        {isErr === "name" && <ErrorCard display={isErr === "name"} text={error} clean={() => setErr("")} />}
 
-                                        </div>
-                                        <div className="profil_info">
-                                            <p className="title_info">Nom</p>
-                                            <ClassicInput className={`full ${checkErr("lastname")}`} type="text" placeholder="Nom..." onChange={e => setLastname(e.target.value)} value={lastname} />
-                                            {isErr === "lastname" && <ErrorCard display={isErr === "lastname"} text={error} clean={() => setErr("")} />}
+                                    </div>
+                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
+                                        <p className="txt-ter mb-1">Nom</p>
+                                        <ClassicInput className={`full ${checkErr("lastname")}`} type="text" placeholder="Nom..." onChange={e => setLastname(e.target.value)} value={lastname} />
+                                        {isErr === "lastname" && <ErrorCard display={isErr === "lastname"} text={error} clean={() => setErr("")} />}
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="profil_flex">
-                                <div className="profil_flex-left">
-                                    <h3>Biographie</h3>
-                                </div>
-                                <div className="profil_flex-right px-[10px]">
-                                    <p className="title_info">Biographie</p>
-                                    <Textarea className={`full ${checkErr("bio")}`} type="text" placeholder="Biographie..." onChange={e => setBio(e.target.value)} value={bio} />
-                                    {isErr === "bio" && <ErrorCard display={isErr === "bio"} text={error} clean={() => setErr("")} />}
-                                </div>
+                        </div>
+                        <div className="row py-6 border-b">
+                            <div className="col-12 col-lg-3 mb-5">
+                                <h3 className="txt-ter">Biographie</h3>
                             </div>
-                            <div className="profil_flex">
-                                <div className="profil_flex-left">
-                                    <h3>Localisation</h3>
-                                </div>
-                                <div className="profil_flex-right">
-                                    <div className="profil_info_flex">
-                                        <div className="profil_info">
-                                            <p className="title_info">Ville</p>
-                                            <ClassicInput className={`full ${checkErr("location")}`} type="text" placeholder="Rechercher une localité..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchLocation} cross onClean={clean} />
-                                            {isErr === "location" && <ErrorCard display={isErr === "location"} text={error} clean={() => setErr("")} />}
+                            <div className="col-12 col-lg-9 lg:px-2">
+                                <p className="txt-ter mb-1">Biographie</p>
+                                <Textarea className={`full ${checkErr("bio")}`} type="text" placeholder="Biographie..." onChange={e => setBio(e.target.value)} value={bio} />
+                                {isErr === "bio" && <ErrorCard display={isErr === "bio"} text={error} clean={() => setErr("")} />}
+                            </div>
+                        </div>
+                        <div className="row py-6 border-b">
+                            <div className="col-12 col-lg-3 mb-5">
+                                <h3 className="txt-ter">Localisation</h3>
+                            </div>
+                            <div className="col-12 col-lg-9">
+                                <div className="row">
+                                    <div className="col col-lg-6 mb-5 lg:px-2">
+                                        <p className="txt-ter mb-1">Ville</p>
+                                        <ClassicInput className={`full ${checkErr("location")}`} type="text" placeholder="Rechercher une localité..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchLocation} cross onClean={clean} />
+                                        {isErr === "location" && <ErrorCard display={isErr === "location"} text={error} clean={() => setErr("")} />}
 
-                                            <div tabIndex="0" className="auto-complete-container full custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
-                                                {!isEmpty && display && isResponse &&
-                                                    locationsFound.map((element, key) => {
-                                                        return (
-                                                            <div className="auto-complete-item" onClick={() => setSelect(element, `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)} key={key}>
-                                                                {`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                                {isLoading && isEmpty &&
-                                                    <SmallLoader />
-                                                }
-                                                {searchQuery.length > 2 && isEmpty && !isLoading &&
-                                                    <div className="no-result">
-                                                        <div><BsInboxFill /></div>
-                                                        <div>Aucun resultat ne correspond à votre recherche...</div>
-                                                    </div>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="profil_flex">
-                                <div className="profil_flex-left">
-                                    <h3>Coordonnées</h3>
-                                </div>
-                                <div className="profil_flex-right">
-                                    <div className="profil_info_flex">
-                                        <div className="profil_info">
-                                            <p className="title_info">Email</p>
-                                            <div className="info email">
-                                                <div className="flex items-center"><MdLockOutline />{user.email}</div>
-                                                <TextButton text="Modifier" />
-                                            </div>
-                                        </div>
-                                        <div className="profil_info">
-                                            <p className="title_info">Tél.</p>
-                                            <ClassicInput className={`full ${checkErr("phone")}`} type="text" placeholder="Téléphone..." onChange={e => setPhone(e.target.value)} value={phone} />
-                                            {isErr === "phone" && <ErrorCard display={isErr === "phone"} text={error} clean={() => setErr("")} />}
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="profil_flex">
-                                <div className="profil_flex-left">
-                                    <h3>Réseaux sociaux et sites internet</h3>
-                                </div>
-                                <div className="profil_flex-right">
-                                    <div className="profil_info_flex">
-                                        <div className="profil_info">
-                                            <p className="title_info">Réseaux sociaux et sites internet</p>
-                                            <div className="flex">
-                                                <ClassicInput className={`w-full !max-w-full mb-4 ${checkErr("networks")}`} inputClassName="w-full" type="text" placeholder="https://" value={network} onChange={e => setNetwork(e.target.value)} />
-                                                <Button className="!h-[46px] ml-2" text="Ajouter" onClick={handleNetwork} />
-                                            </div>
-                                            {isErr === "networks" && <ErrorCard display={isErr === "networks"} text={error} clean={() => setErr("")} />}
-                                            {networks.length > 0 &&
-                                                networks.map((element, key) => {
+                                        <div tabIndex="0" className="auto-complete-container full custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
+                                            {!isEmpty && display && isResponse &&
+                                                locationsFound.map((element, key) => {
                                                     return (
-                                                        <div className="network" key={key}>
-                                                            <div className="flex items-center w-[80%] relative">
-                                                                {returnNetworkSVG(element.type)}
-                                                                <a href={element.url} rel="noreferrer" target="_blank" className="ml-4">{element.url}</a>
-                                                            </div>
-                                                            <IoClose className='cursor-pointer' onClick={() => deleteItem(key)} />
+                                                        <div className="auto-complete-item" onClick={() => setSelect(element, `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)} key={key}>
+                                                            {`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
                                                         </div>
                                                     )
                                                 })
+                                            }
+                                            {isLoading && isEmpty &&
+                                                <SmallLoader />
+                                            }
+                                            {searchQuery.length > 2 && isEmpty && !isLoading &&
+                                                <div className="no-result">
+                                                    <div><BsInboxFill /></div>
+                                                    <div>Aucun resultat ne correspond à votre recherche...</div>
+                                                </div>
                                             }
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </>
-                    } />
-                    <Route path="password" element={
-                        <EditPassword user={user} />
-                    } />
-                </Routes>
-            </div>
+                        </div>
+                        <div className="row py-6 border-b">
+                            <div className="col-12 col-lg-3 mb-5">
+                                <h3 className="txt-ter">Coordonnées</h3>
+                            </div>
+                            <div className="col-12 col-lg-9">
+                                <div className="row">
+                                    <div className="col-12 col-sm-6 mb-5 lg:px-2">
+                                        <p className="txt-ter mb-1">Email</p>
+                                        <div className="secured-email">
+                                            <div className="flex items-center"><MdLockOutline />{user.email}</div>
+                                            <TextButton text="Modifier" />
+                                        </div>
+                                    </div>
+                                    <div className="col-12 col-sm-6 mb-5 lg:px-2">
+                                        <p className="txt-ter mb-1">Tél.</p>
+                                        <ClassicInput className={`full ${checkErr("phone")}`} type="text" placeholder="Téléphone..." onChange={e => setPhone(e.target.value)} value={phone} />
+                                        {isErr === "phone" && <ErrorCard display={isErr === "phone"} text={error} clean={() => setErr("")} />}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row py-6">
+                            <div className="col-12 col-lg-3 mb-5">
+                                <h3 className="txt-ter">Réseaux sociaux et sites internet</h3>
+                            </div>
+                            <div className="col-12 col-lg-9">
+                                <div className="row">
+                                    <div className="col-12 col-lg-6 mb-5 lg:px-2">
+                                        <p className="txt-ter mb-1">Réseaux sociaux et sites internet</p>
+                                        <div className="flex">
+                                            <ClassicInput className={`w-full !max-w-full mb-4 ${checkErr("networks")}`} inputClassName="w-full" type="text" placeholder="https://" value={network} onChange={e => setNetwork(e.target.value)} />
+                                            <Button className="!h-[46px] ml-2" text="Ajouter" onClick={handleNetwork} />
+                                        </div>
+                                        {isErr === "networks" && <ErrorCard display={isErr === "networks"} text={error} clean={() => setErr("")} />}
+                                        {networks && networks.length > 0 &&
+                                            networks.map((element, key) => {
+                                                return (
+                                                    <div className="network" key={key}>
+                                                        <div className="flex items-center w-[80%] relative">
+                                                            {returnNetworkSVG(element.type)}
+                                                            <a href={element.url} rel="noreferrer" target="_blank" className="ml-4">{element.url}</a>
+                                                        </div>
+                                                        <IoClose className='cursor-pointer' onClick={() => deleteItem(key)} />
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                } />
+                <Route path="password" element={
+                    <EditPassword
+                        user={user}
+                        password={password}
+                        setPassword={setPassword}
+                        newPassword={newPassword}
+                        setNewPassword={setNewPassword}
+                        confirmedNewPassword={confirmedNewPassword}
+                        setConfirmedNewPassword={setConfirmedNewPassword}
+                        isErr={isErr}
+                        setErr={setErr}
+                        error={error}
+                        checkErr={checkErr}
+
+                    />
+                } />
+            </Routes>
             <div id="back-actions">
                 <Link className="no-decoration" to="/profil/about"><TextButton text="Annuler" /></Link>
                 <Button text="Enregistrer" onClick={handleUpdate} />

@@ -1,16 +1,36 @@
 .card {
     position         : relative;
+    width            : 100%;
     color            : var(--text);
     cursor           : pointer;
     background-color : var(--content-light);
     border-radius    : var(--radius);
-    border           : 1px solid transparent;
-    box-shadow      : var(--shadow-tiny);
+    border           : 1px solid var(--light-border);
 
     .card-img {
         height        : 160px;
         width         : 100%;
         border-radius : var(--radius) var(--radius) 0 0;
+    }
+
+    .state {
+        position      : absolute;
+        top           : 10px;
+        left         : 10px;
+        padding       : 2px 12px;
+        border-radius : var(--radius);
+        font-size     : 14px;
+        color         : white;
+
+        &.orange {
+            background : var(--orange);
+        }
+        &.blue {
+            background : var(--light-blue);
+        }
+        &.green {
+            background : var(--green);
+        }
     }
 
     .card-body {
@@ -22,18 +42,6 @@
             padding-bottom : 10px;
             border-bottom  : 1px solid var(--light-border);
 
-            h3 {
-                text-overflow      : ellipsis;
-                overflow           : hidden;
-                width              : 100%;
-                line-height        : 30px;
-                font-size          : 18px;
-                display            : -webkit-box;
-                -webkit-line-clamp : 1;
-                -webkit-box-orient : vertical;
-                margin-bottom      : 6px;
-            }
-
             p {
                 display       : flex;
                 align-items   : center;
@@ -43,41 +51,6 @@
 
                 svg {
                     margin-right : 5px;
-                }
-            }
-        }
-
-        .card-head {
-            display         : flex;
-            justify-content : space-between;
-            align-items     : center;
-            padding         : 8px 0;
-
-            .contributors {
-                display     : flex;
-                align-items : center;
-
-                p {
-                    margin-left : 6px;
-                }
-            }
-
-            .state {
-                padding       : 2px 12px;
-                border-radius : var(--radius);
-                font-size     : 14px;
-
-                &.orange {
-                    background : rgba(var(--orange-rgb), 0.2);
-                    color      : var(--orange);
-                }
-                &.blue {
-                    background : rgba(var(--light-blue-rgb), 0.2);
-                    color      : var(--light-blue);
-                }
-                &.green {
-                    background : rgba(var(--green-rgb), 0.2);
-                    color      : var(--green);
                 }
             }
         }
@@ -98,11 +71,8 @@
         }
 
         .card-footer {
-            display : flex;
-            width   : 100%;
 
             .footer-left {
-                width : 70%;
 
                 .action-btn {
                     position    : relative;
@@ -149,9 +119,6 @@
             }
 
             .footer-right {
-                width       : 30%;
-                display     : flex;
-                padding-top : 8px;
 
                 .footer-name {
                     color : var(--text-secondary);

@@ -20,7 +20,7 @@ const Profil = ({ user, websocket }) => {
                     <div className="profil_cover_img" style={coverPicture(user.cover_picture)}>
                         <UploadCoverImg user={user} />
                     </div>
-                    <div className="box">
+                    <div className="container relative">
                         <div className="avatar" style={avatar(user.picture)}>
                             <UploadImg user={user} />
                         </div>
@@ -32,35 +32,37 @@ const Profil = ({ user, websocket }) => {
                         </div>
                     </div>
                 </div>
-                <div className="content_box profil_content">
-                    <Routes>
-                        <Route index element={
-                            <>
-                                <ProfilCard user={user} />
-                            </>
-                        } />
-                        <Route path="about" element={
-                            <>
-                                <ProfilCard user={user} />
-                                <About user={user} />
-                            </>
-                        } />
-                        <Route path="projects/*" element={
-                            <>
-                                <ProfilCard user={user} />
-                                <Projects user={user} websocket={websocket} />
-                            </>
-                        } />
-                        <Route path="contacts" element={
-                            <>
-                                <ProfilCard user={user} />
-                                <Friends user={user} websocket={websocket} />
-                            </>
-                        } />
-                        <Route path="edit" element={
-                            <Edit user={user} />
-                        } />
-                    </Routes>
+                <div className="container mt-8 pb-[100px]">
+                    {user &&
+                        <Routes>
+                            <Route index element={
+                                <div className="row">
+                                    <ProfilCard user={user} />
+                                </div>
+                            } />
+                            <Route path="about" element={
+                                <div className="row">
+                                    <ProfilCard user={user} />
+                                    <About user={user} />
+                                </div>
+                            } />
+                            <Route path="projects/*" element={
+                                <div className="row">
+                                    <ProfilCard user={user} />
+                                    <Projects user={user} websocket={websocket} />
+                                </div>
+                            } />
+                            <Route path="contacts" element={
+                                <div className="row">
+                                    <ProfilCard user={user} />
+                                    <Friends user={user} websocket={websocket} />
+                                </div>
+                            } />
+                            <Route path="edit/*" element={
+                                <Edit user={user} />
+                            } />
+                        </Routes>
+                    }
                 </div>
             </div>
             <Footer />

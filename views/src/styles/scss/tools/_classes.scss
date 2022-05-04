@@ -1,0 +1,36 @@
+.primary {
+    color : var(--primary);
+}
+
+.txt-prim {
+    color : var(--text);
+}
+
+.txt-sec {
+    color : var(--text-secondary);
+}
+
+.txt-ter {
+    color : var(--text-tertiary);
+}
+
+.border-b {
+    border-bottom : 1px solid var(--light-border);
+}
+.border-t {
+    border-top : 1px solid var(--light-border);
+}
+.border-l {
+    border-left : 1px solid var(--light-border);
+}
+.border-r {
+    border-right : 1px solid var(--light-border);
+}
+
+.bold {
+    font-weight : 600;
+}
+
+.f-24 {
+    font-size : 24px;
+}

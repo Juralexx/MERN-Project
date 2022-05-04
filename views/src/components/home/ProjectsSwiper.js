@@ -33,13 +33,27 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                 <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
             </div>
             <Swiper
-                slidesPerView={3}
-                spaceBetween={20}
                 keyboard={{ enabled: true }}
                 mousewheel={true}
                 modules={[Navigation, Keyboard, Mousewheel]}
                 onSwiper={setSwiper}
                 navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
+                slidesPerView={1}
+                spaceBetween={20}
+                breakpoints={{
+                    576: {
+                        spaceBetween: 20,
+                        slidesPerView: 2,
+                    },
+                    992: {
+                        spaceBetween: 20,
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        spaceBetween: 20,
+                        slidesPerView: 4,
+                    },
+                }}
             >
                 {!isLoading ? (
                     projects.map((element, key) => {

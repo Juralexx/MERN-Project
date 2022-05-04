@@ -14,31 +14,26 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal }
     return (
         <div className="card">
             <div className="card-img" style={projectPicture(`${process.env.REACT_APP_API_URL}files/img/paysage-3.jpg`)}></div>
+            <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
             <FavoriteButton project={element} />
             <div className="card-body">
                 <Link to={"/project/" + element.URLID + "/" + element.URL}>
                     <div className="card-title">
-                        <h3>{element.title}</h3>
+                        <h4 className="one_line mb-2 !leading-6">{element.title}</h4>
                         <p><FaMapMarkerAlt />{element.location + ", " + element.department}</p>
                         <p><IoAlbums />{element.category}</p>
                     </div>
                 </Link>
-                <div className="card-head">
-                    {element.works.length > 0 &&
-                        <div className="contributors"><BsFillPeopleFill /><p>{element.works.length}</p></div>
-                    }
-                    <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
-                </div>
-                <div className="description"><p>{element.description}</p></div>
-                <div className="card-footer">
-                    <div className="footer-left">
+                <div className="three_lines text-sec py-2 mb-2 !leading-6 h-20"><p>{element.description}</p></div>
+                <div className="card-footer flex col-12">
+                    <div className="footer-left col-8">
                         <LikersButton project={element} onClick={() => { setProject(element); setOpenLikersModal(true) }} />
                         <FollowersButton project={element} onClick={() => { setProject(element); setOpenFollowersModal(true) }} />
                     </div>
-                    <div className="footer-right">
+                    <div className="footer-right col-4 flex pt-2">
                         <div className="footer-name">
-                            <p className="name">par <Link to={`/${element.posterPseudo}`}>{element.posterPseudo}</Link></p>
-                            <p className="date">le {dateParser(element.createdAt)}</p>
+                            <p className="name"><Link to={`/${element.posterPseudo}`}>{element.posterPseudo}</Link></p>
+                            <p className="date">{dateParser(element.createdAt)}</p>
                         </div>
                     </div>
                 </div>

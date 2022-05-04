@@ -1,109 +1,8 @@
 .profil_container {
 
-    h1 {
-        font-size : 30px;
-    }
-
     .header {
         padding-bottom : 20px;
         border-bottom  : 1px solid var(--light-border);
-    }
-
-    .profil_flex {
-        display       : flex;
-        padding       : 20px 0;
-        border-bottom : 1px solid var(--light-border);
-
-        &:last-child {
-            border : none;
-        }
-
-        .profil_flex-left {
-            width : 30%;
-
-            h3 {
-                font-size : 18px;
-                color     : var(--text-secondary);
-            }
-        }
-
-        .profil_flex-right {
-            width : 70%;
-
-            .profil_info_flex {
-                display        : flex;
-                padding-bottom : 20px;
-
-                .profil_info {
-                    width   : 50%;
-                    padding : 0 10px;
-                }
-            }
-    
-            .title_info {
-                color         : var(--text-tertiary);
-                margin-bottom : 5px;
-            }
-
-            .info {
-                font-size : 16px;
-
-                &.email {
-                    display         : flex;
-                    align-items     : center;
-                    justify-content : space-between;
-                    border          : 1px solid var(--light-border);
-                    padding         : 5px 10px;
-                    border-radius   : var(--radius);
-                    svg {
-                        margin-right : 5px;
-                    }
-                }
-            }
-        }
-    }
-
-    .profil_content {
-        display        : flex;
-        padding-bottom : 100px;
-
-        .profil_card {
-            width         : 300px;
-            flex          : 0 0 300px;
-            padding-right : 20px;
-            color         : var(--text-secondary);
-
-            .profil_card-header {
-                padding-bottom : 20px;
-                border-bottom  : 1px solid var(--light-border);
-
-                .pseudo_header {
-                    font-size     : 24px;
-                    font-weight   : 600;
-                    color         : var(--text);
-                    margin-bottom : 10px;
-                }
-    
-                p {
-                    display     : flex;
-                    align-items : center;
-                    line-height : 24px;
-    
-                    svg {
-                        margin-right : 5px;
-                        color        : var(--primary);
-                    }
-                }
-            }
-
-            .profil_card-body {
-                padding-top : 20px;
-
-                .networks {
-                    padding-top : 20px;
-                }
-            }
-        }
     }
 
     .networks-item {
@@ -155,9 +54,6 @@
     }
 
     .profil_page {
-        position     : relative;
-        width        : 100%;
-        padding-left : 20px;
         
         .search_header {
             position        : relative;
@@ -232,5 +128,17 @@
                 }
             }
         }
+    }
+}
+
+.secured-email {
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
+    border          : 1px solid var(--light-border);
+    padding         : 5px 10px;
+    border-radius   : var(--radius);
+    svg {
+        margin-right : 5px;
     }
 }

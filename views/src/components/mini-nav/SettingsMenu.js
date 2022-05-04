@@ -23,9 +23,12 @@ const SettingsMenu = ({ open }) => {
             url: `${process.env.REACT_APP_API_URL}api/user/logout`,
             withCredentials: true,
         })
-            .then(() => removeCookie('jwt'))
-            .catch((err) => console.log(err))
-        window.location = '/'
+            .then(() => {
+                removeCookie('jwt')
+                localStorage.removeItem("auth")
+            })
+            .catch(err => console.log(err))
+        window.location.pathname = '/'
     }
 
     return (

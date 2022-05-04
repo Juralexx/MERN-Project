@@ -1,11 +1,16 @@
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ uid, children }) => {
-    const navigate = useNavigate()
+const ProtectedRoute = ({ children }) => {
+    const localStorageAuth = localStorage.getItem("auth")
 
-    if (!uid) navigate("/")
-    return children ? children : <Outlet />
+    return (
+        localStorageAuth ? (
+            children ? children : <Outlet />
+        ) : (
+            window.location.pathname = '/'
+        )
+    )
 }
 
 export default ProtectedRoute

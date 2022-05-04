@@ -4,12 +4,12 @@ import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from '../project/projects/functions'
 import { DropdownInput, IconInput } from '../tools/components/Inputs'
 import { SmallLoader } from '../tools/components/Loader'
-import SmallCard from '../tools/components/SmallCard'
 import { BiSearchAlt } from 'react-icons/bi'
 import { AiFillStar } from 'react-icons/ai'
 import { IoHeart } from 'react-icons/io5'
 import { MdInsertChart } from 'react-icons/md'
 import { MdOutlineBookmark } from 'react-icons/md'
+import Card from '../tools/components/Card'
 
 const Projects = ({ user, websocket }) => {
     const [projects, setProjects] = useState([])
@@ -66,7 +66,7 @@ const Projects = ({ user, websocket }) => {
     }, [user.projects, location.pathname])
 
     return (
-        <div className="profil_page">
+        <div className="profil_page col-12 col-lg-9 relative">
             <div className="content_nav !mb-4">
                 <NavLink to="/profil/projects"><MdInsertChart />Projets<span>{user.projects?.length}</span></NavLink>
                 <NavLink to="favorites"><AiFillStar />Favoris<span>{user.favorites?.length}</span></NavLink>
@@ -84,20 +84,22 @@ const Projects = ({ user, websocket }) => {
                     <div onClick={() => sortByDone(projects, setProjectsToDisplay, setFilter)}>Terminé</div>
                 </DropdownInput>
             </div>
-            <div className="profil_page-body">
+            <div className="profil_page-body row">
                 <Routes>
                     <Route index element={
                         !isLoading ? (
                             projects.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <SmallCard
-                                            key={key}
-                                            element={element}
-                                            user={user}
-                                            websocket={websocket}
-                                            style={{ display: search ? (isResults.includes(element) ? "block" : "none") : "block" }}
-                                        />
+                                        <div className="col-6 col-md-4">
+                                            <Card
+                                                key={key}
+                                                element={element}
+                                                user={user}
+                                                websocket={websocket}
+                                                style={{ display: search ? (isResults.includes(element) ? "block" : "none") : "block" }}
+                                            />
+                                        </div>
                                     )
                                 })
                             ) : (
@@ -117,7 +119,7 @@ const Projects = ({ user, websocket }) => {
                             projects.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <SmallCard
+                                        <Card
                                             key={key}
                                             element={element}
                                             user={user}
@@ -143,7 +145,7 @@ const Projects = ({ user, websocket }) => {
                             projects.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <SmallCard
+                                        <Card
                                             key={key}
                                             element={element}
                                             user={user}
@@ -169,7 +171,7 @@ const Projects = ({ user, websocket }) => {
                             projects.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <SmallCard
+                                        <Card
                                             key={key}
                                             element={element}
                                             user={user}

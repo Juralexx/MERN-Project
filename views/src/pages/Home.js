@@ -83,7 +83,7 @@ const Home = ({ websocket, user }) => {
                             setDate={setDate}
                         />
                         <div className="home-body">
-                            <div className="content_box">
+                            <div className="container">
                                 <CategoriesSwiper />
                                 <div className="swiper-container">
                                     <div className="swiper-header">

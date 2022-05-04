@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MiniNav from "./mini-nav/MiniNav";
 import { AiOutlineHome } from 'react-icons/ai'
-import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
-import { IoPersonCircleSharp } from 'react-icons/io5'
+import { MdOutlineMessage, MdOutlineScreenSearchDesktop, MdDehaze } from 'react-icons/md'
+import { BiUser } from 'react-icons/bi'
 import { RiLoginCircleLine } from 'react-icons/ri'
 import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
@@ -11,6 +11,7 @@ import { ImArrowLeft2 } from 'react-icons/im'
 const Navbar = ({ websocket, user, uid }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
     const location = useLocation()
+    const [toggled, setToggled] = useState(false)
 
     return (
         location.pathname !== "/add-project" &&
@@ -21,14 +22,15 @@ const Navbar = ({ websocket, user, uid }) => {
                         <div className="logo_container">
                             <Link to="/">
                                 <div className="logo_inner">
-                                    <img src="/img/logo-top.png" alt="" />
+                                    <img className="logo-main sm:block hidden" src="/img/logo-top.png" alt="" />
+                                    <img className="logo-small block sm:hidden" src="/img/logo.png" alt="" />
                                 </div>
                             </Link>
                         </div>
 
                         {uid ? (
                             <>
-                                <div className="nav_container">
+                                <div className={`${toggled ? "nav_container open" : "nav_container"}`}>
                                     <ul className="nav_ul">
                                         <li className="nav_li">
                                             <NavLink to="/" className={isThisActive}>
@@ -56,11 +58,14 @@ const Navbar = ({ websocket, user, uid }) => {
                                         </li>
                                     </ul>
                                 </div>
-                                <MiniNav user={user} websocket={websocket} />
+                                <div className="mini_nav_container">
+                                    <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />
+                                    <MiniNav user={user} websocket={websocket} />
+                                </div>
                             </>
                         ) : (
                             <>
-                                <div className="nav_container">
+                                <div className={`${toggled ? "nav_container open" : "nav_container"}`}>
                                     <ul className="nav_ul">
                                         <li className="nav_li">
                                             <NavLink to="/" className={isThisActive}>
@@ -90,19 +95,22 @@ const Navbar = ({ websocket, user, uid }) => {
                                 </div>
                                 <div className="nav_container-right">
                                     <ul className="nav_ul">
-                                        <li className="nav_li">
+                                        <li className="nav_li login">
                                             <NavLink to="/login" className={isThisActive}>
-                                                <IoPersonCircleSharp className="nav_icon" />
+                                                <BiUser className="nav_icon" />
                                                 <p className="nav_p">Connexion</p>
                                             </NavLink>
                                         </li>
-                                        <li className="nav_li">
+                                        <li className="nav_li register">
                                             <NavLink to="/register" className={isThisActive}>
                                                 <RiLoginCircleLine className="nav_icon" />
                                                 <p className="nav_p">Inscription</p>
                                             </NavLink>
                                         </li>
                                     </ul>
+                                </div>
+                                <div className="mini_nav_container">
+                                    <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />
                                 </div>
                             </>
                         )}
@@ -119,7 +127,8 @@ const Navbar = ({ websocket, user, uid }) => {
                                 <div className="navbar_form_pages">
                                     <Link to="/">
                                         <div className="logo_inner">
-                                            <img src="/img/logo-top.png" alt="" />
+                                            <img className="logo-main" src="/img/logo-top.png" alt="" />
+                                            <img className="logo-small" src="/img/logo.png" alt="" />
                                         </div>
                                     </Link>
                                     <div className="right">
@@ -139,11 +148,12 @@ const Navbar = ({ websocket, user, uid }) => {
                                 <div className="navbar_form_pages">
                                     <Link to="/">
                                         <div className="logo_inner">
-                                            <img src="/img/logo-top.png" alt="" />
+                                            <img className="logo-main" src="/img/logo-top.png" alt="" />
+                                            <img className="logo-small" src="/img/logo.png" alt="" />
                                         </div>
                                     </Link>
                                     <div className="right">
-                                        <IoPersonCircleSharp className="nav_icon" />
+                                        <BiUser className="nav_icon" />
                                         <p>Connexion</p>
                                     </div>
                                 </div>

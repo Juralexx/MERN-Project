@@ -38,22 +38,36 @@ const CategoriesSwiper = () => {
     }, [swiper])
 
     return (
-        <div className="home-category">
-            <h2>Les catégories les plus populaires</h2>
-            <div className="category-swiper">
+        <div className="home-category border-b py-7">
+            <h2>Catégories</h2>
+            <div className="category-swiper mt-3">
                 <div className="nav-buttons">
                     <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
                     <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
                 </div>
                 <Swiper
-                    slidesPerView={6}
                     keyboard={{ enabled: true }}
                     mousewheel={true}
                     loop="true"
                     modules={[Navigation, Keyboard, Mousewheel]}
                     onSwiper={setSwiper}
                     navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
+                    slidesPerView={3}
                     spaceBetween={20}
+                    breakpoints={{
+                        768: {
+                            spaceBetween: 20,
+                            slidesPerView: 4,
+                        },
+                        992: {
+                            spaceBetween: 20,
+                            slidesPerView: 5,
+                        },
+                        1200: {
+                            spaceBetween: 20,
+                            slidesPerView: 6,
+                        },
+                    }}
                 >
                     {categories.map((element, key) => {
                         return (

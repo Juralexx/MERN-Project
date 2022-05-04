@@ -22,7 +22,7 @@ const TagsSwiper = () => {
 
     return (
         <div className="home-tags">
-            <h2>Les tags les plus populaires</h2>
+            {/* <h2>Les tags les plus populaires</h2>
             <div className="tags-container">
                 {tags.slice(0, 5).map((element, key) => {
                     return (
@@ -41,7 +41,7 @@ const TagsSwiper = () => {
                         </div>
                     )
                 })}
-            </div>
+            </div> */}
         </div>
     )
 }

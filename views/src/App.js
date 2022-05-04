@@ -9,7 +9,7 @@ import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRe
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 
 function App() {
-    const user = useSelector((state) => state.userReducer)
+    const user = useSelector(state => state.userReducer)
     const [uid, setUid] = useState(null)
     const [friends, setFriends] = useState([])
     const [onlineUsers, setOnlineUsers] = useState([])
@@ -31,8 +31,8 @@ function App() {
         }
         fetchToken()
 
-        if (uid)
-            dispatch(getUser(uid))
+        if (uid) dispatch(getUser(uid))
+
     }, [uid, dispatch])
 
     useEffect(() => {
