@@ -116,13 +116,13 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
                         return (
                             <div className="locations_item" key={key} ref={ref => locationsRefs[key] = ref}>
                                 {element.type === "city" &&
-                                    <p>{element.location} ({element.department_code})</p>
+                                    <div>{element.location} ({element.department_code})</div>
                                 }
                                 {element.type === "department" &&
-                                    <p>{element.department} ({element.department_code})</p>
+                                    <div>{element.department} ({element.department_code})</div>
                                 }
                                 {element.type === "region" &&
-                                    <p>{element.region}</p>
+                                    <div>{element.region}</div>
                                 }
                                 <IoClose onClick={() => deleteItem(element)} />
                             </div>

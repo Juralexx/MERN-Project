@@ -13,7 +13,6 @@
         position         : relative;
         margin           : auto;
         width            : 600px;
-        height           : auto;
         padding          : 15px 20px;
         color            : var(--text);
         background-color : var(--content);
@@ -84,12 +83,6 @@
                 &.active {
                     background-color : rgba(var(--primary-rgb), 0.6);
                 }
-                &:nth-child(1) {
-                    border-radius : var(--radius) 0 0 var(--radius);
-                }
-                &:nth-child(2) {
-                    border-radius : 0 var(--radius) var(--radius) 0;
-                }
             }
         }
     }
@@ -107,6 +100,60 @@
         &.modal_cover-active {
             display : block;
             z-index : 100000;
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    .modal_wrapper {
+        .modal_container {
+            width : 85%;
+        }
+    }
+}
+
+@media(max-width: 576px) {
+    .modal_wrapper {
+        .modal_container {
+            width : 95%;
+        }
+    }
+}
+
+.map_modal {
+    .map_modal_nav {
+        display       : flex;
+        position      : relative;
+        width         : 100%;
+        margin-bottom : 16px;
+        border-bottom : 1px solid var(--light-border);
+
+        .map_modal_nav_item {
+            position      : relative;
+            height        : 100%;
+            width         : 50%;
+            text-align    : center;
+            color         : var(--text);
+            cursor        : pointer;
+            padding       : 10px 5px;
+            overflow      : hidden;
+        }
+    }
+}
+
+@media(max-width: 576px) {
+    .modal_container {
+        &.map_modal {
+            width    : 100%;
+            padding  : 30px 20px;
+            position : fixed;
+            bottom   : 0;
+            top      : 0;
+            left     : 0;
+            right    : 0;
+            .map {
+                margin-top : 30px;
+            }
         }
     }
 }

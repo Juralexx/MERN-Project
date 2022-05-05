@@ -50,7 +50,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                             icon={<BiSearchAlt />}
                         />
                         <div className="relative row my-3">
-                            <div className="col-12 col-sm-6 sm:pr-1 sm:pb-0 pb-3" ref={categoriesRef}>
+                            <div className="col-12 col-sm-6 sm:!pr-1 sm:pb-0 pb-3" ref={categoriesRef}>
                                 <IconInput
                                     className="is_start_icon"
                                     inputClassName="cursor-pointer"
@@ -64,7 +64,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                                 />
                                 <CategoriesPicker className="top-[56px]" open={openCategories} setOpen={setOpenCategories} category={category} setCategory={setCategory} />
                             </div>
-                            <div className="col-12 col-sm-6 sm:pl-1">
+                            <div className="col-12 col-sm-6 sm:!pl-1">
                                 <IconInput
                                     className="is_start_icon"
                                     placeholder="Métier"
@@ -83,7 +83,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                             setAroundLocation={setAroundLocation}
                         />
                         {moreFilters &&
-                            <div className="row my-3">
+                            <div className="row !my-3">
                                 <div className="col-6 !pr-1">
                                     <DropdownInput useRef={datesMenu} readOnly placeholder="Date de mise en ligne" value={date} open={byDate} onClick={() => setByDate(!byDate)} cross clean={() => setDate("")}>
                                         <div onClick={() => setDate("Moins d'un jour")}>Moins d'un jour</div>

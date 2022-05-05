@@ -1,6 +1,7 @@
 .card {
     position         : relative;
     width            : 100%;
+    max-width        : 317px;
     color            : var(--text);
     cursor           : pointer;
     background-color : var(--content-light);

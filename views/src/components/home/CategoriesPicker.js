@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { categories } from '../../api/categories'
-import { ImArrowRight2 } from 'react-icons/im'
+import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im'
 
 const CategoriesPicker = ({ open, setOpen, setCategory, category, className }) => {
     const [active, setActive] = useState(0)
@@ -16,7 +16,12 @@ const CategoriesPicker = ({ open, setOpen, setCategory, category, className }) =
     return (
         open &&
         <div className={`${className ? "categories_container " + className : "categories_container"}`}>
-            <h4>Catégories</h4>
+            <div className="categories_header">
+                <div className="move-back md:hidden" onClick={() => setOpen(false)}>
+                    <ImArrowLeft2 />
+                </div>
+                <h4>Catégories</h4>
+            </div>
             <div className="categories_inner">
                 <div className="categories_col">
                     {categories.slice(0, 4).map((category, key) => {

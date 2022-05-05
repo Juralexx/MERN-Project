@@ -52,7 +52,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
     }
 
     return (
-        <Modal open={open} setOpen={setOpen} css="add-members-modal">
+        <Modal open={open} setOpen={setOpen} className="add-members-modal">
             <h2 className="title_border">Nouveaux membres</h2>
             <div className="user_in_array-container">
                 {array.length > 0 && (

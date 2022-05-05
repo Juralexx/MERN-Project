@@ -1,5 +1,4 @@
 import React from 'react'
-import { BsFillPeopleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { dateParser } from '../../Utils';
 import { stateToBackground, stateToString } from '../functions/function';

@@ -144,13 +144,17 @@
     border-radius : var(--radius);
     box-shadow    : var(--shadow-lg);
 
-    h4 {
-        text-transform   : uppercase;
-        padding          : 15px 20px 0;
+    .categories_header {
+        padding : 15px 20px 0;
+        h4 {
+            text-transform : uppercase;
+        }
     }
 
     .categories_inner {
-        display : flex;
+        display    : flex;
+        flex-wrap  : wrap;
+        max-height : 155px;
 
         .categories_col {
             display        : flex;
@@ -225,5 +229,59 @@
 
     &.right {
         right : 0;
+    }
+}
+
+@media(max-width:768px) {
+    .categories_container {
+        position   : fixed;
+        width      : 100vw;
+        height     : 100vh;
+        top        : 0;
+        left       : 0;
+        right      : 0;
+        z-index    : 900;
+        overflow-y : scroll;
+        .categories_header {
+            position         : fixed;
+            top              : 0;
+            right            : 0;
+            left             : 0;
+            padding          : 15px;
+            background-color : var(--light);
+            box-shadow : var(--shadow-lg);
+            z-index: 200;
+            h4 {
+                text-align : center;
+            }
+        }
+        .categories_inner {
+            position: relative;
+            flex-direction : column;
+            max-height     : unset;
+            padding-bottom : 50px;
+            padding-top    : 60px;
+            .categories_col {
+                padding : 0 20px;
+                width   : 100%;
+                .categories_item {
+                    padding       : 13px 10px;
+                    border-bottom : 1px solid var(--light-border);
+                }
+                &:last-child {
+                    .categories_item {
+                        &:last-child {
+                            border : none;
+                        }
+                    }
+                }
+            }
+        }
+        .categories_bottom_link {
+            position   : fixed;
+            width      : 100%;
+            bottom     : 0;
+            box-shadow : var(--shadow-top);
+        }
     }
 }

@@ -38,22 +38,8 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                 modules={[Navigation, Keyboard, Mousewheel]}
                 onSwiper={setSwiper}
                 navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
-                slidesPerView={1}
+                slidesPerView="auto"
                 spaceBetween={20}
-                breakpoints={{
-                    576: {
-                        spaceBetween: 20,
-                        slidesPerView: 2,
-                    },
-                    992: {
-                        spaceBetween: 20,
-                        slidesPerView: 3,
-                    },
-                    1200: {
-                        spaceBetween: 20,
-                        slidesPerView: 4,
-                    },
-                }}
             >
                 {!isLoading ? (
                     projects.map((element, key) => {
@@ -79,8 +65,24 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                 )}
             </Swiper>
 
-            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} websocket={websocket} user={user} />}
-            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} user={user} />}
+            {openFollowersModal &&
+                <FollowersModal
+                    project={project}
+                    open={openFollowersModal}
+                    setOpen={setOpenFollowersModal}
+                    websocket={websocket}
+                    user={user}
+                />
+            }
+            {openLikersModal &&
+                <LikersModal
+                    project={project}
+                    open={openLikersModal}
+                    setOpen={setOpenLikersModal}
+                    websocket={websocket}
+                    user={user}
+                />
+            }
         </>
     )
 }

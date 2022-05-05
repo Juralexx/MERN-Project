@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Keyboard, Navigation, Mousewheel } from "swiper";
+import "swiper/css/navigation";
+import 'swiper/css';
 import { coverPicture } from '../tools/functions/useAvatar';
+import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im';
 
 const TagsSwiper = () => {
+    const [swiper, setSwiper] = useState()
+    const prevRef = useRef()
+    const nextRef = useRef()
 
     const tags = [
         { name: "Art", url: `${process.env.REACT_APP_API_URL}files/tags/art.jpg` },
@@ -20,28 +28,82 @@ const TagsSwiper = () => {
         { name: "Technologie", url: `${process.env.REACT_APP_API_URL}files/tags/technologie.jpg` }
     ]
 
+    useEffect(() => {
+        if (swiper) {
+            swiper.params.navigation.prevEl = prevRef.current
+            swiper.params.navigation.nextEl = nextRef.current
+            swiper.navigation.init()
+            swiper.navigation.update()
+        }
+    }, [swiper])
+
     return (
-        <div className="home-tags">
-            {/* <h2>Les tags les plus populaires</h2>
-            <div className="tags-container">
-                {tags.slice(0, 5).map((element, key) => {
-                    return (
-                        <div className="tags-card" style={coverPicture(element.url)} key={key}>
-                            <p>#{element.name}</p>
-                        </div>
-                    )
-                })}
+        <div className="home_small_swiper border-b py-7">
+            <h2>Les tags les plus populaires</h2>
+            <div className="small_swiper mt-3">
+                <div className="nav-buttons">
+                    <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
+                    <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
+                </div>
+                <Swiper
+                    keyboard={{ enabled: true }}
+                    mousewheel={true}
+                    loop="true"
+                    modules={[Navigation, Keyboard, Mousewheel]}
+                    onSwiper={setSwiper}
+                    navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
+                    slidesPerView="auto"
+                    spaceBetween={20}
+                    breakpoints={{
+                        768: {
+                            spaceBetween: 20,
+                            slidesPerView: 4,
+                        },
+                        992: {
+                            spaceBetween: 20,
+                            slidesPerView: 5,
+                        },
+                        1200: {
+                            spaceBetween: 20,
+                            slidesPerView: 6,
+                        },
+                    }}
+                >
+                    {tags.map((element, key) => {
+                        return (
+                            <SwiperSlide key={key} className="small_slide">
+                                <div className="small_slide_card" style={coverPicture(element.url)}>
+                                    <p>#{element.name}</p>
+                                </div>
+                            </SwiperSlide>
+                        )
+                    })}
+                </Swiper>
             </div>
-            <div className="small-tags-container">
-                {tags.slice(6, 12).map((element, key) => {
-                    return (
-                        <div className="small-tags-card" key={key}>
-                            <div className="tags-img" style={coverPicture(element.url)}></div>
-                            <div className="tags">#{element.name}</div>
-                        </div>
-                    )
-                })}
-            </div> */}
+
+            <div className="tiny_swiper">
+                <Swiper
+                    keyboard={{ enabled: true }}
+                    mousewheel={true}
+                    loop="true"
+                    modules={[Navigation, Keyboard, Mousewheel]}
+                    onSwiper={setSwiper}
+                    // navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
+                    slidesPerView="auto"
+                    spaceBetween={20}
+                >
+                    {tags.slice(6, 12).map((element, key) => {
+                        return (
+                            <SwiperSlide key={key} className="tiny_slide">
+                                <div className="tiny_card" key={key}>
+                                    <div className="tiny_card-img" style={coverPicture(element.url)}></div>
+                                    <div className="tiny_card-text">#{element.name}</div>
+                                </div>
+                            </SwiperSlide>
+                        )
+                    })}
+                </Swiper>
+            </div>
         </div>
     )
 }

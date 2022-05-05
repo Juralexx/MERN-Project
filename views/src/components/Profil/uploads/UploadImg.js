@@ -59,7 +59,7 @@ const UploadImg = ({ user }) => {
     return (
         <>
             <IconToggle className="btn_img_edit" icon={<MdPhotoCamera />} onClick={() => setOpen(!open)} />
-            <Modal open={open} setOpen={setOpen} css="profil_img_modal">
+            <Modal open={open} setOpen={setOpen} className="profil_img_modal">
                 <div className="profil_img_modal_body">
                     {!file ? (
                         <>

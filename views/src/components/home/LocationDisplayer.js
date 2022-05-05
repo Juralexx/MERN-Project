@@ -37,13 +37,13 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                                     return (
                                         <div className="locations_selected_item" key={key}>
                                             {element.type === "city" &&
-                                                <p>{element.location} ({element.department_code})</p>
+                                                <div>{element.location} ({element.department_code})</div>
                                             }
                                             {element.type === "department" &&
-                                                <p>{element.department} ({element.department_code})</p>
+                                                <div>{element.department} ({element.department_code})</div>
                                             }
                                             {element.type === "region" &&
-                                                <p>{element.region}</p>
+                                                <div>{element.region}</div>
                                             }
                                             <IoClose onClick={() => deleteItem(element)} />
                                         </div>
@@ -60,13 +60,13 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                                     <div className="locations_search_item" key={key} onClick={() => setLocation(locations => [...locations, element])}>
                                         <FaMapMarkerAlt />
                                         {element.type === "city" &&
-                                            <p>{element.location} ({element.department_code})</p>
+                                            <div>{element.location} ({element.department_code})</div>
                                         }
                                         {element.type === "department" &&
-                                            <p>{element.department} ({element.department_code})</p>
+                                            <div>{element.department} ({element.department_code})</div>
                                         }
                                         {element.type === "region" &&
-                                            <p>{element.region}</p>
+                                            <div>{element.region}</div>
                                         }
                                     </div>
                                 )
@@ -92,8 +92,8 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                 </div>
             }
             <div className="locations_search_body">
-                <div className="locations_search_item"><BsGeoFill /> <p>Autour de moi</p></div>
-                <div className="locations_search_item"><GiFrance /> <p>Toute la France</p></div>
+                <div className="locations_search_item"><BsGeoFill /> <div>Autour de moi</div></div>
+                <div className="locations_search_item"><GiFrance /> <div>Toute la France</div></div>
             </div>
             <div className="locations_search_bottom">
                 <TextButton text="Effacer" onClick={() => { setLocation([]); setSliderKey(0); setAroundLocation(0)}}/>

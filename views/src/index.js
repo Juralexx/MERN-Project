@@ -8,8 +8,8 @@ import thunk from "redux-thunk"
 import rootReducer from './reducers'
 import ThemeContextWrapper from './components/tools/theme/ThemeContextWrapper';
 import './styles/dist/tailwind.css'
-import './styles/dist/style.css'
 import './styles/dist/cols.css'
+import './styles/dist/style.css'
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"

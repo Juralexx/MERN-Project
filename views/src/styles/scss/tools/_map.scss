@@ -1,16 +1,8 @@
-.map-container {
-    max-width       : 350px;
-    margin          : 0 auto;
-    display         : flex;
-    flex-direction  : column;
-    justify-content : center;
-    align-items     : center;
-}
-
-#map-departments {
-    width  : 450px;
+.map {
+    width  : 80%;
+    height : auto;
     margin : 0 auto;
-    cursor : ponter;
+    cursor : pointer;
 
     path {
         stroke          : var(--content-light);
@@ -25,7 +17,9 @@
             fill : var(--primary-dark);
         }
     }
+}
 
+#map-departments {
     g {
         &:hover {
             path {
@@ -33,7 +27,6 @@
             }
         }
     }
-
     g {
         path {
             &:hover {
@@ -44,29 +37,17 @@
 }
 
 #map-region {
-    width  : 450px;
-    margin : 0 auto;
-    cursor : pointer;
-
-    path {
-        stroke          : var(--content-light);
-        stroke-width    : 2px;
-        stroke-linecap  : round;
-        stroke-linejoin : round;
-        stroke-opacity  : 0.25;
-        fill            : var(--primary-light);
-        cursor          : pointer;
-
-        &.active {
-            fill : var(--primary-dark);
-        }
-    }
-
     g {
         path {
             &:hover {
                 fill : var(--primary);
             }
         }
+    }
+}
+
+@media(max-width: 768px) {
+    .map {
+        width : 100%;
     }
 }

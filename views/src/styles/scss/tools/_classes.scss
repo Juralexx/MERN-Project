@@ -34,3 +34,35 @@
 .f-24 {
     font-size : 24px;
 }
+
+.anim {
+    &:before {
+        content          : '';
+        position         : absolute;
+        left             : 50%;
+        transform        : translateX(-50%);
+        bottom           : -6px;
+        width            : 0;
+        height           : 10px;
+        border-radius    : 20px;
+        background-color : transparent;
+        transition       : 0.4s ease;
+    }
+
+    &:hover {
+        &:before {
+            width            : 30%;
+            transition       : 0.2s ease;
+            background-color : var(--primary);
+        }
+    }
+
+    &.active {
+        color : var(--primary);
+        &:before {
+            width            : 80%;
+            transition       : 0.2s ease;
+            background-color : var(--primary);
+        }
+    }
+}

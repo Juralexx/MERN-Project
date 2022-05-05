@@ -136,8 +136,8 @@
 
         svg {
             color  : var(--placeholder);
-            height : 24px;
-            width  : 24px;
+            height : 16px;
+            width  : 16px;
         }
     }
 
@@ -607,7 +607,6 @@
     padding          : 10px 0;
     max-height       : 300px;
     overflow         : auto;
-    width            : 500px;
     z-index          : 700;
     border-radius    : var(--radius);
     box-shadow       : var(--shadow-2xl);

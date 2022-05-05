@@ -72,7 +72,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
     }, [friends])
 
     return (
-        <Modal open={open} setOpen={setOpen} css="conversation-modal">
+        <Modal open={open} setOpen={setOpen} className="conversation-modal">
             <div className='header'>
                 {conversation.name && <div className="conversation-name">{conversation.name}</div>}
                 <ul>

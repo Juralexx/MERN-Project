@@ -3,100 +3,65 @@ import { categories } from '../api/categories'
 import { centre, drom, est, nord, ouest, sud_est, sud_ouest } from '../api/regions'
 
 const Footer = () => {
+    let regions = [ouest, centre, sud_est, est, nord, sud_ouest, drom]
+    let reg_names = ["Ouest", "Centre", "Sud-Est", "Est", "Nord", "Sud-Ouest", "DROM"]
+
     return (
         <div id="footer">
-            <div className="box">
-                <div className="footer-content">
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            <img src={`${process.env.REACT_APP_API_URL}files/img/logo-top.png`} alt="" />
-                        </div>
-                    </div>
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Catégories</div>
-                            {categories.slice(0, 4).map((e, key) => {
-                                return <a href="/" key={key}>{e.name}</a>
+            <div className="container">
+                <div className="row py-5 border-b">
+                    <div className="col-6 col-sm-6 col-md-3">
+                    <h4 className="txt-prim uppercase bold">Catégories</h4>
+                        <div className="flex flex-col leading-6">
+                            {categories.slice(0, 3).map((e, key) => {
+                                return <a href="/" className="txt-sec" key={key}>{e.name}</a>
                             })}
                         </div>
                     </div>
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            {categories.slice(4, 10).map((e, key) => {
-                                return <a href="/" key={key}>{e.name}</a>
+                    <div className="col-6 col-sm-6 col-md-3">
+                        <div className="flex flex-col leading-6">
+                            {categories.slice(3, 7).map((e, key) => {
+                                return <a href="/" className="txt-sec" key={key}>{e.name}</a>
                             })}
                         </div>
                     </div>
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            {categories.slice(10, categories.length).map((e, key) => {
-                                return <a href="/" key={key}>{e.name}</a>
+                    <div className="col-6 col-sm-6 col-md-3">
+                        <div className="flex flex-col leading-6">
+                            {categories.slice(7, 11).map((e, key) => {
+                                return <a href="/" className="txt-sec" key={key}>{e.name}</a>
                             })}
                         </div>
                     </div>
-                </div>
-                <div className="footer-content">
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Ouest</div>
-                            {ouest.map((e, key) => {
-                                return <a href="/" key={key}>{e.nom_region}</a>
-                            })}
-                        </div>
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Sud-Ouest</div>
-                            {sud_ouest.map((e, key) => {
-                                return <a href="/" key={key}>{e.nom_region}</a>
-                            })}
-                        </div>
-                    </div>
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Sud-Est</div>
-                            {sud_est.map((e, key) => {
-                                return <a href="/" key={key}>{e.nom_region}</a>
-                            })}
-                        </div>
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Est</div>
-                            {est.map((e, key) => {
-                                return <a href="/" key={key}>{e.nom_region}</a>
-                            })}
-                        </div>
-                    </div>
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Nord</div>
-                            {nord.map((e, key) => {
-                                return <a href="/" key={key}>{e.nom_region}</a>
-                            })}
-                        </div>
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Centre</div>
-                            {centre.map((e, key) => {
-                                return <a href="/" key={key}>{e.nom_region}</a>
-                            })}
-                        </div>
-                    </div>
-                    <div className="footer-content-col">
-                        <div className="footer-content-bloc">
-                            <div className="footer-title">Drom</div>
-                            {drom.map((e, key) => {
-                                return <a href="/" key={key}>{e.nom_region}</a>
+                    <div className="col-6 col-sm-6 col-md-3">
+                        <div className="flex flex-col leading-6">
+                            {categories.slice(11, categories.length).map((e, key) => {
+                                return <a href="/" className="txt-sec" key={key}>{e.name}</a>
                             })}
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="box">
-                <div className="footer-bottom">
-                    <div className="footer-bottom-left">
-                        <a href="/">Conditions d'utilisation</a>
-                        <a href="/">Politique de confidentialité</a>
-                        <a href="/">Politique en matière de cookies</a>
+                <div className="row py-5 border-b">
+                    {regions.map((arr, i) => {
+                        return (
+                            <div className="col-6 col-sm-6 col-md-3 mb-3" key={i}>
+                                <div className="flex flex-col leading-6">
+                                    <h5 className="txt-prim uppercase bold mb-2">{reg_names[i]}</h5>
+                                    {arr.map((e, key) => {
+                                        return <a href="/" className="txt-sec" key={key}>{e.nom_region}</a>
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+                <div className="flex justify-between py-4">
+                    <div className="flex lg:flex-row flex-col">
+                        <a href="/" className="txt-sec lg:mr-3">Conditions d'utilisation</a>
+                        <a href="/" className="txt-sec lg:mr-3">Politique de confidentialité</a>
+                        <a href="/" className="txt-sec lg:mr-3">Politique en matière de cookies</a>
                     </div>
-                    <div className="footer-bottom-right">
-                        <div className="footer-logo">
+                    <div className="flex items-center txt-sec">
+                        <div className="w-7 h-7 mr-2">
                             <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} alt="" />
                         </div>
                         <div>Redux Ltd. © 2022</div>

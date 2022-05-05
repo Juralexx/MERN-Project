@@ -70,7 +70,7 @@ const FollowersModal = ({ project, open, setOpen, user, websocket }) => {
 
     return (
         <>
-            <Modal open={open} setOpen={setOpen} css='users_modal'>
+            <Modal open={open} setOpen={setOpen} className='users_modal'>
                 <div className="users_modal-header">
                     <MdOutlineBookmark className="follow" />
                     <p>Suivi par {project.followers.length} personnes</p>

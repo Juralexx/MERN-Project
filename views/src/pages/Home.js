@@ -87,7 +87,7 @@ const Home = ({ websocket, user }) => {
                                 <CategoriesSwiper />
                                 <div className="swiper-container">
                                     <div className="swiper-header">
-                                        <h2>Les projets les plus récent</h2>
+                                        <h2>Les plus récent</h2>
                                         <Link to="/">Voir plus <MdArrowRightAlt /></Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -105,7 +105,7 @@ const Home = ({ websocket, user }) => {
                                 </div>
                                 <div className="swiper-container">
                                     <div className="swiper-header">
-                                        <h2>Les projets les plus aimés</h2>
+                                        <h2>Les plus aimés</h2>
                                         <Link to="/">Voir plus <MdArrowRightAlt /></Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -114,7 +114,7 @@ const Home = ({ websocket, user }) => {
                                 </div>
                                 <div className="swiper-container">
                                     <div className="swiper-header">
-                                        <h2>Les projets les plus suivis</h2>
+                                        <h2>Les plus suivis</h2>
                                         <Link to="/">Voir plus <MdArrowRightAlt /></Link>
                                     </div>
                                     <div className="swiper-inner">

@@ -113,7 +113,7 @@ const NewConversationModal = ({ friends, currentId, changeCurrentChat, websocket
     return (
         <>
             <Button text="Nouvelle conversation" className="mb-[10px] ml-[5px]" onClick={() => setOpen(true)} />
-            <Modal open={open} setOpen={setOpen} css=" add-conversation-modal">
+            <Modal open={open} setOpen={setOpen} className=" add-conversation-modal">
                 <div className='header'>
                     <ul>
                         <li onClick={() => setNavbar(1)}>Membres</li>

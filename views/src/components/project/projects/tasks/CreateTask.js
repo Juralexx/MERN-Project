@@ -51,7 +51,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
     }
 
     return (
-        <Modal open={open} setOpen={setOpen} css="create-task-modal">
+        <Modal open={open} setOpen={setOpen} className="create-task-modal">
             <h2>Créer une nouvelle tâche</h2>
 
             <div className="modal_nav">

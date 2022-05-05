@@ -20,7 +20,7 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
     }
 
     return (
-        <Modal open={open} setOpen={setOpen} css="task-modal">
+        <Modal open={open} setOpen={setOpen} className="task-modal">
             <div className="task-modal_header">
                 <h3>{task.title}</h3>
                 <p>Créée par {task.creator} le {dateParser(task.date)} à {getHourOnly(new Date(task.date))}</p>

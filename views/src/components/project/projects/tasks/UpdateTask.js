@@ -66,7 +66,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
     }
 
     return (
-        <Modal open={open} setOpen={setOpen} css="update-task-modal">
+        <Modal open={open} setOpen={setOpen} className="update-task-modal">
             <h2>Modifier la tâche</h2>
 
             <div className="modal_nav">
