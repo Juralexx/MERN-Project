@@ -24,7 +24,7 @@ const ActualityCard = ({ project, user }) => {
     }, [swiper])
 
     return (
-        <div className="project-page-card actuality_card">
+        <div className="content-card actuality_card">
             <div className="card-title">
                 <Link to={`/project/${project.URLID}/${project.URL}/actuality`}><h3>Actualités</h3></Link>
                 {project.actualities.length > 0 &&

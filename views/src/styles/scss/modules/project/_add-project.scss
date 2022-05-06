@@ -10,16 +10,16 @@
             justify-content : space-between;
             height          : 64px;
             width           : 100%;
+            padding         : 0 20px;
             background      : var(--navbar);
             border-bottom   : 1px solid var(--light-border);
-            z-index         : 800;
+            z-index         : 900;
 
             .logo_container {
                 position        : relative;
                 display         : flex;
                 justify-content : space-between;
                 align-items     : center;
-                padding-left    : 20px;
     
                 .logo_inner {
                     display     : flex;
@@ -38,7 +38,6 @@
             .header-top-right {
                 display     : flex;
                 align-items : center;
-                padding     : 0 20px;
 
                 button {
                     margin : 0 10px;
@@ -154,9 +153,7 @@
         display         : flex;
         align-items     : center;
         justify-content : flex-end;
-        padding         : 10px 0 0;
-        margin-top      : 10px;
-        margin-bottom   : 50px;
+        padding         : 20px 0 50px;
     }
 
     .add-project-card {
@@ -165,7 +162,6 @@
         padding       : 40px 0;
         background    : var(--content-light);
         color         : var(--text);
-        border-radius : var(--radius);
         border-bottom : 1px solid var(--light-border);
 
         .flex-card {
@@ -176,12 +172,14 @@
             .card-left {
                 position : relative;
                 width    : 50%;
+                order    : 1;
             }
 
             .card-right {
                 position : relative;
                 width    : 45%;
                 margin   : 0 0 0 5%;
+                order    : 2;
             }
 
             h3 {
@@ -197,6 +195,50 @@
         .content-form {
             position : relative;
             width    : 100%;
+        }
+    }
+}
+
+@media(max-width: 992px) {
+    .add-project {
+        .add-project-header {
+            .add-project-header-top {
+                .header-top-right {
+                    button {
+                        margin : 0 5px;
+                    }
+                }
+            }
+        }
+
+        .add-project-card {
+            padding : 20px 0;
+            .flex-card {
+                display        : flex;
+                flex-direction : column;
+                width          : 100%;
+                .card-left {
+                    width   : 100%;
+                    padding : 15px 0;
+                    order   : 2;
+                }
+                .card-right {
+                    width   : 100%;
+                    margin  : 0;
+                    padding : 15px 0;
+                    order   : 1;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 576px) {
+    .add-project {
+        .add-project-header {
+            .add-project-header-top {
+                padding : 0 7px;
+            }
         }
     }
 }
@@ -351,6 +393,26 @@
                 width  : 20px;
                 height : 20px;
             }
+        }
+    }
+}
+
+@media(max-width: 992px) {
+    .add-img-container {
+        flex-wrap : wrap;
+        .img-preview-container {
+            margin-top : 10px;
+            width      : 49%;
+        }
+    }
+}
+
+@media(max-width: 576px) {
+    .add-img-container {
+        flex-wrap : wrap;
+        .img-preview-container {
+            margin-top : 10px 0;
+            width      : 100%;
         }
     }
 }

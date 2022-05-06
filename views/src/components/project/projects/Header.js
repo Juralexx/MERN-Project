@@ -16,7 +16,7 @@ const Header = ({ project, websocket, user }) => {
 
     return (
         <div className="dashboard-header">
-            <div className="dashboard-header_container">
+            <div className="container py-3">
                 <Breadcrumb project={project} />
 
                 <div className="dashboard-header-top">

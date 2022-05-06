@@ -11,9 +11,7 @@ const Actualities = ({ project, user }) => {
 
     return (
         <>
-            <div className="content-header">
-                <h2>Actualités</h2>
-            </div>
+            <h2 className="text-[26px] bold mb-8">Actualités</h2>
             <div className="actuality-container">
                 {project.actualities.length > 0 ? (
                     reverseArray(project.actualities).map((element, key) => {

@@ -39,7 +39,7 @@ const Description = ({ description, setDescription, tags, setTags, error, setErr
 
     return (
         <div className="add-project-card">
-            <h3>Courte description et tags</h3>
+            <h2>Courte description et tags</h2>
             <div className="flex-card">
                 <div className="card-left">
                     <div className="content-form">

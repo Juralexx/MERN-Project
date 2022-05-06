@@ -3,63 +3,55 @@
     width      : 100%;
     background : var(--x-light);
 
-    .dashboard-header_container {
-        position  : relative;
-        width     : 100%;
-        max-width : 1366px;
-        margin    : 0 auto;
-        padding   : 10px 50px;
+    .dashboard-header-top {
+        position        : relative;
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
 
-        .dashboard-header-top {
-            position        : relative;
-            display         : flex;
-            align-items     : center;
-            justify-content : space-between;
+        .dashboard-header_left {
+            display     : flex;
+            align-items : center;
     
-            .dashboard-header_left {
-                display     : flex;
-                align-items : center;
-        
-                .dashboard-header-img {
-                    height        : 48px;
-                    width         : 48px;
-                    border-radius : 30px;
+            .dashboard-header-img {
+                height        : 48px;
+                width         : 48px;
+                border-radius : 30px;
+            }
+    
+            .dashboard-header-content {
+                padding : 0 32px;
+    
+                h1 {
+                    font-size     : 20px !important;
+                    margin-bottom : 2px;
+                    color         : var(--text);
                 }
-        
-                .dashboard-header-content {
-                    padding : 0 32px;
-        
-                    h1 {
-                        font-size     : 20px !important;
-                        margin-bottom : 2px;
-                        color         : var(--text);
-                    }
-    
-                    .dashboard-header-content-infos {
-                        display : flex;
-                        align-items : center;
-    
-                        .infos {
-                            display      : flex;
-                            align-items  : center;
-                            font-size    : 13px;
-                            color        : var(--text-secondary);
-                            margin-right : 20px;
-    
-                            svg {
-                                margin-bottom : 2px;
-                                margin-right  : 3px;
-                                color         : var(--text-tertiary);
-                            }
+
+                .dashboard-header-content-infos {
+                    display : flex;
+                    align-items : center;
+
+                    .infos {
+                        display      : flex;
+                        align-items  : center;
+                        font-size    : 13px;
+                        color        : var(--text-secondary);
+                        margin-right : 20px;
+
+                        svg {
+                            margin-bottom : 2px;
+                            margin-right  : 3px;
+                            color         : var(--text-tertiary);
                         }
                     }
                 }
             }
-        
-            .dashboard-header_right {
-                display : flex;
-        
-            }
+        }
+    
+        .dashboard-header_right {
+            display : flex;
+    
         }
     }
     

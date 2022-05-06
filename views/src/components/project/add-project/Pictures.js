@@ -27,14 +27,6 @@ const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
         <div className="add-project-card">
             <div className="flex-card">
                 <div className="card-left">
-                    <h3>Image principale du projet</h3>
-                    <p>Ajoutez une image qui représente clairement votre projet. Choisissez une image qui supportera d'être redimensionnée.
-                        Elle sera visible sur votre page de projet, sur le site et les applications mobiles Kickstarter et sur les réseaux sociaux.<br />
-                        Votre image doit faire au moins 1024x576 pixels. Elle sera recadrée au format 16:9.<br />
-                        À proscrire : les bannières, les badges et le texte. Ces éléments seraient illisibles à petit format et pourraient être pénalisés par l'algorithme Facebook,
-                        tout en diminuant vos chances de figurer sur la page d'accueil et dans les lettres d'information de Kickstarter.</p>
-                </div>
-                <div className="card-right">
                     {mainPic.length === 0 ? (
                         <div {...getRootProps({ className: `img-dropzone ${isDragActive && "active"}` })}>
                             <input {...getInputProps()} name="files" />
@@ -53,8 +45,16 @@ const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
                         </div>
                     )}
                 </div>
+                <div className="card-right">
+                    <h3>Image principale du projet</h3>
+                    <p>Ajoutez une image qui représente clairement votre projet. Choisissez une image qui supportera d'être redimensionnée.
+                        Elle sera visible sur votre page de projet, sur le site et les applications mobiles Kickstarter et sur les réseaux sociaux.<br />
+                        Votre image doit faire au moins 1024x576 pixels. Elle sera recadrée au format 16:9.<br />
+                        À proscrire : les bannières, les badges et le texte. Ces éléments seraient illisibles à petit format et pourraient être pénalisés par l'algorithme Facebook,
+                        tout en diminuant vos chances de figurer sur la page d'accueil et dans les lettres d'information de Kickstarter.</p>
+                </div>
             </div>
-            <div className="flex-card !mt-10">
+            <div className="flex-card !mt-7">
                 <div className="card-left">
                     <h3>Ajouter plus d'images</h3>
                     <p>Ajoutez une image qui représente clairement votre projet. Choisissez une image qui supportera d'être redimensionnée.

@@ -51,7 +51,7 @@ const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => 
 
     return (
         <div className="add-project-card">
-            <h3>Réseaux sociaux et site web</h3>
+            <h2>Réseaux sociaux et site web</h2>
             <div className="flex-card">
                 <div className="card-left">
                     <div className="content-form">

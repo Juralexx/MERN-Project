@@ -201,7 +201,8 @@ const AddProject = ({ user }) => {
                         <div className="logo_container">
                             <Link to="/">
                                 <div className="logo_inner">
-                                    <img src={`${process.env.REACT_APP_API_URL}files/img/logo-top.png`} alt="" />
+                                    <img className="logo-main sm:block hidden" src="/img/logo-top.png" alt="" />
+                                    <img className="logo-small block sm:hidden" src="/img/logo.png" alt="" />
                                 </div>
                             </Link>
                         </div>
@@ -235,7 +236,7 @@ const AddProject = ({ user }) => {
                         </div>
                     </div>
                 </div>
-                <div className="content_box">
+                <div className="container pt-8">
                     {nav === 0 &&
                         <>
                             <div className="titles-container">

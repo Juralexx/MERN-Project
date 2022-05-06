@@ -4,16 +4,16 @@ import { DatePicker } from '../../tools/components/Inputs'
 const End = ({ start, setStart, end, setEnd }) => {
     return (
         <div className="add-project-card">
-            <h3>Date de fin ou de déroulement</h3>
+            <h2>Date de fin ou de déroulement</h2>
             <div className="flex-card">
-                <div className="card-left flex">
+                <div className="card-left flex flex-col sm:flex-row">
                     <div>
                         <p className="title">Date de fin potentielle</p>
                         <DatePicker className="top" placeholder="JJ/MM/AAAA" value={start} selected={start} onSelect={setStart} />
                     </div>
-                    <div>
+                    <div className="mt-6 sm:mt-0 sm:ml-2">
                         <p className="title">Date de fin potentielle</p>
-                        <DatePicker className="top ml-2" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
+                        <DatePicker className="top" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
                     </div>
                 </div>
                 <div className="card-right">

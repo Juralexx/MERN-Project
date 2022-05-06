@@ -59,14 +59,16 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                 <Header project={project} websocket={websocket} user={user} />
                 <Routes>
                     <Route index element={
-                        <div className="dashboard-content_container">
-                            <div className="dashboard-content_container-col">
+                        <div className="container">
+                            <div className="row py-4">
+                            <div className="col-12 col-lg-6">
                                 <ActivityFeed project={project} user={user} websocket={websocket} />
                             </div>
-                            <div className="dashboard-content_container-col">
+                            <div className="col-12 col-lg-6">
                                 <HomeMembers project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                                 <HomeTasks project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
                             </div>
+                        </div>
                         </div>
                     } />
                     <Route path="about" element={

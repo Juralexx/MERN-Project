@@ -7,7 +7,6 @@
     box-shadow   : var(--shadow-left);
     z-index      : 799;
     overflow-y   : hidden;
-    border-right : 2px solid var(--primary);
 
     &.reduced {
         max-width : 80px;

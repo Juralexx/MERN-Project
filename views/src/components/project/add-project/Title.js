@@ -15,7 +15,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
 
     return (
         <div className="add-project-card">
-            <h3>Titre, sous-titre et catégorie</h3>
+            <h2>Titre, sous-titre et catégorie</h2>
             <div className="flex-card">
                 <div className="card-left">
                     <div className="content-form">

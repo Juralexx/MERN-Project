@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MiniNav from "./mini-nav/MiniNav";
 import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai'
@@ -8,12 +8,15 @@ import { RiLoginCircleLine } from 'react-icons/ri'
 import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
 import { StartIconButton } from "./tools/components/Button";
+import { useClickOutside } from "./tools/functions/useClickOutside";
 
 const Navbar = ({ websocket, user, uid }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
     const location = useLocation()
     const [toggled, setToggled] = useState(false)
     const closeOnClick = () => { if (toggled) setToggled(false) }
+    const navRef = useRef()
+    useClickOutside(navRef, setToggled, false)
 
     return (
         location.pathname !== "/add-project" &&
@@ -30,7 +33,9 @@ const Navbar = ({ websocket, user, uid }) => {
                                 </div>
                             </Link>
                             <div className="hidden lg:flex ml-8">
-                                <StartIconButton text="Déposer un projet" icon={<AiOutlinePlus />} />
+                                <NavLink to="/add-project">
+                                    <StartIconButton text="Déposer un projet" icon={<AiOutlinePlus />} />
+                                </NavLink>
                             </div>
                         </div>
 
@@ -71,7 +76,7 @@ const Navbar = ({ websocket, user, uid }) => {
                                     </ul>
                                 </div>
                                 <div className="mini_nav_container">
-                                    <MiniNav user={user} websocket={websocket} />
+                                    <MiniNav user={user} websocket={websocket} onClick={closeOnClick} />
                                 </div>
                             </>
                         ) : (

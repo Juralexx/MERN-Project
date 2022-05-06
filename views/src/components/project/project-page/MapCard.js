@@ -26,7 +26,7 @@ const MapCard = ({ project }) => {
     }, [project.location])
 
     return (
-        <div className="project-page-card">
+        <div className="content-card map_card">
             <div className="card-title">
                 <Link to={`/project/${project.URLID}/${project.URL}/actuality`}><h3>{project.location} ({project.code_department})</h3></Link>
             </div>

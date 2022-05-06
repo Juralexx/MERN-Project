@@ -58,7 +58,7 @@ const Location = ({ leafletLoading, geoJSON, geolocalisation, setGeolocalisation
 
     return (
         <div className="add-project-card">
-            <h3 className="mb-5">Localisation</h3>
+            <h2>Localisation</h2>
             <div className="flex-card">
                 <div className="card-left">
                     <div className="content-form mb-3">

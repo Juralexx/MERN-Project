@@ -3,32 +3,11 @@
     display    : flex;
     width      : 100%;
     height     : calc(100% - 60px);
-    background : var(--body);
+    background : var(--content-light);
 
     .dashboard-content {
         position   : relative;
         width      : 100%;
         overflow-y : auto;
-
-        .dashboard-content_container {
-            position  : relative;
-            width     : 100%;
-            max-width : 1366px;
-            display   : flex;
-            padding   : 16px 50px;
-            margin    : 0 auto;
-
-            .dashboard-content_container-col {
-                width   : 50%;
-
-                &:nth-child(1) {
-                    padding : 0 10px 0 0;
-                }
-
-                &:nth-child(2) {
-                    padding : 0 0 0 10px;
-                }
-            }
-        }
     }
 }

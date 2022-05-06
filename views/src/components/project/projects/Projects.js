@@ -39,7 +39,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
     return (
         <>
             <div className="dashboard-projects-header">
-                <div className="content_box">
+                <div className="container">
                     <div className="dashboard-projects-header-top">
                         <h1>Mes projects <span>{projects.length}</span></h1>
                     </div>
@@ -63,8 +63,7 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                     </div>
                 </div>
             </div>
-            <div className="content_container">
-                <div className="content_box">
+                <div className="container py-11">
                     <div className="dashboard-projects-tools">
                         <div>
                             <div className="infos blue mr-2">Projets en ligne ({(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length})</div>
@@ -114,7 +113,6 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                             )
                         })}
                 </div>
-            </div>
         </>
     )
 }

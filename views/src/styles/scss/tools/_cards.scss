@@ -3,10 +3,10 @@
     width            : 100%;
     max-width        : 317px;
     color            : var(--text);
-    cursor           : pointer;
     background-color : var(--content-light);
     border-radius    : var(--radius);
     border           : 1px solid var(--light-border);
+    cursor           : pointer;
 
     .card-img {
         height        : 160px;
@@ -17,7 +17,7 @@
     .state {
         position      : absolute;
         top           : 10px;
-        left         : 10px;
+        left          : 10px;
         padding       : 2px 12px;
         border-radius : var(--radius);
         font-size     : 14px;
@@ -145,7 +145,6 @@
     right            : 8px;
     display          : flex;
     align-items      : center;
-    padding          : 2px 0 0 0;
     background-color : var(--content-x-light);
     border-radius    : 30px;
     box-shadow       : var(--shadow-tiny);
@@ -157,6 +156,7 @@
     p {
         position    : absolute;
         opacity     : 0;
+        visibility  : hidden;
         font-size   : 13px;
         white-space : nowrap;
     }
@@ -168,6 +168,7 @@
         p {
             position   : unset;
             opacity    : 1;
+            visibility : visible;
             transition : 1s ease .2s;
         }
     }

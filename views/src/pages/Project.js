@@ -55,28 +55,24 @@ const ProjectPage = ({ user, projects }) => {
         <div className="content_container project-page">
             <Header user={user} project={project} />
             <div className="project-page-body">
-                <div className="content_nav-sticky" ref={navRef}>
-                    <div className="box">
-                        <div className="content_nav">
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={isActive}>À propos</NavLink>
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/researches`} className={isActive}>Recherches <span>{project.works.length}</span></NavLink>
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isActive}>Galerie <span>{project.pictures.length}</span></NavLink>
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isActive}>Actualités <span>{project.actualities.length}</span></NavLink>
-                            <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isActive}>FAQ <span>{project.QNA.length}</span></NavLink>
-                            <Button text="Rejoindre le projet" className="ml-auto" style={{ display: displayBtn }} />
-                        </div>
+                <div className="container-lg content_nav-sticky overflow-x-auto" ref={navRef}>
+                    <div className="content_nav">
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={isActive}>À propos</NavLink>
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/researches`} className={isActive}>Recherches <span>{project.works.length}</span></NavLink>
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isActive}>Galerie <span>{project.pictures.length}</span></NavLink>
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isActive}>Actualités <span>{project.actualities.length}</span></NavLink>
+                        <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isActive}>FAQ <span>{project.QNA.length}</span></NavLink>
+                        <Button text="Rejoindre le projet" className="ml-auto" style={{ display: displayBtn }} />
                     </div>
                 </div>
-                <div className="content_box">
-                    <div className="project-page-content">
-                        <div className="content">
+                <div className="container-lg">
+                    <div className="row h-full py-10">
+                        <div className="col-lg-8 lg:pr-4">
                             {!isLoading &&
                                 <Routes>
                                     <Route index element={
                                         <>
-                                            <div className="content-header">
-                                                <h2>À propos du projet</h2>
-                                            </div>
+                                            <h2 className="text-[26px] bold mb-8">À propos du projet</h2>
                                             <div dangerouslySetInnerHTML={convertDeltaToHTML(project.content[0])}></div>
                                             {project.networks.length > 0 &&
                                                 <Networks project={project} />
@@ -101,7 +97,7 @@ const ProjectPage = ({ user, projects }) => {
                                 </Routes>
                             }
                         </div>
-                        <div className="content-cards" style={{ maxHeight: getHeight() }}>
+                        <div className="content-cards col-lg-4" style={{ maxHeight: getHeight() }}>
                             {!isLoading &&
                                 <>
                                     <MapCard project={project} user={user} />

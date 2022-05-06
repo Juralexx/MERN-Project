@@ -12,15 +12,13 @@ const Qna = ({ project, user }) => {
 
     return (
         <>
-            <div className="content-header">
-                <h2>Foire aux questions</h2>
-            </div>
+            <h2 className="text-[26px] bold mb-8">Foire aux questions</h2>
             {project.QNA.length > 0 ? (
                 project.QNA.map((element, key) => {
                     return (
                         <div className="accordion" key={key} onClick={() => openAnswer(key)}>
                             <div className="accordion_top">
-                                {element.question}
+                                <p>{element.question}</p>
                                 {displayed.includes(key) ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
                             </div>
                             {displayed.includes(key) &&

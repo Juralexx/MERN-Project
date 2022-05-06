@@ -12,15 +12,13 @@ const Works = ({ project, user }) => {
 
     return (
         <>
-            <div className="content-header">
-                <h2>Compétences recherchées</h2>
-            </div>
+            <h2 className="text-[26px] bold mb-8">Compétences recherchées</h2>
             {project.works.length > 0 ? (
                 project.works.map((element, key) => {
                     return (
                         <div className="accordion" key={key} onClick={() => openAnswer(key)}>
                             <div className="accordion_top">
-                                {element.name}
+                                <p>{element.name}</p>
                                 {displayed.includes(key) ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
                             </div>
                             {displayed.includes(key) &&

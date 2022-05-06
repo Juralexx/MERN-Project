@@ -24,7 +24,7 @@ const GalleryCard = ({ project, user }) => {
 
     return (
 
-        <div className="project-page-card gallery_card">
+        <div className="content-card gallery_card">
             <div className="card-title">
                 <Link to={`/project/${project.URLID}/${project.URL}/gallery`}><h3>Galerie</h3></Link>
                 {project.pictures.length > 1 &&

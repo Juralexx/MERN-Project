@@ -262,3 +262,8 @@
         width : 300px;
     }
 }
+
+.leaflet-top, .leaflet-bottom,
+.leaflet-control {
+    z-index : 400;
+}

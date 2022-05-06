@@ -23,7 +23,7 @@ const QnaCard = ({ project, user }) => {
     }, [swiper])
 
     return (
-        <div className="project-page-card qna_card">
+        <div className="content-card qna_card">
             <div className="card-title">
                 <Link to={`/project/${project.URLID}/${project.URL}/qna`}><h3>Foire aux questions</h3></Link>
                 {project.QNA.length > 0 &&

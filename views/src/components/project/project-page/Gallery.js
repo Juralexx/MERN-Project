@@ -10,16 +10,14 @@ const Gallery = ({ project, user }) => {
 
     return (
         <>
-            <div className="content-header">
-                <h2>Galerie</h2>
-            </div>
+            <h2 className="text-[26px] bold mb-8">Galerie</h2>
             {project.pictures.length > 0 ? (
-                <div className="img-container">
+                <div className="row">
                     {project.pictures.length > 1 &&
                         project.pictures.map((element, key) => {
                             return (
-                                <div className="img-item">
-                                    <div key={key} style={projectPicture(element)} onClick={() => { setToggler(!toggler); setPicture(element) }}></div>
+                                <div className="col-12 col-xl-6 !p-2 min-h-[300px]">
+                                    <div className="w-full h-full" key={key} style={projectPicture(element)} onClick={() => { setToggler(!toggler); setPicture(element) }}></div>
                                 </div>
                             )
                         })
