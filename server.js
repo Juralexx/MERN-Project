@@ -12,7 +12,6 @@ import workRoutes from './api/work.api.routes.js'
 import locationRoutes from './api/location.api.routes.js'
 import geolocationRoutes from './api/geolocations.api.routes.js'
 import conversationRoutes from './routes/conversation.routes.js'
-import messageRoutes from './routes/message.routes.js'
 
 const app = express();
 app.use('/uploads', express.static('./uploads'))
@@ -44,7 +43,6 @@ app.get('/jwtid', requireAuth, (req, res) => {
 app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
 app.use('/api/conversations', conversationRoutes)
-app.use('/api/messages', messageRoutes)
 app.use('/api/work', workRoutes)
 app.use('/api/location', locationRoutes)
 app.use('/api/geolocation', geolocationRoutes)

@@ -28,7 +28,21 @@ const ConversationModel = new mongoose.Schema(
             picture: String
         },
         messages: {
-            type: [],
+            type: [{
+                _id: String, 
+                sender: String,
+                sender_pseudo: String,
+                sender_picture: String,
+                text: {
+                    type: [],
+                },
+                emojis: {
+                    type: [],
+                    emojis: {
+                        emoji_sender: String
+                    },
+                }
+            }],
         },
         last_message: {
             type: String,

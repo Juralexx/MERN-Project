@@ -16,21 +16,21 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
     const userData = useSelector((state) => state.userReducer)
     const [conversations, setConversations] = useState([])
     const [conversationsFound, setConversationsFound] = useState(false)
-    /*=========================================================*/
+    
     const [currentChat, setCurrentChat] = useState(null)
-    /*=========================================================*/
+    
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState({})
     const [getNewMessage, setGetNewMessage] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState("")
     const [modifiedMessage, setModifiedMessage] = useState("")
     const [messagesDates, setMessagesDates] = useState([])
-    /*=========================================================*/
+    
     const [notification, setNotification] = useState("")
-    /*=========================================================*/
+    
     const [isTyping, setTyping] = useState(false)
     const [typingContext, setTypingContext] = useState("")
-    /*=========================================================*/
+    
     const lastMessageRef = useRef()
     const convWrapperRef = useRef()
     const quillRef = useRef()
