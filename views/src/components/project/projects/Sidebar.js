@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { addActive } from '../../Utils'
 import { avatar } from '../../tools/functions/useAvatar'
 import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
 import { BsFillDiagram3Fill, BsFillCaretRightFill } from 'react-icons/bs'
@@ -11,7 +12,6 @@ const Sidebar = ({ user, projects, isLoading }) => {
     const [reduced, setReduced] = useState(false)
     const [submenu, setSubmenu] = useState(0)
     const localStore = localStorage.getItem("sideState")
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const isThisActive = ({ isActive }) => (!isActive ? "" : "active")
 
     const handleState = () => {

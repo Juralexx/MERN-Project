@@ -1,6 +1,10 @@
 import { acceptFriendRequest, cancelFriendRequest, deleteFriend, refuseFriendRequest, sendFriendRequest } from "../../../actions/user.action"
 import { randomID } from "../../Utils"
 
+/**
+ * Send a friend request
+ */
+
 export const sendRequest = (friend, user, websocket, dispatch) => {
     const notification = { _id: randomID(24), type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString(), seen: false }
     websocket.current.emit("friendRequest", {
@@ -9,6 +13,10 @@ export const sendRequest = (friend, user, websocket, dispatch) => {
     })
     dispatch(sendFriendRequest(friend._id, user._id, notification))
 }
+
+/**
+ * Cancel a friend request
+ */
 
 export const cancelRequest = (friend, user, websocket, dispatch) => {
     websocket.current.emit("cancelFriendRequest", {
@@ -19,6 +27,10 @@ export const cancelRequest = (friend, user, websocket, dispatch) => {
     dispatch(cancelFriendRequest(friend._id, user._id, "friend-request"))
 }
 
+/**
+ * Accept a friend request
+ */
+
 export const acceptRequest = (request, user, websocket, dispatch) => {
     websocket.current.emit("acceptFriendRequest", {
         friend: user._id,
@@ -28,6 +40,10 @@ export const acceptRequest = (request, user, websocket, dispatch) => {
     dispatch(acceptFriendRequest(request.requesterId, user._id, request.type, request))
 }
 
+/**
+ * Refuse a friend request
+ */
+
 export const refuseRequest = (request, user, websocket, dispatch) => {
     websocket.current.emit("refuseFriendRequest", {
         userId: user._id,
@@ -36,6 +52,10 @@ export const refuseRequest = (request, user, websocket, dispatch) => {
     Object.assign(request, { state: "refused" })
     dispatch(refuseFriendRequest(request.requesterId, user._id, request.type, request))
 }
+
+/**
+ * Remove a friend
+ */
 
 export const removeFriend = (userId, friendId, websocket, dispatch) => {
     websocket.current.emit("deleteFriend", {

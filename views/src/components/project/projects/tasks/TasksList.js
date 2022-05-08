@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground, randomizeCheckboxID } from '../../../tools/functions/task'
 import { clickOn } from '../../../tools/functions/useClickOutside'
-import { reduceString } from '../../../tools/functions/reduceString'
-import { dateParser } from '../../../Utils'
-import { getDifference } from '../../../tools/functions/function'
+import { addActive, dateParser, getDifference, reduceString } from '../../../Utils'
 import ToolsMenu from '../../../tools/components/ToolsMenu'
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { RiCalendarTodoLine } from 'react-icons/ri'
 import { MdOutlineMessage } from 'react-icons/md'
 
 const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, showTask, setShowTask, websocket, dispatch, setUpdateTask, setTask }) => {
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const todo = tasks.filter(element => element.state === "todo")
     const inProgress = tasks.filter(element => element.state === "in progress")
     const done = tasks.filter(element => element.state === "done")

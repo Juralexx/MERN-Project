@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-import { removeAccents } from '../components/Utils'
+import { addActive, removeAccents } from '../components/Utils'
 import Title from "../components/project/add-project/Title";
 import Location from "../components/project/add-project/Location";
 import Contributors from "../components/project/add-project/Contributors";
@@ -46,7 +46,6 @@ const AddProject = ({ user }) => {
     const [error, setError] = useState(null)
     const [isErr, setErr] = useState(null)
     const [nav, setNav] = useState(0)
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     // const navigate = useNavigate()
 
     const handleAddProject = async () => {

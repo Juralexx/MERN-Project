@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { addActive } from '../../../Utils'
 import { createTask } from '../../../../actions/project.action'
+import { isInResults, isSelected } from '../../../tools/functions/member'
 import Modal from '../../../tools/components/Modal'
 import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../../tools/functions/task'
-import { highlightIt } from '../../../tools/functions/function'
 import { MediumAvatar, TinyAvatar } from '../../../tools/components/Avatars'
 import { IoClose } from 'react-icons/io5'
 
@@ -13,7 +14,6 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
     const [displayStatus, setDisplayStatus] = useState(false)
     const [displayState, setDisplayState] = useState(false)
     const [navbar, setNavbar] = useState(1)
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const dispatch = useDispatch()
 
     const newTask = () => {
@@ -112,7 +112,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                             <div className="user_displayer">
                                 {project.members.map((element, key) => {
                                     return (
-                                        <div className="user_display_choice" key={key} onClick={() => addMemberToArray(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
+                                        <div className={`user_display_choice ${isInResults(element, isMemberInResult, search, "flex")} ${isSelected(array, element)}`} key={key} onClick={() => addMemberToArray(element, array, setArray)}>
                                             <MediumAvatar pic={element.picture} />
                                             <p>{element.pseudo}</p>
                                         </div>

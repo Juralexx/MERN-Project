@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { BsThreeDots } from 'react-icons/bs'
-import SmallMenu from "../tools/components/SmallMenu";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { addActive } from "../Utils";
 import { IconInput } from "../tools/components/Inputs";
+import ToolsMenu from "../tools/components/ToolsMenu";
 import { IoMdNotificationsOff } from 'react-icons/io'
 import { HiPencilAlt } from 'react-icons/hi'
 import { AiOutlineFullscreen } from 'react-icons/ai'
 import { GoSearch } from 'react-icons/go'
-import { Link } from "react-router-dom";
 
 const MessengerMenu = ({ open, setOpen, user, websocket }) => {
-    const [openMenu, setOpenMenu] = useState(false)
     const [showUnread, setShowUnread] = useState(false)
 
     return (
@@ -21,20 +20,17 @@ const MessengerMenu = ({ open, setOpen, user, websocket }) => {
                     <div className="menu">
                         <div className="tools_btn"><HiPencilAlt /></div>
                         <Link to={"/messenger"}><div className="tools_btn" onClick={() => setOpen(false)}><AiOutlineFullscreen /></div></Link>
-                        <div className="tools_btn" onClick={() => setOpenMenu(!openMenu)}><BsThreeDots /></div>
+                        <ToolsMenu>
+                            <div className="tools_choice">Tout marquer comme lu</div>
+                            <div className="tools_choice">Voir toutes les messages</div>
+                        </ToolsMenu>
                     </div>
                 </div>
-                {openMenu &&
-                    <SmallMenu>
-                        <div className="tools_choice">Tout marquer comme lu</div>
-                        <div className="tools_choice">Voir toutes les messages</div>
-                    </SmallMenu>
-                }
                 <div className="messages-navbar">
-                    <div className={`navlink ${showUnread ? "" : "active"}`}>Tout</div>
-                    <div className={`navlink ${showUnread ? "active" : ""}`}>Non lu</div>
+                    <div className={`navlink ${addActive(!showUnread, "active")}`} onClick={() => setShowUnread(false)}>Tout</div>
+                    <div className={`navlink ${addActive(showUnread, "active")}`} onClick={() => setShowUnread(true)}>Non lu</div>
                 </div>
-                <IconInput className="is_start_icon" placeholder="Rechercher un projet" icon={<GoSearch />} cross/>
+                <IconInput className="is_start_icon" placeholder="Rechercher un projet" icon={<GoSearch />} cross />
             </div>
             <div className="messenger-menu-content">
                 {!showUnread &&

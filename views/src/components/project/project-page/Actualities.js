@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import NoContent from './NoContent'
 import { EndIconButton } from '../../tools/components/Button'
-import { convertDeltaToHTML } from '../../tools/functions/function'
 import { dateParser, reverseArray } from '../../Utils'
 import { BigAvatar } from '../../tools/components/Avatars'
+import { convertDeltaToHTML } from '../../tools/editor/functions'
 import { MdArrowForward, MdOutlineNotificationsActive } from 'react-icons/md'
 
 const Actualities = ({ project, user }) => {

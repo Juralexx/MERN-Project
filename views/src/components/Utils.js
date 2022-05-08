@@ -42,7 +42,7 @@ export const randomNbLtID = (max) => {
  * Check pseudo validity.
  */
 
- export const onlyLettersSpacesAndDashes = (string) => {
+export const onlyLettersSpacesAndDashes = (string) => {
     const regexp = new RegExp(/^[A-Za-z\s\-]+$/)
     if (regexp.test(string)) return true
     else return false
@@ -182,8 +182,40 @@ export const isEmpty = (value) => {
         || value === null
         || (typeof value === "object" && Object.keys(value).length === 0)
         || (typeof value === "string" && value.trim().length === 0)
-    );
-};
+    )
+}
+
+/**
+ * Check if array or object are empty.
+ */
+
+export const addActive = (state, classe) => {
+    if (state) {
+        return classe
+    } else return
+}
+
+/**
+ * Reduce string between 0 and choosen length.
+ */
+
+ export const reduceString = (string, maxLength) => {
+    if (string.length >= maxLength) {
+        if (string.substring((maxLength - 1), maxLength) === " ") {
+            let cleanSpaces = string.replace(string.substring((maxLength - 1), maxLength), "")
+            string = cleanSpaces.substring(0, maxLength) + "..."
+        }
+        return string.substring(0, maxLength) + "..."
+    } else return string
+}
+
+/**
+ * Get différence between two number and add "+" before
+ */
+
+export const getDifference = (one, two) => {
+    return "+" + (two - one)
+}
 
 /**
  * Convert string  in URL.
@@ -242,7 +274,7 @@ export const geolocToFloat = (string) => {
     let lon = string.substr(string.indexOf(',') + 1, string.length)
     lat = parseFloat(lat)
     lon = parseFloat(lon)
-    return [lat,lon]
+    return [lat, lon]
 }
 
 /**

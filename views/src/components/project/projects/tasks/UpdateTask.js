@@ -5,8 +5,8 @@ import Modal from '../../../tools/components/Modal'
 import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../../tools/functions/task'
-import { highlightIt } from '../../../tools/functions/function'
-import { ISOtoNavFormat } from '../../../Utils'
+import { addActive, ISOtoNavFormat } from '../../../Utils'
+import { isInResults, isSelected } from '../../../tools/functions/member'
 import { MediumAvatar, TinyAvatar } from '../../../tools/components/Avatars'
 import { IoClose } from 'react-icons/io5'
 
@@ -20,7 +20,6 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
     const [displayStatus, setDisplayStatus] = useState(false)
     const [displayState, setDisplayState] = useState(false)
     const [navbar, setNavbar] = useState(1)
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const dispatch = useDispatch()
 
     const updateTask = () => {
@@ -128,7 +127,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                             <div className="user_displayer">
                                 {project.members.map((element, key) => {
                                     return (
-                                        <div className="user_display_choice" key={key} onClick={() => addMemberToArray(element, array, setArray)} style={highlightIt(array, element, isMemberInResult, search)}>
+                                        <div className={`user_display_choice ${isInResults(element, isMemberInResult, search, "flex")} ${isSelected(array, element)}`} key={key} onClick={() => addMemberToArray(element, array, setArray)}>
                                             <MediumAvatar pic={element.picture} />
                                             <p>{element.pseudo}</p>
                                         </div>

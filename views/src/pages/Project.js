@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { NavLink, useParams, Routes, Route } from 'react-router-dom'
 import { getProject } from '../actions/project.action';
-import { convertDeltaToHTML } from '../components/tools/functions/function'
+import { convertDeltaToHTML } from '../components/tools/editor/functions';
 import Header from '../components/project/project-page/Header';
 import Actualities from '../components/project/project-page/Actualities';
 import Gallery from '../components/project/project-page/Gallery';

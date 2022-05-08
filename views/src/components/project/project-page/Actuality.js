@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { BigAvatar } from '../../tools/components/Avatars'
-import { convertDeltaToHTML } from '../../tools/functions/function'
 import { dateParser } from '../../Utils'
 import { coverPicture } from '../../tools/functions/useAvatar'
+import { convertDeltaToHTML } from '../../tools/editor/functions'
 
 const Actuality = ({ project }) => {
     const { urlid, url } = useParams()

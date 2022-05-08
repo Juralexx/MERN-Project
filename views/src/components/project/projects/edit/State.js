@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { DropdownInput } from '../../../tools/components/Inputs'
-import { stateToString } from '../../../tools/functions/function'
 import { useClickOutside } from '../../../tools/functions/useClickOutside'
+import { stateToString } from '../../functions'
 
 const State = ({ state, setState }) => {
     const [display, setDisplay] = useState(false)

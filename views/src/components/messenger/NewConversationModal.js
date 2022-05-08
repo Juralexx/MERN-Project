@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { addActive } from '../Utils';
 import { Button, TextButton } from '../tools/components/Button';
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs';
 import { MediumAvatar, TinyAvatar } from '../tools/components/Avatars';
@@ -14,7 +15,6 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, friendsArr,
     const [name, setName] = useState()
     const [description, setDescription] = useState()
     const [members, setMembers] = useState([])
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
 
     const createNewConversation = async () => {
         let usr = { id: user._id, pseudo: user.pseudo, picture: user.picture }

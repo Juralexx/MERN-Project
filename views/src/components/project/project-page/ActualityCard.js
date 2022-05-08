@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { convertDeltaToHTML } from '../../tools/functions/function';
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import { convertDeltaToHTML } from '../../tools/editor/functions';
 import NoContent from './NoContent';
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { BiNews } from 'react-icons/bi';
 
 const ActualityCard = ({ project, user }) => {

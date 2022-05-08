@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../../tools/functions/task'
-import { reduceString } from '../../../tools/functions/reduceString'
-import { dateParserWithoutYear, reverseArray } from '../../../Utils'
+import { addActive, dateParserWithoutYear, getDifference, reduceString, reverseArray } from '../../../Utils'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import TaskModal from './TaskModal'
 import ToolsMenu from '../../../tools/components/ToolsMenu'
 import { TextButton } from '../../../tools/components/Button'
 import { DropdownInput } from '../../../tools/components/Inputs'
-import { getDifference } from '../../../tools/functions/function'
 import { RiCalendarTodoLine } from 'react-icons/ri'
 import { MdOutlineMessage } from 'react-icons/md'
 
@@ -23,7 +21,6 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [navbar, setNavbar] = useState(1)
     const [filter, setFilter] = useState("")
     const dispatch = useDispatch()
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
 
     useEffect(() => {
         if (navbar === 1) {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { getDifference } from '../../../tools/functions/function'
 import { stateToBackground, statusToBorder, isDatePassed, stateToString, statusToString, statusToBackground, removeTask, changeState } from '../../../tools/functions/task'
-import { dateParser } from '../../../Utils'
+import { dateParser, getDifference } from '../../../Utils'
 import { HiPlus } from 'react-icons/hi'
 import { DragDropContext } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";

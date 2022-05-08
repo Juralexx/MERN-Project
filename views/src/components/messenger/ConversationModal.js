@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { dateParser } from '../Utils'
+import { addActive, dateParser } from '../Utils'
 import Modal from '../tools/components/Modal'
 import { Button, TextButton } from '../tools/components/Button'
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs'
@@ -15,7 +15,6 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, delet
     const [changeName, setChangeName] = useState(false)
     const [description, setDescription] = useState(conversation.description)
     const [changeDescription, setChangeDescription] = useState(false)
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
 
     const [addMember, setAddMember] = useState(false)
     const [membersToAdd, setMembersToAdd] = useState([])

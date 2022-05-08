@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateProject } from '../../../../actions/project.action'
-import { geoJSONStructure, geolocToFloat, ISOtoNavFormat, removeAccents } from '../../../Utils'
+import { addActive, geoJSONStructure, geolocToFloat, ISOtoNavFormat, removeAccents } from '../../../Utils'
 import { Button, OutlinedButton } from '../../../tools/components/Button'
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
@@ -46,7 +46,6 @@ const Edit = ({ project }) => {
     const [isErr, setErr] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
 
     const [nav, setNav] = useState(0)
 

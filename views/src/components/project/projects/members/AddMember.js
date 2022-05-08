@@ -5,8 +5,8 @@ import Modal from '../../../tools/components/Modal'
 import { ClassicInput } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { MediumAvatar, TinyAvatar } from '../../../tools/components/Avatars'
-import { sendProjectMemberRequest } from '../../../tools/functions/member';
-import { addMemberToArray, removeMemberFromArray, highlightIt } from '../../../tools/functions/member';
+import { isInResults, isSelected, sendProjectMemberRequest } from '../../../tools/functions/member';
+import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/member';
 import { SmallLoader } from '../../../tools/components/Loader';
 import { IoClose } from 'react-icons/io5'
 
@@ -74,7 +74,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                         <div className="user_displayer">
                             {friendsFound.map((element, key) => {
                                 return (
-                                    <div className="user_display_choice" key={key} onClick={() => addMemberToArray(element, user, array, setArray)} style={highlightIt(array, element, isFriendInResult, search)}>
+                                    <div className={`user_display_choice ${isInResults(element, isFriendInResult, search, "flex")} ${isSelected(array, element)}`} key={key} onClick={() => addMemberToArray(element, user, array, setArray)}>
                                         <MediumAvatar pic={element.picture} />
                                         <p>{element.pseudo}</p>
                                     </div>

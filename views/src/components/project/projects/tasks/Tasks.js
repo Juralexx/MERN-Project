@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { reverseArray } from '../../../Utils'
+import { addActive, reverseArray } from '../../../Utils'
 import { StartIconOutlinedButton } from '../../../tools/components/Button'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
@@ -18,7 +18,6 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [navbar, setNavbar] = useState(1)
     const [layout, setLayout] = useState("kanban")
     const localStore = localStorage.getItem("taskLayout")
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [end, setEnd] = useState("")

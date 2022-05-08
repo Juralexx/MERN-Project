@@ -5,10 +5,10 @@ import Modal from "../components/Modal";
 import { IconInput } from "../components/Inputs";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { departments, regions } from "./api";
+import { addActive } from "../../Utils";
 
 const MapModal = ({ open, setOpen, location, setLocation }) => {
     const [ByDepartments, setDepartments] = useState(false)
-    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
     const [isRegionInResult, setRegionsInResult] = useState([])
     const [openRegions, setOpenRegions] = useState(false)
     const [searchRegion, setSearchRegion] = useState(false)
