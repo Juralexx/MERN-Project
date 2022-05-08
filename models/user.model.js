@@ -118,11 +118,8 @@ const UserModel = new mongoose.Schema(
                 type: String,
                 id: String,
                 last_message_seen: String,
+                favorite: Boolean
             }
-        },
-
-        favorite_conversations: {
-            type: [String]
         },
 
         notifications: {

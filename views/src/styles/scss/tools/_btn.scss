@@ -164,6 +164,7 @@
     border-radius   : 40px;
     cursor          : pointer;
     transform       : scale(1);
+    background-color: var(--x-light);
 
     svg {
         width  : 20px;
@@ -262,7 +263,27 @@
             color            : var(--primary);
             background-color : var(--light);
         }
+    }
+}
 
+.add-more-users {
+    display     : flex;
+    align-items : center;
+    padding     : 10px 0;
+    font-weight : 600;
+    cursor      : pointer;
 
+    svg {
+        height           : 36px;
+        width            : 36px;
+        padding          : 5px;
+        margin-right     : 10px;
+        color            : var(--primary);
+        background-color : rgba(var(--primary-rgb), 0.15);
+        border-radius    : 5px;
+    }
+
+    &:hover {
+        color : var(--primary);
     }
 }

@@ -1,33 +1,10 @@
 import axios from "axios";
 
-export const GET_CONVERSATION = "GET_CONVERSATION"
-export const CREATE_CONVERSATION = "CREATE_CONVERSATION"
-export const RECEIVE_CREATE_CONVERSATION = "RECEIVE_CREATE_CONVERSATION"
-export const UPDATE_CONVERSATION = "UPDATE_CONVERSATION"
-export const RECEIVE_UPDATE_CONVERSATION = "RECEIVE_UPDATE_CONVERSATION"
-export const DELETE_CONVERSATION = "DELETE_CONVERSATION"
-export const RECEIVE_DELETE_CONVERSATION = "RECEIVE_DELETE_CONVERSATION"
-
-export const ADD_MEMBER_CONVERSATION = "ADD_MEMBER_CONVERSATION"
-export const RECEIVE_ADD_MEMBER_CONVERSATION = "RECEIVE_ADD_MEMBER_CONVERSATION"
-export const REMOVE_MEMBER_CONVERSATION = "REMOVE_MEMBER_CONVERSATION"
-export const RECEIVE_REMOVE_MEMBER_CONVERSATION = "RECEIVE_REMOVE_MEMBER_CONVERSATION"
-
-export const POST_MESSAGE = "POST_MESSAGE"
-export const RECEIVE_POST_MESSAGE = "RECEIVE_POST_MESSAGE"
-export const UPDATE_MESSAGE = "UPDATE_MESSAGE"
-export const RECEIVE_UPDATE_MESSAGE = "RECEIVE_UPDATE_MESSAGE"
-export const DELETE_MESSAGE = "DELETE_MESSAGE"
-export const RECEIVE_DELETE_MESSAGE = "RECEIVE_DELETE_MESSAGE"
-export const SET_LAST_MESSAGE_SEEN = "SET_LAST_MESSAGE_SEEN"
-export const ADD_EMOJI = "ADD_EMOJI"
-export const RECEIVE_ADD_EMOJI = "RECEIVE_ADD_EMOJI"
-export const REMOVE_EMOJI = "REMOVE_EMOJI"
-export const RECEIVE_REMOVE_EMOJI = "RECEIVE_REMOVE_EMOJI"
-
 /**
  * Get conversation
  */
+
+export const GET_CONVERSATION = "GET_CONVERSATION"
 
 export const getConversation = (conversationId) => {
     return async (dispatch) => {
@@ -41,8 +18,10 @@ export const getConversation = (conversationId) => {
 }
 
 /**
- * Get conversation
+ * Create conversation
  */
+
+export const CREATE_CONVERSATION = "CREATE_CONVERSATION"
 
 export const createConversation = (conversation) => {
     return async (dispatch) => {
@@ -68,15 +47,19 @@ export const createConversation = (conversation) => {
     }
 }
 
+export const RECEIVE_CREATE_CONVERSATION = "RECEIVE_CREATE_CONVERSATION"
+
 export const receiveCreateConversation = (conversationId) => {
     return async (dispatch) => {
-         dispatch({ type: RECEIVE_CREATE_CONVERSATION, payload: { conversationId } })
+        dispatch({ type: RECEIVE_CREATE_CONVERSATION, payload: { conversationId } })
     }
 }
 
 /**
  * Update conversation
  */
+
+export const UPDATE_CONVERSATION = "UPDATE_CONVERSATION"
 
 export const updateConversation = (conversationId, description, name, owner, waiter, last_message) => {
     return async (dispatch) => {
@@ -92,15 +75,19 @@ export const updateConversation = (conversationId, description, name, owner, wai
     }
 }
 
+export const RECEIVE_UPDATE_CONVERSATION = "RECEIVE_UPDATE_CONVERSATION"
+
 export const receiveUpdateConversation = (description, name, owner, waiter, last_message) => {
     return async (dispatch) => {
-         dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, waiter, last_message } })
+        dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, waiter, last_message } })
     }
 }
 
 /**
  * Delete conversation
  */
+
+export const DELETE_CONVERSATION = "DELETE_CONVERSATION"
 
 export const deleteConversation = (conversationId) => {
     return async (dispatch) => {
@@ -113,9 +100,11 @@ export const deleteConversation = (conversationId) => {
     }
 }
 
+export const RECEIVE_DELETE_CONVERSATION = "RECEIVE_DELETE_CONVERSATION"
+
 export const receiveDeleteConversation = (conversationId) => {
     return async (dispatch) => {
-         dispatch({ type: DELETE_CONVERSATION, payload: { conversationId } })
+        dispatch({ type: DELETE_CONVERSATION, payload: { conversationId } })
     }
 }
 
@@ -123,7 +112,9 @@ export const receiveDeleteConversation = (conversationId) => {
  * Add member to conversation
  */
 
- export const addMember = (conversationId, newMember) => {
+export const ADD_MEMBER_CONVERSATION = "ADD_MEMBER_CONVERSATION"
+
+export const addMember = (conversationId, newMember) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -139,21 +130,24 @@ export const receiveDeleteConversation = (conversationId) => {
 
 export const receiveNewMember = (newMember) => {
     return async (dispatch) => {
-         dispatch({ type: ADD_MEMBER_CONVERSATION, payload: { newMember } })
+        dispatch({ type: ADD_MEMBER_CONVERSATION, payload: { newMember } })
     }
 }
 
+export const RECEIVE_ADD_MEMBER_CONVERSATION = "RECEIVE_ADD_MEMBER_CONVERSATION"
+
 export const receiveAddMember = (conversationId) => {
     return async (dispatch) => {
-         dispatch({ type: RECEIVE_ADD_MEMBER_CONVERSATION, payload: { conversationId } })
+        dispatch({ type: RECEIVE_ADD_MEMBER_CONVERSATION, payload: { conversationId } })
     }
 }
 
 /**
  * Remove member from conversation
  */
+export const REMOVE_MEMBER_CONVERSATION = "REMOVE_MEMBER_CONVERSATION"
 
- export const removeMember = (conversationId, memberId) => {
+export const removeMember = (conversationId, memberId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -169,19 +163,23 @@ export const receiveAddMember = (conversationId) => {
 
 export const receiveRemovedMember = (memberId) => {
     return async (dispatch) => {
-         dispatch({ type: REMOVE_MEMBER_CONVERSATION, payload: { memberId } })
+        dispatch({ type: REMOVE_MEMBER_CONVERSATION, payload: { memberId } })
     }
 }
 
+export const RECEIVE_REMOVE_MEMBER_CONVERSATION = "RECEIVE_REMOVE_MEMBER_CONVERSATION"
+
 export const receiveRemoveMember = (conversationId) => {
     return async (dispatch) => {
-         dispatch({ type: RECEIVE_REMOVE_MEMBER_CONVERSATION, payload: { conversationId } })
+        dispatch({ type: RECEIVE_REMOVE_MEMBER_CONVERSATION, payload: { conversationId } })
     }
 }
 
 /**
  * Post new message
  */
+
+export const POST_MESSAGE = "POST_MESSAGE"
 
 export const sendMessage = (conversationId, message) => {
     return async (dispatch) => {
@@ -195,15 +193,19 @@ export const sendMessage = (conversationId, message) => {
     }
 }
 
+export const RECEIVE_POST_MESSAGE = "RECEIVE_POST_MESSAGE"
+
 export const receiveNewMessage = (message) => {
     return async (dispatch) => {
-         dispatch({ type: RECEIVE_POST_MESSAGE, payload: { message } })
+        dispatch({ type: RECEIVE_POST_MESSAGE, payload: { message } })
     }
 }
 
 /**
  * Update message
  */
+
+export const UPDATE_MESSAGE = "UPDATE_MESSAGE"
 
 export const updateMessage = (conversationId, messageId, text) => {
     return async (dispatch) => {
@@ -221,7 +223,7 @@ export const updateMessage = (conversationId, messageId, text) => {
 
 export const receiveUpdateMessage = (messageId, text) => {
     return async (dispatch) => {
-         dispatch({ type: UPDATE_MESSAGE, payload: { messageId, text } })
+        dispatch({ type: UPDATE_MESSAGE, payload: { messageId, text } })
     }
 }
 
@@ -229,7 +231,9 @@ export const receiveUpdateMessage = (messageId, text) => {
  * Delete message
  */
 
- export const deleteMessage = (conversationId, messageId) => {
+export const DELETE_MESSAGE = "DELETE_MESSAGE"
+
+export const deleteMessage = (conversationId, messageId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -245,7 +249,7 @@ export const receiveUpdateMessage = (messageId, text) => {
 
 export const receiveDeleteMessage = (messageId) => {
     return async (dispatch) => {
-         dispatch({ type: DELETE_MESSAGE, payload: { messageId } })
+        dispatch({ type: DELETE_MESSAGE, payload: { messageId } })
     }
 }
 
@@ -253,7 +257,9 @@ export const receiveDeleteMessage = (messageId) => {
  * Set the last message user seen
  */
 
- export const setLastMessageSeen = (userId, conversationId, messageId) => {
+export const SET_LAST_MESSAGE_SEEN = "SET_LAST_MESSAGE_SEEN"
+
+export const setLastMessageSeen = (userId, conversationId, messageId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -271,7 +277,9 @@ export const receiveDeleteMessage = (messageId) => {
  * Add emoji to message
  */
 
- export const addEmoji = (conversationId, messageId, emoji) => {
+export const ADD_EMOJI = "ADD_EMOJI"
+
+export const addEmoji = (conversationId, messageId, emoji) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -287,7 +295,7 @@ export const receiveDeleteMessage = (messageId) => {
 
 export const receiveAddEmoji = (messageId, emoji) => {
     return async (dispatch) => {
-         dispatch({ type: ADD_EMOJI, payload: { messageId, emoji } })
+        dispatch({ type: ADD_EMOJI, payload: { messageId, emoji } })
     }
 }
 
@@ -295,7 +303,9 @@ export const receiveAddEmoji = (messageId, emoji) => {
  * Remove emoji from message
  */
 
- export const removeEmoji = (conversationId, messageId, emoji) => {
+export const REMOVE_EMOJI = "REMOVE_EMOJI"
+
+export const removeEmoji = (conversationId, messageId, emoji) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -311,6 +321,46 @@ export const receiveAddEmoji = (messageId, emoji) => {
 
 export const receiveRemoveEmoji = (messageId, emoji) => {
     return async (dispatch) => {
-         dispatch({ type: REMOVE_EMOJI, payload: { messageId, emoji } })
+        dispatch({ type: REMOVE_EMOJI, payload: { messageId, emoji } })
+    }
+}
+
+/**
+ * Add conversation to favorites
+ */
+
+export const ADD_FAVORITE_CONVERSATION = "ADD_FAVORITE_CONVERSATION"
+
+export const addFavorite = (userId, conversationId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/conversation/add-favorite/` + userId,
+            data: { conversationId }
+        })
+            .then(() => {
+                dispatch({ type: ADD_FAVORITE_CONVERSATION, payload: { conversationId } })
+            })
+            .catch(err => console.error(err))
+    }
+}
+
+/**
+ * Add conversation to favorites
+ */
+
+export const REMOVE_FAVORITE_CONVERSATION = "REMOVE_FAVORITE_CONVERSATION"
+
+export const removeFavorite = (userId, conversationId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/conversation/remove-favorite/` + userId,
+            data: { conversationId }
+        })
+            .then(() => {
+                dispatch({ type: REMOVE_FAVORITE_CONVERSATION, payload: { conversationId } })
+            })
+            .catch(err => console.error(err))
     }
 }

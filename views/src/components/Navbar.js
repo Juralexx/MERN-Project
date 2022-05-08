@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MiniNav from "./mini-nav/MiniNav";
+import { StartIconButton } from "./tools/components/Button";
+import { useClickOutside } from "./tools/functions/useClickOutside";
 import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai'
 import { MdOutlineMessage, MdOutlineScreenSearchDesktop, MdDehaze } from 'react-icons/md'
 import { BiUser } from 'react-icons/bi'
 import { RiLoginCircleLine } from 'react-icons/ri'
 import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
-import { StartIconButton } from "./tools/components/Button";
-import { useClickOutside } from "./tools/functions/useClickOutside";
 
 const Navbar = ({ websocket, user, uid }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
@@ -25,7 +25,7 @@ const Navbar = ({ websocket, user, uid }) => {
                 {location.pathname !== "/register" && location.pathname !== "/login" ? (
                     <>
                         <div className="logo_container">
-                            <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />
+                            {uid && <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />}
                             <Link to="/">
                                 <div className="logo_inner">
                                     <img className="logo-main sm:block hidden" src="/img/logo-top.png" alt="" />
@@ -83,6 +83,12 @@ const Navbar = ({ websocket, user, uid }) => {
                             <>
                                 <div className={`${toggled ? "nav_container open" : "nav_container"}`}>
                                     <ul className="nav_ul">
+                                        <li className="nav_li flex lg:!hidden border-b" onClick={closeOnClick}>
+                                            <NavLink to="/add-project" className={isThisActive}>
+                                                <AiOutlinePlus className="nav_icon" />
+                                                <p className="nav_p">Déposer un projet</p>
+                                            </NavLink>
+                                        </li>
                                         <li className="nav_li" onClick={closeOnClick}>
                                             <NavLink to="/" className={isThisActive}>
                                                 <AiOutlineHome className="nav_icon" />
@@ -107,6 +113,18 @@ const Navbar = ({ websocket, user, uid }) => {
                                                 <p className="nav_p">Messages</p>
                                             </NavLink>
                                         </li>
+                                        <li className="nav_li flex lg:!hidden border-t mt-10" onClick={closeOnClick}>
+                                            <NavLink to="/login" className={isThisActive}>
+                                                <BiUser className="nav_icon" />
+                                                <p className="nav_p">Connexion</p>
+                                            </NavLink>
+                                        </li>
+                                        <li className="nav_li flex lg:!hidden" onClick={closeOnClick}>
+                                            <NavLink to="/register" className={isThisActive}>
+                                                <RiLoginCircleLine className="nav_icon" />
+                                                <p className="nav_p">Inscription</p>
+                                            </NavLink>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div className="nav_container-right">
@@ -125,7 +143,7 @@ const Navbar = ({ websocket, user, uid }) => {
                                         </li>
                                     </ul>
                                 </div>
-                                <div className="mini_nav_container">
+                                <div className="mini_nav_container lg:hidden">
                                     <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />
                                 </div>
                             </>

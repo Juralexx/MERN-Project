@@ -2,14 +2,13 @@ import UserModel from '../../models/user.model.js'
 
 export const addConversationToFavorite = async (req, res) => {
     try {
-        await UserModel.findByIdAndUpdate(
-            { _id: req.params.id },
+        await UserModel.updateOne(
             {
-                $addToSet: {
-                    favorite_conversations: req.body.conversationId
-                },
+                _id: req.params.id,
+                conversations: { $elemMatch: { id: req.body.conversationId } },
             },
-            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+            { $set: { "conversations.$.favorite": true } },
+            { new: true, upsert: true, setDefaultsOnInsert: true },
         )
             .then((docs) => { res.send(docs) })
             .catch((err) => { return res.status(500).send({ message: err }) })
@@ -20,13 +19,12 @@ export const addConversationToFavorite = async (req, res) => {
 
 export const removeConversationFromFavorite = async (req, res) => {
     try {
-        await UserModel.findByIdAndUpdate(
-            { _id: req.params.id },
+        await UserModel.updateOne(
             {
-                $pull: {
-                    favorite_conversations: req.body.conversationId
-                },
+                _id: req.params.id,
+                conversations: { $elemMatch: { id: req.body.conversationId } },
             },
+            { $set: { "conversations.$.favorite": false } },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
         )
             .then((docs) => { res.send(docs) })
@@ -37,7 +35,6 @@ export const removeConversationFromFavorite = async (req, res) => {
 };
 
 export const setLastMessageSeen = async (req, res) => {
-    console.log(req.body.conversationId)
     try {
         await UserModel.updateOne(
             {

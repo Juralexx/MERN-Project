@@ -27,10 +27,17 @@
     border-right : 1px solid var(--light-border);
 }
 
+.bg-prim-light {
+    background-color: rgba(var(--primary-rgb), 0.2);
+}
+
 .bold {
     font-weight : 600;
 }
 
+.f-12 {
+    font-size : 12px;
+}
 .f-24 {
     font-size : 24px;
 }

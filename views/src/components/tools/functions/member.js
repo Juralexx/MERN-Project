@@ -148,6 +148,18 @@ export const highlightIt = (array, element, isInResult, search) => {
     })
 }
 
+export const isInResults = (element, isInResult, search, classe) => {
+    if (search) {
+        if (isInResult.includes(element)) return classe
+        else return 'hidden'
+    } else return classe
+}
+
+export const isSelected = (array, element) => {
+    if (array.some(member => member.id === element._id))
+        return "bg-prim-light"
+}
+
 /***************************************************************************************************************************************************/
 /******************************************************************** ADMIN ************************************************************************/
 

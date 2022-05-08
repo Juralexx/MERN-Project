@@ -15,7 +15,7 @@ header {
         z-index       : 800;
 
         .logo_container {
-            position        : absolute;
+            position        : relative;
             top             : 0;
             left            : 0;
             height          : 100%;
@@ -50,10 +50,6 @@ header {
                 margin-right : 15px;
                 cursor       : pointer;
             }
-        }
-
-        .nav_container-right {
-            right : 50px;
         }
 
         .nav_container, .nav_container-right {
@@ -146,6 +142,18 @@ header {
                 }
             }
         }
+        
+        .nav_container-right {
+            right  : 10px;
+            margin : 0;
+            .nav_ul {
+                .nav_li {
+                    .nav_link {
+                        padding : 0 15px 0;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -158,11 +166,11 @@ header {
         .navbar {
             .nav_container {
                 margin-left  : auto;
-                margin-right : 270px;
+                margin-right : 50px;
                 .nav_ul {
                     .nav_li {
                         .nav_link {
-                            padding : 0 15px 0;
+                            padding : 0 20px 0;
                         }
                     }
                 }
@@ -176,6 +184,7 @@ header {
         .navbar {
             .logo_container {
                 padding-left : 15px;
+                margin-right : auto;
                 .toggle_icon {
                     display : block;
                 }
@@ -228,13 +237,14 @@ header {
             .nav_container-right {
                 margin-left  : auto;
                 margin-right : 0;
+                right        : 10px;
                 .nav_ul {
                     .register {
                         display : none;
                     }
                     .nav_li {
                         .nav_link {
-                            padding:0 10px;
+                            padding:0 15px;
                             &:before {
                                 content : none;
                             }
@@ -246,9 +256,9 @@ header {
                             .nav_icon {
                                 margin-bottom : 0;
                                 height        : 30px;
-                                width         : 44px;
+                                width         : 56px;
                                 border-right  : 1px solid var(--light-border);
-                                padding        : 0 9px;
+                                padding        : 0 15px;
                             }
                             .nav_p {
                                 display : none;

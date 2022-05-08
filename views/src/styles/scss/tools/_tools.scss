@@ -84,7 +84,7 @@
         padding          : 4px 8px;
         margin           : 4px;
         color            : var(--text);
-        background-color : var(--primary);
+        background-color : rgba(var(--primary-rgb), 0.2);
         border-radius    : var(--radius);
         cursor           : pointer;
     
@@ -97,8 +97,11 @@
             margin-top    : 1px;
     
             &:hover {
-                background-color : var(--primary-dark);
+                background-color : rgba(var(--primary-rgb), 0.3);
             }
+        }
+        p {
+            margin-top : 1px;
         }
     }
 }
@@ -113,15 +116,17 @@
         overflow-y : auto;
 
         .user_display_choice {
-            display       : flex;
-            align-items   : center;
-            padding       : 8px;
-            margin        : 4px 0;
-            cursor        : pointer;
-            border-radius : var(--radius);
+            display         : flex;
+            align-items     : center;
+            justify-content : space-between;
+            padding         : 8px;
+            margin          : 4px 0;
+            cursor          : pointer;
+            border-radius   : var(--radius);
 
-            &:hover {
-                background : var(--content-x-light);
+            .user {
+                display     : flex;
+                align-items : center;
             }
         }
     }

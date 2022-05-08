@@ -1,5 +1,5 @@
 .mini_nav_container {
-    position    : absolute;
+    position    : relative;
     top         : 0;
     right       : 20px;
     display     : flex;
@@ -23,7 +23,7 @@
                 position        : relative;
                 display         : flex;
                 height          : 100%;
-                min-width       : 43px;
+                min-width       : 39px;
                 justify-content : center;
                 align-items     : center;
                 cursor          : pointer;
@@ -137,11 +137,18 @@
             }
         }
     }
+
+    .toggle_icon {
+        height       : 28px;
+        width        : 28px;
+        margin-right : 15px;
+        cursor       : pointer;
+    }
 }
 
 @media(max-width: 992px) {
     .mini_nav_container {
-        right : 5px;
+        right : 10px;
         .mini_nav {
             .mini_nav-ul {
                 .mini_nav-li {

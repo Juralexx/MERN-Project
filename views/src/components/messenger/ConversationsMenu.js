@@ -1,20 +1,27 @@
 import React, { useState } from 'react'
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
-import { ClassicInput } from '../tools/components/Inputs';
+import { IconInput } from '../tools/components/Inputs';
+import { IconToggle } from '../tools/components/Button';
+import { isInResults } from '../tools/functions/member';
+import { FaCaretDown } from 'react-icons/fa';
+import { BiSearchAlt } from 'react-icons/bi';
+import { HiPencilAlt } from 'react-icons/hi'
+import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 
-const ConversationsMenu = ({ friends, uid, user, isLoading, setCurrentChat, conversations, changeCurrentChat, getNewMessage, notification, setConversations, websocket }) => {
-    const [isConversationInResult, setConversationsInResult] = useState([])
+const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, setCurrentChat, changeCurrentChat, getNewMessage, notification }) => {
+    const [open, setOpen] = useState(false)
+    const [isResults, setResults] = useState([])
     const [search, setSearch] = useState(false)
-    const [searchQuery, setSearchQuery] = useState("")
-    const isEmpty = !isConversationInResult || isConversationInResult.length === 0
-    const regexp = new RegExp(searchQuery, 'i');
+    const [query, setQuery] = useState("")
+    const isEmpty = !isResults || isResults.length === 0
+    const regexp = new RegExp(query, 'i');
 
     const searchConversation = () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        if (searchQuery.length >= 2) {
-            const response = conversations.filter(conversation => conversation.members.some(member => regexp.test(member.pseudo)))
-            setConversationsInResult(response)
+        if (!query || query.trim() === "") { return }
+        if (query.length >= 2) {
+            const res = [...favorites, ...conversations].filter(conversation => conversation.members.some(member => regexp.test(member.pseudo)))
+            setResults(res)
             setSearch(true)
             if (isEmpty) {
                 setSearch(false)
@@ -24,43 +31,65 @@ const ConversationsMenu = ({ friends, uid, user, isLoading, setCurrentChat, conv
 
     return (
         <div className="conversation-menu">
-            <div className="flex pb-5">
-                <div className="search_input">
-                    <ClassicInput
-                        className="full"
-                        placeholder="Rechercher une conversation..."
-                        value={searchQuery}
-                        onInput={e => setSearchQuery(e.target.value)}
-                        onChange={searchConversation}
-                    />
-                </div>
-                <div className="create_conversation_tools">
-                    <NewConversationModal
-                        user={user}
-                        friends={friends}
-                        currentId={uid}
-                        changeCurrentChat={setCurrentChat}
-                        websocket={websocket}
-                        setConversations={setConversations}
-                    />
+            <div className="flex justify-between pb-3">
+                <h2 className="bold">Conversations</h2>
+                <div className="flex">
+                    <IconToggle icon={<AiOutlineUsergroupAdd />} className="mr-2" onClick={() => setOpen(true)} />
+                    <IconToggle icon={<HiPencilAlt />} />
                 </div>
             </div>
+            <div className="pb-4 mb-3 border-b">
+                <IconInput className="full is_start_icon" icon={<BiSearchAlt />} placeholder="Rechercher une conversation..." value={query} onInput={e => setQuery(e.target.value)} onChange={searchConversation} />
+            </div>
+            <NewConversationModal
+                open={open}
+                setOpen={setOpen}
+                uid={uid}
+                user={user}
+                friendsArr={friendsArr}
+                changeCurrentChat={setCurrentChat}
+                websocket={websocket}
+                setConversations={setConversations}
+            />
 
             {!isLoading ? (
-                conversations.length > 0 ? (
-                    conversations.map((element, key) => {
-                        return (
-                            <div key={key} onClick={() => changeCurrentChat(element)} style={{ display: search ? (isConversationInResult.includes(element) ? "block" : "none") : ("block") }}>
-                                <Conversation
-                                    uid={uid}
-                                    user={user}
-                                    conversation={element}
-                                    newMessage={getNewMessage}
-                                    notification={notification}
-                                />
+                conversations.length > 0 || favorites.length > 0 ? (
+                    <>
+                        {favorites.length > 0 &&
+                            <div className="conversations_container">
+                                <div className="conversation-menu-tool">Favoris <FaCaretDown /></div>
+                                {favorites.map((element, key) => {
+                                    return (
+                                        <div className={`${isInResults(element, isResults, search, "block")}`} key={key} onClick={() => changeCurrentChat(element)}>
+                                            <Conversation
+                                                uid={uid}
+                                                user={user}
+                                                conversation={element}
+                                                newMessage={getNewMessage}
+                                                notification={notification}
+                                            />
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        )
-                    })
+                        }
+                        <div className="conversations_container">
+                            <div className="conversation-menu-tool">Conversations <FaCaretDown /></div>
+                            {conversations.map((element, key) => {
+                                return (
+                                    <div key={key} onClick={() => changeCurrentChat(element)} style={{ display: search ? (isResults.includes(element) ? "block" : "none") : ("block") }}>
+                                        <Conversation
+                                            uid={uid}
+                                            user={user}
+                                            conversation={element}
+                                            newMessage={getNewMessage}
+                                            notification={notification}
+                                        />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </>
                 ) : (
                     <div className="no-conversation-yet !mt-10">
                         <p>Aucune conversation à afficher...</p>

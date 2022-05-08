@@ -12,16 +12,23 @@
         .conversation-box-top {
             position        : relative;
             display         : flex;
+            align-items     : center;
             justify-content : space-between;
             height          : 60px;
-            padding         : 13px 20px;
-            background      : var(--light);
+            padding         : 8px 15px;
             border-bottom   : 1px solid var(--light-border);
+            box-shadow      : 0 0 4px rgba(0, 0, 0, 0.2);
+            z-index         : 10;
 
             .conversation-box-members {
-                display     : flex;
-                align-items : center;
-                cursor      : pointer;
+                display       : flex;
+                align-items   : center;
+                cursor        : pointer;
+                padding       : 6px;
+                border-radius : var(--radius);
+                &:hover {
+                    background-color : rgba(var(--primary-rgb), 0.1);
+                }
 
                 .conversation-img-container {
                     display      : flex;
@@ -43,6 +50,8 @@
                 .conversation-name {
                     display     : flex;
                     align-items : center;
+                    font-weight : 600;
+                    font-size   : 16px;
 
                     svg {
                         margin-left : 5px;
@@ -70,29 +79,20 @@
         cursor      : pointer;
 
         .date {
-            display       : flex;
-            align-items   : center;
-            text-align    : center;
-            width         : 100%;
-            padding       : 6px 20px;
-            font-size     : 12px;
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            text-align      : center;
+            width           : 100%;
+            padding         : 6px 20px;
+            font-size       : 12px;
+            color           : var(--text-secondary);
 
             svg {
-                width       : 20px;
-                height      : 20px;
+                width       : 16px;
+                height      : 16px;
                 margin-top  : 1px;
-                margin-left : 10px;
-            }
-            
-            &:before, &:after {
-                content    : '';
-                border-top : 1px solid var(--light-border);
-                margin     : 0 20px 0 0;
-                flex       : 1 0 20px;
-            }
-            
-            &:after {
-                margin : 0 0 0 20px;
+                margin-left : 3px;
             }
         }
 
@@ -125,7 +125,6 @@
 
 .conversation-bottom {
     padding    : 10px;
-    background : var(--x-light);
 }
 
 .message-text-tools {
@@ -167,6 +166,7 @@
     border          : 2px solid var(--light-border);
     border-radius   : 5px;
     background      : var(--content-light);
+    box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
 }
 
 .message-text-editor {
@@ -264,8 +264,8 @@
                 .message-right-bottom {
                     margin-left : 5px;
                     text-align  : right;
-                    font-size   : 11px;
-                    line-height : 17px;
+                    font-size   : 10px;
+                    line-height : 14px;
                     color       : var(--text-secondary);
                 }
 
@@ -274,6 +274,7 @@
                     background    : rgba(var(--primary-rgb), 0.30);
                     margin        : 5px 0;
                     border-radius : 0 8px 8px;
+                    cursor        : pointer;
                     p {
                         line-height : 17px;
                     }

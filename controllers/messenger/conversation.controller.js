@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import conversationModel from '../../models/conversation.model.js';
+import ConversationModel from '../../models/conversation.model.js';
 import UserModel from '../../models/user.model.js';
 const ObjectID = mongoose.Types.ObjectId
 
@@ -23,13 +23,14 @@ export const createConversation = async (req, res) => {
         const savedConversation = await newConversation.save()
         if (savedConversation) {
             savedConversation.members.map(async member => {
-                await userModel.findByIdAndUpdate(
+                await UserModel.findByIdAndUpdate(
                     { _id: member.id },
                     {
                         $addToSet: {
                             conversations: {
                                 conversation: savedConversation._id,
                                 last_message_seen: null,
+                                favorite: false
                             }
                         },
                     },
@@ -51,7 +52,7 @@ export const getConversation = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
-    conversationModel.findById({ _id: req.params.id },
+    ConversationModel.findById({ _id: req.params.id },
         (err, docs) => {
             if (!err) {
                 res.send(docs)
@@ -71,8 +72,8 @@ export const updateConversation = async (req, res) => {
             { _id: req.params.id },
             {
                 $set: {
-                    description: req.body.description,
                     name: req.body.name,
+                    description: req.body.description,
                     owner: req.body.owner,
                     waiter: req.body.waiter,
                 }

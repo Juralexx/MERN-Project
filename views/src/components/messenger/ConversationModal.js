@@ -2,33 +2,35 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { dateParser } from '../Utils'
 import Modal from '../tools/components/Modal'
-import { Button } from '../tools/components/Button'
-import { ClassicInput } from '../tools/components/Inputs'
+import { Button, TextButton } from '../tools/components/Button'
+import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs'
+import { MediumAvatar } from '../tools/components/Avatars'
+import { isInResults } from '../tools/functions/member'
+import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
+import { otherMembersIDs } from './tools/function'
 
-const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, deleteConversation, leaveConversation, addNewMember }) => {
-
-    const [displayInfos, setDisplayInfos] = useState(true)
-    const [displayMembers, setDisplayMembers] = useState(false)
+const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, deleteConversation, leaveConversation, addNewMember }) => {
+    const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState(conversation.name)
     const [changeName, setChangeName] = useState(false)
     const [description, setDescription] = useState(conversation.description)
     const [changeDescription, setChangeDescription] = useState(false)
+    const addActive = (state, classe) => { if (state) { return classe } else { return "" } }
 
     const [addMember, setAddMember] = useState(false)
     const [membersToAdd, setMembersToAdd] = useState([])
 
-    const [isMemberInResult, setMemberInResult] = useState([])
+    const [isResults, setResults] = useState([])
     const [search, setSearch] = useState(false)
-    const [searchQuery, setSearchQuery] = useState("")
-    const isEmpty = !isMemberInResult || isMemberInResult.length === 0
-    const regexp = new RegExp(searchQuery, 'i')
+    const [query, setQuery] = useState("")
+    const isEmpty = !isResults || isResults.length === 0
+    const regexp = new RegExp(query, 'i')
 
-    const handleInputChange = (e) => { setSearchQuery(e.target.value) }
     const searchMember = () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        if (searchQuery.length >= 2) {
+        if (!query || query.trim() === "") { return }
+        if (query.length >= 2) {
             const response = conversation.members.filter(member => regexp.test(member.pseudo))
-            setMemberInResult(response)
+            setResults(response)
             setSearch(true)
             if (isEmpty) {
                 setSearch(false)
@@ -40,9 +42,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}`,
-            data: {
-                description: description,
-            }
+            data: { description: description }
         })
         setChangeDescription(false)
     }
@@ -50,149 +50,155 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}`,
-            data: {
-                name: name,
-            }
+            data: { name: name }
         })
         setChangeName(false)
     }
 
     useEffect(() => {
-        let ids = []
-        conversation.members.map(members => { return ids = [...ids, members.id] })
-        const notInConvYet = friends.filter(friend => !ids.includes(friend.friend))
-        const findFutureMembers = notInConvYet.map(async (friend) => {
-            return await axios.get(`${process.env.REACT_APP_API_URL}api/user/${friend.friend}`)
-                .then((res) => res.data)
-                .catch((err) => console.error(err))
-        })
-        Promise.all(findFutureMembers).then((res) => {
-            setMembersToAdd(res)
-        })
-    }, [friends])
+        let ids = otherMembersIDs(conversation, uid)
+        const notInConvYet = friendsArr.filter(f => !ids.includes(f._id))
+        setMembersToAdd(notInConvYet)
+    }, [friendsArr, conversation, uid])
 
     return (
         <Modal open={open} setOpen={setOpen} className="conversation-modal">
-            <div className='header'>
-                {conversation.name && <div className="conversation-name">{conversation.name}</div>}
-                <ul>
-                    <li onClick={() => { setDisplayInfos(true); setDisplayMembers(false) }}>À propos</li>
-                    <li onClick={() => { setDisplayInfos(false); setDisplayMembers(true) }}>Membres</li>
-                </ul>
+            {conversation.name &&
+                <div className="px-3 pb-3 bold">{conversation.name}</div>
+            }
+            <div className="modal_nav">
+                <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>À propos</div>
+                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres <span>{conversation.members.length}</span></div>
             </div>
-            <div className='body'>
-                {displayInfos &&
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-bloc">
-                            {changeName ? (
-                                <div className="left">
-                                    <div className="info-title">Nom</div>
-                                    <div className="info">
-                                        <ClassicInput className="full" defaultValue={conversation.name} onChange={(e) => setName(e.target.value)} />
-                                    </div>
-                                    <Button text="Annuler" onClick={() => setChangeName(!changeName)} />
+            {navbar === 1 ? (
+                <div className="conversation-infos">
+                    <div className="conversation-infos-bloc border-b">
+                        {changeName ? (
+                            <div className="w-full">
+                                <div className="bold mb-2">Nom</div>
+                                <div className="txt-sec">
+                                    <ClassicInput className="full" placeholder="Nom de la conversation..." defaultValue={conversation.name} onChange={(e) => setName(e.target.value)} />
+                                </div>
+                                <div className="flex justify-end py-2">
+                                    <TextButton className="mr-2" text="Annuler" onClick={() => setChangeName(!changeName)} />
                                     <Button text="Valider" onClick={submitName} />
                                 </div>
-                            ) : (
-                                <>
-                                    <div className="left">
-                                        <div className="info-title">Nom</div>
-                                        <div className="info">{name !== "" && name !== undefined ? (name) : ('Pas encore de nom')}</div>
-                                    </div>
-                                    <div className="right">
-                                        {conversation.owner.id === uid && (
-                                            <Button text="Modifier" onClick={() => setChangeName(!changeName)} />
-                                        )}
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                        <div className="conversation-infos-bloc">
-                            {changeDescription ? (
-                                <div className="left">
-                                    <div className="info-title">Description</div>
-                                    <div className="info">
-                                        <ClassicInput className="full" defaultValue={conversation.description} onChange={(e) => setDescription(e.target.value)} />
-                                    </div>
-                                    <Button text="Annuler" onClick={() => setChangeDescription(!changeDescription)} />
-                                    <Button text="Valider" onClick={submitDescription} />
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="left">
-                                        <div className="info-title">Description</div>
-                                        <div className="info">{description !== "" && description !== undefined ? (description) : ('Pas encore de description')}</div>
-                                    </div>
-                                    <div className="right">
-                                        {conversation.owner.id === uid && (
-                                            <Button text="Modifier" onClick={() => setChangeDescription(!changeDescription)} />
-                                        )}
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                        <div className="conversation-infos-bloc">
-                            <div className="left">
-                                <div className="title">Créé par</div>
-                                <div className="info">{conversation.creator.pseudo} le {dateParser(conversation.createdAt)}</div>
                             </div>
-                        </div>
-                        <div className="conversation-infos-bloc">
-                            <div className="left">
-                                <div className="title">Propriétaire</div>
-                                <div className="info">{conversation.owner.pseudo}</div>
-                            </div>
-                        </div>
-                        <div className="conversation-btn_container">
-                            <Button text="Quitter" onClick={() => { leaveConversation(conversation, uid); setOpen(false) }} />
-                            {conversation.owner.id === uid && <Button text="Supprimer" onClick={() => { deleteConversation(conversation); setOpen(false) }} />}
-                        </div>
-                    </div>
-                }
-                {displayMembers &&
-                    <>
-                        <ClassicInput className="full" placeholder="Rechercher un membre..." type="search" value={searchQuery} onInput={handleInputChange} onChange={searchMember} />
-                        {!addMember && (
+                        ) : (
                             <>
-                                <Button text="Ajouter un membre" className="full mt-2" onClick={() => setAddMember(!addMember)} />
-                                <div className="conversation-members">
-                                    {conversation.members.map((member, key) => {
-                                        return (
-                                            <div className="conversation-member" key={key} style={{ display: search ? (isMemberInResult.includes(member) ? "flex" : "none") : ("flex") }}>
-                                                <div className="conversation-member-infos">
-                                                    <div className="conversation-member-avatar" style={avatar(member.picture)}></div>
-                                                    <div className="pseudo">{member.pseudo}</div>
-                                                </div>
-                                                {conversation.owner.id === uid && member.id !== uid &&
-                                                    <Button text="Supprimer" onClick={() => leaveConversation(conversation, member.id)} />
-                                                }
-                                            </div>
-                                        )
-                                    })}
+                                <div className="w-full">
+                                    <div className="bold mb-2">Nom</div>
+                                    <div className="txt-sec">{name !== "" && name !== undefined ? name : 'Pas encore de nom'}</div>
+                                </div>
+                                <div className="ml-10">
+                                    {conversation.owner.id === uid &&
+                                        <TextButton text="Modifier" onClick={() => setChangeName(!changeName)} />
+                                    }
                                 </div>
                             </>
                         )}
-                        {addMember &&
+                    </div>
+                    <div className="conversation-infos-bloc border-b">
+                        {changeDescription ? (
+                            <div className="w-full">
+                                <div className="bold mb-2">Description</div>
+                                <div className="txt-sec">
+                                    <Textarea className="full" placeholder="Description de la conversation..." defaultValue={conversation.description} onChange={(e) => setDescription(e.target.value)} />
+                                </div>
+                                <div className="flex justify-end py-2">
+                                    <TextButton className="mr-2" text="Annuler" onClick={() => setChangeDescription(!changeDescription)} />
+                                    <Button text="Valider" onClick={submitDescription} />
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="w-full">
+                                    <div className="bold mb-2">Description</div>
+                                    <div className="txt-sec">{description !== "" && description !== undefined ? description : 'Pas encore de description'}</div>
+                                </div>
+                                <div className="ml-10">
+                                    {conversation.owner.id === uid &&
+                                        <TextButton text="Modifier" onClick={() => setChangeDescription(!changeDescription)} />
+                                    }
+                                </div>
+                            </>
+                        )}
+                    </div>
+                    <div className="conversation-infos-bloc border-b">
+                        <div className="w-full">
+                            <div className="bold mb-2">Créé par</div>
+                            <div className="txt-sec">{conversation.creator.pseudo} le {dateParser(conversation.createdAt)}</div>
+                        </div>
+                    </div>
+                    <div className="conversation-infos-bloc">
+                        <div className="w-full">
+                            <div className="bold mb-2">Propriétaire</div>
+                            <div className="txt-sec">{conversation.owner.pseudo}</div>
+                        </div>
+                    </div>
+                    <div className="conversation-btn_container">
+                        <TextButton text="Quitter" className="mr-2" onClick={() => { leaveConversation(conversation, uid); setOpen(false) }} />
+                        {conversation.owner.id === uid && <Button text="Supprimer" onClick={() => { deleteConversation(conversation); setOpen(false) }} />}
+                    </div>
+                </div>
+            ) : (
+                <>
+                    <IconInput className="full is_start_icon" placeholder="Rechercher un membre..." icon={<BiSearchAlt />} value={query} onInput={e => setQuery(e.target.value)} onChange={searchMember} />
+                    {!addMember && (
+                        <>
+                            <div className="add-more-users mt-3" onClick={() => setAddMember(!addMember)}>
+                                <BiUserPlus />
+                                <p>Ajouter des personnes</p>
+                            </div>
                             <div className="conversation-members">
-                                {membersToAdd.length > 0 && (
-                                    membersToAdd.map((member, key) => {
+                                {conversation.members.map((member, key) => {
+                                    return (
+                                        <div className={`${isInResults(member, isResults, search, "flex")} justify-between py-2`} key={key}>
+                                            <div className="flex items-center">
+                                                <MediumAvatar pic={member.picture} />
+                                                <div>{member.pseudo}</div>
+                                            </div>
+                                            {conversation.owner.id === uid && member.id !== uid &&
+                                                <TextButton text="Supprimer" onClick={() => leaveConversation(conversation, member.id)} />
+                                            }
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </>
+                    )}
+                    {addMember &&
+                        <div className="conversation-members">
+                            {membersToAdd.length > 0 ? (
+                                <>
+                                    {membersToAdd.map((member, key) => {
                                         return (
-                                            <div className="conversation-member" key={key} style={{ display: search ? (isMemberInResult.includes(member) ? "flex" : "none") : ("flex") }}>
-                                                <div className="conversation-member-infos">
-                                                    <div className="conversation-member-avatar" style={avatar(member.picture)}></div>
-                                                    <div className="pseudo">{member.pseudo}</div>
+                                            <div className={`${isInResults(member, isResults, search, "flex")} justify-between py-2`} key={key}>
+                                                <div className="flex items-center">
+                                                    <MediumAvatar pic={member.picture} />
+                                                    <div>{member.pseudo}</div>
                                                 </div>
-                                                <Button text="Ajouter" onClick={() => addNewMember(conversation, member)} />
+                                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member)} />
                                             </div>
                                         )
-                                    })
-                                )}
-                                <Button text="Terminé" onClick={() => setAddMember(!addMember)} />
-                            </div>
-                        }
-                    </>
-                }
-            </div>
+                                    })}
+                                    <Button text="Terminé" onClick={() => setAddMember(!addMember)} />
+                                </>
+                            ) : (
+                                <>
+                                    <div className="empty-array">
+                                        <div><BiUserPlus /></div>
+                                        <div>Tous vos contact font déjà parti de cette conversation</div>
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <Button text="Retour" onClick={() => setAddMember(!addMember)} />
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    }
+                </>
+            )}
         </Modal>
     )
 }
