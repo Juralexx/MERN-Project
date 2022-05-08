@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import ScrollButton from './tools/ScrollButton';
-import { Picker } from 'emoji-mart'
-import 'emoji-mart/css/emoji-mart.css'
+import React, { useEffect, useState } from 'react'
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./tools/EditorToolbar";
+import { Picker } from 'emoji-mart'
+import 'emoji-mart/css/emoji-mart.css'
+import ScrollButton from './tools/ScrollButton';
 import Typing from './tools/Typing';
 import { IoSend } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
@@ -37,35 +36,39 @@ const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMe
 
     return (
         <div className="conversation-bottom">
-            <Typing
-                typingContext={typingContext}
-                currentChat={currentChat}
-                isTyping={isTyping}
-            />
-            <ScrollButton convWrapperRef={convWrapperRef?.current} scrollTo={lastMessageRef} />
-            <div className="message-text-editor">
-                <EditorToolbar display={openEditorToolbar} />
-                <div ref={quillRef}>
-                    <ReactQuill
-                        onChange={handleNewMessage}
-                        value={newMessage}
-                        placeholder="Envoyer un message..."
-                        modules={modules}
-                        formats={formats}
-                    />
+            <div className="conversation-toolsbox">
+                <Typing
+                    typingContext={typingContext}
+                    currentChat={currentChat}
+                    isTyping={isTyping}
+                />
+                <ScrollButton convWrapperRef={convWrapperRef?.current} scrollTo={lastMessageRef} />
+                <div className="message-text-editor">
+                    <EditorToolbar display={openEditorToolbar} />
+                    <div ref={quillRef}>
+                        <ReactQuill
+                            onChange={handleNewMessage}
+                            value={newMessage}
+                            placeholder="Envoyer un message..."
+                            modules={modules}
+                            formats={formats}
+                        />
+                    </div>
                 </div>
+                <div className="message-text-tools">
+                    <div className="text-tools-left">
+                        <button className="text-tools" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><BsEmojiSmile /></button>
+                        <button className="text-tools"><FiAtSign /></button>
+                        <button className="text-tools" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
+                    </div>
+                    <div className="text-tools-right">
+                        <button className="send-tool" disabled={!isContent} onClick={handleSubmit}><IoSend /></button>
+                    </div>
+                </div>
+                {openEmojiPicker &&
+                    <Picker onClick={(emoji) => pickEmoji(emoji)} style={{ position: "absolute", bottom: -30, left: -54, transform: "scale(0.7)", zIndex: 10 }} />
+                }
             </div>
-            <div className="message-text-tools">
-                <div className="left">
-                    <button className="btn btn-secondary" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><BsEmojiSmile /></button>
-                    <button className="btn btn-secondary"><FiAtSign /></button>
-                    <button className="btn btn-secondary" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
-                </div>
-                <div className="right">
-                    <button className="btn btn-secondary" disabled={!isContent} onClick={handleSubmit}><IoSend /></button>
-                </div>
-            </div>
-            {openEmojiPicker && <Picker onClick={(emoji) => pickEmoji(emoji)} style={{ position: "absolute", bottom: -30, left: -54, transform: "scale(0.7)", zIndex: 10 }} />}
         </div>
     )
 }

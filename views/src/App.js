@@ -7,6 +7,7 @@ import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
+import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveUpdateMessage } from './actions/messenger.action';
 
 function App() {
     const user = useSelector(state => state.userReducer)
@@ -36,15 +37,15 @@ function App() {
     }, [uid, dispatch])
 
     useEffect(() => {
-        if (Object.keys(user).length > 0) {
+        if (Object.keys(user).length > 0 && friends.length === 0) {
             websocket.current.emit("addUser", { userId: user._id })
-            websocket.current.on("getUsers", (users) => {
+            websocket.current.on("getUsers", users => {
                 setFriends(user.friends)
                 setOnlineUsers(user.friends.filter(f => users.some(u => u.userId === f.friend)))
             })
         }
         return () => websocket.current.off("getUsers")
-    }, [user])
+    }, [user, friends.length])
 
     useEffect(() => {
         if (!window.location.href.includes("messenger")) {
@@ -58,14 +59,38 @@ function App() {
         websocket.current.on("sendMessageNotification", data => {
             setSentNotification({
                 type: "new-message",
-                sender: data.senderId,
-                sender_pseudo: data.sender_pseudo,
-                sender_picture: data.sender_picture,
-                text: data.text,
-                conversationId: data.conversationId,
+                sender: data.message.senderId,
+                sender_pseudo: data.message.sender_pseudo,
+                sender_picture: data.message.sender_picture,
+                text: data.message.text,
+                conversationId: data.message.conversationId,
                 createdAt: new Date().toISOString()
             })
             setSend(true)
+        })
+        websocket.current.on("updateMessage", data => {
+            dispatch(receiveUpdateMessage(data.messageId, data.text))
+        })
+        websocket.current.on("deleteMessage", data => {
+            dispatch(receiveDeleteMessage(data.messageId))
+        })
+        websocket.current.on("addConversation", data => {
+            dispatch(receiveCreateConversation(data.conversationId))
+        })
+        websocket.current.on("deleteConversation", data => {
+            dispatch(receiveDeleteConversation(data.conversationId))
+        })
+        websocket.current.on("addConversationMember", data => {
+            dispatch(receiveNewMember(data.newMember))
+        })
+        websocket.current.on("joinConversation", data => {
+            dispatch(receiveAddMember(data.conversationId))
+        })
+        websocket.current.on("removeConversationMember", data => {
+            dispatch(receiveRemovedMember(data.memberId))
+        })
+        websocket.current.on("leaveConversation", data => {
+            dispatch(receiveRemoveMember(data.conversationId))
         })
         websocket.current.on("friendRequest", data => {
             dispatch(receiveFriendRequest(data.notification))
@@ -127,6 +152,14 @@ function App() {
         })
         return () => {
             websocket.current.off("sendMessageNotification")
+            websocket.current.off("updateMessage")
+            websocket.current.off("deleteMessage")
+            websocket.current.off("addConversation")
+            websocket.current.off("deleteConversation")
+            websocket.current.off("addConversationMember")
+            websocket.current.off("joinConversation")
+            websocket.current.off("removeConversationMember")
+            websocket.current.off("leaveConversation")
             websocket.current.off("friendRequest")
             websocket.current.off("cancelFriendRequest")
             websocket.current.off("acceptFriendRequest")

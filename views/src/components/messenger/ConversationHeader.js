@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { avatar } from '../tools/functions/useAvatar'
-import ConversationModal from './ConversationModal'
-import { ToolsBtn } from '../tools/components/Button'
-import SmallMenu from '../tools/components/SmallMenu'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { getMembers } from './tools/function'
+import ConversationModal from './ConversationModal'
+import ToolsMenu from '../tools/components/ToolsMenu'
 
-const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConversation, leaveConversation, addNewMember }) => {
-    const [openConvMenu, setOpenConvMenu] = useState(false)
+const ConversationHeader = ({ currentChat, uid, friends, deleteConversation, leaveConversation, addNewMember }) => {
     const [openConvModal, setOpenConvModal] = useState(false)
     const [favorite, setFavorite] = useState(false)
 
@@ -34,26 +32,23 @@ const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConve
                 <div className="conversation-box-top">
                     <div className="conversation-box-members">
                         <div className="conversation-img-container">
-                            {getMembers(currentChat).map((element, key) => {
+                            {getMembers(currentChat, uid).map((element, key) => {
                                 return <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
                             })}
                         </div>
                         <div className="conversation-name">
-                            <div>{getMembers(currentChat)[0].pseudo}</div>
+                            <div>{getMembers(currentChat, uid)[0].pseudo}</div>
                             <MdOutlineKeyboardArrowDown />
                         </div>
                     </div>
-                    <ToolsBtn onClick={() => setOpenConvMenu(!openConvMenu)}><BiDotsHorizontalRounded /></ToolsBtn>
-                    {openConvMenu &&
-                        <SmallMenu>
-                            {favorite ? (
-                                <div className="tools_choice" onClick={removeFavorite}>Retirer des favoris</div>
-                            ) : (
-                                <div className="tools_choice" onClick={addFavorite}>Ajouter aux favoris</div>
-                            )}
-                            {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
-                        </SmallMenu>
-                    }
+                    <ToolsMenu>
+                        {favorite ? (
+                            <div className="tools_choice" onClick={removeFavorite}>Retirer des favoris</div>
+                        ) : (
+                            <div className="tools_choice" onClick={addFavorite}>Ajouter aux favoris</div>
+                        )}
+                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
+                    </ToolsMenu>
                 </div>
             }
             {openConvModal &&
@@ -94,17 +89,14 @@ const ConversationHeader = ({ getMembers, currentChat, uid, friends, deleteConve
                             <MdOutlineKeyboardArrowDown />
                         </div>
                     </div>
-                    <ToolsBtn onClick={() => setOpenConvMenu(!openConvMenu)}><BiDotsHorizontalRounded /></ToolsBtn>
-                    {openConvMenu &&
-                        <SmallMenu>
-                            {favorite ? (
-                                <div className="tools_choice" onClick={removeFavorite}>Retirer des favoris</div>
-                            ) : (
-                                <div className="tools_choice" onClick={addFavorite}>Ajouter aux favoris</div>
-                            )}
-                            {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
-                        </SmallMenu>
-                    }
+                    <ToolsMenu>
+                        {favorite ? (
+                            <div className="tools_choice" onClick={removeFavorite}>Retirer des favoris</div>
+                        ) : (
+                            <div className="tools_choice" onClick={addFavorite}>Ajouter aux favoris</div>
+                        )}
+                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
+                    </ToolsMenu>
                 </div>
             }
         </>

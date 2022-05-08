@@ -1,0 +1,77 @@
+.online-users-container {
+    width   : 22%;
+    padding : 10px;
+
+    h3 {
+        padding : 8px 15px;
+    }
+
+    .online-users {
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        position        : relative;
+        padding         : 10px 15px;
+        border-radius   : var(--radius);
+        cursor          : pointer;
+
+        .online-user {
+            display : flex;
+
+            .online-user-img {
+                width         : 36px;
+                height        : 36px;
+                border-radius : 50%;
+                margin-right  : 10px;
+
+                &.connected {
+                    border : 3px solid var(--green);
+                }
+            }
+
+            .online-user-name {
+                .online-user-pseudo {
+                    line-height : 16px;
+                    color       : var(--text);
+                    font-weight : 600;
+                }
+
+                .online-user-status {
+                    font-size  : 12px;
+                    margin-top : 3px;
+                    color      : var(--text-secondary)
+                }
+            }
+        }
+
+        &:hover {
+            background : var(--x-light);
+
+            .online-badge {
+                background-color : var(--content-light);
+            }
+        }
+
+        .online-user-menu {
+            position      : absolute;
+            left          : -155px;
+            top           : 0px;
+            background    : var(--content);
+            border-radius : var(--radius);
+            padding       : 10px 0;
+
+            ul {
+                margin  : 0;
+                padding : 0;
+
+                li {
+                    padding : 5px 30px;
+
+                    &:hover {
+                        background : var(--body);
+                    }
+                }
+            }
+        }
+    }
+}

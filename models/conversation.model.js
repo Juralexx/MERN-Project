@@ -41,12 +41,9 @@ const ConversationModel = new mongoose.Schema(
                     emojis: {
                         emoji_sender: String
                     },
-                }
+                },
+                createdAt: Date
             }],
-        },
-        last_message: {
-            type: String,
-            default: ""
         },
         description: {
             type: String,

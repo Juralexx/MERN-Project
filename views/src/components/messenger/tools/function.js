@@ -32,19 +32,28 @@ export function convertDeltaToString(message) {
 }
 
 
-export function getDate(element, setState) {
-    const diffInMs = Math.abs(new Date(element.createdAt) - new Date());
-    const checkDate = diffInMs / (1000 * 60 * 60 * 24);
+export function getDate(date) {
+    let diffInMinutes = Math.abs(new Date(date) - new Date());
+    let checkDate = diffInMinutes / (1000 * 60 * 60 * 24);
     if (checkDate > 1) {
-        const getDateInDays = dateParserWithoutYear(element.createdAt)
-        setState(getDateInDays)
+        let getDateInDays = dateParserWithoutYear(date)
+        return getDateInDays
     } else {
-        const getDateInHours = formatDistanceToNowStrict(new Date(element.createdAt), new Date(), { locale: fr, includeSeconds: true })
-        setState(getDateInHours)
+        let getDateInHours = formatDistanceToNowStrict(new Date(date), new Date(), { locale: fr, includeSeconds: true })
+        return getDateInHours
     }
 }
 
-export function getMembers(conversation, uid, setState) {
-    const index = conversation.members.filter(member => member.id !== uid)
-    setState(index)
+export const getMembers = (conversation, uid) => {
+    const members = conversation.members.filter(member => member.id !== uid)
+    return members
+}
+
+export const otherMembers = (conversation, uid) => {
+    const membersId = conversation.members.filter(member => member.id !== uid)
+    let memberIds = []
+    membersId.map(member => {
+        return memberIds = [...memberIds, member.id]
+    })
+    return memberIds
 }

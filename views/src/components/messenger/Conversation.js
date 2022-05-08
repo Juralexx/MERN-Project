@@ -1,50 +1,24 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState, useRef } from 'react';
-import { UidContext } from '../AppContext';
+import React, { useEffect, useState, useRef } from 'react';
 import { avatar } from '../tools/functions/useAvatar';
 import { convertEditorToHTML, getDate, getMembers } from './tools/function';
 
-const Conversation = ({ user, conversation, newMessage, notification }) => {
-    const uid = useContext(UidContext)
-    const [convMembers, setConvMembers] = useState([])
-    const [isResponse, setResponse] = useState(false)
-    const [lastMessageFound, setLastMessageFound] = useState(null)
-    const [date, setDate] = useState()
-    const [unseen, setUnseen] = useState()
+const Conversation = ({ uid, user, conversation, newMessage, notification }) => {
+    const convMembers = getMembers(conversation, uid)
+    const [lastMessageFound, setLastMessageFound] = useState(conversation.messages[conversation.messages.length - 1])
+    const [date, setDate] = useState(getDate(lastMessageFound.createdAt))
+    const [unseen, setUnseen] = useState(null)
     const wrapperRef = useRef()
 
-    useEffect(() => {
-        if (conversation.last_message !== "") {
-            const getLastMessage = async () => {
-                try {
-                    const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/single/${conversation.last_message}`)
-                    setLastMessageFound(response.data)
-                    getDate(response.data, setDate)
-                    getMembers(conversation, uid, setConvMembers)
-                    setResponse(true)
-                } catch (err) { console.log(err) }
-            }
-            getLastMessage()
-        } else {
-            getDate(conversation, setDate)
-            getMembers(conversation, uid, setConvMembers)
-            setResponse(true)
-        }
-    }, [isResponse, conversation.last_message])
+    const removeNotification = () => { if (unseen !== null) setUnseen(null) }
 
     useEffect(() => {
-        if (user && conversation.last_message !== "") {
-            const conv = user.conversations.find(element => element.conversation === conversation._id)
+        if (user) {
+            const conv = user.conversations.find(e => e.id === conversation._id)
             if (conv.last_message_seen !== null) {
-                const lastMessageSeenIndex = conversation.messages.findIndex(element => element === conv.last_message_seen)
-                const difference = Math.abs((conversation.messages.length - 1) - lastMessageSeenIndex)
-                if (difference > 0 && difference < 10) {
-                    setUnseen(difference)
-                    if (wrapperRef.current) wrapperRef.current.className = "conversation new-notification";
-                } else if (difference > 10) {
-                    setUnseen('9+')
-                    if (wrapperRef.current) wrapperRef.current.className = "conversation new-notification";
-                }
+                const index = conversation.messages.findIndex(e => e._id === conv.last_message_seen)
+                const diff = Math.abs((conversation.messages.length - 1) - index)
+                if (diff > 0 && diff < 10) setUnseen(diff)
+                else if (diff > 10) setUnseen('9+')
             }
         }
     }, [user, conversation.messages])
@@ -58,26 +32,14 @@ const Conversation = ({ user, conversation, newMessage, notification }) => {
 
     useEffect(() => {
         if (notification && notification.conversationId === conversation._id) {
-            wrapperRef.current.className = "conversation new-notification";
             setLastMessageFound(notification)
             setDate('À l\'instant')
+            setUnseen(unseen + 1)
         }
-    }, [notification, conversation._id])
-
-    useEffect(() => {
-        const ref = wrapperRef.current
-        const removeNotification = () => {
-            if (ref.className === "conversation new-notification")
-                ref.className = "conversation"
-            setUnseen()
-        }
-        ref?.addEventListener('mousedown', removeNotification)
-        return () => ref?.removeEventListener('mousedown', removeNotification)
-    }, [notification, wrapperRef.current])
+    }, [notification, conversation._id]) 
 
     return (
-        isResponse &&
-        <div className="conversation" ref={wrapperRef}>
+        <div className={`${unseen !== null ? "conversation new-notification" : "conversation"}`} onClick={removeNotification} ref={wrapperRef}>
             <div className="conversation-img-container">
                 {convMembers.slice(0, 3).map((element, key) => {
                     return (

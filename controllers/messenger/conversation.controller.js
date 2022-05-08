@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import conversationModel from '../../models/conversation.model.js';
 import UserModel from '../../models/user.model.js';
 const ObjectID = mongoose.Types.ObjectId
 
@@ -50,19 +51,14 @@ export const getConversation = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
-    try {
-        const conversation = await ConversationModel.find({ _id: req.params.id },
-            (err, docs) => {
-                if (!err) {
-                    res.send(docs)
-                } else {
-                    console.log('Unknown URL : ' + err)
-                }
-            })
-        res.status(200).json(conversation)
-    } catch (err) {
-        res.status(400).json(err)
-    }
+    conversationModel.findById({ _id: req.params.id },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs)
+            } else {
+                console.log('Unknown URL : ' + err)
+            }
+        }).select()
 }
 
 /**
@@ -79,7 +75,6 @@ export const updateConversation = async (req, res) => {
                     name: req.body.name,
                     owner: req.body.owner,
                     waiter: req.body.waiter,
-                    last_message: req.body.last_message
                 }
             },
             { new: true, upsert: true },

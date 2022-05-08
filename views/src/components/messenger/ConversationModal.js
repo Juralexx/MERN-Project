@@ -39,7 +39,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
     const submitDescription = async () => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversations/${conversation._id}`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}`,
             data: {
                 description: description,
             }
@@ -49,7 +49,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friends, avatar, 
     const submitName = async () => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversations/${conversation._id}`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}`,
             data: {
                 name: name,
             }

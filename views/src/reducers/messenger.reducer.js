@@ -1,4 +1,4 @@
-import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION, UPDATE_MESSAGE } from "../actions/messenger.action";
+import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION, UPDATE_MESSAGE } from "../actions/messenger.action";
 
 const initialState = {}
 
@@ -33,6 +33,11 @@ export default function messengerReducer(state = initialState, action) {
                 members: state.members.filter(member => member !== action.payload.memberId)
             }
         case POST_MESSAGE:
+            return {
+                ...state,
+                messages: [...state.messages, action.payload]
+            }
+        case RECEIVE_POST_MESSAGE:
             return {
                 ...state,
                 messages: [...state.messages, action.payload]

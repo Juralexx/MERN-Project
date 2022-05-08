@@ -19,6 +19,7 @@ export const UPDATE_MESSAGE = "UPDATE_MESSAGE"
 export const RECEIVE_UPDATE_MESSAGE = "RECEIVE_UPDATE_MESSAGE"
 export const DELETE_MESSAGE = "DELETE_MESSAGE"
 export const RECEIVE_DELETE_MESSAGE = "RECEIVE_DELETE_MESSAGE"
+export const SET_LAST_MESSAGE_SEEN = "SET_LAST_MESSAGE_SEEN"
 export const ADD_EMOJI = "ADD_EMOJI"
 export const RECEIVE_ADD_EMOJI = "RECEIVE_ADD_EMOJI"
 export const REMOVE_EMOJI = "REMOVE_EMOJI"
@@ -61,7 +62,7 @@ export const createConversation = (conversation) => {
         })
             .then(res => {
                 console.log(res)
-                dispatch({ type: CREATE_CONVERSATION, payload: res.data._id })
+                dispatch({ type: CREATE_CONVERSATION, payload: res.data })
             })
             .catch(err => console.error(err))
     }
@@ -194,9 +195,9 @@ export const sendMessage = (conversationId, message) => {
     }
 }
 
-export const receiveNewMessage = (conversationId, message) => {
+export const receiveNewMessage = (message) => {
     return async (dispatch) => {
-         dispatch({ type: REMOVE_MEMBER_CONVERSATION, payload: { message } })
+         dispatch({ type: RECEIVE_POST_MESSAGE, payload: { message } })
     }
 }
 
@@ -218,9 +219,9 @@ export const updateMessage = (conversationId, messageId, text) => {
     }
 }
 
-export const receiveUpdateMessage = (message) => {
+export const receiveUpdateMessage = (messageId, text) => {
     return async (dispatch) => {
-         dispatch({ type: UPDATE_MESSAGE, payload: { message } })
+         dispatch({ type: UPDATE_MESSAGE, payload: { messageId, text } })
     }
 }
 
@@ -245,6 +246,24 @@ export const receiveUpdateMessage = (message) => {
 export const receiveDeleteMessage = (messageId) => {
     return async (dispatch) => {
          dispatch({ type: DELETE_MESSAGE, payload: { messageId } })
+    }
+}
+
+/**
+ * Set the last message user seen
+ */
+
+ export const setLastMessageSeen = (userId, conversationId, messageId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/conversation/last-message-seen/` + userId,
+            data: { conversationId, messageId }
+        })
+            .then(() => {
+                dispatch({ type: SET_LAST_MESSAGE_SEEN, payload: { conversationId, messageId } })
+            })
+            .catch(err => console.error(err))
     }
 }
 

@@ -2,7 +2,7 @@ import { ACCEPT_FRIEND_REQUEST, DELETE_FRIEND, DELETE_NOTIFICATION, GET_USER, RE
 import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action.upload";
 import { CANCEL_SENT_FRIEND_REQUEST, SEND_FRIEND_REQUEST } from "../actions/user.action";
 import { ACCEPT_MEMBER_REQUEST, RECEIVE_CANCEL_MEMBER_REQUEST, RECEIVE_MEMBER_REQUEST, REFUSE_MEMBER_REQUEST, REMOVE_PROJECT_FROM_MEMBER } from "../actions/project.action";
-import { CREATE_CONVERSATION, DELETE_CONVERSATION, RECEIVE_ADD_MEMBER_CONVERSATION, RECEIVE_CREATE_CONVERSATION, RECEIVE_REMOVE_MEMBER_CONVERSATION } from "../actions/messenger.action";
+import { CREATE_CONVERSATION, DELETE_CONVERSATION, RECEIVE_ADD_MEMBER_CONVERSATION, RECEIVE_CREATE_CONVERSATION, RECEIVE_REMOVE_MEMBER_CONVERSATION, SET_LAST_MESSAGE_SEEN } from "../actions/messenger.action";
 
 const initialState = {}
 
@@ -179,17 +179,23 @@ export default function userReducer(state = initialState, action) {
         case CREATE_CONVERSATION:
             return {
                 ...state,
-                conversations: [...state.conversations, action.payload]
+                conversations: [...state.conversations, { type: action.payload.type, id: action.payload._id, last_message_seen: action.payload.last_message_seen, }]
             }
         case RECEIVE_CREATE_CONVERSATION:
             return {
                 ...state,
-                conversations: [...state.conversations, action.payload.conversationId]
+                conversations: [...state.conversations, { id: action.payload.conversationId, last_message_seen: null }]
             }
         case DELETE_CONVERSATION:
             return {
                 ...state,
-                conversations: state.conversations.filter(conversation => conversation !== action.payload.conversationId)
+                conversations: state.conversations.filter(conversation => conversation.id !== action.payload.conversationId)
+            }
+        case SET_LAST_MESSAGE_SEEN:
+            let i = state.conversations.find(conversation => conversation.id === action.payload.conversationId)
+            state.conversations[i] = action.payload.messageId
+            return {
+                conversations: state.conversations
             }
         case RECEIVE_ADD_MEMBER_CONVERSATION:
             return {

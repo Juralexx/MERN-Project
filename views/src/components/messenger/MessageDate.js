@@ -14,13 +14,11 @@ const MessageDate = ({ message }) => {
             <div className="date" onClick={() => setOpen(!open)}>{dateParser(message.createdAt)} <MdOutlineKeyboardArrowDown /></div>
             {open &&
                 <div className="message-date-sort-tools">
-                    <ul>
-                        <li>Hier</li>
-                        <li>La semaine dernière</li>
-                        <li>Le mois dernier</li>
-                        <li>Premiers messages</li>
-                        <li>Accèder à une date spécifique</li>
-                    </ul>
+                    <div>Hier</div>
+                    <div>La semaine dernière</div>
+                    <div>Le mois dernier</div>
+                    <div>Premiers messages</div>
+                    <div>Accèder à une date spécifique</div>
                 </div>
             }
         </div>

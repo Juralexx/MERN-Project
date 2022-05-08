@@ -116,6 +116,7 @@ const UserModel = new mongoose.Schema(
             type: [],
             conversation: {
                 type: String,
+                id: String,
                 last_message_seen: String,
             }
         },

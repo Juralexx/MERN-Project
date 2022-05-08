@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { UidContext, UserContext } from '../AppContext';
-import { io } from 'socket.io-client'
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addMember, deleteConversation, deleteMessage, getConversation, removeMember, sendMessage, setLastMessageSeen, updateMessage } from '../../actions/messenger.action';
+import { otherMembers } from './tools/function';
 import MessageDate from './MessageDate';
 import Message from './Message';
 import OnlineUsers from './OnlineUsers';
@@ -10,33 +10,29 @@ import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
 import ConversationBottom from './ConversationBottom';
 
-const Messenger = ({ websocket, friends, onlineUsers }) => {
-    const uid = useContext(UidContext)
-    const user = useContext(UserContext)
-    const userData = useSelector((state) => state.userReducer)
+const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
     const [conversations, setConversations] = useState([])
-    const [conversationsFound, setConversationsFound] = useState(false)
-    
-    const [currentChat, setCurrentChat] = useState(null)
-    
+    const [currentChat, setCurrentChat] = useState({})
+    const [isLoading, setLoading] = useState(true)
+    const dispatch = useDispatch()
+
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState({})
     const [getNewMessage, setGetNewMessage] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState("")
     const [modifiedMessage, setModifiedMessage] = useState("")
     const [messagesDates, setMessagesDates] = useState([])
-    
+
     const [notification, setNotification] = useState("")
-    
+
     const [isTyping, setTyping] = useState(false)
     const [typingContext, setTypingContext] = useState("")
-    
+
     const lastMessageRef = useRef()
     const convWrapperRef = useRef()
     const quillRef = useRef()
 
     useEffect(() => {
-        websocket.current = io('ws://localhost:3001')
         websocket.current.on("getMessage", data => {
             setArrivalMessage({
                 sender: data.senderId,
@@ -64,32 +60,11 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             setTyping(false)
             setTypingContext("")
         })
-        websocket.current.on("addConversation", data => {
-            let newConversation = { conversation: data.conversation }
-            setConversations(conversations => [...conversations, newConversation])
-        })
-        websocket.current.on("deleteConversation", data => {
-            const index = conversations.findIndex(conversation => conversation._id !== data.conversationId)
-            setConversations(conversations.splice(index, 1))
-        })
-        websocket.current.on("modifyMessage", data => {
-            let object = messages.find(message => message._id === data.messageId)
-            object.text = data.text
-            setMessages(messages => [...messages, object])
-        })
-        websocket.current.on("deleteMessage", data => {
-            const array = messages.filter(message => message.conversationId === data.conversationId)
-            const index = array.findIndex(message => message._id === data.messageId)
-            setMessages(messages.splice(index, 1))
-        })
-        websocket.current.on("addEmoji", data => {
-            const array = messages.slice()
-            let mess = array.filter(message => message._id === data.messageId)
-            console.log(mess)
-            mess[0].emojis.push(data.emoji)
-            setMessages(messages => [...messages, mess])
-        })
     }, [websocket.current])
+
+    /**
+     * typing
+     */
 
     useEffect(() => {
         if (currentChat) {
@@ -100,7 +75,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
 
                 ids.map(memberId => {
                     return websocket.current.emit("typing", {
-                        sender: userData.pseudo,
+                        sender: user.pseudo,
                         receiverId: memberId,
                         conversationId: currentChat._id
                     })
@@ -129,11 +104,27 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
         return () => clearInterval(interval)
     }, [isTyping])
 
+    /**
+     * Scroll to last message
+     */
+
+    useEffect(() => {
+        lastMessageRef.current?.scrollIntoView()
+    }, [messages.length])
+
+    /**
+     * arrival message
+     */
+
     useEffect(() => {
         arrivalMessage
             && currentChat?.members.some(member => member.id === arrivalMessage.sender)
             && (setMessages(previousMessages => [...previousMessages, arrivalMessage]))
     }, [arrivalMessage, currentChat])
+
+    /**
+     * is on messenger
+     */
 
     useEffect(() => {
         if (currentChat) {
@@ -144,223 +135,171 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
         }
     }, [uid, onlineUsers.length, websocket, currentChat])
 
-    useEffect(() => {
-        const getConversations = async () => {
-            try {
-                const res = await axios.get(`${process.env.REACT_APP_API_URL}api/conversations/${uid}`)
-                const realConversations = res.data.filter(conv => conv.waiter !== uid)
-                setConversations(realConversations.sort((a, b) => { return b.updatedAt.localeCompare(a.updatedAt) }))
-                setConversationsFound(true)
-            } catch (err) {
-                console.error(err)
-            }
-        }
-        getConversations()
-    }, [uid, conversations.length])
+    /**
+     * get conversations
+     */
 
     useEffect(() => {
-        if (conversations)
-            setCurrentChat(conversations[0])
-    }, [conversations, conversationsFound])
-
-    useEffect(() => {
-        if (currentChat) {
-            const getMessages = async () => {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}api/messages/${currentChat._id}`)
-                setMessages(response.data)
-
-                if (!arrivalMessage) {
-                    let array = []
-                    response.data.map((messages, key) => { return array = [...array, { index: key, date: messages.createdAt.substring(0, 10) }] })
-                    let filteredArray = []
-                    array.filter((item) => {
-                        let i = filteredArray.findIndex(element => (element.date === item.date));
-                        if (i <= -1) { filteredArray.push(item) }
-                        return null;
-                    });
-                    setMessagesDates(filteredArray)
+        if (user.conversations) {
+            const getConversations = async () => {
+                try {
+                    const promises = user.conversations.map(async conv => {
+                        return await axios.get(`${process.env.REACT_APP_API_URL}api/conversation/${conv.id}`)
+                            .then(res => res.data)
+                            .catch(err => console.error(err))
+                    })
+                    Promise.all(promises).then(res => {
+                        if (res.length > 0) {
+                            const sort = res.sort((a, b) => { return b.updatedAt.localeCompare(a.updatedAt) })
+                            setConversations(sort)
+                            dispatch(getConversation(sort[0]._id))
+                            setCurrentChat(sort[0])
+                            setMessages(sort[0].messages)
+                            getMessagesDates(sort[0].messages)
+                            setLoading(false)
+                        }
+                        
+                    })
+                } catch (err) {
+                    console.error(err)
                 }
             }
-            getMessages()
+            getConversations()
         }
-    }, [currentChat, messages.length, arrivalMessage])
+    }, [user.conversations])
 
-    /*************************************************************************************** */
-    /************************************ FONCTIONS **************************************** */
+    /**
+     * FONCTIONS
+     */
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (conversation) => {
         const message = {
             sender: uid,
-            sender_pseudo: userData.pseudo,
-            sender_picture: userData.picture,
+            sender_pseudo: user.pseudo,
+            sender_picture: user.picture,
             text: newMessage,
-            conversationId: currentChat._id,
+            conversationId: conversation._id,
         }
-        if (currentChat.members.length > 2) {
-            let ids = []
-            currentChat.members.map(member => { return ids = [...ids, member.id] })
-            ids.map(memberId => {
+        if (conversation.type === "group") {
+            otherMembers(conversation, uid).map(memberId => {
                 return websocket.current.emit("sendMessage", {
-                    senderId: uid,
-                    sender_pseudo: userData.pseudo,
-                    sender_picture: userData.picture,
                     receiverId: memberId,
-                    text: [newMessage],
-                    conversationId: currentChat._id
+                    message: message
                 })
             })
-
-            try {
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}api/messages/`, message)
-                setMessages([...messages, response.data])
-                setNewMessage('')
-                setGetNewMessage(response.data)
-            } catch (err) {
-                console.log(err)
-            }
         } else {
-            const receiver = currentChat.members.find(member => member.id !== uid)
-            if (currentChat.waiter === receiver.id) {
+            const receiver = conversation.members.find(member => member.id !== uid)
+            if (conversation.waiter) {
                 const removeWaiter = async () => {
-                    let data = { waiter: receiver.id }
-                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversations/${currentChat._id}/remove-waiter`, data)
+                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/remove-waiter`, { waiter: receiver.id })
                     websocket.current.emit("addConversation", {
                         receiverId: receiver.id,
-                        conversation: currentChat
+                        conversation: conversation
                     })
                 }
                 removeWaiter()
             }
             websocket.current.emit("sendMessage", {
-                senderId: uid,
-                sender_pseudo: userData.pseudo,
-                sender_picture: userData.picture,
                 receiverId: receiver.id,
-                text: [newMessage],
-                conversationId: currentChat._id
+                message: message
             })
-
-            try {
-                const response = await axios.post(`${process.env.REACT_APP_API_URL}api/messages/`, message)
-                setMessages([...messages, response.data])
-                setNewMessage('')
-                setGetNewMessage(response.data)
-            } catch (err) {
-                console.log(err)
-            }
         }
+        dispatch(sendMessage(conversation._id, message))
+        setNewMessage('')
     }
 
-    useEffect(() => {
-        lastMessageRef.current?.scrollIntoView()
-    }, [messages.length])
-
-    const getMembers = (conversation) => {
-        const members = conversation.members.filter(member => member.id !== uid)
-        return members
-    }
-
-    const changeCurrentChat = async (conversation) => {
-        const messageId = currentChat.messages[currentChat.messages.length - 1]
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/conversation/last-message-seen/${uid}`,
-            data: {
-                conversationId: currentChat._id,
-                messageId: messageId
-            },
-        }).then(res => res.data).catch(err => console.log(err))
+    const changeCurrentChat = (conversation) => {
         websocket.current.emit("changeCurrentConversation", {
             userId: uid,
             conversationId: conversation._id
         })
+        dispatch(setLastMessageSeen(uid, currentChat._id, currentChat.messages[currentChat.messages.length - 1]._id))
+        setCurrentChat(conversation)
     }
 
-    const deleteConversation = async (element) => {
-        const membersId = element.members.filter(member => member.id !== uid)
-        let ids = []
-        membersId.map(member => { return ids = [...ids, member.id] })
-
-        ids.map(memberId => {
+    const deleteConv = async (conversation) => {
+        otherMembers(conversation, uid).map(memberId => {
             return websocket.current.emit("deleteConversation", {
                 receiverId: memberId,
-                conversationId: element._id,
+                conversationId: conversation._id,
             })
         })
-
-        await axios
-            .delete(`${process.env.REACT_APP_API_URL}api/conversations/${element._id}`)
-            .then((res) => {
-                let storedArray = conversations.slice()
-                let todelete = storedArray.find(conversation => conversation._id === element._id)
-                storedArray.splice(todelete, 1)
-                setConversations(storedArray)
-            })
-            .catch((err) => console.log(err))
+        dispatch(deleteConversation(conversation._id))
     }
 
-    const leaveConversation = async (element, memberId) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversations/${element._id}/pull`,
-            data: { memberId }
-        })
-    }
-
-    const addNewMember = async (element, member) => {
+    const addNewMember = async (conversation, member) => {
         let newMember = {
             id: member._id,
             pseudo: member.pseudo,
             picture: member.picture
         }
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversations/${element._id}/add`,
-            data: { newMember }
+        dispatch(addMember(conversation._id, newMember))
+        otherMembers(conversation, uid).map(member => {
+            return websocket.current.emit("addConversationMember", {
+                receiverId: member,
+                newMember: newMember,
+            })
+        })
+        return websocket.current.emit("joinConversation", {
+            receiverId: newMember._id,
+            conversationId: conversation._id,
         })
     }
 
-    const deleteMessage = async (message) => {
-        let ids = []
-        currentChat.members.map(member => { return ids = [...ids, member.id] })
+    const leaveConversation = async (conversation, memberId) => {
+        dispatch(removeMember(conversation._id, memberId))
+        otherMembers(conversation, uid).map(member => {
+            return websocket.current.emit("removeConversationMember", {
+                receiverId: member,
+                memberId: memberId,
+            })
+        })
+        return websocket.current.emit("leaveConversation", {
+            receiverId: memberId,
+            conversationId: conversation._id,
+        })
+    }
 
-        ids.map(memberId => {
+    const removeMessage = async (message) => {
+        otherMembers(currentChat, uid).map(memberId => {
             return websocket.current.emit("deleteMessage", {
                 receiverId: memberId,
-                conversationId: currentChat._id,
                 messageId: message._id
             })
         })
-
-        await axios
-            .delete(`${process.env.REACT_APP_API_URL}api/messages/${message._id}`)
-            .then((res) => res.data)
-            .catch((err) => console.log(err))
+        dispatch(deleteMessage(currentChat._id, message._id))
     }
 
     const modifyMessage = async (message) => {
-        let ids = []
-        currentChat.members.map(member => { return ids = [...ids, member.id] })
-        ids.map(memberId => {
-            return websocket.current.emit("modifyMessage", {
+        otherMembers(currentChat, uid).map(memberId => {
+            return websocket.current.emit("updateMessage", {
                 receiverId: memberId,
-                conversationId: currentChat._id,
                 messageId: message._id,
                 text: [modifiedMessage]
             })
         })
+        dispatch(updateMessage(currentChat._id, message._id, modifiedMessage))
+    }
 
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/messages/single/${message._id}`,
-            data: { text: modifiedMessage }
+    const getMessagesDates = (messages) => {
+        let array = []
+        messages.map((message, key) => {
+            return array = [...array, { index: key, date: message.createdAt.substring(0, 10) }]
         })
+        let filteredArray = []
+        array.filter(item => {
+            let i = filteredArray.findIndex(e => e.date === item.date);
+            if (i <= -1) { filteredArray.push(item) }
+            return null
+        })
+        setMessagesDates(filteredArray)
     }
 
     return (
         <div className="messenger">
             <ConversationsMenu
                 uid={uid}
+                user={user}
                 friends={friends}
                 websocket={websocket}
                 setCurrentChat={setCurrentChat}
@@ -369,7 +308,7 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                 changeCurrentChat={changeCurrentChat}
                 getNewMessage={getNewMessage}
                 notification={notification}
-                user={user}
+                isLoading={isLoading}
             />
             <div className="conversation-box">
                 <div className="conversation-box-wrapper">
@@ -378,9 +317,8 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                             <ConversationHeader
                                 uid={uid}
                                 friends={friends}
-                                getMembers={getMembers}
                                 currentChat={currentChat}
-                                deleteConversation={deleteConversation}
+                                deleteConversation={deleteConv}
                                 leaveConversation={leaveConversation}
                                 addNewMember={addNewMember}
                             />
@@ -393,15 +331,16 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                                             )}
                                             <div ref={lastMessageRef}>
                                                 <Message
+                                                    uid={uid}
+                                                    user={user}
                                                     message={message}
                                                     own={message.sender === uid}
                                                     uniqueKey={key}
-                                                    uid={uid}
                                                     currentChat={currentChat}
                                                     websocket={websocket}
                                                     modifyMessage={modifyMessage}
                                                     setModifiedMessage={setModifiedMessage}
-                                                    deleteMessage={deleteMessage}
+                                                    deleteMessage={removeMessage}
                                                 />
                                             </div>
                                         </div>
@@ -422,7 +361,10 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
                         </>
                     ) : (
                         <div className="conversation-box-container">
-                            <p>Créer votre première conversation pour commencer à chatter !</p>
+                            <div className="no-conversation-yet">
+                                <img src={`${process.env.REACT_APP_API_URL}files/img/no-conversation.png`} alt="Pas encore de conversation" />
+                                <p>Créer votre première conversation pour commencer à chatter !</p>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -431,9 +373,9 @@ const Messenger = ({ websocket, friends, onlineUsers }) => {
             <div className="online-users-container">
                 <h3>Contacts</h3>
                 <OnlineUsers
-                    onlineUsers={onlineUsers}
-                    currentId={uid}
+                    uid={uid}
                     user={user}
+                    onlineUsers={onlineUsers}
                     changeCurrentChat={setCurrentChat}
                     setConversations={setConversations}
                     conversations={conversations}

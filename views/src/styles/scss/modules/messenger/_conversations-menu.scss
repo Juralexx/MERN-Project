@@ -1,0 +1,104 @@
+.conversation-menu {
+    width   : 28%;
+    padding : 10px;
+
+    .search_input {
+        width : 100%;
+    }
+
+    .create_conversation_tools {
+        width       : 15%;
+        margin-left : 10px;
+
+        .icon_toggle {
+            height        : 100%;
+            width         : 100%;
+            background    : var(--primary);
+            border-radius : var(--radius);
+
+            svg {
+                width  : 24px;
+                height : 24px;
+                color  : white;
+            }
+        }
+    }
+
+    .conversation {
+        display     : flex;
+        align-items : center;
+        padding     : 10px;
+        margin      : 5px 0;
+        cursor      : pointer;
+
+        &:hover {
+            background    : var(--x-light);
+            border-radius : var(--radius);
+        }
+
+        &.new-notification {
+            background : rgba(var(--primary-rgb), 0.2);
+        }
+
+        .conversation-img-container {
+            display      : flex;
+            position     : relative;
+            margin-right : 10px;
+
+            .conversation-img {
+                min-width     : 36px;
+                min-height    : 36px;
+                border-radius : 50%;
+
+                &:nth-child(n+2) {
+                    margin-left : -24px;
+                }
+            }
+        }
+
+        .conversation-infos {
+            width : 100%;
+
+            .conversation-infos-top {
+                display         : flex;
+                justify-content : space-between;
+
+                .conversation-name {
+                    display     : flex;
+                    color       : var(--text);
+                    font-size   : 14px;
+                    font-weight : 600;
+                }
+
+                .conversation-date {
+                    font-size : 12px;
+                    color     : var(--text-secondary);
+                }
+            }
+
+            .last-message-wrapper {
+                display    : flex;
+                margin-top : 2px;
+                font-size  : 12px;
+                color      : var(--text-secondary);
+
+                p {
+                    font-size : 12px;
+                }
+
+                .unseen-messages {
+                    position        : absolute;
+                    right           : 0;
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : center;
+                    width           : 24px;
+                    height          : 24px;
+                    border-radius   : 20px;
+                    background      : var(--primary);
+                    color           : white;
+                }
+            }
+        }
+    }
+}
