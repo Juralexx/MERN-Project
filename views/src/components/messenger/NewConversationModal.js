@@ -6,6 +6,7 @@ import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs';
 import { MediumAvatar, TinyAvatar } from '../tools/components/Avatars';
 import { isInResults, isSelected } from '../tools/functions/member';
 import { otherMembersIDs, pushUserInArray, removeUserFromArray } from './tools/function';
+import { oneLevelSearch } from '../tools/functions/searches';
 import Modal from '../tools/components/Modal';
 import { IoClose } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi';
@@ -48,20 +49,6 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, friendsArr,
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
     const [isResults, setResults] = useState([])
-    const isEmpty = !isResults || isResults.length === 0
-    const regexp = new RegExp(query, 'i')
-
-    const searchFriends = () => {
-        if (!query || query.trim() === "") { return }
-        if (query.length >= 2) {
-            const response = friendsArr?.filter(friend => regexp.test(friend.pseudo))
-            setResults(response)
-            setSearch(true)
-            if (isEmpty) {
-                setSearch(false)
-            }
-        } else { setSearch(false) }
-    }
 
     return (
         <>
@@ -85,7 +72,13 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, friendsArr,
                                 })
                             )}
                         </div>
-                        <IconInput className="full is_start_icon mb-3" placeholder="Rechercher un membre..." icon={<BiSearchAlt />} value={query} onInput={e => setQuery(e.target.value)} onChange={searchFriends} />
+                        <IconInput
+                            className="full is_start_icon mb-3"
+                            placeholder="Rechercher un membre..."
+                            icon={<BiSearchAlt />} value={query}
+                            onInput={e => setQuery(e.target.value)}
+                            onChange={() => oneLevelSearch(query, friendsArr, 'pseudo', isResults, setResults, setSearch)}
+                        />
                         <div className="user_selecter">
                             {open && friendsArr &&
                                 <div className="user_displayer">

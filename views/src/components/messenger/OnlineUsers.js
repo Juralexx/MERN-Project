@@ -33,7 +33,7 @@ const OnlineUsers = ({ uid, user, onlineUsers, friendsArr, fetchedFriends, conve
     }
 
     const isOnline = (friend) => {
-        let online = onlineUsers.some(item => item.friend === friend._id)
+        let online = onlineUsers.some(u => u.friend === friend._id)
         return online
     }
 

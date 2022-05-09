@@ -36,7 +36,7 @@ function Paths({ websocket, onlineUsers, friends, user, uid }) {
 
                 <Route path="messenger" element={
                     <ProtectedRoute>
-                        <Messenger uid={uid} user={user} websocket={websocket} friends={friends} onlineUsers={onlineUsers} />
+                        <Messenger uid={uid} user={user} websocket={websocket} onlineUsers={onlineUsers} />
                     </ProtectedRoute>
                 } />
 

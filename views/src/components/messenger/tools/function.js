@@ -98,3 +98,52 @@ export const removeUserFromArray = (member, array) => {
     arr.splice(index, 1)
     return arr
 }
+
+/**
+ * Find if a conversation if selected members already exists
+ */
+
+export const isConversation = (conversations, members) => {
+    console.log(members)
+    if (conversations.length > 0) {
+        const convs = conversations.filter(conv => conv.members.length === members.length)
+        if (convs.length > 0) {
+            if (members.length === 2) {
+                const conversation = convs.filter(conv => conv.members[0].id === members[0]._id || conv.members[1].id === members[0]._id)
+                console.log(conversation)
+                if (conversation.length > 0) {
+                    return conversation[0]
+                } else {
+                    return false
+                }
+            } else {
+                let membersIDs = []
+                members.forEach(member => {
+                    membersIDs.push(member._id)
+                })
+                for (let i = 0; i < convs.length; i++) {
+                    let convIDs = []
+                    convs[i].members.forEach(member => {
+                        convIDs.push(member.id)
+                    })
+                    if (JSON.stringify(convIDs.sort()) === JSON.stringify(membersIDs.sort())) {
+                        return convs[i]
+                    } else if (i === (convs.length - 1)) {
+                        return false
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Remove user already selected from array
+ */
+
+export const removeSelected = (array, user) => {
+    let arr = [...array]
+    let i = arr.findIndex(e => e._id === user._id)
+    arr.splice(i, 1)
+    return arr
+}

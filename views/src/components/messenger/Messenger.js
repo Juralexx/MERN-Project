@@ -3,15 +3,16 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addMember, deleteConversation, deleteMessage, getConversation, removeMember, sendMessage, setLastMessageSeen, updateMessage } from '../../actions/messenger.action';
 import { otherMembersIDs } from './tools/function';
-import { EmptyDialog, EmptyGroup, NoConversation } from './Empty'
+import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
 import MessageDate from './MessageDate';
 import Message from './Message';
 import OnlineUsers from './OnlineUsers';
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
 import ConversationBottom from './ConversationBottom';
+import SearchHeader from './SearchHeader';
 
-const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
+const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [conversations, setConversations] = useState([])
     const [favorites, setFavorites] = useState([])
     const [currentChat, setCurrentChat] = useState({})
@@ -20,12 +21,15 @@ const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
     const [friendsArr, setFriendsArr] = useState([])
     const [fetchedFriends, setFetchedFriends] = useState(true)
 
+    const [searchHeader, setSearchHeader] = useState(false)
+    const [blank, setBlank] = useState(false)
+
     const [messages, setMessages] = useState([])
+    const [messagesDates, setMessagesDates] = useState([])
     const [newMessage, setNewMessage] = useState({})
     const [getNewMessage, setGetNewMessage] = useState([])
     const [arrivalMessage, setArrivalMessage] = useState("")
     const [modifiedMessage, setModifiedMessage] = useState("")
-    const [messagesDates, setMessagesDates] = useState([])
 
     const [notification, setNotification] = useState("")
 
@@ -46,7 +50,8 @@ const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
             const getConversations = async () => {
                 try {
                     const promises = user.conversations.map(async conv => {
-                        return await axios.get(`${process.env.REACT_APP_API_URL}api/conversation/${conv.id}`)
+                        return await axios
+                            .get(`${process.env.REACT_APP_API_URL}api/conversation/${conv.id}`)
                             .then(res => res.data)
                             .catch(err => console.error(err))
                     })
@@ -211,39 +216,41 @@ const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
      */
 
     const handleSubmit = async (conversation) => {
-        const message = {
-            sender: uid,
-            sender_pseudo: user.pseudo,
-            sender_picture: user.picture,
-            text: newMessage,
-            conversationId: conversation._id,
-        }
-        if (conversation.type === "group") {
-            otherMembersIDs(conversation, uid).map(memberId => {
-                return websocket.current.emit("sendMessage", {
-                    receiverId: memberId,
+        if (!blank) {
+            const message = {
+                sender: uid,
+                sender_pseudo: user.pseudo,
+                sender_picture: user.picture,
+                text: newMessage,
+                conversationId: conversation._id,
+            }
+            if (conversation.type === "group") {
+                otherMembersIDs(conversation, uid).map(memberId => {
+                    return websocket.current.emit("sendMessage", {
+                        receiverId: memberId,
+                        message: message
+                    })
+                })
+            } else {
+                const receiver = conversation.members.find(member => member.id !== uid)
+                if (conversation.waiter) {
+                    const removeWaiter = async () => {
+                        await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/remove-waiter`, { waiter: receiver.id })
+                        websocket.current.emit("addConversation", {
+                            receiverId: receiver.id,
+                            conversation: conversation
+                        })
+                    }
+                    removeWaiter()
+                }
+                websocket.current.emit("sendMessage", {
+                    receiverId: receiver.id,
                     message: message
                 })
-            })
-        } else {
-            const receiver = conversation.members.find(member => member.id !== uid)
-            if (conversation.waiter) {
-                const removeWaiter = async () => {
-                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/remove-waiter`, { waiter: receiver.id })
-                    websocket.current.emit("addConversation", {
-                        receiverId: receiver.id,
-                        conversation: conversation
-                    })
-                }
-                removeWaiter()
             }
-            websocket.current.emit("sendMessage", {
-                receiverId: receiver.id,
-                message: message
-            })
+            dispatch(sendMessage(conversation._id, message))
+            setNewMessage('')
         }
-        dispatch(sendMessage(conversation._id, message))
-        setNewMessage('')
     }
 
     const changeCurrentChat = (conversation) => {
@@ -326,17 +333,19 @@ const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
     }
 
     const getMessagesDates = (messages) => {
-        let array = []
-        messages.map((message, key) => {
-            return array = [...array, { index: key, date: message.createdAt.substring(0, 10) }]
-        })
-        let filteredArray = []
-        array.filter(item => {
-            let i = filteredArray.findIndex(e => e.date === item.date);
-            if (i <= -1) { filteredArray.push(item) }
-            return null
-        })
-        setMessagesDates(filteredArray)
+        if (messages.length > 0) {
+            let array = []
+            messages.map((message, key) => {
+                return array = [...array, { index: key, date: message.createdAt.substring(0, 10) }]
+            })
+            let filteredArray = []
+            array.filter(item => {
+                let i = filteredArray.findIndex(e => e.date === item.date);
+                if (i <= -1) { filteredArray.push(item) }
+                return null
+            })
+            setMessagesDates(filteredArray)
+        }
     }
 
     return (
@@ -351,6 +360,8 @@ const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
                 favorites={favorites}
                 setCurrentChat={setCurrentChat}
                 changeCurrentChat={changeCurrentChat}
+                setSearchHeader={setSearchHeader}
+                setBlank={setBlank}
                 getNewMessage={getNewMessage}
                 notification={notification}
                 isLoading={isLoading}
@@ -359,47 +370,64 @@ const Messenger = ({ uid, user, websocket, friends, onlineUsers }) => {
                 <div className="conversation-box-wrapper">
                     {Object.keys(currentChat).length > 0 ? (
                         <>
-                            <ConversationHeader
-                                uid={uid}
-                                user={user}
-                                friendsArr={friendsArr}
-                                currentChat={currentChat}
-                                deleteConversation={deleteConv}
-                                leaveConversation={leaveConversation}
-                                addNewMember={addNewMember}
-                                dispatch={dispatch}
-                            />
+                            {!searchHeader ? (
+                                <ConversationHeader
+                                    uid={uid}
+                                    user={user}
+                                    friendsArr={friendsArr}
+                                    currentChat={currentChat}
+                                    deleteConversation={deleteConv}
+                                    leaveConversation={leaveConversation}
+                                    addNewMember={addNewMember}
+                                    dispatch={dispatch}
+                                />
+                            ) : (
+                                <SearchHeader
+                                    uid={uid}
+                                    user={user}
+                                    friendsArr={friendsArr}
+                                    setCurrentChat={setCurrentChat}
+                                    changeCurrentChat={changeCurrentChat}
+                                    conversations={conversations.concat(favorites)}
+                                    setConversations={setConversations}
+                                    setBlank={setBlank}
+                                />
+                            )}
                             <div className="conversation-box-container" ref={convWrapperRef}>
-                                {messages.length > 0 ? (
-                                    messages.map((message, key) => {
-                                        return (
-                                            <div key={key}>
-                                                {messagesDates.some(element => element.date === message.createdAt.substring(0, 10) && element.index === key) && (
-                                                    <MessageDate message={message} />
-                                                )}
-                                                <div ref={lastMessageRef}>
-                                                    <Message
-                                                        uid={uid}
-                                                        user={user}
-                                                        message={message}
-                                                        own={message.sender === uid}
-                                                        uniqueKey={key}
-                                                        currentChat={currentChat}
-                                                        websocket={websocket}
-                                                        modifyMessage={modifyMessage}
-                                                        setModifiedMessage={setModifiedMessage}
-                                                        deleteMessage={removeMessage}
-                                                    />
+                                {!blank ? (
+                                    messages.length > 0 ? (
+                                        messages.map((message, key) => {
+                                            return (
+                                                <div key={key}>
+                                                    {messagesDates.some(element => element.date === message.createdAt.substring(0, 10) && element.index === key) &&
+                                                        <MessageDate message={message} />
+                                                    }
+                                                    <div ref={lastMessageRef}>
+                                                        <Message
+                                                            uid={uid}
+                                                            user={user}
+                                                            websocket={websocket}
+                                                            message={message}
+                                                            own={message.sender === uid}
+                                                            uniqueKey={key}
+                                                            currentChat={currentChat}
+                                                            modifyMessage={modifyMessage}
+                                                            setModifiedMessage={setModifiedMessage}
+                                                            deleteMessage={removeMessage}
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    })
-                                ) : (
-                                    currentChat.type === "dialog" ? (
-                                        <EmptyDialog uid={uid} currentChat={currentChat} />
+                                            )
+                                        })
                                     ) : (
-                                        <EmptyGroup uid={uid} currentChat={currentChat} />
+                                        currentChat.type === "dialog" ? (
+                                            <EmptyDialog uid={uid} currentChat={currentChat} />
+                                        ) : (
+                                            <EmptyGroup uid={uid} currentChat={currentChat} />
+                                        )
                                     )
+                                ) : (
+                                    <></>
                                 )}
                             </div>
                             <ConversationBottom

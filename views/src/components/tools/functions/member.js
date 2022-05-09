@@ -151,7 +151,7 @@ export const highlightIt = (array, element, isInResult, search) => {
 export const isInResults = (element, isInResult, search, classe) => {
     if (search) {
         if (isInResult.includes(element)) return classe
-        else return 'hidden'
+        else return '!hidden'
     } else return classe
 }
 

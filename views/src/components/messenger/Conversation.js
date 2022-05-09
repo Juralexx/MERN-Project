@@ -10,13 +10,13 @@ const Conversation = ({ uid, user, conversation, newMessage, notification }) => 
     const removeNotification = () => { if (unseen !== null) setUnseen(null) }
 
     useEffect(() => {
-        if (lastMessageFound)
+        if (lastMessageFound && Object.keys(lastMessageFound).length > 0)
             setDate(getDate(lastMessageFound.createdAt))
         else setDate(getDate(conversation.createdAt))
     }, [lastMessageFound, conversation.createdAt])
 
     useEffect(() => {
-        if (user.conversations && conversation.messages) {
+        if (user.conversations && conversation.messages.length > 0) {
             const conv = user.conversations.find(e => e.id === conversation._id)
             if (conv.last_message_seen && conv.last_message_seen !== null && conv.last_message_seen !== "") {
                 const index = conversation.messages.findIndex(e => e._id === conv.last_message_seen)

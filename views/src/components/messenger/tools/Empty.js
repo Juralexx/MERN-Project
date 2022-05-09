@@ -1,6 +1,6 @@
-import { avatar } from "../tools/functions/useAvatar"
-import { dateParser } from "../Utils"
-import { getMembers } from "./tools/function"
+import { avatar } from "../../tools/functions/useAvatar"
+import { dateParser } from "../../Utils"
+import { getMembers } from "./function"
 
 export const NoConversation = () => {
     return (

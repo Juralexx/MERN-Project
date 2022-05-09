@@ -143,7 +143,7 @@ const Navbar = ({ websocket, user, uid }) => {
                                         </li>
                                     </ul>
                                 </div>
-                                <div className="mini_nav_container lg:hidden">
+                                <div className="mini_nav_container lg:!hidden">
                                     <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />
                                 </div>
                             </>

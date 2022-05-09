@@ -4,30 +4,17 @@ import NewConversationModal from './NewConversationModal';
 import { IconInput } from '../tools/components/Inputs';
 import { IconToggle } from '../tools/components/Button';
 import { isInResults } from '../tools/functions/member';
+import { twoLevelSearch } from '../tools/functions/searches';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiPencilAlt } from 'react-icons/hi'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 
-const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, setCurrentChat, changeCurrentChat, getNewMessage, notification }) => {
+const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, setCurrentChat, changeCurrentChat, setSearchHeader, setBlank, getNewMessage, notification }) => {
     const [open, setOpen] = useState(false)
-    const [isResults, setResults] = useState([])
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
-    const isEmpty = !isResults || isResults.length === 0
-    const regexp = new RegExp(query, 'i');
-
-    const searchConversation = () => {
-        if (!query || query.trim() === "") { return }
-        if (query.length >= 2) {
-            const res = [...favorites, ...conversations].filter(conversation => conversation.members.some(member => regexp.test(member.pseudo)))
-            setResults(res)
-            setSearch(true)
-            if (isEmpty) {
-                setSearch(false)
-            }
-        } else { setSearch(false) }
-    }
+    const [isResults, setResults] = useState([])
 
     return (
         <div className="conversation-menu">
@@ -35,11 +22,18 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                 <h2 className="bold">Conversations</h2>
                 <div className="flex">
                     <IconToggle icon={<AiOutlineUsergroupAdd />} className="mr-2" onClick={() => setOpen(true)} />
-                    <IconToggle icon={<HiPencilAlt />} />
+                    <IconToggle icon={<HiPencilAlt />} onClick={() => { setSearchHeader(true); setBlank(true) }} />
                 </div>
             </div>
             <div className="pb-4 mb-3 border-b">
-                <IconInput className="full is_start_icon" icon={<BiSearchAlt />} placeholder="Rechercher une conversation..." value={query} onInput={e => setQuery(e.target.value)} onChange={searchConversation} />
+                <IconInput
+                    className="full is_start_icon"
+                    icon={<BiSearchAlt />}
+                    placeholder="Rechercher une conversation..."
+                    value={query}
+                    onInput={e => setQuery(e.target.value)}
+                    onChange={() => twoLevelSearch(query, [...favorites, ...conversations], 'members', 'pseudo', isResults, setResults, setSearch)}
+                />
             </div>
             <NewConversationModal
                 open={open}

@@ -179,7 +179,7 @@ export default function userReducer(state = initialState, action) {
         case CREATE_CONVERSATION:
             return {
                 ...state,
-                conversations: [...state.conversations, { type: action.payload.type, id: action.payload._id, last_message_seen: action.payload.last_message_seen, }]
+                conversations: [...state.conversations, { type: action.payload.type, id: action.payload._id, last_message_seen: action.payload.last_message_seen }]
             }
         case RECEIVE_CREATE_CONVERSATION:
             return {
@@ -195,6 +195,7 @@ export default function userReducer(state = initialState, action) {
             let i = state.conversations.find(conversation => conversation.id === action.payload.conversationId)
             state.conversations[i] = action.payload.messageId
             return {
+                ...state,
                 conversations: state.conversations
             }
         case RECEIVE_ADD_MEMBER_CONVERSATION:

@@ -6,8 +6,9 @@ import { Button, TextButton } from '../tools/components/Button'
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs'
 import { MediumAvatar } from '../tools/components/Avatars'
 import { isInResults } from '../tools/functions/member'
-import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 import { otherMembersIDs } from './tools/function'
+import { oneLevelSearch } from '../tools/functions/searches'
+import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 
 const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, deleteConversation, leaveConversation, addNewMember }) => {
     const [navbar, setNavbar] = useState(1)
@@ -22,20 +23,6 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, delet
     const [isResults, setResults] = useState([])
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
-    const isEmpty = !isResults || isResults.length === 0
-    const regexp = new RegExp(query, 'i')
-
-    const searchMember = () => {
-        if (!query || query.trim() === "") { return }
-        if (query.length >= 2) {
-            const response = conversation.members.filter(member => regexp.test(member.pseudo))
-            setResults(response)
-            setSearch(true)
-            if (isEmpty) {
-                setSearch(false)
-            }
-        } else { setSearch(false) }
-    }
 
     const submitDescription = async () => {
         await axios({
@@ -142,7 +129,14 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, delet
                 </div>
             ) : (
                 <>
-                    <IconInput className="full is_start_icon" placeholder="Rechercher un membre..." icon={<BiSearchAlt />} value={query} onInput={e => setQuery(e.target.value)} onChange={searchMember} />
+                    <IconInput
+                        className="full is_start_icon"
+                        placeholder="Rechercher un membre..."
+                        icon={<BiSearchAlt />}
+                        value={query}
+                        onInput={e => setQuery(e.target.value)}
+                        onChange={() => oneLevelSearch(query, conversation.members, 'pseudo', isResults, setResults, setSearch)}
+                    />
                     {!addMember && (
                         <>
                             <div className="add-more-users mt-3" onClick={() => setAddMember(!addMember)}>
