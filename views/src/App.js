@@ -7,7 +7,7 @@ import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
-import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveUpdateMessage } from './actions/messenger.action';
+import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage } from './actions/messenger.action';
 
 function App() {
     const user = useSelector(state => state.userReducer)
@@ -49,6 +49,7 @@ function App() {
 
     useEffect(() => {
         if (!window.location.href.includes("messenger")) {
+            console.log('first')
             websocket.current.emit("leaveMessenger", {
                 userId: uid
             })
@@ -57,16 +58,11 @@ function App() {
 
     useEffect(() => {
         websocket.current.on("sendMessageNotification", data => {
-            setSentNotification({
-                type: "new-message",
-                sender: data.message.senderId,
-                sender_pseudo: data.message.sender_pseudo,
-                sender_picture: data.message.sender_picture,
-                text: data.message.text,
-                conversationId: data.message.conversationId,
-                createdAt: new Date().toISOString()
-            })
+            setSentNotification({ type: "new-message", ...data.message })
             setSend(true)
+        })
+        websocket.current.on("getMessage", data => {
+            dispatch(receiveNewMessage(data.message))
         })
         websocket.current.on("updateMessage", data => {
             dispatch(receiveUpdateMessage(data.messageId, data.text))

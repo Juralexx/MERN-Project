@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { avatar } from '../tools/functions/useAvatar'
-import { getMembers } from './tools/function'
+import { deleteConv, getMembers, leaveConversation, returnMembers } from './tools/function'
 import { addFavorite, removeFavorite } from '../../actions/messenger.action'
 import ConversationModal from './ConversationModal'
 import ToolsMenu from '../tools/components/ToolsMenu'
 
-const ConversationHeader = ({ uid, user, currentChat, friendsArr, deleteConversation, leaveConversation, addNewMember, dispatch }) => {
+const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dispatch }) => {
     const [openConvModal, setOpenConvModal] = useState(false)
     const [isFavorite, setFavorite] = useState(null)
     const members = getMembers(currentChat, uid)
@@ -22,8 +22,8 @@ const ConversationHeader = ({ uid, user, currentChat, friendsArr, deleteConversa
 
     useEffect(() => {
         if (user.conversations && currentChat) {
-            let c = user.conversations.filter(e => e.id === currentChat._id)
-            c && c.favorite === true ? setFavorite(true) : setFavorite(false)
+            let conv = user.conversations.filter(e => e.id === currentChat._id)
+            conv && conv.favorite === true ? setFavorite(true) : setFavorite(false)
         }
     }, [user.conversations, currentChat])
 
@@ -43,20 +43,20 @@ const ConversationHeader = ({ uid, user, currentChat, friendsArr, deleteConversa
                         ) : (
                             <div className="tools_choice" onClick={favorite}>Ajouter aux favoris</div>
                         )}
-                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
+                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}>Supprimer la conversation</div>}
                     </ToolsMenu>
                 </div>
             }
             {openConvModal &&
                 <ConversationModal
                     uid={uid}
+                    websocket={websocket}
                     setOpen={setOpenConvModal}
                     open={openConvModal}
                     conversation={currentChat}
-                    deleteConversation={deleteConversation}
                     leaveConversation={leaveConversation}
-                    addNewMember={addNewMember}
                     friendsArr={friendsArr}
+                    dispatch={dispatch}
                 />
             }
             {currentChat.type === "group" &&
@@ -69,20 +69,7 @@ const ConversationHeader = ({ uid, user, currentChat, friendsArr, deleteConversa
                                 )
                             })}
                         </div>
-                        <div className="conversation-name">
-                            {currentChat.members.length === 2 &&
-                                members[0].pseudo
-                            }
-                            {currentChat.members.length === 3 &&
-                                members[0].pseudo + ", " + members[1].pseudo
-                            }
-                            {currentChat.members.length === 4 &&
-                                members[0].pseudo + ", " + members[1].pseudo + ", " + members[2].pseudo
-                            }
-                            {currentChat.members.length > 5 &&
-                                members[0].pseudo + ", " + members[1].pseudo + ", " + members[2].pseudo + " et " + (members.length - 3) + " autres"
-                            }
-                        </div>
+                        <div className="conversation-name">{returnMembers(members)}</div>
                     </div>
                     <ToolsMenu>
                         {isFavorite ? (
@@ -90,7 +77,10 @@ const ConversationHeader = ({ uid, user, currentChat, friendsArr, deleteConversa
                         ) : (
                             <div className="tools_choice" onClick={favorite}>Ajouter aux favoris</div>
                         )}
-                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConversation(currentChat)}>Supprimer la conversation</div>}
+                        <div className="tools_choice" onClick={() => leaveConversation(currentChat, uid, uid, websocket, dispatch)}>Quitter la conversation</div>
+                        {currentChat.owner === uid &&
+                            <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}>Supprimer la conversation</div>
+                        }
                     </ToolsMenu>
                 </div>
             }

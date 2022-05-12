@@ -16,17 +16,18 @@
     max-height     : 500px;
     margin         : auto;
     img {
-        width  : 70%;
+        width  : 40%;
         margin : 0 auto;
     }
     p {
         text-align : center;
-        font-size  : 18px;
+        font-size  : 16px;
     }
     .user-avatar {
         height        : 80px;
         width         : 80px;
         border-radius : 50%;
+        border        : 3px solid  var(--content-x-light);
 
         &:nth-child(n+2) {
             margin-left : -34px;

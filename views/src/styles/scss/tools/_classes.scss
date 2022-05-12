@@ -73,3 +73,14 @@
         }
     }
 }
+
+.transition {
+    visibility : hidden;
+    opacity    : 0;
+    transition : .2s ease-in;
+    &.open {
+        visibility : visible;
+        opacity    : 1;
+        transition : .2s ease-in;
+    }
+}

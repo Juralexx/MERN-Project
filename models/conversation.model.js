@@ -48,6 +48,9 @@ const ConversationModel = new mongoose.Schema(
         description: {
             type: String,
         },
+        last_message: {
+            type: String
+        }
     },
     {
         timestamps: true

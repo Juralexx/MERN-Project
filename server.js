@@ -168,10 +168,11 @@ io.on("connect", (socket) => {
         }
     })
 
-    socket.on("sendMessage", ({ receiverId, conversationId }) => {
+    socket.on("sendMessage", ({ receiverId, conversationId, message }) => {
         let user = users.find(member => member.userId === receiverId)
         if (user) {
             if (user.conversationId && user.conversationId === conversationId) {
+                console.log(1)
                 return io.to(user.socketId).emit("getMessage", {
                     message
                 })
@@ -180,6 +181,7 @@ io.on("connect", (socket) => {
                     message
                 })
             } else {
+                console.log(3)
                 return io.to(user.socketId).emit("sendMessageNotification", {
                     message
                 })
@@ -201,7 +203,6 @@ io.on("connect", (socket) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
             return io.to(user.socketId).emit('deleteMessage', {
-                conversationId,
                 messageId
             })
         }

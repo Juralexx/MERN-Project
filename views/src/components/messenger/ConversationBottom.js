@@ -10,7 +10,7 @@ import { BsEmojiSmile } from 'react-icons/bs'
 import { BiFontFamily } from 'react-icons/bi'
 import { FiAtSign } from 'react-icons/fi'
 
-const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMessage, newMessage, handleSubmit, typingContext, currentChat, isTyping }) => {
+const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, newMessage, setNewMessage, handleSubmit, isTyping, typingContext, currentChat }) => {
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
     const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
     const [cursorPosition, setCursorPosition] = useState()
@@ -36,12 +36,12 @@ const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMe
 
     return (
         <div className="conversation-bottom">
+            <Typing
+                typingContext={typingContext}
+                currentChat={currentChat}
+                isTyping={isTyping}
+            />
             <div className="conversation-toolsbox">
-                <Typing
-                    typingContext={typingContext}
-                    currentChat={currentChat}
-                    isTyping={isTyping}
-                />
                 <ScrollButton convWrapperRef={convWrapperRef?.current} scrollTo={lastMessageRef} />
                 <div className="message-text-editor">
                     <EditorToolbar display={openEditorToolbar} />
@@ -62,7 +62,7 @@ const ConversationBottom = ({ convWrapperRef, lastMessageRef, quillRef, setNewMe
                         <button className="text-tools" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
                     </div>
                     <div className="text-tools-right">
-                        <button className="send-tool" disabled={!isContent} onClick={handleSubmit}><IoSend /></button>
+                        <button className="send-tool" disabled={!isContent} onClick={() => handleSubmit(currentChat)}><IoSend /></button>
                     </div>
                 </div>
                 {openEmojiPicker &&

@@ -8,7 +8,7 @@ import 'emoji-mart/css/emoji-mart.css'
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { avatar } from '../tools/functions/useAvatar';
-import { convertEditorToHTML, convertEditorToString } from './tools/function';
+import { convertEditorToHTML, convertEditorToString, modifyMessage, removeMessage } from './tools/function';
 import { getHourOnly } from '../Utils';
 import { MdOutlineContentCopy, MdOutlineAddReaction } from 'react-icons/md'
 import { IoSend } from 'react-icons/io5'
@@ -16,11 +16,12 @@ import { BsEmojiSmile } from 'react-icons/bs'
 import { BiFontFamily } from 'react-icons/bi'
 import { FiAtSign } from 'react-icons/fi'
 
-const Message = ({ user, uid, websocket, message, own, uniqueKey, currentChat, setModifiedMessage, modifyMessage, deleteMessage }) => {
+const Message = ({ user, uid, websocket, message, own, uniqueKey, currentChat, dispatch }) => {
     const [hoveredCard, setHoveredCard] = useState(-1)
     const [hoveredPopup, setHoveredPopup] = useState(-1)
     const [messageToModify, setMessageToModify] = useState(-1)
     const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
+    const [modifiedMessage, setModifiedMessage] = useState("")
 
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
     const [emojis, setEmojis] = useState(message.emojis)
@@ -102,7 +103,7 @@ const Message = ({ user, uid, websocket, message, own, uniqueKey, currentChat, s
                                         </div>
                                         <div className="text-tools-right">
                                             <button className="text-tools !mr-2" onClick={() => setMessageToModify(-1)}>Annuler</button>
-                                            <button className="send-tool" onClick={() => { modifyMessage(message); setMessageToModify(-1) }}><IoSend /></button>
+                                            <button className="send-tool" onClick={() => { modifyMessage(message, modifiedMessage, currentChat, uid, websocket, dispatch); setMessageToModify(-1) }}><IoSend /></button>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +146,7 @@ const Message = ({ user, uid, websocket, message, own, uniqueKey, currentChat, s
                         <ToolsMenu>
                             {message.sender === uid &&
                                 <>
-                                    <div className="tools_choice" onClick={() => deleteMessage(message)}>Supprimer le message</div>
+                                    <div className="tools_choice" onClick={() => removeMessage(message, currentChat, uid, websocket, dispatch)}>Supprimer le message</div>
                                     <div className="tools_choice" onClick={() => setMessageToModify(uniqueKey)}>Modifier le message</div>
                                 </>
                             }

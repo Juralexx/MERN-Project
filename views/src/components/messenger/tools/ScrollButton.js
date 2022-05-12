@@ -15,14 +15,13 @@ const ScrollButton = ({ convWrapperRef, scrollTo }) => {
     }, [convWrapperRef])
 
     return (
-        visible && (
-            <button
-                className="conversation-scroll-btn"
-                onClick={() => scrollTo?.current?.scrollIntoView({ behavior: "smooth" })}>
-                <span>Derniers messages</span> <FaArrowCircleDown />
-            </button>
-        )
-    );
+        visible &&
+        <button
+            className="conversation-scroll-btn"
+            onClick={() => scrollTo?.current?.scrollIntoView({ behavior: "smooth" })}>
+            <span>Derniers messages</span> <FaArrowCircleDown />
+        </button>
+    )
 }
 
 export default ScrollButton;

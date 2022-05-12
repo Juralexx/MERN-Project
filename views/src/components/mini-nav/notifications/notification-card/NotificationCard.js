@@ -16,9 +16,15 @@ const NotificationCard = ({ sentNotification, setSend, send, user, websocket }) 
     return (
         Object.keys(sentNotification).length !== 0 && (
             <>
-                <MessageCard sentNotification={sentNotification} setSend={setSend} />
-                <FriendRequestCard sentNotification={sentNotification} websocket={websocket} user={user} />
-                <MemberRequestCard sentNotification={sentNotification} websocket={websocket} user={user} />
+                {sentNotification.type === "new-message" &&
+                    <MessageCard sentNotification={sentNotification} setSend={setSend} />
+                }
+                {sentNotification.type === "friend-request" &&
+                    <FriendRequestCard sentNotification={sentNotification} websocket={websocket} user={user} />
+                }
+                {sentNotification.type === "project-member-request" &&
+                    <MemberRequestCard sentNotification={sentNotification} websocket={websocket} user={user} />
+                }
             </>
         )
     )

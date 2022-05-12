@@ -1,82 +1,73 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { NavLink } from 'react-router-dom'
 import { avatar } from '../tools/functions/useAvatar';
 import { createConversation } from '../../actions/messenger.action';
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { IconToggle } from '../tools/components/Button';
 import { BiSearchAlt } from 'react-icons/bi';
+import { isConversation } from './tools/function';
+import { OnlineUserLoader } from './tools/Loaders';
 
-const OnlineUsers = ({ uid, user, onlineUsers, friendsArr, fetchedFriends, conversations, setConversations, changeCurrentChat, dispatch }) => {
+const OnlineUsers = ({ uid, user, onlineUsers, friendsArr, fetchedFriends, conversations, setConversations, setCurrentChat, changeCurrentChat, dispatch }) => {
 
     const handleClick = (receiver) => {
-        const isConversation = conversations.filter(conv =>
-            conv.members.length === 2
-            && (conv.members[0].id === uid || conv.members[1].id === uid)
-            && (conv.members[0].id === receiver._id || conv.members[1].id === receiver._id)
-        )
-
-        if (isConversation) changeCurrentChat(isConversation)
+        let isConv = isConversation(conversations, [receiver, user])
+        if (isConv !== false)
+            changeCurrentChat(isConv)
         else {
             const conversation = {
                 type: 'dialog',
                 members: [{ id: user._id, pseudo: user.pseudo, picture: user.picture }, { id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }],
                 creator: { id: user._id, pseudo: user.pseudo, picture: user.picture },
-                waiter: receiver._id,
-                messages: []
+                messages: [],
+                createdAt: new Date().toISOString()
             }
-            dispatch(createConversation(conversation))
-                .then(() => {
-                    changeCurrentChat(conversation)
-                    setConversations(convs => [...convs, conversation])
-                })
+            setConversations(convs => [conversation, ...convs])
+            setCurrentChat(conversation)
         }
     }
 
-    const isOnline = (friend) => {
-        let online = onlineUsers.some(u => u.friend === friend._id)
-        return online
-    }
+    const isOnline = useCallback((friend) => {
+        if (friend) {
+            let online = onlineUsers.some(u => u.friend === friend._id)
+            return online
+        }
+    }, [onlineUsers])
 
     return (
         <div className="online-users-container">
-            <div className="flex justify-between pb-3">
+            <div className="flex justify-between pb-3 mb-3 border-b">
                 <h2 className="bold">Contact</h2>
                 <div className="flex">
                     <IconToggle icon={<BiSearchAlt />} />
                 </div>
             </div>
             {!fetchedFriends ? (
-                friendsArr.map((element, key) => {
-                    return (
-                        <div className="online-users" key={key}>
-                            <div className="online-user">
-                                <div className={`${isOnline() ? "online-user-img connected" : "online-user-img"}`} style={avatar(element.picture)}></div>
-                                <div className="online-user-name">
-                                    <div className="online-user-pseudo">{element.pseudo}</div>
-                                    <div className="online-user-status"><em>{isOnline() ? "Actif" : "Déconnecté"}</em></div>
+                friendsArr.length > 0 ? (
+                    friendsArr.map((element, key) => {
+                        return (
+                            <div className="online-users" key={key}>
+                                <div className="online-user">
+                                    <div className={`${isOnline(element) ? "online-user-img connected" : "online-user-img"}`} style={avatar(element.picture)}></div>
+                                    <div className="online-user-name">
+                                        <div className="online-user-pseudo">{element.pseudo}</div>
+                                        <div className="online-user-status"><em>{isOnline(element) ? "Actif" : "Déconnecté"}</em></div>
+                                    </div>
                                 </div>
+                                <ToolsMenu>
+                                    <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
+                                    <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                </ToolsMenu>
                             </div>
-                            <ToolsMenu>
-                                <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
-                                <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
-                            </ToolsMenu>
-                        </div>
-                    )
-                })
+                        )
+                    })
+                ) : (
+                    <div className="no-conversation-yet !mt-10">
+                        <p>Aucun contact à afficher...</p>
+                    </div>
+                )
             ) : (
-                [...Array(5)].map((_, key) => {
-                    return (
-                        <div className="online-users" key={key}>
-                            <div className="online-user">
-                                <div className="loading-circle-36 loading"></div>
-                                <div className="online-user-name">
-                                    <div className="loading-small-title loading"></div>
-                                    <div className="loading-short-text mt-2 pulse loading"></div>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })
+                <OnlineUserLoader />
             )}
         </div>
     )

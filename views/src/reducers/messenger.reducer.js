@@ -35,15 +35,15 @@ export default function messengerReducer(state = initialState, action) {
         case POST_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, action.payload]
+                messages: [...state.messages, action.payload.message]
             }
         case RECEIVE_POST_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, action.payload]
+                messages: [...state.messages, action.payload.message]
             }
         case UPDATE_MESSAGE:
-            state.messages[findMessage()].text = action.payload.text
+            state.messages[findMessage(action.payload.messageId)].text = action.payload.text
             return {
                 ...state,
                 messages: state.messages
@@ -51,7 +51,7 @@ export default function messengerReducer(state = initialState, action) {
         case DELETE_MESSAGE:
             return {
                 ...state,
-                messages: state.messages.filter(message => message !== action.payload.messageId)
+                messages: state.messages.filter(message => message._id !== action.payload.messageId)
             }
         case ADD_EMOJI:
             state.messages[findMessage(action.payload.messageId)].emojis.push(action.payload.emoji)

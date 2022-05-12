@@ -6,11 +6,11 @@ import { Button, TextButton } from '../tools/components/Button'
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs'
 import { MediumAvatar } from '../tools/components/Avatars'
 import { isInResults } from '../tools/functions/member'
-import { otherMembersIDs } from './tools/function'
+import { addNewMember, deleteConv, otherMembersIDs } from './tools/function'
 import { oneLevelSearch } from '../tools/functions/searches'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 
-const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, deleteConversation, leaveConversation, addNewMember }) => {
+const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsArr, leaveConversation }) => {
     const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState(conversation.name)
     const [changeName, setChangeName] = useState(false)
@@ -124,7 +124,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, delet
                     </div>
                     <div className="conversation-btn_container">
                         <TextButton text="Quitter" className="mr-2" onClick={() => { leaveConversation(conversation, uid); setOpen(false) }} />
-                        {conversation.owner.id === uid && <Button text="Supprimer" onClick={() => { deleteConversation(conversation); setOpen(false) }} />}
+                        {conversation.owner.id === uid && <Button text="Supprimer" onClick={() => { deleteConv(conversation, uid, websocket, dispatch); setOpen(false) }} />}
                     </div>
                 </div>
             ) : (
@@ -171,7 +171,7 @@ const ConversationModal = ({ setOpen, open, conversation, uid, friendsArr, delet
                                                     <MediumAvatar pic={member.picture} />
                                                     <div>{member.pseudo}</div>
                                                 </div>
-                                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member)} />
+                                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member, uid, websocket, dispatch)} />
                                             </div>
                                         )
                                     })}

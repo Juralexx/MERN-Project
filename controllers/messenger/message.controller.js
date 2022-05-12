@@ -1,28 +1,26 @@
 import mongoose from 'mongoose';
 import ConversationModel from '../../models/conversation.model.js';
-const ObjectID = mongoose.Types.ObjectId
 
 /**
  * Post new message
  */
 
 export const addMessage = async (req, res) => {
-    const newMessage = Object.assign(req.body.message, { _id: new ObjectID })
-
     try {
         await ConversationModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
                 $addToSet: {
-                    messages: newMessage
+                    messages: req.body.message
                 },
                 $set: {
-                    last_message: newMessage._id
+                    last_message: req.body.message._id
                 },
             },
-            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+            { new: true },
         )
-        res.status(200).json(newMessage)
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -46,8 +44,8 @@ export const updateMessage = async (req, res) => {
             },
             { new: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -63,11 +61,15 @@ export const deleteMessage = async (req, res) => {
             { _id: req.params.id },
             {
                 $pull: {
-                    messages: req.body.messageId
+                    messages: {
+                        _id: req.body.messageId
+                    }
                 },
             },
-            { new: true, upsert: true },
+            { new: true },
         )
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -77,7 +79,7 @@ export const deleteMessage = async (req, res) => {
  * Add emoji to message
  */
 
- export const addEmoji = async (req, res) => {
+export const addEmoji = async (req, res) => {
     try {
         await ConversationModel.updateOne(
             {
@@ -91,8 +93,8 @@ export const deleteMessage = async (req, res) => {
             },
             { new: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -116,8 +118,8 @@ export const removeEmoji = async (req, res) => {
             },
             { new: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }

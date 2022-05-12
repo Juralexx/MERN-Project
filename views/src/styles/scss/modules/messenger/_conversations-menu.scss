@@ -1,6 +1,7 @@
 .conversation-menu {
-    width   : 28%;
-    padding : 10px;
+    position : relative;
+    width    : 28%;
+    padding  : 10px;
 
     .conversation-menu-tool {
         display     : flex;
@@ -9,6 +10,7 @@
         color       : var(--text-secondary);
         font-weight : 600;
         cursor      : pointer;
+
         svg {
             width       : 16px;
             height      : 16px;
@@ -17,105 +19,128 @@
     }
 
     .conversation {
-        display     : flex;
-        align-items : center;
-        padding     : 10px 7px;
-        margin      : 5px 0;
-        cursor      : pointer;
+        position : relative;
+        padding  : 10px 7px;
+        margin   : 5px 0;
+        width    : 100%;
+        cursor   : pointer;
 
-        &:hover {
+        &:hover, &.active {
             background    : var(--x-light);
             border-radius : var(--radius);
         }
 
-        &.new-notification {
-            background : rgba(var(--primary-rgb), 0.2);
-        }
+        .conversation_inner {
+            display     : flex;
+            align-items : center;
+            flex        : 1;
+            z-index     : 1;
 
-        .conversation-img-container {
-            display      : flex;
-            position     : relative;
-            margin-right : 10px;
+            .conversation-img-container {
+                display      : flex;
+                position     : relative;
+                margin-right : 10px;
 
-            .conversation-img {
-                min-width     : 36px;
-                min-height    : 36px;
-                border-radius : 50%;
+                .conversation-img {
+                    min-width     : 38px;
+                    min-height    : 38px;
+                    border-radius : 50%;
+                    border        : 2px solid var(--content-light);
 
-                &:nth-child(n+2) {
-                    margin-left : -24px;
-                }
-            }
-        }
-
-        .conversation-infos {
-            width : 100%;
-
-            .conversation-infos-top {
-                display         : flex;
-                justify-content : space-between;
-
-                .conversation-name {
-                    color              : var(--text);
-                    font-size          : 14px;
-                    line-height        : 22px;
-                    font-weight        : 600;
-                    text-overflow      : ellipsis;
-                    overflow           : hidden;
-                    max-width          : 60%;
-                    display            : -webkit-box;
-                    -webkit-line-clamp : 1;
-                    -webkit-box-orient : vertical;
-                }
-
-                .conversation-date {
-                    font-size : 12px;
-                    color     : var(--text-secondary);
+                    &:nth-child(n+2) {
+                        margin-left : -24px;
+                    }
                 }
             }
 
-            .last-message-wrapper {
-                display     : flex;
-                margin-top  : 2px;
-                font-size   : 12px;
-                color       : var(--text-secondary);
+            .conversation-infos {
+                position : relative;
+                flex: 1;
+                z-index  : 1;
 
-                .last-message-pseudo {
-                    white-space: nowrap;
-                }
+                .conversation-infos-top {
+                    display : flex;
 
-                .last-message {
-                    width : 100%;
-                    p {
-                        font-size          : 12px;
-                        line-height        : 16px;
-                        color              : var(--text-secondary);
+                    .conversation-name {
+                        color              : var(--text);
+                        font-size          : 14px;
+                        line-height        : 22px;
+                        font-weight        : 600;
                         text-overflow      : ellipsis;
                         overflow           : hidden;
-                        width          : 80%;
+                        max-width          : 60%;
                         display            : -webkit-box;
                         -webkit-line-clamp : 1;
                         -webkit-box-orient : vertical;
                     }
+
+                    .conversation-date {
+                        font-size   : 12px;
+                        margin-left : auto;
+                        color       : var(--text-secondary);
+                    }
                 }
 
-                p {
-                    font-size : 12px;
-                }
+                .last-message-wrapper {
+                    display    : flex;
+                    margin-top : 2px;
+                    font-size  : 12px;
+                    color      : var(--text-secondary);
+                    flex        : 1;
 
-                .unseen-messages {
-                    position        : absolute;
-                    right           : 0;
-                    display         : flex;
-                    align-items     : center;
-                    justify-content : center;
-                    width           : 24px;
-                    height          : 24px;
-                    border-radius   : 20px;
-                    background      : var(--primary);
-                    color           : white;
+                    .last-message {
+                        display : flex;
+
+                        div {
+                            &:nth-child(1) {
+                                white-space: nowrap;
+                            }
+                        }
+
+                        p {
+                            margin-top         : 1px;
+                            font-size          : 12px;
+                            line-height        : 16px;
+                            color              : var(--text-secondary);
+                            text-overflow      : ellipsis;
+                            overflow           : hidden;
+                            max-width          : 120px;
+                            display            : -webkit-box;
+                            -webkit-line-clamp : 1;
+                            -webkit-box-orient : vertical;
+                        }
+
+                        &.notification {
+                            font-weight : 600;
+                            color       : var(--primary) !important;
+                            p {
+                                font-weight : 600;
+                                color       : var(--primary) !important;
+                            }
+                        }
+                    }
+
+                    .unseen-badge {
+                        position      : absolute;
+                        right         : 40px;
+                        bottom        : 0;
+                        width         : 11px;
+                        height        : 11px;
+                        border-radius : 50%;
+                        background    : var(--primary);
+                        color         : white;
+                    }
                 }
             }
         }
+    }
+
+    .tools_box {
+        position : absolute;
+        right    : 18px;
+        bottom   : 12px;
+        height   : 20px;
+        width    : 20px;
+        z-index  : 2;
     }
 }

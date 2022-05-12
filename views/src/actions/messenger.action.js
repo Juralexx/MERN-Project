@@ -184,10 +184,9 @@ export const POST_MESSAGE = "POST_MESSAGE"
 export const sendMessage = (conversationId, message) => {
     return async (dispatch) => {
         return axios
-            .post(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`, message)
-            .then(res => {
-                console.log(res)
-                dispatch({ type: POST_MESSAGE, payload: res.data })
+            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-message`, { message: message })
+            .then(() => {
+                dispatch({ type: POST_MESSAGE, payload: { message } })
             })
             .catch(err => console.error(err))
     }
@@ -197,7 +196,7 @@ export const RECEIVE_POST_MESSAGE = "RECEIVE_POST_MESSAGE"
 
 export const receiveNewMessage = (message) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_POST_MESSAGE, payload: { message } })
+        dispatch({ type: POST_MESSAGE, payload: { message } })
     }
 }
 
@@ -237,7 +236,7 @@ export const deleteMessage = (conversationId, messageId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/delete-message/`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-message`,
             data: { messageId }
         })
             .then(() => {

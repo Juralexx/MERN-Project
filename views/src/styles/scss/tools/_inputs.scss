@@ -22,7 +22,8 @@
         }
     
         &:focus {
-            border : 2px solid var(--primary);
+            border     : 2px solid var(--primary);
+            box-shadow : none;
         }
     }
 
@@ -78,7 +79,8 @@
         box-shadow    : var(--shadow-tiny);
     
         &:focus {
-            border : 2px solid var(--primary);
+            border     : 2px solid var(--primary);
+            box-shadow : none;
             + label {
                 transform  : scale(0.75);
                 top        : 4px;
@@ -188,7 +190,8 @@
     }
 
     &::placeholder {
-        color : var(--placeholder);
+        color      : var(--placeholder);
+        box-shadow : none;
     }
 }
 
@@ -213,7 +216,8 @@
         box-shadow    : var(--shadow-tiny);
     
         &:focus {
-            border : 2px solid var(--primary);
+            border     : 2px solid var(--primary);
+            box-shadow : none;
         }
 
         &::placeholder {
@@ -275,6 +279,7 @@
 
         &:focus {
             border-bottom : 2px solid var(--primary);
+            box-shadow    : none;
 
             + label {
                 position   : absolute;
@@ -358,7 +363,8 @@
     box-shadow    : var(--shadow-tiny);
 
     &:focus {
-        border : 2px solid var(--primary);
+        border     : 2px solid var(--primary);
+        box-shadow : none;
     }
 
     &::placeholder {
@@ -504,7 +510,8 @@
         box-shadow    : var(--shadow-tiny);
 
         &:focus {
-            border : 2px solid var(--primary);
+            border     : 2px solid var(--primary);
+            box-shadow : none;
         }
 
         &::placeholder {
