@@ -2,7 +2,6 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
 import { dateParserWithoutYear } from '../../Utils'
-import { useDispatch } from 'react-redux';
 import { addMember, deleteConversation, deleteMessage, removeMember, updateMessage } from '../../../actions/messenger.action';
 
 /**
@@ -37,11 +36,12 @@ export function convertDeltaToString(message) {
     return html
 }
 
-export function convertEditorToStringNoMarkers(message) {
+export function convertEditorToStringNoHTML(message) {
     let callback = {}
     let converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
     let html = converter.convert(message.text[0].ops)
-    return html.replace('<p>', '')
+    var regex = /(<([^>]+)>)/ig
+    return html.replace(regex, '')
 }
 
 /**
@@ -69,6 +69,18 @@ export function getDate(date) {
 export const getMembers = (conversation, uid) => {
     const members = conversation.members.filter(member => member.id !== uid)
     return members
+}
+
+/**
+ * Keep only id, pseudo and picture from users and return array
+ */
+
+export const userToMember = (members) => {
+    let arr = []
+    members.forEach(member => {
+        arr.push({ id: member._id, pseudo: member.pseudo, picture: member.picture })
+    })
+    return arr
 }
 
 /**
@@ -150,9 +162,9 @@ export const isConversation = (conversations, members) => {
  * Remove user already selected from array
  */
 
-export const removeSelected = (array, user) => {
+export const removeSelected = (array, userId) => {
     let arr = [...array]
-    let i = arr.findIndex(e => e._id === user._id)
+    let i = arr.findIndex(e => e._id === userId)
     arr.splice(i, 1)
     return arr
 }
@@ -206,6 +218,27 @@ export const getMessagesDates = (messages) => {
         })
         return filteredArray
     }
+}
+
+/**
+ * Minimize message height and remove pseudo and hours if previous and this message is under certain time
+ */
+
+export const getHoursDiff = (prev, current, next) => {
+    let classes = []
+    if (next.sender === current.sender) {
+        classes.push('no-date')
+    }
+    if (prev.sender === current.sender) {
+        let hourDiff = new Date(current.createdAt) - new Date(prev.createdAt)
+        let prevTimeDiff = Math.floor((hourDiff % 86400000) / 3600000)
+        if (prevTimeDiff < 3)
+            classes.push('minify')
+        else classes.push('normal')
+    } else {
+        classes.push('normal')
+    }
+    return classes.toString().replace(',', ' ')
 }
 
 /**

@@ -2,15 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
-import { getMessagesDates, otherMembersIDs } from './tools/function';
+import { getHoursDiff, getMessagesDates, otherMembersIDs } from './tools/function';
 import { randomNbID } from '../Utils';
 import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
-import MessageDate from './MessageDate';
-import Message from './Message';
-import OnlineUsers from './OnlineUsers';
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
 import ConversationBottom from './ConversationBottom';
+import OnlineUsers from './OnlineUsers';
+import MessageDate from './MessageDate';
+import Message from './Message';
 import SearchHeader from './SearchHeader';
 import { MessageLoader } from './tools/Loaders';
 
@@ -230,7 +230,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
         if (currentChat.messages.length > 0 && currentChat._id && currentChat._id !== conversation._id)
             dispatch(setLastMessageSeen(uid, currentChat._id, currentChat.messages[currentChat.messages.length - 1]._id))
         if (conversation._id) {
-            if (!currentChat._id || currentChat._id !== conversation._id) {
+            if (currentChat._id && currentChat._id !== conversation._id) {
                 dispatch(getConversation(conversation._id))
                 websocket.current.emit("changeCurrentConversation", {
                     userId: uid,
@@ -245,7 +245,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     }
 
     const onConversationClick = (conversation) => {
-        dispatch(getConversation(conversation._id))
+        changeCurrentChat(conversation)
         if (searchHeader)
             setSearchHeader(false)
         setBlank(false)
@@ -289,6 +289,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 favorites={favorites}
                 currentChat={currentChat}
                 setCurrentChat={setCurrentChat}
+                temporaryConv={temporaryConv}
+                setTemporaryConv={setTemporaryConv}
                 setSearchHeader={setSearchHeader}
                 setBlank={setBlank}
                 onConversationClick={onConversationClick}
@@ -327,7 +329,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                 {!blank ? (
                                     !isLoading ? (
                                         currentChat.messages.length > 0 ? (
-                                            messages.map((message, key) => {
+                                            messages.map((message, key, array) => {
                                                 return (
                                                     <div key={key}>
                                                         {messagesDates.some(element => element.date === message.createdAt.substring(0, 10) && element.index === key) &&
@@ -340,6 +342,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                                                 websocket={websocket}
                                                                 message={message}
                                                                 own={message.sender === uid}
+                                                                className={(key > 0 && key < array.length - 1) && getHoursDiff(array[key - 1], message, array[key + 1])}
                                                                 uniqueKey={key}
                                                                 currentChat={currentChat}
                                                                 dispatch={dispatch}

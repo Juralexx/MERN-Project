@@ -4,7 +4,7 @@ import { useClickOutside } from '../functions/useClickOutside'
 import { usePopper } from "react-popper";
 
 const ToolsMenu = (props) => {
-    const { className, disabled } = props
+    const { className, disabled, onClick } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
     useClickOutside(ref, setOpen, false)
@@ -30,7 +30,7 @@ const ToolsMenu = (props) => {
     }, [open])
 
     return (
-        <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`}>
+        <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
             <div className={open ? "tools_menu transition open" : "tools_menu transition"} onClick={() => setOpen(false)}
                 ref={popperElRef}
                 style={styles.popper}

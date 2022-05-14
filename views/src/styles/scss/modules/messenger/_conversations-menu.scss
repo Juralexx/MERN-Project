@@ -20,7 +20,7 @@
 
     .conversation {
         position : relative;
-        padding  : 10px 7px;
+        padding  : 12px 7px;
         margin   : 5px 0;
         width    : 100%;
         cursor   : pointer;
@@ -33,7 +33,6 @@
         .conversation_inner {
             display     : flex;
             align-items : center;
-            flex        : 1;
             z-index     : 1;
 
             .conversation-img-container {
@@ -42,20 +41,20 @@
                 margin-right : 10px;
 
                 .conversation-img {
-                    min-width     : 38px;
-                    min-height    : 38px;
+                    min-width     : 45px;
+                    min-height    : 45px;
                     border-radius : 50%;
                     border        : 2px solid var(--content-light);
 
                     &:nth-child(n+2) {
-                        margin-left : -24px;
+                        margin-left : -32px;
                     }
                 }
             }
 
             .conversation-infos {
                 position : relative;
-                flex: 1;
+                flex     : 1;
                 z-index  : 1;
 
                 .conversation-infos-top {
@@ -64,7 +63,7 @@
                     .conversation-name {
                         color              : var(--text);
                         font-size          : 14px;
-                        line-height        : 22px;
+                        line-height        : 24px;
                         font-weight        : 600;
                         text-overflow      : ellipsis;
                         overflow           : hidden;
@@ -104,7 +103,7 @@
                             color              : var(--text-secondary);
                             text-overflow      : ellipsis;
                             overflow           : hidden;
-                            max-width          : 120px;
+                            max-width          : 90%;
                             display            : -webkit-box;
                             -webkit-line-clamp : 1;
                             -webkit-box-orient : vertical;
@@ -122,7 +121,7 @@
 
                     .unseen-badge {
                         position      : absolute;
-                        right         : 40px;
+                        right         : 5px;
                         bottom        : 0;
                         width         : 11px;
                         height        : 11px;
@@ -133,14 +132,40 @@
                 }
             }
         }
+
+        &.temporary {
+            display     : flex;
+            align-items : center;
+        }
     }
 
     .tools_box {
-        position : absolute;
-        right    : 18px;
-        bottom   : 12px;
-        height   : 20px;
-        width    : 20px;
-        z-index  : 2;
+        position         : absolute;
+        top              : 50%;
+        transform        : translateY(-50%);
+        right            : 50px;
+        z-index          : 2;
+
+        .tools_btn {
+            height           : 32px;
+            width            : 32px;
+            background-color : var(--light);
+            border-radius    : 50%;
+            box-shadow       : var(--shadow-tiny);
+
+            svg {
+                height       : 24px;
+                width        : 24px;
+            }
+
+            &:hover {
+                background-color : var(--xx-light);
+            }
+        }
+    }
+
+    .close-item {
+        background-color : var(--light);
+        box-shadow       : var(--shadow-tiny);
     }
 }

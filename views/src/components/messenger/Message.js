@@ -16,7 +16,7 @@ import { BsEmojiSmile } from 'react-icons/bs'
 import { BiFontFamily } from 'react-icons/bi'
 import { FiAtSign } from 'react-icons/fi'
 
-const Message = ({ user, uid, websocket, message, own, uniqueKey, currentChat, dispatch }) => {
+const Message = ({ user, uid, websocket, message, own, uniqueKey, className, currentChat, dispatch }) => {
     const [hoveredCard, setHoveredCard] = useState(-1)
     const [hoveredPopup, setHoveredPopup] = useState(-1)
     const [messageToModify, setMessageToModify] = useState(-1)
@@ -68,7 +68,7 @@ const Message = ({ user, uid, websocket, message, own, uniqueKey, currentChat, d
     }
 
     return (
-        <div className={own ? "message-container own" : "message-container"}>
+        <div className={own ? "message-container own " + className : "message-container " + className}>
             <div className="message" onMouseLeave={() => setHoveredCard(-1)} onMouseEnter={() => setHoveredCard(uniqueKey)} style={{ display: messageToModify === uniqueKey && "flex", minWidth: messageToModify === uniqueKey && "100%" }}>
                 <div className="message-content" style={{ display: messageToModify === uniqueKey && "flex", minWidth: messageToModify === uniqueKey && "100%" }}>
                     <div className="message-left">

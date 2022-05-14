@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { avatar } from '../tools/functions/useAvatar';
+import { useClickOutside } from '../tools/functions/useClickOutside';
 import { addActive } from '../Utils';
-import { convertEditorToStringNoMarkers, getDate, getMembers, returnConversationPseudo, returnMembers } from './tools/function';
+import { convertEditorToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './tools/function';
 
 const Conversation = ({ uid, user, conversation, currentChat, newMessage, notification, onConversationClick }) => {
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
@@ -10,6 +11,9 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
     const [date, setDate] = useState()
     const [unseen, setUnseen] = useState(false)
     const [open, setOpen] = useState(false)
+    const [opened, setOpened] = useState(false)
+    const menuRef = useRef()
+    useClickOutside(menuRef, setOpened, false)
 
     useEffect(() => {
         if (lastMessageFound && Object.keys(lastMessageFound).length > 0)
@@ -61,8 +65,8 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
                     {lastMessageFound && Object.keys(lastMessageFound).length > 0 ? (
                         <div className="last-message-wrapper">
                             <div className={`${unseen ? "last-message notification" : "last-message"}`}>
-                                <div>{returnConversationPseudo(conversation, lastMessageFound, uid)}</div>
-                                <p>{convertEditorToStringNoMarkers(lastMessageFound)}</p>
+                                <div className='mr-1'>{returnConversationPseudo(conversation, lastMessageFound, uid)}</div>
+                                <p>{convertEditorToStringNoHTML(lastMessageFound)}</p>
                             </div>
                             {unseen && <div className="unseen-badge"></div>}
                         </div>
@@ -73,12 +77,14 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
                     )}
                 </div>
             </div>
-            {open &&
-                <ToolsMenu>
-                    <div className="tools_choice">Marquer comme lu</div>
-                    <div className="tools_choice">Supprimer la conversation</div>
-                    <div className="tools_choice">Quitter la conversation</div>
-                </ToolsMenu>
+            {(open || opened) &&
+                <div ref={menuRef}>
+                    <ToolsMenu onClick={() => setOpened(!opened)}>
+                        <div className="tools_choice">Marquer comme lu</div>
+                        <div className="tools_choice">Supprimer la conversation</div>
+                        <div className="tools_choice">Quitter la conversation</div>
+                    </ToolsMenu>
+                </div>
             }
         </div>
     );

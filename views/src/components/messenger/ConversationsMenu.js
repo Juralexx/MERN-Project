@@ -10,20 +10,21 @@ import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiPencilAlt } from 'react-icons/hi'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
+import TemporaryConversation from './tools/TemporaryConversation';
 
-const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, currentChat, setCurrentChat, onConversationClick, setSearchHeader, setBlank, getNewMessage, notification }) => {
+const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, onConversationClick, setSearchHeader, setBlank, getNewMessage, notification }) => {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
     const [isResults, setResults] = useState([])
-    
+
     return (
         <div className="conversation-menu">
             <div className="flex justify-between pb-3">
                 <h2 className="bold">Conversations</h2>
                 <div className="flex">
                     <IconToggle icon={<AiOutlineUsergroupAdd />} className="mr-2" onClick={() => setOpen(true)} />
-                    <IconToggle icon={<HiPencilAlt />} onClick={() => { setBlank(true); setSearchHeader(true) }} />
+                    <IconToggle icon={<HiPencilAlt />} onClick={() => { setSearchHeader(true); Object.keys(temporaryConv).length === 0 ? setBlank(true) : setCurrentChat(temporaryConv) }} />
                 </div>
             </div>
             <div className="pb-4 mb-3 border-b">
@@ -48,7 +49,7 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
             />
 
             {!isLoading ? (
-                conversations.length > 0 || favorites.length > 0 ? (
+                conversations.length > 0 || favorites.length > 0 || Object.keys(temporaryConv).length > 0 ? (
                     <>
                         {favorites.length > 0 &&
                             <div className="conversations_container">
@@ -72,6 +73,20 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                         }
                         <div className="conversations_container">
                             <div className="conversation-menu-tool">Conversations <FaCaretDown /></div>
+                            {Object.keys(temporaryConv).length > 0 &&
+                                <div className={`${isInResults(temporaryConv, isResults, search, "block")}`}>
+                                    <TemporaryConversation
+                                        uid={uid}
+                                        user={user}
+                                        temporaryConv={temporaryConv}
+                                        setTemporaryConv={setTemporaryConv}
+                                        currentChat={currentChat}
+                                        setCurrentChat={setCurrentChat}
+                                        setSearchHeader={setSearchHeader}
+                                        conversations={conversations}
+                                    />
+                                </div>
+                            }
                             {conversations.map((element, key) => {
                                 return (
                                     <div className={`${isInResults(element, isResults, search, "block")}`} key={key}>
