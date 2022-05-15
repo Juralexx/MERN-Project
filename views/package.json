@@ -4,6 +4,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@emoji-mart/data": "^1.0.1",
         "@popperjs/core": "^2.11.5",
         "@zendeskgarden/react-accordions": "^8.49.2",
         "emoji-mart": "^3.0.1",

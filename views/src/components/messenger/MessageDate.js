@@ -1,26 +1,21 @@
 import React, { useRef, useState } from 'react'
 import { dateParser } from '../Utils'
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { useClickOutside } from '../tools/functions/useClickOutside'
+import ToolsMenu from '../tools/components/ToolsMenu'
 
 const MessageDate = ({ message }) => {
-    const [open, setOpen] = useState(false)
-    const wrapperRef = useRef()
-
-    useClickOutside(wrapperRef, setOpen, false)
 
     return (
-        <div className="messages-date" ref={wrapperRef}>
-            <div className="date" onClick={() => setOpen(!open)}>{dateParser(message.createdAt)} <MdOutlineKeyboardArrowDown /></div>
-            {open &&
-                <div className="message-date-sort-tools">
-                    <div>Hier</div>
-                    <div>La semaine dernière</div>
-                    <div>Le mois dernier</div>
-                    <div>Premiers messages</div>
-                    <div>Accèder à une date spécifique</div>
-                </div>
-            }
+        <div className="messages-date">
+            <ToolsMenu placement="bottom" target={
+                <div className="date">{dateParser(message.createdAt)}</div>
+            }>
+                <div className="tools_choice">Hier</div>
+                <div className="tools_choice">La semaine dernière</div>
+                <div className="tools_choice">Le mois dernier</div>
+                <div className="tools_choice">Premiers messages</div>
+                <div className="tools_choice">Accèder à une date spécifique</div>
+            </ToolsMenu>
         </div>
     )
 }

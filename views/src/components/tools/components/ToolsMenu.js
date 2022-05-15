@@ -4,7 +4,7 @@ import { useClickOutside } from '../functions/useClickOutside'
 import { usePopper } from "react-popper";
 
 const ToolsMenu = (props) => {
-    const { className, disabled, onClick } = props
+    const { className, btnClassName, disabled, onClick } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
     useClickOutside(ref, setOpen, false)
@@ -12,14 +12,22 @@ const ToolsMenu = (props) => {
     const popperElRef = React.useRef(null);
     const [targetElement, setTargetElement] = React.useState(null);
     const [popperElement, setPopperElement] = React.useState(popperElRef.current);
+    const [arrowElement, setArrowElement] = useState(null);
     const { styles, attributes } = usePopper(targetElement, popperElement, {
-        placement: "left",
+        placement: props.placement || "left",
         modifiers: [
             {
                 name: "offset",
                 options: {
-                    offset: [0, 0]
+                    offset: [0, 10]
                 }
+            },
+            {
+                name: 'arrow',
+                options: {
+                    element: arrowElement,
+                    padding: 5,
+                },
             }
         ]
     })
@@ -37,10 +45,17 @@ const ToolsMenu = (props) => {
                 {...attributes.popper}
             >
                 {props.children}
+                <div className="menu-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div>
             </div>
-            <button className="tools_btn" ref={setTargetElement} disabled={disabled} onClick={()  => setOpen(!open)}>
-                <BiDotsHorizontalRounded />
-            </button>
+            {props.target ? (
+                <div ref={setTargetElement} onClick={() => setOpen(!open)}>
+                    {props.target}
+                </div>
+            ) : (
+                <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} ref={setTargetElement} disabled={disabled} onClick={() => setOpen(!open)}>
+                    <BiDotsHorizontalRounded />
+                </button>
+            )}
         </div>
     )
 }

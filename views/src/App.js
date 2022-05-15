@@ -7,7 +7,7 @@ import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
-import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage } from './actions/messenger.action';
+import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji } from './actions/messenger.action';
 
 function App() {
     const user = useSelector(state => state.userReducer)
@@ -48,15 +48,6 @@ function App() {
     }, [user, friends.length])
 
     useEffect(() => {
-        if (!window.location.href.includes("messenger")) {
-            console.log('first')
-            websocket.current.emit("leaveMessenger", {
-                userId: uid
-            })
-        }
-    }, [uid, websocket])
-
-    useEffect(() => {
         websocket.current.on("sendMessageNotification", data => {
             setSentNotification({ type: "new-message", ...data.message })
             setSend(true)
@@ -69,6 +60,12 @@ function App() {
         })
         websocket.current.on("deleteMessage", data => {
             dispatch(receiveDeleteMessage(data.messageId))
+        })
+        websocket.current.on("addEmoji", data => {
+            dispatch(receiveAddEmoji(data.messageId, data.emoji))
+        })
+        websocket.current.on("removeEmoji", data => {
+            dispatch(receiveRemoveEmoji(data.messageId, data.emojiId))
         })
         websocket.current.on("addConversation", data => {
             dispatch(receiveCreateConversation(data.conversationId))
@@ -150,6 +147,8 @@ function App() {
             websocket.current.off("sendMessageNotification")
             websocket.current.off("updateMessage")
             websocket.current.off("deleteMessage")
+            websocket.current.off("addEmoji")
+            websocket.current.off("removeEmoji")
             websocket.current.off("addConversation")
             websocket.current.off("deleteConversation")
             websocket.current.off("addConversationMember")

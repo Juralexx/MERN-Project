@@ -113,7 +113,9 @@ export const removeEmoji = async (req, res) => {
             },
             {
                 $pull: {
-                    "messages.$.emojis": req.body.emoji
+                    "messages.$.emojis": {
+                        _id: req.body.emojiId
+                    }
                 }
             },
             { new: true },

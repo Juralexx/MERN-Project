@@ -4,6 +4,9 @@ import { deleteConv, getMembers, leaveConversation, returnMembers } from './tool
 import { addFavorite, removeFavorite } from '../../actions/messenger.action'
 import ConversationModal from './ConversationModal'
 import ToolsMenu from '../tools/components/ToolsMenu'
+import { IoTrashOutline } from 'react-icons/io5'
+import { BsStar, BsStarFill } from 'react-icons/bs'
+import { HiLogout } from 'react-icons/hi'
 
 const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dispatch }) => {
     const [openConvModal, setOpenConvModal] = useState(false)
@@ -37,13 +40,13 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
                         </div>
                         <div className="conversation-name">{getMembers(currentChat, uid)[0].pseudo}</div>
                     </div>
-                    <ToolsMenu>
+                    <ToolsMenu placement="bottom">
                         {isFavorite ? (
-                            <div className="tools_choice" onClick={unfavorite}>Retirer des favoris</div>
+                            <div className="tools_choice" onClick={unfavorite}><BsStarFill />Retirer des favoris</div>
                         ) : (
-                            <div className="tools_choice" onClick={favorite}>Ajouter aux favoris</div>
+                            <div className="tools_choice" onClick={favorite}><BsStar />Ajouter aux favoris</div>
                         )}
-                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}>Supprimer la conversation</div>}
+                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}><IoTrashOutline /> Supprimer la conversation</div>}
                     </ToolsMenu>
                 </div>
             }
@@ -71,15 +74,15 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
                         </div>
                         <div className="conversation-name">{returnMembers(members)}</div>
                     </div>
-                    <ToolsMenu>
+                    <ToolsMenu placement="bottom">
                         {isFavorite ? (
-                            <div className="tools_choice" onClick={unfavorite}>Retirer des favoris</div>
+                            <div className="tools_choice" onClick={unfavorite}><BsStarFill />Retirer des favoris</div>
                         ) : (
-                            <div className="tools_choice" onClick={favorite}>Ajouter aux favoris</div>
+                            <div className="tools_choice" onClick={favorite}><BsStar />Ajouter aux favoris</div>
                         )}
-                        <div className="tools_choice" onClick={() => leaveConversation(currentChat, uid, uid, websocket, dispatch)}>Quitter la conversation</div>
+                        <div className="tools_choice" onClick={() => leaveConversation(currentChat, uid, uid, websocket, dispatch)}><HiLogout /> Quitter la conversation</div>
                         {currentChat.owner === uid &&
-                            <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}>Supprimer la conversation</div>
+                            <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}><IoTrashOutline /> Supprimer la conversation</div>
                         }
                     </ToolsMenu>
                 </div>

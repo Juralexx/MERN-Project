@@ -1,8 +1,8 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { dateParserWithoutYear } from '../../Utils'
-import { addMember, deleteConversation, deleteMessage, removeMember, updateMessage } from '../../../actions/messenger.action';
+import { dateParserWithoutYear, randomNbID } from '../../Utils'
+import { addEmoji, addMember, deleteConversation, deleteMessage, removeMember, updateMessage } from '../../../actions/messenger.action';
 
 /**
  * Delta convertion
@@ -224,21 +224,16 @@ export const getMessagesDates = (messages) => {
  * Minimize message height and remove pseudo and hours if previous and this message is under certain time
  */
 
-export const getHoursDiff = (prev, current, next) => {
-    let classes = []
-    if (next.sender === current.sender) {
-        classes.push('no-date')
-    }
+export const getHoursDiff = (prev, current) => {
     if (prev.sender === current.sender) {
         let hourDiff = new Date(current.createdAt) - new Date(prev.createdAt)
-        let prevTimeDiff = Math.floor((hourDiff % 86400000) / 3600000)
-        if (prevTimeDiff < 3)
-            classes.push('minify')
-        else classes.push('normal')
+        let prevTimeDiff = (hourDiff % 86400000) / 3600000
+        if (prevTimeDiff < 0.2)
+            return 'minify'
+        else return 'normal'
     } else {
-        classes.push('normal')
+        return 'normal'
     }
-    return classes.toString().replace(',', ' ')
 }
 
 /**
@@ -323,4 +318,17 @@ export const leaveConversation = (conversation, memberId, uid, websocket, dispat
         receiverId: memberId,
         conversationId: conversation._id,
     })
+}
+
+/**
+ * Concat same emojis
+ */
+
+export const concatSameEmojis = (emojis) => {
+    let group = emojis.reduce((r, a) => {
+        r[a.id] = [...r[a.id] || [], a]
+        return r
+    }, {})
+
+    return Object.values(group)
 }

@@ -161,6 +161,9 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             if (currentChat.messages.length > 0 && currentChat._id)
                 dispatch(setLastMessageSeen(uid, currentChat._id, currentChat.messages[currentChat.messages.length - 1]._id))
         }
+        websocket.current.emit("leaveMessenger", {
+            userId: uid
+        })
     }
 
     window.addEventListener('locationchange', () => {
@@ -341,8 +344,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                                                 user={user}
                                                                 websocket={websocket}
                                                                 message={message}
-                                                                own={message.sender === uid}
-                                                                className={(key > 0 && key < array.length - 1) && getHoursDiff(array[key - 1], message, array[key + 1])}
+                                                                className={key > 0 && getHoursDiff(array[key - 1], message)}
                                                                 uniqueKey={key}
                                                                 currentChat={currentChat}
                                                                 dispatch={dispatch}

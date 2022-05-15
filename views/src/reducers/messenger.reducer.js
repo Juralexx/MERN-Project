@@ -60,7 +60,11 @@ export default function messengerReducer(state = initialState, action) {
                 messages: state.messages
             }
         case REMOVE_EMOJI:
-            state.messages[findMessage(action.payload.messageId)].emojis.filter(emoji => emoji._id !== action.payload.emoji._id)
+            let i = findMessage(action.payload.messageId)
+            let emojis = state.messages[i].emojis.filter(emoji => emoji._id !== action.payload.emojiId)
+            console.log(state.messages[i].emojis)
+            console.log(emojis)
+            state.messages[i].emojis = emojis
             return {
                 ...state,
                 messages: state.messages

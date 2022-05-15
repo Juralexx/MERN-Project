@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaArrowCircleDown } from 'react-icons/fa';
+import { ImArrowDown2 } from 'react-icons/im'
 
 const ScrollButton = ({ convWrapperRef, scrollTo }) => {
     const [visible, setVisible] = useState(false)
@@ -18,12 +18,14 @@ const ScrollButton = ({ convWrapperRef, scrollTo }) => {
     }, [convWrapperRef])
 
     return (
-        visible &&
-        <button
-            className="conversation-scroll-btn"
-            onClick={() => scrollTo?.current?.scrollIntoView({ behavior: "smooth" })}>
-            <span>Derniers messages</span> <FaArrowCircleDown />
-        </button>
+        visible && (
+            <button
+                className="conversation-scroll-btn"
+                onClick={() => scrollTo?.current?.scrollIntoView({ behavior: "smooth" })}
+            >
+                <span>Derniers messages</span> <ImArrowDown2 />
+            </button>
+        )
     )
 }
 

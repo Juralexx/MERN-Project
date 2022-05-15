@@ -190,6 +190,19 @@ export const reverseArray = (array) => {
 }
 
 /**
+ * Group array values by parameter value. Return an array with nested arrays.
+ */
+
+export const groupBy = (array, parameter) => {
+    let group = array.reduce((r, a) => {
+        r[a[parameter]] = [...r[a.id] || [], a]
+        return r
+    }, {})
+
+    return Object.values(group)
+}
+
+/**
  * Check if array or object are empty.
  */
 

@@ -210,12 +210,22 @@ io.on("connect", (socket) => {
 
     socket.on('addEmoji', async ({ receiverId, conversationId, messageId, emoji }) => {
         const user = await users.find(member => member.userId === receiverId)
-        console.log(user)
         if (user) {
             return io.to(user.socketId).emit('addEmoji', {
                 conversationId,
                 messageId,
                 emoji
+            })
+        }
+    })
+
+    socket.on('removeEmoji', async ({ receiverId, conversationId, messageId, emojiId }) => {
+        const user = await users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('removeEmoji', {
+                conversationId,
+                messageId,
+                emojiId
             })
         }
     })

@@ -5,6 +5,7 @@
     border-right : 1px solid var(--light-border);
 
     .conversation-box-wrapper {
+        position        : relative;
         display        : flex;
         flex-direction : column;
         height         : 100%;
@@ -100,55 +101,9 @@
             position         : relative;
             height           : 100%;
             overflow-y       : auto;
+            overflow-x: hidden;
             padding          : 10px;
             background-color : var(--content-x-light);
-        }
-    }
-
-    .messages-date {
-        position    : relative;
-        display     : flex;
-        align-items : center;
-        z-index     : 10;
-        cursor      : pointer;
-
-        .date {
-            display         : flex;
-            align-items     : center;
-            justify-content : center;
-            text-align      : center;
-            width           : 100%;
-            padding         : 6px 20px;
-            font-size       : 12px;
-            color           : var(--text-secondary);
-
-            svg {
-                width       : 16px;
-                height      : 16px;
-                margin-top  : 1px;
-                margin-left : 3px;
-            }
-        }
-
-        .message-date-sort-tools {
-            position      : absolute;
-            top           : 32px;
-            left          : 50%;
-            transform     : translateX(-50%);
-            padding       : 10px;
-            background    : var(--content-light);
-            border-radius : var(--radius);
-            box-shadow    : var(--shadow-lg);
-            z-index       : 11;
-
-            div {
-                padding     : 5px 10px;
-                white-space : nowrap;
-
-                &:hover {
-                    background : var(--x-light);
-                }
-            }
         }
     }
 }
@@ -159,11 +114,12 @@
 
 .conversation-bottom {
     padding    : 5px;
-    box-shadow: var(--shadow-top);
-    background      : var(--content-x-light);
+    box-shadow : var(--shadow-top);
+    background : var(--content-x-light);
 }
 
 .message-text-tools {
+    position:relative;
     display         : flex;
     justify-content : space-between;
     align-items     : center;
@@ -177,6 +133,11 @@
         .text-tools {
             padding : 4px;
             margin  : 0 4px;
+
+            svg {
+                width  : 14px;
+                height : 14px;
+            }
         }
 
         .send-tool {

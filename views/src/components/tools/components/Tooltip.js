@@ -2,20 +2,27 @@ import React, { useState, useEffect } from 'react'
 import { usePopper } from "react-popper";
 
 const Tooltip = (props) => {
-    const { className } = props
     const [open, setOpen] = useState(false)
 
     const popperElRef = React.useRef(null);
     const [targetElement, setTargetElement] = useState(null);
     const [popperElement, setPopperElement] = useState(popperElRef.current);
+    const [arrowElement, setArrowElement] = useState(null);
     const { styles, attributes } = usePopper(targetElement, popperElement, {
-        placement: "top",
+        placement: props.placement || "top",
         modifiers: [
             {
                 name: "offset",
                 options: {
-                    offset: [0, 0]
+                    offset: [0, 12]
                 }
+            },
+            {
+                name: 'arrow',
+                options: {
+                    element: arrowElement,
+                    padding: 5,
+                },
             }
         ]
     })
@@ -27,17 +34,18 @@ const Tooltip = (props) => {
 
     return (
         <>
-            {open &&
-                <div
-                    className={`${className ? "tooltip " + className : "tooltip"}`}
-                    ref={popperElRef}
-                    style={styles.popper}
-                    {...attributes.popper}
-                >
-                    {props.content}
-                </div>
-            }
-            <div ref={setTargetElement} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+            <div
+                className={`${open ? 'tooltip transition open' : "tooltip transition"}`}
+                id="tooltip"
+                role="tooltip"
+                ref={popperElRef}
+                style={styles.popper}
+                {...attributes.popper}
+            >
+                {props.content}
+                <div className="tooltip-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div>
+            </div>
+            <div className="tooltip-target" ref={setTargetElement} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
                 {props.children}
             </div>
         </>

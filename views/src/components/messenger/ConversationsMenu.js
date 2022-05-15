@@ -11,6 +11,7 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { HiPencilAlt } from 'react-icons/hi'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import TemporaryConversation from './tools/TemporaryConversation';
+import Tooltip from '../tools/components/Tooltip';
 
 const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, onConversationClick, setSearchHeader, setBlank, getNewMessage, notification }) => {
     const [open, setOpen] = useState(false)
@@ -22,9 +23,13 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
         <div className="conversation-menu">
             <div className="flex justify-between pb-3">
                 <h2 className="bold">Conversations</h2>
-                <div className="flex">
-                    <IconToggle icon={<AiOutlineUsergroupAdd />} className="mr-2" onClick={() => setOpen(true)} />
-                    <IconToggle icon={<HiPencilAlt />} onClick={() => { setSearchHeader(true); Object.keys(temporaryConv).length === 0 ? setBlank(true) : setCurrentChat(temporaryConv) }} />
+                <div className="relative flex">
+                    <Tooltip content={<p>Nouvelle conversation de groupe</p>} placement="bottom">
+                        <IconToggle icon={<AiOutlineUsergroupAdd />} className="mx-2" onClick={() => setOpen(true)} />
+                    </Tooltip>
+                    <Tooltip content={<p>Nouvelle conversation</p>} placement="bottom">
+                        <IconToggle icon={<HiPencilAlt />} onClick={() => { setSearchHeader(true); Object.keys(temporaryConv).length === 0 ? setBlank(true) : setCurrentChat(temporaryConv) }} />
+                    </Tooltip>
                 </div>
             </div>
             <div className="pb-4 mb-3 border-b">

@@ -272,3 +272,49 @@
 .leaflet-control {
     z-index : 400;
 }
+
+#tooltip {
+    display:flex;
+    position      : absolute;
+    width         : auto;
+    padding       : 7px 10px;
+    border-radius : var(--radius);
+    background    : rgb(20, 20, 20);
+    z-index       : 700;
+      
+    .tooltip-arrow {
+        position   : absolute;
+        width      : 12px;
+        height     : 12px;
+        background : inherit;
+        visibility : hidden;
+        
+        &:before {
+            position   : absolute;
+            width      : 12px;
+            height     : 12px;
+            background : inherit;
+            visibility : visible;
+            content    : '';
+            transform  : rotate(45deg);
+        }
+    }
+    
+    &[data-popper-placement^='top'] > .tooltip-arrow {
+        bottom: -4px;
+    }
+    &[data-popper-placement^='bottom'] > .tooltip-arrow {
+        top: -4px;
+    }
+    &[data-popper-placement^='left'] > .tooltip-arrow {
+        right: -4px;
+    }
+    &[data-popper-placement^='right'] > .tooltip-arrow {
+        left: -4px;
+    }
+
+    p {
+        color     : var(--white);
+        font-size : 13px;
+    }
+}

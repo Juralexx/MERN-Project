@@ -1,158 +1,162 @@
-import React, { useRef, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./tools/EditorToolbar";
-import { Picker } from 'emoji-mart'
+import EmojiPicker from '../tools/components/EmojiPicker';
+import Tooltip from '../tools/components/Tooltip';
 import { Emoji } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { avatar } from '../tools/functions/useAvatar';
-import { convertEditorToHTML, convertEditorToString, modifyMessage, removeMessage } from './tools/function';
-import { getHourOnly } from '../Utils';
-import { MdOutlineContentCopy, MdOutlineAddReaction } from 'react-icons/md'
-import { IoSend } from 'react-icons/io5'
-import { BsEmojiSmile } from 'react-icons/bs'
+import { concatSameEmojis, convertEditorToHTML, convertEditorToString, modifyMessage, otherMembersIDs, removeMessage } from './tools/function';
+import { getHourOnly, randomNbID } from '../Utils';
+import { MdOutlineAddReaction, MdOutlineContentCopy } from 'react-icons/md'
+import { IoArrowUndoOutline, IoSend, IoTrashOutline } from 'react-icons/io5'
 import { BiFontFamily } from 'react-icons/bi'
-import { FiAtSign } from 'react-icons/fi'
+import { FiAtSign, FiEdit, FiThumbsUp } from 'react-icons/fi'
+import { addEmoji, removeEmoji } from '../../actions/messenger.action';
 
-const Message = ({ user, uid, websocket, message, own, uniqueKey, className, currentChat, dispatch }) => {
-    const [hoveredCard, setHoveredCard] = useState(-1)
-    const [hoveredPopup, setHoveredPopup] = useState(-1)
-    const [messageToModify, setMessageToModify] = useState(-1)
+const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
+    const [messageToModify, setMessageToModify] = useState(false)
     const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
     const [modifiedMessage, setModifiedMessage] = useState("")
+    const messageRef = useRef()
+    const [hovered, setHovered] = useState(false)
+    const [opened, setOpened] = useState(false)
+    useClickOutside(messageRef, setOpened, false)
+    const [emojis, setEmojis] = useState(concatSameEmojis(message.emojis))
+    let like = { id: "+1", name: "Thumbs Up Sign", short_names: ["+1", "thumbsup"], colons: ":+1:", emoticons: [], unified: "1f44d", skin: 1, native: "👍" }
 
-    const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
-    const [emojis, setEmojis] = useState(message.emojis)
-    const wrapperRef = useRef()
-    useClickOutside(wrapperRef, setOpenEmojiPicker, false)
+    useEffect(() => {
+        if (message.emojis.length > 0)
+            setEmojis(concatSameEmojis(message.emojis))
+    }, [message.emojis.length])
 
-    const handleEmoji = async (emoji) => {
-        let ids = []
-        currentChat.members.map(member => { return ids = [...ids, member.id] })
-        ids.map(memberId => {
+    const handleEmoji = (emoji) => {
+        let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: uid }
+        otherMembersIDs(currentChat, uid).map(memberId => {
             return websocket.current.emit("addEmoji", {
                 receiverId: memberId,
                 conversationId: currentChat._id,
                 messageId: message._id,
-                emoji: emoji
+                emoji: emoj
             })
         })
-
-        setEmojis([...emojis, emoji])
-        Object.assign(emoji, { emoji_sender: user.pseudo, emoji_sender_id: uid })
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/messages/single/${message._id}`,
-            data: { emojis: emoji }
-        })
-        setOpenEmojiPicker(false)
+        dispatch(addEmoji(currentChat._id, message._id, emoj))
     }
 
-    const deleteEmoji = async (emoji) => {
-        let storedArray = emojis.slice()
-        let index = storedArray.findIndex(element => element.id === emoji.id && element.sender_pseudo === emoji.sender_pseudo)
-        storedArray.splice(index, 1)
-        setEmojis(storedArray)
-
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/messages/single/remove-emoji/${message._id}`,
-            data: { emojis: emoji }
+    const deleteEmoji = (emojisGrouped) => {
+        let emoji = emojisGrouped.find(e => e.sender_id === uid)
+        otherMembersIDs(currentChat, uid).map(memberId => {
+            return websocket.current.emit("removeEmoji", {
+                receiverId: memberId,
+                conversationId: currentChat._id,
+                messageId: message._id,
+                emojiId: emoji._id
+            })
         })
+        dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
     }
 
-    const handleModifiedMessage = (text, delta, source, editor) => {
+    const handleEditor = (text, delta, source, editor) => {
         setModifiedMessage(editor.getContents())
     }
 
     return (
-        <div className={own ? "message-container own " + className : "message-container " + className}>
-            <div className="message" onMouseLeave={() => setHoveredCard(-1)} onMouseEnter={() => setHoveredCard(uniqueKey)} style={{ display: messageToModify === uniqueKey && "flex", minWidth: messageToModify === uniqueKey && "100%" }}>
-                <div className="message-content" style={{ display: messageToModify === uniqueKey && "flex", minWidth: messageToModify === uniqueKey && "100%" }}>
-                    <div className="message-left">
-                        <div className="message-img" style={avatar(message.sender_picture)}></div>
-                    </div>
-                    <div className="message-right">
-                        <div className="message-right-top">
-                            <div className="message-sender">{message.sender_pseudo}</div>
-                        </div>
+        <div className={opened ? "message-container hovered " + className : "message-container " + className} data-hour={getHourOnly(new Date(message.createdAt))} ref={messageRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+            <div className="message" style={{ display: messageToModify === uniqueKey && "flex", minWidth: messageToModify === uniqueKey && "100%" }}>
+                <div className="message-left">
+                    <div className="message-img" style={avatar(message.sender_picture)}></div>
+                </div>
+                <div className="message-right">
+                    <div className="message-right-top">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))}</span></div>
 
-                        {message && messageToModify !== uniqueKey ? (
-                            <>
-                                <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>
-                                <div className="message-right-bottom">{getHourOnly(new Date(message.createdAt))}</div>
-                            </>
-                        ) : (
-                            <>
-                                <div className="message-text-editor conversation-toolsbox">
-                                    <EditorToolbar display={openEditorToolbar} />
-                                    <ReactQuill
-                                        onChange={handleModifiedMessage}
-                                        defaultValue={convertEditorToString(message)}
-                                        placeholder="Rédiger un messager..."
-                                        modules={modules}
-                                        formats={formats}
-                                    />
-                                    <div className="message-text-tools">
-                                        <div className="text-tools-left">
-                                            <button className="text-tools" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><BsEmojiSmile /></button>
-                                            <button className="text-tools"><FiAtSign /></button>
-                                            <button className="text-tools" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
-                                        </div>
-                                        <div className="text-tools-right">
-                                            <button className="text-tools !mr-2" onClick={() => setMessageToModify(-1)}>Annuler</button>
-                                            <button className="send-tool" onClick={() => { modifyMessage(message, modifiedMessage, currentChat, uid, websocket, dispatch); setMessageToModify(-1) }}><IoSend /></button>
-                                        </div>
-                                    </div>
+                    {message && messageToModify !== uniqueKey ? (
+                        <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>
+                    ) : (
+                        <div className="message-text-editor conversation-toolsbox">
+                            <EditorToolbar display={openEditorToolbar} />
+                            <ReactQuill
+                                onChange={handleEditor}
+                                defaultValue={convertEditorToString(message)}
+                                placeholder="Rédiger un messager..."
+                                modules={modules}
+                                formats={formats}
+                            />
+                            <div className="message-text-tools">
+                                <div className="text-tools-left">
+                                    <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji)} />
+                                    <button className="text-tools"><FiAtSign /></button>
+                                    <button className="text-tools" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
                                 </div>
-                            </>
-                        )}
-
-                        {emojis && emojis.length > 0 && (
-                            <div className="emoji-container">
-                                {emojis.map((emoji, key) => {
-                                    return (
-                                        <div className="emoji" key={key} onMouseEnter={() => setHoveredPopup(key)} onMouseLeave={setHoveredPopup}>
-                                            <Emoji emoji={emoji} size={14} onClick={() => emoji.emoji_sender_id === uid && (deleteEmoji(emoji))} />
-                                            {hoveredPopup === key && (
-                                                <div className="emoji-popup">
-                                                    <Emoji emoji={emoji} size={26} />
-                                                    <p>{emoji.emoji_sender + " a réagit avec " + emoji.colons}</p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )
-                                })}
-                                <div className="emoji-add" onClick={() => setOpenEmojiPicker(!openEmojiPicker)} ref={wrapperRef}>
-                                    <MdOutlineAddReaction />
+                                <div className="text-tools-right">
+                                    <button className="text-tools !mr-2" onClick={() => setMessageToModify(-1)}>Annuler</button>
+                                    <button className="send-tool" onClick={() => { modifyMessage(message, modifiedMessage, currentChat, uid, websocket, dispatch); setMessageToModify(-1) }}><IoSend /></button>
                                 </div>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
 
-                    {openEmojiPicker &&
-                        <div ref={wrapperRef}>
-                            <Picker emoji="point_up" onClick={(emoji) => handleEmoji(emoji)} style={{ position: "absolute", top: -80, right: 0, transform: "scale(0.7)", zIndex: 10 }} />
+                    {emojis.length > 0 &&
+                        <div className="message-emoji-container">
+                            {emojis.map((emojisGrouped, key) => {
+                                let names = emojisGrouped.map(e => { return e.sender_pseudo })
+                                let ids = emojisGrouped.map(e => { return e.sender_id })
+                                let emoji = emojisGrouped[0]
+                                return (
+                                    <div className={`${ids.includes(uid) ? "emoji own" : "emoji"}`} key={key} onClick={() => ids.includes(uid) ? deleteEmoji(emojisGrouped) : handleEmoji(emojisGrouped[0])}>
+                                        <Tooltip content={
+                                            <div className="emoji-popup">
+                                                <Emoji emoji={emoji} size={36} set='twitter' />
+                                                {names.length > 1 ? (
+                                                    <p>{names.toString().replace(",", ", ") + " ont réagit avec " + emoji.colons}</p>
+                                                ) : (
+                                                    <p>{emoji.sender_pseudo + " a réagit avec " + emoji.colons}</p>
+                                                )}
+                                            </div>
+                                        }>
+                                            <Emoji emoji={emoji} size={16} set='twitter' />
+                                        </Tooltip>
+                                        {emojisGrouped.length > 1 &&
+                                            <p>{emojisGrouped.length}</p>
+                                        }
+                                    </div>
+                                )
+                            })}
+                            <EmojiPicker btnClassName="emoji-add" onSelect={handleEmoji} onClick={() => setOpened(!opened)} />
                         </div>
                     }
-                    <div className="message-actions" ref={wrapperRef} style={{ display: hoveredCard === uniqueKey && messageToModify !== uniqueKey ? 'flex' : 'none' }}>
-                        <div className="message-actions-btn"><Emoji emoji="thumbsup" size={16} /></div>
-                        <div className="message-actions-btn"><Emoji emoji=":white_check_mark:" size={16} /></div>
-                        <div className="message-actions-btn"><Emoji emoji=":grin:" size={16} /></div>
-                        <div className="message-actions-btn" onClick={() => setOpenEmojiPicker(!openEmojiPicker)}><MdOutlineAddReaction /></div>
-                        <div className="message-actions-btn" onClick={() => navigator.clipboard.writeText(message.text)}><MdOutlineContentCopy /></div>
-                        <ToolsMenu>
+                </div>
+
+                {(hovered || opened) && !messageToModify &&
+                    <div className="message-actions">
+                        <Tooltip content={<p>Liker</p>}>
+                            <div className="message-actions-btn" onClick={() => handleEmoji(like)}><FiThumbsUp /></div>
+                        </Tooltip>
+                        <Tooltip content={<p>Réagir</p>}>
+                            <EmojiPicker btnClassName="message-actions-btn" onSelect={handleEmoji} onClick={() => setOpened(!opened)} />
+                        </Tooltip>
+                        <Tooltip content={<p>Répondre</p>}>
+                            <div className="message-actions-btn"><IoArrowUndoOutline /></div>
+                        </Tooltip>
+                        {message.sender === uid &&
+                            <Tooltip content={<p>Modifier</p>}>
+                                <div className="message-actions-btn" onClick={() => setMessageToModify(uniqueKey)}><FiEdit /></div>
+                            </Tooltip>
+                        }
+                        <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
+                            <div className="tools_choice"><IoArrowUndoOutline /> Répondre</div>
+                            <div className="tools_choice"><MdOutlineAddReaction /> Ajouter une réaction</div>
+                            <div className="tools_choice" onClick={() => navigator.clipboard.writeText(message.text)}><MdOutlineContentCopy /> Copier le message</div>
                             {message.sender === uid &&
                                 <>
-                                    <div className="tools_choice" onClick={() => removeMessage(message, currentChat, uid, websocket, dispatch)}>Supprimer le message</div>
-                                    <div className="tools_choice" onClick={() => setMessageToModify(uniqueKey)}>Modifier le message</div>
+                                    <div className="tools_choice" onClick={() => setMessageToModify(uniqueKey)}><FiEdit /> Modifier le message</div>
+                                    <div className="tools_choice" onClick={() => removeMessage(message, currentChat, uid, websocket, dispatch)}><IoTrashOutline />Supprimer le message</div>
                                 </>
                             }
                         </ToolsMenu>
                     </div>
-                </div>
+                }
             </div>
         </div>
     )

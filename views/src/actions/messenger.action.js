@@ -304,23 +304,23 @@ export const receiveAddEmoji = (messageId, emoji) => {
 
 export const REMOVE_EMOJI = "REMOVE_EMOJI"
 
-export const removeEmoji = (conversationId, messageId, emoji) => {
+export const removeEmoji = (conversationId, messageId, emojiId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-emoji/`,
-            data: { messageId, emoji }
+            data: { messageId, emojiId }
         })
             .then(() => {
-                dispatch({ type: REMOVE_EMOJI, payload: { messageId, emoji } })
+                dispatch({ type: REMOVE_EMOJI, payload: { messageId, emojiId } })
             })
             .catch(err => console.error(err))
     }
 }
 
-export const receiveRemoveEmoji = (messageId, emoji) => {
+export const receiveRemoveEmoji = (messageId, emojiId) => {
     return async (dispatch) => {
-        dispatch({ type: REMOVE_EMOJI, payload: { messageId, emoji } })
+        dispatch({ type: REMOVE_EMOJI, payload: { messageId, emojiId } })
     }
 }
 

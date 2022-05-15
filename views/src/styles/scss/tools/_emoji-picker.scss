@@ -1,0 +1,73 @@
+.emoji-picker {
+    position : absolute;
+    z-index  : 700;
+    .emoji-mart {
+        padding : 5px;
+        .emoji-mart-preview {
+            height:60px;
+            .emoji-mart-title-label {
+                font-size:16px;
+            }
+            .emoji-mart-preview-emoji {
+                left : 7px;
+                span span {
+                    max-height : 30px;
+                    max-width  : 30px;
+                }
+            }
+            .emoji-mart-preview-data {
+                left : 55px;
+            }
+            .emoji-mart-preview-name,
+            .emoji-mart-preview-emoticons {
+                display : none;
+            }
+            .emoji-mart-preview-shortnames {
+                .emoji-mart-preview-shortname {
+                    font-size   : 15px !important;
+                    color       : var(--text-secondary);
+                    font-weight : 600;
+                }
+            }
+        }
+        .emoji-mart-scroll {
+            margin-bottom : 10px;
+            margin-top   : 6px;
+            &::-webkit-scrollbar {
+                width  : 7px;
+                height : 20px;
+            }
+            &::-webkit-scrollbar-button {
+                width  : 0px;
+                height : 0px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background    : var(--light-border);
+                border        : 31px none var(--body);
+                border-radius : 6px;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background : var(--light-border);
+            }
+            &::-webkit-scrollbar-thumb:active {
+                background : var(--light-border);
+            }
+            &::-webkit-scrollbar-track {
+                background : var(--color-hover);
+                width      : 5px;
+            }
+            &::-webkit-scrollbar-track:hover {
+                background : var(--color-hover);
+            }
+            &::-webkit-scrollbar-track:active {
+                background : var(--color-hover);
+            }
+            &::-webkit-scrollbar-corner {
+                background : transparent;
+            } 
+        }
+        .emoji-mart-anchors svg, .emoji-mart-anchors img {
+            margin : 0 auto;
+        }
+    }
+}
