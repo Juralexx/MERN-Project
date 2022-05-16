@@ -63,7 +63,7 @@ const Projects = ({ user, websocket }) => {
             }
             fetch()
         }
-    }, [user.projects, location.pathname])
+    }, [user.projects, user.favorites, user.followed, user.liked, location.pathname])
 
     return (
         <div className="profil_page col-12 col-lg-9 relative">

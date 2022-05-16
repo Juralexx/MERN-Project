@@ -17,6 +17,9 @@ Font.whitelist = [
 Quill.register(Font, true);
 
 export const modules = {
+    clipboard: {
+        matchVisual: false
+    },
     toolbar: {
         container: "#toolbar",
     },
@@ -36,6 +39,8 @@ export const formats = [
     "indent",
     "link",
     "image",
+    "background",
+    "color",
     "code-block"
 ];
 

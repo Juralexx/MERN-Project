@@ -146,51 +146,6 @@
     }
 }
 
-.message-text-editor {
-    width         : 100%;
-    background    : var(--content-light);
-
-    .ql-editor {
-        background : var(--content-light);
-        border     : 1px solid transparent;
-        padding    : 10px 12px;
-
-        &:focus {
-            border : 1px solid var(--primary);
-        }
-
-        &.ql-blank::before {
-            left : 15px;
-            color : var(--text-secondary);
-        }
-
-        .ql-formats {
-            border-right : 1px solid var(--light-border);
-            margin-right : 0;
-        }
-    }
-
-    .ql-toolbar.ql-snow {
-        border  : none;
-        padding : 5px;
-        button {
-            height  : unset;
-            width   : unset;
-            padding : 4px;
-        }
-        svg {
-            width  : 14px;
-            height : 14px;
-        }
-    }
-
-    .ql-snow .ql-stroke, .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
-        stroke : var(--text);
-    }
-}
-
-
-
 .message-emoji-container {
     display     : flex;
     padding-top : 4px;

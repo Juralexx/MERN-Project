@@ -86,6 +86,17 @@ export const isEmailValid = (email) => {
 }
 
 /**
+ * Check theme and return choosen values.
+ */
+
+export const checkTheme = (light, dark) => {
+    const theme = localStorage.getItem("theme")
+    if (theme !== null && theme === "light")
+        return light
+    else return dark
+}
+
+/**
  * Return date formated : dd mon. YYY.
  */
 
@@ -200,6 +211,37 @@ export const groupBy = (array, parameter) => {
     }, {})
 
     return Object.values(group)
+}
+
+/**
+ * Remove HTML markers
+ */
+
+export const removeHTMLMarkers = (html) => {
+    let regex = /(<([^>]+)>)/ig
+    return html.replace(regex, '')
+}
+
+/**
+ * Converts a string to its html characters completely.
+ */
+
+export const stringToCharSet = (str) => {
+    var buf = [];
+    for (var i = str.length - 1; i >= 0; i--) {
+        buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+    }
+    return buf.join('')
+}
+
+/**
+ * Converts an html characterSet into its original character.
+ */
+
+export const charSetToChar = (str) => {
+    var txt = document.createElement("textarea")
+    txt.innerHTML = str
+    return txt.value
 }
 
 /**

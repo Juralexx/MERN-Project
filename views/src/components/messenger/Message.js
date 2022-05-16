@@ -18,17 +18,17 @@ import { addEmoji, removeEmoji } from '../../actions/messenger.action';
 
 const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
     const [messageToModify, setMessageToModify] = useState(false)
-    const [openEditorToolbar, setOpenEditorToolbar] = useState(false)
+    const [isToolbar, setToolbar] = useState(false)
     const [modifiedMessage, setModifiedMessage] = useState("")
     const messageRef = useRef()
     const [hovered, setHovered] = useState(false)
     const [opened, setOpened] = useState(false)
     useClickOutside(messageRef, setOpened, false)
-    const [emojis, setEmojis] = useState(concatSameEmojis(message.emojis))
+    const [emojis, setEmojis] = useState([])
     let like = { id: "+1", name: "Thumbs Up Sign", short_names: ["+1", "thumbsup"], colons: ":+1:", emoticons: [], unified: "1f44d", skin: 1, native: "👍" }
 
     useEffect(() => {
-        if (message.emojis.length > 0)
+        if (message.emojis.length)
             setEmojis(concatSameEmojis(message.emojis))
     }, [message.emojis.length])
 
@@ -75,7 +75,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                         <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>
                     ) : (
                         <div className="message-text-editor conversation-toolsbox">
-                            <EditorToolbar display={openEditorToolbar} />
+                            <EditorToolbar display={isToolbar} />
                             <ReactQuill
                                 onChange={handleEditor}
                                 defaultValue={convertEditorToString(message)}
@@ -87,7 +87,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                 <div className="text-tools-left">
                                     <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji)} />
                                     <button className="text-tools"><FiAtSign /></button>
-                                    <button className="text-tools" onClick={() => setOpenEditorToolbar(!openEditorToolbar)}><BiFontFamily /></button>
+                                    <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><BiFontFamily /></button>
                                 </div>
                                 <div className="text-tools-right">
                                     <button className="text-tools !mr-2" onClick={() => setMessageToModify(-1)}>Annuler</button>

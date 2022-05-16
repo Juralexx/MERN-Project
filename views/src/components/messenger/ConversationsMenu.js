@@ -13,7 +13,7 @@ import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import TemporaryConversation from './tools/TemporaryConversation';
 import Tooltip from '../tools/components/Tooltip';
 
-const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, onConversationClick, setSearchHeader, setBlank, getNewMessage, notification }) => {
+const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
@@ -66,7 +66,7 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                                                 uid={uid}
                                                 user={user}
                                                 conversation={element}
-                                                newMessage={getNewMessage}
+                                                newMessage={newMessage}
                                                 notification={notification}
                                                 currentChat={currentChat}
                                                 onConversationClick={onConversationClick}
@@ -99,7 +99,7 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                                             uid={uid}
                                             user={user}
                                             conversation={element}
-                                            newMessage={getNewMessage}
+                                            newMessage={newMessage}
                                             notification={notification}
                                             currentChat={currentChat}
                                             onConversationClick={onConversationClick}

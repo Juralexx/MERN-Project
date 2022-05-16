@@ -35,7 +35,6 @@ export const createConversation = (conversation) => {
                 description: conversation.description,
                 owner: conversation.owner,
                 creator: conversation.creator,
-                waiter: conversation.waiter,
                 messages: conversation.messages
             }
         })
@@ -61,15 +60,15 @@ export const receiveCreateConversation = (conversationId) => {
 
 export const UPDATE_CONVERSATION = "UPDATE_CONVERSATION"
 
-export const updateConversation = (conversationId, description, name, owner, waiter, last_message) => {
+export const updateConversation = (conversationId, description, name, owner, last_message) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
-            data: { description, name, owner, waiter, last_message }
+            data: { description, name, owner, last_message }
         })
             .then(() => {
-                dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, waiter, last_message } })
+                dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, last_message } })
             })
             .catch(err => console.error(err))
     }
@@ -77,9 +76,9 @@ export const updateConversation = (conversationId, description, name, owner, wai
 
 export const RECEIVE_UPDATE_CONVERSATION = "RECEIVE_UPDATE_CONVERSATION"
 
-export const receiveUpdateConversation = (description, name, owner, waiter, last_message) => {
+export const receiveUpdateConversation = (description, name, owner, last_message) => {
     return async (dispatch) => {
-        dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, waiter, last_message } })
+        dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, last_message } })
     }
 }
 

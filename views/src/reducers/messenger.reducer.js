@@ -19,7 +19,6 @@ export default function messengerReducer(state = initialState, action) {
                 description: action.payload.description,
                 name: action.payload.name,
                 owner: action.payload.owner,
-                waiter: action.payload.waiter,
                 last_message: action.payload.last_message,
             }
         case ADD_MEMBER_CONVERSATION:
@@ -54,17 +53,16 @@ export default function messengerReducer(state = initialState, action) {
                 messages: state.messages.filter(message => message._id !== action.payload.messageId)
             }
         case ADD_EMOJI:
-            state.messages[findMessage(action.payload.messageId)].emojis.push(action.payload.emoji)
+            let i = findMessage(action.payload.messageId)
+            state.messages[i].emojis.push(action.payload.emoji)
             return {
                 ...state,
                 messages: state.messages
             }
         case REMOVE_EMOJI:
-            let i = findMessage(action.payload.messageId)
-            let emojis = state.messages[i].emojis.filter(emoji => emoji._id !== action.payload.emojiId)
-            console.log(state.messages[i].emojis)
-            console.log(emojis)
-            state.messages[i].emojis = emojis
+            let j = findMessage(action.payload.messageId)
+            let emojis = state.messages[j].emojis.filter(emoji => emoji._id !== action.payload.emojiId)
+            state.messages[j].emojis = emojis
             return {
                 ...state,
                 messages: state.messages

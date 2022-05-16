@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { dateParser } from '../Utils'
-import { useClickOutside } from '../tools/functions/useClickOutside'
 import ToolsMenu from '../tools/components/ToolsMenu'
 
 const MessageDate = ({ message }) => {

@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { NavLink } from 'react-router-dom'
 import { avatar } from '../tools/functions/useAvatar';
-import { createConversation } from '../../actions/messenger.action';
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { IconToggle } from '../tools/components/Button';
 import { BiSearchAlt } from 'react-icons/bi';

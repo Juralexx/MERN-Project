@@ -1,8 +1,8 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { dateParserWithoutYear, randomNbID } from '../../Utils'
-import { addEmoji, addMember, deleteConversation, deleteMessage, removeMember, updateMessage } from '../../../actions/messenger.action';
+import { charSetToChar, dateParserWithoutYear, removeHTMLMarkers } from '../../Utils'
+import { addMember, deleteConversation, deleteMessage, removeMember, updateMessage } from '../../../actions/messenger.action';
 
 /**
  * Delta convertion
@@ -40,8 +40,7 @@ export function convertEditorToStringNoHTML(message) {
     let callback = {}
     let converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
     let html = converter.convert(message.text[0].ops)
-    var regex = /(<([^>]+)>)/ig
-    return html.replace(regex, '')
+    return charSetToChar(removeHTMLMarkers(html))
 }
 
 /**

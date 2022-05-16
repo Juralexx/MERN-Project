@@ -48,7 +48,7 @@ const ProjectPage = ({ user, projects }) => {
                 } else setDisplayBtn("none")
             })
         }
-    }, [navRef.current])
+    }, [navRef])
 
     return (
         !isLoading &&

@@ -15,7 +15,6 @@ export const createConversation = async (req, res) => {
         description: req.body.description,
         owner: req.body.owner,
         creator: req.body.creator,
-        waiter: req.body.waiter,
         messages: req.body.messages
     })
 
@@ -75,7 +74,6 @@ export const updateConversation = async (req, res) => {
                     name: req.body.name,
                     description: req.body.description,
                     owner: req.body.owner,
-                    waiter: req.body.waiter,
                 }
             },
             { new: true, upsert: true },
@@ -186,29 +184,6 @@ export const removeMember = async (req, res) => {
                 },
             },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
-        )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
-    } catch (err) {
-        res.status(400).json(err)
-    }
-}
-
-/**
- * Remove conversation waiter. Waiter = when we create conversation, if there's no messages sent, 
- * users in conversation do not see the new conversation in their conversations list. 
- */
-
-export const removeWaiter = async (req, res) => {
-    try {
-        await ConversationModel.findByIdAndUpdate(
-            { _id: req.params.id },
-            {
-                $unset: {
-                    waiter: req.body.waiter
-                }
-            },
-            { new: true, upsert: true },
         )
             .then((docs) => { res.send(docs) })
             .catch((err) => { return res.status(500).send({ message: err }) })

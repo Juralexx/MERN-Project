@@ -30,13 +30,25 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
 
     const [messages, setMessages] = useState([])
     const [messagesDates, setMessagesDates] = useState([])
-    const [newMessage, setNewMessage] = useState({})
-    const [getNewMessage, setGetNewMessage] = useState([])
+    const [newMessage, setNewMessage] = useState([])
 
     const lastMessageRef = useRef()
     const convWrapperRef = useRef()
     const quillRef = useRef()
     const dispatch = useDispatch()
+
+    /**
+     * is on messenger
+     */
+
+    useEffect(() => {
+        if (currentChat) {
+            websocket.current.emit("onMessenger", {
+                userId: uid,
+                conversationId: currentChat._id
+            })
+        }
+    }, [uid, onlineUsers.length, websocket, currentChat])
 
     /**
      * get conversations
@@ -115,34 +127,17 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     /**
      * typing
      */
-
+    
     const [isTyping, setTyping] = useState(false)
-    const [typingContext, setTypingContext] = useState("")
-
-    useEffect(() => {
-        if (currentChat) {
-            const getTyping = () => {
-                otherMembersIDs(currentChat, uid).map(memberId => {
-                    return websocket.current.emit("typing", {
-                        sender: user.pseudo,
-                        receiverId: memberId,
-                        conversationId: currentChat._id
-                    })
-                })
-            }
-            const quill = quillRef?.current
-            quill?.addEventListener("keypress", getTyping)
-            return () => quill?.removeEventListener("keypress", getTyping)
-        }
-    }, [currentChat, uid, user.pseudo, websocket])
+    const [typingContext, setTypingContext] = useState({})
 
     useEffect(() => {
         let interval
-        if (isTyping)
-            interval = setInterval(() => { setTyping(false) }, 5000)
+        if (isTyping && typingContext.conversationId === currentChat._id)
+            interval = setInterval(() => { setTyping(false) }, 1000)
         else clearInterval(interval)
         return () => clearInterval(interval)
-    }, [isTyping])
+    }, [isTyping, typingContext])
 
     /**
      * Scroll to last message
@@ -172,30 +167,18 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     })
 
     /**
-     * is on messenger
-     */
-
-    useEffect(() => {
-        if (currentChat) {
-            websocket.current.emit("onMessenger", {
-                userId: uid,
-                conversationId: currentChat._id
-            })
-        }
-    }, [uid, onlineUsers.length, websocket.current, currentChat])
-
-    /**
      * FONCTIONS
      */
 
-    const handleSubmit = async (conversation) => {
+    const handleSubmit = (conversation, messageContent) => {
         const message = {
             _id: randomNbID(24),
             sender: uid,
             sender_pseudo: user.pseudo,
             sender_picture: user.picture,
-            text: [newMessage],
+            text: [messageContent],
             conversationId: conversation._id,
+            emojis: [],
             createdAt: new Date().toISOString()
         }
         if (conversation.type === "group") {
@@ -208,16 +191,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             })
         } else {
             const receiver = conversation.members.find(member => member.id !== uid)
-            if (conversation.waiter) {
-                const removeWaiter = async () => {
-                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/remove-waiter`, { waiter: receiver.id })
-                    websocket.current.emit("addConversation", {
-                        receiverId: receiver.id,
-                        conversation: conversation
-                    })
-                }
-                removeWaiter()
-            }
             websocket.current.emit("sendMessage", {
                 receiverId: receiver.id,
                 conversationId: conversation._id,
@@ -225,7 +198,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             })
         }
         dispatch(sendMessage(conversation._id, message))
-        setNewMessage('')
+        setNewMessage(message)
     }
 
     const changeCurrentChat = (conversation) => {
@@ -262,14 +235,14 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
 
     useEffect(() => {
         websocket.current.on("getMessage", data => {
-            setGetNewMessage(data.message)
+            setNewMessage(data.message)
             setTyping(false)
-            setTypingContext("")
+            setTypingContext({})
         })
         websocket.current.on("getNotification", data => {
             setNotification(data.message)
             setTyping(false)
-            setTypingContext("")
+            setTypingContext({})
         })
         websocket.current.on('typing', data => {
             setTyping(true)
@@ -278,7 +251,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 conversationId: data.conversationId
             })
         })
-    }, [websocket.current, websocket])
+    }, [websocket.current])
 
     return (
         <div className="messenger">
@@ -297,7 +270,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 setSearchHeader={setSearchHeader}
                 setBlank={setBlank}
                 onConversationClick={onConversationClick}
-                getNewMessage={getNewMessage}
+                newMessage={newMessage}
                 notification={notification}
                 isLoading={isLoading}
             />
@@ -368,15 +341,16 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                 )}
                             </div>
                             <ConversationBottom
+                                user={user}
+                                websocket={websocket}
                                 convWrapperRef={convWrapperRef}
                                 lastMessageRef={lastMessageRef}
                                 quillRef={quillRef}
-                                setNewMessage={setNewMessage}
-                                newMessage={newMessage}
                                 handleSubmit={handleSubmit}
                                 typingContext={typingContext}
                                 currentChat={currentChat}
                                 isTyping={isTyping}
+                                setTyping={setTyping}
                             />
                         </>
                     ) : (

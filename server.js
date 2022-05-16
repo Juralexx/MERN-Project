@@ -14,8 +14,6 @@ import geolocationRoutes from './api/geolocations.api.routes.js'
 import conversationRoutes from './routes/conversation.routes.js'
 
 const app = express();
-app.use('/uploads', express.static('./uploads'))
-app.use('/files', express.static('./files'))
 
 app.use(cors({
     mode: 'no-cors',
@@ -39,6 +37,9 @@ app.get('*', checkUser)
 app.get('/jwtid', requireAuth, (req, res) => {
     return res.status(200).send(res.locals.user._id)
 })
+
+app.use('/uploads', express.static('./uploads'))
+app.use('/files', express.static('./files'))
 
 app.use('/api/user', userRoutes)
 app.use('/api/project', projectRoutes)
@@ -172,7 +173,6 @@ io.on("connect", (socket) => {
         let user = users.find(member => member.userId === receiverId)
         if (user) {
             if (user.conversationId && user.conversationId === conversationId) {
-                console.log(1)
                 return io.to(user.socketId).emit("getMessage", {
                     message
                 })
@@ -181,7 +181,6 @@ io.on("connect", (socket) => {
                     message
                 })
             } else {
-                console.log(3)
                 return io.to(user.socketId).emit("sendMessageNotification", {
                     message
                 })

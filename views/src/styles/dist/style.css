@@ -9584,48 +9584,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
           box-shadow: var(--shadow-top);
   background: var(--content-x-light);
 }
-
-.message-text-tools {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-  padding: 5px;
-  background: var(--content-light);
-}
-.message-text-tools .text-tools-left, .message-text-tools .text-tools-right {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.message-text-tools .text-tools-left .text-tools, .message-text-tools .text-tools-right .text-tools {
-  padding: 4px;
-  margin: 0 4px;
-}
-.message-text-tools .text-tools-left .text-tools svg, .message-text-tools .text-tools-right .text-tools svg {
-  width: 14px;
-  height: 14px;
-}
-.message-text-tools .text-tools-left .send-tool, .message-text-tools .text-tools-right .send-tool {
-  padding: 4px 8px;
-  border-radius: 3px;
-  background-color: var(--primary);
-  color: white;
-}
-.message-text-tools .emoji-picker-container {
-  position: absolute;
-  right: 0;
-  bottom: 70px;
-}
-
-.conversation-toolsbox {
+.conversation-bottom .conversation-toolsbox {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -9642,6 +9601,95 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   background: var(--content-light);
   -webkit-box-shadow: rgba(35, 34, 33, 0.17) 0px 0 2px 0px;
           box-shadow: rgba(35, 34, 33, 0.17) 0px 0 2px 0px;
+}
+.conversation-bottom .conversation-toolsbox .message-text-tools {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  padding: 5px;
+  background: var(--content-light);
+}
+.conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-left, .conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-left .text-tools, .conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-right .text-tools {
+  padding: 4px;
+  margin: 0 4px;
+  height: 24px;
+  width: 24px;
+}
+.conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-left .text-tools svg, .conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-right .text-tools svg {
+  width: 14px;
+  height: 14px;
+}
+.conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-left .send-tool, .conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-right .send-tool {
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: var(--primary);
+  color: white;
+}
+.conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-left .send-tool:disabled, .conversation-bottom .conversation-toolsbox .message-text-tools .text-tools-right .send-tool:disabled {
+  opacity: 0.5;
+}
+.conversation-bottom .conversation-toolsbox .message-text-tools .emoji-picker-container {
+  position: absolute;
+  right: 0;
+  bottom: 70px;
+}
+.conversation-bottom .auto-complete-container {
+  bottom: 100%;
+  width: auto;
+  min-width: 280px;
+}
+
+.message-text-editor {
+  position: relative;
+  width: 100%;
+  background: var(--content-light);
+}
+.message-text-editor .ql-editor {
+  background: var(--content-light);
+  border: 1px solid transparent;
+  padding: 10px 12px;
+  max-height: 120px;
+  overflow-y: scroll;
+}
+.message-text-editor .ql-editor:focus {
+  border: 1px solid var(--primary);
+}
+.message-text-editor .ql-editor.ql-blank::before {
+  left: 15px;
+  color: var(--text-secondary);
+}
+.message-text-editor .ql-editor .ql-formats {
+  border-right: 1px solid var(--light-border);
+  margin-right: 0;
+}
+.message-text-editor .ql-toolbar.ql-snow {
+  border: none;
+  padding: 5px;
+}
+.message-text-editor .ql-toolbar.ql-snow button {
+  height: unset;
+  width: unset;
+  padding: 4px;
+}
+.message-text-editor .ql-toolbar.ql-snow svg {
+  width: 14px;
+  height: 14px;
+}
+.message-text-editor .ql-snow .ql-stroke, .message-text-editor .ql-snow .ql-fill, .message-text-editor .ql-snow .ql-stroke.ql-fill {
+  stroke: var(--text);
 }
 
 .is-typing {
@@ -9859,43 +9907,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .message-container.minify:hover::before {
   display: block;
-}
-
-.message-text-editor {
-  width: 100%;
-  background: var(--content-light);
-}
-.message-text-editor .ql-editor {
-  background: var(--content-light);
-  border: 1px solid transparent;
-  padding: 10px 12px;
-}
-.message-text-editor .ql-editor:focus {
-  border: 1px solid var(--primary);
-}
-.message-text-editor .ql-editor.ql-blank::before {
-  left: 15px;
-  color: var(--text-secondary);
-}
-.message-text-editor .ql-editor .ql-formats {
-  border-right: 1px solid var(--light-border);
-  margin-right: 0;
-}
-.message-text-editor .ql-toolbar.ql-snow {
-  border: none;
-  padding: 5px;
-}
-.message-text-editor .ql-toolbar.ql-snow button {
-  height: unset;
-  width: unset;
-  padding: 4px;
-}
-.message-text-editor .ql-toolbar.ql-snow svg {
-  width: 14px;
-  height: 14px;
-}
-.message-text-editor .ql-snow .ql-stroke, .message-text-editor .ql-snow .ql-fill, .message-text-editor .ql-snow .ql-stroke.ql-fill {
-  stroke: var(--text);
 }
 
 .message-emoji-container {
