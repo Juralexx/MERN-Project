@@ -36,7 +36,9 @@ const ConversationModel = new mongoose.Schema(
                 emojis: {
                     type: [],
                 },
-                createdAt: Date
+                createdAt: Date,
+                modified: Boolean,
+                shared: Object
             }],
         },
         description: {

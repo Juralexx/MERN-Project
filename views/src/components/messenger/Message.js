@@ -6,22 +6,25 @@ import Tooltip from '../tools/components/Tooltip';
 import { Emoji } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import ToolsMenu from '../tools/components/ToolsMenu';
+import Warning from '../tools/components/Warning';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { avatar } from '../tools/functions/useAvatar';
-import { concatSameEmojis, convertEditorToHTML, convertEditorToString, modifyMessage, otherMembersIDs, removeMessage } from './tools/function';
-import { getHourOnly, randomNbID } from '../Utils';
-import { MdOutlineAddReaction, MdOutlineContentCopy } from 'react-icons/md'
-import { IoArrowUndoOutline, IoSend, IoTrashOutline } from 'react-icons/io5'
-import { BiFontFamily } from 'react-icons/bi'
-import { FiAtSign, FiEdit, FiThumbsUp } from 'react-icons/fi'
+import { concatSameEmojis, convertEditorToHTML, convertEditorToString, convertEditorToStringNoHTML, modifyMessage, otherMembersIDs, removeMessage } from './tools/function';
+import { dateParserWithoutYear, getHourOnly, randomNbID } from '../Utils';
 import { addEmoji, removeEmoji } from '../../actions/messenger.action';
+import { MdOutlineAddReaction, MdOutlineContentCopy } from 'react-icons/md'
+import { IoArrowUndoOutline, IoTrashOutline } from 'react-icons/io5'
+import { BiFontFamily } from 'react-icons/bi'
+import { FiEdit, FiThumbsUp } from 'react-icons/fi'
+import { SmallAvatar } from '../tools/components/Avatars';
 
 const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
-    const [messageToModify, setMessageToModify] = useState(false)
+    const [modify, setModify] = useState(-1)
     const [isToolbar, setToolbar] = useState(false)
     const [modifiedMessage, setModifiedMessage] = useState("")
-    const messageRef = useRef()
     const [hovered, setHovered] = useState(false)
+    const [warning, setWarning] = useState(false)
+    const messageRef = useRef()
     const [opened, setOpened] = useState(false)
     useClickOutside(messageRef, setOpened, false)
     const [emojis, setEmojis] = useState([])
@@ -64,34 +67,35 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
 
     return (
         <div className={opened ? "message-container hovered " + className : "message-container " + className} data-hour={getHourOnly(new Date(message.createdAt))} ref={messageRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-            <div className="message" style={{ display: messageToModify === uniqueKey && "flex", minWidth: messageToModify === uniqueKey && "100%" }}>
+            <div className="message" style={{ display: modify === uniqueKey && "flex" }}>
                 <div className="message-left">
                     <div className="message-img" style={avatar(message.sender_picture)}></div>
                 </div>
                 <div className="message-right">
-                    <div className="message-right-top">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))}</span></div>
+                    <div className="message-right-top">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "- modifié"}</span></div>
 
-                    {message && messageToModify !== uniqueKey ? (
+                    {message && modify !== uniqueKey ? (
                         <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>
                     ) : (
-                        <div className="message-text-editor conversation-toolsbox">
-                            <EditorToolbar display={isToolbar} />
-                            <ReactQuill
-                                onChange={handleEditor}
-                                defaultValue={convertEditorToString(message)}
-                                placeholder="Rédiger un messager..."
-                                modules={modules}
-                                formats={formats}
-                            />
-                            <div className="message-text-tools">
-                                <div className="text-tools-left">
-                                    <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji)} />
-                                    <button className="text-tools"><FiAtSign /></button>
-                                    <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><BiFontFamily /></button>
-                                </div>
-                                <div className="text-tools-right">
-                                    <button className="text-tools !mr-2" onClick={() => setMessageToModify(-1)}>Annuler</button>
-                                    <button className="send-tool" onClick={() => { modifyMessage(message, modifiedMessage, currentChat, uid, websocket, dispatch); setMessageToModify(-1) }}><IoSend /></button>
+                        <div className="conversation-toolsbox">
+                            <div className="message-text-editor">
+                                <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
+                                <ReactQuill
+                                    onChange={handleEditor}
+                                    defaultValue={convertEditorToString(message)}
+                                    placeholder="Rédiger un messager..."
+                                    modules={modules}
+                                    formats={formats}
+                                />
+                                <div className="message-text-tools">
+                                    <div className="text-tools-left">
+                                        <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji)} />
+                                        <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><BiFontFamily /></button>
+                                    </div>
+                                    <div className="text-tools-right">
+                                        <button className="cancel-tool" onClick={() => { setModify(-1); setOpened(!opened) }}>Annuler</button>
+                                        <button className="send-tool" onClick={() => { modifyMessage(message, modifiedMessage, currentChat, uid, websocket, dispatch); setModify(-1) }}>Enregistrer</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -117,9 +121,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                         }>
                                             <Emoji emoji={emoji} size={16} set='twitter' />
                                         </Tooltip>
-                                        {emojisGrouped.length > 1 &&
-                                            <p>{emojisGrouped.length}</p>
-                                        }
+                                        <p>{emojisGrouped.length}</p>
                                     </div>
                                 )
                             })}
@@ -128,7 +130,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                     }
                 </div>
 
-                {(hovered || opened) && !messageToModify &&
+                {(hovered || opened) && modify !== uniqueKey &&
                     <div className="message-actions">
                         <Tooltip content={<p>Liker</p>}>
                             <div className="message-actions-btn" onClick={() => handleEmoji(like)}><FiThumbsUp /></div>
@@ -141,7 +143,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                         </Tooltip>
                         {message.sender === uid &&
                             <Tooltip content={<p>Modifier</p>}>
-                                <div className="message-actions-btn" onClick={() => setMessageToModify(uniqueKey)}><FiEdit /></div>
+                                <div className="message-actions-btn" onClick={() => setModify(uniqueKey)}><FiEdit /></div>
                             </Tooltip>
                         }
                         <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
@@ -150,12 +152,36 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                             <div className="tools_choice" onClick={() => navigator.clipboard.writeText(message.text)}><MdOutlineContentCopy /> Copier le message</div>
                             {message.sender === uid &&
                                 <>
-                                    <div className="tools_choice" onClick={() => setMessageToModify(uniqueKey)}><FiEdit /> Modifier le message</div>
-                                    <div className="tools_choice" onClick={() => removeMessage(message, currentChat, uid, websocket, dispatch)}><IoTrashOutline />Supprimer le message</div>
+                                    <div className="tools_choice" onClick={() => setModify(uniqueKey)}><FiEdit /> Modifier le message</div>
+                                    <div className="tools_choice" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashOutline />Supprimer le message</div>
+
                                 </>
                             }
                         </ToolsMenu>
                     </div>
+                }
+                {warning &&
+                    <Warning
+                        title="Supprimer le message"
+                        text="Voulez-vous vraiment supprimer ce message ? Cette action est irréversible."
+                        validateBtn="Supprimer"
+                        open={warning}
+                        setOpen={setWarning}
+                        onValidate={() => removeMessage(message, currentChat, uid, websocket, dispatch)}
+                        onClose={() => setOpened(false)}
+                    >
+                        <div className="message-delete-preview">
+                            <div className="message-preview-left">
+                                <SmallAvatar pic={message.sender_picture} />
+                            </div>
+                            <div className="message-preview-right">
+                                <div className="message-preview-right-top">
+                                    {message.sender_pseudo} <span>{dateParserWithoutYear(message.createdAt)} à {getHourOnly(new Date(message.createdAt))}</span>
+                                </div>
+                                <p className="message-text">{convertEditorToStringNoHTML(message)}</p>
+                            </div>
+                        </div>
+                    </Warning>
                 }
             </div>
         </div>

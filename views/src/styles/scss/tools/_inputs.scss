@@ -632,15 +632,26 @@
     border           : 2px solid var(--light-border);
 
     .auto-complete-item {
+        position:relative;
         display     : flex;
         align-items : center;
         padding     : 7px 16px;
         cursor      : pointer;
-        border      : 4px solid transparent;
-
+        &:before {
+            content          : '';
+            position         : absolute;
+            left             : -5px;
+            width            : 10px;
+            height           : 100%;
+            border-radius    : 20px;
+            background-color : transparent;
+        }
+    
         &:hover {
             background  : var(--content-x-light);
-            border-left : 4px solid var(--primary);
+            &:before {
+                background-color : var(--primary);
+            }
         }
     }
 

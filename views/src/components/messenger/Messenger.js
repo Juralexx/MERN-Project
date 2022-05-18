@@ -12,7 +12,7 @@ import OnlineUsers from './OnlineUsers';
 import MessageDate from './MessageDate';
 import Message from './Message';
 import SearchHeader from './SearchHeader';
-import { MessageLoader } from './tools/Loaders';
+import { ChatLoader } from './tools/Loaders';
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const reducer = useSelector(state => state.messengerReducer)
@@ -48,10 +48,10 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 conversationId: currentChat._id
             })
         }
-    }, [uid, onlineUsers.length, websocket, currentChat])
+    }, [uid, onlineUsers.length, websocket, currentChat, currentChat._id])
 
     /**
-     * get conversations
+     * Get conversations
      */
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 }
             }
             getConversations()
-        } else setLoading(false)
+        }
     }, [user.conversations, dispatch])
 
     /**
@@ -90,13 +90,15 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     useEffect(() => {
         if (Object.keys(reducer).length > 0) {
             setCurrentChat(reducer)
-            setMessages(reducer.messages)
             if (reducer.messages.length > 0) {
+                setMessages(reducer.messages)
                 setMessagesDates(getMessagesDates(reducer.messages))
             }
-            setLoading(false)
+            if (Object.keys(currentChat).length > 0) {
+                setLoading(false)
+            }
         }
-    }, [reducer])
+    }, [reducer, currentChat])
 
     /**
      * Fetch friends
@@ -127,7 +129,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     /**
      * typing
      */
-    
+
     const [isTyping, setTyping] = useState(false)
     const [typingContext, setTypingContext] = useState({})
 
@@ -137,7 +139,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             interval = setInterval(() => { setTyping(false) }, 1000)
         else clearInterval(interval)
         return () => clearInterval(interval)
-    }, [isTyping, typingContext])
+    }, [isTyping, typingContext, currentChat._id])
 
     /**
      * Scroll to last message
@@ -276,34 +278,34 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             />
             <div className="conversation-box">
                 <div className="conversation-box-wrapper">
-                    {Object.keys(currentChat).length > 0 ? (
-                        <>
-                            {!searchHeader ? (
-                                <ConversationHeader
-                                    uid={uid}
-                                    user={user}
-                                    websocket={websocket}
-                                    friendsArr={friendsArr}
-                                    currentChat={currentChat}
-                                    dispatch={dispatch}
-                                />
-                            ) : (
-                                <SearchHeader
-                                    uid={uid}
-                                    user={user}
-                                    friendsArr={friendsArr}
-                                    setCurrentChat={setCurrentChat}
-                                    changeCurrentChat={changeCurrentChat}
-                                    conversations={conversations.concat(favorites)}
-                                    setConversations={setConversations}
-                                    setBlank={setBlank}
-                                    temporaryConv={temporaryConv}
-                                    setTemporaryConv={setTemporaryConv}
-                                />
-                            )}
-                            <div className="conversation-box-container" ref={convWrapperRef}>
-                                {!blank ? (
-                                    !isLoading ? (
+                    {!isLoading ? (
+                        Object.keys(currentChat).length > 0 ? (
+                            <>
+                                {!searchHeader ? (
+                                    <ConversationHeader
+                                        uid={uid}
+                                        user={user}
+                                        websocket={websocket}
+                                        friendsArr={friendsArr}
+                                        currentChat={currentChat}
+                                        dispatch={dispatch}
+                                    />
+                                ) : (
+                                    <SearchHeader
+                                        uid={uid}
+                                        user={user}
+                                        friendsArr={friendsArr}
+                                        setCurrentChat={setCurrentChat}
+                                        changeCurrentChat={changeCurrentChat}
+                                        conversations={conversations.concat(favorites)}
+                                        setConversations={setConversations}
+                                        setBlank={setBlank}
+                                        temporaryConv={temporaryConv}
+                                        setTemporaryConv={setTemporaryConv}
+                                    />
+                                )}
+                                <div className="conversation-box-container" ref={convWrapperRef}>
+                                    {!blank ? (
                                         currentChat.messages.length > 0 ? (
                                             messages.map((message, key, array) => {
                                                 return (
@@ -334,27 +336,27 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                             )
                                         )
                                     ) : (
-                                        <MessageLoader />
-                                    )
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                            <ConversationBottom
-                                user={user}
-                                websocket={websocket}
-                                convWrapperRef={convWrapperRef}
-                                lastMessageRef={lastMessageRef}
-                                quillRef={quillRef}
-                                handleSubmit={handleSubmit}
-                                typingContext={typingContext}
-                                currentChat={currentChat}
-                                isTyping={isTyping}
-                                setTyping={setTyping}
-                            />
-                        </>
+                                        <></>
+                                    )}
+                                </div>
+                                <ConversationBottom
+                                    user={user}
+                                    websocket={websocket}
+                                    convWrapperRef={convWrapperRef}
+                                    lastMessageRef={lastMessageRef}
+                                    quillRef={quillRef}
+                                    handleSubmit={handleSubmit}
+                                    typingContext={typingContext}
+                                    currentChat={currentChat}
+                                    isTyping={isTyping}
+                                    setTyping={setTyping}
+                                />
+                            </>
+                        ) : (
+                            <NoConversation />
+                        )
                     ) : (
-                        <NoConversation />
+                        <ChatLoader />
                     )}
                 </div>
             </div>

@@ -42,7 +42,9 @@ export default function messengerReducer(state = initialState, action) {
                 messages: [...state.messages, action.payload.message]
             }
         case UPDATE_MESSAGE:
-            state.messages[findMessage(action.payload.messageId)].text = action.payload.text
+            let updated = state.messages[findMessage(action.payload.messageId)]
+            updated.text = action.payload.text
+            updated.modified = true
             return {
                 ...state,
                 messages: state.messages

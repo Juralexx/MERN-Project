@@ -1,32 +1,43 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import axios from 'axios';
+import { useDropzone } from 'react-dropzone';
 import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./tools/EditorToolbar";
+import { Quill } from "react-quill";
+import EditorToolbar, { formats, modules } from "./tools/EditorToolbar";
 import ScrollButton from './tools/ScrollButton';
 import Typing from './tools/Typing';
 import EmojiPicker from '../tools/components/EmojiPicker';
-import { getMembers, otherMembersIDs } from './tools/function';
+import { getMembers, otherMembersIDs, returnMembers } from './tools/function';
 import { TinyAvatar } from '../tools/components/Avatars';
-import { checkTheme } from '../Utils';
-import { IoSend } from 'react-icons/io5'
+import { addActive, checkTheme } from '../Utils';
+import { IoSend, IoText } from 'react-icons/io5'
+import { BsPlusLg } from 'react-icons/bs'
 import { BsEmojiSmile } from 'react-icons/bs'
-import { BiFontFamily } from 'react-icons/bi'
-import { FiAtSign } from 'react-icons/fi'
+import { FiAtSign, FiPaperclip } from 'react-icons/fi'
+import { FaPhotoVideo } from 'react-icons/fa';
 
 const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, handleSubmit, isTyping, setTyping, typingContext, currentChat }) => {
-    const [isToolbar, setToolbar] = useState(false)
+    const [isToolbar, setToolbar] = useState(true)
+    const [isTools, setTools] = useState(false)
     const [disabled, setDisabled] = useState(true)
     const [position, setPosition] = useState(0)
 
     const [isEmoji, setEmoji] = useState(false)
     const [emojiArr, setEmojiArr] = useState([])
+    const [hasShortcuts, setHasShortcuts] = useState([])
+    const [shortcuts, setShortcuts] = useState([])
     const [emojisResults, setEmojisResults] = useState([])
 
     const members = useMemo(() => getMembers(currentChat, user._id), [currentChat, user._id])
     const [isMention, setMention] = useState(false)
     const [mentionsResults, setMentionResults] = useState(members)
 
+    const [files, setFiles] = useState([])
+    const [focused, setFocused] = useState(false)
+
     const handleNewMessage = (text, delta, source, editor) => {
+        let quill = quillRef.current.getEditor()
+        quill.focus()
         let length = editor.getLength()
         let txt = editor.getText()
 
@@ -100,6 +111,14 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                             await axios.get(`${process.env.REACT_APP_API_URL}files/native.json`)
                                 .then(res => {
                                     setEmojiArr(Object.values(res.data))
+                                    Object.values(res.data).forEach(e => {
+                                        if (e.emoticons) {
+                                            setHasShortcuts(s => [...s, e])
+                                            e.emoticons.forEach(shortcut => {
+                                                setShortcuts(s => [...s, shortcut])
+                                            })
+                                        }
+                                    })
                                 })
                         }
                         fetch()
@@ -118,6 +137,9 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                     } else if (query.trim() === "") {
                         setEmoji(false)
                     } else {
+                        if (/\W|[_]/g.test(query)) { //if str has any symbols
+                            query = query.replace(/\W|_/g, '[$&]'); //use brekits [ ] for that symbols
+                        }
                         let regexp = new RegExp(query, 'i')
                         const results = emojiArr.filter(emoji => regexp.test(emoji.id))
                         setEmojisResults(results)
@@ -133,17 +155,74 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
         }
     }
 
+    /**
+     * Insert emoji if shortcut is detected
+     */
+
+    const onKeyPressed = (event) => {
+        let quill = quillRef.current.getEditor()
+        quill.focus()
+        let txt = quill.getText()
+        let index = quill.getSelection().index
+
+        if (event.keyCode === 32 || event.keyCode === 13) {
+            if (shortcuts.length > 0) {
+                shortcuts.some(shortcut => {
+                    if (txt.includes(shortcut)) {
+                        let emoji = hasShortcuts.find(e => e.emoticons.includes(shortcut))
+                        if (event.keyCode === 13) {
+                            quill.deleteText(index - shortcut.length, shortcut.length)
+                            quill.insertText(index - shortcut.length, emoji.skins[0].native)
+                            quill.setSelection(quill.getSelection().index + 1)
+                        }
+                        else if (event.keyCode === 32) {
+                            quill.deleteText(index - (shortcut.length + 1), shortcut.length)
+                            quill.insertText(index - (shortcut.length + 1), emoji.skins[0].native)
+                            quill.setSelection(quill.getSelection().index)
+                        }
+                    }
+                })
+            }
+            if (emojiArr.length > 0) {
+                emojiArr.some(emoji => {
+                    if (txt.includes(`:${emoji.id}:`)) {
+                        let emoticon = emojiArr.find(e => e.id === emoji.id)
+                        if (event.keyCode === 13) {
+                            quill.deleteText(index - (emoji.id.length + 2), emoji.id.length + 2)
+                            quill.insertText(index - (emoji.id.length + 2), emoticon.skins[0].native)
+                            quill.setSelection(quill.getSelection().index + 1)
+                        }
+                        else if (event.keyCode === 32) {
+                            quill.deleteText(index - (emoji.id.length + 3), emoji.id.length + 3)
+                            quill.insertText(index - (emoji.id.length + 3), emoticon.skins[0].native)
+                            quill.setSelection(quill.getSelection().index)
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+    /**
+     * On autocomplete mention selection
+     */
+
     const onMention = (mention) => {
         let quill = quillRef.current.getEditor()
         quill.focus()
-        let pos = quill.getSelection().index
         let range = quill.getSelection()
-        quill.deleteText(pos, range.index)
-        quill.insertText(pos, `@${mention.pseudo}`, {
+        quill.deleteText(position, range.index)
+        console.log(range.index)
+        if (quill.getText()[position] === '@') {
+            quill.deleteText(position, 1)
+        }
+        quill.insertText(position, `@${mention.pseudo}`, {
             'color': '#18A5D6',
-            'bold': true
+            'bold': true,
+            'list': 'bullet',
+            'check': 'todo',
         }, true)
-        quill.insertText(pos + mention.pseudo.length + 1, "\u00a0", {
+        quill.insertText(position + mention.pseudo.length + 1, "\u00a0", {
             'color': `${checkTheme('#232221', '#ffffff')}`,
             'bold': false
         })
@@ -152,14 +231,17 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
         setMentionResults(members)
     }
 
+    /**
+     * On autocomplete emoji selection
+     */
+
     const onEmoji = (emoji) => {
         let quill = quillRef.current.getEditor()
         quill.focus()
-        let pos = quill.getSelection().index
         let range = quill.getSelection()
-        quill.deleteText(pos, range.index)
-        quill.insertText(pos, emoji.skins[0].native)
-        quill.insertText(pos + 2, "\u00a0", {
+        quill.deleteText(position, range.index)
+        quill.insertText(position, emoji.skins[0].native)
+        quill.insertText(position + 2, "\u00a0", {
             'color': `${checkTheme('#232221', '#ffffff')}`,
             'bold': false
         })
@@ -168,31 +250,137 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
         setEmojisResults([])
     }
 
+    /**
+     * Place autocomplete container upon cursor
+     */
+
+    const placeUponCursor = () => {
+        if (isMention || isEmoji) {
+            let quill = quillRef.current.getEditor()
+            quill.focus()
+            let quillHeight = quillRef.current.editor.scroll.domNode.offsetHeight
+            let pos = quill.getBounds(position)
+            return {
+                bottom: quillHeight - pos.bottom + pos.height,
+                left: pos.left,
+                right: pos.right,
+            }
+        }
+    }
+
+    /**
+     * On mention button press
+     */
+
+    const openMention = () => {
+        let quill = quillRef.current.getEditor()
+        quill.focus()
+        let pos = quill.getSelection().index
+        let txt = quill.getText()
+        let previous = txt[pos - 1]
+
+        if (!isMention) {
+            if ((/\s/).test(previous) || (!(/\s/).test(previous) && previous === undefined)) {
+                quill.insertText(pos, "@", {
+                    'color': checkTheme('#232221', '#ffffff'),
+                    'bold': true
+                }, true)
+            } else if (!(/\s/).test(previous) && previous !== undefined && previous !== '@') {
+                quill.insertText(pos, "\u00a0", {
+                    'color': checkTheme('#232221', '#ffffff'),
+                }, true)
+                quill.insertText(pos + 1, "@", {
+                    'color': checkTheme('#232221', '#ffffff'),
+                    'bold': true
+                }, true)
+            }
+            setMention(true)
+        } else {
+            setMention(false)
+        }
+    }
+
+    /**
+     * On emoji picker selection
+     */
+
     const pickEmoji = (emoji) => {
         let quill = quillRef?.current?.getEditor()
         let position = quill.getSelection().index
         quill.insertText(position, emoji.native)
     }
 
+    /**
+     * On enterkey press
+     */
+
+    const Delta = Quill.import('delta')
+
+    useEffect(() => {
+        if (quillRef?.current) {
+            let quill = quillRef?.current?.getEditor()
+            quill.keyboard.addBinding({ key: 13, shiftKey: true }, (range, ctx) => {
+                quill.insertText(range.index, '\n');
+            })
+            quill.keyboard.addBinding({ key: 13 }, () => { })
+            quill.keyboard.addBinding({ key: 32 }, (range, ctx) => {
+                quill.insertText(range.index, '\u00a0');
+            })
+            quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+                const ops = delta.ops.map((op) => ({ insert: op.insert }));
+                return new Delta(ops)
+            })
+        }
+    }, [quillRef?.current])
+
+    /**
+     * On message submission
+     */
+
     const onSubmit = () => {
+        console.log('submitted')
         let quill = quillRef?.current?.getEditor()
-        handleSubmit(currentChat, quill.getContents())
-        quill.deleteText(0, quill.getLength())
-        setTyping(false)
+        if (quill.getLength() > 1) {
+            handleSubmit(currentChat, quill.getContents())
+            quill.deleteText(0, quill.getLength())
+            setTyping(false)
+        }
     }
 
-    const placeUponCursor = () => {
-        if (isMention || isEmoji) {
-            let quill = quillRef.current.getEditor()
-            quill.focus()
-            let current = quill.getSelection().index
-            let pos = quill.getBounds(current)
+    /**
+     * Files dropzone
+     */
+
+    const getEditorHeight = () => {
+        let quill = quillRef?.current?.getEditor()
+        if (quill) {
+            let quillHeight = quillRef.current.editor.scroll.domNode.offsetHeight
+            let quillWidth = quillRef.current.editor.scroll.domNode.offsetWidth
             return {
-                bottom: pos.bottom + 6,
-                left: pos.left,
-                right: pos.right,
+                height: quillHeight,
+                width: quillWidth
             }
         }
+    }
+
+    const getFiles = (filesArray) => {
+        return files.concat(Array.from(filesArray))
+    }
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        accept: 'image/jpeg, image/jpg, image/png, image/gif, image/tiff, image/bmp',
+        maxSize: 5000000,
+        noClick: true,
+        onDrag: () => quillRef.current.focus(),
+        onDrop: files => {
+            getFiles(files)
+            quillRef.current.focus()
+            console.log('dropped')
+        }
+    })
+
+    const onUpload = () => {
+
     }
 
     return (
@@ -202,7 +390,7 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                 currentChat={currentChat}
                 isTyping={isTyping}
             />
-            <div className="conversation-toolsbox">
+            <div className={`conversation-toolsbox ${addActive(isDragActive, "active")}`}>
                 <ScrollButton convWrapperRef={convWrapperRef?.current} scrollTo={lastMessageRef} />
                 <div className="message-text-editor">
                     {isMention &&
@@ -235,22 +423,35 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                             })}
                         </div>
                     }
-                    <EditorToolbar display={isToolbar} />
+                    <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
                     <ReactQuill
                         ref={quillRef}
-                        onChange={handleNewMessage}
+                        placeholder={`Envoyer un message à ${returnMembers(members)}`}
                         defaultValue=""
-                        placeholder="Envoyer un message..."
+                        onChange={handleNewMessage}
+                        onKeyUp={e => onKeyPressed(e)}
                         modules={modules}
                         formats={formats}
+                        onBlur={() => setFocused(false)}
                     />
+                    <div {...getRootProps({ className: `message-dropzone ${focused ? "hidden" : "block"}` })} style={getEditorHeight()} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
+                        <input {...getInputProps()} name="files" />
+                    </div>
                 </div>
                 <div className="message-text-tools">
                     <div className="text-tools-left">
-                        <EmojiPicker placement="top" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={pickEmoji} onClick={() => quillRef?.current?.focus()} />
-                        <button className="text-tools" onClick={() => setMention(!isMention)}><FiAtSign /></button>
-                        <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><BiFontFamily /></button>
+                        <button className="menu-tools-btn" onClick={() => setTools(!isTools)}><BsPlusLg /></button>
+                        <div className="tools-group">
+                            <EmojiPicker placement="top" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={pickEmoji} onClick={() => quillRef?.current?.focus()} />
+                            <button className="text-tools" onClick={openMention}><FiAtSign /></button>
+                            <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
+                        </div>
+                        <div className="tools-group">
+                            <button className="text-tools" {...getRootProps()}><input {...getInputProps()} name="files" /><FaPhotoVideo /></button>
+                            <button className="text-tools"><FiPaperclip /></button>
+                        </div>
                     </div>
+                    {isTools && <div className="message-text-tools-menu"></div>}
                     <div className="text-tools-right">
                         <button className="send-tool" disabled={disabled} onClick={onSubmit}><IoSend /></button>
                     </div>

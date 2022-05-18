@@ -52,6 +52,7 @@ const EmojiPicker = (props) => {
                         set='twitter'
                         sheetSize={64}
                         tooltip='false'
+                        showPreview={false}
                         emojiTooltip={false}
                         color="#18A5D6"
                         emoji="grinning"

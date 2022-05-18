@@ -24,24 +24,28 @@
 }
 
 .dark {
-    --body            : #111111;
-    --content         : #1e1e1e;
-    --content-light   : #2d2d2d;
-    --content-x-light : #383838;
-    --navbar          : #383838;
+    --body            : #202225;
+    --content         : #2f3136;
+    --content-light   : #36393f;
+    --content-x-light : #40444b;
+    --input           : #40444b;
+    --navbar          : #40444b;
+    --x-light         : #40444b;
+    --xx-light        : #40444b;
+    --light           : #36393f;
+    --mini_nav-btn    : #36393f;
+    // --body            : #111111;
+    // --content         : #1e1e1e;
+    // --content-light   : #2d2d2d;
+    // --content-x-light : #383838;
     --text            : #ffffff;
     --text-secondary  : rgba(255, 255, 255, 0.7);
     --text-tertiary   : rgba(255, 255, 255, 0.5);
     --svg             : #abb9c9;
     --light-border    : rgba(255, 255, 255, 0.2);
-    --input           : #383838;
     --input-text      : #ffffff;
     --placeholder     : #b6bac0;
-    --light           : #2d2d2d;
-    --x-light         : #383838;
-    --xx-light        : #383838;
     --navbar-txt      : #EDF8FC;
-    --mini_nav-btn    : #2d2d2d;
     --menu            : rgb(30, 30, 30);
     --color-skeleton  : linear-gradient(-90deg, rgb(169, 173, 179) 0%, rgb(106, 114, 127) 50%, rgb(169, 173, 179) 100%);
     --shadow-light    : 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);;
@@ -115,3 +119,20 @@
 // --content         : #2f3136;
 // --content-light   : #36393f;
 // --content-x-light : #40444b;
+// --input           : #40444b;
+// --navbar          : #40444b;
+// --x-light         : #40444b;
+// --xx-light        : #40444b;
+// --light           : #36393f;
+// --mini_nav-btn    : #36393f;
+
+// --body            : #111111;
+// --content         : #1e1e1e;
+// --content-light   : #2d2d2d;
+// --content-x-light : #383838;
+// --input           : #383838;
+// --navbar          : #383838;
+// --x-light         : #383838;
+// --xx-light        : #383838;
+// --light           : #2d2d2d;
+// --mini_nav-btn    : #2d2d2d;

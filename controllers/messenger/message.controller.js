@@ -40,6 +40,7 @@ export const updateMessage = async (req, res) => {
             {
                 $set: {
                     "messages.$.text": req.body.text,
+                    "messages.$.modified": true
                 },
             },
             { new: true },

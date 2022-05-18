@@ -176,9 +176,9 @@ export const returnMembers = (members) => {
     if (members.length === 1)
         return members[0].pseudo
     else if (members.length === 2)
-        return members[0].pseudo + ", " + members[1].pseudo
+        return members[0].pseudo + " et " + members[1].pseudo
     else if (members.length === 3)
-        return members[0].pseudo + ", " + members[1].pseudo + ", " + members[2].pseudo
+        return members[0].pseudo + ", " + members[1].pseudo + " et " + members[2].pseudo
     else if (members.length > 3)
         return members[0].pseudo + ", " + members[1].pseudo + ", " + members[2].pseudo + " et " + (members.length - 3) + " autres"
 }
@@ -233,6 +233,20 @@ export const getHoursDiff = (prev, current) => {
     } else {
         return 'normal'
     }
+}
+
+/**
+ * Check file extension
+ */
+
+export const isImage = (file) => {
+    const types = ['image/jpg', 'image/jpeg', 'image/bmp', 'image/gif', 'image/png', 'image/svg+xml'];
+    return types.some(el => file.type === el);
+}
+
+export const isVideo = (file) => {
+    const types = ['video/mp4', 'video/webm', 'video/x-m4v', 'video/quicktime'];
+    return types.some(el => file.type === el);
 }
 
 /**

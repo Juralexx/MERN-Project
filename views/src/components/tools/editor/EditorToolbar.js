@@ -51,10 +51,10 @@ export const modules = {
     videoHandler: {
         upload: (file) => {
             return new Promise((resolve, reject) => {
-                const fd = new FormData();
-                fd.append("file", file);
-                console.log(file);
-            });
+                const fd = new FormData()
+                fd.append("file", file)
+                console.log(file)
+            })
         }
     },
     attachmentHandler: {

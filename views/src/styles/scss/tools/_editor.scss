@@ -387,7 +387,6 @@
 .ql-editor.ql-blank::before {
     color          : var(--placeholder);
     content        : attr(data-placeholder);
-    font-style     : italic;
     left           : 40px;
     pointer-events : none;
     position       : absolute;
@@ -402,7 +401,6 @@
 .ql-snow.ql-toolbar button,
 .ql-snow .ql-toolbar button {
     background : none;
-    border     : none;
     cursor     : pointer;
     display    : inline-block;
     float      : left;
@@ -503,19 +501,19 @@
 @media (pointer: coarse) {
     .ql-snow.ql-toolbar button:hover:not(.ql-active),
     .ql-snow .ql-toolbar button:hover:not(.ql-active) {
-        color : #444;
+        color : var(--text);
     }
     .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-fill,
     .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-fill,
     .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill,
     .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke.ql-fill {
-        fill : #444;
+        fill : var(--text);
     }
     .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke,
     .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke,
     .ql-snow.ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter,
     .ql-snow .ql-toolbar button:hover:not(.ql-active) .ql-stroke-miter {
-        stroke : #444;
+        stroke : var(--text);
     }
 }
 .ql-snow {
@@ -553,20 +551,20 @@
 }
 .ql-snow .ql-stroke {
     fill            : none;
-    stroke          : #444;
+    stroke          : var(--text);
     stroke-linecap  : round;
     stroke-linejoin : round;
     stroke-width    : 2;
 }
 .ql-snow .ql-stroke-miter {
     fill              : none;
-    stroke            : #444;
+    stroke            : var(--text);
     stroke-miterlimit : 10;
     stroke-width      : 2;
 }
 .ql-snow .ql-fill,
 .ql-snow .ql-stroke.ql-fill {
-    fill : #444;
+    fill : var(--text);
 }
 .ql-snow .ql-empty {
     fill : none;
@@ -641,7 +639,7 @@
     width : 100%;
 }
 .ql-snow .ql-picker {
-    color          : #444;
+    color          : var(--text);
     display        : inline-block;
     float          : left;
     font-size      : 14px;
@@ -683,7 +681,7 @@
     z-index : 2;
 }
 .ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-fill {
-    fill : #ccc;
+    fill : var(--text);
 }
 .ql-snow .ql-picker.ql-expanded .ql-picker-label .ql-stroke {
     stroke : #ccc;
@@ -890,7 +888,7 @@
     background-color : #fff;
     border           : 1px solid #ccc;
     box-shadow       : 0px 0px 5px #ddd;
-    color            : #444;
+    color            : var(--text);
     padding          : 5px 12px;
     white-space      : nowrap;
 }
@@ -1004,8 +1002,7 @@
 .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
     height        : 28px;
     padding       : 5px;
-    margin:0 4px;
-    border-radius : var(--radius);
+    margin        : 0 4px;
     &:hover {
         background : var(--xx-light);
     }
