@@ -172,7 +172,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
      * FONCTIONS
      */
 
-    const handleSubmit = (conversation, messageContent) => {
+    const handleSubmit = (conversation, messageContent, files) => {
         const message = {
             _id: randomNbID(24),
             sender: uid,
@@ -182,6 +182,27 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             conversationId: conversation._id,
             emojis: [],
             createdAt: new Date().toISOString()
+        }
+        if (files.length > 0) {
+            let filesArr = []
+            files.forEach(file => {
+                if (file.type.includes('image')) {
+                    filesArr.push({
+                        type: 'image',
+                        name: file.name,
+                        url: URL.createObjectURL(file),
+                        origin: file
+                    })
+                } else {
+                    filesArr.push({
+                        type: 'document',
+                        name: file.name,
+                        url: URL.createObjectURL(file),
+                        origin: file
+                    })
+                }
+            })
+            Object.assign(message, { files: filesArr })
         }
         if (conversation.type === "group") {
             otherMembersIDs(conversation, uid).map(memberId => {
@@ -199,7 +220,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 message: message
             })
         }
-        dispatch(sendMessage(conversation._id, message))
+        dispatch(sendMessage(conversation._id, message, files))
         setNewMessage(message)
     }
 
@@ -308,12 +329,13 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                     {!blank ? (
                                         currentChat.messages.length > 0 ? (
                                             messages.map((message, key, array) => {
+                                                const ref = messages.length === key ? { ref: lastMessageRef } : {};
                                                 return (
                                                     <div key={key}>
                                                         {messagesDates.some(element => element.date === message.createdAt.substring(0, 10) && element.index === key) &&
                                                             <MessageDate message={message} />
                                                         }
-                                                        <div ref={lastMessageRef}>
+                                                        <div {...ref}>
                                                             <Message
                                                                 uid={uid}
                                                                 user={user}

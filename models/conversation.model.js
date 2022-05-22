@@ -38,7 +38,8 @@ const ConversationModel = new mongoose.Schema(
                 },
                 createdAt: Date,
                 modified: Boolean,
-                shared: Object
+                shared: Object,
+                files: []
             }],
         },
         description: {

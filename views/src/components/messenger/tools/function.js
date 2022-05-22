@@ -1,8 +1,10 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, dateParserWithoutYear, removeHTMLMarkers } from '../../Utils'
-import { addMember, deleteConversation, deleteMessage, removeMember, updateMessage } from '../../../actions/messenger.action';
+import { charSetToChar, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
+import { addEmoji, addMember, deleteConversation, deleteMessage, removeEmoji, removeMember, updateMessage } from '../../../actions/messenger.action';
+import { coverPicture } from '../../tools/functions/useAvatar';
+import { IoDocumentTextOutline } from 'react-icons/io5';
 
 /**
  * Delta convertion
@@ -236,6 +238,12 @@ export const getHoursDiff = (prev, current) => {
 }
 
 /**
+ * Like object
+ */
+
+ export const like = { id: "+1", name: "Thumbs Up Sign", short_names: ["+1", "thumbsup"], colons: ":+1:", emoticons: [], unified: "1f44d", skin: 1, native: "👍" }
+
+/**
  * Check file extension
  */
 
@@ -247,6 +255,115 @@ export const isImage = (file) => {
 export const isVideo = (file) => {
     const types = ['video/mp4', 'video/webm', 'video/x-m4v', 'video/quicktime'];
     return types.some(el => file.type === el);
+}
+
+export const isFile = (file) => {
+    const types = [
+        '.7z',
+        '.ade',
+        '.mde',
+        '.adp',
+        '.apk',
+        '.appx',
+        '.appxbundle',
+        '.aspx',
+        '.bat',
+        '.com',
+        '.dll',
+        '.exe',
+        '.msi',
+        '.cab',
+        '.cmd',
+        '.cpl',
+        '.dmg',
+        '.gz',
+        '.hta',
+        '.ins',
+        '.ipa',
+        '.iso',
+        '.isp',
+        '.jar',
+        '.js',
+        '.jse',
+        '.jsp',
+        '.lib',
+        '.lnk',
+        '.msc',
+        '.msix',
+        '.msixbundle',
+        '.msp',
+        '.mst',
+        '.nsh',
+        '.pif',
+        '.ps1',
+        '.scr',
+        '.sct',
+        '.wsc',
+        '.shb',
+        '.sys',
+        '.vb',
+        '.vbe',
+        '.vbs',
+        '.vxd',
+        '.wsf',
+        '.wsh',
+        '.tar'
+    ]
+    return !types.some(el => file.name.endsWith(el))
+}
+
+/**
+ * Return the file preview in editor
+ */
+
+export const returnEditorFiles = (file) => {
+    if (file.type.includes('image')) {
+        return (
+            <div className="file-img-preview" style={coverPicture(URL.createObjectURL(file))}></div>
+        )
+    } else {
+        return (
+            <div className="file-doc">
+                <IoDocumentTextOutline className="file-doc-img" />
+                <div className="file-doc-content">
+                    <p>{file.name}</p>
+                    <p>Document</p>
+                </div>
+            </div>
+        )
+    }
+}
+
+/**
+ * Remove uploaded file
+ */
+
+export const removeFile = (files, index) => {
+    let array = files.slice()
+    array.splice(index, 1)
+    return array
+}
+
+/**
+ * Return the file in message
+ */
+
+export const returnMessageFiles = (file) => {
+    if (file.type.includes('image')) {
+        return (
+            <img className="file-img" src={file.url} alt="" />
+        )
+    } else {
+        return (
+            <div className="file-doc">
+                <IoDocumentTextOutline className="file-doc-img" />
+                <div className="file-doc-content">
+                    <p><a href={file.url}>{file.name}</a></p>
+                    <p>Document</p>
+                </div>
+            </div>
+        )
+    }
 }
 
 /**
@@ -344,4 +461,38 @@ export const concatSameEmojis = (emojis) => {
     }, {})
 
     return Object.values(group)
+}
+
+/**
+ * Add emoji
+ */
+
+export const handleEmoji = (emoji, user, websocket, currentChat, message, dispatch) => {
+    let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: user._id }
+    otherMembersIDs(currentChat, user._id).map(memberId => {
+        return websocket.current.emit("addEmoji", {
+            receiverId: memberId,
+            conversationId: currentChat._id,
+            messageId: message._id,
+            emoji: emoj
+        })
+    })
+    dispatch(addEmoji(currentChat._id, message._id, emoj))
+}
+
+/**
+ * Remove emoji
+ */
+
+export const deleteEmoji = (emojisGrouped, user, websocket, currentChat, message, dispatch) => {
+    let emoji = emojisGrouped.find(e => e.sender_id === user._id)
+    otherMembersIDs(currentChat, user._id).map(memberId => {
+        return websocket.current.emit("removeEmoji", {
+            receiverId: memberId,
+            conversationId: currentChat._id,
+            messageId: message._id,
+            emojiId: emoji._id
+        })
+    })
+    dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
 }

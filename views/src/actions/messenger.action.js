@@ -180,14 +180,25 @@ export const receiveRemoveMember = (conversationId) => {
 
 export const POST_MESSAGE = "POST_MESSAGE"
 
-export const sendMessage = (conversationId, message) => {
+export const sendMessage = (conversationId, message, files) => {
     return async (dispatch) => {
-        return axios
+        await axios
             .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-message`, { message: message })
+            .then(async () => {
+                if (files.length > 0) {
+                    let formData = new FormData()
+                    for (let i = 0; i < files.length; i++) {
+                        formData.append('files', files[i])
+                    }
+                    return await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload-files/${message._id}`, formData)
+                        .then(res => console.log(res))
+                        .catch(err => console.log(err))
+                }
+            })
             .then(() => {
                 dispatch({ type: POST_MESSAGE, payload: { message } })
             })
-            .catch(err => console.error(err))
+            .catch (err => console.error(err))
     }
 }
 
@@ -235,7 +246,7 @@ export const deleteMessage = (conversationId, messageId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-message`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-message/${messageId}`,
             data: { messageId }
         })
             .then(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import ReactQuill from "react-quill";
@@ -7,7 +7,8 @@ import EditorToolbar, { formats, modules } from "./tools/EditorToolbar";
 import ScrollButton from './tools/ScrollButton';
 import Typing from './tools/Typing';
 import EmojiPicker from '../tools/components/EmojiPicker';
-import { getMembers, otherMembersIDs, returnMembers } from './tools/function';
+import ErrorModal from '../tools/components/ErrorModal';
+import { getMembers, isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers } from './tools/function';
 import { TinyAvatar } from '../tools/components/Avatars';
 import { addActive, checkTheme } from '../Utils';
 import { IoSend, IoText } from 'react-icons/io5'
@@ -15,12 +16,14 @@ import { BsPlusLg } from 'react-icons/bs'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { FiAtSign, FiPaperclip } from 'react-icons/fi'
 import { FaPhotoVideo } from 'react-icons/fa';
+import { MdClear } from 'react-icons/md';
+
 
 const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, handleSubmit, isTyping, setTyping, typingContext, currentChat }) => {
-    const [isToolbar, setToolbar] = useState(true)
+    const [isToolbar, setToolbar] = useState(false)
     const [isTools, setTools] = useState(false)
-    const [disabled, setDisabled] = useState(true)
     const [position, setPosition] = useState(0)
+    const [disabled, setDisabled] = useState(true)
 
     const [isEmoji, setEmoji] = useState(false)
     const [emojiArr, setEmojiArr] = useState([])
@@ -34,15 +37,14 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
 
     const [files, setFiles] = useState([])
     const [focused, setFocused] = useState(false)
+    const [uploadErr, setUploadErr] = useState([])
+    const filesRef = useRef()
 
     const handleNewMessage = (text, delta, source, editor) => {
         let quill = quillRef.current.getEditor()
         quill.focus()
         let length = editor.getLength()
         let txt = editor.getText()
-
-        if (editor.getLength() > 1) setDisabled(false)
-        else setDisabled(true)
 
         if (!isTyping) {
             otherMembersIDs(currentChat, user._id).map(memberId => {
@@ -53,6 +55,10 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                 })
             })
         }
+
+        if (length > 1) {
+            setDisabled(false)
+        } else setDisabled(true)
 
         if (length <= 1) {
             setPosition(0)
@@ -338,12 +344,14 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
      */
 
     const onSubmit = () => {
-        console.log('submitted')
         let quill = quillRef?.current?.getEditor()
-        if (quill.getLength() > 1) {
-            handleSubmit(currentChat, quill.getContents())
-            quill.deleteText(0, quill.getLength())
-            setTyping(false)
+        if (quill.getLength() > 1 || files.length > 0) {
+            let messageContent = quill.getLength() > 1 ? quill.getContents() : []
+            handleSubmit(currentChat, messageContent, files)
+            if (quill.getLength() > 1) {
+                quill.deleteText(0, quill.getLength())
+                setTyping(false)
+            }
         }
     }
 
@@ -354,33 +362,49 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
     const getEditorHeight = () => {
         let quill = quillRef?.current?.getEditor()
         if (quill) {
-            let quillHeight = quillRef.current.editor.scroll.domNode.offsetHeight
-            let quillWidth = quillRef.current.editor.scroll.domNode.offsetWidth
-            return {
-                height: quillHeight,
-                width: quillWidth
+            if (files.length > 0 && filesRef.current) {
+                let filesHeight = filesRef.current.offsetHeight
+                let filesWidth = quillRef.current.offsetWidth
+                return {
+                    height: filesHeight,
+                    width: filesWidth
+                }
+            } else {
+                let quillHeight = quillRef.current.editor.scroll.domNode.offsetHeight
+                let quillWidth = quillRef.current.editor.scroll.domNode.offsetWidth
+                return {
+                    height: quillHeight,
+                    width: quillWidth
+                }
             }
         }
     }
 
-    const getFiles = (filesArray) => {
-        return files.concat(Array.from(filesArray))
-    }
-
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        accept: 'image/jpeg, image/jpg, image/png, image/gif, image/tiff, image/bmp',
-        maxSize: 5000000,
-        noClick: true,
+        maxSize: 500000000,
         onDrag: () => quillRef.current.focus(),
         onDrop: files => {
-            getFiles(files)
+            onUpload(files)
             quillRef.current.focus()
-            console.log('dropped')
         }
     })
 
-    const onUpload = () => {
 
+    const onUpload = (filesArray) => {
+        filesArray.forEach(file => {
+            if (isImage(file) || isVideo(file) || isFile(file)) {
+                if (file.size > 10000000) {
+                    setUploadErr(err => [...err, { name: file.name, error: 'Fichier trop volumineux' }])
+                } else {
+                    setFiles(f => [...f, file])
+                    if (disabled) {
+                        setDisabled(false)
+                    }
+                }
+            } else {
+                setUploadErr(err => [...err, { name: file.name, error: 'Ce type de fichier n\'est pas accepté' }])
+            }
+        })
     }
 
     return (
@@ -424,18 +448,32 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                         </div>
                     }
                     <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
-                    <ReactQuill
-                        ref={quillRef}
-                        placeholder={`Envoyer un message à ${returnMembers(members)}`}
-                        defaultValue=""
-                        onChange={handleNewMessage}
-                        onKeyUp={e => onKeyPressed(e)}
-                        modules={modules}
-                        formats={formats}
-                        onBlur={() => setFocused(false)}
-                    />
-                    <div {...getRootProps({ className: `message-dropzone ${focused ? "hidden" : "block"}` })} style={getEditorHeight()} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
-                        <input {...getInputProps()} name="files" />
+                    <div className="message-editor-container">
+                        <ReactQuill
+                            ref={quillRef}
+                            placeholder={`Envoyer un message à ${returnMembers(members)}`}
+                            defaultValue=""
+                            onChange={handleNewMessage}
+                            onKeyUp={e => onKeyPressed(e)}
+                            modules={modules}
+                            formats={formats}
+                            onBlur={() => setFocused(false)}
+                        />
+                        <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight()} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
+                            <input {...getInputProps()} name="files" />
+                        </div>
+                        <div className={`editor-files-container ${files.length === 0 ? "!hidden" : "flex"}`} ref={filesRef}>
+                            {files.length > 0 &&
+                                files.map((file, key) => {
+                                    return (
+                                        <div className="files-block" key={key}>
+                                            {returnEditorFiles(file)}
+                                            <div className="delete-btn" onClick={() => setFiles(removeFile(files, key))}><MdClear /></div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
                 <div className="message-text-tools">
@@ -447,7 +485,7 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                             <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
                         </div>
                         <div className="tools-group">
-                            <button className="text-tools" {...getRootProps()}><input {...getInputProps()} name="files" /><FaPhotoVideo /></button>
+                            <button className="text-tools files-upload" {...getRootProps()}><input {...getInputProps()} name="files" /><FaPhotoVideo /></button>
                             <button className="text-tools"><FiPaperclip /></button>
                         </div>
                     </div>
@@ -457,6 +495,14 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                     </div>
                 </div>
             </div>
+            {uploadErr.length > 0 &&
+                <ErrorModal
+                    title="Erreur, certains fichiers non pas pu être importés"
+                    text={uploadErr.map((f, key) => {
+                        return <p key={key}>{f.name + " : " + f.error}</p>
+                    })}
+                />
+            }
         </div>
     )
 }

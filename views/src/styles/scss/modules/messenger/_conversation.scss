@@ -128,7 +128,7 @@
         box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
 
         &:focus-within, &.active {
-            border          : 3px solid var(--primary);
+            border : 3px solid var(--primary);
         }
 
         .message-text-tools {
@@ -168,13 +168,15 @@
                         color : var(--primary);
                     }
 
-                    input {
-                        position : absolute;
-                        width    : 100%;
-                        height   : 100%;
-                        opacity  : 0;
-                        font-size: 0;
-                        cursor   : pointer;
+                    &.files-upload {
+                        input {
+                            position : absolute;
+                            width    : 100%;
+                            height   : 100%;
+                            opacity  : 0;
+                            font-size: 0;
+                            cursor   : pointer;
+                        }
                     }
                 }
 
@@ -240,19 +242,32 @@
     width      : 100%;
     background : var(--content-light);
 
-    .ql-editor {
-        background : var(--content-light);
-        border     : 1px solid transparent;
-        padding    : 10px 10px;
+    .message-editor-container {
+        position   : relative;
         max-height : 250px;
-        overflow-y : auto;
 
-        &.ql-blank {
-            &:before {
-                left  : 11px;
-                top   : 11px;
-                color : var(--text-secondary);
+        .ql-editor {
+            background : var(--content-light);
+            padding    : 10px 10px;
+            overflow-y : auto;
+            border     : 1px solid transparent;
+
+            &.ql-blank {
+                &:before {
+                    left  : 11px;
+                    top   : 11px;
+                    color : var(--text-secondary);
+                }
             }
+        }
+
+        .message-dropzone {
+            position : absolute;
+            bottom   : 0;
+            opacity  : 0;
+            cursor   : text;
+            width    : 100%;
+            height   : 100%;
         }
     }
 
@@ -292,12 +307,127 @@
             height : 15px;
         }
     }
+}
 
-    .message-dropzone {
-        position : absolute;
-        bottom   : 0;
-        opacity  : 0;
-        cursor   : text;
+.editor-files-container {
+    display   : flex;
+    flex-wrap : wrap;
+    width     : 100%;
+    padding   : 0 10px 10px;
+
+    .files-block {
+        position      : relative;
+        display       : inline-flex;
+        border-radius : 5px;
+        margin        : 5px;
+        &:nth-child(1) {
+            margin-left : 0;
+        }
+    }
+}
+
+.message-files-container {
+    display : block;
+    width   : 100%;
+    
+    .files-block {
+        position      : relative;
+        display       : inline-block;
+        border-radius : 5px;
+        margin        : 5px 0;
+    }
+}
+
+.files-block {
+    .file-img-preview {
+        width         : 100px;
+        height        : 100px;
+        border-radius : 5px;
+    }
+
+    .file-img {
+        height        : auto;
+        max-height    : 200px;
+        width         : auto;
+        border-radius : 5px;
+    }
+
+    .file-doc {
+        display          : flex;
+        align-items      : center;
+        max-width        : 280px;
+        height           : 58px;
+        padding          : 10px 50px 10px 10px;
+        border           : 1px solid var(--light-border);
+        border-radius    : 5px;
+        background-color : var(--xx-light);
+
+        .file-doc-img {
+            min-height   : 30px;
+            min-width    : 30px;
+            margin-right : 10px;
+            color        : var(--light-blue);
+        }
+
+        .file-doc-content {
+            p {
+                &:nth-child(1) {
+                    text-overflow      : ellipsis;
+                    overflow           : hidden;
+                    width              : 100%;
+                    line-height        : 18px;
+                    display            : -webkit-box;
+                    -webkit-line-clamp : 1;
+                    -webkit-box-orient : vertical;
+                }
+                &:nth-child(2) {
+                    font-size : 12px;
+                    color     : var(--text-secondary);
+                }
+            }
+        }
+    }
+
+    .delete-btn {
+        position      : absolute;
+        right         : -5px;
+        top           : -5px;
+        padding       : 2px;
+        border-radius : 50%;
+        background    : #4b4b4b;
+        border        : 1px solid var(--light-border);
+        cursor        : pointer;
+
+        svg {
+            height : 16px;
+            width  : 16px;
+            color  : var(--text);
+        }
+    }
+
+    .download-btn {
+        display       : none;
+        position      : absolute;
+        right         : 7px;
+        top           : 7px;
+        padding       : 4px;
+        border-radius : 50%;
+        background    : var(--light);
+        border        : 1px solid var(--light-border);
+        box-shadow    : var(--shadow-tiny);
+        cursor        : pointer;
+
+        svg {
+            height : 18px;
+            width  : 18px;
+            color  : var(--text-secondary);
+        }
+    }
+
+    &:hover {
+        .download-btn {
+            display : block;
+        }
     }
 }
 

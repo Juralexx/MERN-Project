@@ -66,7 +66,13 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
                         <div className="last-message-wrapper">
                             <div className={`${unseen ? "last-message notification" : "last-message"}`}>
                                 <div className='mr-1'>{returnConversationPseudo(conversation, lastMessageFound, uid)}</div>
-                                <p>{convertEditorToStringNoHTML(lastMessageFound)}</p>
+                                <p>
+                                    {lastMessageFound.text.length > 0 ? (
+                                        convertEditorToStringNoHTML(lastMessageFound)
+                                    ) : (
+                                        lastMessageFound.files[0].name
+                                    )}
+                                </p>
                             </div>
                             {unseen && <div className="unseen-badge"></div>}
                         </div>

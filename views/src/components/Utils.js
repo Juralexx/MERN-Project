@@ -2,6 +2,8 @@
  * Return a randam ID.
  */
 
+import axios from "axios";
+
 export const randomID = (max) => {
     const allCapsAlpha = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
     const allLowerAlpha = [..."abcdefghijklmnopqrstuvwxyz"];
@@ -356,6 +358,26 @@ export const geolocToFloat = (string) => {
 export const replaceStr = (char, str) => {
     const string = str.replace(char, '')
     return string
+}
+
+/**
+ * Download file
+ */
+
+export const download = async (file) => {
+    await axios({
+        url: file.url,
+        method: 'GET',
+        responseType: 'blob'
+    })
+        .then(res => {
+            const link = document.createElement('a')
+            link.href = URL.createObjectURL(new Blob([res.data]))
+            link.setAttribute('download', file.name)
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+        })
 }
 
 /**

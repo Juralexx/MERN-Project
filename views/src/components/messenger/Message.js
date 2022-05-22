@@ -9,14 +9,14 @@ import ToolsMenu from '../tools/components/ToolsMenu';
 import Warning from '../tools/components/Warning';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { avatar } from '../tools/functions/useAvatar';
-import { concatSameEmojis, convertEditorToHTML, convertEditorToString, convertEditorToStringNoHTML, modifyMessage, otherMembersIDs, removeMessage } from './tools/function';
-import { dateParserWithoutYear, getHourOnly, randomNbID } from '../Utils';
+import { SmallAvatar } from '../tools/components/Avatars';
+import { concatSameEmojis, convertEditorToHTML, convertEditorToString, convertEditorToStringNoHTML, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from './tools/function';
+import { dateParserWithoutYear, download, getHourOnly, randomNbID } from '../Utils';
 import { addEmoji, removeEmoji } from '../../actions/messenger.action';
-import { MdOutlineAddReaction, MdOutlineContentCopy } from 'react-icons/md'
+import { MdFileDownload, MdOutlineAddReaction, MdOutlineContentCopy } from 'react-icons/md'
 import { IoArrowUndoOutline, IoTrashOutline } from 'react-icons/io5'
 import { BiFontFamily } from 'react-icons/bi'
 import { FiEdit, FiThumbsUp } from 'react-icons/fi'
-import { SmallAvatar } from '../tools/components/Avatars';
 
 const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
     const [modify, setModify] = useState(-1)
@@ -28,7 +28,6 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
     const [opened, setOpened] = useState(false)
     useClickOutside(messageRef, setOpened, false)
     const [emojis, setEmojis] = useState([])
-    let like = { id: "+1", name: "Thumbs Up Sign", short_names: ["+1", "thumbsup"], colons: ":+1:", emoticons: [], unified: "1f44d", skin: 1, native: "👍" }
 
     useEffect(() => {
         if (message.emojis.length)
@@ -72,21 +71,39 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                     <div className="message-img" style={avatar(message.sender_picture)}></div>
                 </div>
                 <div className="message-right">
-                    <div className="message-right-top">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "- modifié"}</span></div>
+                    <div className="message-right-top">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "(modifié)"}</span></div>
 
                     {message && modify !== uniqueKey ? (
-                        <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>
+                        <>
+                            {message.text.length > 0 &&
+                                <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>
+                            }
+                            {message.files && message.files.length > 0 &&
+                                message.files.map((file, key) => {
+                                    return (
+                                        <div className="message-files-container" key={key}>
+                                            <div className="files-block">
+                                                {returnMessageFiles(file)}
+                                                <button className="download-btn" onClick={() => download(file)}><MdFileDownload /></button>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </>
                     ) : (
                         <div className="conversation-toolsbox">
                             <div className="message-text-editor">
-                                <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
-                                <ReactQuill
-                                    onChange={handleEditor}
-                                    defaultValue={convertEditorToString(message)}
-                                    placeholder="Rédiger un messager..."
-                                    modules={modules}
-                                    formats={formats}
-                                />
+                                <div className="message-editor-container">
+                                    <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
+                                    <ReactQuill
+                                        onChange={handleEditor}
+                                        defaultValue={convertEditorToString(message)}
+                                        placeholder="Rédiger un messager..."
+                                        modules={modules}
+                                        formats={formats}
+                                    />
+                                </div>
                                 <div className="message-text-tools">
                                     <div className="text-tools-left">
                                         <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji)} />
@@ -154,7 +171,6 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                 <>
                                     <div className="tools_choice" onClick={() => setModify(uniqueKey)}><FiEdit /> Modifier le message</div>
                                     <div className="tools_choice" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashOutline />Supprimer le message</div>
-
                                 </>
                             }
                         </ToolsMenu>
