@@ -1,4 +1,6 @@
 import ConversationModel from '../../models/conversation.model.js';
+import mongoose from 'mongoose';
+const ObjectID = mongoose.Types.ObjectId
 import fs from 'fs'
 import { createGzip } from 'zlib'
 import { promisify } from 'util'
@@ -8,6 +10,27 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url))
 import sharp from 'sharp'
+
+/**
+ * Get message
+ */
+
+export const getMessage = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(400).send('Unknown ID : ' + req.params.id)
+    }
+    ConversationModel.find({
+        _id: req.params.id,
+        messages: { $elemMatch: { _id: req.params.messageId } }
+    },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs)
+            } else {
+                console.log('Unknown URL : ' + err)
+            }
+        }).select()
+}
 
 /**
  * Post new message
@@ -43,19 +66,26 @@ export const uploadFiles = async (req, res) => {
     let files = []
     let done = 0
 
-    console.log(req.files)
-
     if (req.files) {
         if (!fs.existsSync(__directory)) {
             fs.mkdirSync(__directory, { recursive: true })
         }
 
-        req.files.map((file, key) => {
-            console.log(file.detectedMimeType)
-            const fileName = file.originalName;
-            const temporaryName = req.params.messageId + '-' + key
+        let fileNamesAndTypes = req.files.map(file => { return { name: file.originalName, type: file.detectedMimeType || file.clientReportedMimeType } })
 
-            if (file.detectedMimeType.includes('image')) {
+        if (req.files.length > 1) {
+            fileNamesAndTypes.forEach((file, key) => {
+                if (key > 0 && fileNamesAndTypes.some(f => f.type === file.type) && fileNamesAndTypes.some(f => f.name === file.name)) {
+                    fileNamesAndTypes[key].name = file.name + "-" + key
+                }
+            })
+        }
+
+        req.files.map((file, key) => {
+            let fileName = fileNamesAndTypes[key].name;
+            const temporaryName = req.params.messageId + '-' + key + (file.detectedFileExtension || '.jpg')
+
+            if (fileNamesAndTypes[key].type.includes('image')) {
                 files.push({
                     type: 'image',
                     name: fileName,
@@ -72,16 +102,11 @@ export const uploadFiles = async (req, res) => {
                                 if (err) {
                                     console.error(err)
                                 } else {
-                                    done++
-                                    if (done === req.files.length) {
-                                        req.files.map(file => {
-                                            fs.unlink(`${__directory}/${temporaryName}`, (err) => {
-                                                if (err) {
-                                                    console.error(err)
-                                                }
-                                            })
-                                        })
-                                    }
+                                    fs.unlink(`${__directory}/${temporaryName}`, (err) => {
+                                        if (err) {
+                                            console.error(err)
+                                        }
+                                    })
                                 }
                             })
                     })
@@ -112,6 +137,42 @@ export const uploadFiles = async (req, res) => {
                 $set: {
                     "messages.$.files": files
                 },
+                $addToSet: {
+                    files: files
+                }
+            },
+            { new: true },
+        )
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        res.status(400).json(err)
+    }
+}
+
+/**
+ * Delete files
+ */
+
+export const deleteFiles = async (req, res) => {
+    const __directory = `${__dirname}/../../uploads/conversations/${req.params.id}/${req.params.messageId}`
+
+    fs.unlink(`${__directory}/${req.body.file.name}`, (err) => {
+        if (err) {
+            console.error(err)
+        }
+    })
+
+    try {
+        await ConversationModel.updateOne(
+            {
+                _id: req.params.id,
+                messages: { $elemMatch: { _id: req.params.messageId } }
+            },
+            {
+                $pull: {
+                    "messages.$.files": req.body.file.url
+                }
             },
             { new: true },
         )

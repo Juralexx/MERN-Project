@@ -184,21 +184,20 @@ export const sendMessage = (conversationId, message, files) => {
     return async (dispatch) => {
         await axios
             .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-message`, { message: message })
-            .then(async () => {
-                if (files.length > 0) {
+            .then(async res => {
+                if (res.data && files.length > 0) {
                     let formData = new FormData()
                     for (let i = 0; i < files.length; i++) {
                         formData.append('files', files[i])
                     }
-                    return await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload-files/${message._id}`, formData)
-                        .then(res => console.log(res))
+                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload-files/${message._id}/`, formData)
                         .catch(err => console.log(err))
                 }
             })
             .then(() => {
                 dispatch({ type: POST_MESSAGE, payload: { message } })
             })
-            .catch (err => console.error(err))
+            .catch(err => console.error(err))
     }
 }
 
@@ -309,6 +308,32 @@ export const receiveAddEmoji = (messageId, emoji) => {
 }
 
 /**
+ * Remove uploaded file
+ */
+
+export const DELETE_FILE = "DELETE_FILE"
+
+export const deleteFile = (conversationId, messageId, file) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/delete-files/${messageId}`,
+            data: { file }
+        })
+            .then(() => {
+                dispatch({ type: DELETE_FILE, payload: { messageId, file } })
+            })
+            .catch(err => console.error(err))
+    }
+}
+
+export const receiveRemoveFile = (messageId, file) => {
+    return async (dispatch) => {
+        dispatch({ type: DELETE_FILE, payload: { messageId, file } })
+    }
+}
+
+/**
  * Remove emoji from message
  */
 
@@ -318,7 +343,7 @@ export const removeEmoji = (conversationId, messageId, emojiId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-emoji/`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-emoji`,
             data: { messageId, emojiId }
         })
             .then(() => {

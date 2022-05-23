@@ -3,23 +3,24 @@ import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import ReactQuill from "react-quill";
 import { Quill } from "react-quill";
-import EditorToolbar, { formats, modules } from "./tools/EditorToolbar";
-import ScrollButton from './tools/ScrollButton';
-import Typing from './tools/Typing';
-import EmojiPicker from '../tools/components/EmojiPicker';
-import ErrorModal from '../tools/components/ErrorModal';
-import { getMembers, isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers } from './tools/function';
-import { TinyAvatar } from '../tools/components/Avatars';
-import { addActive, checkTheme } from '../Utils';
+import EditorToolbar, { formats, modules } from "./EditorToolbar";
+import ScrollButton from '../tools/ScrollButton';
+import Typing from '../tools/Typing';
+import EmojiPicker from '../../tools/components/EmojiPicker';
+import ErrorModal from '../../tools/components/ErrorModal';
+import Mention from './Mention';
+import Emoji from './Emoji';
+import Link from './Link';
+import { getMembers, isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, openMention, pickEmoji } from '../tools/function';
+import { addActive } from '../../Utils';
 import { IoSend, IoText } from 'react-icons/io5'
 import { BsPlusLg } from 'react-icons/bs'
 import { BsEmojiSmile } from 'react-icons/bs'
-import { FiAtSign, FiPaperclip } from 'react-icons/fi'
+import { FiAtSign } from 'react-icons/fi'
 import { FaPhotoVideo } from 'react-icons/fa';
-import { MdClear } from 'react-icons/md';
+import { MdClear, MdOutlineLink } from 'react-icons/md';
 
-
-const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, handleSubmit, isTyping, setTyping, typingContext, currentChat }) => {
+const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, handleSubmit, isTyping, setTyping, typingContext, currentChat }) => {
     const [isToolbar, setToolbar] = useState(false)
     const [isTools, setTools] = useState(false)
     const [position, setPosition] = useState(0)
@@ -35,14 +36,16 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
     const [isMention, setMention] = useState(false)
     const [mentionsResults, setMentionResults] = useState(members)
 
+    const [isLink, setLink] = useState(false)
+
     const [files, setFiles] = useState([])
     const [focused, setFocused] = useState(false)
     const [uploadErr, setUploadErr] = useState([])
     const filesRef = useRef()
 
+    let quill = quillRef?.current?.getEditor()
+
     const handleNewMessage = (text, delta, source, editor) => {
-        let quill = quillRef.current.getEditor()
-        quill.focus()
         let length = editor.getLength()
         let txt = editor.getText()
 
@@ -68,12 +71,6 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
             if (isEmoji) {
                 setEmoji(false)
             }
-        }
-
-        if (isEmoji) {
-            setMention(false)
-        } else if (isMention) {
-            setEmoji(false)
         }
 
         if (length > 1) {
@@ -166,7 +163,6 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
      */
 
     const onKeyPressed = (event) => {
-        let quill = quillRef.current.getEditor()
         quill.focus()
         let txt = quill.getText()
         let index = quill.getSelection().index
@@ -210,121 +206,13 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
     }
 
     /**
-     * On autocomplete mention selection
-     */
-
-    const onMention = (mention) => {
-        let quill = quillRef.current.getEditor()
-        quill.focus()
-        let range = quill.getSelection()
-        quill.deleteText(position, range.index)
-        console.log(range.index)
-        if (quill.getText()[position] === '@') {
-            quill.deleteText(position, 1)
-        }
-        quill.insertText(position, `@${mention.pseudo}`, {
-            'color': '#18A5D6',
-            'bold': true,
-            'list': 'bullet',
-            'check': 'todo',
-        }, true)
-        quill.insertText(position + mention.pseudo.length + 1, "\u00a0", {
-            'color': `${checkTheme('#232221', '#ffffff')}`,
-            'bold': false
-        })
-        setMention(false)
-        setPosition(0)
-        setMentionResults(members)
-    }
-
-    /**
-     * On autocomplete emoji selection
-     */
-
-    const onEmoji = (emoji) => {
-        let quill = quillRef.current.getEditor()
-        quill.focus()
-        let range = quill.getSelection()
-        quill.deleteText(position, range.index)
-        quill.insertText(position, emoji.skins[0].native)
-        quill.insertText(position + 2, "\u00a0", {
-            'color': `${checkTheme('#232221', '#ffffff')}`,
-            'bold': false
-        })
-        setEmoji(false)
-        setPosition(0)
-        setEmojisResults([])
-    }
-
-    /**
-     * Place autocomplete container upon cursor
-     */
-
-    const placeUponCursor = () => {
-        if (isMention || isEmoji) {
-            let quill = quillRef.current.getEditor()
-            quill.focus()
-            let quillHeight = quillRef.current.editor.scroll.domNode.offsetHeight
-            let pos = quill.getBounds(position)
-            return {
-                bottom: quillHeight - pos.bottom + pos.height,
-                left: pos.left,
-                right: pos.right,
-            }
-        }
-    }
-
-    /**
-     * On mention button press
-     */
-
-    const openMention = () => {
-        let quill = quillRef.current.getEditor()
-        quill.focus()
-        let pos = quill.getSelection().index
-        let txt = quill.getText()
-        let previous = txt[pos - 1]
-
-        if (!isMention) {
-            if ((/\s/).test(previous) || (!(/\s/).test(previous) && previous === undefined)) {
-                quill.insertText(pos, "@", {
-                    'color': checkTheme('#232221', '#ffffff'),
-                    'bold': true
-                }, true)
-            } else if (!(/\s/).test(previous) && previous !== undefined && previous !== '@') {
-                quill.insertText(pos, "\u00a0", {
-                    'color': checkTheme('#232221', '#ffffff'),
-                }, true)
-                quill.insertText(pos + 1, "@", {
-                    'color': checkTheme('#232221', '#ffffff'),
-                    'bold': true
-                }, true)
-            }
-            setMention(true)
-        } else {
-            setMention(false)
-        }
-    }
-
-    /**
-     * On emoji picker selection
-     */
-
-    const pickEmoji = (emoji) => {
-        let quill = quillRef?.current?.getEditor()
-        let position = quill.getSelection().index
-        quill.insertText(position, emoji.native)
-    }
-
-    /**
      * On enterkey press
      */
 
     const Delta = Quill.import('delta')
 
     useEffect(() => {
-        if (quillRef?.current) {
-            let quill = quillRef?.current?.getEditor()
+        if (quill) {
             quill.keyboard.addBinding({ key: 13, shiftKey: true }, (range, ctx) => {
                 quill.insertText(range.index, '\n');
             })
@@ -337,14 +225,13 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                 return new Delta(ops)
             })
         }
-    }, [quillRef?.current])
+    }, [quill])
 
     /**
      * On message submission
      */
 
     const onSubmit = () => {
-        let quill = quillRef?.current?.getEditor()
         if (quill.getLength() > 1 || files.length > 0) {
             let messageContent = quill.getLength() > 1 ? quill.getContents() : []
             handleSubmit(currentChat, messageContent, files)
@@ -352,30 +239,8 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                 quill.deleteText(0, quill.getLength())
                 setTyping(false)
             }
-        }
-    }
-
-    /**
-     * Files dropzone
-     */
-
-    const getEditorHeight = () => {
-        let quill = quillRef?.current?.getEditor()
-        if (quill) {
-            if (files.length > 0 && filesRef.current) {
-                let filesHeight = filesRef.current.offsetHeight
-                let filesWidth = quillRef.current.offsetWidth
-                return {
-                    height: filesHeight,
-                    width: filesWidth
-                }
-            } else {
-                let quillHeight = quillRef.current.editor.scroll.domNode.offsetHeight
-                let quillWidth = quillRef.current.editor.scroll.domNode.offsetWidth
-                return {
-                    height: quillHeight,
-                    width: quillWidth
-                }
+            if (files.length > 0) {
+                setFiles([])
             }
         }
     }
@@ -384,28 +249,23 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
         maxSize: 500000000,
         onDrag: () => quillRef.current.focus(),
         onDrop: files => {
-            onUpload(files)
+            files.forEach(file => {
+                if (isImage(file) || isVideo(file) || isFile(file)) {
+                    if (file.size > 10000000) {
+                        setUploadErr(err => [...err, { name: file.name, error: 'Fichier trop volumineux' }])
+                    } else {
+                        setFiles(f => [...f, file])
+                        if (disabled) {
+                            setDisabled(false)
+                        }
+                    }
+                } else {
+                    setUploadErr(err => [...err, { name: file.name, error: 'Ce type de fichier n\'est pas accepté' }])
+                }
+            })
             quillRef.current.focus()
         }
     })
-
-
-    const onUpload = (filesArray) => {
-        filesArray.forEach(file => {
-            if (isImage(file) || isVideo(file) || isFile(file)) {
-                if (file.size > 10000000) {
-                    setUploadErr(err => [...err, { name: file.name, error: 'Fichier trop volumineux' }])
-                } else {
-                    setFiles(f => [...f, file])
-                    if (disabled) {
-                        setDisabled(false)
-                    }
-                }
-            } else {
-                setUploadErr(err => [...err, { name: file.name, error: 'Ce type de fichier n\'est pas accepté' }])
-            }
-        })
-    }
 
     return (
         <div className="conversation-bottom">
@@ -415,51 +275,50 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                 isTyping={isTyping}
             />
             <div className={`conversation-toolsbox ${addActive(isDragActive, "active")}`}>
-                <ScrollButton convWrapperRef={convWrapperRef?.current} scrollTo={lastMessageRef} />
+                <ScrollButton
+                    convWrapperRef={convWrapperRef?.current}
+                    scrollTo={lastMessageRef}
+                />
                 <div className="message-text-editor">
-                    {isMention &&
-                        mentionsResults.length > 0 &&
-                        <div tabIndex="0" className="auto-complete-container custom-scrollbar max-w-[300px]" style={placeUponCursor()}>
-                            {mentionsResults.map((element, key) => {
-                                return (
-                                    <div className={`${mentionsResults.some(e => e.pseudo) ? "auto-complete-item" : "auto-complete-item hidden"}`} key={key} onClick={() => onMention(element)}>
-                                        <div className="flex items-center">
-                                            <TinyAvatar pic={element.picture} />
-                                            <p>{element.pseudo}</p>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    }
-                    {isEmoji &&
-                        emojisResults.length > 0 &&
-                        <div tabIndex="0" className="auto-complete-container custom-scrollbar max-w-[300px]" style={placeUponCursor()}>
-                            {emojisResults.slice(0, 20).map((emoji, key) => {
-                                return (
-                                    <div className={`${emojisResults.some(e => e.id) ? "auto-complete-item" : "auto-complete-item hidden"}`} key={key} onClick={() => onEmoji(emoji)}>
-                                        <div className="flex items-center">
-                                            <div>{emoji.skins[0].native}</div>
-                                            <p>:{emoji.id}:</p>
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    }
+                    <Mention
+                        quill={quill}
+                        members={members}
+                        isMention={isMention}
+                        setMention={setMention}
+                        mentionsResults={mentionsResults}
+                        setMentionResults={setMentionResults}
+                        position={position}
+                        setPosition={setPosition}
+                    />
+                    <Emoji
+                        quill={quill}
+                        isEmoji={isEmoji}
+                        setEmoji={setEmoji}
+                        emojisResults={emojisResults}
+                        setEmojisResults={setEmojisResults}
+                        position={position}
+                        setPosition={setPosition}
+                    />
+                    <Link
+                        quill={quill}
+                        isLink={isLink}
+                        setLink={setLink}
+                        position={position}
+                    />
+
                     <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
                     <div className="message-editor-container">
                         <ReactQuill
                             ref={quillRef}
                             placeholder={`Envoyer un message à ${returnMembers(members)}`}
+                            modules={modules}
+                            formats={formats}
                             defaultValue=""
                             onChange={handleNewMessage}
                             onKeyUp={e => onKeyPressed(e)}
-                            modules={modules}
-                            formats={formats}
                             onBlur={() => setFocused(false)}
                         />
-                        <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight()} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
+                        <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight(quill, files, filesRef)} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
                             <input {...getInputProps()} name="files" />
                         </div>
                         <div className={`editor-files-container ${files.length === 0 ? "!hidden" : "flex"}`} ref={filesRef}>
@@ -480,13 +339,13 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
                     <div className="text-tools-left">
                         <button className="menu-tools-btn" onClick={() => setTools(!isTools)}><BsPlusLg /></button>
                         <div className="tools-group">
-                            <EmojiPicker placement="top" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={pickEmoji} onClick={() => quillRef?.current?.focus()} />
-                            <button className="text-tools" onClick={openMention}><FiAtSign /></button>
+                            <EmojiPicker placement="top" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
+                            <button className="text-tools" onClick={() => openMention(quill, isMention, setMention)}><FiAtSign /></button>
                             <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
                         </div>
                         <div className="tools-group">
                             <button className="text-tools files-upload" {...getRootProps()}><input {...getInputProps()} name="files" /><FaPhotoVideo /></button>
-                            <button className="text-tools"><FiPaperclip /></button>
+                            <button className="text-tools" onClick={() => setLink(!isLink)}><MdOutlineLink /></button>
                         </div>
                     </div>
                     {isTools && <div className="message-text-tools-menu"></div>}
@@ -507,4 +366,4 @@ const ConversationBottom = ({ user, websocket, convWrapperRef, lastMessageRef, q
     )
 }
 
-export default ConversationBottom
+export default Editor

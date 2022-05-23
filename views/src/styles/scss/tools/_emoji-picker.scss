@@ -104,3 +104,11 @@
         }
     }
 }
+        
+.emoji-mart-dark {
+    background-color : var(--content);
+}
+
+.emoji-mart-dark .emoji-mart-search input {
+    background-color : var(--content-x-light);
+}

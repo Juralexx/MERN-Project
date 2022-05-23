@@ -1,8 +1,8 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
-import { addEmoji, addMember, deleteConversation, deleteMessage, removeEmoji, removeMember, updateMessage } from '../../../actions/messenger.action';
+import { charSetToChar, checkTheme, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
+import { addEmoji, addMember, deleteConversation, deleteFile, deleteMessage, removeEmoji, removeMember, updateMessage } from '../../../actions/messenger.action';
 import { coverPicture } from '../../tools/functions/useAvatar';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 
@@ -24,24 +24,31 @@ export function convertEditorToString(message) {
     return html
 }
 
+export function convertEditorToStringNoHTML(message) {
+    let callback = {}
+    let converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
+    let html = converter.convert(message.text[0].ops)
+    return charSetToChar(removeHTMLMarkers(html))
+}
+
 export function convertDeltaToHTML(message) {
     let callback = {}
-    let converter = new QuillDeltaToHtmlConverter(message.ops, callback)
-    let html = converter.convert(message.ops)
+    let converter = new QuillDeltaToHtmlConverter(message.text.ops, callback)
+    let html = converter.convert(message.text.ops)
     return ({ __html: html })
 }
 
 export function convertDeltaToString(message) {
     let callback = {}
-    let converter = new QuillDeltaToHtmlConverter(message.ops, callback)
-    let html = converter.convert(message.ops)
+    let converter = new QuillDeltaToHtmlConverter(message.text.ops, callback)
+    let html = converter.convert(message.text.ops)
     return html
 }
 
-export function convertEditorToStringNoHTML(message) {
+export function convertDeltaToStringNoHTML(message) {
     let callback = {}
-    let converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
-    let html = converter.convert(message.text[0].ops)
+    let converter = new QuillDeltaToHtmlConverter(message.text.ops, callback)
+    let html = converter.convert(message.text.ops)
     return charSetToChar(removeHTMLMarkers(html))
 }
 
@@ -241,7 +248,7 @@ export const getHoursDiff = (prev, current) => {
  * Like object
  */
 
- export const like = { id: "+1", name: "Thumbs Up Sign", short_names: ["+1", "thumbsup"], colons: ":+1:", emoticons: [], unified: "1f44d", skin: 1, native: "👍" }
+export const like = { id: "+1", name: "Thumbs Up Sign", short_names: ["+1", "thumbsup"], colons: ":+1:", emoticons: [], unified: "1f44d", skin: 1, native: "👍" }
 
 /**
  * Check file extension
@@ -375,10 +382,10 @@ export const modifyMessage = (message, text, conversation, uid, websocket, dispa
         return websocket.current.emit("updateMessage", {
             receiverId: memberId,
             messageId: message._id,
-            text: [text]
+            text: text
         })
     })
-    dispatch(updateMessage(conversation._id, message._id, [text]))
+    dispatch(updateMessage(conversation._id, message._id, text))
 }
 
 /**
@@ -486,6 +493,7 @@ export const handleEmoji = (emoji, user, websocket, currentChat, message, dispat
 
 export const deleteEmoji = (emojisGrouped, user, websocket, currentChat, message, dispatch) => {
     let emoji = emojisGrouped.find(e => e.sender_id === user._id)
+    dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
     otherMembersIDs(currentChat, user._id).map(memberId => {
         return websocket.current.emit("removeEmoji", {
             receiverId: memberId,
@@ -494,5 +502,105 @@ export const deleteEmoji = (emojisGrouped, user, websocket, currentChat, message
             emojiId: emoji._id
         })
     })
-    dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
+}
+
+/**
+ * Delete file
+ */
+
+ export const deleteFiles = (file, user, websocket, currentChat, message, dispatch) => {
+    otherMembersIDs(currentChat, user._id).map(memberId => {
+        return websocket.current.emit("deleteFile", {
+            receiverId: memberId,
+            conversationId: currentChat._id,
+            messageId: message._id,
+            file: file
+        })
+    })
+    dispatch(deleteFile(currentChat._id, message._id, file))
+    if (message.text.length === 0 && message.files.length - 1 <= 0) {
+        removeMessage(message, currentChat, user._id, websocket, dispatch)
+    }
+}
+
+/**
+ * Place autocomplete container upon cursor
+ */
+
+export const placeUponCursor = (quill) => {
+    if (quill) {
+        quill.focus()
+        let range = quill.getSelection()
+        let quillHeight = quill.scroll.domNode.offsetHeight
+        let pos = quill.getBounds(range.index)
+        return {
+            bottom: quillHeight - pos.bottom + pos.height,
+            left: pos.left,
+            right: pos.right,
+        }
+    }
+}
+
+/**
+ * If no files are uploaded, file dropzone get height of editor, else it gets the height of files container.
+ */
+
+export const getEditorHeight = (quill, files, filesRef) => {
+    if (quill) {
+        if (files.length > 0 && filesRef.current) {
+            let filesHeight = filesRef.current.offsetHeight
+            let filesWidth = quill.offsetWidth
+            return {
+                height: filesHeight,
+                width: filesWidth
+            }
+        } else {
+            let quillHeight = quill.scroll.domNode.offsetHeight
+            let quillWidth = quill.scroll.domNode.offsetWidth
+            return {
+                height: quillHeight,
+                width: quillWidth
+            }
+        }
+    }
+}
+
+/**
+ * On mention on button press
+ */
+
+export const openMention = (quill, isMention, setMention) => {
+    quill.focus()
+    let pos = quill.getSelection().index
+    let txt = quill.getText()
+    let previous = txt[pos - 1]
+
+    if (!isMention) {
+        if ((/\s/).test(previous) || (!(/\s/).test(previous) && previous === undefined)) {
+            quill.insertText(pos, "@", {
+                'color': checkTheme('#232221', '#ffffff'),
+                'bold': true
+            }, true)
+        } else if (!(/\s/).test(previous) && previous !== undefined && previous !== '@') {
+            quill.insertText(pos, "\u00a0", {
+                'color': checkTheme('#232221', '#ffffff'),
+            }, true)
+            quill.insertText(pos + 1, "@", {
+                'color': checkTheme('#232221', '#ffffff'),
+                'bold': true
+            }, true)
+        }
+        setMention(true)
+    } else {
+        setMention(false)
+    }
+}
+
+/**
+ * On emoji picker selection
+ */
+
+export const pickEmoji = (emoji, quill) => {
+    let position = quill.getSelection().index
+    quill.insertText(position, emoji.native)
 }

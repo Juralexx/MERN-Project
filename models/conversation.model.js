@@ -31,7 +31,7 @@ const ConversationModel = new mongoose.Schema(
                 sender_pseudo: String,
                 sender_picture: String,
                 text: {
-                    type: [],
+                    type: {},
                 },
                 emojis: {
                     type: [],
@@ -47,7 +47,8 @@ const ConversationModel = new mongoose.Schema(
         },
         last_message: {
             type: String
-        }
+        },
+        files: []
     },
     {
         timestamps: true

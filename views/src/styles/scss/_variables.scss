@@ -4,7 +4,7 @@
     --content-light   : #ffffff;
     --content-x-light : #ffffff;
     --navbar          : #ffffff;
-    --text            : #232221;
+    --text            : #292929;
     --text-secondary  : #7a7a7a;
     --text-tertiary   : #aaa9a9;
     --svg             : #abb9c9;
@@ -24,16 +24,16 @@
 }
 
 .dark {
-    --body            : #202225;
-    --content         : #2f3136;
-    --content-light   : #36393f;
-    --content-x-light : #40444b;
-    --input           : #40444b;
-    --navbar          : #40444b;
-    --x-light         : #40444b;
-    --xx-light        : #40444b;
-    --light           : #36393f;
-    --mini_nav-btn    : #36393f;
+    --body            : #0b0c0e;
+    --content         : #141619;
+    --content-light   : #1a1d22;
+    --content-x-light : #21242a;
+    --input           : #272b31;
+    --navbar          : #272b31;
+    --x-light         : #272b31;
+    --xx-light        : #272b31;
+    --light           : #1a1d22;
+    --mini_nav-btn    : #1a1d22;
     // --body            : #111111;
     // --content         : #1e1e1e;
     // --content-light   : #2d2d2d;
@@ -46,20 +46,20 @@
     --input-text      : #ffffff;
     --placeholder     : #b6bac0;
     --navbar-txt      : #EDF8FC;
-    --menu            : rgb(30, 30, 30);
+    --menu            : #0b0c0e;
     --color-skeleton  : linear-gradient(-90deg, rgb(169, 173, 179) 0%, rgb(106, 114, 127) 50%, rgb(169, 173, 179) 100%);
     --shadow-light    : 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);;
     --shadow-tiny     : rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
 }
 
 :root, .dark {
-    --primary         : #18A5D6;
-    --primary-rgb     : 24, 165, 214;
-    --primary-light   : #53bee2;
-    --primary-dark    : #158bb2;
+    --primary         : #5a7df0;
+    --primary-rgb     : 90, 125, 240;
+    --primary-light   : #90a1f3;
+    --primary-dark    : #1760ec;
     --blue            : #4470ff ;
     --blue-rgb        : 68, 112, 255;
-    --xblue           : #7471fc ;
+    --xblue           : #7471fc;
     --xblue-rgb       : 116, 113, 252;
     --light-blue      : #00aefd;
     --light-blue-rgb  : 0, 174, 253;
@@ -114,6 +114,11 @@
 // --primary-rgb     : 150, 146, 255;
 // --primary-light   : #aaa7fd;
 // --primary-dark    : #8582e4;
+
+// --primary         : #18A5D6;
+// --primary-rgb     : 24, 165, 214;
+// --primary-light   : #53bee2;
+// --primary-dark    : #158bb2;
 
 // --body            : #202225;
 // --content         : #2f3136;

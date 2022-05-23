@@ -3,7 +3,7 @@ import ToolsMenu from '../tools/components/ToolsMenu';
 import { avatar } from '../tools/functions/useAvatar';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { addActive } from '../Utils';
-import { convertEditorToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './tools/function';
+import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './tools/function';
 
 const Conversation = ({ uid, user, conversation, currentChat, newMessage, notification, onConversationClick }) => {
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
@@ -67,10 +67,10 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
                             <div className={`${unseen ? "last-message notification" : "last-message"}`}>
                                 <div className='mr-1'>{returnConversationPseudo(conversation, lastMessageFound, uid)}</div>
                                 <p>
-                                    {lastMessageFound.text.length > 0 ? (
-                                        convertEditorToStringNoHTML(lastMessageFound)
+                                    {Object.keys(lastMessageFound.text).length > 0 ? (
+                                        convertDeltaToStringNoHTML(lastMessageFound)
                                     ) : (
-                                        lastMessageFound.files[0].name
+                                        lastMessageFound.files.length > 0 && lastMessageFound.files[0].name
                                     )}
                                 </p>
                             </div>

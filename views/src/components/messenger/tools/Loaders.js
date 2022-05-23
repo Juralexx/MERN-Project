@@ -3,7 +3,7 @@ import { BsEmojiSmile } from "react-icons/bs"
 import { FiAtSign } from "react-icons/fi"
 import { IoSend } from "react-icons/io5"
 import ReactQuill from "react-quill"
-import EditorToolbar, { formats } from './EditorToolbar'
+import EditorToolbar, { formats } from '../editor/EditorToolbar'
 import EmojiPicker from "../../tools/components/EmojiPicker"
 
 export const ConversationLoader = () => {

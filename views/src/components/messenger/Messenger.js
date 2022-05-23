@@ -7,7 +7,7 @@ import { randomNbID } from '../Utils';
 import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
-import ConversationBottom from './ConversationBottom';
+import Editor from './editor/Editor';
 import OnlineUsers from './OnlineUsers';
 import MessageDate from './MessageDate';
 import Message from './Message';
@@ -178,27 +178,25 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             sender: uid,
             sender_pseudo: user.pseudo,
             sender_picture: user.picture,
-            text: [messageContent],
+            text: messageContent,
             conversationId: conversation._id,
             emojis: [],
             createdAt: new Date().toISOString()
         }
         if (files.length > 0) {
             let filesArr = []
-            files.forEach(file => {
+            files.forEach((file, key) => {
                 if (file.type.includes('image')) {
                     filesArr.push({
                         type: 'image',
                         name: file.name,
-                        url: URL.createObjectURL(file),
-                        origin: file
+                        url: URL.createObjectURL(file)
                     })
                 } else {
                     filesArr.push({
                         type: 'document',
                         name: file.name,
-                        url: URL.createObjectURL(file),
-                        origin: file
+                        url: URL.createObjectURL(file)
                     })
                 }
             })
@@ -329,13 +327,12 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                     {!blank ? (
                                         currentChat.messages.length > 0 ? (
                                             messages.map((message, key, array) => {
-                                                const ref = messages.length === key ? { ref: lastMessageRef } : {};
                                                 return (
                                                     <div key={key}>
                                                         {messagesDates.some(element => element.date === message.createdAt.substring(0, 10) && element.index === key) &&
                                                             <MessageDate message={message} />
                                                         }
-                                                        <div {...ref}>
+                                                        <div ref={lastMessageRef}>
                                                             <Message
                                                                 uid={uid}
                                                                 user={user}
@@ -361,7 +358,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                         <></>
                                     )}
                                 </div>
-                                <ConversationBottom
+                                <Editor
                                     user={user}
                                     websocket={websocket}
                                     convWrapperRef={convWrapperRef}

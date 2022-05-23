@@ -1,4 +1,4 @@
-import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION, UPDATE_MESSAGE } from "../actions/messenger.action";
+import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION, UPDATE_MESSAGE, DELETE_FILE } from "../actions/messenger.action";
 
 const initialState = {}
 
@@ -65,6 +65,14 @@ export default function messengerReducer(state = initialState, action) {
             let j = findMessage(action.payload.messageId)
             let emojis = state.messages[j].emojis.filter(emoji => emoji._id !== action.payload.emojiId)
             state.messages[j].emojis = emojis
+            return {
+                ...state,
+                messages: state.messages
+            }
+        case DELETE_FILE:
+            let h = findMessage(action.payload.messageId)
+            let files = state.messages[h].files.filter(file => file.url !== action.payload.file.url)
+            state.messages[h].files = files
             return {
                 ...state,
                 messages: state.messages

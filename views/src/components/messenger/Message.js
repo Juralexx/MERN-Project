@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./tools/EditorToolbar";
+import EditorToolbar, { modules, formats } from "./editor/EditorToolbar";
 import EmojiPicker from '../tools/components/EmojiPicker';
 import Tooltip from '../tools/components/Tooltip';
 import { Emoji } from 'emoji-mart'
@@ -10,13 +10,14 @@ import Warning from '../tools/components/Warning';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { avatar } from '../tools/functions/useAvatar';
 import { SmallAvatar } from '../tools/components/Avatars';
-import { concatSameEmojis, convertEditorToHTML, convertEditorToString, convertEditorToStringNoHTML, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from './tools/function';
+import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from './tools/function';
 import { dateParserWithoutYear, download, getHourOnly, randomNbID } from '../Utils';
 import { addEmoji, removeEmoji } from '../../actions/messenger.action';
-import { MdFileDownload, MdOutlineAddReaction, MdOutlineContentCopy } from 'react-icons/md'
-import { IoArrowUndoOutline, IoTrashOutline } from 'react-icons/io5'
+import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/md'
+import { IoArrowUndo, IoTrashBin } from 'react-icons/io5'
+import { IoMdChatbubbles } from 'react-icons/io'
 import { BiFontFamily } from 'react-icons/bi'
-import { FiEdit, FiThumbsUp } from 'react-icons/fi'
+import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
 
 const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
     const [modify, setModify] = useState(-1)
@@ -30,7 +31,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
     const [emojis, setEmojis] = useState([])
 
     useEffect(() => {
-        if (message.emojis.length)
+        if (message.emojis.length > 0)
             setEmojis(concatSameEmojis(message.emojis))
     }, [message.emojis.length])
 
@@ -75,16 +76,20 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
 
                     {message && modify !== uniqueKey ? (
                         <>
-                            {message.text.length > 0 &&
-                                <div className="message-text" dangerouslySetInnerHTML={convertEditorToHTML(message)}></div>
+                            {Object.keys(message.text).length > 0 &&
+                                <div className="message-text" dangerouslySetInnerHTML={convertDeltaToHTML(message)}></div>
                             }
                             {message.files && message.files.length > 0 &&
                                 message.files.map((file, key) => {
                                     return (
                                         <div className="message-files-container" key={key}>
+                                            <p className="txt-sec f-12">{file.name}</p>
                                             <div className="files-block">
                                                 {returnMessageFiles(file)}
-                                                <button className="download-btn" onClick={() => download(file)}><MdFileDownload /></button>
+                                                <div className="files-tools">
+                                                    <button className="files-tools-btn" onClick={() => download(file)}><MdFileDownload /></button>
+                                                    <button className="files-tools-btn" onClick={() => deleteFiles(file, user, websocket, currentChat, message, dispatch)}><MdClear /></button>
+                                                </div>
                                             </div>
                                         </div>
                                     )
@@ -98,7 +103,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                     <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
                                     <ReactQuill
                                         onChange={handleEditor}
-                                        defaultValue={convertEditorToString(message)}
+                                        defaultValue={convertDeltaToString(message)}
                                         placeholder="Rédiger un messager..."
                                         modules={modules}
                                         formats={formats}
@@ -150,32 +155,37 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                 {(hovered || opened) && modify !== uniqueKey &&
                     <div className="message-actions">
                         <Tooltip content={<p>Liker</p>}>
-                            <div className="message-actions-btn" onClick={() => handleEmoji(like)}><FiThumbsUp /></div>
+                            <div className="message-actions-btn" onClick={() => handleEmoji(like)}><MdThumbUp /></div>
                         </Tooltip>
                         <Tooltip content={<p>Réagir</p>}>
                             <EmojiPicker btnClassName="message-actions-btn" onSelect={handleEmoji} onClick={() => setOpened(!opened)} />
                         </Tooltip>
+                        <Tooltip content={<p>Partager</p>}>
+                            <div className="message-actions-btn"><IoArrowUndo /></div>
+                        </Tooltip>
                         <Tooltip content={<p>Répondre</p>}>
-                            <div className="message-actions-btn"><IoArrowUndoOutline /></div>
+                            <div className="message-actions-btn"><IoMdChatbubbles /></div>
                         </Tooltip>
                         {message.sender === uid &&
                             <Tooltip content={<p>Modifier</p>}>
-                                <div className="message-actions-btn" onClick={() => setModify(uniqueKey)}><FiEdit /></div>
+                                <div className="message-actions-btn" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /></div>
                             </Tooltip>
                         }
                         <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
-                            <div className="tools_choice"><IoArrowUndoOutline /> Répondre</div>
-                            <div className="tools_choice"><MdOutlineAddReaction /> Ajouter une réaction</div>
-                            <div className="tools_choice" onClick={() => navigator.clipboard.writeText(message.text)}><MdOutlineContentCopy /> Copier le message</div>
+                            <div className="tools_choice"><IoArrowUndo /> Partager</div>
+                            <div className="tools_choice"><IoMdChatbubbles /> Répondre</div>
+                            <div className="tools_choice"><MdAddReaction /> Ajouter une réaction</div>
+                            <div className="tools_choice" onClick={() => navigator.clipboard.writeText(message.text)}><RiFileCopyFill /> Copier le message</div>
                             {message.sender === uid &&
                                 <>
-                                    <div className="tools_choice" onClick={() => setModify(uniqueKey)}><FiEdit /> Modifier le message</div>
-                                    <div className="tools_choice" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashOutline />Supprimer le message</div>
+                                    <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
+                                    <div className="tools_choice" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
                                 </>
                             }
                         </ToolsMenu>
                     </div>
                 }
+                
                 {warning &&
                     <Warning
                         title="Supprimer le message"
@@ -194,7 +204,13 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                 <div className="message-preview-right-top">
                                     {message.sender_pseudo} <span>{dateParserWithoutYear(message.createdAt)} à {getHourOnly(new Date(message.createdAt))}</span>
                                 </div>
-                                <p className="message-text">{convertEditorToStringNoHTML(message)}</p>
+                                <p className="message-text">
+                                    {Object.keys(message.text).length > 0 ? (
+                                        convertDeltaToStringNoHTML(message)
+                                    ) : (
+                                        message.files.length > 0 && message.files[0].name
+                                    )}
+                                </p>
                             </div>
                         </div>
                     </Warning>

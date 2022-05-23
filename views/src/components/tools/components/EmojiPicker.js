@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useClickOutside } from '../functions/useClickOutside'
 import { usePopper } from "react-popper";
-import { MdOutlineAddReaction } from 'react-icons/md';
+import { MdAddReaction } from 'react-icons/md';
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 
@@ -68,7 +68,7 @@ const EmojiPicker = (props) => {
                 onClick && onClick()
                 setOpen(!open)
             }}>
-                {icon ? (icon) : <MdOutlineAddReaction />}
+                {icon ? (icon) : <MdAddReaction />}
             </button>
         </div>
     )

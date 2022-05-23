@@ -15,6 +15,7 @@ const Content = ({ content, setContent }) => {
                 quillRef.current.getEditor().deleteText(100000, editor.getLength());
             }
         })
+        console.log(content)
     }
 
     return (

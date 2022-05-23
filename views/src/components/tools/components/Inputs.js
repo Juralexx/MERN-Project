@@ -8,10 +8,11 @@ import { FiCalendar } from 'react-icons/fi'
 import { useClickOutside } from '../functions/useClickOutside';
 
 export const ClassicInput = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
+    const { useRef, type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
     return (
         <div className={`${className ? 'classic-input ' + className : 'classic-input'}`}>
             <input
+                ref={useRef}
                 className={inputClassName}
                 type={type}
                 name={name}
@@ -189,11 +190,12 @@ export const CheckBox = (props) => {
 }
 
 export const IconInput = (props) => {
-    const { type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, onClean, endIconClick } = props
+    const { useRef, type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, onClean, endIconClick } = props
     return (
         <div className={`${className ? "icon-input " + className : "icon-input"}`}>
             <input
                 className={inputClassName}
+                ref={useRef}
                 type={type}
                 name={name}
                 id={id}

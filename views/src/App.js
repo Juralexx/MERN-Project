@@ -7,7 +7,7 @@ import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
-import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji } from './actions/messenger.action';
+import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile } from './actions/messenger.action';
 
 function App() {
     const user = useSelector(state => state.userReducer)
@@ -60,6 +60,9 @@ function App() {
         })
         websocket.current.on("deleteMessage", data => {
             dispatch(receiveDeleteMessage(data.messageId))
+        })
+        websocket.current.on("deleteFile", data => {
+            dispatch(receiveRemoveFile(data.messageId, data.file))
         })
         websocket.current.on("addEmoji", data => {
             dispatch(receiveAddEmoji(data.messageId, data.emoji))
@@ -147,6 +150,7 @@ function App() {
             websocket.current.off("sendMessageNotification")
             websocket.current.off("updateMessage")
             websocket.current.off("deleteMessage")
+            websocket.current.off("deleteFile")
             websocket.current.off("addEmoji")
             websocket.current.off("removeEmoji")
             websocket.current.off("addConversation")

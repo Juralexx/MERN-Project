@@ -249,7 +249,6 @@
         .ql-editor {
             background : var(--content-light);
             padding    : 10px 10px;
-            overflow-y : auto;
             border     : 1px solid transparent;
 
             &.ql-blank {
@@ -309,6 +308,25 @@
     }
 }
 
+.quill-link-displayer {
+    position         : absolute;
+    width            : 400px;
+    background-color : var(--content-light);
+    border-radius    : var(--radius);
+    padding          : 14px 15px 0;
+    box-shadow       : var(--shadow-lg);
+    border           : 2px solid var(--light-border);
+    z-index          : 750;
+
+    .classic-input {
+        height     : 36px;
+        box-shadow : none;
+        input {
+            height : 36px;
+        }
+    }
+}
+
 .editor-files-container {
     display   : flex;
     flex-wrap : wrap;
@@ -340,8 +358,8 @@
 
 .files-block {
     .file-img-preview {
-        width         : 100px;
-        height        : 100px;
+        width         : 58px;
+        height        : 58px;
         border-radius : 5px;
     }
 
@@ -355,12 +373,12 @@
     .file-doc {
         display          : flex;
         align-items      : center;
-        max-width        : 280px;
+        width            : 280px;
         height           : 58px;
         padding          : 10px 50px 10px 10px;
         border           : 1px solid var(--light-border);
         border-radius    : 5px;
-        background-color : var(--xx-light);
+        background-color : var(--content-light);
 
         .file-doc-img {
             min-height   : 30px;
@@ -405,28 +423,28 @@
         }
     }
 
-    .download-btn {
-        display       : none;
+    .files-tools {
+        display       : flex;
         position      : absolute;
         right         : 7px;
         top           : 7px;
-        padding       : 4px;
-        border-radius : 50%;
-        background    : var(--light);
         border        : 1px solid var(--light-border);
-        box-shadow    : var(--shadow-tiny);
-        cursor        : pointer;
+        border-radius : var(--radius);
 
-        svg {
-            height : 18px;
-            width  : 18px;
-            color  : var(--text-secondary);
-        }
-    }
+        .files-tools-btn {
+            padding    : 4px;
+            background : var(--xx-light);
+            cursor     : pointer;
+    
+            svg {
+                height : 18px;
+                width  : 18px;
+                color  : var(--text);
+            }
 
-    &:hover {
-        .download-btn {
-            display : block;
+            &:hover {
+                background: var(--light);
+            }
         }
     }
 }

@@ -530,8 +530,7 @@
     visibility : hidden;
 }
 .ql-snow .ql-tooltip {
-    position  : absolute;
-    transform : translateY(10px);
+    position : absolute;
 }
 .ql-snow .ql-tooltip a {
     cursor          : pointer;
@@ -607,7 +606,9 @@
     font-size : 0.67em;
 }
 .ql-snow .ql-editor a {
-    text-decoration : underline;
+    text-decoration : underline !important;
+    color           : #8ab4f8;
+    cursor          : pointer;
 }
 .ql-snow .ql-editor blockquote {
     border-left   : 4px solid #ccc;
@@ -885,12 +886,15 @@
     border-top : 0px;
 }
 .ql-snow .ql-tooltip {
-    background-color : #fff;
-    border           : 1px solid #ccc;
-    box-shadow       : 0px 0px 5px #ddd;
+    display          : inline-block;
+    background-color : var(--xx-light);
+    border           : 2px solid var(--light-border);
+    box-shadow       : var(--shadow-lg);
     color            : var(--text);
     padding          : 5px 12px;
     white-space      : nowrap;
+    border-radius    : var(--radius);
+    display          : none;
 }
 .ql-snow .ql-tooltip::before {
     content      : "Visit URL:";
@@ -898,13 +902,14 @@
     margin-right : 8px;
 }
 .ql-snow .ql-tooltip input[type=text] {
-    display   : none;
-    border    : 1px solid #ccc;
-    font-size : 13px;
-    height    : 26px;
-    margin    : 0px;
-    padding   : 3px 5px;
-    width     : 170px;
+    display          : none;
+    background-color : var(--content-light);
+    border           : 1px solid var(--light-border);
+    font-size        : 13px;
+    height           : 26px;
+    margin           : 0px;
+    padding          : 3px 5px;
+    width            : 170px;
 }
 .ql-snow .ql-tooltip a.ql-preview {
     display        : inline-block;
@@ -915,12 +920,11 @@
 }
 .ql-snow .ql-tooltip a.ql-action::after {
     border-right  : 1px solid #ccc;
-    content       : 'Edit';
-    margin-left   : 16px;
+    content       : 'Modifier';
     padding-right : 8px;
 }
 .ql-snow .ql-tooltip a.ql-remove::before {
-    content     : 'Remove';
+    content     : 'Supprimer';
     margin-left : 8px;
 }
 .ql-snow .ql-tooltip a {
@@ -933,13 +937,19 @@
 .ql-snow .ql-tooltip.ql-editing input[type=text] {
     display : inline-block;
 }
+.ql-snow .ql-tooltip.ql-editing a.ql-action {
+    padding       : 3px 10px;
+    background    : var(--primary);
+    border-radius : var(--radius);
+    margin-left   : 10px;
+}
 .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
     border-right  : 0px;
-    content       : 'Save';
+    content       : 'Valider';
     padding-right : 0px;
 }
 .ql-snow .ql-tooltip[data-mode=link]::before {
-    content : "Enter link:";
+    content : "Lien :";
 }
 .ql-snow .ql-tooltip[data-mode=formula]::before {
     content : "Enter formula:";
