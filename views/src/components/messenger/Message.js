@@ -160,11 +160,8 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                         <Tooltip content={<p>Réagir</p>}>
                             <EmojiPicker btnClassName="message-actions-btn" onSelect={handleEmoji} onClick={() => setOpened(!opened)} />
                         </Tooltip>
-                        <Tooltip content={<p>Partager</p>}>
-                            <div className="message-actions-btn"><IoArrowUndo /></div>
-                        </Tooltip>
                         <Tooltip content={<p>Répondre</p>}>
-                            <div className="message-actions-btn"><IoMdChatbubbles /></div>
+                            <div className="message-actions-btn"><IoArrowUndo /></div>
                         </Tooltip>
                         {message.sender === uid &&
                             <Tooltip content={<p>Modifier</p>}>
@@ -172,8 +169,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                             </Tooltip>
                         }
                         <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
-                            <div className="tools_choice"><IoArrowUndo /> Partager</div>
-                            <div className="tools_choice"><IoMdChatbubbles /> Répondre</div>
+                            <div className="tools_choice"><IoArrowUndo /> Répondre</div>
                             <div className="tools_choice"><MdAddReaction /> Ajouter une réaction</div>
                             <div className="tools_choice" onClick={() => navigator.clipboard.writeText(message.text)}><RiFileCopyFill /> Copier le message</div>
                             {message.sender === uid &&

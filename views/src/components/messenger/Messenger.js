@@ -188,15 +188,25 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             files.forEach((file, key) => {
                 if (file.type.includes('image')) {
                     filesArr.push({
+                        _id: key,
                         type: 'image',
                         name: file.name,
-                        url: URL.createObjectURL(file)
+                        url: URL.createObjectURL(file),
+                        date: new Date().toISOString(),
+                        userId: user._id,
+                        userPseudo: user.pseudo,
+                        messageId: message._id,
                     })
                 } else {
                     filesArr.push({
+                        _id: key,
                         type: 'document',
                         name: file.name,
-                        url: URL.createObjectURL(file)
+                        url: URL.createObjectURL(file),
+                        date: new Date().toISOString(),
+                        userId: user._id,
+                        userPseudo: user.pseudo,
+                        messageId: message._id,
                     })
                 }
             })
@@ -218,7 +228,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 message: message
             })
         }
-        dispatch(sendMessage(conversation._id, message, files))
+        dispatch(sendMessage(conversation._id, message, files, user))
         setNewMessage(message)
     }
 

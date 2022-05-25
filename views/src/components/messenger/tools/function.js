@@ -1,7 +1,7 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, checkTheme, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
+import { charSetToChar, checkTheme, dateParser, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
 import { addEmoji, addMember, deleteConversation, deleteFile, deleteMessage, removeEmoji, removeMember, updateMessage } from '../../../actions/messenger.action';
 import { coverPicture } from '../../tools/functions/useAvatar';
 import { IoDocumentTextOutline } from 'react-icons/io5';
@@ -342,6 +342,26 @@ export const returnEditorFiles = (file) => {
 }
 
 /**
+ * Return the file preview in menus
+ */
+
+export const returnMenuFiles = (file) => {
+    return (
+        <div className="file-doc">
+            {file.type.includes('image') ? (
+                <div className="file-img-preview" style={coverPicture(file.url)}></div>
+            ) : (
+                <IoDocumentTextOutline className="file-doc-img" />
+            )}
+            <div className="file-doc-content">
+                <p>{file.name}</p>
+                <p>Partagé par {file.userPseudo} le {dateParser(file.date)}</p>
+            </div>
+        </div>
+    )
+}
+
+/**
  * Remove uploaded file
  */
 
@@ -508,7 +528,7 @@ export const deleteEmoji = (emojisGrouped, user, websocket, currentChat, message
  * Delete file
  */
 
- export const deleteFiles = (file, user, websocket, currentChat, message, dispatch) => {
+export const deleteFiles = (file, user, websocket, currentChat, message, dispatch) => {
     otherMembersIDs(currentChat, user._id).map(memberId => {
         return websocket.current.emit("deleteFile", {
             receiverId: memberId,

@@ -1,8 +1,12 @@
 import React from 'react'
+import Modal from '../tools/components/Modal'
 
-const ShareModal = () => {
+const ShareModal = ({ open, setOpen }) => {
+
     return (
-        <div>ShareModal</div>
+        <Modal open={open} setOpen={setOpen} className="share-message-modal">
+
+        </Modal>
     )
 }
 

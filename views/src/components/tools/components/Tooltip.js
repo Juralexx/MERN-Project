@@ -41,6 +41,7 @@ const Tooltip = (props) => {
                 ref={popperElRef}
                 style={styles.popper}
                 {...attributes.popper}
+                key={props.key}
             >
                 {props.content}
                 <div className="tooltip-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div>

@@ -2,7 +2,6 @@ import ConversationModel from '../../models/conversation.model.js';
 import mongoose from 'mongoose';
 const ObjectID = mongoose.Types.ObjectId
 import fs from 'fs'
-import { createGzip } from 'zlib'
 import { promisify } from 'util'
 import stream from 'stream'
 const pipeline = promisify(stream.pipeline)
@@ -64,32 +63,40 @@ export const addMessage = async (req, res) => {
 export const uploadFiles = async (req, res) => {
     const __directory = `${__dirname}/../../uploads/conversations/${req.params.id}/${req.params.messageId}`
     let files = []
-    let done = 0
 
     if (req.files) {
         if (!fs.existsSync(__directory)) {
             fs.mkdirSync(__directory, { recursive: true })
         }
 
-        let fileNamesAndTypes = req.files.map(file => { return { name: file.originalName, type: file.detectedMimeType || file.clientReportedMimeType } })
+        let filesArr = req.files.map(file => { return { name: file.originalName, type: file.detectedMimeType || file.clientReportedMimeType } })
 
         if (req.files.length > 1) {
-            fileNamesAndTypes.forEach((file, key) => {
-                if (key > 0 && fileNamesAndTypes.some(f => f.type === file.type) && fileNamesAndTypes.some(f => f.name === file.name)) {
-                    fileNamesAndTypes[key].name = file.name + "-" + key
+            req.files.forEach((file, key) => {
+                let arr = req.files.slice()
+                arr.splice(key, 1)
+                if (arr.some(f => f.detectedMimeType === file.detectedMimeType && f.originalName === file.originalName)) {
+                    let filename = filesArr[key].name.split('.').slice(0, -1).join('.');
+                    let extension = filesArr[key].name.substr(filesArr[key].name.lastIndexOf('.'));
+                    filesArr[key].name = filename + "-" + key + extension
                 }
             })
         }
 
         req.files.map((file, key) => {
-            let fileName = fileNamesAndTypes[key].name;
+            let fileName = filesArr[key].name;
             const temporaryName = req.params.messageId + '-' + key + (file.detectedFileExtension || '.jpg')
 
-            if (fileNamesAndTypes[key].type.includes('image')) {
+            if (filesArr[key].type.includes('image')) {
                 files.push({
+                    _id: key,
                     type: 'image',
                     name: fileName,
-                    url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`
+                    url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,
+                    userId: req.params.userId,
+                    userPseudo: req.params.userPseudo,
+                    date: new Date().toISOString(),
+                    messageId: req.params.messageId,
                 })
                 new Promise(async () => {
                     await pipeline(
@@ -113,9 +120,14 @@ export const uploadFiles = async (req, res) => {
                 })
             } else {
                 files.push({
+                    _id: key,
                     type: 'file',
                     name: fileName,
-                    url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`
+                    url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,
+                    userId: req.params.userId,
+                    userPseudo: req.params.userPseudo,
+                    date: new Date().toISOString(),
+                    messageId: req.params.messageId,
                 })
                 new Promise(async () => {
                     await pipeline(
@@ -138,7 +150,9 @@ export const uploadFiles = async (req, res) => {
                     "messages.$.files": files
                 },
                 $addToSet: {
-                    files: files
+                    files: {
+                        $each: files
+                    }
                 }
             },
             { new: true },
@@ -171,7 +185,12 @@ export const deleteFiles = async (req, res) => {
             },
             {
                 $pull: {
-                    "messages.$.files": req.body.file.url
+                    "messages.$.files": {
+                        _id: req.body.file._id
+                    },
+                    files: {
+                        _id: req.body.file._id
+                    },
                 }
             },
             { new: true },
@@ -227,7 +246,10 @@ export const deleteMessage = async (req, res) => {
                 $pull: {
                     messages: {
                         _id: req.body.messageId
-                    }
+                    },
+                    files: {
+                        messageId: req.params.messageId
+                    },
                 },
             },
             { new: true },

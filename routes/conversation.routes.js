@@ -16,7 +16,7 @@ conversationRoutes.put('/:id/add-member', addMember)
 conversationRoutes.put('/:id/remove-member', removeMember)
 
 conversationRoutes.put('/:id/add-message', addMessage)
-conversationRoutes.put('/:id/upload-files/:messageId', upload.array('files'), uploadFiles)
+conversationRoutes.put('/:id/upload-files/:messageId/:userId/:userPseudo', upload.array('files'), uploadFiles)
 conversationRoutes.put('/:id/delete-files/:messageId', deleteFiles)
 conversationRoutes.put('/:id/update-message', updateMessage)
 conversationRoutes.put('/:id/remove-message/:messageId', deleteMessage)

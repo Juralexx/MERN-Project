@@ -57,7 +57,6 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
                     setOpen={setOpenConvModal}
                     open={openConvModal}
                     conversation={currentChat}
-                    leaveConversation={leaveConversation}
                     friendsArr={friendsArr}
                     dispatch={dispatch}
                 />
@@ -65,14 +64,20 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
             {currentChat.type === "group" &&
                 <div className="conversation-box-top">
                     <div className="conversation-box-members" onClick={() => setOpenConvModal(!openConvModal)}>
-                        <div className="conversation-img-container">
-                            {members.map((element, key) => {
-                                return (
-                                    <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                                )
-                            })}
-                        </div>
-                        <div className="conversation-name">{returnMembers(members)}</div>
+                        {currentChat.name ? (
+                            <div className="conversation-name">{currentChat.name}</div>
+                        ) : (
+                            <>
+                                <div className="conversation-img-container">
+                                    {members.map((element, key) => {
+                                        return (
+                                            <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                                        )
+                                    })}
+                                </div>
+                                <div className="conversation-name">{returnMembers(members)}</div>
+                            </>
+                        )}
                     </div>
                     <ToolsMenu placement="bottom">
                         {isFavorite ? (

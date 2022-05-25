@@ -59,7 +59,9 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
                 </div>
                 <div className="conversation-infos">
                     <div className="conversation-infos-top">
-                        <div className="conversation-name">{returnMembers(members)}</div>
+                        <div className="conversation-name">
+                            {conversation.name ? (conversation.name) : (returnMembers(members))}
+                        </div>
                         <div className="conversation-date">{date}</div>
                     </div>
                     {lastMessageFound && Object.keys(lastMessageFound).length > 0 ? (

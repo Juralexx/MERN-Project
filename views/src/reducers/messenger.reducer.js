@@ -1,4 +1,4 @@
-import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION, UPDATE_MESSAGE, DELETE_FILE } from "../actions/messenger.action";
+import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION_OWNER, UPDATE_CONVERSATION_NAME, UPDATE_CONVERSATION_DESCRIPTION, UPDATE_MESSAGE, DELETE_FILE } from "../actions/messenger.action";
 
 const initialState = {}
 
@@ -13,13 +13,20 @@ export default function messengerReducer(state = initialState, action) {
         case GET_CONVERSATION:
             return action.payload
 
-        case UPDATE_CONVERSATION:
+        case UPDATE_CONVERSATION_NAME:
+            return {
+                ...state,
+                name: action.payload.name,
+            }
+        case UPDATE_CONVERSATION_DESCRIPTION:
             return {
                 ...state,
                 description: action.payload.description,
-                name: action.payload.name,
+            }
+        case UPDATE_CONVERSATION_OWNER:
+            return {
+                ...state,
                 owner: action.payload.owner,
-                last_message: action.payload.last_message,
             }
         case ADD_MEMBER_CONVERSATION:
             return {
@@ -29,12 +36,13 @@ export default function messengerReducer(state = initialState, action) {
         case REMOVE_MEMBER_CONVERSATION:
             return {
                 ...state,
-                members: state.members.filter(member => member !== action.payload.memberId)
+                members: state.members.filter(member => member.id !== action.payload.memberId)
             }
         case POST_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, action.payload.message]
+                messages: [...state.messages, action.payload.message],
+                files: [...state.files, action.payload.message.files]
             }
         case RECEIVE_POST_MESSAGE:
             return {
@@ -52,7 +60,8 @@ export default function messengerReducer(state = initialState, action) {
         case DELETE_MESSAGE:
             return {
                 ...state,
-                messages: state.messages.filter(message => message._id !== action.payload.messageId)
+                messages: state.messages.filter(message => message._id !== action.payload.messageId),
+                files: state.files.filter(file => file.messageId !== action.payload.messageId)
             }
         case ADD_EMOJI:
             let i = findMessage(action.payload.messageId)
@@ -71,11 +80,12 @@ export default function messengerReducer(state = initialState, action) {
             }
         case DELETE_FILE:
             let h = findMessage(action.payload.messageId)
-            let files = state.messages[h].files.filter(file => file.url !== action.payload.file.url)
+            let files = state.messages[h].files.filter(file => file._id !== action.payload.file._id)
             state.messages[h].files = files
             return {
                 ...state,
-                messages: state.messages
+                messages: state.messages,
+                files: state.files.filter(file => file.messageId !== action.payload.messageId && file.id !== action.payload.file._id)
             }
 
         default:

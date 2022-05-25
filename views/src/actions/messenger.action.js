@@ -55,32 +55,82 @@ export const receiveCreateConversation = (conversationId) => {
 }
 
 /**
- * Update conversation
+ * Update conversation owner
  */
 
-export const UPDATE_CONVERSATION = "UPDATE_CONVERSATION"
+export const UPDATE_CONVERSATION_OWNER = "UPDATE_CONVERSATION_OWNER"
 
-export const updateConversation = (conversationId, description, name, owner, last_message) => {
+export const updateConversationOwner = (conversationId, owner) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
-            data: { description, name, owner, last_message }
+            data: { owner }
         })
             .then(() => {
-                dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, last_message } })
+                dispatch({ type: UPDATE_CONVERSATION_OWNER, payload: { owner } })
             })
             .catch(err => console.error(err))
     }
 }
 
-export const RECEIVE_UPDATE_CONVERSATION = "RECEIVE_UPDATE_CONVERSATION"
-
-export const receiveUpdateConversation = (description, name, owner, last_message) => {
+export const receiveUpdateConversationOwner = (owner) => {
     return async (dispatch) => {
-        dispatch({ type: UPDATE_CONVERSATION, payload: { description, name, owner, last_message } })
+        dispatch({ type: UPDATE_CONVERSATION_OWNER, payload: { owner } })
     }
 }
+
+/**
+ * Update conversation description
+ */
+
+ export const UPDATE_CONVERSATION_DESCRIPTION = "UPDATE_CONVERSATION_DESCRIPTION"
+
+ export const updateConversationDescription = (conversationId, description) => {
+     return async (dispatch) => {
+         await axios({
+             method: "put",
+             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
+             data: { description }
+         })
+             .then(() => {
+                 dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
+             })
+             .catch(err => console.error(err))
+     }
+ }
+ 
+ export const receiveUpdateConversationDescription = (description) => {
+     return async (dispatch) => {
+         dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
+     }
+ }
+
+ /**
+ * Update conversation name
+ */
+
+  export const UPDATE_CONVERSATION_NAME = "UPDATE_CONVERSATION_NAME"
+
+  export const updateConversationName = (conversationId, name) => {
+      return async (dispatch) => {
+          await axios({
+              method: "put",
+              url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
+              data: { name }
+          })
+              .then(() => {
+                  dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
+              })
+              .catch(err => console.error(err))
+      }
+  }
+  
+  export const receiveUpdateConversationName = (name) => {
+      return async (dispatch) => {
+          dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
+      }
+  }
 
 /**
  * Delete conversation
@@ -180,7 +230,7 @@ export const receiveRemoveMember = (conversationId) => {
 
 export const POST_MESSAGE = "POST_MESSAGE"
 
-export const sendMessage = (conversationId, message, files) => {
+export const sendMessage = (conversationId, message, files, user) => {
     return async (dispatch) => {
         await axios
             .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-message`, { message: message })
@@ -190,7 +240,7 @@ export const sendMessage = (conversationId, message, files) => {
                     for (let i = 0; i < files.length; i++) {
                         formData.append('files', files[i])
                     }
-                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload-files/${message._id}/`, formData)
+                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload-files/${message._id}/${user._id}/${user.pseudo}`, formData)
                         .catch(err => console.log(err))
                 }
             })

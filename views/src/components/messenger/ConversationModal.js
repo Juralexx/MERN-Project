@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useState, useMemo } from 'react'
 import { addActive, dateParser } from '../Utils'
 import Modal from '../tools/components/Modal'
 import { Button, TextButton } from '../tools/components/Button'
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs'
 import { MediumAvatar } from '../tools/components/Avatars'
 import { isInResults } from '../tools/functions/member'
-import { addNewMember, deleteConv, otherMembersIDs } from './tools/function'
+import { addNewMember, deleteConv, leaveConversation, otherMembersIDs, getMembers, returnMembers, returnMenuFiles } from './tools/function'
 import { oneLevelSearch } from '../tools/functions/searches'
+import { updateConversationDescription, updateConversationName } from '../../actions/messenger.action'
+import { avatar } from '../tools/functions/useAvatar'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 
-const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsArr, leaveConversation }) => {
+const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsArr }) => {
     const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState(conversation.name)
     const [changeName, setChangeName] = useState(false)
@@ -18,45 +19,44 @@ const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversati
     const [changeDescription, setChangeDescription] = useState(false)
 
     const [addMember, setAddMember] = useState(false)
-    const [membersToAdd, setMembersToAdd] = useState([])
+    const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
+    const membersToAdd = friendsArr.filter(f => !otherMembersIDs(conversation, uid).includes(f._id))
 
     const [isResults, setResults] = useState([])
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
 
     const submitDescription = async () => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}`,
-            data: { description: description }
-        })
+        dispatch(updateConversationDescription(conversation._id, description))
         setChangeDescription(false)
     }
     const submitName = async () => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}`,
-            data: { name: name }
-        })
+        dispatch(updateConversationName(conversation._id, name))
         setChangeName(false)
     }
 
-    useEffect(() => {
-        let ids = otherMembersIDs(conversation, uid)
-        const notInConvYet = friendsArr.filter(f => !ids.includes(f._id))
-        setMembersToAdd(notInConvYet)
-    }, [friendsArr, conversation, uid])
-
     return (
         <Modal open={open} setOpen={setOpen} className="conversation-modal">
-            {conversation.name &&
-                <div className="px-3 pb-3 bold">{conversation.name}</div>
-            }
+            {conversation.name ? (
+                <div className="pb-3 bold">{conversation.name}</div>
+            ) : (
+                <div className="flex items-center pb-3">
+                    <div className="conversation-img-container">
+                        {members.slice(0, 3).map((element, key) => {
+                            return (
+                                <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                            )
+                        })}
+                    </div>
+                    <div className="conversation-name">{returnMembers(members)}</div>
+                </div>
+            )}
             <div className="modal_nav">
                 <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>À propos</div>
-                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres <span>{conversation.members.length}</span></div>
+                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres <span>{members.length}</span></div>
+                {conversation.files.length > 0 && <div className={`modal_nav-item ${addActive(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>Fichiers</div>}
             </div>
-            {navbar === 1 ? (
+            {navbar === 1 &&
                 <div className="conversation-infos">
                     <div className="conversation-infos-bloc border-b">
                         {changeName ? (
@@ -99,7 +99,7 @@ const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversati
                         ) : (
                             <>
                                 <div className="w-full">
-                                    <div className="bold mb-2">Description</div>
+                                    <div className="bold mb-1">Description</div>
                                     <div className="txt-sec">{description !== "" && description !== undefined ? description : 'Pas encore de description'}</div>
                                 </div>
                                 <div className="ml-10">
@@ -112,39 +112,40 @@ const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversati
                     </div>
                     <div className="conversation-infos-bloc border-b">
                         <div className="w-full">
-                            <div className="bold mb-2">Créé par</div>
+                            <div className="bold mb-1">Créé par</div>
                             <div className="txt-sec">{conversation.creator.pseudo} le {dateParser(conversation.createdAt)}</div>
                         </div>
                     </div>
                     <div className="conversation-infos-bloc">
                         <div className="w-full">
-                            <div className="bold mb-2">Propriétaire</div>
+                            <div className="bold mb-1">Propriétaire</div>
                             <div className="txt-sec">{conversation.owner.pseudo}</div>
                         </div>
                     </div>
                     <div className="conversation-btn_container">
-                        <TextButton text="Quitter" className="mr-2" onClick={() => { leaveConversation(conversation, uid); setOpen(false) }} />
-                        {conversation.owner.id === uid && <Button text="Supprimer" onClick={() => { deleteConv(conversation, uid, websocket, dispatch); setOpen(false) }} />}
+                        <TextButton text="Quitter la conversation" className="mr-2" onClick={() => { leaveConversation(conversation, uid); setOpen(false) }} />
+                        {conversation.owner.id === uid && <Button text="Supprimer la conversation" onClick={() => { deleteConv(conversation, uid, websocket, dispatch); setOpen(false) }} />}
                     </div>
                 </div>
-            ) : (
+            }
+            {navbar === 2 &&
                 <>
                     <IconInput
-                        className="full is_start_icon"
+                        className="full is_start_icon mb-3"
                         placeholder="Rechercher un membre..."
                         icon={<BiSearchAlt />}
                         value={query}
                         onInput={e => setQuery(e.target.value)}
-                        onChange={() => oneLevelSearch(query, conversation.members, 'pseudo', isResults, setResults, setSearch)}
+                        onChange={() => oneLevelSearch(query, members, 'pseudo', isResults, setResults, setSearch)}
                     />
                     {!addMember && (
                         <>
-                            <div className="add-more-users mt-3" onClick={() => setAddMember(!addMember)}>
+                            <div className="add-more-users" onClick={() => setAddMember(!addMember)}>
                                 <BiUserPlus />
                                 <p>Ajouter des personnes</p>
                             </div>
                             <div className="conversation-members">
-                                {conversation.members.map((member, key) => {
+                                {members.map((member, key) => {
                                     return (
                                         <div className={`${isInResults(member, isResults, search, "flex")} justify-between py-2`} key={key}>
                                             <div className="flex items-center">
@@ -152,7 +153,7 @@ const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversati
                                                 <div>{member.pseudo}</div>
                                             </div>
                                             {conversation.owner.id === uid && member.id !== uid &&
-                                                <TextButton text="Supprimer" onClick={() => leaveConversation(conversation, member.id)} />
+                                                <TextButton text="Supprimer" onClick={() => leaveConversation(conversation, member.id, uid, websocket, dispatch)} />
                                             }
                                         </div>
                                     )
@@ -191,7 +192,19 @@ const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversati
                         </div>
                     }
                 </>
-            )}
+            }
+            {conversation.files.length > 0 &&
+                navbar === 3 &&
+                <div className="conversation-files">
+                    {conversation.files.map((file, key) => {
+                        return (
+                            <div className="conversation-file" key={key}>
+                                {returnMenuFiles(file)}
+                            </div>
+                        )
+                    })}
+                </div>
+            }
         </Modal>
     )
 }
