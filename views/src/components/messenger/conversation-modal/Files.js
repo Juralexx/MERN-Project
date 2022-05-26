@@ -31,32 +31,30 @@ const Files = ({ uid, websocket, conversation, dispatch }) => {
             <div className="conversation-files custom-scrollbar">
                 {conversation.files.map((file, key) => {
                     return (
-                        <>
-                            <div className={`${isInResults(file, isResults, search, "flex")} conversation-file`} key={key}>
-                                <div className="file-doc">
-                                    {file.type.includes('image') ? (
-                                        <div className="file-img-preview" style={coverPicture(file.url)}></div>
-                                    ) : (
-                                        <IoDocumentTextOutline className="file-doc-img" />
-                                    )}
-                                    <div className="file-doc-content">
-                                        <p><a href={file.url} rel="noreferrer" target="_blank">{file.name}</a></p>
-                                        <p>Partagé par {file.userPseudo} le {dateParser(file.date)}</p>
-                                    </div>
+                        <div className={`${isInResults(file, isResults, search, "flex")} conversation-file`} key={key}>
+                            <div className="file-doc">
+                                {file.type.includes('image') ? (
+                                    <div className="file-img-preview" style={coverPicture(file.url)}></div>
+                                ) : (
+                                    <IoDocumentTextOutline className="file-doc-img" />
+                                )}
+                                <div className="file-doc-content">
+                                    <p><a href={file.url} rel="noreferrer" target="_blank">{file.name}</a></p>
+                                    <p>Partagé par {file.userPseudo} le {dateParser(file.date)}</p>
                                 </div>
-                                <div className="file-tools">
-                                    <Tooltip content={<p>Ouvrir</p>}>
-                                        <button><a href={file.url} rel="noreferrer" target="_blank"><IoArrowRedo /></a></button>
+                            </div>
+                            <div className="file-tools">
+                                <Tooltip content={<p>Ouvrir</p>}>
+                                    <button><a href={file.url} rel="noreferrer" target="_blank"><IoArrowRedo /></a></button>
+                                </Tooltip>
+                                <Tooltip content={<p>Télécharger</p>}>
+                                    <button onClick={() => download(file)}><MdFileDownload /></button>
+                                </Tooltip>
+                                {file.userId === uid &&
+                                    <Tooltip content={<p>Supprimer</p>}>
+                                        <button onClick={() => setWarning(key)}><IoTrashBin className="red" /></button>
                                     </Tooltip>
-                                    <Tooltip content={<p>Télécharger</p>}>
-                                        <button onClick={() => download(file)}><MdFileDownload /></button>
-                                    </Tooltip>
-                                    {file.userId === uid &&
-                                        <Tooltip content={<p>Supprimer</p>}>
-                                            <button onClick={() => setWarning(key)}><IoTrashBin className="red" /></button>
-                                        </Tooltip>
-                                    }
-                                </div>
+                                }
                             </div>
                             {warning === key &&
                                 <Warning
@@ -70,7 +68,7 @@ const Files = ({ uid, websocket, conversation, dispatch }) => {
                                 >
                                 </Warning>
                             }
-                        </>
+                        </div>
                     )
                 })}
             </div>

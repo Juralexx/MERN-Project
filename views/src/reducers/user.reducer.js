@@ -175,16 +175,10 @@ export default function userReducer(state = initialState, action) {
         /**
          * MESSENGER
          */
-
-        case CREATE_CONVERSATION:
-            return {
-                ...state,
-                conversations: [...state.conversations, { type: action.payload.type, id: action.payload._id, last_message_seen: action.payload.last_message_seen }]
-            }
         case RECEIVE_CREATE_CONVERSATION:
             return {
                 ...state,
-                conversations: [...state.conversations, { id: action.payload.conversationId, last_message_seen: null }]
+                conversations: [...state.conversations, { id: action.payload.conversationId, last_message_seen: null, favorite: false }]
             }
         case DELETE_CONVERSATION:
             return {

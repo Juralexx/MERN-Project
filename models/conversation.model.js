@@ -8,6 +8,12 @@ const ConversationModel = new mongoose.Schema(
         name: {
             type: String
         },
+        description: {
+            type: String
+        },
+        picture: {
+            type: String
+        },
         members: {
             type: [],
             _id: String,
@@ -25,25 +31,24 @@ const ConversationModel = new mongoose.Schema(
             picture: String
         },
         messages: {
-            type: [{
-                _id: String, 
-                sender: String,
-                sender_pseudo: String,
-                sender_picture: String,
-                text: {
-                    type: {},
-                },
-                emojis: {
-                    type: [],
-                },
-                createdAt: Date,
-                modified: Boolean,
-                shared: Object,
-                files: []
-            }],
-        },
-        description: {
-            type: String,
+            type: [
+                {
+                    _id: String,
+                    sender: String,
+                    sender_pseudo: String,
+                    sender_picture: String,
+                    text: {
+                        type: {},
+                    },
+                    emojis: {
+                        type: [],
+                    },
+                    createdAt: Date,
+                    modified: Boolean,
+                    shared: Object,
+                    files: []
+                }
+            ],
         },
         last_message: {
             type: String

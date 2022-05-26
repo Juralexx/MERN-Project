@@ -239,6 +239,16 @@ io.on("connect", (socket) => {
         }
     })
 
+    socket.on('customizeConversationPseudo', ({ receiverId, conversationId, userId, pseudo }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('customizeConversationPseudo', {
+                userId,
+                pseudo
+            })
+        }
+    })
+
     /***********************************************************************************/
     /************************************* FRIEND **************************************/
 

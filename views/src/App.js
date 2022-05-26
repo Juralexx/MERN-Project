@@ -7,7 +7,7 @@ import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
-import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile } from './actions/messenger.action';
+import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo } from './actions/messenger.action';
 
 function App() {
     const user = useSelector(state => state.userReducer)
@@ -88,6 +88,9 @@ function App() {
         websocket.current.on("leaveConversation", data => {
             dispatch(receiveRemoveMember(data.conversationId))
         })
+        websocket.current.on("customizeConversationPseudo", data => {
+            dispatch(receiveCustomizeUserPseudo(data.userId, data.pseudo))
+        })
         websocket.current.on("friendRequest", data => {
             dispatch(receiveFriendRequest(data.notification))
             setSentNotification(data.notification)
@@ -159,6 +162,7 @@ function App() {
             websocket.current.off("joinConversation")
             websocket.current.off("removeConversationMember")
             websocket.current.off("leaveConversation")
+            websocket.current.off("customizeConversationPseudo")
             websocket.current.off("friendRequest")
             websocket.current.off("cancelFriendRequest")
             websocket.current.off("acceptFriendRequest")

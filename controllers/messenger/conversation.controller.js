@@ -2,6 +2,14 @@ import mongoose from 'mongoose';
 import ConversationModel from '../../models/conversation.model.js';
 import UserModel from '../../models/user.model.js';
 const ObjectID = mongoose.Types.ObjectId
+import fs from 'fs'
+import { promisify } from 'util'
+import stream from 'stream'
+const pipeline = promisify(stream.pipeline);
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+import sharp from 'sharp'
 
 /**
  * Create a new conversation
@@ -62,6 +70,58 @@ export const getConversation = async (req, res) => {
 }
 
 /**
+ * Upload conversation picture
+ */
+
+export const uploadConversationPicture = async (req, res) => {
+    const __directory = `${__dirname}/../../uploads/conversations/${req.params.id}`
+
+    if (!fs.existsSync(__directory)) {
+        fs.mkdirSync(__directory, { recursive: true })
+    }
+
+    const fileName = `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.id}.jpg`;
+
+    new Promise(async () => {
+        await pipeline(
+            req.file.stream,
+            fs.createWriteStream(`${__directory}/${req.file.originalName}`)
+        )
+            .then(() => {
+                sharp(`${__directory}/${req.file.originalName}`)
+                    .withMetadata()
+                    .jpeg({ mozjpeg: true, quality: 50 })
+                    .toFile(`${__directory}/${req.params.id}.jpg`, (err) => {
+                        if (err) {
+                            console.error(err)
+                        } else {
+                            fs.unlink(`${__directory}/${req.file.originalName}`, (err) => {
+                                if (err) console.error(err)
+                            })
+                        }
+                    })
+            })
+    })
+
+    try {
+        await ConversationModel.findByIdAndUpdate(
+            { _id: req.params.id },
+            { $set: { picture: fileName } },
+            { new: true, upsert: true },
+            (err, docs) => {
+                if (!err) {
+                    return res.send(docs);
+                } else {
+                    return res.status(400).send({ message: err });
+                }
+            }
+        )
+    } catch (err) {
+        return res.status(400).send({ message: err });
+    }
+}
+
+/**
  * Update conversation
  */
 
@@ -78,8 +138,33 @@ export const updateConversation = async (req, res) => {
             },
             { new: true, upsert: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        res.status(400).json(err)
+    }
+}
+
+/**
+ * Customize user pseudo in conversation
+ */
+
+export const customizeUserPseudo = async (req, res) => {
+    try {
+        await ConversationModel.updateOne(
+            {
+                _id: req.params.id,
+                members: { $elemMatch: { _id: req.params.userId } }
+            },
+            {
+                $set: {
+                    "members.$.custom_pseudo": req.body.pseudo
+                },
+            },
+            { new: true, upsert: true },
+        )
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -151,8 +236,8 @@ export const addMember = async (req, res) => {
             },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -185,8 +270,8 @@ export const removeMember = async (req, res) => {
             },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
     }

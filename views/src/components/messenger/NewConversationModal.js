@@ -13,14 +13,15 @@ import { BiSearchAlt } from 'react-icons/bi';
 
 const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversations, setConversations, friendsArr, changeCurrentChat }) => {
     const [navbar, setNavbar] = useState(1)
-    const [name, setName] = useState()
-    const [description, setDescription] = useState()
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [picture, setPicture] = useState(null)
     const [members, setMembers] = useState([])
 
     const createNewConversation = async () => {
         let usr = { _id: user._id, pseudo: user.pseudo, picture: user.picture, date: new Date().toISOString() }
         let isConv = isConversation(conversations, [...members, usr])
-        
+
         if (members.length === 1 && isConv !== false) {
             changeCurrentChat(isConv)
             console.log(isConv)
@@ -36,7 +37,14 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                     owner: usr,
                     creator: usr
                 }
-            }).then(res => {
+            }).then(async res => {
+                if (res.data && picture !== null) {
+                    let formData = new FormData()
+                    formData.append('file', picture)
+                    await axios
+                        .put(`${process.env.REACT_APP_API_URL}api/conversation/${res.data._id}/upload`, formData)
+                        .catch(err => console.log(err))
+                }
                 otherMembersIDs(res.data, uid).map(memberId => {
                     return websocket.current.emit("addConversation", {
                         receiverId: memberId,
@@ -45,13 +53,12 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                 })
                 setConversations(convs => [...convs, res.data])
                 changeCurrentChat(res.data)
-                console.log(res.data)
             })
         }
         setMembers([])
         setNavbar(1)
-        setName()
-        setDescription()
+        setName("")
+        setDescription("")
         setOpen(false)
     }
 
@@ -100,7 +107,7 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                                                 <p>{element.pseudo}</p>
                                             </div>
                                             {members.some(member => member._id === element._id) ? (
-                                                <TextButton text="Retirer" />
+                                                <TextButton text="Retirer" className="light_delete" />
                                             ) : (
                                                 <TextButton text="Ajouter" />
                                             )}
@@ -120,13 +127,15 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                     <div className="py-3">
                         <div className="title">Nom</div>
                         <div className="info">
-                            <ClassicInput className="full" onChange={e => setName(e.target.value)} placeholder="Nom de la conversation..." />
+                            <ClassicInput className="full" value={name} onChange={e => setName((e.target.value).substring(0, 50))} placeholder="Nom de la conversation..." />
+                            <div className="field_infos full">{name.length} / 50 caractères</div>
                         </div>
                     </div>
                     <div className="py-3">
                         <div className="title">Description</div>
                         <div className="info">
-                            <Textarea className="full" onChange={e => setDescription(e.target.value)} placeholder="Description de la conversation..." />
+                            <Textarea className="full" value={description} onChange={e => setDescription((e.target.value).substring(0, 500))} placeholder="Description de la conversation..." />
+                            <div className="field_infos full">{description.length} / 500 caractères</div>
                         </div>
                     </div>
                 </>

@@ -3708,7 +3708,7 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 10px;
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item {
-  padding: 6px 10px;
+  padding: 4px 10px;
   color: var(--text-secondary);
   cursor: pointer;
 }
@@ -3716,8 +3716,9 @@ h1, h2, h3, h4, h5 {
   color: var(--text);
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item.active {
-  color: var(--primary);
-  border-bottom: 2px solid var(--primary);
+  color: var(--white);
+  background-color: var(--primary);
+  border-radius: var(--radius);
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item span {
   font-size: 12px;

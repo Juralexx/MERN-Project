@@ -1,4 +1,4 @@
-import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION_OWNER, UPDATE_CONVERSATION_NAME, UPDATE_CONVERSATION_DESCRIPTION, UPDATE_MESSAGE, DELETE_FILE } from "../actions/messenger.action";
+import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION_OWNER, UPDATE_CONVERSATION_NAME, UPDATE_CONVERSATION_DESCRIPTION, UPDATE_MESSAGE, DELETE_FILE, UPLOAD_CONVERSATION_PICTURE, CREATE_CONVERSATION, CUSTOMIZE_USER_PSEUDO } from "../actions/messenger.action";
 
 const initialState = {}
 
@@ -13,6 +13,11 @@ export default function messengerReducer(state = initialState, action) {
         case GET_CONVERSATION:
             return action.payload
 
+        case UPLOAD_CONVERSATION_PICTURE:
+            return {
+                ...state,
+                picture: action.payload.picture,
+            }
         case UPDATE_CONVERSATION_NAME:
             return {
                 ...state,
@@ -27,6 +32,13 @@ export default function messengerReducer(state = initialState, action) {
             return {
                 ...state,
                 owner: action.payload.owner,
+            }
+        case CUSTOMIZE_USER_PSEUDO:
+            let u = state.members.findIndex(m => m._id === action.payload.userId)
+            state.members[u].custom_pseudo = action.payload.pseudo
+            return {
+                ...state,
+                members: state.members
             }
         case ADD_MEMBER_CONVERSATION:
             return {

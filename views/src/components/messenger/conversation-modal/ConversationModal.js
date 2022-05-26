@@ -6,6 +6,7 @@ import { avatar } from '../../tools/functions/useAvatar'
 import Files from './Files'
 import Members from './Members'
 import Main from './Main'
+import Customization from './Customization'
 
 const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsArr }) => {
     const [navbar, setNavbar] = useState(1)
@@ -36,7 +37,8 @@ const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversati
             <div className="modal_nav">
                 <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>À propos</div>
                 <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres <span>{members.length + 1}</span></div>
-                {conversation.files.length > 0 && <div className={`modal_nav-item ${addActive(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>Fichiers</div>}
+                <div className={`modal_nav-item ${addActive(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>Fichiers <span>{conversation.files.length}</span></div>
+                <div className={`modal_nav-item ${addActive(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Personnalisation</div>
             </div>
 
             {navbar === 1 &&
@@ -60,9 +62,17 @@ const ConversationModal = ({ uid, websocket, dispatch, open, setOpen, conversati
                 />
             }
 
-            {conversation.files.length > 0 &&
-                navbar === 3 &&
+            {navbar === 3 &&
                 <Files
+                    uid={uid}
+                    websocket={websocket}
+                    conversation={conversation}
+                    dispatch={dispatch}
+                />
+            }
+
+            {navbar === 4 &&
+                <Customization
                     uid={uid}
                     websocket={websocket}
                     conversation={conversation}

@@ -18,39 +18,26 @@ export const getConversation = (conversationId) => {
 }
 
 /**
- * Create conversation
+ * Receive conversation creation
  */
-
-export const CREATE_CONVERSATION = "CREATE_CONVERSATION"
-
-export const createConversation = (conversation) => {
-    return async (dispatch) => {
-        await axios({
-            method: "post",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/`,
-            data: {
-                type: conversation.type,
-                members: conversation.members,
-                name: conversation.name,
-                description: conversation.description,
-                owner: conversation.owner,
-                creator: conversation.creator,
-                messages: conversation.messages
-            }
-        })
-            .then(res => {
-                console.log(res)
-                dispatch({ type: CREATE_CONVERSATION, payload: res.data })
-            })
-            .catch(err => console.error(err))
-    }
-}
 
 export const RECEIVE_CREATE_CONVERSATION = "RECEIVE_CREATE_CONVERSATION"
 
 export const receiveCreateConversation = (conversationId) => {
     return async (dispatch) => {
         dispatch({ type: RECEIVE_CREATE_CONVERSATION, payload: { conversationId } })
+    }
+}
+
+/**
+ * Upload conversation image
+ */
+
+export const UPLOAD_CONVERSATION_PICTURE = "UPLOAD_CONVERSATION_PICTURE"
+
+export const uploadConversationPicture = (picture) => {
+    return async (dispatch) => {
+        dispatch({ type: UPLOAD_CONVERSATION_PICTURE, payload: { picture } })
     }
 }
 
@@ -84,53 +71,79 @@ export const receiveUpdateConversationOwner = (owner) => {
  * Update conversation description
  */
 
- export const UPDATE_CONVERSATION_DESCRIPTION = "UPDATE_CONVERSATION_DESCRIPTION"
+export const UPDATE_CONVERSATION_DESCRIPTION = "UPDATE_CONVERSATION_DESCRIPTION"
 
- export const updateConversationDescription = (conversationId, description) => {
-     return async (dispatch) => {
-         await axios({
-             method: "put",
-             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
-             data: { description }
-         })
-             .then(() => {
-                 dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
-             })
-             .catch(err => console.error(err))
-     }
- }
- 
- export const receiveUpdateConversationDescription = (description) => {
-     return async (dispatch) => {
-         dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
-     }
- }
+export const updateConversationDescription = (conversationId, description) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
+            data: { description }
+        })
+            .then(() => {
+                dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
+            })
+            .catch(err => console.error(err))
+    }
+}
 
- /**
- * Update conversation name
- */
+export const receiveUpdateConversationDescription = (description) => {
+    return async (dispatch) => {
+        dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
+    }
+}
 
-  export const UPDATE_CONVERSATION_NAME = "UPDATE_CONVERSATION_NAME"
+/**
+* Update conversation name
+*/
 
-  export const updateConversationName = (conversationId, name) => {
-      return async (dispatch) => {
-          await axios({
-              method: "put",
-              url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
-              data: { name }
-          })
-              .then(() => {
-                  dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
-              })
-              .catch(err => console.error(err))
-      }
-  }
-  
-  export const receiveUpdateConversationName = (name) => {
-      return async (dispatch) => {
-          dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
-      }
-  }
+export const UPDATE_CONVERSATION_NAME = "UPDATE_CONVERSATION_NAME"
+
+export const updateConversationName = (conversationId, name) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
+            data: { name }
+        })
+            .then(() => {
+                dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
+            })
+            .catch(err => console.error(err))
+    }
+}
+
+export const receiveUpdateConversationName = (name) => {
+    return async (dispatch) => {
+        dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
+    }
+}
+
+/**
+* Update conversation name
+*/
+
+export const CUSTOMIZE_USER_PSEUDO = "CUSTOMIZE_USER_PSEUDO"
+
+export const customizeUserPseudo = (conversationId, userId, pseudo) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/customize-pseudo/${userId}`,
+            data: { pseudo }
+        })
+            .then(() => {
+                dispatch({ type: CUSTOMIZE_USER_PSEUDO, payload: { userId, pseudo } })
+            })
+            .catch(err => console.error(err))
+    }
+}
+
+export const receiveCustomizeUserPseudo = (userId, pseudo) => {
+    return async (dispatch) => {
+        dispatch({ type: CUSTOMIZE_USER_PSEUDO, payload: { userId, pseudo } })
+    }
+}
 
 /**
  * Delete conversation
