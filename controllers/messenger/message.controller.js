@@ -18,17 +18,14 @@ export const getMessage = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
-    ConversationModel.find({
-        _id: req.params.id,
-        messages: { $elemMatch: { _id: req.params.messageId } }
-    },
+    ConversationModel.findOne({ _id: req.params.id },
         (err, docs) => {
             if (!err) {
                 res.send(docs)
             } else {
                 console.log('Unknown URL : ' + err)
             }
-        }).select()
+        }).select({ messages: { $elemMatch: { _id: req.params.messageId } } })
 }
 
 /**

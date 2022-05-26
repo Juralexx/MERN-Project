@@ -1,0 +1,139 @@
+.conversation-modal {
+    min-height     : 470px;
+    padding-bottom : 60px !important;
+    
+    .conversation-infos {
+        padding    : 0 3px;
+        overflow-y : auto;
+
+        .conversation-infos-bloc {
+            display         : flex;
+            align-items     : center;
+            justify-content : space-between;
+            padding         : 10px 0;
+        }
+    }
+    
+    .conversation-img-container {
+        display      : flex;
+        position     : relative;
+        height       : 32px;
+        margin-right : 10px;
+
+        .conversation-img {
+            min-width     : 32px;
+            min-height    : 32px;
+            border-radius : 50%;
+            border        : 2px solid  var(--content-light);
+
+            &:nth-child(n+2) {
+                margin-left : -12px;
+            }
+        }
+    }
+
+    .conversation-name {
+        display     : flex;
+        align-items : center;
+        font-weight : 600;
+        font-size   : 16px;
+
+        svg {
+            margin-left : 5px;
+            width       : 20px;
+            height      : 20px;
+        }
+    }
+
+    .conversation-members {
+        max-height : 300px;
+        overflow-y : auto;
+    }
+
+    .conversation-btn_container {
+        position        : fixed;
+        display         : flex;
+        justify-content : flex-end;
+        padding         : 15px 20px;
+        left            : 0;
+        bottom          : 0;
+        width           : 100%;
+    }
+
+    .conversation-files {
+        max-height : 600px;
+        overflow-y : auto;
+
+        .conversation-file {
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+            cursor          : pointer;
+            margin          : 3px 0;
+            padding          : 4px 10px;
+
+            &:hover, &:active {
+                background-color : var(--light);
+
+                .file-tools {
+                    display : flex;
+                }
+            }
+
+            .file-doc {
+                display          : flex;
+                align-items      : center;
+                width            : 100%;
+                border-radius    : 5px;
+        
+                .file-doc-img {
+                    width  : 34px;
+                    height : 34px;
+                    color  : var(--light-blue);
+                }
+
+                .file-img-preview {
+                    width         : 34px;
+                    height        : 34px;
+                    border-radius : 5px;
+                }
+        
+                .file-doc-content {
+                    margin-left : 14px;
+                    p {
+                        &:nth-child(1) {
+                            text-overflow      : ellipsis;
+                            overflow           : hidden;
+                            width              : 100%;
+                            line-height        : 18px;
+                            display            : -webkit-box;
+                            -webkit-line-clamp : 1;
+                            -webkit-box-orient : vertical;
+                        }
+                        &:nth-child(2) {
+                            font-size : 12px;
+                            color     : var(--text-secondary);
+                        }
+                    }
+                }
+            }
+
+            .file-tools {
+                display : none;
+
+                button {
+                    padding       : 4px;
+                    background    : var(--xx-light);
+                    margin        : 0 4px;
+                    border-radius : 50%;
+                    box-shadow    : var(--shadow-tiny);
+
+                    svg {
+                        height : 20px;
+                        width  : 20px;
+                    }
+                }
+            }
+        }
+    }
+}

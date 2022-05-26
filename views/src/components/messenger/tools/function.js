@@ -5,6 +5,7 @@ import { charSetToChar, checkTheme, dateParser, dateParserWithoutYear, randomNbI
 import { addEmoji, addMember, deleteConversation, deleteFile, deleteMessage, removeEmoji, removeMember, updateMessage } from '../../../actions/messenger.action';
 import { coverPicture } from '../../tools/functions/useAvatar';
 import { IoDocumentTextOutline } from 'react-icons/io5';
+import axios from 'axios';
 
 /**
  * Delta convertion
@@ -75,7 +76,7 @@ export function getDate(date) {
  */
 
 export const getMembers = (conversation, uid) => {
-    const members = conversation.members.filter(member => member.id !== uid)
+    const members = conversation.members.filter(member => member._id !== uid)
     return members
 }
 
@@ -86,7 +87,7 @@ export const getMembers = (conversation, uid) => {
 export const userToMember = (members) => {
     let arr = []
     members.forEach(member => {
-        arr.push({ id: member._id, pseudo: member.pseudo, picture: member.picture })
+        arr.push({ _id: member._id, pseudo: member.pseudo, picture: member.picture })
     })
     return arr
 }
@@ -96,10 +97,10 @@ export const userToMember = (members) => {
  */
 
 export const otherMembersIDs = (conversation, uid) => {
-    const membersId = conversation.members.filter(member => member.id !== uid)
+    const membersId = conversation.members.filter(member => member._id !== uid)
     let memberIds = []
     membersId.map(member => {
-        return memberIds = [...memberIds, member.id]
+        return memberIds = [...memberIds, member._id]
     })
     return memberIds
 }
@@ -109,11 +110,11 @@ export const otherMembersIDs = (conversation, uid) => {
  */
 
 export const pushUserInArray = (member, array) => {
-    if (!array.some(e => e.id === member._id)) {
-        return [...array, { id: member._id, pseudo: member.pseudo, picture: member.picture }]
+    if (!array.some(e => e._id === member._id)) {
+        return [...array, { _id: member._id, pseudo: member.pseudo, picture: member.picture, date: new Date().toISOString() }]
     } else {
         let arr = [...array]
-        let index = arr.findIndex(e => e.id === member._id)
+        let index = arr.findIndex(e => e._id === member._id)
         arr.splice(index, 1)
         return arr
     }
@@ -125,7 +126,7 @@ export const pushUserInArray = (member, array) => {
 
 export const removeUserFromArray = (member, array) => {
     let arr = [...array]
-    let index = arr.findIndex(e => e.id === member.id)
+    let index = arr.findIndex(e => e._id === member._id)
     arr.splice(index, 1)
     return arr
 }
@@ -139,7 +140,7 @@ export const isConversation = (conversations, members) => {
         const convs = conversations.filter(conv => conv.members.length === members.length)
         if (convs.length > 0) {
             if (members.length === 2) {
-                const conversation = convs.filter(conv => conv.members[0].id === members[0]._id || conv.members[1].id === members[0]._id)
+                const conversation = convs.filter(conv => conv.members[0]._id === members[0]._id || conv.members[1]._id === members[0]._id)
                 if (conversation.length > 0) {
                     return conversation[0]
                 } else {
@@ -342,26 +343,6 @@ export const returnEditorFiles = (file) => {
 }
 
 /**
- * Return the file preview in menus
- */
-
-export const returnMenuFiles = (file) => {
-    return (
-        <div className="file-doc">
-            {file.type.includes('image') ? (
-                <div className="file-img-preview" style={coverPicture(file.url)}></div>
-            ) : (
-                <IoDocumentTextOutline className="file-doc-img" />
-            )}
-            <div className="file-doc-content">
-                <p>{file.name}</p>
-                <p>Partagé par {file.userPseudo} le {dateParser(file.date)}</p>
-            </div>
-        </div>
-    )
-}
-
-/**
  * Remove uploaded file
  */
 
@@ -538,8 +519,20 @@ export const deleteFiles = (file, user, websocket, currentChat, message, dispatc
         })
     })
     dispatch(deleteFile(currentChat._id, message._id, file))
-    if (message.text.length === 0 && message.files.length - 1 <= 0) {
-        removeMessage(message, currentChat, user._id, websocket, dispatch)
+    if (message.text) {
+        if (message.text.length === 0 && message.files.length - 1 <= 0) {
+            removeMessage(message, currentChat, user._id, websocket, dispatch)
+        }
+    } else {
+        const fecthMessage = async () => {
+            await axios.get(`${process.env.REACT_APP_API_URL}api/conversation/${currentChat._id}/${message}`)
+                .then(res => {
+                    if (res.data.text.length === 0 && res.data.files.length - 1 <= 0) {
+                        removeMessage(message, currentChat, user._id, websocket, dispatch)
+                    }
+                })
+        }
+        fecthMessage()
     }
 }
 

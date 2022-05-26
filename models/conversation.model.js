@@ -10,17 +10,17 @@ const ConversationModel = new mongoose.Schema(
         },
         members: {
             type: [],
-            id: String,
+            _id: String,
             pseudo: String,
             picture: String,
         },
         owner: {
-            id: String,
+            _id: String,
             pseudo: String,
             picture: String
         },
         creator: {
-            id: String,
+            _id: String,
             pseudo: String,
             picture: String
         },

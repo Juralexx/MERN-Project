@@ -11,7 +11,7 @@ const SearchHeader = ({ uid, user, friendsArr, setCurrentChat, changeCurrentChat
     const [query, setQuery] = useState("")
     const [isResults, setResults] = useState([])
     
-    const [friends, setFriends] = useState(friendsArr.filter(f => !temporaryConv.members?.some(m => m.id === f._id)) || friendsArr)
+    const [friends, setFriends] = useState(friendsArr.filter(f => !temporaryConv.members?.some(m => m._id === f._id)) || friendsArr)
     const [members, setMembers] = useState(temporaryConv.members || [])
     const wrapperRef = useRef()
     const [open, setOpen] = useState(friends.length > 0 ? true : false)
@@ -37,7 +37,7 @@ const SearchHeader = ({ uid, user, friendsArr, setCurrentChat, changeCurrentChat
                 const conversation = {
                     type: mbrsArr.length > 1 ? 'group' : 'dialog',
                     members: mbrsArr,
-                    creator: { id: user._id, pseudo: user.pseudo, picture: user.picture },
+                    creator: { _id: user._id, pseudo: user.pseudo, picture: user.picture },
                     messages: [],
                     createdAt: new Date().toISOString()
                 }
@@ -68,7 +68,7 @@ const SearchHeader = ({ uid, user, friendsArr, setCurrentChat, changeCurrentChat
                     const conversation = {
                         type: mbrs.length > 1 ? 'group' : 'dialog',
                         members: mbrs,
-                        creator: { id: user._id, pseudo: user.pseudo, picture: user.picture },
+                        creator: { _id: user._id, pseudo: user.pseudo, picture: user.picture },
                         messages: [],
                         createdAt: new Date().toISOString()
                     }

@@ -18,7 +18,6 @@
         background-color : var(--content);
         border-radius    : var(--radius);
         box-shadow       : var(--shadow-xl);
-        border           : 1px solid var(--content-x-light);
         z-index          : 100000000000;
     
         h2 {
@@ -70,10 +69,10 @@
         .modal_nav {
             display       : flex;
             min-width     : 100%;
-            margin-bottom : 20px;
+            margin-bottom : 10px;
     
             .modal_nav-item {
-                padding : 8px 16px;
+                padding : 6px 10px;
                 color   : var(--text-secondary);
                 cursor  : pointer;
     
@@ -100,7 +99,7 @@
         bottom     : 0;
         left       : 0;
         right      : 0;
-        background : rgba(0, 0, 0, 0.5);
+        background : var(--modal-cover);
         z-index    : 100000;
         display    : none;
     
@@ -270,6 +269,8 @@
 }
 
 .warning_modal {
+    max-width : 480px;
+
     .warning_title {
         font-size : 20px;
         width     : 90%;

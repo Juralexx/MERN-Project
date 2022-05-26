@@ -221,9 +221,9 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 })
             })
         } else {
-            const receiver = conversation.members.find(member => member.id !== uid)
+            const receiver = conversation.members.find(member => member._id !== uid)
             websocket.current.emit("sendMessage", {
-                receiverId: receiver.id,
+                receiverId: receiver._id,
                 conversationId: conversation._id,
                 message: message
             })

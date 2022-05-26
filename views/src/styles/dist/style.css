@@ -19,6 +19,8 @@
   --navbar-txt: #232221;
   --mini_nav-btn: #eef0fc;
   --menu: #ffffff;
+  --modal-cover: rgba(0, 0, 0, 0.5);
+  --tooltip: #222121;
   --color-skeleton: rgb(203, 213, 225);
   --shadow-light: 0 5px 50px 0px rgb(0 0 0 / 0.07), 0 8px 10px -6px rgb(0 0 0 / 0.07);
   --shadow-tiny: rgb(35 34 33 / 17%) 0px 1px 4px 1px;
@@ -44,6 +46,8 @@
   --placeholder: #b6bac0;
   --navbar-txt: #EDF8FC;
   --menu: #0b0c0e;
+  --modal-cover: rgba(255, 255, 255, 0.2);
+  --tooltip: #69697f;
   --color-skeleton: linear-gradient(-90deg, rgb(169, 173, 179) 0%, rgb(106, 114, 127) 50%, rgb(169, 173, 179) 100%);
   --shadow-light: 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);
   --shadow-tiny: rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
@@ -388,6 +392,10 @@ h1, h2, h3, h4, h5 {
   font-size: 12px;
 }
 
+.f-18 {
+  font-size: 18px;
+}
+
 .f-24 {
   font-size: 24px;
 }
@@ -511,6 +519,21 @@ h1, h2, h3, h4, h5 {
   -webkit-box-shadow: inset var(--shadow-tiny);
           box-shadow: inset var(--shadow-tiny);
 }
+.btn.delete {
+  background-color: rgba(var(--red-rgb), 0.9);
+}
+.btn.delete:hover {
+  background-color: var(--red);
+}
+.btn.light_delete {
+  color: var(--red);
+}
+.btn.light_delete svg {
+  color: var(--red);
+}
+.btn.light_delete:hover {
+  background-color: rgba(var(--red-rgb), 0.2);
+}
 
 .btn_first {
   color: white !important;
@@ -554,6 +577,7 @@ h1, h2, h3, h4, h5 {
 
 .text_btn {
   color: var(--primary);
+  border-radius: var(--radius);
   -webkit-box-shadow: none;
           box-shadow: none;
 }
@@ -654,6 +678,13 @@ h1, h2, h3, h4, h5 {
 .icon_toggle:active {
   -webkit-transform: scale(0.95);
           transform: scale(0.95);
+}
+.icon_toggle.shadow {
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
+}
+.icon_toggle.light {
+  background-color: var(--xx-light);
 }
 
 .small_tools_btn {
@@ -2803,6 +2834,15 @@ h1, h2, h3, h4, h5 {
 .icon-input.full input {
   width: 100%;
 }
+.icon-input.small {
+  height: 36px;
+}
+.icon-input.small.is_start_icon input {
+  padding-left: 35px;
+}
+.icon-input.small.is_start_icon .start_icon {
+  padding-left: 8px;
+}
 
 .number-input {
   display: block;
@@ -3616,7 +3656,6 @@ h1, h2, h3, h4, h5 {
   border-radius: var(--radius);
   -webkit-box-shadow: var(--shadow-xl);
           box-shadow: var(--shadow-xl);
-  border: 1px solid var(--content-x-light);
   z-index: 100000000000;
 }
 .modal_wrapper .modal_container h2 {
@@ -3670,10 +3709,10 @@ h1, h2, h3, h4, h5 {
   display: -ms-flexbox;
   display: flex;
   min-width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item {
-  padding: 8px 16px;
+  padding: 6px 10px;
   color: var(--text-secondary);
   cursor: pointer;
 }
@@ -3695,7 +3734,7 @@ h1, h2, h3, h4, h5 {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--modal-cover);
   z-index: 100000;
   display: none;
 }
@@ -3854,6 +3893,9 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 6px;
 }
 
+.warning_modal {
+  max-width: 480px;
+}
 .warning_modal .warning_title {
   font-size: 20px;
   width: 90%;
@@ -4289,8 +4331,19 @@ h1, h2, h3, h4, h5 {
   width: auto;
   padding: 7px 10px;
   border-radius: var(--radius);
-  background: rgb(20, 20, 20);
+  background: var(--tooltip);
   z-index: 700;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 5s, opacity 0.2s;
+  transition: visibility 5s, opacity 0.2s;
+}
+#tooltip.open {
+  visibility: visible;
+  opacity: 1;
+}
+#tooltip.open .tooltip-arrow:before {
+  visibility: visible;
 }
 #tooltip .tooltip-arrow {
   position: absolute;
@@ -4304,10 +4357,12 @@ h1, h2, h3, h4, h5 {
   width: 12px;
   height: 12px;
   background: inherit;
-  visibility: visible;
+  visibility: hidden;
   content: "";
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
+  -webkit-transition: visibility 5s;
+  transition: visibility 5s;
 }
 #tooltip[data-popper-placement^=top] > .tooltip-arrow {
   bottom: -4px;
@@ -9353,12 +9408,12 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   top: -36px;
-  padding: 3px 0;
+  padding: 4px 0;
   font-size: 13px;
   border-radius: var(--radius);
-  border: 1px solid var(--primary);
-  background: rgba(var(--primary-rgb), 0.7);
+  background: var(--primary);
   color: white;
+  z-index: 700;
 }
 .conversation-scroll-btn span {
   margin-right: 6px;
@@ -9379,123 +9434,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .add-conversation-modal .conversation-btn_container button {
   width: 100%;
-}
-
-/**********************************************************************************/
-/****************************** CONVERSATION MODAL ********************************/
-.conversation-modal {
-  min-height: 470px;
-  padding-bottom: 60px !important;
-}
-.conversation-modal .conversation-infos {
-  padding: 0 3px;
-  overflow-y: auto;
-}
-.conversation-modal .conversation-infos .conversation-infos-bloc {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 12px 0;
-}
-.conversation-modal .conversation-img-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  height: 32px;
-  margin-right: 10px;
-}
-.conversation-modal .conversation-img-container .conversation-img {
-  min-width: 32px;
-  min-height: 32px;
-  border-radius: 50%;
-  border: 2px solid var(--content-light);
-}
-.conversation-modal .conversation-img-container .conversation-img:nth-child(n+2) {
-  margin-left: -12px;
-}
-.conversation-modal .conversation-name {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-weight: 600;
-  font-size: 16px;
-}
-.conversation-modal .conversation-name svg {
-  margin-left: 5px;
-  width: 20px;
-  height: 20px;
-}
-.conversation-modal .conversation-members {
-  max-height: 300px;
-  overflow-y: auto;
-}
-.conversation-modal .conversation-btn_container {
-  position: fixed;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  padding: 15px 20px;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-.conversation-modal .conversation-files .conversation-file {
-  cursor: pointer;
-}
-.conversation-modal .conversation-files .conversation-file:hover {
-  background-color: var(--light);
-}
-.conversation-modal .conversation-files .conversation-file .file-doc {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: 100%;
-  height: 58px;
-  padding: 10px 50px 10px 10px;
-  border-radius: 5px;
-}
-.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-img {
-  min-height: 30px;
-  min-width: 30px;
-  margin-right: 10px;
-  color: var(--light-blue);
-}
-.conversation-modal .conversation-files .conversation-file .file-doc .file-img-preview {
-  width: 38px;
-  height: 38px;
-  border-radius: 5px;
-}
-.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-content {
-  margin-left: 14px;
-}
-.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-content p:nth-child(1) {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-  line-height: 18px;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-content p:nth-child(2) {
-  font-size: 12px;
-  color: var(--text-secondary);
 }
 
 .notification-message {
@@ -10728,4 +10666,151 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .online-users-container .online-users .online-user-menu ul li:hover {
   background: var(--body);
+}
+
+.conversation-modal {
+  min-height: 470px;
+  padding-bottom: 60px !important;
+}
+.conversation-modal .conversation-infos {
+  padding: 0 3px;
+  overflow-y: auto;
+}
+.conversation-modal .conversation-infos .conversation-infos-bloc {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px 0;
+}
+.conversation-modal .conversation-img-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  height: 32px;
+  margin-right: 10px;
+}
+.conversation-modal .conversation-img-container .conversation-img {
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--content-light);
+}
+.conversation-modal .conversation-img-container .conversation-img:nth-child(n+2) {
+  margin-left: -12px;
+}
+.conversation-modal .conversation-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+.conversation-modal .conversation-name svg {
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+}
+.conversation-modal .conversation-members {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.conversation-modal .conversation-btn_container {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 15px 20px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+.conversation-modal .conversation-files {
+  max-height: 600px;
+  overflow-y: auto;
+}
+.conversation-modal .conversation-files .conversation-file {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  margin: 3px 0;
+  padding: 4px 10px;
+}
+.conversation-modal .conversation-files .conversation-file:hover, .conversation-modal .conversation-files .conversation-file:active {
+  background-color: var(--light);
+}
+.conversation-modal .conversation-files .conversation-file:hover .file-tools, .conversation-modal .conversation-files .conversation-file:active .file-tools {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.conversation-modal .conversation-files .conversation-file .file-doc {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  border-radius: 5px;
+}
+.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-img {
+  width: 34px;
+  height: 34px;
+  color: var(--light-blue);
+}
+.conversation-modal .conversation-files .conversation-file .file-doc .file-img-preview {
+  width: 34px;
+  height: 34px;
+  border-radius: 5px;
+}
+.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-content {
+  margin-left: 14px;
+}
+.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-content p:nth-child(1) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  line-height: 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.conversation-modal .conversation-files .conversation-file .file-doc .file-doc-content p:nth-child(2) {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.conversation-modal .conversation-files .conversation-file .file-tools {
+  display: none;
+}
+.conversation-modal .conversation-files .conversation-file .file-tools button {
+  padding: 4px;
+  background: var(--xx-light);
+  margin: 0 4px;
+  border-radius: 50%;
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
+}
+.conversation-modal .conversation-files .conversation-file .file-tools button svg {
+  height: 20px;
+  width: 20px;
 }

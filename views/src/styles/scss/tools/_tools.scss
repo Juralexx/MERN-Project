@@ -274,13 +274,27 @@
 }
 
 #tooltip {
-    display:flex;
+    display       : flex;
     position      : absolute;
     width         : auto;
     padding       : 7px 10px;
     border-radius : var(--radius);
-    background    : rgb(20, 20, 20);
+    background    : var(--tooltip);
     z-index       : 700;
+    visibility    : hidden;
+    opacity       : 0;
+    transition    : visibility 5s, opacity .2s;
+
+    &.open {
+        visibility : visible;
+        opacity    : 1;
+
+        .tooltip-arrow {
+            &:before {
+                visibility : visible;
+            }
+        }
+    }
       
     .tooltip-arrow {
         position   : absolute;
@@ -294,9 +308,10 @@
             width      : 12px;
             height     : 12px;
             background : inherit;
-            visibility : visible;
+            visibility : hidden;
             content    : '';
             transform  : rotate(45deg);
+            transition : visibility 5s;
         }
     }
     

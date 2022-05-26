@@ -27,6 +27,23 @@
         transform  : scale(0.95);
         box-shadow : inset var(--shadow-tiny);
     }
+
+    &.delete {
+        background-color:  rgba(var(--red-rgb), 0.9);
+        &:hover {
+            background-color: var(--red);
+        }
+    }
+
+    &.light_delete {
+        color : var(--red);
+        svg {
+            color : var(--red);
+        }
+        &:hover {
+            background-color : rgba(var(--red-rgb), 0.2);
+        }
+    }
 }
 
 .btn_first {
@@ -76,8 +93,9 @@
 }
 
 .text_btn {
-    color      : var(--primary);
-    box-shadow : none;
+    color         : var(--primary);
+    border-radius : var(--radius);
+    box-shadow    : none;
 
     &:hover {
         background : rgba(var(--primary-rgb), 0.15);
@@ -177,6 +195,13 @@
 
     &:active {
         transform  : scale(0.95);
+    }
+
+    &.shadow {
+        box-shadow : var(--shadow-tiny);
+    }
+    &.light {
+        background-color : var(--xx-light);
     }
 }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { avatar } from '../tools/functions/useAvatar'
 import { deleteConv, getMembers, leaveConversation, returnMembers } from './tools/function'
 import { addFavorite, removeFavorite } from '../../actions/messenger.action'
-import ConversationModal from './ConversationModal'
+import ConversationModal from './conversation-modal/ConversationModal'
 import ToolsMenu from '../tools/components/ToolsMenu'
 import { IoTrashOutline } from 'react-icons/io5'
 import { BsStar, BsStarFill } from 'react-icons/bs'
@@ -46,7 +46,7 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
                         ) : (
                             <div className="tools_choice" onClick={favorite}><BsStar />Ajouter aux favoris</div>
                         )}
-                        {currentChat.owner === uid && <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}><IoTrashOutline /> Supprimer la conversation</div>}
+                        {currentChat.owner._id === uid && <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}><IoTrashOutline /> Supprimer la conversation</div>}
                     </ToolsMenu>
                 </div>
             }
@@ -65,7 +65,16 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
                 <div className="conversation-box-top">
                     <div className="conversation-box-members" onClick={() => setOpenConvModal(!openConvModal)}>
                         {currentChat.name ? (
-                            <div className="conversation-name">{currentChat.name}</div>
+                            <>
+                                <div className="conversation-img-container">
+                                    {members.slice(0, 3).map((element, key) => {
+                                        return (
+                                            <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                                        )
+                                    })}
+                                </div>
+                                <div className="conversation-name">{currentChat.name}</div>
+                            </>
                         ) : (
                             <>
                                 <div className="conversation-img-container">
@@ -86,7 +95,7 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
                             <div className="tools_choice" onClick={favorite}><BsStar />Ajouter aux favoris</div>
                         )}
                         <div className="tools_choice" onClick={() => leaveConversation(currentChat, uid, uid, websocket, dispatch)}><HiLogout /> Quitter la conversation</div>
-                        {currentChat.owner === uid &&
+                        {currentChat.owner._id === uid &&
                             <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}><IoTrashOutline /> Supprimer la conversation</div>
                         }
                     </ToolsMenu>

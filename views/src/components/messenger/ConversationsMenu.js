@@ -50,6 +50,7 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                 friendsArr={friendsArr}
                 changeCurrentChat={setCurrentChat}
                 websocket={websocket}
+                conversations={conversations}
                 setConversations={setConversations}
             />
 

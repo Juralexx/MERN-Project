@@ -16,8 +16,8 @@ const OnlineUsers = ({ uid, user, onlineUsers, friendsArr, fetchedFriends, conve
         else {
             const conversation = {
                 type: 'dialog',
-                members: [{ id: user._id, pseudo: user.pseudo, picture: user.picture }, { id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }],
-                creator: { id: user._id, pseudo: user.pseudo, picture: user.picture },
+                members: [{ _id: user._id, pseudo: user.pseudo, picture: user.picture }, { _id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }],
+                creator: { _id: user._id, pseudo: user.pseudo, picture: user.picture },
                 messages: [],
                 createdAt: new Date().toISOString()
             }

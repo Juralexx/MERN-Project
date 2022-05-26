@@ -170,6 +170,18 @@
             width : 100%;
         }
     }
+
+    &.small {
+        height:36px;
+        &.is_start_icon {
+            input {
+                padding-left : 35px;
+            }
+            .start_icon {
+                padding-left:8px;
+            }
+        }
+    }
 }
 
 .number-input {

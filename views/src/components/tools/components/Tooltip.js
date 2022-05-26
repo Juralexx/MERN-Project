@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { usePopper } from "react-popper";
 
 const Tooltip = (props) => {
     const [open, setOpen] = useState(false)
 
-    const popperElRef = React.useRef(null);
+    const popperElRef = useRef(null);
     const [targetElement, setTargetElement] = useState(null);
     const [popperElement, setPopperElement] = useState(popperElRef.current);
     const [arrowElement, setArrowElement] = useState(null);
@@ -35,7 +35,7 @@ const Tooltip = (props) => {
     return (
         <>
             <div
-                className={`${open ? 'tooltip transition open' : "tooltip transition"}`}
+                className={`${open ? "open" : "closed"}`}
                 id="tooltip"
                 role="tooltip"
                 ref={popperElRef}

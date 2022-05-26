@@ -36,7 +36,7 @@ export default function messengerReducer(state = initialState, action) {
         case REMOVE_MEMBER_CONVERSATION:
             return {
                 ...state,
-                members: state.members.filter(member => member.id !== action.payload.memberId)
+                members: state.members.filter(member => member._id !== action.payload.memberId)
             }
         case POST_MESSAGE:
             return {
