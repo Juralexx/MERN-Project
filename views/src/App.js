@@ -37,7 +37,7 @@ function App() {
     }, [uid, dispatch])
 
     useEffect(() => {
-        if (Object.keys(user).length > 0 && friends.length === 0) {
+        if (Object.keys(user).length > 0) {
             websocket.current.emit("addUser", { userId: user._id })
             websocket.current.on("getUsers", users => {
                 setFriends(user.friends)

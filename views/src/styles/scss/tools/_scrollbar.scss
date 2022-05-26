@@ -1,34 +1,31 @@
 .custom-scrollbar {
     &::-webkit-scrollbar {
-        width  : 10px;
-        height : 10px;
+        width  : 20px;
+        cursor : pointer;
     }
+
     &::-webkit-scrollbar-button {
         width  : 0px;
         height : 0px;
     }
+
     &::-webkit-scrollbar-thumb {
-        background    : var(--light-border);
-        border        : 31px none var(--body);
-        border-radius : 6px;
+        background      : var(--light-border);
+        border          : 5px solid rgba(0, 0, 0, 0);
+        background-clip : padding-box;
+        border-radius   : 9999px;
+        cursor          : pointer;
     }
-    &::-webkit-scrollbar-thumb:hover {
-        background : var(--light-border);
-    }
-    &::-webkit-scrollbar-thumb:active {
-        background : var(--light-border);
-    }
+
     &::-webkit-scrollbar-track {
-        background : var(--color-hover);
-        width      : 5px;
+        background : transparent;
+
+        &:hover, &:active {
+            background : var(--light);
+        }
     }
-    &::-webkit-scrollbar-track:hover {
-        background : var(--color-hover);
-    }
-    &::-webkit-scrollbar-track:active {
-        background : var(--color-hover);
-    }
+
     &::-webkit-scrollbar-corner {
         background : transparent;
-    } 
+    }
 }

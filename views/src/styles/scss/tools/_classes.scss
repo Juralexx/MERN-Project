@@ -31,6 +31,14 @@
     background-color: rgba(var(--primary-rgb), 0.2);
 }
 
+.red {
+    color : var(--red);
+}
+
+.bg-light-red {
+    background-color: rgba(var(--red-rgb), 0.4);
+}
+
 .bold {
     font-weight : 600;
 }

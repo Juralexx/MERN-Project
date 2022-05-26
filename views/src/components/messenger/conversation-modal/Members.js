@@ -4,8 +4,7 @@ import { isInResults } from '../../tools/functions/member'
 import { oneLevelSearch } from '../../tools/functions/searches'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 import { addNewMember, leaveConversation, otherMembersIDs } from '../tools/function'
-import { TextButton } from '../../tools/components/Button'
-import { Button } from 'react-day-picker'
+import { TextButton, Button } from '../../tools/components/Button'
 import { dateParser } from '../../Utils'
 import { IconInput } from '../../tools/components/Inputs'
 
@@ -33,10 +32,10 @@ const Members = ({ uid, websocket, members, friendsArr, conversation, dispatch }
                         <BiUserPlus />
                         <p>Ajouter des personnes</p>
                     </div>
-                    <div className="conversation-members">
+                    <div className="conversation-members custom-scrollbar">
                         {conversation.members.map((member, key) => {
                             return (
-                                <div className={`${isInResults(member, isResults, search, "flex")} justify-between py-2`} key={key}>
+                                <div className={`${isInResults(member, isResults, search, "flex")} conversation-member`} key={key}>
                                     <div className="flex items-center">
                                         <MediumAvatar pic={member.picture} />
                                         <div>
@@ -46,7 +45,7 @@ const Members = ({ uid, websocket, members, friendsArr, conversation, dispatch }
 
                                     </div>
                                     {conversation.owner._id === uid && member._id !== uid &&
-                                        <TextButton text="Supprimer" onClick={() => leaveConversation(conversation, member._id, uid, websocket, dispatch)} />
+                                        <TextButton text="Supprimer" className="light_delete" onClick={() => leaveConversation(conversation, member._id, uid, websocket, dispatch)} />
                                     }
                                 </div>
                             )
@@ -55,11 +54,11 @@ const Members = ({ uid, websocket, members, friendsArr, conversation, dispatch }
                 </>
             )}
             {addMember &&
-                <div className="conversation-members">
+                <div className="conversation-members custom-scrollbar">
                     {membersToAdd.length > 0 ? (
                         membersToAdd.map((member, key) => {
                             return (
-                                <div className={`${isInResults(member, isResults, search, "flex")} justify-between py-2`} key={key}>
+                                <div className={`${isInResults(member, isResults, search, "flex")} conversation-member`} key={key}>
                                     <div className="flex items-center">
                                         <MediumAvatar pic={member.picture} />
                                         <div>{member.pseudo}</div>

@@ -124,6 +124,10 @@
             cursor          : pointer;
             border-radius   : var(--radius);
 
+            &:hover {
+                background-color: rgba(var(--primary-rgb), 0.3);
+            }
+
             .user {
                 display     : flex;
                 align-items : center;

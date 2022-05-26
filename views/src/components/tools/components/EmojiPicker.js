@@ -42,7 +42,8 @@ const EmojiPicker = (props) => {
     return (
         <div ref={ref} className={`${className ? "tools_box relative " + className : "tools_box relative"}`} >
             {open &&
-                <div className={`${open ? "emoji-picker transition open" : "emoji-picker transition"}`}
+                <div
+                    className={`${open ? "emoji-picker transition open" : "emoji-picker transition"}`}
                     ref={popperElRef}
                     style={styles.popper}
                     {...attributes.popper}
@@ -51,11 +52,11 @@ const EmojiPicker = (props) => {
                         theme={checkTheme()}
                         set='twitter'
                         sheetSize={64}
-                        tooltip='false'
-                        showPreview={false}
-                        emojiTooltip={false}
                         color="#18A5D6"
                         emoji="grinning"
+                        title=":grinning:"
+                        useButton={true}
+                        emojiSize={18}
                         onSelect={emoji => {
                             onSelect(emoji)
                             setOpen(false)
@@ -64,10 +65,12 @@ const EmojiPicker = (props) => {
                 </div>
             }
 
-            <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} ref={setTargetElement} disabled={disabled} onClick={() => {
-                onClick && onClick()
-                setOpen(!open)
-            }}>
+            <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} ref={setTargetElement} disabled={disabled}
+                onClick={() => {
+                    onClick && onClick()
+                    setOpen(!open)
+                }}
+            >
                 {icon ? (icon) : <MdAddReaction />}
             </button>
         </div>

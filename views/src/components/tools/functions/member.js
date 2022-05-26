@@ -156,7 +156,7 @@ export const isInResults = (element, isInResult, search, classe) => {
 }
 
 export const isSelected = (array, element) => {
-    if (array.some(member => member.id === element._id))
+    if (array.some(member => member._id === element._id))
         return "bg-prim-light"
 }
 

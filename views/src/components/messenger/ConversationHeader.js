@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { avatar } from '../tools/functions/useAvatar'
-import { deleteConv, getMembers, leaveConversation, returnMembers } from './tools/function'
+import { deleteConv, getMembers, isOnline, leaveConversation, returnMembers } from './tools/function'
 import { addFavorite, removeFavorite } from '../../actions/messenger.action'
 import ConversationModal from './conversation-modal/ConversationModal'
 import ToolsMenu from '../tools/components/ToolsMenu'
@@ -8,7 +8,7 @@ import { IoTrashOutline } from 'react-icons/io5'
 import { BsStar, BsStarFill } from 'react-icons/bs'
 import { HiLogout } from 'react-icons/hi'
 
-const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dispatch }) => {
+const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, onlineUsers, dispatch }) => {
     const [openConvModal, setOpenConvModal] = useState(false)
     const [isFavorite, setFavorite] = useState(null)
     const members = getMembers(currentChat, uid)
@@ -36,7 +36,7 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, friendsArr, dis
                 <div className="conversation-box-top">
                     <div className="conversation-box-members">
                         <div className="conversation-img-container">
-                            <div className="conversation-img" style={avatar(getMembers(currentChat, uid)[0].picture)}></div>
+                            <div className={`${isOnline(getMembers(currentChat, uid)[0], onlineUsers) ? "conversation-img connected" : "conversation-img"}`} style={avatar(getMembers(currentChat, uid)[0].picture)}></div>
                         </div>
                         <div className="conversation-name">{getMembers(currentChat, uid)[0].pseudo}</div>
                     </div>

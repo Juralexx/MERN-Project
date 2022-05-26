@@ -9,8 +9,8 @@ import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
 import Editor from './editor/Editor';
 import OnlineUsers from './OnlineUsers';
-import MessageDate from './MessageDate';
-import Message from './Message';
+import MessageDate from './message/MessageDate';
+import Message from './message/Message';
 import SearchHeader from './SearchHeader';
 import { ChatLoader } from './tools/Loaders';
 
@@ -48,7 +48,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 conversationId: currentChat._id
             })
         }
-    }, [uid, onlineUsers.length, websocket, currentChat, currentChat._id])
+    }, [uid, websocket, currentChat, currentChat._id])
 
     /**
      * Get conversations
@@ -282,7 +282,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 conversationId: data.conversationId
             })
         })
-    }, [websocket.current])
+    }, [websocket.current, websocket])
 
     return (
         <div className="messenger">
@@ -296,6 +296,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 favorites={favorites}
                 currentChat={currentChat}
                 setCurrentChat={setCurrentChat}
+                changeCurrentChat={changeCurrentChat}
                 temporaryConv={temporaryConv}
                 setTemporaryConv={setTemporaryConv}
                 setSearchHeader={setSearchHeader}
@@ -315,6 +316,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                         uid={uid}
                                         user={user}
                                         websocket={websocket}
+                                        onlineUsers={onlineUsers}
                                         friendsArr={friendsArr}
                                         currentChat={currentChat}
                                         dispatch={dispatch}
@@ -333,13 +335,13 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                         setTemporaryConv={setTemporaryConv}
                                     />
                                 )}
-                                <div className="conversation-box-container" ref={convWrapperRef}>
+                                <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
                                     {!blank ? (
                                         currentChat.messages.length > 0 ? (
                                             messages.map((message, key, array) => {
                                                 return (
                                                     <div key={key}>
-                                                        {messagesDates.some(element => element.date === message.createdAt.substring(0, 10) && element.index === key) &&
+                                                        {messagesDates.some(el => el.date === message.createdAt.substring(0, 10) && el.index === key) &&
                                                             <MessageDate message={message} />
                                                         }
                                                         <div ref={lastMessageRef}>

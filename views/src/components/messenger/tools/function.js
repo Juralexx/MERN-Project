@@ -1,7 +1,7 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, checkTheme, dateParser, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
+import { charSetToChar, checkTheme, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
 import { addEmoji, addMember, deleteConversation, deleteFile, deleteMessage, removeEmoji, removeMember, updateMessage } from '../../../actions/messenger.action';
 import { coverPicture } from '../../tools/functions/useAvatar';
 import { IoDocumentTextOutline } from 'react-icons/io5';
@@ -53,6 +53,10 @@ export function convertDeltaToStringNoHTML(message) {
     return charSetToChar(removeHTMLMarkers(html))
 }
 
+export const handleEditor = (text, delta, source, editor) => {
+    return editor.getContents()
+}
+
 /**
  * Convert date. If date > 1 year, return date with year, else no.
  */
@@ -68,6 +72,17 @@ export function getDate(date) {
         if (getDateInHours === "0 seconds")
             return "À l'instant"
         else return getDateInHours
+    }
+}
+
+/**
+ * Check if user is online
+ */
+
+export const isOnline = (friend, onlineUsers) => {
+    if (friend) {
+        let online = onlineUsers.some(u => u.friend === friend._id)
+        return online
     }
 }
 
@@ -154,7 +169,7 @@ export const isConversation = (conversations, members) => {
                 for (let i = 0; i < convs.length; i++) {
                     let convIDs = []
                     convs[i].members.forEach(member => {
-                        convIDs.push(member.id)
+                        convIDs.push(member._id)
                     })
                     if (JSON.stringify(convIDs.sort()) === JSON.stringify(membersIDs.sort())) {
                         return convs[i]

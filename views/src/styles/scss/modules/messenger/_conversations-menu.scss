@@ -20,7 +20,7 @@
 
     .conversation {
         position : relative;
-        padding  : 12px 7px;
+        padding  : 7px;
         margin   : 5px 0;
         width    : 100%;
         cursor   : pointer;
@@ -140,22 +140,22 @@
     }
 
     .tools_box {
-        position         : absolute;
-        top              : 50%;
-        transform        : translateY(-50%);
-        right            : 50px;
-        z-index          : 2;
+        position  : absolute;
+        top       : 50%;
+        transform : translateY(-50%);
+        right     : 60px;
+        z-index   : 2;
 
         .tools_btn {
-            height           : 32px;
-            width            : 32px;
+            height           : 26px;
+            width            : 26px;
             background-color : var(--light);
             border-radius    : 50%;
             box-shadow       : var(--shadow-tiny);
 
             svg {
-                height       : 24px;
-                width        : 24px;
+                height : 20px;
+                width  : 20px;
             }
 
             &:hover {

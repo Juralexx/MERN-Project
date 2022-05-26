@@ -21,7 +21,7 @@ const Main = ({ uid, websocket, conversation, dispatch, setOpen }) => {
     }
 
     return (
-        <div className="conversation-infos">
+        <div className="conversation-infos custom-scrollbar">
             <div className="conversation-infos-bloc border-b">
                 {changeName ? (
                     <div className="w-full">

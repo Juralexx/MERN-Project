@@ -1,23 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ReactQuill from "react-quill";
-import EditorToolbar, { modules, formats } from "./editor/EditorToolbar";
-import EmojiPicker from '../tools/components/EmojiPicker';
-import Tooltip from '../tools/components/Tooltip';
 import { Emoji } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
-import ToolsMenu from '../tools/components/ToolsMenu';
-import Warning from '../tools/components/Warning';
-import { useClickOutside } from '../tools/functions/useClickOutside';
-import { avatar } from '../tools/functions/useAvatar';
-import { SmallAvatar } from '../tools/components/Avatars';
-import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from './tools/function';
-import { dateParserWithoutYear, download, getHourOnly, randomNbID } from '../Utils';
-import { addEmoji, removeEmoji } from '../../actions/messenger.action';
+import EmojiPicker from '../../tools/components/EmojiPicker';
+import ReactQuill from "react-quill";
+import EditorToolbar, { modules, formats } from "../editor/EditorToolbar";
+import Tooltip from '../../tools/components/Tooltip';
+import ToolsMenu from '../../tools/components/ToolsMenu';
+import Warning from '../../tools/components/Warning';
+import { useClickOutside } from '../../tools/functions/useClickOutside';
+import { avatar } from '../../tools/functions/useAvatar';
+import { SmallAvatar } from '../../tools/components/Avatars';
+import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, handleEditor, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from '../tools/function';
+import { dateParserWithoutYear, download, getHourOnly, randomNbID } from '../../Utils';
+import { addEmoji, removeEmoji } from '../../../actions/messenger.action';
 import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/md'
-import { IoArrowUndo, IoTrashBin } from 'react-icons/io5'
-import { IoMdChatbubbles } from 'react-icons/io'
-import { BiFontFamily } from 'react-icons/bi'
+import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'
 import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
+import { BiFontFamily } from 'react-icons/bi'
 
 const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
     const [modify, setModify] = useState(-1)
@@ -33,7 +32,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
     useEffect(() => {
         if (message.emojis.length > 0)
             setEmojis(concatSameEmojis(message.emojis))
-    }, [message.emojis.length])
+    }, [message.emojis.length, message.emojis])
 
     const handleEmoji = (emoji) => {
         let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: uid }
@@ -61,10 +60,6 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
         dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
     }
 
-    const handleEditor = (text, delta, source, editor) => {
-        setModifiedMessage(editor.getContents())
-    }
-
     return (
         <div className={opened ? "message-container hovered " + className : "message-container " + className} data-hour={getHourOnly(new Date(message.createdAt))} ref={messageRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
             <div className="message" style={{ display: modify === uniqueKey && "flex" }}>
@@ -87,6 +82,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                             <div className="files-block">
                                                 {returnMessageFiles(file)}
                                                 <div className="files-tools">
+                                                    <button><a href={file.url} rel="noreferrer" target="_blank"><IoArrowRedo /></a></button>
                                                     <button className="files-tools-btn" onClick={() => download(file)}><MdFileDownload /></button>
                                                     <button className="files-tools-btn" onClick={() => deleteFiles(file, user, websocket, currentChat, message, dispatch)}><MdClear /></button>
                                                 </div>
@@ -102,7 +98,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                 <div className="message-editor-container">
                                     <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
                                     <ReactQuill
-                                        onChange={handleEditor}
+                                        onChange={(text, delta, source, editor) => setModifiedMessage(handleEditor(text, delta, source, editor))}
                                         defaultValue={convertDeltaToString(message)}
                                         placeholder="Rédiger un messager..."
                                         modules={modules}
@@ -171,7 +167,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                         <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
                             <div className="tools_choice"><IoArrowUndo /> Répondre</div>
                             <div className="tools_choice"><MdAddReaction /> Ajouter une réaction</div>
-                            <div className="tools_choice" onClick={() => navigator.clipboard.writeText(message.text)}><RiFileCopyFill /> Copier le message</div>
+                            <div className="tools_choice" onClick={() => navigator.clipboard.writeText(convertDeltaToString(message))}><RiFileCopyFill /> Copier le message</div>
                             {message.sender === uid &&
                                 <>
                                     <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
@@ -181,7 +177,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                         </ToolsMenu>
                     </div>
                 }
-                
+
                 {warning &&
                     <Warning
                         title="Supprimer le message"

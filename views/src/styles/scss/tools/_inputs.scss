@@ -644,26 +644,14 @@
     border           : 2px solid var(--light-border);
 
     .auto-complete-item {
-        position:relative;
+        position    : relative;
         display     : flex;
         align-items : center;
         padding     : 7px 16px;
         cursor      : pointer;
-        &:before {
-            content          : '';
-            position         : absolute;
-            left             : -5px;
-            width            : 10px;
-            height           : 100%;
-            border-radius    : 20px;
-            background-color : transparent;
-        }
     
         &:hover {
-            background  : var(--content-x-light);
-            &:before {
-                background-color : var(--primary);
-            }
+            background : var(--x-light);
         }
     }
 

@@ -23,11 +23,11 @@ export const createConversation = async (req, res) => {
         if (savedConversation) {
             savedConversation.members.map(async member => {
                 await UserModel.findByIdAndUpdate(
-                    { _id: member.id },
+                    { _id: member._id },
                     {
                         $addToSet: {
                             conversations: {
-                                conversation: savedConversation._id,
+                                id: savedConversation._id,
                                 last_message_seen: null,
                                 favorite: false
                             }

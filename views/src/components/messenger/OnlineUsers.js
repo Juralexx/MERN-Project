@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { avatar } from '../tools/functions/useAvatar';
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { IconToggle } from '../tools/components/Button';
 import { BiSearchAlt } from 'react-icons/bi';
-import { isConversation } from './tools/function';
+import { isConversation, isOnline } from './tools/function';
 import { OnlineUserLoader } from './tools/Loaders';
 
 const OnlineUsers = ({ uid, user, onlineUsers, friendsArr, fetchedFriends, conversations, setConversations, setCurrentChat, changeCurrentChat, dispatch }) => {
@@ -26,13 +26,6 @@ const OnlineUsers = ({ uid, user, onlineUsers, friendsArr, fetchedFriends, conve
         }
     }
 
-    const isOnline = useCallback((friend) => {
-        if (friend) {
-            let online = onlineUsers.some(u => u.friend === friend._id)
-            return online
-        }
-    }, [onlineUsers])
-
     return (
         <div className="online-users-container">
             <div className="flex justify-between pb-3 mb-3 border-b">
@@ -44,13 +37,14 @@ const OnlineUsers = ({ uid, user, onlineUsers, friendsArr, fetchedFriends, conve
             {!fetchedFriends ? (
                 friendsArr.length > 0 ? (
                     friendsArr.map((element, key) => {
+                        let online = isOnline(element, onlineUsers)
                         return (
                             <div className="online-users" key={key}>
                                 <div className="online-user">
-                                    <div className={`${isOnline(element) ? "online-user-img connected" : "online-user-img"}`} style={avatar(element.picture)}></div>
+                                    <div className={`${online ? "online-user-img connected" : "online-user-img"}`} style={avatar(element.picture)}></div>
                                     <div className="online-user-name">
                                         <div className="online-user-pseudo">{element.pseudo}</div>
-                                        <div className="online-user-status"><em>{isOnline(element) ? "Actif" : "Déconnecté"}</em></div>
+                                        <div className="online-user-status"><em>{online ? "Actif" : "Déconnecté"}</em></div>
                                     </div>
                                 </div>
                                 <ToolsMenu>

@@ -1,101 +1,121 @@
 .emoji-picker {
-    position : absolute;
-    z-index  : 700;
-    height   : 360px !important;
-    width    : 287px !important;
+    position   : absolute;
+    z-index    : 700;
+    height     : 368px !important;
+    width      : 300px !important;
+    box-shadow : var(--shadow-xl);
 
     .emoji-mart {
-        padding : 5px;
-        height   : 360px !important;
-        width    : 287px !important;
+        width : 300px !important;
+
+        .emoji-mart-category {
+            width : 277px;
+
+            .emoji-mart-emoji {
+                span {
+                    cursor : pointer;
+                }
+            }
+        }
 
         .emoji-mart-bar {
-            display : none;
-
+            background-color : var(--content-light);
             .emoji-mart-preview {
-                height : 50px;
-    
+                height : 42px;
+
                 .emoji-mart-title-label {
-                    font-size:16px;
+                    font-size : 16px;
                 }
-    
+
                 .emoji-mart-category-label {
                     top : -1px;
                 }
-    
+
                 .emoji-mart-preview-emoji {
-                    left : 7px;
-                    span span {
-                        max-height : 30px;
-                        max-width  : 30px;
+                    span {
+                        span {
+                            height : 26px !important;
+                            width  : 26px !important;
+                        }
                     }
                 }
-    
+
                 .emoji-mart-preview-data {
-                    left : 55px;
+                    left : 60px;
                 }
-    
-                .emoji-mart-preview-name,
-                .emoji-mart-preview-emoticons {
+
+                .emoji-mart-preview-name {
                     display : none;
                 }
     
                 .emoji-mart-preview-shortnames {
+                    margin-left : 5px;
                     .emoji-mart-preview-shortname {
-                        font-size   : 13px !important;
-                        color       : var(--text-secondary);
-                        font-weight : 600;
+                        font-size          : 14px !important;
+                        color              : var(--text-secondary);
+                        font-weight        : 600;
+                        text-overflow      : ellipsis;
+                        overflow           : hidden;
+                        width              : 100%;
+                        line-height        : 19px;
+                        display            : -webkit-box;
+                        -webkit-line-clamp : 1;
+                        -webkit-box-orient : vertical;
+
+                        &:nth-child(n+2) {
+                            display : none;
+                        }
                     }
+                }
+                .emoji-mart-preview-emoticons {
+                    display : none;
                 }
             }
         }
 
         .emoji-mart-scroll {
             margin-bottom : 10px;
-            height        : 297px;
-
+            height        : 225px;
+            width         : 100%;
+            padding-right : 0;
+            padding       : 0 8px;
+            
             &::-webkit-scrollbar {
-                width  : 7px;
-                height : 20px;
+                width  : 10px;
+                cursor : pointer;
             }
+
             &::-webkit-scrollbar-button {
                 width  : 0px;
                 height : 0px;
             }
+
             &::-webkit-scrollbar-thumb {
                 background    : var(--light-border);
-                border        : 31px none var(--body);
                 border-radius : 6px;
+                width         : 10px;
+                cursor        : pointer;
             }
-            &::-webkit-scrollbar-thumb:hover {
-                background : var(--light-border);
-            }
-            &::-webkit-scrollbar-thumb:active {
-                background : var(--light-border);
-            }
+
             &::-webkit-scrollbar-track {
-                background : var(--color-hover);
-                width      : 5px;
+                background : transparent;
+        
+                &:hover, &:active {
+                    background : var(--light);
+                }
             }
-            &::-webkit-scrollbar-track:hover {
-                background : var(--color-hover);
-            }
-            &::-webkit-scrollbar-track:active {
-                background : var(--color-hover);
-            }
+
             &::-webkit-scrollbar-corner {
                 background : transparent;
-            } 
+            }
         }
 
-        .emoji-mart-anchors svg, .emoji-mart-anchors img {
-            margin : 0 auto;
-        }
-
-        .emoji-mart-emoji {
-            span {
-                height : 20px !important;
-                width  : 20px !important;
+        .emoji-mart-anchors {
+            svg {
+                margin : 0 auto;
+            }
+            img {
+                margin : 0 auto;
             }
         }
 
@@ -104,11 +124,48 @@
         }
     }
 }
-        
+
 .emoji-mart-dark {
     background-color : var(--content);
+
+    .emoji-mart-search {
+        input {
+            background-color : var(--content);
+        }
+    }
 }
 
-.emoji-mart-dark .emoji-mart-search input {
-    background-color : var(--content-x-light);
+.emoji-mart-search{
+    padding : 8px 12px 2px;
+    margin  : 0;
+    input {
+        padding       : 7px 10px 5px 30px;
+        font-size     : 14px;
+        border-radius : 3px;
+
+        &:focus {
+            border : 1px solid var(--primary);
+        }
+
+        &::placeholder {
+            content : 'Rechercher';
+        }
+    }
+}
+
+.emoji-mart-search-icon {
+    right : unset;
+    left  : 15px;
+    top   : 15px;
+}
+
+.emoji-mart-anchor-bar {
+    height : 1px;
+}
+
+.emoji-mart-category-label {
+    span {
+        background-color : var(--content) !important;
+        font-size        : 14px;
+    }
 }

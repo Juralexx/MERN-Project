@@ -11,7 +11,7 @@ import Modal from '../tools/components/Modal';
 import { IoClose } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi';
 
-const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversations, friendsArr, changeCurrentChat }) => {
+const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversations, setConversations, friendsArr, changeCurrentChat }) => {
     const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState()
     const [description, setDescription] = useState()
@@ -19,10 +19,11 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
 
     const createNewConversation = async () => {
         let usr = { _id: user._id, pseudo: user.pseudo, picture: user.picture, date: new Date().toISOString() }
-        console.log(conversations, [...members, usr])
         let isConv = isConversation(conversations, [...members, usr])
-        if (members === 1 && isConv !== false) {
+        
+        if (members.length === 1 && isConv !== false) {
             changeCurrentChat(isConv)
+            console.log(isConv)
         } else {
             await axios({
                 method: "post",
@@ -42,14 +43,16 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                         conversationId: res.data._id
                     })
                 })
-                setMembers([])
-                setNavbar(1)
-                setName()
-                setDescription()
-                setOpen(false)
+                setConversations(convs => [...convs, res.data])
                 changeCurrentChat(res.data)
+                console.log(res.data)
             })
         }
+        setMembers([])
+        setNavbar(1)
+        setName()
+        setDescription()
+        setOpen(false)
     }
 
     const [search, setSearch] = useState(false)
@@ -78,7 +81,7 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                         )}
                     </div>
                     <IconInput
-                        className="full is_start_icon mb-3"
+                        className="full is_start_icon mb-3 small"
                         placeholder="Rechercher un membre..."
                         icon={<BiSearchAlt />} value={query}
                         onInput={e => setQuery(e.target.value)}

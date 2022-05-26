@@ -1,9 +1,8 @@
 .conversation-modal {
-    min-height     : 470px;
-    padding-bottom : 60px !important;
+    height : 500px;
     
     .conversation-infos {
-        padding    : 0 3px;
+        max-height : 330px;
         overflow-y : auto;
 
         .conversation-infos-bloc {
@@ -27,7 +26,7 @@
             border        : 2px solid  var(--content-light);
 
             &:nth-child(n+2) {
-                margin-left : -12px;
+                margin-left : -20px;
             }
         }
     }
@@ -46,8 +45,19 @@
     }
 
     .conversation-members {
-        max-height : 300px;
+        max-height : 390px;
         overflow-y : auto;
+
+        .conversation-member {
+            display         : flex;
+            justify-content : space-between;
+            padding         : 8px;
+            border-radius   : var(--radius);
+
+            &:hover {
+                background-color: var(--light);
+            }
+        }
     }
 
     .conversation-btn_container {
@@ -61,7 +71,7 @@
     }
 
     .conversation-files {
-        max-height : 600px;
+        max-height : 340px;
         overflow-y : auto;
 
         .conversation-file {
@@ -70,7 +80,7 @@
             align-items     : center;
             cursor          : pointer;
             margin          : 3px 0;
-            padding          : 4px 10px;
+            padding         : 8px 10px;
 
             &:hover, &:active {
                 background-color : var(--light);
@@ -81,10 +91,10 @@
             }
 
             .file-doc {
-                display          : flex;
-                align-items      : center;
-                width            : 100%;
-                border-radius    : 5px;
+                display       : flex;
+                align-items   : center;
+                width         : 100%;
+                border-radius : 5px;
         
                 .file-doc-img {
                     width  : 34px;
@@ -122,18 +132,37 @@
                 display : none;
 
                 button {
-                    padding       : 4px;
-                    background    : var(--xx-light);
-                    margin        : 0 4px;
-                    border-radius : 50%;
-                    box-shadow    : var(--shadow-tiny);
+                    display         : flex;
+                    align-items     : center;
+                    justify-content : center;
+                    height          : 26px;
+                    width           : 26px;
+                    background      : var(--xx-light);
+                    margin          : 0 4px;
+                    border-radius   : 50%;
+                    box-shadow      : var(--shadow-tiny);
 
                     svg {
-                        height : 20px;
-                        width  : 20px;
+                        height : 18px;
+                        width  : 18px;
                     }
                 }
             }
+        }
+    }
+}
+
+.add-conversation-modal {
+    height : 500px;
+
+    .conversation-btn_container {
+        position : fixed;
+        padding  : 15px 20px;
+        left     : 0;
+        bottom   : 0;
+        width    : 100%;
+        button {
+            width : 100%;
         }
     }
 }

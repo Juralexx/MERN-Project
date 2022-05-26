@@ -6,14 +6,14 @@ import { IconToggle } from '../tools/components/Button';
 import { isInResults } from '../tools/functions/member';
 import { twoLevelSearch } from '../tools/functions/searches';
 import { ConversationLoader } from './tools/Loaders';
+import TemporaryConversation from './tools/TemporaryConversation';
+import Tooltip from '../tools/components/Tooltip';
+import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiPencilAlt } from 'react-icons/hi'
-import { AiOutlineUsergroupAdd } from 'react-icons/ai';
-import TemporaryConversation from './tools/TemporaryConversation';
-import Tooltip from '../tools/components/Tooltip';
 
-const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
+const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
@@ -34,7 +34,7 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
             </div>
             <div className="pb-4 mb-3 border-b">
                 <IconInput
-                    className="full is_start_icon"
+                    className="full is_start_icon small"
                     icon={<BiSearchAlt />}
                     placeholder="Rechercher une conversation..."
                     value={query}
@@ -42,15 +42,16 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                     onChange={() => twoLevelSearch(query, [...favorites, ...conversations], 'members', 'pseudo', isResults, setResults, setSearch)}
                 />
             </div>
+
             <NewConversationModal
                 open={open}
                 setOpen={setOpen}
                 uid={uid}
                 user={user}
                 friendsArr={friendsArr}
-                changeCurrentChat={setCurrentChat}
+                changeCurrentChat={changeCurrentChat}
                 websocket={websocket}
-                conversations={conversations}
+                conversations={conversations.concat(favorites)}
                 setConversations={setConversations}
             />
 
