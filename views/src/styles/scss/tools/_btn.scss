@@ -269,6 +269,7 @@
     box-shadow    : 0 0px 30px 10px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.07);
     border-radius : var(--radius);
     z-index       : 700;
+    border        : 1px solid var(--light-border);
 
     .tools_choice {
         display       : flex;
@@ -304,29 +305,43 @@
         background : transparent;
         
         &::before {
-            content    : '';
-            position   : absolute;
-            width      : 15px;
-            height     : 15px;
-            background : var(--menu);
-            transform  : rotate(45deg);
+            content      : '';
+            position     : absolute;
+            width        : 15px;
+            height       : 15px;
+            background   : var(--menu);
+            transform    : rotate(45deg);
         }
     }
 
     &[data-popper-placement^='top'] > .menu-arrow {
-        bottom: -7.5px;
+        bottom       : -7.5px;
+        &:before {
+            border-top   : 1px solid var(--light-border);
+            border-right : 1px solid var(--light-border);
+        }
     }
     
     &[data-popper-placement^='bottom'] > .menu-arrow {
         top: -7.5px;
+        &:before {
+            border-top  : 1px solid var(--light-border);
+            border-left : 1px solid var(--light-border);
+        }
     }
     
     &[data-popper-placement^='left'] > .menu-arrow {
-        right: -7.5px;
+        right : -7.5px;
+        &:before {
+            border-top   : 1px solid var(--light-border);
+            border-right : 1px solid var(--light-border);
+        }
     }
     
     &[data-popper-placement^='right'] > .menu-arrow {
-        left: -7.5px;
+        left        : -7.5px;
+        border-top  : 1px solid var(--light-border);
+        border-left : 1px solid var(--light-border);
     }
 }
 

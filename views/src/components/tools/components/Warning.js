@@ -4,6 +4,7 @@ import { Button, TextButton } from './Button'
 
 const Warning = (props) => {
     const { open, setOpen, css, title, text, cancelBtn, validateBtn, onValidate, onClose } = props
+    const wrapperClass = open ? "modal_wrapper" : "modal_wrapper hide_wrapper"
     const coverClass = open ? 'modal_cover modal_cover-active' : 'modal_cover'
     const containerClass = open ? `modal_container warning_modal modal_container-active show_modal ${css ? css : null}` : 'modal_container warning_modal hide_modal'
 
@@ -11,8 +12,7 @@ const Warning = (props) => {
     const validate = onValidate ? () => { setOpen(false); onValidate() } : () => setOpen(false)
 
     return (
-        open &&
-        <div className="modal_wrapper">
+        <div className={wrapperClass}>
             <div className={containerClass}>
                 <div className="close_modal" onClick={close}><IoClose /></div>
                 <div className="warning_title">{title}</div>

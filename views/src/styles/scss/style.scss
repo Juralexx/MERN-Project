@@ -3,26 +3,6 @@
 @import 'body';
 @import 'header';
 
-/* Tools */
-
-@import 'tools/classes';
-@import 'tools/accordion';
-@import 'tools/btn';
-@import 'tools/categories';
-@import 'tools/checkbox';
-@import 'tools/containers';
-@import 'tools/editor';
-@import 'tools/inputs';
-@import 'tools/loader';
-@import 'tools/map';
-@import 'tools/modals';
-@import 'tools/no-content';
-@import 'tools/scrollbar';
-@import 'tools/tools';
-@import 'tools/cards';
-@import 'tools/skeleton';
-@import 'tools/emoji-picker';
-
 /* Log */
 
 @import 'modules/log/signup';
@@ -73,5 +53,25 @@
 @import 'modules/messenger/message';
 @import 'modules/messenger/conversations-menu';
 @import 'modules/messenger/online-users';
-@import 'modules/messenger/conversation-modal';
+@import 'modules/messenger/conversation-tools';
 @import 'modules/messenger/editor';
+
+/* Tools */
+
+@import 'tools/classes';
+@import 'tools/accordion';
+@import 'tools/btn';
+@import 'tools/categories';
+@import 'tools/checkbox';
+@import 'tools/containers';
+@import 'tools/editor';
+@import 'tools/inputs';
+@import 'tools/loader';
+@import 'tools/map';
+@import 'tools/modals';
+@import 'tools/no-content';
+@import 'tools/scrollbar';
+@import 'tools/tools';
+@import 'tools/cards';
+@import 'tools/skeleton';
+@import 'tools/emoji-picker';

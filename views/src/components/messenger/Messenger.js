@@ -8,7 +8,7 @@ import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
 import Editor from './editor/Editor';
-import OnlineUsers from './OnlineUsers';
+import ConversationTools from './ConversationTools';
 import MessageDate from './message/MessageDate';
 import Message from './message/Message';
 import SearchHeader from './SearchHeader';
@@ -31,6 +31,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [messages, setMessages] = useState([])
     const [messagesDates, setMessagesDates] = useState([])
     const [newMessage, setNewMessage] = useState([])
+    
+    const [tools, setTools] = useState(false)
 
     const lastMessageRef = useRef()
     const convWrapperRef = useRef()
@@ -317,7 +319,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                         user={user}
                                         websocket={websocket}
                                         onlineUsers={onlineUsers}
-                                        friendsArr={friendsArr}
+                                        setTools={setTools}
                                         currentChat={currentChat}
                                         dispatch={dispatch}
                                     />
@@ -391,16 +393,20 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     )}
                 </div>
             </div>
-            <OnlineUsers
+            <ConversationTools
                 uid={uid}
                 user={user}
+                websocket={websocket}
                 onlineUsers={onlineUsers}
                 friendsArr={friendsArr}
                 fetchedFriends={fetchedFriends}
+                currentChat={currentChat}
+                setCurrentChat={setCurrentChat}
+                changeCurrentChat={changeCurrentChat}
+                tools={tools}
+                setTools={setTools}
                 conversations={conversations.concat(favorites)}
                 setConversations={setConversations}
-                setCurrentChat={setCurrentChat}
-                changeCurrentChat={setCurrentChat}
                 dispatch={dispatch}
             />
         </div>

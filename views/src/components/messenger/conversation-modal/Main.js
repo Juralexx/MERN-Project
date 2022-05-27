@@ -21,8 +21,8 @@ const Main = ({ uid, websocket, conversation, dispatch, setOpen }) => {
     }
 
     return (
-        <div className="conversation-infos custom-scrollbar">
-            <div className="conversation-infos-bloc border-b">
+        <div className="tools-displayer-content custom-scrollbar">
+            <div className="conversation-infos-bloc">
                 {changeName ? (
                     <div className="w-full">
                         <div className="bold mb-2">Nom</div>
@@ -48,7 +48,7 @@ const Main = ({ uid, websocket, conversation, dispatch, setOpen }) => {
                     </>
                 )}
             </div>
-            <div className="conversation-infos-bloc border-b">
+            <div className="conversation-infos-bloc">
                 {changeDescription ? (
                     <div className="w-full">
                         <div className="bold mb-2">Description</div>
@@ -74,7 +74,7 @@ const Main = ({ uid, websocket, conversation, dispatch, setOpen }) => {
                     </>
                 )}
             </div>
-            <div className="conversation-infos-bloc border-b">
+            <div className="conversation-infos-bloc">
                 <div className="w-full">
                     <div className="bold mb-1">Créé par</div>
                     <div className="txt-sec">{conversation.creator.pseudo} le {dateParser(conversation.createdAt)}</div>
@@ -85,10 +85,6 @@ const Main = ({ uid, websocket, conversation, dispatch, setOpen }) => {
                     <div className="bold mb-1">Propriétaire</div>
                     <div className="txt-sec">{conversation.owner.pseudo}</div>
                 </div>
-            </div>
-            <div className="conversation-btn_container">
-                <TextButton text="Quitter la conversation" className="mr-2" onClick={() => { leaveConversation(conversation, uid); setOpen(false) }} />
-                {conversation.owner._id === uid && <Button className="delete" text="Supprimer la conversation" onClick={() => { deleteConv(conversation, uid, websocket, dispatch); setOpen(false) }} />}
             </div>
         </div>
     )

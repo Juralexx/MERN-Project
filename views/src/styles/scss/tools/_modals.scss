@@ -7,7 +7,12 @@
     padding    : 100px 0 30px;
     overflow-x : hidden;
     overflow-y : auto;
+    visibility : visible;
     z-index    : 100000000000;
+
+    &.hide_wrapper {
+        visibility : hidden;
+    }
 
     .modal_container {
         position         : relative;
@@ -33,19 +38,15 @@
         &.hide_modal {
             opacity    : 0;
             visibility : hidden;
-            transform  : scale(1.1) translate(-47%, -50%);
-            transition : visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+            transform  : scale(1.2);
+            // transition : visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
         }
     
-        &.modal_container-active {
-            display : block;
-    
-            &.show_modal {
-                opacity    : 1;
-                visibility : visible;
-                transform  : scale(1);
-                transition : visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-            }
+        &.show_modal {
+            opacity    : 1;
+            visibility : visible;
+            transform  : scale(1);
+            transition : visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
         }
     
         .close_modal {
@@ -95,6 +96,7 @@
     }
     
     .modal_cover {
+        display    : none;
         position   : fixed;
         top        : 0;
         bottom     : 0;
@@ -102,11 +104,9 @@
         right      : 0;
         background : var(--modal-cover);
         z-index    : 100000;
-        display    : none;
     
         &.modal_cover-active {
             display : block;
-            z-index : 100000;
         }
     }
 }
