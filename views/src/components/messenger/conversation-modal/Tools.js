@@ -10,6 +10,7 @@ import AddMembers from './AddMembers'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
 import Settings from './Settings'
+import { HiArrowSmLeft } from 'react-icons/hi'
 
 const Tools = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsArr }) => {
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
@@ -25,19 +26,23 @@ const Tools = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsA
 
     return (
         <div className="conversation-tools-container">
-            <div className={`${!addMembers && files.open === false ? "conversation-tools-content" : "conversation-tools-content vanish-left"}`}>
+            <div className={`${!addMembers && files.open === false && open ? "conversation-tools-content" : "conversation-tools-content vanish-left"}`}>
+                <div className="go-back">
+                    <HiArrowSmLeft onClick={() => setOpen(false)} />
+                    <p>Retour</p>
+                </div>
                 <div className="conversation-tools-header">
-                    {conversation.picture ? (
-                        <div className="conversation-img" style={avatar(conversation.picture)}></div>
-                    ) : (
-                        <div className="conversation-img-container">
-                            {members.slice(0, 3).map((element, key) => {
+                    <div className="conversation-img-container">
+                        {conversation.picture ? (
+                            <div className="conversation-picture" style={avatar(conversation.picture)}></div>
+                        ) : (
+                            members.slice(0, 3).map((element, key) => {
                                 return (
                                     <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
                                 )
-                            })}
-                        </div>
-                    )}
+                            })
+                        )}
+                    </div>
                     {conversation.name ? (
                         <div className="bold text-lg">{conversation.name}</div>
                     ) : (
@@ -53,11 +58,7 @@ const Tools = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsA
                         <MdOutlineKeyboardArrowDown />
                     </div>
                     <Main
-                        uid={uid}
-                        websocket={websocket}
                         conversation={conversation}
-                        dispatch={dispatch}
-                        setOpen={setOpen}
                     />
                 </div>
 

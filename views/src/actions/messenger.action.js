@@ -35,7 +35,22 @@ export const receiveCreateConversation = (conversationId) => {
 
 export const UPLOAD_CONVERSATION_PICTURE = "UPLOAD_CONVERSATION_PICTURE"
 
-export const uploadConversationPicture = (picture) => {
+export const uploadConversationPicture = (conversationId, picture) => {
+    return async (dispatch) => {
+        return await axios
+            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload`, picture)
+            .then(res => {
+                dispatch({ type: UPLOAD_CONVERSATION_PICTURE, payload: res.data.picture })
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+/**
+ * Receive upload conversation image
+ */
+
+export const receiveUploadConversationPicture = (picture) => {
     return async (dispatch) => {
         dispatch({ type: UPLOAD_CONVERSATION_PICTURE, payload: { picture } })
     }
@@ -68,54 +83,28 @@ export const receiveUpdateConversationOwner = (owner) => {
 }
 
 /**
- * Update conversation description
- */
-
-export const UPDATE_CONVERSATION_DESCRIPTION = "UPDATE_CONVERSATION_DESCRIPTION"
-
-export const updateConversationDescription = (conversationId, description) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
-            data: { description }
-        })
-            .then(() => {
-                dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
-            })
-            .catch(err => console.error(err))
-    }
-}
-
-export const receiveUpdateConversationDescription = (description) => {
-    return async (dispatch) => {
-        dispatch({ type: UPDATE_CONVERSATION_DESCRIPTION, payload: { description } })
-    }
-}
-
-/**
-* Update conversation name
+* Update conversation name and description
 */
 
-export const UPDATE_CONVERSATION_NAME = "UPDATE_CONVERSATION_NAME"
+export const UPDATE_CONVERSATION_INFOS = "UPDATE_CONVERSATION_INFOS"
 
-export const updateConversationName = (conversationId, name) => {
+export const updateConversationInfos = (conversationId, name, description) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`,
-            data: { name }
+            data: { name, description }
         })
             .then(() => {
-                dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
+                dispatch({ type: UPDATE_CONVERSATION_INFOS, payload: { name, description } })
             })
             .catch(err => console.error(err))
     }
 }
 
-export const receiveUpdateConversationName = (name) => {
+export const receiveUpdateConversationInfos = (name, description) => {
     return async (dispatch) => {
-        dispatch({ type: UPDATE_CONVERSATION_NAME, payload: { name } })
+        dispatch({ type: UPDATE_CONVERSATION_INFOS, payload: { name, description } })
     }
 }
 

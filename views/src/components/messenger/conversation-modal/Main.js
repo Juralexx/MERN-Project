@@ -1,78 +1,21 @@
-import React, { useState } from 'react'
-import { Button, TextButton } from '../../tools/components/Button'
-import { ClassicInput, Textarea } from '../../tools/components/Inputs'
-import { updateConversationDescription, updateConversationName } from '../../../actions/messenger.action'
+import React from 'react'
 import { dateParser } from '../../Utils'
-import { deleteConv, leaveConversation } from '../tools/function'
 
-const Main = ({ uid, websocket, conversation, dispatch, setOpen }) => {
-    const [name, setName] = useState(conversation.name)
-    const [changeName, setChangeName] = useState(false)
-    const [description, setDescription] = useState(conversation.description)
-    const [changeDescription, setChangeDescription] = useState(false)
-
-    const submitDescription = async () => {
-        dispatch(updateConversationDescription(conversation._id, description))
-        setChangeDescription(false)
-    }
-    const submitName = async () => {
-        dispatch(updateConversationName(conversation._id, name))
-        setChangeName(false)
-    }
+const Main = ({ conversation }) => {
 
     return (
         <div className="tools-displayer-content custom-scrollbar">
             <div className="conversation-infos-bloc">
-                {changeName ? (
-                    <div className="w-full">
-                        <div className="bold mb-2">Nom</div>
-                        <div className="txt-sec">
-                            <ClassicInput className="full" placeholder="Nom de la conversation..." defaultValue={conversation.name} onChange={(e) => setName(e.target.value)} />
-                        </div>
-                        <div className="flex justify-end py-2">
-                            <TextButton className="mr-2" text="Annuler" onClick={() => setChangeName(!changeName)} />
-                            <Button text="Valider" onClick={submitName} />
-                        </div>
-                    </div>
-                ) : (
-                    <>
-                        <div className="w-full">
-                            <div className="bold mb-2">Nom</div>
-                            <div className="txt-sec">{name !== "" && name !== undefined ? name : 'Pas encore de nom'}</div>
-                        </div>
-                        <div className="ml-10">
-                            {conversation.owner._id === uid &&
-                                <TextButton text="Modifier" onClick={() => setChangeName(!changeName)} />
-                            }
-                        </div>
-                    </>
-                )}
+                <div className="w-full">
+                    <div className="bold mb-2">Nom</div>
+                    <div className="txt-sec">{conversation.name !== "" && conversation.name !== undefined ? conversation.name : 'Pas encore de nom'}</div>
+                </div>
             </div>
             <div className="conversation-infos-bloc">
-                {changeDescription ? (
-                    <div className="w-full">
-                        <div className="bold mb-2">Description</div>
-                        <div className="txt-sec">
-                            <Textarea className="full" placeholder="Description de la conversation..." defaultValue={conversation.description} onChange={(e) => setDescription(e.target.value)} />
-                        </div>
-                        <div className="flex justify-end py-2">
-                            <TextButton className="mr-2" text="Annuler" onClick={() => setChangeDescription(!changeDescription)} />
-                            <Button text="Valider" onClick={submitDescription} />
-                        </div>
-                    </div>
-                ) : (
-                    <>
-                        <div className="w-full">
-                            <div className="bold mb-1">Description</div>
-                            <div className="txt-sec">{description !== "" && description !== undefined ? description : 'Pas encore de description'}</div>
-                        </div>
-                        <div className="ml-10">
-                            {conversation.owner._id === uid &&
-                                <TextButton text="Modifier" onClick={() => setChangeDescription(!changeDescription)} />
-                            }
-                        </div>
-                    </>
-                )}
+                <div className="w-full">
+                    <div className="bold mb-1">Description</div>
+                    <div className="txt-sec">{conversation.description !== "" && conversation.description !== undefined ? conversation.description : 'Pas encore de description'}</div>
+                </div>
             </div>
             <div className="conversation-infos-bloc">
                 <div className="w-full">

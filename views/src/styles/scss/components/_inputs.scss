@@ -48,10 +48,17 @@
     }
 
     &.full {
-        width     : 100%;
+        flex-grow : 1;
         max-width : unset;
         input {
-            width : 100%;
+            flex-grow : 1;
+        }
+    }
+
+    &.small {
+        height : 36px;
+        input {
+            height : 36px;
         }
     }
 }
@@ -107,7 +114,7 @@
 
     &.is_start_icon {
         input {
-            padding : 6px 12px 4px 50px;
+            padding : 6px 12px 6px 50px;
         }
     }
 
@@ -164,10 +171,10 @@
     }
 
     &.full {
-        width     : 100%;
+        flex-grow : 1;
         max-width : unset;
         input {
-            width : 100%;
+            flex-grow : 1;
         }
     }
 
@@ -385,6 +392,14 @@
 
     &.small {
         height : 60px;
+    }
+
+    &.full {
+        flex-grow : 1;
+        max-width : unset;
+        input {
+            flex-grow : 1;
+        }
     }
 }
 

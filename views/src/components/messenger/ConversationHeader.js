@@ -51,31 +51,24 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, setTools, onlin
             {currentChat.type === "group" &&
                 <div className="conversation-box-top">
                     <div className="conversation-box-members" onClick={() => setTools(true)}>
+                        <div className="conversation-img-container">
+                            {currentChat.picture ? (
+                                <div className="conversation-img" style={avatar(currentChat.picture)}></div>
+                            ) : (
+                                members.slice(0, 3).map((element, key) => {
+                                    return (
+                                        <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                                    )
+                                })
+                            )}
+                        </div>
                         {currentChat.name ? (
-                            <>
-                                <div className="conversation-img-container">
-                                    {members.slice(0, 3).map((element, key) => {
-                                        return (
-                                            <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                                        )
-                                    })}
-                                </div>
-                                <div className="conversation-name">{currentChat.name}</div>
-                            </>
+                            <div className="conversation-name">{currentChat.name}</div>
                         ) : (
-                            <>
-                                <div className="conversation-img-container">
-                                    {members.map((element, key) => {
-                                        return (
-                                            <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                                        )
-                                    })}
-                                </div>
-                                <div className="conversation-name">{returnMembers(members)}</div>
-                            </>
+                            <div className="conversation-name">{returnMembers(members)}</div>
                         )}
                     </div>
-                    <ToolsMenu placement="bottom">
+                    <ToolsMenu>
                         {isFavorite ? (
                             <div className="tools_choice" onClick={unfavorite}><BsStarFill />Retirer des favoris</div>
                         ) : (

@@ -12,12 +12,11 @@ export const uploadProfilPicture = (data, userId) => {
     return async (dispatch) => {
         return await axios
             .post(`${process.env.REACT_APP_API_URL}api/user/upload/${userId}`, data)
-            .then((res) => {
+            .then(async (res) => {
                 if (res.data.message) {
                     dispatch({ type: GET_UPLOAD_PROFIL_ERRORS, payload: res.data.message })
                 } else {
-                    console.log(res)
-                    return axios
+                    return await axios
                         .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                         .then((res) => {
                             dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture })
@@ -35,11 +34,11 @@ export const deleteProfilPicture = (userId, picture) => {
             url: `${process.env.REACT_APP_API_URL}api/user/upload/delete/${userId}` + userId,
             data: { picture },
         })
-            .then((res) => {
-                return axios
+            .then(async () => {
+                return await axios
                     .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`)
                     .then((res) => {
-                        dispatch({ type: DELETE_UPLOADED_PICTURE, payload: "/img/random-user.png" })
+                        dispatch({ type: DELETE_UPLOADED_PICTURE, payload: `${process.env.REACT_APP_API_URL}api/files/img/random-user.jpg` })
                     })
             })
             .catch((err) => console.log(err))

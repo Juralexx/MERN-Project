@@ -10,7 +10,7 @@ import Warning from '../../tools/components/Warning';
 import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { avatar } from '../../tools/functions/useAvatar';
 import { SmallAvatar } from '../../tools/components/Avatars';
-import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, handleEditor, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from '../tools/function';
+import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, getUserPseudo, handleEditor, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from '../tools/function';
 import { dateParserWithoutYear, download, getHourOnly, randomNbID } from '../../Utils';
 import { addEmoji, removeEmoji } from '../../../actions/messenger.action';
 import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/md'
@@ -67,7 +67,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                     <div className="message-img" style={avatar(message.sender_picture)}></div>
                 </div>
                 <div className="message-right">
-                    <div className="message-right-top">{message.sender_pseudo} <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "(modifié)"}</span></div>
+                    <div className="message-right-top">{getUserPseudo(currentChat.members, message.sender, message.sender_pseudo)} <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "(modifié)"}</span></div>
 
                     {message && modify !== uniqueKey ? (
                         <>
@@ -183,6 +183,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                         title="Supprimer le message"
                         text="Voulez-vous vraiment supprimer ce message ? Cette action est irréversible."
                         validateBtn="Supprimer"
+                        className="delete"
                         open={warning}
                         setOpen={setWarning}
                         onValidate={() => removeMessage(message, currentChat, uid, websocket, dispatch)}

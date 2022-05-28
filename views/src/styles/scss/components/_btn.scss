@@ -35,6 +35,13 @@
         }
     }
 
+    &.validate {
+        background-color:  rgba(var(--green-rgb), 0.9);
+        &:hover {
+            background-color: var(--green);
+        }
+    }
+
     &.light_delete {
         color : var(--red);
         svg {
@@ -42,6 +49,16 @@
         }
         &:hover {
             background-color : rgba(var(--red-rgb), 0.2);
+        }
+    }
+
+    &.light_validate {
+        color : var(--green);
+        svg {
+            color : var(--green);
+        }
+        &:hover {
+            background-color : rgba(var(--green-rgb), 0.2);
         }
     }
 }

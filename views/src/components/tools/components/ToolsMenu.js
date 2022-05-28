@@ -39,14 +39,16 @@ const ToolsMenu = (props) => {
 
     return (
         <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
-            <div className={open ? "tools_menu transition open" : "tools_menu transition"} onClick={() => setOpen(false)}
-                ref={popperElRef}
-                style={styles.popper}
-                {...attributes.popper}
-            >
-                {props.children}
-                <div className="menu-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div>
-            </div>
+            {open &&
+                <div className="tools_menu" onClick={() => setOpen(false)}
+                    ref={popperElRef}
+                    style={styles.popper}
+                    {...attributes.popper}
+                >
+                    {props.children}
+                    <div className="menu-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div>
+                </div>
+            }
             {props.target ? (
                 <div ref={setTargetElement} onClick={() => setOpen(!open)}>
                     {props.target}

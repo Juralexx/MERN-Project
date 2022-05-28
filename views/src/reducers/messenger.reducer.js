@@ -1,4 +1,4 @@
-import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION_OWNER, UPDATE_CONVERSATION_NAME, UPDATE_CONVERSATION_DESCRIPTION, UPDATE_MESSAGE, DELETE_FILE, UPLOAD_CONVERSATION_PICTURE, CREATE_CONVERSATION, CUSTOMIZE_USER_PSEUDO } from "../actions/messenger.action";
+import { ADD_EMOJI, ADD_MEMBER_CONVERSATION, DELETE_MESSAGE, GET_CONVERSATION, POST_MESSAGE, RECEIVE_POST_MESSAGE, REMOVE_EMOJI, REMOVE_MEMBER_CONVERSATION, UPDATE_CONVERSATION_OWNER, UPDATE_MESSAGE, DELETE_FILE, UPLOAD_CONVERSATION_PICTURE, CUSTOMIZE_USER_PSEUDO, UPDATE_CONVERSATION_INFOS } from "../actions/messenger.action";
 
 const initialState = {}
 
@@ -16,16 +16,12 @@ export default function messengerReducer(state = initialState, action) {
         case UPLOAD_CONVERSATION_PICTURE:
             return {
                 ...state,
-                picture: action.payload.picture,
+                picture: action.payload,
             }
-        case UPDATE_CONVERSATION_NAME:
+        case UPDATE_CONVERSATION_INFOS:
             return {
                 ...state,
                 name: action.payload.name,
-            }
-        case UPDATE_CONVERSATION_DESCRIPTION:
-            return {
-                ...state,
                 description: action.payload.description,
             }
         case UPDATE_CONVERSATION_OWNER:

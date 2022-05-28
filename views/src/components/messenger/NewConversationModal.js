@@ -95,9 +95,7 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                         onChange={() => oneLevelSearch(query, friendsArr, 'pseudo', isResults, setResults, setSearch)}
                     />
                     <div className="user_selecter">
-                        {open &&
-                            friendsArr.length > 0 ? (
-                            friendsArr &&
+                        {friendsArr.length > 0 ? (
                             <div className="user_displayer">
                                 {friendsArr.map((element, key) => {
                                     return (

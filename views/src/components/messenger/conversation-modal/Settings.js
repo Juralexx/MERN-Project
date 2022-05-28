@@ -18,8 +18,9 @@ const Settings = ({ uid, websocket, conversation, dispatch }) => {
             
             <Warning
                 title="Quitter la conversation"
-                text="Voulez-vous vraiment cette conversation ? Vous ne pourrez plus revenir, sauf si quelqu'un vous réinvite."
+                text="Voulez-vous vraiment quitter cette conversation ? Vous ne pourrez plus revenir, sauf si quelqu'un vous réinvite."
                 validateBtn="Quitter la conversation"
+                className="delete"
                 open={warning === 'leave'}
                 setOpen={setWarning}
                 onValidate={() => leaveConversation(conversation, uid)}
@@ -30,6 +31,7 @@ const Settings = ({ uid, websocket, conversation, dispatch }) => {
                 title="Supprimer la conversation"
                 text="Voulez-vous vraiment supprimer cette conversation ? Cette action est irréversible."
                 validateBtn="Supprimer la conversation"
+                className="delete"
                 open={warning === 'delete'}
                 setOpen={setWarning}
                 onValidate={() => deleteConv(conversation, uid, websocket, dispatch)}

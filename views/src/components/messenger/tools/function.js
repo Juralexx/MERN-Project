@@ -245,6 +245,24 @@ export const getMessagesDates = (messages) => {
 }
 
 /**
+ * Check if user as a custom pseudo, if yes dispatch it, else dispatch user pseudo
+ */
+
+export const getUserPseudo = (members, userId, pseudo) => {
+    let user = members.find(member => member._id === userId)
+
+    if (user) {
+        if (user.custom_pseudo) {
+            return user.custom_pseudo
+        } else {
+            return pseudo
+        }
+    } else {
+        return pseudo
+    }
+}
+
+/**
  * Minimize message height and remove pseudo and hours if previous and this message is under certain time
  */
 

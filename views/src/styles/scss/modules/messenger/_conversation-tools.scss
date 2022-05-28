@@ -6,13 +6,15 @@
     overflow-x : hidden;
 
     .conversation-tools-content {
-        position   : absolute;
-        top        : 0;
-        left       : 0;
-        width      : 100%;
-        height     : 100%;
-        background : var(--content-light);
-        transition : .3s ease;
+        position       : absolute;
+        top            : 0;
+        left           : 0;
+        width          : 100%;
+        display        : flex;
+        flex-direction : column;
+        flex           : 1;
+        background     : var(--content-light);
+        transition     : .3s ease;
 
         &.vanish-left {
             left       : -100%;
@@ -23,17 +25,22 @@
             left       : 100%;
             transition : .3s ease;
         }
+
+        input {
+            box-shadow : none;
+        }
     }
 
     .conversation-tools-header {
         display        : flex;
         flex-direction : column;
         align-items    : center;
+        padding        : 0 0 10px;
     }
 
     .tools-displayer {
         max-height : 45px;
-        overflow   : hidden;
+        overflow-y : hidden;
         transition : .3s ease;
 
         &.open {
@@ -145,6 +152,12 @@
                 margin-left : -30px;
             }
         }
+
+        .conversation-picture {
+            width         : 80px;
+            height        : 80px;
+            border-radius : 50%;
+        }
     }
 
     .conversation-name {
@@ -161,14 +174,14 @@
     }
 
     .conversation-members {
-        overflow-y : auto;
-        overflow-x : hidden;
+        // overflow-y : auto;
+        // overflow-x : hidden;
 
         .conversation-member {
             display         : flex;
             align-items     : center;
             justify-content : space-between;
-            padding         : 8px;
+            padding         : 8px 0;
         }
     }
 }
