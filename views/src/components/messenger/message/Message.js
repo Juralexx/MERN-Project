@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Emoji } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
-import EmojiPicker from '../../tools/components/EmojiPicker';
+import EmojiPicker from '../tools/EmojiPicker';
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../editor/EditorToolbar";
 import Tooltip from '../../tools/components/Tooltip';

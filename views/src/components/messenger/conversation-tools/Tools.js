@@ -8,10 +8,10 @@ import Main from './Main'
 import Settings from './Settings'
 import AddMembers from './AddMembers'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import { TiStarOutline, TiStar } from 'react-icons/ti'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
-import { TiStarOutline, TiStar } from 'react-icons/ti'
 
 const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, friendsArr }) => {
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
@@ -26,11 +26,10 @@ const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, fr
     }
 
     return (
-        <div className="conversation-tools-container">
+        <div className="conversation-tools-container custom-scrollbar">
             <div className={`${!addMembers && files.open === false && open ? "conversation-tools-content" : "conversation-tools-content vanish-left"}`}>
-                <div className="go-back">
+                <div className="go-back absolute">
                     <HiArrowSmLeft onClick={() => setOpen(false)} />
-                    <p>Retour</p>
                 </div>
                 <div className="conversation-tools-header">
                     <div className="conversation-img-container">

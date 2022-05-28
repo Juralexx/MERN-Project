@@ -468,6 +468,17 @@ h1, h2, h3, h4, h5 {
   background-color: var(--primary);
 }
 
+.opacity-trans {
+  opacity: 0;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+.opacity-trans.plain {
+  opacity: 1;
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease;
+}
+
 .accordion {
   width: 100%;
   height: auto;
@@ -2175,7 +2186,7 @@ h1, h2, h3, h4, h5 {
   position: relative;
   margin: auto;
   width: 500px;
-  padding: 15px 20px;
+  padding: 15px;
   color: var(--text);
   background-color: var(--content-light);
   border-radius: var(--radius);
@@ -2237,16 +2248,16 @@ h1, h2, h3, h4, h5 {
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item {
   padding: 4px 20px;
-  margin-right: 5px;
+  margin-right: 7px;
   cursor: pointer;
+  border-radius: var(--radius);
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item:hover {
-  background-color: rgba(var(--primary-rgb), 0.1);
+  background-color: var(--x-light);
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item.active {
   color: var(--white);
   background-color: var(--primary);
-  border-radius: var(--radius);
 }
 .modal_wrapper .modal_container .modal_nav .modal_nav-item span {
   font-size: 12px;
@@ -2446,6 +2457,7 @@ h1, h2, h3, h4, h5 {
           justify-content: center;
   padding: 0 20px;
   font-size: 13px;
+  line-height: 19px;
   text-align: center;
   text-decoration: none;
   text-transform: none;
@@ -2771,6 +2783,7 @@ h1, h2, h3, h4, h5 {
   position: absolute;
   width: 15px;
   height: 15px;
+  border-radius: 3px;
   background: var(--menu);
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
@@ -9635,8 +9648,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 .conversation-box {
   position: relative;
   width: 50%;
-  border-left: 2px solid var(--light-border);
-  border-right: 2px solid var(--light-border);
 }
 .conversation-box .conversation-box-wrapper {
   position: relative;
@@ -9663,6 +9674,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   height: 60px;
   padding: 8px 15px;
   border-bottom: 2px solid var(--light-border);
+  border-left: 2px solid var(--light-border);
+  border-right: 2px solid var(--light-border);
   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   z-index: 20;
@@ -9771,11 +9784,10 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   overflow-x: hidden;
   padding: 10px;
   background-color: var(--content-x-light);
+  border-left: 2px solid var(--light-border);
+  border-right: 2px solid var(--light-border);
 }
 
-/**
-* EDITOR
-*/
 .is-typing {
   position: relative;
   display: -webkit-box;
@@ -9933,8 +9945,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   height: 30px;
 }
 .message-container .message .message-actions .message-actions-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 .message-container .message .message-actions .message-actions-btn:hover, .message-container .message .message-actions .message-actions-btn:hover .tools_box .tools_btn {
   background-color: var(--light);
@@ -9952,7 +9964,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   display: none;
   content: attr(data-hour);
   position: absolute;
-  left: 20px;
+  left: 10px;
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
@@ -10417,7 +10429,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 0 0 10px;
+  padding: 10px 0;
 }
 .conversation-tools-container .tools-displayer {
   max-height: 45px;
@@ -10711,7 +10723,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 
 .conversation-bottom {
-  padding: 5px;
   background: var(--content-x-light);
 }
 .conversation-bottom .auto-complete-container {
@@ -10733,7 +10744,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
       -ms-flex-pack: justify;
           justify-content: space-between;
   border: 2px solid var(--light-border);
-  border-radius: 5px;
   background: var(--content-light);
   -webkit-box-shadow: rgba(35, 34, 33, 0.17) 0px 0 2px 0px;
           box-shadow: rgba(35, 34, 33, 0.17) 0px 0 2px 0px;
@@ -10765,6 +10775,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
           align-items: center;
 }
 .conversation-toolsbox .message-text-tools .text-tools-left .tools-group {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10772,7 +10783,17 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
       -ms-flex-align: center;
           align-items: center;
   padding: 0 5px;
-  border-left: 1px solid var(--light-border);
+}
+.conversation-toolsbox .message-text-tools .text-tools-left .tools-group:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 1px;
+  height: 15px;
+  background-color: var(--light-border);
 }
 .conversation-toolsbox .message-text-tools .text-tools-left .text-tools {
   position: relative;
@@ -10798,8 +10819,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   cursor: pointer;
 }
 .conversation-toolsbox .message-text-tools .menu-tools-btn {
-  padding: 5px;
-  margin-right: 10px;
+  padding: 4px;
+  margin-right: 8px;
   border-radius: 50%;
   background: var(--xx-light);
   border: 1px solid var(--light-border);
@@ -11025,15 +11046,27 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   height: 100%;
 }
 .message-text-editor .ql-formats {
+  position: relative;
   margin-right: 0 !important;
   padding: 0 5px;
 }
 .message-text-editor .ql-formats:nth-child(1) {
   padding-left: 0;
 }
+.message-text-editor .ql-formats.before:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 1px;
+  height: 15px;
+  background-color: var(--light-border);
+}
 .message-text-editor .ql-toolbar.ql-snow {
   border: none;
-  padding: 3px 5px 3px;
+  padding: 3px 5px;
 }
 .message-text-editor .ql-toolbar.ql-snow button {
   height: unset;
@@ -11044,9 +11077,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .message-text-editor .ql-toolbar.ql-snow button:hover {
   background: var(--x-light);
-}
-.message-text-editor .ql-toolbar.ql-snow button.bordered {
-  border-right: 1px solid var(--light-border);
 }
 .message-text-editor .ql-toolbar.ql-snow svg {
   width: 15px;

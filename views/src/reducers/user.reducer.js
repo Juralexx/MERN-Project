@@ -207,14 +207,16 @@ export default function userReducer(state = initialState, action) {
             state.conversations[favorite] = true
             return {
                 ...state,
-                conversations: state.conversations
+                conversations: state.conversations,
+                favorite_conversations: state.favorite_conversations.push(action.payload.conversationId)
             }
         case REMOVE_FAVORITE_CONVERSATION:
             let unfavorite = state.conversations.findIndex(conversation => conversation.id === action.payload.conversationId)
             state.conversations[unfavorite] = false
             return {
                 ...state,
-                conversations: state.conversations
+                conversations: state.conversations,
+                favorite_conversations: state.favorite_conversations.filter(item => item !== action.payload.conversationId)
             }
 
         default:

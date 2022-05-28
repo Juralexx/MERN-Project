@@ -4,7 +4,7 @@ import { FiAtSign } from "react-icons/fi"
 import { IoSend } from "react-icons/io5"
 import ReactQuill from "react-quill"
 import EditorToolbar, { formats } from '../editor/EditorToolbar'
-import EmojiPicker from "../../tools/components/EmojiPicker"
+import EmojiPicker from "./EmojiPicker"
 
 export const ConversationLoader = () => {
     return (

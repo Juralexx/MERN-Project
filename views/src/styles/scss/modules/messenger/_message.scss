@@ -83,8 +83,8 @@
                 height          : 30px;
 
                 svg {
-                    width  : 18px;
-                    height : 18px;
+                    width  : 16px;
+                    height : 16px;
                 }
 
                 &:hover, &:hover .tools_box .tools_btn {
@@ -106,7 +106,7 @@
             display   : none;
             content   : attr(data-hour);
             position  : absolute;
-            left      : 20px;
+            left      : 10px;
             top       : 50%;
             transform : translateY(-50%);
             color     : var(--text-secondary);

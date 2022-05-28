@@ -650,11 +650,17 @@ export const returnMembers = (members) => {
 export const returnConversationPseudo = (conversation, message, uid) => {
     if (conversation.type === 'group') {
         if (message.sender === uid) {
-            return "Vous : "
-        } else return conversation.sender_pseudo
+            return (
+                <div className="mr-1">Vous :</div>
+            )
+        } else return (
+            <div className="mr-1">{conversation.sender_pseudo}</div>
+        )
     } else {
         if (message.sender === uid) {
-            return "Vous : "
+            return (
+                <div className="mr-1">Vous :</div>
+            )
         } else return
     }
 }

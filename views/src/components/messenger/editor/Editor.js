@@ -6,12 +6,12 @@ import { Quill } from "react-quill";
 import EditorToolbar, { formats, modules } from "./EditorToolbar";
 import ScrollButton from '../tools/ScrollButton';
 import Typing from '../tools/Typing';
-import EmojiPicker from '../../tools/components/EmojiPicker';
+import EmojiPicker from '../tools/EmojiPicker';
 import ErrorModal from '../../tools/components/ErrorModal';
 import Mention from './Mention';
 import Emoji from './Emoji';
 import Link from './Link';
-import { getMembers, isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, openMention, pickEmoji } from '../tools/function';
+import { getMembers, isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, openMention, pickEmoji, placeUponCursor } from '../tools/function';
 import { addActive } from '../../Utils';
 import { IoSend, IoText } from 'react-icons/io5'
 import { BsPlusLg } from 'react-icons/bs'
@@ -339,7 +339,7 @@ const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, han
                     <div className="text-tools-left">
                         <button className={`menu-tools-btn ${addActive(isTools, "active")}`} onClick={() => setTools(!isTools)}><BsPlusLg /></button>
                         <div className="tools-group">
-                            <EmojiPicker placement="top" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
+                            <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
                             <button className="text-tools" onClick={() => openMention(quill, isMention, setMention)}><FiAtSign /></button>
                             <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
                         </div>

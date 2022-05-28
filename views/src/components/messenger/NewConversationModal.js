@@ -98,7 +98,6 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                         {friendsArr.length > 0 ? (
                             <div className="user_displayer">
                                 {friendsArr.map((element, key) => {
-                                    console.log(element.work)
                                     return (
                                         <div className={`user_display_choice ${isSelected(members, element)} ${isInResults(element, isResults, search, "flex")}`} onClick={() => setMembers(pushUserInArray(element, members))} key={key}>
                                             <div className="user">

@@ -1,5 +1,4 @@
 .conversation-bottom {
-    padding    : 5px;
     background : var(--content-x-light);
 
     .auto-complete-container {
@@ -15,11 +14,11 @@
     flex-direction  : column;
     justify-content : space-between;
     border          : 2px solid var(--light-border);
-    border-radius   : 5px;
     background      : var(--content-light);
     box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
 
-    &:focus-within, &.active {
+    &:focus-within,
+    &.active {
         border : 2px solid var(--primary);
     }
 
@@ -37,10 +36,21 @@
             align-items : center;
 
             .tools-group {
+                position    : relative;
                 display     : flex;
                 align-items : center;
                 padding     : 0 5px;
-                border-left : 1px solid var(--light-border);
+
+                &:before {
+                    content          : '';
+                    position         : absolute;
+                    left             : 0;
+                    top              : 50%;
+                    transform        : translateY(-50%);
+                    width            : 1px;
+                    height           : 15px;
+                    background-color : var(--light-border);
+                }
             }
     
             .text-tools {
@@ -74,8 +84,8 @@
         }
 
         .menu-tools-btn {
-            padding       : 5px;
-            margin-right  : 10px;
+            padding       : 4px;
+            margin-right  : 8px;
             border-radius : 50%;
             background    : var(--xx-light);
             border        : 1px solid var(--light-border);

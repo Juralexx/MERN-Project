@@ -55,17 +55,17 @@ export const formats = [
 
 export const QuillToolbar = ({ style }) => (
     <div id="toolbar" style={style}>
-        <span className="ql-formats border-r">
+        <span className="ql-formats before">
             <button className="ql-bold" />
             <button className="ql-italic" />
             <button className="ql-underline" />
             <button className="ql-strike" />
         </span>
-        <span className="ql-formats border-r">
+        <span className="ql-formats before">
             <button className="ql-list" value="ordered" />
             <button className="ql-list" value="bullet" />
         </span>
-        <span className="ql-formats border-r">
+        <span className="ql-formats before">
             <button className="ql-indent" value="-1" />
             <button className="ql-indent" value="+1" />
         </span>

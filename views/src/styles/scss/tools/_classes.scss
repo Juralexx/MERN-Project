@@ -116,14 +116,12 @@
     }
 }
 
-// .transition {
-//     visibility : hidden;
-//     opacity    : 0;
-//     transition : .2s ease;
+.opacity-trans {
+    opacity    : 0;
+    transition : .2s ease;
 
-//     &.open {
-//         visibility : visible;
-//         opacity    : 1;
-//         transition : .4s ease;
-//     }
-// }
+    &.plain {
+        opacity    : 1;
+        transition : .4s ease;
+    }
+}

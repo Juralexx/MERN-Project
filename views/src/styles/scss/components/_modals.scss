@@ -18,7 +18,7 @@
         position         : relative;
         margin           : auto;
         width            : 500px;
-        padding          : 15px 20px;
+        padding          : 15px;
         color            : var(--text);
         background-color : var(--content-light);
         border-radius    : var(--radius);
@@ -75,17 +75,17 @@
             margin-bottom : 8px;
     
             .modal_nav-item {
-                padding      : 4px 20px;
-                margin-right : 5px;
-                cursor       : pointer;
+                padding       : 4px 20px;
+                margin-right  : 7px;
+                cursor        : pointer;
+                border-radius : var(--radius);
     
                 &:hover {
-                    background-color : rgba(var(--primary-rgb), 0.1);
+                    background-color : var(--x-light);
                 }
                 &.active {
                     color            : var(--white);
                     background-color : var(--primary);
-                    border-radius    : var(--radius);
                 }
 
                 span {

@@ -67,7 +67,7 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
                     {lastMessageFound && Object.keys(lastMessageFound).length > 0 ? (
                         <div className="last-message-wrapper">
                             <div className={`${unseen ? "last-message notification" : "last-message"}`}>
-                                <div className='mr-1'>{returnConversationPseudo(conversation, lastMessageFound, uid)}</div>
+                                {returnConversationPseudo(conversation, lastMessageFound, uid)}
                                 <p>
                                     {Object.keys(lastMessageFound.text).length > 0 ? (
                                         convertDeltaToStringNoHTML(lastMessageFound)

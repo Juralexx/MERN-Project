@@ -18,34 +18,56 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
                 <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Administrateurs</div>
             </div>
             <div className="conversation-members custom-scrollbar">
-                {conversation.members.map((member, key) => {
-                    return (
-                        <div className="conversation-member" key={key}>
-                            <div className="flex items-center">
-                                <MediumAvatar pic={member.picture} />
-                                <div>
-                                    <p>{member.pseudo}</p>
-                                    <p>
-                                        {conversation.creator._id === member._id ? (
-                                            "Créateur du groupe"
-                                        ) : (
-                                            `Ajouté(e) par ${member.requester_pseudo} le ${dateParser(member.date)}`
-                                        )}
-                                    </p>
+                {navbar === 1 &&
+                    conversation.members.map((member, key) => {
+                        return (
+                            <div className="conversation-member" key={key}>
+                                <div className="flex items-center">
+                                    <MediumAvatar pic={member.picture} />
+                                    <div>
+                                        <p>{member.pseudo}</p>
+                                        <p>
+                                            {conversation.creator._id === member._id ? (
+                                                "Créateur du groupe"
+                                            ) : (
+                                                `Ajouté(e) par ${member.requester_pseudo} le ${dateParser(member.date)}`
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
+                                <ToolsMenu>
+                                    {member._id !== uid &&
+                                        <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
+                                    }
+                                    <div className="tools_choice"><IoArrowRedo /><Link to={"/" + member.pseudo}>Voir le profil</Link></div>
+                                    {conversation.owner._id === uid && member._id !== uid &&
+                                        <div className="tools_choice red" onClick={() => leaveConversation(conversation, member._id, uid, websocket, dispatch)}><IoTrashBin />Supprimer</div>
+                                    }
+                                </ToolsMenu>
                             </div>
-                            <ToolsMenu>
-                                {member._id !== uid &&
-                                    <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
-                                }
-                                <div className="tools_choice"><IoArrowRedo /><Link to={"/" + member.pseudo}>Voir le profil</Link></div>
-                                {conversation.owner._id === uid && member._id !== uid &&
-                                    <div className="tools_choice red" onClick={() => leaveConversation(conversation, member._id, uid, websocket, dispatch)}><IoTrashBin />Supprimer</div>
-                                }
-                            </ToolsMenu>
+                        )
+                    })
+                }
+                {navbar === 2 &&
+                    <div className="conversation-member">
+                        <div className="flex items-center">
+                            <MediumAvatar pic={conversation.creator.picture} />
+                            <div>
+                                <p>{conversation.creator.pseudo}</p>
+                                <p>Créateur du groupe</p>
+                            </div>
                         </div>
-                    )
-                })}
+                        <ToolsMenu>
+                            {conversation.creator._id !== uid &&
+                                <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
+                            }
+                            <div className="tools_choice"><IoArrowRedo /><Link to={"/" + conversation.creator.pseudo}>Voir le profil</Link></div>
+                            {conversation.owner._id === uid && conversation.creator._id !== uid &&
+                                <div className="tools_choice red" onClick={() => leaveConversation(conversation, conversation.creator._id, uid, websocket, dispatch)}><IoTrashBin />Supprimer</div>
+                            }
+                        </ToolsMenu>
+                    </div>
+                }
             </div>
         </Modal>
     )

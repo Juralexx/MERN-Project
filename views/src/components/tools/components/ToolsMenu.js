@@ -4,7 +4,7 @@ import { useClickOutside } from '../functions/useClickOutside'
 import { usePopper } from "react-popper";
 
 const ToolsMenu = (props) => {
-    const { className, btnClassName, disabled, onClick } = props
+    const { className, btnClassName, disabled, onClick, placement } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
     useClickOutside(ref, setOpen, false)
@@ -14,7 +14,7 @@ const ToolsMenu = (props) => {
     const [popperElement, setPopperElement] = React.useState(popperElRef.current);
     const [arrowElement, setArrowElement] = useState(null);
     const { styles, attributes } = usePopper(targetElement, popperElement, {
-        placement: props.placement || "left-start",
+        placement: placement || "left-start",
         modifiers: [
             {
                 name: "offset",

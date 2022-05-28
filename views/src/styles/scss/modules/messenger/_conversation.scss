@@ -1,11 +1,9 @@
 .conversation-box {
-    position     : relative;
-    width        : 50%;
-    border-left  : 2px solid var(--light-border);
-    border-right : 2px solid var(--light-border);
+    position : relative;
+    width    : 50%;
 
     .conversation-box-wrapper {
-        position        : relative;
+        position       : relative;
         display        : flex;
         flex-direction : column;
         height         : 100%;
@@ -18,6 +16,8 @@
             height          : 60px;
             padding         : 8px 15px;
             border-bottom   : 2px solid var(--light-border);
+            border-left     : 2px solid var(--light-border);
+            border-right    : 2px solid var(--light-border);
             box-shadow      : 0 0 4px rgba(0, 0, 0, 0.2);
             z-index         : 20;
 
@@ -27,7 +27,7 @@
                 cursor        : pointer;
                 padding       : 6px;
                 border-radius : var(--radius);
-                
+
                 &:hover {
                     background-color : rgba(var(--primary-rgb), 0.1);
                 }
@@ -106,16 +106,14 @@
             position         : relative;
             height           : 100%;
             overflow-y       : auto;
-            overflow-x: hidden;
+            overflow-x       : hidden;
             padding          : 10px;
             background-color : var(--content-x-light);
+            border-left      : 2px solid var(--light-border);
+            border-right     : 2px solid var(--light-border);
         }
     }
 }
-
-/**
-* EDITOR
-*/
 
 .is-typing {
     position    : relative;
