@@ -1,0 +1,68 @@
+.message-text-editor {
+    position   : relative;
+    width      : 100%;
+    background : var(--content-light);
+
+    .message-editor-container {
+        position   : relative;
+        max-height : 250px;
+
+        .ql-editor {
+            background : var(--content-light);
+            padding    : 10px 10px;
+            border     : 1px solid transparent;
+
+            &.ql-blank {
+                &:before {
+                    left  : 11px;
+                    top   : 11px;
+                    color : var(--text-secondary);
+                }
+            }
+        }
+
+        .message-dropzone {
+            position : absolute;
+            bottom   : 0;
+            opacity  : 0;
+            cursor   : text;
+            width    : 100%;
+            height   : 100%;
+        }
+    }
+
+    .ql-formats {
+        margin-right : 0 !important;
+        padding      : 0 5px;
+
+        &:nth-child(1) {
+            padding-left : 0;
+        }
+    }
+
+    .ql-toolbar.ql-snow {
+        border  : none;
+        padding : 3px 5px 3px;
+
+        button {
+            height        : unset;
+            width         : unset;
+            padding       : 3px;
+            margin        : 0 2px;
+            border-radius : var(--radius);
+
+            &:hover {
+                background : var(--x-light);
+            }
+
+            &.bordered {
+                border-right : 1px solid var(--light-border);
+            }
+        }
+
+        svg {
+            width  : 15px;
+            height : 15px;
+        }
+    }
+}

@@ -1,8 +1,8 @@
 .conversation-box {
     position     : relative;
     width        : 50%;
-    border-left  : 1px solid var(--light-border);
-    border-right : 1px solid var(--light-border);
+    border-left  : 2px solid var(--light-border);
+    border-right : 2px solid var(--light-border);
 
     .conversation-box-wrapper {
         position        : relative;
@@ -17,7 +17,7 @@
             justify-content : space-between;
             height          : 60px;
             padding         : 8px 15px;
-            border-bottom   : 1px solid var(--light-border);
+            border-bottom   : 2px solid var(--light-border);
             box-shadow      : 0 0 4px rgba(0, 0, 0, 0.2);
             z-index         : 20;
 
@@ -27,6 +27,7 @@
                 cursor        : pointer;
                 padding       : 6px;
                 border-radius : var(--radius);
+                
                 &:hover {
                     background-color : rgba(var(--primary-rgb), 0.1);
                 }

@@ -8,7 +8,7 @@ import { twoLevelSearch } from '../tools/functions/searches';
 import { ConversationLoader } from './tools/Loaders';
 import TemporaryConversation from './tools/TemporaryConversation';
 import Tooltip from '../tools/components/Tooltip';
-import { AiOutlineUsergroupAdd } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiPencilAlt } from 'react-icons/hi'
@@ -21,18 +21,18 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
 
     return (
         <div className="conversation-menu">
-            <div className="flex justify-between pb-3">
+            <div className="flex items-center justify-between py-1">
                 <h2 className="bold">Conversations</h2>
                 <div className="relative flex">
-                    <Tooltip content={<p>Nouvelle conversation de groupe</p>} placement="bottom">
+                    <Tooltip content={<p>Nouvelle&nbsp;conversation de groupe</p>} placement="bottom">
                         <IconToggle icon={<AiOutlineUsergroupAdd />} className="mx-2" onClick={() => setOpen(true)} />
                     </Tooltip>
-                    <Tooltip content={<p>Nouvelle conversation</p>} placement="bottom">
-                        <IconToggle icon={<HiPencilAlt />} onClick={() => { setSearchHeader(true); Object.keys(temporaryConv).length === 0 ? setBlank(true) : setCurrentChat(temporaryConv) }} />
+                    <Tooltip content={<p>Nouvelle&nbsp;conversation</p>} placement="bottom">
+                        <IconToggle icon={<AiOutlineEdit />} onClick={() => { setSearchHeader(true); Object.keys(temporaryConv).length === 0 ? setBlank(true) : setCurrentChat(temporaryConv) }} />
                     </Tooltip>
                 </div>
             </div>
-            <div className="pb-4 mb-3 border-b">
+            <div className="py-2 mb-2">
                 <IconInput
                     className="full is_start_icon small"
                     icon={<BiSearchAlt />}

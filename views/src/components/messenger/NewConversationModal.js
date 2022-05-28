@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { addActive } from '../Utils';
+import { addActive, dateParser } from '../Utils';
 import { Button, TextButton } from '../tools/components/Button';
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs';
 import { MediumAvatar, TinyAvatar } from '../tools/components/Avatars';
@@ -68,7 +68,7 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
 
     return (
         <Modal open={open} setOpen={setOpen} className="add-conversation-modal">
-            <div className="modal_nav">
+            <div className="modal_nav pb-2 border-b">
                 <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Membres</div>
                 <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À propos</div>
             </div>
@@ -98,11 +98,15 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                         {friendsArr.length > 0 ? (
                             <div className="user_displayer">
                                 {friendsArr.map((element, key) => {
+                                    console.log(element.work)
                                     return (
                                         <div className={`user_display_choice ${isSelected(members, element)} ${isInResults(element, isResults, search, "flex")}`} onClick={() => setMembers(pushUserInArray(element, members))} key={key}>
                                             <div className="user">
                                                 <MediumAvatar pic={element.picture} />
-                                                <p>{element.pseudo}</p>
+                                                <div>
+                                                    <p>{element.pseudo}</p>
+                                                    <p>{element.work && element.work}</p>
+                                                </div>
                                             </div>
                                             {members.some(member => member._id === element._id) ? (
                                                 <TextButton text="Retirer" className="light_delete" />
@@ -122,18 +126,18 @@ const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversatio
                 </>
             ) : (
                 <>
-                    <div className="py-3">
+                    <div className="pt-3">
                         <div className="title">Nom</div>
                         <div className="info">
                             <ClassicInput className="full" value={name} onChange={e => setName((e.target.value).substring(0, 50))} placeholder="Nom de la conversation..." />
-                            <div className="field_infos full">{name.length} / 50 caractères</div>
+                            <div className="field_infos !w-full">{name.length} / 50 caractères</div>
                         </div>
                     </div>
-                    <div className="py-3">
+                    <div className="pt-3">
                         <div className="title">Description</div>
                         <div className="info">
-                            <Textarea className="full" value={description} onChange={e => setDescription((e.target.value).substring(0, 500))} placeholder="Description de la conversation..." />
-                            <div className="field_infos full">{description.length} / 500 caractères</div>
+                            <Textarea className="w-full" value={description} onChange={e => setDescription((e.target.value).substring(0, 500))} placeholder="Description de la conversation..." />
+                            <div className="field_infos !w-full">{description.length} / 500 caractères</div>
                         </div>
                     </div>
                 </>

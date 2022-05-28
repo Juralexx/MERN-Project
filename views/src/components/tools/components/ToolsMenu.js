@@ -14,19 +14,19 @@ const ToolsMenu = (props) => {
     const [popperElement, setPopperElement] = React.useState(popperElRef.current);
     const [arrowElement, setArrowElement] = useState(null);
     const { styles, attributes } = usePopper(targetElement, popperElement, {
-        placement: props.placement || "left",
+        placement: props.placement || "left-start",
         modifiers: [
             {
                 name: "offset",
                 options: {
-                    offset: [0, 10]
+                    offset: [-5, 5]
                 }
             },
             {
                 name: 'arrow',
                 options: {
                     element: arrowElement,
-                    padding: 5,
+                    padding: 10,
                 },
             }
         ]

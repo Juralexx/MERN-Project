@@ -337,7 +337,7 @@ const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, han
                 </div>
                 <div className="message-text-tools">
                     <div className="text-tools-left">
-                        <button className="menu-tools-btn" onClick={() => setTools(!isTools)}><BsPlusLg /></button>
+                        <button className={`menu-tools-btn ${addActive(isTools, "active")}`} onClick={() => setTools(!isTools)}><BsPlusLg /></button>
                         <div className="tools-group">
                             <EmojiPicker placement="top" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
                             <button className="text-tools" onClick={() => openMention(quill, isMention, setMention)}><FiAtSign /></button>

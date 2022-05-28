@@ -1,0 +1,18 @@
+.quill-link-displayer {
+    position         : absolute;
+    width            : 400px;
+    background-color : var(--content-light);
+    border-radius    : var(--radius);
+    padding          : 14px 15px 0;
+    box-shadow       : var(--shadow-lg);
+    border           : 2px solid var(--light-border);
+    z-index          : 750;
+
+    .classic-input {
+        height     : 36px;
+        box-shadow : none;
+        input {
+            height : 36px;
+        }
+    }
+}

@@ -9,7 +9,7 @@ const Settings = ({ uid, websocket, conversation, dispatch }) => {
     const [warning, setWarning] = useState(null)
 
     return (
-        <>
+        <div className="tools-displayer-content">
             <div className="tools-choice"><MdNotificationsActive /> Désactiver les notifications</div>
             <div className="tools-choice" onClick={() => setWarning('leave')}><HiLogout /> Quitter la conversation</div>
             {conversation.owner._id === uid &&
@@ -38,7 +38,7 @@ const Settings = ({ uid, websocket, conversation, dispatch }) => {
                 onClose={() => setWarning(null)}
             >
             </Warning>
-        </>
+        </div>
     )
 }
 

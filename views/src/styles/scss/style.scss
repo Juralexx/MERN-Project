@@ -79,4 +79,8 @@
 @import 'modules/messenger/conversations-menu';
 @import 'modules/messenger/online-users';
 @import 'modules/messenger/conversation-tools';
-@import 'modules/messenger/editor';
+
+@import 'modules/messenger/editor/editor';
+@import 'modules/messenger/editor/files';
+@import 'modules/messenger/editor/link';
+@import 'modules/messenger/editor/quill';

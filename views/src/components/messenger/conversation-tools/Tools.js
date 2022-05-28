@@ -1,18 +1,19 @@
 import React, { useState, useMemo } from 'react'
-import { getMembers, returnMembers } from '../tools/function'
+import { getMembers, returnMembers, setFavorite, setUnfavorite } from '../tools/function'
 import { avatar } from '../../tools/functions/useAvatar'
+import Customization from './Customization'
 import Files from './Files'
 import Members from './Members'
 import Main from './Main'
-import Customization from './Customization'
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import Settings from './Settings'
 import AddMembers from './AddMembers'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
-import Settings from './Settings'
-import { HiArrowSmLeft } from 'react-icons/hi'
+import { TiStarOutline, TiStar } from 'react-icons/ti'
 
-const Tools = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsArr }) => {
+const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, friendsArr }) => {
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
     const [navbar, setNavbar] = useState(null)
     const [addMembers, setAddMembers] = useState(false)
@@ -43,12 +44,19 @@ const Tools = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsA
                             })
                         )}
                     </div>
+
                     {conversation.name ? (
                         <div className="bold text-lg">{conversation.name}</div>
                     ) : (
                         <div className="flex items-center pb-3">
                             <div className="conversation-name">{returnMembers(members)}</div>
                         </div>
+                    )}
+                    
+                    {user.favorite_conversations && user.favorite_conversations.includes(conversation._id) ? (
+                        <div className="tools-choice" onClick={() => setUnfavorite(conversation._id, uid, dispatch)}><TiStar />Retirer des favoris</div>
+                    ) : (
+                        <div className="tools-choice" onClick={() => setFavorite(conversation._id, uid, dispatch)}><TiStarOutline />Ajouter aux favoris</div>
                     )}
                 </div>
 
@@ -82,8 +90,10 @@ const Tools = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsA
                         <p>Fichiers <span>{conversation.files.length}</span></p>
                         <MdOutlineKeyboardArrowDown />
                     </div>
-                    <div className="tools-choice" onClick={() => setFiles({ open: true, type: 'medias' })}><BiImages /> Multimédia</div>
-                    <div className="tools-choice" onClick={() => setFiles({ open: true, type: 'files' })}><FiFileText /> Fichiers</div>
+                    <div className="tools-displayer-content">
+                        <div className="tools-choice" onClick={() => setFiles({ open: true, type: 'medias' })}><BiImages /> Multimédia</div>
+                        <div className="tools-choice" onClick={() => setFiles({ open: true, type: 'files' })}><FiFileText /> Fichiers</div>
+                    </div>
                 </div>
 
                 <div className={`${navbar === 4 ? "tools-displayer open" : "tools-displayer"}`}>
@@ -115,7 +125,7 @@ const Tools = ({ uid, websocket, dispatch, open, setOpen, conversation, friendsA
 
             <div className={`${addMembers ? "conversation-tools-content" : "conversation-tools-content vanish-right"}`}>
                 <AddMembers
-                    uid={uid}
+                    user={user}
                     websocket={websocket}
                     friendsArr={friendsArr}
                     conversation={conversation}

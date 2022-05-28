@@ -11,9 +11,9 @@
     --light-border    : #DCDEDD;
     --input           : #ffffff;
     --input-text      : #696969;
-    --placeholder     : #b6bac0;
-    --light           : #EDF8FC;
-    --x-light         : #EDF8FC;
+    --placeholder     : #9a9fa7;
+    --light           : rgba(var(--primary-rgb), 0.1);
+    --x-light         : rgba(var(--primary-rgb), 0.1);
     --xx-light        : #ffffff;
     --navbar-txt      : #232221;
     --mini_nav-btn    : #eef0fc;
@@ -46,7 +46,7 @@
     --navbar-txt     : #EDF8FC;
     --menu           : #1a1d22;
     --modal-cover    : rgba(255, 255, 255, 0.05);
-    --tooltip        : #69697f;
+    --tooltip        : #161616;
     --color-skeleton : linear-gradient(-90deg, rgb(169, 173, 179) 0%, rgb(106, 114, 127) 50%, rgb(169, 173, 179) 100%);
     --shadow-light   : 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);;
     --shadow-tiny    : rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
@@ -56,7 +56,7 @@
     --primary         : #5a7df0;
     --primary-rgb     : 90, 125, 240;
     --primary-light   : #90a1f3;
-    --primary-dark    : #1760ec;
+    --primary-dark    : #4c73f1;
     --blue            : #4470ff ;
     --blue-rgb        : 68, 112, 255;
     --xblue           : #7471fc;

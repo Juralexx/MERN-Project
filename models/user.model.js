@@ -122,6 +122,10 @@ const UserModel = new mongoose.Schema(
             }
         },
 
+        favorite_conversations: {
+            type: [String]
+        },
+
         notifications: {
             type: [],
             notification: {

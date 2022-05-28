@@ -14,9 +14,8 @@ import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDelt
 import { dateParserWithoutYear, download, getHourOnly, randomNbID } from '../../Utils';
 import { addEmoji, removeEmoji } from '../../../actions/messenger.action';
 import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/md'
-import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'
+import { IoArrowRedo, IoArrowUndo, IoText, IoTrashBin } from 'react-icons/io5'
 import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
-import { BiFontFamily } from 'react-icons/bi'
 
 const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
     const [modify, setModify] = useState(-1)
@@ -108,11 +107,11 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                 <div className="message-text-tools">
                                     <div className="text-tools-left">
                                         <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji)} />
-                                        <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><BiFontFamily /></button>
+                                        <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
                                     </div>
                                     <div className="text-tools-right">
                                         <button className="cancel-tool" onClick={() => { setModify(-1); setOpened(!opened) }}>Annuler</button>
-                                        <button className="send-tool" onClick={() => { modifyMessage(message, modifiedMessage, currentChat, uid, websocket, dispatch); setModify(-1) }}>Enregistrer</button>
+                                        <button className="save-tool" onClick={() => { modifyMessage(message, modifiedMessage, currentChat, uid, websocket, dispatch); setModify(-1) }}>Enregistrer</button>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +136,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                                 )}
                                             </div>
                                         }>
-                                            <Emoji emoji={emoji} size={16} set='twitter' />
+                                            <Emoji emoji={emoji} size={14} set='twitter' />
                                         </Tooltip>
                                         <p>{emojisGrouped.length}</p>
                                     </div>

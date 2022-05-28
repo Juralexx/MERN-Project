@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import Modal from '../../tools/components/Modal'
-import { customizeUserPseudo, updateConversationInfos, uploadConversationPicture } from '../../../actions/messenger.action'
+import { customizeUserPseudo, removeConversationPicture, updateConversationInfos, uploadConversationPicture } from '../../../actions/messenger.action'
 import { ClassicInput, Textarea } from '../../tools/components/Inputs'
 import { Button, TextButton } from '../../tools/components/Button'
 import { MediumAvatar } from '../../tools/components/Avatars'
 import { RiEdit2Fill } from 'react-icons/ri'
-import { BiImage } from 'react-icons/bi'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { IoText, IoTrashBin } from 'react-icons/io5'
-import { MdCheck, MdClear } from 'react-icons/md'
+import { MdCheck, MdClear, MdOutlineImage, MdOutlineImageNotSupported } from 'react-icons/md'
+import { otherMembersIDs } from '../tools/function'
 
 const Customization = ({ uid, websocket, conversation, dispatch }) => {
     const [file, setFile] = useState()
@@ -21,31 +21,61 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
     const [name, setName] = useState(conversation.name)
     const [description, setDescription] = useState(conversation.description)
 
-    const handleInformations = async () => {
+    const updateInformations = async () => {
+        otherMembersIDs(conversation, uid).map(memberId => {
+            return websocket.current.emit("updateConversation", {
+                receiverId: memberId,
+                name: name,
+                description: description
+            })
+        })
         dispatch(updateConversationInfos(conversation._id, name, description))
         setEdit(false)
     }
 
-    const handlePseudo = (memberId) => {
-        dispatch(customizeUserPseudo(conversation._id, memberId, pseudo))
+    const updatePseudo = (userId) => {
+        otherMembersIDs(conversation, uid).map(memberId => {
+            return websocket.current.emit("customizeConversationPseudo", {
+                receiverId: memberId,
+                userId: userId,
+                pseudo: pseudo
+            })
+        })
+        dispatch(customizeUserPseudo(conversation._id, userId, pseudo))
         setPseudo("")
         setEditPseudo(null)
     }
 
-    const handlePicture = () => {
+    const uploadPicture = () => {
         let formData = new FormData()
         formData.append("file", file)
         dispatch(uploadConversationPicture(conversation._id, formData))
+        otherMembersIDs(conversation, uid).map(memberId => {
+            return websocket.current.emit("updateConversationPicture", {
+                receiverId: memberId,
+                picture: `${process.env.REACT_APP_API_URL}uploads/conversations/${conversation._id}/${conversation._id}.jpg`
+            })
+        })
         setFile(null)
     }
 
+    const deletePicture = () => {
+        dispatch(removeConversationPicture(conversation._id))
+        otherMembersIDs(conversation, uid).map(memberId => {
+            return websocket.current.emit("deleteConversationPicture", {
+                receiverId: memberId
+            })
+        })
+    }
+
     return (
-        <>
+        <div className="tools-displayer-content">
             <div className="tools-choice" onClick={() => setEdit(true)}><HiOutlineMenuAlt2 /> Modifier les informations</div>
             <div className="tools-choice relative file_upload">
-                <BiImage /> Modifier la photo
-                <input type="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handlePicture} />
+                <MdOutlineImage /> Modifier la photo
+                <input type="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={uploadPicture} />
             </div>
+            <div className="tools-choice" onClick={() => deletePicture()}><MdOutlineImageNotSupported /> Supprimer la photo</div>
             <div className="tools-choice" onClick={() => setPseudos(true)}><IoText /> Modifier les pseudos</div>
 
             <Modal open={edit} setOpen={setEdit} className="edit-conversation-modal">
@@ -60,7 +90,7 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
                 </div>
                 <div className="flex justify-end mt-6">
                     <TextButton className="mr-2" text="Annuler" onClick={() => setEdit(false)} />
-                    <Button text="Enregistrer" onClick={handleInformations} />
+                    <Button text="Enregistrer" onClick={updateInformations} />
                 </div>
             </Modal>
 
@@ -82,7 +112,7 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
                                         <div className="flex items-center">
                                             <button onClick={() => setEditPseudo(key)}><RiEdit2Fill className="w-5 h-5" /></button>
                                             {member.custom_pseudo &&
-                                                <button onClick={() => handlePseudo(member._id)}><IoTrashBin className="ml-3 red w-5 h-5" /></button>
+                                                <button onClick={() => updatePseudo(member._id)}><IoTrashBin className="ml-3 red w-5 h-5" /></button>
                                             }
                                         </div>
                                     </>
@@ -90,8 +120,8 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
                                     <div className="flex items-center grow">
                                         <MediumAvatar pic={member.picture} />
                                         <ClassicInput className="full small" placeholder={member.pseudo} defaultValue={member.custom_pseudo} onChange={(e) => setPseudo(e.target.value)} />
-                                        <button className="ml-3" onClick={() => setEdit(null)}><MdClear className="w-5 h-5" /></button>
-                                        <button className="ml-3" onClick={() => handlePseudo(member._id)}><MdCheck className="w-5 h-5" /></button>
+                                        <button className="ml-3" onClick={() => setEditPseudo(null)}><MdClear className="w-5 h-5" /></button>
+                                        <button className="ml-3" onClick={() => updatePseudo(member._id)}><MdCheck className="w-5 h-5" /></button>
                                     </div>
                                 )}
                             </div>
@@ -99,7 +129,7 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
                     })}
                 </div>
             </Modal>
-        </>
+        </div>
     )
 }
 

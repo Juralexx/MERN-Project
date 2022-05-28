@@ -19,6 +19,9 @@ const ConversationModel = new mongoose.Schema(
             _id: String,
             pseudo: String,
             picture: String,
+            date: Date,
+            requester: String,
+            requester_pseudo: String
         },
         owner: {
             _id: String,

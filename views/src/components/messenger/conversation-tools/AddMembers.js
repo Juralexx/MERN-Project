@@ -8,8 +8,8 @@ import { IconInput } from '../../tools/components/Inputs'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 import { HiArrowSmLeft } from 'react-icons/hi'
 
-const AddMembers = ({ uid, websocket, friendsArr, conversation, setAddMembers, dispatch }) => {
-    const membersToAdd = friendsArr.filter(f => !otherMembersIDs(conversation, uid).includes(f._id))
+const AddMembers = ({ user, websocket, friendsArr, conversation, setAddMembers, dispatch }) => {
+    const membersToAdd = friendsArr.filter(f => !otherMembersIDs(conversation, user._id).includes(f._id))
     const [isResults, setResults] = useState([])
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
@@ -37,7 +37,7 @@ const AddMembers = ({ uid, websocket, friendsArr, conversation, setAddMembers, d
                                     <MediumAvatar pic={member.picture} />
                                     <div>{member.pseudo}</div>
                                 </div>
-                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member, uid, websocket, dispatch)} />
+                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member, user, websocket, dispatch)} />
                             </div>
                         )
                     })

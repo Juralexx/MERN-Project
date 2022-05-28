@@ -790,6 +790,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-height: 500px;
 }
 
+.max-h-\[450px\] {
+  max-height: 450px;
+}
+
 .min-h-\[300px\] {
   min-height: 300px;
 }
@@ -848,6 +852,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-1\/4 {
   width: 25%;
+}
+
+.\!w-full {
+  width: 100% !important;
 }
 
 .min-w-full {
@@ -1081,6 +1089,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
+.pt-1 {
+  padding-top: 0.25rem;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
 }
 
 .text-left {

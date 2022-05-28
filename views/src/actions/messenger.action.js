@@ -40,6 +40,7 @@ export const uploadConversationPicture = (conversationId, picture) => {
         return await axios
             .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload`, picture)
             .then(res => {
+                console.log(res.data.picture)
                 dispatch({ type: UPLOAD_CONVERSATION_PICTURE, payload: res.data.picture })
             })
             .catch(err => console.log(err))
@@ -53,6 +54,33 @@ export const uploadConversationPicture = (conversationId, picture) => {
 export const receiveUploadConversationPicture = (picture) => {
     return async (dispatch) => {
         dispatch({ type: UPLOAD_CONVERSATION_PICTURE, payload: { picture } })
+    }
+}
+
+/**
+ * Remove conversation image
+ */
+
+export const REMOVE_CONVERSATION_PICTURE = "REMOVE_CONVERSATION_PICTURE"
+
+export const removeConversationPicture = (conversationId) => {
+    return async (dispatch) => {
+        return await axios
+            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload/delete`)
+            .then(() => {
+                dispatch({ type: REMOVE_CONVERSATION_PICTURE, payload: '' })
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+/**
+ * Receive remove conversation image
+ */
+
+export const receiveRemoveConversationPicture = () => {
+    return async (dispatch) => {
+        dispatch({ type: REMOVE_CONVERSATION_PICTURE, payload: '' })
     }
 }
 

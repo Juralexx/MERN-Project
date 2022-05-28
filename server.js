@@ -124,6 +124,32 @@ io.on("connect", (socket) => {
         }
     })
 
+    socket.on('updateConversation', ({ receiverId, conversationId, name, description }) => {
+        const user = users.filter(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateConversation', {
+                name,
+                description
+            })
+        }
+    })
+
+    socket.on('updateConversationPicture', ({ receiverId, conversationId, picture }) => {
+        const user = users.filter(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateConversationPicture', {
+                picture
+            })
+        }
+    })
+
+    socket.on('deleteConversationPicture', ({ receiverId, conversationId }) => {
+        const user = users.filter(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('deleteConversationPicture')
+        }
+    })
+
     socket.on('deleteConversation', ({ receiverId, conversationId }) => {
         const user = users.filter(member => member.userId === receiverId)
         if (user) {

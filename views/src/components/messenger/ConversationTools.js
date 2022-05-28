@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import { avatar } from '../tools/functions/useAvatar';
 import ToolsMenu from '../tools/components/ToolsMenu';
+import Tools from './conversation-tools/Tools';
 import { IconToggle } from '../tools/components/Button';
-import { BiSearchAlt } from 'react-icons/bi';
 import { isConversation, isOnline } from './tools/function';
 import { OnlineUserLoader } from './tools/Loaders';
-import Tools from './conversation-modal/Tools';
+import { avatar } from '../tools/functions/useAvatar';
+import { BiSearchAlt } from 'react-icons/bi';
 
 const ConversationTools = ({ uid, user, websocket, onlineUsers, friendsArr, fetchedFriends, conversations, setConversations, currentChat, setCurrentChat, changeCurrentChat, tools, setTools, dispatch }) => {
 
@@ -28,10 +28,10 @@ const ConversationTools = ({ uid, user, websocket, onlineUsers, friendsArr, fetc
     }
 
     return (
-        <div className="online-users-container">
+        <div className="conversation-tools">
             {!tools ? (
                 <>
-                    <div className="flex justify-between pb-3 mb-3 border-b">
+                    <div className="flex items-center justify-between py-1 mb-3">
                         <h2 className="bold">Contact</h2>
                         <div className="flex">
                             <IconToggle icon={<BiSearchAlt />} />
@@ -69,6 +69,7 @@ const ConversationTools = ({ uid, user, websocket, onlineUsers, friendsArr, fetc
             ) : (
                 <Tools
                     uid={uid}
+                    user={user}
                     websocket={websocket}
                     open={tools}
                     setOpen={setTools}

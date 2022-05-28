@@ -4,7 +4,7 @@
     justify-content : left;
     min-width       : 100%;
     margin          : 10px 0 0;
-    padding         : 4px 15px;
+    padding         : 4px;
     border-radius   : var(--radius);
     cursor          : pointer;
 
@@ -108,7 +108,6 @@
             position  : absolute;
             left      : 20px;
             top       : 50%;
-            height    : 10px;
             transform : translateY(-50%);
             color     : var(--text-secondary);
             font-size : 10px;
@@ -119,112 +118,20 @@
             }
         }
     }
-    
-    .conversation-toolsbox {
-        position        : relative;
-        width           : 100%;
-        display         : flex;
-        flex-direction  : column;
-        justify-content : space-between;
-        border          : 3px solid var(--light-border);
-        border-radius   : 5px;
-        background      : var(--content-light);
-        box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
-    
-        .message-text-tools {
-            position        : relative;
-            display         : flex;
-            align-items     : center;
-            justify-content : space-between;
-            padding         : 3px 5px 5px;
-            background      : var(--content-light);
-        
-            .text-tools-left, .text-tools-right {
-                display     : flex;
-                align-items : center;
-    
-                .tools-group {
-                    display     : flex;
-                    align-items : center;
-                    padding     : 0 5px;
-                    border-left : 1px solid var(--light-border);
-                }
-        
-                .text-tools {
-                    display         : flex;
-                    align-items     : center;
-                    justify-content : center;
-                    height          : 15px;
-                    width           : 27px;
-        
-                    svg {
-                        width  : 15px;
-                        height : 15px;
-                    }
-    
-                    &:hover {
-                        color : var(--primary);
-                    }
-                }
-    
-                .menu-tools-btn {
-                    padding       : 4px;
-                    margin-right  : 10px;
-                    border-radius : 50%;
-                    background    : var(--x-light);
-                    border        : 1px solid var(--light-border);
-        
-                    svg {
-                        width  : 11px;
-                        height : 11px;
-                    }
-    
-                    &:hover {
-                        color : var(--primary);
-                    }
-                }
-        
-                .send-tool {
-                    font-size        : 12px;
-                    padding          : 4px 8px;
-                    border-radius    : 3px;
-                    background-color : var(--primary);
-                    color            : white;
-
-                    &:disabled {
-                        opacity : 0.5;
-                    }
-                }
-
-                .cancel-tool {
-                    font-size     : 12px;
-                    padding       : 4px 8px;
-                    margin-right  : 7px;
-                    border        : 1px solid var(--light-border);
-                    border-radius : 3px;
-                }
-            }
-        
-            .emoji-picker-container {
-                position : absolute;
-                right    : 0;
-                bottom   : 70px;
-            }
-        }
-    }
 }
 
 .message-emoji-container {
     display     : flex;
-    padding-top : 4px;
+    padding-top : 8px;
 
     .emoji {
         position         : relative;
         display          : flex;
         align-items      : center;
-        padding          : 3px 7px;
+        justify-content  : center;
+        padding          : 3px 7px 1px;
         margin-right     : 5px;
-        border-radius    : var(--radius);
+        border-radius    : 20px;
         background-color : var(--mini_nav-btn);
 
         .tooltip-target {
@@ -233,12 +140,15 @@
 
         &.own {
             background : rgba(var(--blue-rgb), 0.55);
-            border     : 2px solid var(--blue);
+            border     : 1px solid var(--blue);
+            color      : white;
         }
 
         p {
-            line-height : 14px;
-            margin-left : 5px;
+            line-height   : 12px;
+            font-size     : 12px;
+            margin-left   : 5px;
+            margin-bottom : 1px;
         }
     }
 
@@ -262,12 +172,15 @@
     .emoji-popup {
         display     : flex;
         align-items : center;
-        min-width   : 200px;
+        padding     : 5px 0;
 
         p {
-            margin-left : 10px;
-            line-height : 18px;
-            font-size   : 13px;
+            margin-left   : 10px;
+            line-height   : 18px;
+            font-size     : 13px;
+            text-align    : left;
+            inline-size   : 150px;
+            overflow-wrap : break-word;
         }
     }
 }

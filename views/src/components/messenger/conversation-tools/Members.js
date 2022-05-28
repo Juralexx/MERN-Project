@@ -19,7 +19,7 @@ const Members = ({ uid, websocket, members, setAddMembers, conversation, dispatc
     return (
         <div className="tools-displayer-content">
             <IconInput
-                className="full is_start_icon small mb-3"
+                className="full is_start_icon small mb-2"
                 placeholder="Rechercher un membre..."
                 icon={<BiSearchAlt />}
                 value={query}

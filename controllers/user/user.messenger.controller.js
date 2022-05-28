@@ -7,7 +7,14 @@ export const addConversationToFavorite = async (req, res) => {
                 _id: req.params.id,
                 conversations: { $elemMatch: { id: req.body.conversationId } },
             },
-            { $set: { "conversations.$.favorite": true } },
+            {
+                $set: {
+                    "conversations.$.favorite": true
+                },
+                $addToSet: {
+                    favorite_conversations: req.body.conversationId
+                }
+            },
             { new: true, upsert: true, setDefaultsOnInsert: true },
         )
             .then((docs) => { res.send(docs) })
@@ -24,7 +31,14 @@ export const removeConversationFromFavorite = async (req, res) => {
                 _id: req.params.id,
                 conversations: { $elemMatch: { id: req.body.conversationId } },
             },
-            { $set: { "conversations.$.favorite": false } },
+            {
+                $set: {
+                    "conversations.$.favorite": false
+                },
+                $pull: {
+                    favorite_conversations: req.body.conversationId
+                }
+            },
             { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
         )
             .then((docs) => { res.send(docs) })

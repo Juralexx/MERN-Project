@@ -1,32 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { avatar } from '../tools/functions/useAvatar'
-import { deleteConv, getMembers, isOnline, leaveConversation, returnMembers } from './tools/function'
-import { addFavorite, removeFavorite } from '../../actions/messenger.action'
-import ToolsMenu from '../tools/components/ToolsMenu'
-import { IoTrashOutline } from 'react-icons/io5'
-import { BsStar, BsStarFill } from 'react-icons/bs'
-import { HiLogout } from 'react-icons/hi'
+import { getMembers, isOnline, returnMembers } from './tools/function'
+import { HiMenuAlt3 } from 'react-icons/hi'
+import MembersModal from './tools/MembersModal'
 
 const ConversationHeader = ({ uid, user, websocket, currentChat, setTools, onlineUsers, dispatch }) => {
-    const [isFavorite, setFavorite] = useState(null)
     const members = getMembers(currentChat, uid)
-
-    const favorite = () => {
-        dispatch(addFavorite(uid, currentChat._id))
-        setFavorite(true)
-    }
-
-    const unfavorite = () => {
-        dispatch(removeFavorite(uid, currentChat._id))
-        setFavorite(false)
-    }
-
-    useEffect(() => {
-        if (user.conversations && currentChat) {
-            let conv = user.conversations.filter(e => e.id === currentChat._id)
-            conv && conv.favorite === true ? setFavorite(true) : setFavorite(false)
-        }
-    }, [user.conversations, currentChat])
+    const [membersModal, setMembersModal] = useState(false)
 
     return (
         <>
@@ -38,19 +18,12 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, setTools, onlin
                         </div>
                         <div className="conversation-name">{getMembers(currentChat, uid)[0].pseudo}</div>
                     </div>
-                    <ToolsMenu placement="bottom">
-                        {isFavorite ? (
-                            <div className="tools_choice" onClick={unfavorite}><BsStarFill />Retirer des favoris</div>
-                        ) : (
-                            <div className="tools_choice" onClick={favorite}><BsStar />Ajouter aux favoris</div>
-                        )}
-                        {currentChat.owner._id === uid && <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}><IoTrashOutline /> Supprimer la conversation</div>}
-                    </ToolsMenu>
                 </div>
             }
+
             {currentChat.type === "group" &&
                 <div className="conversation-box-top">
-                    <div className="conversation-box-members" onClick={() => setTools(true)}>
+                    <div className="conversation-box-members" onClick={() => setMembersModal(true)}>
                         <div className="conversation-img-container">
                             {currentChat.picture ? (
                                 <div className="conversation-img" style={avatar(currentChat.picture)}></div>
@@ -68,19 +41,19 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, setTools, onlin
                             <div className="conversation-name">{returnMembers(members)}</div>
                         )}
                     </div>
-                    <ToolsMenu>
-                        {isFavorite ? (
-                            <div className="tools_choice" onClick={unfavorite}><BsStarFill />Retirer des favoris</div>
-                        ) : (
-                            <div className="tools_choice" onClick={favorite}><BsStar />Ajouter aux favoris</div>
-                        )}
-                        <div className="tools_choice" onClick={() => leaveConversation(currentChat, uid, uid, websocket, dispatch)}><HiLogout /> Quitter la conversation</div>
-                        {currentChat.owner._id === uid &&
-                            <div className="tools_choice" onClick={() => deleteConv(currentChat, uid, websocket, dispatch)}><IoTrashOutline /> Supprimer la conversation</div>
-                        }
-                    </ToolsMenu>
+                    <button className="tools_btn" onClick={() => setTools(true)}>
+                        <HiMenuAlt3 />
+                    </button>
                 </div>
             }
+            <MembersModal
+                uid={uid}
+                websocket={websocket}
+                open={membersModal}
+                setOpen={setMembersModal}
+                conversation={currentChat}
+                dispatch={dispatch}
+            />
         </>
     )
 }

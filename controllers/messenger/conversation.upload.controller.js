@@ -12,7 +12,7 @@ import sharp from 'sharp'
  * Upload conversation picture
  */
 
- export const uploadConversationPicture = async (req, res) => {
+export const uploadConversationPicture = async (req, res) => {
     const __directory = `${__dirname}/../../uploads/conversations/${req.params.id}`
 
     if (!fs.existsSync(__directory)) {
@@ -50,6 +50,33 @@ import sharp from 'sharp'
         )
             .then(docs => { res.send(docs) })
             .catch(err => { return res.status(500).send({ message: err }) })
+    } catch (err) {
+        return res.status(400).send({ message: err });
+    }
+}
+
+/**
+ * Delete conversation picture
+ */
+
+export const deleteConversationPicture = (req, res) => {
+    const __directory = `${__dirname}/../../uploads/conversations/${req.params.id}`
+
+    fs.unlinkSync(`${__directory}/${req.params.id}.jpg`)
+
+    try {
+        ConversationModel.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $unset: {
+                    picture: ""
+                }
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true }
+        )
+            .then(docs => { res.send(docs) })
+            .catch(err => { return res.status(500).send({ message: err }) })
+
     } catch (err) {
         return res.status(400).send({ message: err });
     }
