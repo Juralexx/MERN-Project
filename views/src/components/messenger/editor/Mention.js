@@ -3,7 +3,7 @@ import { TinyAvatar } from '../../tools/components/Avatars'
 import { checkTheme } from '../../Utils'
 import { placeUponCursor } from '../tools/function'
 
-const Mention = ({ members, quill, isMention, setMention, mentionsResults, setMentionResults, position, setPosition }) => {
+const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMentionResults, position, setPosition }) => {
 
     const onMention = (mention) => {
         quill.focus()
@@ -14,12 +14,12 @@ const Mention = ({ members, quill, isMention, setMention, mentionsResults, setMe
         }
         quill.insertText(position, `@${mention.pseudo}`, {
             'color': '#ffb004',
-            'background': 'rgba(255, 176, 4, 0.12)',
-            code: true
-        }, true).setAttribute('class','spanblock');
+            'background': 'rgba(255, 176, 4, 0.12)'
+        }, true)
         quill.insertText(position + mention.pseudo.length + 1, "\u00a0", {
             'color': `${checkTheme('#232221', '#ffffff')}`,
-            'bold': false
+            'bold': false,
+            'background': 'inherit',
         })
         setMention(false)
         setPosition(0)
@@ -33,7 +33,7 @@ const Mention = ({ members, quill, isMention, setMention, mentionsResults, setMe
             {mentionsResults.map((element, key) => {
                 return (
                     <div
-                        className={`${mentionsResults.some(e => e.pseudo) ? "auto-complete-item" : "auto-complete-item hidden"}`}
+                        className="auto-complete-item"
                         key={key}
                         onClick={() => onMention(element)}
                     >
@@ -49,3 +49,5 @@ const Mention = ({ members, quill, isMention, setMention, mentionsResults, setMe
 }
 
 export default Mention
+
+// {`${mentionsResults.some(e => e.pseudo) ? "auto-complete-item" : "auto-complete-item hidden"`}

@@ -19,8 +19,8 @@ const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
 
     const [warning, setWarning] = useState(-1)
 
-    const medias = useMemo(() => conversation.files.filter(file => file.type === 'image' || files.type === 'video'))
-    const docs = useMemo(() => conversation.files.filter(file => file.type !== 'image' && files.type !== 'video'))
+    const medias = useMemo(() => conversation.files.filter(file => file.type === 'image' || files.type === 'video'), [conversation.files])
+    const docs = useMemo(() => conversation.files.filter(file => file.type !== 'image' && files.type !== 'video'), [conversation.files])
 
     return (
         <>

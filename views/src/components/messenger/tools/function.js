@@ -492,37 +492,45 @@ export const concatSameEmojis = (emojis) => {
 }
 
 /**
- * Add emoji
+ * Add emoji if user didn't add it, else remove it
  */
 
-export const handleEmoji = (emoji, user, websocket, currentChat, message, dispatch) => {
-    let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: user._id }
-    otherMembersIDs(currentChat, user._id).map(memberId => {
-        return websocket.current.emit("addEmoji", {
-            receiverId: memberId,
-            conversationId: currentChat._id,
-            messageId: message._id,
-            emoji: emoj
-        })
-    })
-    dispatch(addEmoji(currentChat._id, message._id, emoj))
-}
+export const handleEmoji = (emoji, emojis, user, websocket, currentChat, message, dispatch) => {
+    let isEmoji = {}
+    if (emojis.length > 0) {
+        for (let i = 0; i < emojis.length; i++) {
+            let emojiArr = emojis[i]
+            for(let j = 0; j < emojiArr.length; j++) {
+                if (emojiArr[j].id === emoji.id && emojiArr[j].sender_id === user._id) {
+                    isEmoji = emojiArr[j]
+                    break
+                }
+            }
+        }
+    }
 
-/**
- * Remove emoji
- */
-
-export const deleteEmoji = (emojisGrouped, user, websocket, currentChat, message, dispatch) => {
-    let emoji = emojisGrouped.find(e => e.sender_id === user._id)
-    dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
-    otherMembersIDs(currentChat, user._id).map(memberId => {
-        return websocket.current.emit("removeEmoji", {
-            receiverId: memberId,
-            conversationId: currentChat._id,
-            messageId: message._id,
-            emojiId: emoji._id
+    if (Object.keys(isEmoji).length > 0) {
+        dispatch(removeEmoji(currentChat._id, message._id, isEmoji._id))
+        otherMembersIDs(currentChat, user._id).map(memberId => {
+            return websocket.current.emit("removeEmoji", {
+                receiverId: memberId,
+                conversationId: currentChat._id,
+                messageId: message._id,
+                emojiId: isEmoji._id
+            })
         })
-    })
+    } else {
+        let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: user._id }
+        otherMembersIDs(currentChat, user._id).map(memberId => {
+            return websocket.current.emit("addEmoji", {
+                receiverId: memberId,
+                conversationId: currentChat._id,
+                messageId: message._id,
+                emoji: emoj
+            })
+        })
+        dispatch(addEmoji(currentChat._id, message._id, emoj))
+    }
 }
 
 /*****************************************************************************************************************************************************************/

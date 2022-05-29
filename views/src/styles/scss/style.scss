@@ -25,12 +25,22 @@
 @import 'components/tooltip';
 @import 'components/modals';
 @import 'components/btn';
-@import 'components/inputs';
 @import 'components/editor';
+
+@import 'components/inputs/auto-complete.scss';
+@import 'components/inputs/classic-input.scss';
+@import 'components/inputs/date-picker.scss';
+@import 'components/inputs/double-icon-input.scss';
+@import 'components/inputs/icon-input.scss';
+@import 'components/inputs/dropdown-input.scss';
+@import 'components/inputs/dynamic-input.scss';
+@import 'components/inputs/number-input.scss';
+@import 'components/inputs/textarea.scss';
 
 /* Log */
 
 @import 'modules/log/signup';
+@import 'modules/log/password-checker';
 
 /* Profil */
 

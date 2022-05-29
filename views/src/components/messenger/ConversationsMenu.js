@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
+import TemporaryConversation from './tools/TemporaryConversation';
+import Tooltip from '../tools/components/Tooltip';
 import { IconInput } from '../tools/components/Inputs';
 import { IconToggle } from '../tools/components/Button';
 import { isInResults } from '../tools/functions/member';
 import { twoLevelSearch } from '../tools/functions/searches';
 import { ConversationLoader } from './tools/Loaders';
-import TemporaryConversation from './tools/TemporaryConversation';
-import Tooltip from '../tools/components/Tooltip';
 import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
-import { HiPencilAlt } from 'react-icons/hi'
 
 const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
     const [open, setOpen] = useState(false)

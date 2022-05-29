@@ -1,0 +1,22 @@
+.number-input {
+    display       : block;
+    height        : 44px;
+    max-width     : 100px;
+    padding       : 8px;
+    color         : var(--input-text);
+    background    : var(--input);
+    border-radius : var(--radius);
+    border        : 2px solid transparent;
+    outline       : none;
+    z-index       : 10;
+    box-shadow    : var(--shadow-tiny);
+
+    &:focus {
+        border : 2px solid var(--primary);
+    }
+
+    &::placeholder {
+        color      : var(--placeholder);
+        box-shadow : none;
+    }
+}

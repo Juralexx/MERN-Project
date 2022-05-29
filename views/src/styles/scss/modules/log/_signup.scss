@@ -41,13 +41,13 @@
                 background : var(--content-light);
 
                 input {
-                    min-width  : 100%;
+                    min-width : 100%;
                 }
             }
 
             .validated {
                 position : absolute;
-                top      : 23px;
+                top      : 18px;
                 right    : 20px;
                 z-index  : 2;
                 color    : var(--green);
@@ -88,6 +88,15 @@
     }
 }
 
+.successfully-registered {
+    padding          : 6px;
+    text-align       : center;
+    color            : var(--green);
+    margin-bottom    : 10px;
+    background-color : rgba(var(--green-rgb), 0.1);
+    border-radius    : var(--radius);
+}
+
 /**
 * QUERIES
 */
@@ -107,108 +116,6 @@
             .header-logo {
                 display : none;
             }
-        }
-    }
-}
-
-/**
-* Password checker modal
-*/
-
-.password-checker {
-    position      : absolute;
-    top           : 108%;
-    width         : 100%;
-    background    : var(--content-x-light);
-    border-radius : var(--radius);
-    padding       : 15px;
-    box-shadow    : var(--shadow-lg);
-    z-index       : 10;
-
-    .checker-header {
-        color  : var(--text);
-        margin : 10px 0;
-    }
-
-    .checker {
-        display     : flex;
-        align-items : center;
-        padding     : 5px 0;
-
-        svg {
-            width        : 22px;
-            height       : 22px;
-            margin-right : 8px;
-        }
-
-        &.is-valid {
-            color : var(--green);
-        }
-
-        &.not-valid {
-            color : var(--red);
-        }
-    }
-}
-
-.password-strength {
-    display       : flex;
-    align-items   : center;
-    height        : 30px;
-    margin-bottom : 10px;
-
-    .strength-item {
-        height           : 14px;
-        width            : 24%;
-        background-color : var(--light);
-
-        &:nth-child(1) {
-            border-radius : var(--radius ) 0 0 var(--radius );
-            &.weak {
-                background-color : var(--red);
-            }
-            &.medium {
-                background-color : var(--orange);
-            }
-            &.strong {
-                background-color : var(--green);
-            }
-        }
-        &:nth-child(2) {
-            &.medium {
-                background-color : var(--orange);
-            }
-            &.strong {
-                background-color : var(--green);
-            }
-        }
-        &:nth-child(3) {
-            border-radius : 0 var(--radius ) var(--radius ) 0;
-            &.strong {
-                background-color : var(--green);
-            }
-        }
-    }
-
-    .strength {
-        width         : 25%;
-        height        : 30px;
-        padding       : 5px;
-        text-align    : center;
-        border-radius : var(--radius);
-        margin-left   : auto;
-
-        &.weak {
-            color            : var(--red);
-            background-color : rgba(var(--red-rgb), 0.2);
-        }
-        &.medium {
-            color            : var(--orange);
-            background-color : rgba(var(--orange-rgb), 0.2);
-        }
-        &.strong {
-            color            : var(--green);
-            background-color : rgba(var(--green-rgb), 0.2);
         }
     }
 }

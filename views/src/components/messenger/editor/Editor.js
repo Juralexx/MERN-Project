@@ -11,16 +11,14 @@ import ErrorModal from '../../tools/components/ErrorModal';
 import Mention from './Mention';
 import Emoji from './Emoji';
 import Link from './Link';
-import { getMembers, isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, openMention, pickEmoji, placeUponCursor } from '../tools/function';
+import { getMembers, isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, openMention, pickEmoji } from '../tools/function';
 import { addActive } from '../../Utils';
 import { IoSend, IoText } from 'react-icons/io5'
-import { BsPlusLg } from 'react-icons/bs'
 import { BsEmojiSmile } from 'react-icons/bs'
-import { FiAtSign } from 'react-icons/fi'
-import { FaPhotoVideo } from 'react-icons/fa';
-import { MdClear, MdOutlineLink } from 'react-icons/md';
+import { FaPhotoVideo } from 'react-icons/fa'
+import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
 
-const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, handleSubmit, isTyping, setTyping, typingContext, currentChat }) => {
+const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, handleSubmit, isTyping, setTyping, typingContext, currentChat }) => {
     const [isToolbar, setToolbar] = useState(false)
     const [isTools, setTools] = useState(false)
     const [position, setPosition] = useState(0)
@@ -43,6 +41,7 @@ const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, han
     const [uploadErr, setUploadErr] = useState([])
     const filesRef = useRef()
 
+    const quillRef = useRef()
     let quill = quillRef?.current?.getEditor()
 
     const handleNewMessage = (text, delta, source, editor) => {
@@ -163,7 +162,6 @@ const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, han
      */
 
     const onKeyPressed = (event) => {
-        quill.focus()
         let txt = quill.getText()
         let index = quill.getSelection().index
 
@@ -225,7 +223,7 @@ const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, han
                 return new Delta(ops)
             })
         }
-    }, [quill])
+    }, [quill, Delta])
 
     /**
      * On message submission
@@ -337,10 +335,10 @@ const Editor = ({ user, websocket, convWrapperRef, lastMessageRef, quillRef, han
                 </div>
                 <div className="message-text-tools">
                     <div className="text-tools-left">
-                        <button className={`menu-tools-btn ${addActive(isTools, "active")}`} onClick={() => setTools(!isTools)}><BsPlusLg /></button>
+                        <button className={`menu-tools-btn ${addActive(isTools, "active")}`} onClick={() => setTools(!isTools)}><MdOutlineAdd /></button>
                         <div className="tools-group">
                             <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
-                            <button className="text-tools" onClick={() => openMention(quill, isMention, setMention)}><FiAtSign /></button>
+                            <button className="text-tools" onClick={() => openMention(quill, isMention, setMention)}><MdOutlineAlternateEmail /></button>
                             <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
                         </div>
                         <div className="tools-group">

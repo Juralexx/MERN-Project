@@ -1,0 +1,38 @@
+.auto-complete-container {
+    position         : absolute;
+    padding          : 10px 0;
+    max-height       : 300px;
+    overflow         : auto;
+    z-index          : 750;
+    border-radius    : var(--radius);
+    box-shadow       : var(--shadow-2xl);
+    background-color : var(--content-light);
+    border           : 2px solid var(--light-border);
+
+    .auto-complete-item {
+        position    : relative;
+        display     : flex;
+        align-items : center;
+        padding     : 7px 16px;
+        cursor      : pointer;
+    
+        &:hover {
+            background : var(--x-light);
+        }
+    }
+
+    .no-result {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        padding         : 15px 35px;
+        color           : var(--text);
+        font-size       : 16px;
+
+        svg {
+            width        : 30px;
+            height       : 30px;
+            margin-right : 20px;
+        }
+    }
+}

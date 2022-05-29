@@ -25,11 +25,6 @@
         width    : 100%;
         cursor   : pointer;
 
-        &:hover, &.active {
-            background    : var(--x-light);
-            border-radius : var(--radius);
-        }
-
         .conversation_inner {
             display     : flex;
             align-items : center;
@@ -137,9 +132,21 @@
             display     : flex;
             align-items : center;
         }
+
+        &:hover, &.active {
+            background    : var(--x-light);
+            border-radius : var(--radius);
+        }
+
+        &:hover {
+            .tools_box {
+                display : flex;
+            }
+        }
     }
 
     .tools_box {
+        display   : none;
         position  : absolute;
         top       : 50%;
         transform : translateY(-50%);
@@ -161,6 +168,10 @@
             &:hover {
                 background-color : var(--xx-light);
             }
+        }
+
+        &.active {
+            display : flex;
         }
     }
 

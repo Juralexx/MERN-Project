@@ -5,6 +5,7 @@ import { getConversation, sendMessage, setLastMessageSeen } from '../../actions/
 import { getHoursDiff, getMessagesDates, otherMembersIDs } from './tools/function';
 import { randomNbID } from '../Utils';
 import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
+import { ChatLoader } from './tools/Loaders';
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
 import Editor from './editor/Editor';
@@ -12,7 +13,6 @@ import ConversationTools from './ConversationTools';
 import MessageDate from './message/MessageDate';
 import Message from './message/Message';
 import SearchHeader from './SearchHeader';
-import { ChatLoader } from './tools/Loaders';
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const reducer = useSelector(state => state.messengerReducer)
@@ -28,15 +28,13 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [blank, setBlank] = useState(false)
     const [temporaryConv, setTemporaryConv] = useState({})
 
-    const [messages, setMessages] = useState([])
     const [messagesDates, setMessagesDates] = useState([])
     const [newMessage, setNewMessage] = useState([])
-    
+
     const [tools, setTools] = useState(false)
 
     const lastMessageRef = useRef()
     const convWrapperRef = useRef()
-    const quillRef = useRef()
     const dispatch = useDispatch()
 
     /**
@@ -82,6 +80,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 }
             }
             getConversations()
+        } else {
+            setLoading(false)
         }
     }, [user.conversations, dispatch])
 
@@ -93,7 +93,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
         if (Object.keys(reducer).length > 0) {
             setCurrentChat(reducer)
             if (reducer.messages.length > 0) {
-                setMessages(reducer.messages)
                 setMessagesDates(getMessagesDates(reducer.messages))
             }
             if (Object.keys(currentChat).length > 0) {
@@ -148,8 +147,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
      */
 
     useEffect(() => {
-        lastMessageRef.current?.scrollIntoView()
-    }, [messages.length])
+        lastMessageRef?.current?.scrollIntoView()
+    }, [lastMessageRef])
 
     /**
      * Set last message seen on window close or url change
@@ -248,7 +247,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             }
         }
         setMessagesDates(getMessagesDates(conversation.messages))
-        setMessages(conversation.messages)
         setCurrentChat(conversation)
         setLoading(false)
     }
@@ -340,11 +338,14 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                 <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
                                     {!blank ? (
                                         currentChat.messages.length > 0 ? (
-                                            messages.map((message, key, array) => {
+                                            currentChat.messages.map((message, key, array) => {
                                                 return (
                                                     <div key={key}>
                                                         {messagesDates.some(el => el.date === message.createdAt.substring(0, 10) && el.index === key) &&
-                                                            <MessageDate message={message} />
+                                                            <MessageDate
+                                                                messagesDates={messagesDates}
+                                                                message={message}
+                                                            />
                                                         }
                                                         <div ref={lastMessageRef}>
                                                             <Message
@@ -377,7 +378,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                     websocket={websocket}
                                     convWrapperRef={convWrapperRef}
                                     lastMessageRef={lastMessageRef}
-                                    quillRef={quillRef}
                                     handleSubmit={handleSubmit}
                                     typingContext={typingContext}
                                     currentChat={currentChat}

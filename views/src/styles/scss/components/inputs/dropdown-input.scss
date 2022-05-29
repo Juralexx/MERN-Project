@@ -1,0 +1,102 @@
+.dropdown-input {
+    position      : relative;
+    height        : 44px;
+    cursor        : pointer;
+    background    : var(--input);
+    border-radius : var(--radius);
+    z-index       : 1;
+    box-shadow    : var(--shadow-tiny);
+
+    input {
+        padding            : 10px;
+        color              : var(--input-text);
+        background         : var(--content-x-light);
+        border-radius      : var(--radius);
+        border             : 2px solid transparent;
+        outline            : none;
+        cursor             : pointer;
+        width              : 85%;
+        height             : 100%;
+        text-overflow      : ellipsis;
+        overflow           : hidden;
+        display            : -webkit-box;
+        -webkit-line-clamp : 1;
+        -webkit-box-orient : vertical;
+
+        &::placeholder {
+            color : var(--placeholder);
+        }
+    }
+
+    svg {
+        position : absolute;
+        height   : 16px;
+        width    : 16px;
+        bottom   : 12px;
+        right    : 10px;
+        color    : var(--text-tertiary);
+    }
+
+    .dropdown-input-choices {
+        position         : absolute;
+        left             : 0;
+        width            : 100%;
+        margin-top       : 5px;
+        padding          : 5px;
+        background-color : var(--content-x-light);
+        z-index          : 700;
+        box-shadow       : var(--shadow-xl);
+        border-radius    : var(--radius);
+
+        div {
+            padding       : 8px 12px;
+            cursor        : pointer;
+            color         : var(--text-secondary);
+            border-radius : var(--radius);
+
+            &:hover {
+                color            : var(--primary);
+                background-color : var(--light);
+            }
+        }
+    }
+
+    &.small {
+        input {
+            padding   : 6px 10px 5px;
+            font-size : 14px;
+        }
+
+        svg {
+            bottom : 10px;
+        }
+
+        .dropdown-input-choices {
+            font-size : 14px;
+            min-width : 240px;
+        }
+    }
+
+    &.right {
+        .dropdown-input-choices {
+            right : 0;
+            left  : unset;
+        }
+    }
+
+    &.light {
+        background : var(--content-x-light);
+        input {
+            background : var(--content-x-light);
+        }
+        .dropdown-input-choices {
+            background : var(--content-x-light);
+            div {
+                background : var(--content-x-light);
+                &:hover {
+                    background : var(--content-light);
+                }
+            }
+        }
+    }
+}

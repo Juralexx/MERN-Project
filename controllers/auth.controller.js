@@ -35,7 +35,7 @@ export const signUp = async (req, res) => {
             fs.mkdirSync(__directory, { recursive: true })
         }
 
-        const defaultProPic = `${__dirname}/../files/img/random-user.png`
+        const defaultProPic = `${__dirname}/../files/img/random-user.jpg`
         fs.copyFile(defaultProPic, `${__directory}/${user._id}.jpg`, (err) => {
             if (err) throw err
         })

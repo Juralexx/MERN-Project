@@ -10,9 +10,8 @@ import Warning from '../../tools/components/Warning';
 import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { avatar } from '../../tools/functions/useAvatar';
 import { SmallAvatar } from '../../tools/components/Avatars';
-import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, getUserPseudo, handleEditor, like, modifyMessage, otherMembersIDs, removeMessage, returnMessageFiles } from '../tools/function';
-import { dateParserWithoutYear, download, getHourOnly, randomNbID } from '../../Utils';
-import { addEmoji, removeEmoji } from '../../../actions/messenger.action';
+import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, getUserPseudo, handleEditor, handleEmoji, like, modifyMessage, removeMessage, returnMessageFiles } from '../tools/function';
+import { dateParserWithoutYear, download, getHourOnly } from '../../Utils';
 import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/md'
 import { IoArrowRedo, IoArrowUndo, IoText, IoTrashBin } from 'react-icons/io5'
 import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
@@ -32,32 +31,6 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
         if (message.emojis.length > 0)
             setEmojis(concatSameEmojis(message.emojis))
     }, [message.emojis.length, message.emojis])
-
-    const handleEmoji = (emoji) => {
-        let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: uid }
-        otherMembersIDs(currentChat, uid).map(memberId => {
-            return websocket.current.emit("addEmoji", {
-                receiverId: memberId,
-                conversationId: currentChat._id,
-                messageId: message._id,
-                emoji: emoj
-            })
-        })
-        dispatch(addEmoji(currentChat._id, message._id, emoj))
-    }
-
-    const deleteEmoji = (emojisGrouped) => {
-        let emoji = emojisGrouped.find(e => e.sender_id === uid)
-        otherMembersIDs(currentChat, uid).map(memberId => {
-            return websocket.current.emit("removeEmoji", {
-                receiverId: memberId,
-                conversationId: currentChat._id,
-                messageId: message._id,
-                emojiId: emoji._id
-            })
-        })
-        dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
-    }
 
     return (
         <div className={opened ? "message-container hovered " + className : "message-container " + className} data-hour={getHourOnly(new Date(message.createdAt))} ref={messageRef} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
@@ -106,7 +79,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                 </div>
                                 <div className="message-text-tools">
                                     <div className="text-tools-left">
-                                        <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji)} />
+                                        <EmojiPicker btnClassName="text-tools" onSelect={emoji => handleEmoji(emoji, emojis, user, websocket, currentChat, message, dispatch)} />
                                         <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
                                     </div>
                                     <div className="text-tools-right">
@@ -125,7 +98,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                 let ids = emojisGrouped.map(e => { return e.sender_id })
                                 let emoji = emojisGrouped[0]
                                 return (
-                                    <div className={`${ids.includes(uid) ? "emoji own" : "emoji"}`} key={key} onClick={() => ids.includes(uid) ? deleteEmoji(emojisGrouped) : handleEmoji(emojisGrouped[0])}>
+                                    <div className={`${ids.includes(uid) ? "emoji own" : "emoji"}`} key={key} onClick={() => handleEmoji(emojisGrouped[0], emojis, user, websocket, currentChat, message, dispatch)}>
                                         <Tooltip content={
                                             <div className="emoji-popup">
                                                 <Emoji emoji={emoji} size={36} set='twitter' />
@@ -142,7 +115,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                                     </div>
                                 )
                             })}
-                            <EmojiPicker btnClassName="emoji-add" onSelect={handleEmoji} onClick={() => setOpened(!opened)} />
+                            <EmojiPicker btnClassName="emoji-add" onSelect={emoji => handleEmoji(emoji, emojis, user, websocket, currentChat, message, dispatch)} onClick={() => setOpened(!opened)} />
                         </div>
                     }
                 </div>
@@ -150,10 +123,10 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                 {(hovered || opened) && modify !== uniqueKey &&
                     <div className="message-actions">
                         <Tooltip content={<p>Liker</p>}>
-                            <div className="message-actions-btn" onClick={() => handleEmoji(like)}><MdThumbUp /></div>
+                            <div className="message-actions-btn" onClick={() => handleEmoji(like, emojis, user, websocket, currentChat, message, dispatch)}><MdThumbUp /></div>
                         </Tooltip>
                         <Tooltip content={<p>Réagir</p>}>
-                            <EmojiPicker btnClassName="message-actions-btn" onSelect={handleEmoji} onClick={() => setOpened(!opened)} />
+                            <EmojiPicker btnClassName="message-actions-btn" onSelect={emoji => handleEmoji(emoji, emojis, user, websocket, currentChat, message, dispatch)} onClick={() => setOpened(!opened)} />
                         </Tooltip>
                         <Tooltip content={<p>Répondre</p>}>
                             <div className="message-actions-btn"><IoArrowUndo /></div>
@@ -170,7 +143,7 @@ const Message = ({ user, uid, websocket, message, uniqueKey, className, currentC
                             {message.sender === uid &&
                                 <>
                                     <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
-                                    <div className="tools_choice" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
+                                    <div className="tools_choice red" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
                                 </>
                             }
                         </ToolsMenu>

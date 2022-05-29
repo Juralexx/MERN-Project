@@ -7,27 +7,29 @@ import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseu
 
 const Conversation = ({ uid, user, conversation, currentChat, newMessage, notification, onConversationClick }) => {
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
-    const [lastMessageFound, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : null)
+    const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : null)
     const [date, setDate] = useState()
     const [unseen, setUnseen] = useState(false)
+
     const [open, setOpen] = useState(false)
     const [opened, setOpened] = useState(false)
     const menuRef = useRef()
     useClickOutside(menuRef, setOpened, false)
 
     useEffect(() => {
-        if (lastMessageFound && Object.keys(lastMessageFound).length > 0)
-            setDate(getDate(lastMessageFound.createdAt))
+        if (Object.keys(lastMessage).length > 0)
+            setDate(getDate(lastMessage.createdAt))
         else setDate(getDate(conversation.createdAt))
-    }, [lastMessageFound, conversation.createdAt])
+    }, [lastMessage, conversation.createdAt])
 
     useEffect(() => {
-        if (user.conversations && conversation.messages.length > 0) {
+        if (conversation.messages.length > 0) {
             const conv = user.conversations.find(e => e.id === conversation._id)
-            if (conv?.last_message_seen && conv.last_message_seen !== null && conv.last_message_seen !== "") {
+
+            if (conv.last_message_seen && conv.last_message_seen !== (null || "")) {
                 const index = conversation.messages.findIndex(e => e._id === conv.last_message_seen)
-                const diff = Math.abs((conversation.messages.length - 1) - index)
-                if (diff > 0) setUnseen(true)
+                if (Math.abs((conversation.messages.length - 1) - index) > 0)
+                    setUnseen(true)
             }
         }
     }, [user.conversations, conversation.messages, conversation._id])
@@ -37,42 +39,37 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
             setLastMessageFound(newMessage)
             setDate('À l\'instant')
         }
-    }, [newMessage, conversation._id])
-
-    useEffect(() => {
         if (notification && notification.conversationId === conversation._id) {
             setLastMessageFound(notification)
             setDate('À l\'instant')
-            setUnseen(notif => notif + 1)
+            setUnseen(true)
         }
-    }, [notification, conversation._id])
+    }, [newMessage, notification, conversation._id])
 
     return (
         <div className={`conversation ${addActive(conversation._id === currentChat._id, "active")}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
                 <div className="conversation-img-container">
                     {members.slice(0, 3).map((element, key) => {
-                        return (
-                            <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                        )
+                        return <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
                     })}
                 </div>
                 <div className="conversation-infos">
                     <div className="conversation-infos-top">
                         <div className="conversation-name">
-                            {conversation.name ? (conversation.name) : (returnMembers(members))}
+                            {conversation.name ? conversation.name : returnMembers(members)}
                         </div>
                         <div className="conversation-date">{date}</div>
                     </div>
-                    {lastMessageFound && Object.keys(lastMessageFound).length > 0 ? (
+                    {lastMessage && Object.keys(lastMessage).length > 0 ? (
                         <div className="last-message-wrapper">
                             <div className={`${unseen ? "last-message notification" : "last-message"}`}>
-                                {returnConversationPseudo(conversation, lastMessageFound, uid)}
+                                {returnConversationPseudo(conversation, lastMessage, uid)}
                                 <p>
-                                    {Object.keys(lastMessageFound.text).length > 0 ? (
-                                        convertDeltaToStringNoHTML(lastMessageFound)
+                                    {Object.keys(lastMessage.text).length > 0 ? (
+                                        convertDeltaToStringNoHTML(lastMessage)
                                     ) : (
-                                        lastMessageFound.files.length > 0 && lastMessageFound.files[0].name
+                                        lastMessage.files.length > 0 && lastMessage.files[0].name
                                     )}
                                 </p>
                             </div>
