@@ -2,17 +2,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
-import { getHoursDiff, getMessagesDates, otherMembersIDs } from './tools/function';
+import { getHoursDiff, getMessagesDates, otherMembersIDs } from './functions/function';
 import { randomNbID } from '../Utils';
 import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
 import { ChatLoader } from './tools/Loaders';
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
-import Editor from './editor/Editor';
 import ConversationTools from './ConversationTools';
 import MessageDate from './message/MessageDate';
 import Message from './message/Message';
 import SearchHeader from './SearchHeader';
+import Editor from './editor/Editor';
+import Typing from './tools/Typing'
+import ScrollButton from './tools/ScrollButton'
+import { MessengerContext } from '../AppContext';
+import { useLocationchange } from './functions/useLocationchange';
+import { useScrollToLast } from './functions/useScrollToLast';
+import { useFetchFriends } from './functions/useFetchFriends';
+import { useGetMembers } from './functions/useGetMembers';
+import { useTyping } from './functions/useTyping';
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const reducer = useSelector(state => state.messengerReducer)
@@ -21,21 +29,25 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [currentChat, setCurrentChat] = useState({})
     const [isLoading, setLoading] = useState(true)
 
-    const [friendsArr, setFriendsArr] = useState([])
-    const [fetchedFriends, setFetchedFriends] = useState(true)
-
     const [searchHeader, setSearchHeader] = useState(false)
     const [blank, setBlank] = useState(false)
     const [temporaryConv, setTemporaryConv] = useState({})
 
     const [messagesDates, setMessagesDates] = useState([])
     const [newMessage, setNewMessage] = useState([])
+    const [notification, setNotification] = useState("")
 
     const [tools, setTools] = useState(false)
 
     const lastMessageRef = useRef()
     const convWrapperRef = useRef()
     const dispatch = useDispatch()
+
+    const { friendsArr, fetchedFriends } = useFetchFriends(user)
+    const members = useGetMembers(user._id, currentChat)
+    useLocationchange(user, websocket, currentChat)
+    useScrollToLast(lastMessageRef)
+    const { isTyping, setTyping, typingContext, setTypingContext } = useTyping(currentChat)
 
     /**
      * is on messenger
@@ -55,8 +67,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
      */
 
     useEffect(() => {
-        if (user.conversations && user.conversations.length > 0) {
-            const getConversations = async () => {
+        if (user) {
+            if (user.conversations && user.conversations.length > 0) {
                 try {
                     const promises = user.conversations.map(async conv => {
                         return await axios
@@ -78,12 +90,11 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 } catch (err) {
                     console.error(err)
                 }
+            } else {
+                setTimeout(() => setLoading(false), 2000)
             }
-            getConversations()
-        } else {
-            setLoading(false)
         }
-    }, [user.conversations, dispatch])
+    }, [user, dispatch])
 
     /**
      * Dispatch current conversation
@@ -100,74 +111,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             }
         }
     }, [reducer, currentChat])
-
-    /**
-     * Fetch friends
-     */
-
-    useEffect(() => {
-        if (user.friends) {
-            const fetchFriends = () => {
-                try {
-                    const allFriends = user.friends.map(async friend => {
-                        return await axios
-                            .get(`${process.env.REACT_APP_API_URL}api/user/${friend.friend}`)
-                            .then(res => res.data)
-                            .catch(err => console.error(err))
-                    })
-                    Promise.all(allFriends).then(res => {
-                        setFriendsArr(res)
-                        setFetchedFriends(false)
-                    })
-                } catch (err) {
-                    console.log(err)
-                }
-            }
-            fetchFriends()
-        }
-    }, [user.friends])
-
-    /**
-     * typing
-     */
-
-    const [isTyping, setTyping] = useState(false)
-    const [typingContext, setTypingContext] = useState({})
-
-    useEffect(() => {
-        let interval
-        if (isTyping && typingContext.conversationId === currentChat._id)
-            interval = setInterval(() => { setTyping(false) }, 1000)
-        else clearInterval(interval)
-        return () => clearInterval(interval)
-    }, [isTyping, typingContext, currentChat._id])
-
-    /**
-     * Scroll to last message
-     */
-
-    useEffect(() => {
-        lastMessageRef?.current?.scrollIntoView()
-    }, [lastMessageRef])
-
-    /**
-     * Set last message seen on window close or url change
-     */
-
-    window.onbeforeunload = () => {
-        if (user.conversations) {
-            if (currentChat.messages.length > 0 && currentChat._id)
-                dispatch(setLastMessageSeen(uid, currentChat._id, currentChat.messages[currentChat.messages.length - 1]._id))
-        }
-        websocket.current.emit("leaveMessenger", {
-            userId: uid
-        })
-    }
-
-    window.addEventListener('locationchange', () => {
-        if (currentChat.messages.length > 0 && currentChat._id)
-            dispatch(setLastMessageSeen(uid, currentChat._id, currentChat.messages[currentChat.messages.length - 1]._id))
-    })
 
     /**
      * FONCTIONS
@@ -262,8 +205,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     * Websocket
     */
 
-    const [notification, setNotification] = useState("")
-
     useEffect(() => {
         websocket.current.on("getMessage", data => {
             setNewMessage(data.message)
@@ -282,135 +223,113 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 conversationId: data.conversationId
             })
         })
-    }, [websocket.current, websocket])
+    }, [websocket.current, websocket, setTyping, setTypingContext])
 
     return (
-        <div className="messenger">
-            <ConversationsMenu
-                uid={uid}
-                user={user}
-                websocket={websocket}
-                friendsArr={friendsArr}
-                conversations={conversations}
-                setConversations={setConversations}
-                favorites={favorites}
-                currentChat={currentChat}
-                setCurrentChat={setCurrentChat}
-                changeCurrentChat={changeCurrentChat}
-                temporaryConv={temporaryConv}
-                setTemporaryConv={setTemporaryConv}
-                setSearchHeader={setSearchHeader}
-                setBlank={setBlank}
-                onConversationClick={onConversationClick}
-                newMessage={newMessage}
-                notification={notification}
-                isLoading={isLoading}
-            />
-            <div className="conversation-box">
-                <div className="conversation-box-wrapper">
-                    {!isLoading ? (
-                        Object.keys(currentChat).length > 0 ? (
-                            <>
-                                {!searchHeader ? (
-                                    <ConversationHeader
-                                        uid={uid}
-                                        user={user}
-                                        websocket={websocket}
-                                        onlineUsers={onlineUsers}
-                                        setTools={setTools}
-                                        currentChat={currentChat}
-                                        dispatch={dispatch}
-                                    />
-                                ) : (
-                                    <SearchHeader
-                                        uid={uid}
-                                        user={user}
-                                        friendsArr={friendsArr}
-                                        setCurrentChat={setCurrentChat}
-                                        changeCurrentChat={changeCurrentChat}
-                                        conversations={conversations.concat(favorites)}
-                                        setConversations={setConversations}
-                                        setBlank={setBlank}
-                                        temporaryConv={temporaryConv}
-                                        setTemporaryConv={setTemporaryConv}
-                                    />
-                                )}
-                                <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
-                                    {!blank ? (
-                                        currentChat.messages.length > 0 ? (
-                                            currentChat.messages.map((message, key, array) => {
-                                                return (
-                                                    <div key={key}>
-                                                        {messagesDates.some(el => el.date === message.createdAt.substring(0, 10) && el.index === key) &&
-                                                            <MessageDate
-                                                                messagesDates={messagesDates}
-                                                                message={message}
-                                                            />
-                                                        }
-                                                        <div ref={lastMessageRef}>
-                                                            <Message
-                                                                uid={uid}
-                                                                user={user}
-                                                                websocket={websocket}
-                                                                message={message}
-                                                                className={key > 0 && getHoursDiff(array[key - 1], message)}
-                                                                uniqueKey={key}
-                                                                currentChat={currentChat}
-                                                                dispatch={dispatch}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })
-                                        ) : (
-                                            currentChat.type === "dialog" ? (
-                                                <EmptyDialog uid={uid} currentChat={currentChat} />
-                                            ) : (
-                                                <EmptyGroup uid={uid} currentChat={currentChat} />
-                                            )
-                                        )
+        <MessengerContext.Provider value={{ uid, user, websocket, isLoading, friendsArr, currentChat, members, dispatch }}>
+            <div className="messenger">
+                <ConversationsMenu
+                    conversations={conversations}
+                    setConversations={setConversations}
+                    favorites={favorites}
+                    setCurrentChat={setCurrentChat}
+                    changeCurrentChat={changeCurrentChat}
+                    temporaryConv={temporaryConv}
+                    setTemporaryConv={setTemporaryConv}
+                    setSearchHeader={setSearchHeader}
+                    setBlank={setBlank}
+                    onConversationClick={onConversationClick}
+                    newMessage={newMessage}
+                    notification={notification}
+                    isLoading={isLoading}
+                />
+                <div className="conversation-box">
+                    <div className="conversation-box-wrapper">
+                        {!isLoading ? (
+                            Object.keys(currentChat).length > 0 ? (
+                                <>
+                                    {!searchHeader ? (
+                                        <ConversationHeader
+                                            onlineUsers={onlineUsers}
+                                            setTools={setTools}
+                                        />
                                     ) : (
-                                        <></>
+                                        <SearchHeader
+                                            setCurrentChat={setCurrentChat}
+                                            changeCurrentChat={changeCurrentChat}
+                                            conversations={conversations.concat(favorites)}
+                                            setBlank={setBlank}
+                                            temporaryConv={temporaryConv}
+                                            setTemporaryConv={setTemporaryConv}
+                                        />
                                     )}
-                                </div>
-                                <Editor
-                                    user={user}
-                                    websocket={websocket}
-                                    convWrapperRef={convWrapperRef}
-                                    lastMessageRef={lastMessageRef}
-                                    handleSubmit={handleSubmit}
-                                    typingContext={typingContext}
-                                    currentChat={currentChat}
-                                    isTyping={isTyping}
-                                    setTyping={setTyping}
-                                />
-                            </>
+                                    <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
+                                        {!blank ? (
+                                            currentChat.messages.length > 0 ? (
+                                                currentChat.messages.map((message, key, array) => {
+                                                    return (
+                                                        <div key={key}>
+                                                            {messagesDates.some(el => el.date === message.createdAt.substring(0, 10) && el.index === key) &&
+                                                                <MessageDate
+                                                                    messagesDates={messagesDates}
+                                                                    message={message}
+                                                                />
+                                                            }
+                                                            <div ref={lastMessageRef}>
+                                                                <Message
+                                                                    message={message}
+                                                                    className={key > 0 && getHoursDiff(array[key - 1], message)}
+                                                                    uniqueKey={key}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            ) : (
+                                                currentChat.type === "dialog" ? <EmptyDialog /> : <EmptyGroup />
+                                            )
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </div>
+                                    <div className="conversation-bottom">
+                                        <Typing 
+                                            isTyping={isTyping}
+                                            typingContext={typingContext}
+                                            currentChat={currentChat}
+                                        />
+                                        <ScrollButton
+                                            convWrapperRef={convWrapperRef}
+                                            scrollTo={lastMessageRef}
+                                        />
+                                        <Editor
+                                            handleSubmit={handleSubmit}
+                                            isTyping={isTyping}
+                                            setTyping={setTyping}
+                                        />
+                                    </div>
+                                </>
+                            ) : (
+                                <NoConversation />
+                            )
                         ) : (
-                            <NoConversation />
-                        )
-                    ) : (
-                        <ChatLoader />
-                    )}
+                            <ChatLoader />
+                        )}
+                    </div>
                 </div>
+                <ConversationTools
+                    onlineUsers={onlineUsers}
+                    fetchedFriends={fetchedFriends}
+                    setCurrentChat={setCurrentChat}
+                    changeCurrentChat={changeCurrentChat}
+                    tools={tools}
+                    setTools={setTools}
+                    conversations={conversations.concat(favorites)}
+                    setConversations={setConversations}
+                />
             </div>
-            <ConversationTools
-                uid={uid}
-                user={user}
-                websocket={websocket}
-                onlineUsers={onlineUsers}
-                friendsArr={friendsArr}
-                fetchedFriends={fetchedFriends}
-                currentChat={currentChat}
-                setCurrentChat={setCurrentChat}
-                changeCurrentChat={changeCurrentChat}
-                tools={tools}
-                setTools={setTools}
-                conversations={conversations.concat(favorites)}
-                setConversations={setConversations}
-                dispatch={dispatch}
-            />
-        </div>
-    );
-};
+        </MessengerContext.Provider>
+    )
+}
 
 export default Messenger;

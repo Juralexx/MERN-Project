@@ -1,7 +1,7 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, checkTheme, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
+import { charSetToChar, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
 import { addEmoji, addFavorite, addMember, deleteConversation, deleteFile, deleteMessage, removeEmoji, removeFavorite, removeMember, updateMessage } from '../../../actions/messenger.action';
 import { coverPicture } from '../../tools/functions/useAvatar';
 import { IoDocumentTextOutline } from 'react-icons/io5';
@@ -194,37 +194,6 @@ export const getEditorHeight = (quill, files, filesRef) => {
                 width: quillWidth
             }
         }
-    }
-}
-
-/**
- * On mention on button press
- */
-
-export const openMention = (quill, isMention, setMention) => {
-    quill.focus()
-    let pos = quill.getSelection().index
-    let txt = quill.getText()
-    let previous = txt[pos - 1]
-
-    if (!isMention) {
-        if ((/\s/).test(previous) || (!(/\s/).test(previous) && previous === undefined)) {
-            quill.insertText(pos, "@", {
-                'color': checkTheme('#232221', '#ffffff'),
-                'bold': true
-            }, true)
-        } else if (!(/\s/).test(previous) && previous !== undefined && previous !== '@') {
-            quill.insertText(pos, "\u00a0", {
-                'color': checkTheme('#232221', '#ffffff'),
-            }, true)
-            quill.insertText(pos + 1, "@", {
-                'color': checkTheme('#232221', '#ffffff'),
-                'bold': true
-            }, true)
-        }
-        setMention(true)
-    } else {
-        setMention(false)
     }
 }
 

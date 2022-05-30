@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { IoClose } from 'react-icons/io5';
+import React, { useContext, useState } from 'react';
+import { MessengerContext } from '../../AppContext';
 import { IconToggle } from '../../tools/components/Button';
 import { avatar } from '../../tools/functions/useAvatar';
+import { returnMembers } from '../functions/function';
 import { addActive } from '../../Utils';
-import { returnMembers } from './function';
+import { IoClose } from 'react-icons/io5';
 
-const TemporaryConversation = ({ uid, user, temporaryConv, setTemporaryConv, conversations, currentChat, setCurrentChat, setSearchHeader }) => {
+const TemporaryConversation = ({ temporaryConv, setTemporaryConv, conversations, setCurrentChat, setSearchHeader }) => {
+    const { currentChat } = useContext(MessengerContext)
     const [open, setOpen] = useState(false)
 
     return (

@@ -5,9 +5,9 @@ const ScrollButton = ({ convWrapperRef, scrollTo }) => {
     const [visible, setVisible] = useState(false)
 
     useEffect(() => {
-        let ref = convWrapperRef
+        let ref = convWrapperRef?.current
         const updatePosition = () => {
-            if (ref.scrollTop < (ref.scrollHeight - 1500)) {
+            if (ref.scrollTop < (ref.scrollHeight - 1000)) {
                 setVisible(true)
             } else {
                 setVisible(false)

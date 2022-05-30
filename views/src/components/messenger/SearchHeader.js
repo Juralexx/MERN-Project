@@ -1,12 +1,14 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { TinyAvatar } from '../tools/components/Avatars'
 import { isInResults } from '../tools/functions/member'
 import { oneLevelSearch } from '../tools/functions/searches'
 import { useClickOutside } from '../tools/functions/useClickOutside'
-import { isConversation, removeSelected, userToMember } from './tools/function'
+import { isConversation, removeSelected, userToMember } from './functions/function'
 import { IoClose } from 'react-icons/io5'
+import { MessengerContext } from '../AppContext'
 
-const SearchHeader = ({ uid, user, friendsArr, setCurrentChat, changeCurrentChat, conversations, setConversations, setBlank, temporaryConv, setTemporaryConv }) => {
+const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBlank, temporaryConv, setTemporaryConv }) => {
+    const { user, friendsArr } = useContext(MessengerContext)
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
     const [isResults, setResults] = useState([])

@@ -14,7 +14,7 @@ import Messenger from '../messenger/Messenger'
 function Paths({ websocket, onlineUsers, friends, user, uid }) {
     return (
         <BrowserRouter>
-            <Navbar websocket={websocket} user={user} uid={uid} />
+            <Navbar websocket={websocket} user={user} uid={uid} onlineUsers={onlineUsers} />
             <Routes>
                 <Route path="/*" element={<Home websocket={websocket} user={user} />} />
                 <Route path=":pseudo" element={<MemberProfil />} />

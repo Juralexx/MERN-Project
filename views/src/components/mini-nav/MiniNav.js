@@ -11,7 +11,7 @@ import { BsFillCaretDownFill } from 'react-icons/bs'
 import { IoNotifications } from 'react-icons/io5'
 import { MdMessage } from "react-icons/md";
 
-const MiniNav = ({ user, websocket, onClick }) => {
+const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
     const [openSettingsMenu, setOpenSettingsMenu] = useState(false)
     const [openNotificationsMenu, setOpenNotificationsMenu] = useState(false)
     const [openMessengerMenu, setOpenMessengerMenu] = useState(false)
@@ -56,6 +56,9 @@ const MiniNav = ({ user, websocket, onClick }) => {
                 </li>
             </ul>
             <SettingsMenu
+                user={user}
+                websocket={websocket}
+                onlineUsers={onlineUsers}
                 open={openSettingsMenu}
                 setOpen={setOpenSettingsMenu}
             />

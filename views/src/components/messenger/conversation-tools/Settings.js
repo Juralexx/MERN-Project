@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Warning from '../../tools/components/Warning'
-import { deleteConv, leaveConversation } from '../tools/function'
+import { deleteConv, leaveConversation } from '../functions/function'
 import { MdNotificationsActive } from 'react-icons/md'
 import { HiLogout } from 'react-icons/hi'
 import { IoTrashBin } from 'react-icons/io5'

@@ -1,6 +1,6 @@
 .custom-scrollbar {
     &::-webkit-scrollbar {
-        width  : 20px;
+        width  : 18px;
         cursor : pointer;
     }
 
@@ -18,10 +18,18 @@
     }
 
     &::-webkit-scrollbar-track {
-        background : transparent;
+        background      : var(--light);
+        border          : 5px solid rgba(0, 0, 0, 0);
+        background-clip : padding-box;
+        border-radius   : 9999px;
+        cursor          : pointer;
 
         &:hover, &:active {
-            background : var(--light);
+            background      : var(--light);
+            border          : 5px solid rgba(0, 0, 0, 0);
+            background-clip : padding-box;
+            border-radius   : 9999px;
+            cursor          : pointer;
         }
     }
 

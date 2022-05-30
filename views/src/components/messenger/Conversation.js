@@ -1,12 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { MessengerContext } from '../AppContext';
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { avatar } from '../tools/functions/useAvatar';
 import { useClickOutside } from '../tools/functions/useClickOutside';
 import { addActive } from '../Utils';
-import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './tools/function';
+import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
 
-const Conversation = ({ uid, user, conversation, currentChat, newMessage, notification, onConversationClick }) => {
+const Conversation = ({ conversation, newMessage, notification, onConversationClick }) => {
+    const { uid, user, currentChat } = useContext(MessengerContext)
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
+    
     const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : null)
     const [date, setDate] = useState()
     const [unseen, setUnseen] = useState(false)
@@ -47,7 +50,7 @@ const Conversation = ({ uid, user, conversation, currentChat, newMessage, notifi
     }, [newMessage, notification, conversation._id])
 
     return (
-        <div className={`conversation ${addActive(conversation._id === currentChat._id, "active")}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+        <div className={`conversation ${addActive(conversation._id === currentChat._id || opened, "active")}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
                 <div className="conversation-img-container">
                     {members.slice(0, 3).map((element, key) => {

@@ -10,7 +10,7 @@ import { RiLoginCircleLine } from 'react-icons/ri'
 import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
 
-const Navbar = ({ websocket, user, uid }) => {
+const Navbar = ({ websocket, user, uid, onlineUsers }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
     const location = useLocation()
     const [toggled, setToggled] = useState(false)
@@ -76,7 +76,7 @@ const Navbar = ({ websocket, user, uid }) => {
                                     </ul>
                                 </div>
                                 <div className="mini_nav_container">
-                                    <MiniNav user={user} websocket={websocket} onClick={closeOnClick} />
+                                    <MiniNav user={user} websocket={websocket} onlineUsers={onlineUsers} onClick={closeOnClick} />
                                 </div>
                             </>
                         ) : (

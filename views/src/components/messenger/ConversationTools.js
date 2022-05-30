@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom'
 import ToolsMenu from '../tools/components/ToolsMenu';
 import Tools from './conversation-tools/Tools';
 import { IconToggle } from '../tools/components/Button';
-import { isConversation, isOnline } from './tools/function';
+import { isConversation, isOnline } from './functions/function';
 import { OnlineUserLoader } from './tools/Loaders';
 import { avatar } from '../tools/functions/useAvatar';
 import { BiSearchAlt } from 'react-icons/bi';
+import { MessengerContext } from '../AppContext';
 
-const ConversationTools = ({ uid, user, websocket, onlineUsers, friendsArr, fetchedFriends, conversations, setConversations, currentChat, setCurrentChat, changeCurrentChat, tools, setTools, dispatch }) => {
+const ConversationTools = ({ onlineUsers, fetchedFriends, conversations, setConversations, setCurrentChat, changeCurrentChat, tools, setTools }) => {
+    const { uid, user, websocket, friendsArr, currentChat, members, dispatch } = useContext(MessengerContext)
 
     const handleClick = (receiver) => {
         let isConv = isConversation(conversations, [receiver, user])
@@ -31,7 +33,7 @@ const ConversationTools = ({ uid, user, websocket, onlineUsers, friendsArr, fetc
         <div className="conversation-tools">
             {!tools ? (
                 <>
-                    <div className="flex items-center justify-between py-1 mb-3">
+                    <div className="flex items-center justify-between p-1 mb-3">
                         <h2 className="bold">Contact</h2>
                         <div className="flex">
                             <IconToggle icon={<BiSearchAlt />} />
@@ -71,6 +73,7 @@ const ConversationTools = ({ uid, user, websocket, onlineUsers, friendsArr, fetc
                     uid={uid}
                     user={user}
                     websocket={websocket}
+                    members={members}
                     open={tools}
                     setOpen={setTools}
                     conversation={currentChat}

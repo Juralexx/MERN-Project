@@ -137,16 +137,9 @@
             background    : var(--x-light);
             border-radius : var(--radius);
         }
-
-        &:hover {
-            .tools_box {
-                display : flex;
-            }
-        }
     }
 
     .tools_box {
-        display   : none;
         position  : absolute;
         top       : 50%;
         transform : translateY(-50%);

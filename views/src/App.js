@@ -48,6 +48,10 @@ function App() {
     }, [user, friends.length])
 
     useEffect(() => {
+        websocket.current.on("logout", data => {
+            let online = onlineUsers.filter(u => u.friend !== data.userId)
+            setOnlineUsers(online)
+        })
         websocket.current.on("sendMessageNotification", data => {
             setSentNotification({ type: "new-message", ...data.message })
             setSend(true)

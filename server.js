@@ -477,11 +477,11 @@ io.on("connect", (socket) => {
         }
     })
 
-    const removeUser = (socketId) => {
-        users = users.filter(user => user.socketId !== socketId)
-    }
-
-    socket.on("disconnect", () => {
-        removeUser(socket.id)
+    socket.on("logout", ({ receiverId, userId }) => {
+        users = users.filter(user => user.userId !== userId)
+        const user = users.find(member => member.userId === receiverId)
+        return io.to(user.socketId).emit('logout', {
+            userId
+        })
     })
 })

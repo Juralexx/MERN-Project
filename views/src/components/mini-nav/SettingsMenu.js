@@ -8,7 +8,7 @@ import { IoCaretForwardOutline } from 'react-icons/io5'
 import { ImArrowLeft2 } from 'react-icons/im'
 import ThemeToggle from "../tools/theme/ThemeToggle";
 
-const SettingsMenu = ({ open }) => {
+const SettingsMenu = ({ open, user, websocket, onlineUsers }) => {
     const [value, setValue] = useState(0)
 
     const removeCookie = (key) => {
@@ -18,6 +18,12 @@ const SettingsMenu = ({ open }) => {
     }
 
     const logout = async () => {
+        onlineUsers.forEach(u => {
+            websocket.current.emit("logout", {
+                receiverId: u.friend,
+                userId: user._id,
+            })
+        })
         await axios({
             method: "get",
             url: `${process.env.REACT_APP_API_URL}api/user/logout`,

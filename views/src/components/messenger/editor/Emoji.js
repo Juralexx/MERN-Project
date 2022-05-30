@@ -1,12 +1,12 @@
 import React, { useRef } from 'react'
 import { useClickOutside } from '../../tools/functions/useClickOutside'
 import { checkTheme } from '../../Utils'
-import { placeUponCursor } from '../tools/function'
+import { placeUponCursor } from '../functions/function'
 
 const Emoji = ({ quill, isEmoji, setEmoji, emojisResults, setEmojisResults, position, setPosition }) => {
     const emojiRef = useRef()
     useClickOutside(emojiRef, setEmoji, false)
-    
+
     const onEmoji = (emoji) => {
         quill.focus()
         let range = quill.getSelection()

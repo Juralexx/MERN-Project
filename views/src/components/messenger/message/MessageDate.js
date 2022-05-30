@@ -1,9 +1,7 @@
 import React from 'react'
 import { dateParser } from '../../Utils'
-import ToolsMenu from '../../tools/components/ToolsMenu'
 
 const MessageDate = ({ message }) => {
-
     return (
         <div className="messages-date">
             <div className="date">{dateParser(message.createdAt)}</div>

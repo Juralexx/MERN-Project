@@ -12,7 +12,7 @@ import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 
-const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
+const ConversationsMenu = ({ isLoading, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
@@ -45,11 +45,7 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
             <NewConversationModal
                 open={open}
                 setOpen={setOpen}
-                uid={uid}
-                user={user}
-                friendsArr={friendsArr}
                 changeCurrentChat={changeCurrentChat}
-                websocket={websocket}
                 conversations={conversations.concat(favorites)}
                 setConversations={setConversations}
             />
@@ -64,12 +60,9 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                                     return (
                                         <div className={`${isInResults(element, isResults, search, "block")}`} key={key}>
                                             <Conversation
-                                                uid={uid}
-                                                user={user}
                                                 conversation={element}
                                                 newMessage={newMessage}
                                                 notification={notification}
-                                                currentChat={currentChat}
                                                 onConversationClick={onConversationClick}
                                             />
                                         </div>
@@ -82,11 +75,8 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                             {Object.keys(temporaryConv).length > 0 &&
                                 <div className={`${isInResults(temporaryConv, isResults, search, "block")}`}>
                                     <TemporaryConversation
-                                        uid={uid}
-                                        user={user}
                                         temporaryConv={temporaryConv}
                                         setTemporaryConv={setTemporaryConv}
-                                        currentChat={currentChat}
                                         setCurrentChat={setCurrentChat}
                                         setSearchHeader={setSearchHeader}
                                         conversations={conversations}
@@ -97,12 +87,9 @@ const ConversationsMenu = ({ uid, user, websocket, isLoading, friendsArr, conver
                                 return (
                                     <div className={`${isInResults(element, isResults, search, "block")}`} key={key}>
                                         <Conversation
-                                            uid={uid}
-                                            user={user}
                                             conversation={element}
                                             newMessage={newMessage}
                                             notification={notification}
-                                            currentChat={currentChat}
                                             onConversationClick={onConversationClick}
                                         />
                                     </div>

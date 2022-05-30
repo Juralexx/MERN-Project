@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { addActive } from '../Utils';
 import { Button, TextButton } from '../tools/components/Button';
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs';
 import { MediumAvatar, TinyAvatar } from '../tools/components/Avatars';
 import { isInResults, isSelected } from '../tools/functions/member';
-import { isConversation, otherMembersIDs, pushUserInArray, removeUserFromArray } from './tools/function';
+import { isConversation, otherMembersIDs, pushUserInArray, removeUserFromArray } from './functions/function';
 import { oneLevelSearch } from '../tools/functions/searches';
 import Modal from '../tools/components/Modal';
 import { IoClose } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi';
+import { MessengerContext } from '../AppContext';
 
-const NewConversationModal = ({ open, setOpen, uid, user, websocket, conversations, setConversations, friendsArr, changeCurrentChat }) => {
+const NewConversationModal = ({ open, setOpen, conversations, setConversations, changeCurrentChat }) => {
+    const { uid, user, websocket, friendsArr } = useContext(MessengerContext)
     const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")

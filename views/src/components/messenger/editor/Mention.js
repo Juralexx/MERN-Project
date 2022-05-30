@@ -1,7 +1,7 @@
 import React from 'react'
 import { TinyAvatar } from '../../tools/components/Avatars'
 import { checkTheme } from '../../Utils'
-import { placeUponCursor } from '../tools/function'
+import { placeUponCursor } from '../functions/function'
 
 const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMentionResults, position, setPosition }) => {
 

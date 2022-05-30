@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { avatar } from '../tools/functions/useAvatar'
-import { getMembers, isOnline, returnMembers } from './tools/function'
+import { isOnline, returnMembers } from './functions/function'
 import { HiMenuAlt3 } from 'react-icons/hi'
 import MembersModal from './tools/MembersModal'
+import { MessengerContext } from '../AppContext'
 
-const ConversationHeader = ({ uid, user, websocket, currentChat, setTools, onlineUsers, dispatch }) => {
-    const members = getMembers(currentChat, uid)
+const ConversationHeader = ({ setTools, onlineUsers }) => {
+    const { uid, websocket, currentChat, members, dispatch } = useContext(MessengerContext)
     const [membersModal, setMembersModal] = useState(false)
 
     return (
@@ -14,9 +15,9 @@ const ConversationHeader = ({ uid, user, websocket, currentChat, setTools, onlin
                 <div className="conversation-box-top">
                     <div className="conversation-box-members">
                         <div className="conversation-img-container">
-                            <div className={`${isOnline(getMembers(currentChat, uid)[0], onlineUsers) ? "conversation-img connected" : "conversation-img"}`} style={avatar(getMembers(currentChat, uid)[0].picture)}></div>
+                            <div className={`${isOnline(members[0], onlineUsers) ? "conversation-img connected" : "conversation-img"}`} style={avatar(members[0].picture)}></div>
                         </div>
-                        <div className="conversation-name">{getMembers(currentChat, uid)[0].pseudo}</div>
+                        <div className="conversation-name">{members[0].pseudo}</div>
                     </div>
                 </div>
             }

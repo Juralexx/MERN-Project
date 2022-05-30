@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react'
-import { getMembers, returnMembers, setFavorite, setUnfavorite } from '../tools/function'
+import React, { useState } from 'react'
+import { returnMembers, setFavorite, setUnfavorite } from '../functions/function'
 import { avatar } from '../../tools/functions/useAvatar'
 import Customization from './Customization'
 import Files from './Files'
@@ -13,8 +13,7 @@ import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
 
-const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, friendsArr }) => {
-    const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
+const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, friendsArr, members }) => {
     const [navbar, setNavbar] = useState(null)
     const [addMembers, setAddMembers] = useState(false)
     const [files, setFiles] = useState({ open: false, type: null })

@@ -1,5 +1,9 @@
 .conversation-bottom {
-    background : var(--content-x-light);
+    position     : relative;
+    padding      : 10px;
+    background   : var(--content-x-light);
+    border-left  : 2px solid var(--light-border);
+    border-right : 2px solid var(--light-border);
 
     .auto-complete-container {
         bottom    : 100%;
@@ -16,6 +20,7 @@
     border          : 2px solid var(--light-border);
     background      : var(--content-light);
     box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
+    border-radius   : var(--radius);
 
     &:focus-within,
     &.active {

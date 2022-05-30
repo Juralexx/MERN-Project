@@ -8,7 +8,7 @@ import { RiEdit2Fill } from 'react-icons/ri'
 import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { IoText, IoTrashBin } from 'react-icons/io5'
 import { MdCheck, MdClear, MdOutlineImage, MdOutlineImageNotSupported } from 'react-icons/md'
-import { otherMembersIDs } from '../tools/function'
+import { otherMembersIDs } from '../functions/function'
 
 const Customization = ({ uid, websocket, conversation, dispatch }) => {
     const [file, setFile] = useState()

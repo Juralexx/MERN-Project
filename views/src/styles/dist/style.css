@@ -1390,7 +1390,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 20px;
+  width: 18px;
   cursor: pointer;
 }
 .custom-scrollbar::-webkit-scrollbar-button {
@@ -1405,10 +1405,18 @@ h1, h2, h3, h4, h5 {
   cursor: pointer;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--light);
+  border: 5px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  cursor: pointer;
 }
 .custom-scrollbar::-webkit-scrollbar-track:hover, .custom-scrollbar::-webkit-scrollbar-track:active {
   background: var(--light);
+  border: 5px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 9999px;
+  cursor: pointer;
 }
 .custom-scrollbar::-webkit-scrollbar-corner {
   background: transparent;
@@ -9577,7 +9585,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   left: 49%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  top: -36px;
+  top: -26px;
   padding: 4px 0;
   font-size: 13px;
   border-radius: var(--radius);
@@ -10283,13 +10291,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   background: var(--x-light);
   border-radius: var(--radius);
 }
-.conversation-menu .conversation:hover .tools_box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .conversation-menu .tools_box {
-  display: none;
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -10737,7 +10739,11 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 
 .conversation-bottom {
+  position: relative;
+  padding: 10px;
   background: var(--content-x-light);
+  border-left: 2px solid var(--light-border);
+  border-right: 2px solid var(--light-border);
 }
 .conversation-bottom .auto-complete-container {
   bottom: 100%;
@@ -10761,6 +10767,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   background: var(--content-light);
   -webkit-box-shadow: rgba(35, 34, 33, 0.17) 0px 0 2px 0px;
           box-shadow: rgba(35, 34, 33, 0.17) 0px 0 2px 0px;
+  border-radius: var(--radius);
 }
 .conversation-toolsbox:focus-within, .conversation-toolsbox.active {
   border: 2px solid var(--primary);

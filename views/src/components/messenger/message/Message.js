@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Emoji } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import EmojiPicker from '../tools/EmojiPicker';
@@ -10,13 +10,15 @@ import Warning from '../../tools/components/Warning';
 import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { avatar } from '../../tools/functions/useAvatar';
 import { SmallAvatar } from '../../tools/components/Avatars';
-import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, getUserPseudo, handleEditor, handleEmoji, like, modifyMessage, removeMessage, returnMessageFiles } from '../tools/function';
+import { concatSameEmojis, convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, getUserPseudo, handleEditor, handleEmoji, like, modifyMessage, removeMessage, returnMessageFiles } from '../functions/function';
 import { dateParserWithoutYear, download, getHourOnly } from '../../Utils';
 import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/md'
 import { IoArrowRedo, IoArrowUndo, IoText, IoTrashBin } from 'react-icons/io5'
 import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
+import { MessengerContext } from '../../AppContext';
 
-const Message = ({ user, uid, websocket, message, uniqueKey, className, currentChat, dispatch }) => {
+const Message = ({ message, uniqueKey, className }) => {
+    const { uid, user, websocket, currentChat, dispatch } = useContext(MessengerContext)
     const [modify, setModify] = useState(-1)
     const [isToolbar, setToolbar] = useState(false)
     const [modifiedMessage, setModifiedMessage] = useState("")

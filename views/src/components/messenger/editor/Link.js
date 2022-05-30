@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import isURL from 'validator/lib/isURL'
 import { TextButton, Button } from '../../tools/components/Button'
 import { ClassicInput } from '../../tools/components/Inputs'
-import { placeUponCursor } from '../tools/function'
+import { placeUponCursor } from '../functions/function'
 import normalizeUrl from 'normalize-url';
 
 const Link = ({ quill, isLink, setLink, position }) => {

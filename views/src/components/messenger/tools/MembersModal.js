@@ -6,7 +6,7 @@ import { MediumAvatar } from '../../tools/components/Avatars'
 import Modal from '../../tools/components/Modal'
 import ToolsMenu from '../../tools/components/ToolsMenu'
 import { addActive, dateParser } from '../../Utils'
-import { leaveConversation } from './function'
+import { leaveConversation } from '../functions/function'
 
 const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch }) => {
     const [navbar, setNavbar] = useState(1)
