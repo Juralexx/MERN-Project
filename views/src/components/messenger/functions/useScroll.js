@@ -1,43 +1,43 @@
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
-export function useScroll(conversation, convWrapperRef) {
-    const [count, setCount] = useState(null)
-    // const [loadMoreMore, setLoadMore] = useState(false)
-
-    useEffect(() => {
-        if (count === null) {
-            if (conversation?.messages) {
-                if (conversation.messages.length > 20) {
-                    setCount(conversation.messages.length - 20)
-                } else {
-                    setCount(0)
-                }
-            }
-        }
-    }, [conversation.messages, count])
-
-    const loadMore = () => {
-        if (conversation?.messages?.length > 0) {
-            if (count > 0) {
-                const { scrollHeight, scrollTop } = convWrapperRef.current
-                const pastScroll = scrollHeight - scrollTop
-
-                if (scrollHeight - scrollTop > scrollHeight - 200) {
-                    setCount(c => c - 20)
-                    const currentScroll = convWrapperRef.current.scrollHeight - pastScroll
-                    convWrapperRef.current.scrollTo({ top: currentScroll, behavior: 'smooth' })
-                }
-            }
-        }
-    }
+export function useInfiniteScroll(conversation, convWrapperRef) {
+    const [number, setNumber] = useState()
+    const [pushMore, setMore] = useState(false)
+    const [prevscroll, setPrevscroll] = useState()
 
     useEffect(() => {
-        if (count > 0) {
+        if (conversation?.messages) {
+            if (conversation.messages.length > 20)
+                setNumber(conversation.messages.length - 20)
+            else setNumber(0)
+        }
+    }, [conversation.messages])
+
+    useEffect(() => {
+        if (!pushMore) return;
+        setTimeout(async () => {
+            setNumber(prevState => prevState - 20)
+            setMore(false)
+            await convWrapperRef.current.scrollTo({ top: convWrapperRef.current.scrollHeight - prevscroll, behavior: 'auto' })
+        }, 2000)
+    }, [pushMore, convWrapperRef, prevscroll])
+
+    const loadMore = useCallback(() => {
+        const { scrollHeight, scrollTop } = convWrapperRef?.current
+        setPrevscroll(scrollHeight)
+
+        if (scrollHeight - scrollTop > scrollHeight - 200) {
+            setMore(true)
+        }
+    }, [convWrapperRef?.current])
+
+    useEffect(() => {
+        if (number > 0 && !pushMore) {
             let wrapper = convWrapperRef?.current
             wrapper?.addEventListener('scroll', loadMore)
             return () => wrapper?.removeEventListener('scroll', loadMore)
         }
-    }, [convWrapperRef?.current, loadMore, conversation.messages])
+    }, [convWrapperRef?.current, loadMore, pushMore, number])
 
-    return { number: Math.max(0, count) }
+    return { number: Math.max(0, number), pushMore }
 }

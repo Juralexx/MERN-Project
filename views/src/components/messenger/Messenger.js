@@ -7,12 +7,12 @@ import { useScrollToLast } from './functions/useScrollToLast';
 import { useFetchFriends } from './functions/useFetchFriends';
 import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
-import { useScroll } from './functions/useScroll';
+import { useInfiniteScroll } from './functions/useScroll';
 import { getConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
 import { getHoursDiff, getMessagesDates, otherMembersIDs } from './functions/function';
 import { randomNbID } from '../Utils';
 import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
-import { ChatLoader } from './tools/Loaders';
+import { ChatLoader, SmallLoader } from './tools/Loaders';
 import ConversationHeader from './ConversationHeader';
 import ConversationsMenu from './ConversationsMenu';
 import ConversationTools from './ConversationTools';
@@ -45,9 +45,9 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const { friendsArr, fetchedFriends } = useFetchFriends(user)
     const { isTyping, setTyping, typingContext, setTypingContext } = useTyping(currentChat)
     const { members } = useGetMembers(uid, currentChat)
-    const { number } = useScroll(currentChat, convWrapperRef)
     useLocationchange(user, websocket, currentChat)
     useScrollToLast(lastmessageRef, isLoading)
+    const { pushMore, number } = useInfiniteScroll(currentChat, convWrapperRef)
 
     /**
      * is on messenger
@@ -271,29 +271,32 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                         )}
                                         <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
                                             {!blank ? (
-                                                currentChat.messages.length > 0 ? (
-                                                    currentChat.messages.slice(number, currentChat.messages.length).map((message, key, array) => {
-                                                        return (
-                                                            <div ref={lastmessageRef} key={key}>
-                                                                {messagesDates.some(el => el.date === message.createdAt.substring(0, 10) && el.index === key) &&
-                                                                    <MessageDate
-                                                                        messagesDates={messagesDates}
+                                                <>
+                                                    {pushMore && <SmallLoader />}
+                                                    {currentChat.messages.length > 0 ? (
+                                                        currentChat.messages.slice(number, currentChat.messages.length).map((message, key, array) => {
+                                                            return (
+                                                                <div ref={lastmessageRef} key={key}>
+                                                                    {messagesDates.some(el => el.date === message.createdAt.substring(0, 10) && el.index === key) &&
+                                                                        <MessageDate
+                                                                            messagesDates={messagesDates}
+                                                                            message={message}
+                                                                        />
+                                                                    }
+                                                                    <Message
                                                                         message={message}
+                                                                        className={key > 0 && getHoursDiff(array[key - 1], message)}
+                                                                        uniqueKey={key}
+                                                                        currentChat={currentChat}
+                                                                        handleSubmit={handleSubmit}
                                                                     />
-                                                                }
-                                                                <Message
-                                                                    message={message}
-                                                                    className={key > 0 && getHoursDiff(array[key - 1], message)}
-                                                                    uniqueKey={key}
-                                                                    currentChat={currentChat}
-                                                                    handleSubmit={handleSubmit}
-                                                                />
-                                                            </div>
-                                                        )
-                                                    })
-                                                ) : (
-                                                    currentChat.type === "dialog" ? <EmptyDialog currentChat={currentChat} /> : <EmptyGroup currentChat={currentChat} />
-                                                )
+                                                                </div>
+                                                            )
+                                                        })
+                                                    ) : (
+                                                        currentChat.type === "dialog" ? <EmptyDialog currentChat={currentChat} /> : <EmptyGroup currentChat={currentChat} />
+                                                    )}
+                                                </>
                                             ) : (
                                                 <></>
                                             )}
