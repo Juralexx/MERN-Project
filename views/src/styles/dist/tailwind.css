@@ -630,10 +630,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 1rem;
 }
 
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
 .\!mt-10 {
   margin-top: 2.5rem !important;
 }
@@ -664,6 +660,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
 }
 
 .mr-3 {
@@ -788,6 +788,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .min-h-\[300px\] {
   min-height: 300px;
+}
+
+.min-h-\[100px\] {
+  min-height: 100px;
 }
 
 .w-7 {
@@ -962,6 +966,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-right-width: 1px;
 }
 
+.border-none {
+  border-style: none;
+}
+
 .bg-primary {
   --tw-bg-opacity: 1;
   background-color: rgb(187 134 252 / var(--tw-bg-opacity));
@@ -1079,6 +1087,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 0.5rem;
 }
 
+.pt-1 {
+  padding-top: 0.25rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1093,6 +1105,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .text-\[26px\] {
   font-size: 26px;
+}
+
+.\!text-sm {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
 }
 
 .text-lg {
@@ -1116,16 +1133,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.\!text-lg {
-  font-size: 1.125rem !important;
-  line-height: 1.75rem !important;
-}
-
-.\!text-sm {
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
 }
 
 .uppercase {

@@ -206,7 +206,7 @@
     }
 }
 
-.message-delete-preview {
+.message-preview {
     position      : relative;
     width         : 100%;
     display       : flex;
@@ -252,6 +252,14 @@
             }
         }
     }
+
+    &.small {
+        padding       : 0 10px;
+        margin-top    : 15px;
+        border        : none;
+        border-radius : 0;
+        border-left   : 3px solid var(--light-border);
+    }
 }
 
 .message-files-container {
@@ -263,5 +271,76 @@
         display       : inline-block;
         border-radius : 5px;
         margin        : 5px 0;
+    }
+}
+
+.share-message-modal {
+    .conversation-toolsbox,
+    .message-text-editor,
+    .message-text-tools,
+    .ql-editor {
+        background:var(--content-x-light) !important;
+    }
+
+    .quill, .ql-editor {
+        min-height : 100px;
+    }
+
+    .btn-container {
+        padding-top     : 10px;
+        display         : flex;
+        justify-content : flex-end;
+        
+        .save-tool {
+            font-size        : 12px;
+            padding          : 4px 8px 5px;
+            border-radius    : 3px;
+            background-color : var(--dark-green);
+            color            : white;
+
+            &:disabled {
+                opacity : 0.5;
+            }
+        }
+
+        .cancel-tool {
+            font-size     : 12px;
+            padding       : 4px 8px;
+            margin-right  : 7px;
+            border        : 1px solid var(--light-border);
+            border-radius : 3px;
+        }
+    }
+}
+
+.shared-message {
+    margin-top  : 8px;
+    padding     : 3px 5px 3px 10px;
+    border-left : 3px solid var(--light-border);
+
+    .message-top {
+        display       : flex;
+        align-items   : center;
+        margin-bottom : 3px;
+        .message-img {
+            width         : 17px;
+            height        : 17px;
+            border-radius : 50%;
+            margin-right  : 5px;
+        }
+
+        .message-infos {
+            font-size     : 15px;
+            margin-right  : 7px;
+            font-weight   : 600;
+            line-height   : 15px;
+
+            span {
+                font-size   : 11px;
+                color       : var(--text-secondary);
+                margin-left : 5px;
+                font-weight : 300;
+            }
+        }
     }
 }

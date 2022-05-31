@@ -6,8 +6,8 @@ import { useClickOutside } from '../tools/functions/useClickOutside';
 import { addActive } from '../Utils';
 import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
 
-const Conversation = ({ conversation, newMessage, notification, onConversationClick }) => {
-    const { uid, user, currentChat } = useContext(MessengerContext)
+const Conversation = ({ conversation, currentChat,  newMessage, notification, onConversationClick }) => {
+    const { uid, user } = useContext(MessengerContext)
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
     
     const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : null)

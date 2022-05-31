@@ -10,16 +10,18 @@ import Link from './Link';
 import { MessengerContext } from '../../AppContext';
 import { useQuill } from './useQuill';
 import { useEmoji } from './useEmoji';
+import { useMention } from './useMention';
 import { isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, pickEmoji } from '../functions/function';
+import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
 import { addActive } from '../../Utils';
 import { IoSend, IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { FaPhotoVideo } from 'react-icons/fa'
-import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
-import { useMention } from './useMention';
+import Typing from '../tools/Typing';
+import ScrollButton from '../tools/ScrollButton';
 
-const Editor = ({ handleSubmit, isTyping, setTyping }) => {
-    const { user, websocket, currentChat, members } = useContext(MessengerContext)
+const Editor = ({ handleSubmit, currentChat, members, isTyping, setTyping, typingContext, lastmessageRef, convWrapperRef }) => {
+    const { user, websocket } = useContext(MessengerContext)
 
     const quillRef = useRef()
     let quill = quillRef?.current?.getEditor()
@@ -30,7 +32,7 @@ const Editor = ({ handleSubmit, isTyping, setTyping }) => {
     const [position, setPosition] = useState(0)
     const [disabled, setDisabled] = useState(true)
 
-    const { isMention, setMention, mentionsResults, setMentionResults, openMention} = useMention(quill, members)
+    const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
     const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, onKeyPressed } = useEmoji(quill)
 
     const [isLink, setLink] = useState(false)
@@ -185,88 +187,99 @@ const Editor = ({ handleSubmit, isTyping, setTyping }) => {
     })
 
     return (
-        <div className={`conversation-toolsbox ${addActive(isDragActive, "active")}`}>
-            <div className="message-text-editor">
-                <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
-                <div className="message-editor-container">
-                    <Mention
-                        quill={quill}
-                        members={members}
-                        isMention={isMention}
-                        setMention={setMention}
-                        mentionsResults={mentionsResults}
-                        setMentionResults={setMentionResults}
-                        position={position}
-                        setPosition={setPosition}
-                    />
-                    <Emoji
-                        quill={quill}
-                        isEmoji={isEmoji}
-                        setEmoji={setEmoji}
-                        emojisResults={emojisResults}
-                        setEmojisResults={setEmojisResults}
-                        position={position}
-                        setPosition={setPosition}
-                    />
-                    <Link
-                        quill={quill}
-                        isLink={isLink}
-                        setLink={setLink}
-                        position={position}
-                    />
-                    <ReactQuill
-                        ref={quillRef}
-                        placeholder={`Envoyer un message à ${returnMembers(members)}`}
-                        modules={modules}
-                        formats={formats}
-                        defaultValue=""
-                        onChange={handleNewMessage}
-                        onKeyUp={event => onKeyPressed(event)}
-                        onBlur={() => setFocused(false)}
-                    />
-                    <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight(quill, files, filesRef)} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
-                        <input {...getInputProps()} name="files" />
-                    </div>
-                    <div className={`editor-files-container ${files.length === 0 ? "!hidden" : "flex"}`} ref={filesRef}>
-                        {files.length > 0 &&
-                            files.map((file, key) => {
-                                return (
-                                    <div className="files-block" key={key}>
-                                        {returnEditorFiles(file)}
-                                        <div className="delete-btn" onClick={() => setFiles(removeFile(files, key))}><MdClear /></div>
-                                    </div>
-                                )
-                            })
-                        }
+        <div className="conversation-bottom">
+            <Typing
+                isTyping={isTyping}
+                typingContext={typingContext}
+                currentChat={currentChat}
+            />
+            <ScrollButton
+                convWrapperRef={convWrapperRef}
+                scrollTo={lastmessageRef}
+            />
+            <div className={`conversation-toolsbox ${addActive(isDragActive, "active")}`}>
+                <div className="message-text-editor">
+                    <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
+                    <div className="message-editor-container">
+                        <Mention
+                            quill={quill}
+                            members={members}
+                            isMention={isMention}
+                            setMention={setMention}
+                            mentionsResults={mentionsResults}
+                            setMentionResults={setMentionResults}
+                            position={position}
+                            setPosition={setPosition}
+                        />
+                        <Emoji
+                            quill={quill}
+                            isEmoji={isEmoji}
+                            setEmoji={setEmoji}
+                            emojisResults={emojisResults}
+                            setEmojisResults={setEmojisResults}
+                            position={position}
+                            setPosition={setPosition}
+                        />
+                        <Link
+                            quill={quill}
+                            isLink={isLink}
+                            setLink={setLink}
+                            position={position}
+                        />
+                        <ReactQuill
+                            ref={quillRef}
+                            placeholder={`Envoyer un message à ${returnMembers(members)}`}
+                            modules={modules}
+                            formats={formats}
+                            defaultValue=" "
+                            onChange={handleNewMessage}
+                            onKeyUp={event => onKeyPressed(event)}
+                            onBlur={() => setFocused(false)}
+                        />
+                        <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight(quill, files, filesRef)} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
+                            <input {...getInputProps()} name="files" />
+                        </div>
+                        <div className={`editor-files-container ${files.length === 0 ? "!hidden" : "flex"}`} ref={filesRef}>
+                            {files.length > 0 &&
+                                files.map((file, key) => {
+                                    return (
+                                        <div className="files-block" key={key}>
+                                            {returnEditorFiles(file)}
+                                            <div className="delete-btn" onClick={() => setFiles(removeFile(files, key))}><MdClear /></div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
+                <div className="message-text-tools">
+                    <div className="text-tools-left">
+                        <button className={`menu-tools-btn ${addActive(isTools, "active")}`} onClick={() => setTools(!isTools)}><MdOutlineAdd /></button>
+                        <div className="tools-group">
+                            <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
+                            <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
+                            <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
+                        </div>
+                        <div className="tools-group">
+                            <button className="text-tools files-upload" {...getRootProps()}><input {...getInputProps()} name="files" /><FaPhotoVideo /></button>
+                            <button className="text-tools" onClick={() => setLink(!isLink)}><MdOutlineLink /></button>
+                        </div>
+                    </div>
+                    {isTools && <div className="message-text-tools-menu"></div>}
+                    <div className="text-tools-right">
+                        <button className="send-tool" disabled={disabled} onClick={onSubmit}><IoSend /></button>
+                    </div>
+                </div>
+                {uploadErr.length > 0 &&
+                    <ErrorModal
+                        title="Erreur, certains fichiers non pas pu être importés"
+                        text={uploadErr.map((f, key) => {
+                            return <p key={key}>{f.name + " : " + f.error}</p>
+                        })}
+                    />
+                }
             </div>
-            <div className="message-text-tools">
-                <div className="text-tools-left">
-                    <button className={`menu-tools-btn ${addActive(isTools, "active")}`} onClick={() => setTools(!isTools)}><MdOutlineAdd /></button>
-                    <div className="tools-group">
-                        <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
-                        <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
-                        <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
-                    </div>
-                    <div className="tools-group">
-                        <button className="text-tools files-upload" {...getRootProps()}><input {...getInputProps()} name="files" /><FaPhotoVideo /></button>
-                        <button className="text-tools" onClick={() => setLink(!isLink)}><MdOutlineLink /></button>
-                    </div>
-                </div>
-                {isTools && <div className="message-text-tools-menu"></div>}
-                <div className="text-tools-right">
-                    <button className="send-tool" disabled={disabled} onClick={onSubmit}><IoSend /></button>
-                </div>
-            </div>
-            {uploadErr.length > 0 &&
-                <ErrorModal
-                    title="Erreur, certains fichiers non pas pu être importés"
-                    text={uploadErr.map((f, key) => {
-                        return <p key={key}>{f.name + " : " + f.error}</p>
-                    })}
-                />
-            }
         </div>
     )
 }

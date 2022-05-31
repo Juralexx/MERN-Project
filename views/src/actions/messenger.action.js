@@ -12,6 +12,7 @@ export const getConversation = (conversationId) => {
             .get(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}`)
             .then(res => {
                 dispatch({ type: GET_CONVERSATION, payload: res.data })
+                return res
             })
             .catch(err => console.error(err))
     }

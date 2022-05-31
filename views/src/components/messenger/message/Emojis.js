@@ -1,38 +1,9 @@
+import { Emoji } from 'emoji-mart'
 import React from 'react'
+import Tooltip from '../../tools/components/Tooltip'
+import EmojiPicker from '../tools/EmojiPicker'
 
-const Emojis = () => {
-    const [emojis, setEmojis] = useState([])
-
-    useEffect(() => {
-        if (message.emojis.length > 0)
-            setEmojis(concatSameEmojis(message.emojis))
-    }, [message.emojis.length, message.emojis])
-
-    const handleEmoji = (emoji) => {
-        let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: uid }
-        otherMembersIDs(currentChat, uid).map(memberId => {
-            return websocket.current.emit("addEmoji", {
-                receiverId: memberId,
-                conversationId: currentChat._id,
-                messageId: message._id,
-                emoji: emoj
-            })
-        })
-        dispatch(addEmoji(currentChat._id, message._id, emoj))
-    }
-
-    const deleteEmoji = (emojisGrouped) => {
-        let emoji = emojisGrouped.find(e => e.sender_id === uid)
-        otherMembersIDs(currentChat, uid).map(memberId => {
-            return websocket.current.emit("removeEmoji", {
-                receiverId: memberId,
-                conversationId: currentChat._id,
-                messageId: message._id,
-                emojiId: emoji._id
-            })
-        })
-        dispatch(removeEmoji(currentChat._id, message._id, emoji._id))
-    }
+const Emojis = ({ uid, emojis, handleEmoji, opened, setOpened }) => {
 
     return (
         emojis.length > 0 &&
@@ -42,7 +13,7 @@ const Emojis = () => {
                 let ids = emojisGrouped.map(e => { return e.sender_id })
                 let emoji = emojisGrouped[0]
                 return (
-                    <div className={`${ids.includes(uid) ? "emoji own" : "emoji"}`} key={key} onClick={() => ids.includes(uid) ? deleteEmoji(emojisGrouped) : handleEmoji(emojisGrouped[0])}>
+                    <div className={`${ids.includes(uid) ? "emoji own" : "emoji"}`} key={key} onClick={() => handleEmoji(emojisGrouped[0])}>
                         <Tooltip content={
                             <div className="emoji-popup">
                                 <Emoji emoji={emoji} size={36} set='twitter' />
@@ -59,7 +30,7 @@ const Emojis = () => {
                     </div>
                 )
             })}
-            <EmojiPicker btnClassName="emoji-add" onSelect={handleEmoji} onClick={() => setOpened(!opened)} />
+            <EmojiPicker btnClassName="emoji-add" onSelect={emoji => handleEmoji(emoji)} onClick={() => setOpened(!opened)} />
         </div>
     )
 }

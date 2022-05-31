@@ -9,8 +9,8 @@ import { avatar } from '../tools/functions/useAvatar';
 import { BiSearchAlt } from 'react-icons/bi';
 import { MessengerContext } from '../AppContext';
 
-const ConversationTools = ({ onlineUsers, fetchedFriends, conversations, setConversations, setCurrentChat, changeCurrentChat, tools, setTools }) => {
-    const { uid, user, websocket, friendsArr, currentChat, members, dispatch } = useContext(MessengerContext)
+const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setConversations, setCurrentChat, changeCurrentChat, tools, setTools }) => {
+    const { uid, user, websocket, friendsArr, dispatch } = useContext(MessengerContext)
 
     const handleClick = (receiver) => {
         let isConv = isConversation(conversations, [receiver, user])

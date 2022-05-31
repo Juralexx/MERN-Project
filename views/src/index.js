@@ -14,9 +14,9 @@ import './styles/dist/style.css'
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"
 import logger from "redux-logger"
-
+// , logger
 const store = createStore(
-    rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))
+    rootReducer, composeWithDevTools(applyMiddleware(thunk))
 )
 
 ReactDOM.render(

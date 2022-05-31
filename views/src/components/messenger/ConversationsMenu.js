@@ -12,7 +12,7 @@ import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 
-const ConversationsMenu = ({ isLoading, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
+const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
@@ -64,6 +64,7 @@ const ConversationsMenu = ({ isLoading, conversations, favorites, setConversatio
                                                 newMessage={newMessage}
                                                 notification={notification}
                                                 onConversationClick={onConversationClick}
+                                                currentChat={currentChat}
                                             />
                                         </div>
                                     )
@@ -80,6 +81,7 @@ const ConversationsMenu = ({ isLoading, conversations, favorites, setConversatio
                                         setCurrentChat={setCurrentChat}
                                         setSearchHeader={setSearchHeader}
                                         conversations={conversations}
+                                        currentChat={currentChat}
                                     />
                                 </div>
                             }
@@ -91,6 +93,7 @@ const ConversationsMenu = ({ isLoading, conversations, favorites, setConversatio
                                             newMessage={newMessage}
                                             notification={notification}
                                             onConversationClick={onConversationClick}
+                                            currentChat={currentChat}
                                         />
                                     </div>
                                 )

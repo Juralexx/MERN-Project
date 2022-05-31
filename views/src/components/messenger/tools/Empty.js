@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { MessengerContext } from "../../AppContext"
 import { avatar } from "../../tools/functions/useAvatar"
 import { dateParser } from "../../Utils"
+import { getMembers } from "../functions/function"
 
 export const NoConversation = () => {
     return (
@@ -15,9 +16,10 @@ export const NoConversation = () => {
 }
 
 
-export const EmptyDialog = () => {
-    const { currentChat, members } = useContext(MessengerContext)
-    
+export const EmptyDialog = ({ currentChat }) => {
+    const { uid } = useContext(MessengerContext)
+    const members = getMembers(currentChat, uid)
+
     return (
         <div className="no-conversation-yet">
             <div className="user-avatar" style={avatar(members[0].picture)} />
@@ -29,9 +31,10 @@ export const EmptyDialog = () => {
 }
 
 
-export const EmptyGroup = () => {
-    const { currentChat, members } = useContext(MessengerContext)
-    
+export const EmptyGroup = ({ currentChat }) => {
+    const { uid } = useContext(MessengerContext)
+    const members = getMembers(currentChat, uid)
+
     return (
         <div className="no-conversation-yet">
             <div className="flex">

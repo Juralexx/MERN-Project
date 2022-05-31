@@ -5,8 +5,8 @@ import { HiMenuAlt3 } from 'react-icons/hi'
 import MembersModal from './tools/MembersModal'
 import { MessengerContext } from '../AppContext'
 
-const ConversationHeader = ({ setTools, onlineUsers }) => {
-    const { uid, websocket, currentChat, members, dispatch } = useContext(MessengerContext)
+const ConversationHeader = ({ setTools, onlineUsers, currentChat, members }) => {
+    const { uid, websocket, dispatch } = useContext(MessengerContext)
     const [membersModal, setMembersModal] = useState(false)
 
     return (

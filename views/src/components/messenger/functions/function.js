@@ -1,8 +1,8 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, dateParserWithoutYear, randomNbID, removeHTMLMarkers } from '../../Utils'
-import { addEmoji, addFavorite, addMember, deleteConversation, deleteFile, deleteMessage, removeEmoji, removeFavorite, removeMember, updateMessage } from '../../../actions/messenger.action';
+import { charSetToChar, dateParserWithoutYear, removeHTMLMarkers } from '../../Utils'
+import { addFavorite, addMember, deleteConversation, deleteFile, deleteMessage, removeFavorite, removeMember } from '../../../actions/messenger.action';
 import { coverPicture } from '../../tools/functions/useAvatar';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import axios from 'axios';
@@ -242,7 +242,7 @@ export const isConversation = (conversations, members) => {
                 }
             }
         } else return false
-    }
+    } else return false
 }
 
 /**
@@ -421,21 +421,6 @@ export const returnMessageFiles = (file) => {
 }
 
 /**
- * Modify message
- */
-
-export const modifyMessage = (message, text, conversation, uid, websocket, dispatch) => {
-    otherMembersIDs(conversation, uid).map(memberId => {
-        return websocket.current.emit("updateMessage", {
-            receiverId: memberId,
-            messageId: message._id,
-            text: text
-        })
-    })
-    dispatch(updateMessage(conversation._id, message._id, text))
-}
-
-/**
  * Remove message
  */
 
@@ -447,59 +432,6 @@ export const removeMessage = (message, conversation, uid, websocket, dispatch) =
         })
     })
     dispatch(deleteMessage(conversation._id, message._id))
-}/**
- * Concat same emojis
- */
-
-export const concatSameEmojis = (emojis) => {
-    let group = emojis.reduce((r, a) => {
-        r[a.id] = [...r[a.id] || [], a]
-        return r
-    }, {})
-
-    return Object.values(group)
-}
-
-/**
- * Add emoji if user didn't add it, else remove it
- */
-
-export const handleEmoji = (emoji, emojis, user, websocket, currentChat, message, dispatch) => {
-    let isEmoji = {}
-    if (emojis.length > 0) {
-        for (let i = 0; i < emojis.length; i++) {
-            let emojiArr = emojis[i]
-            for(let j = 0; j < emojiArr.length; j++) {
-                if (emojiArr[j].id === emoji.id && emojiArr[j].sender_id === user._id) {
-                    isEmoji = emojiArr[j]
-                    break
-                }
-            }
-        }
-    }
-
-    if (Object.keys(isEmoji).length > 0) {
-        dispatch(removeEmoji(currentChat._id, message._id, isEmoji._id))
-        otherMembersIDs(currentChat, user._id).map(memberId => {
-            return websocket.current.emit("removeEmoji", {
-                receiverId: memberId,
-                conversationId: currentChat._id,
-                messageId: message._id,
-                emojiId: isEmoji._id
-            })
-        })
-    } else {
-        let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: user._id }
-        otherMembersIDs(currentChat, user._id).map(memberId => {
-            return websocket.current.emit("addEmoji", {
-                receiverId: memberId,
-                conversationId: currentChat._id,
-                messageId: message._id,
-                emoji: emoj
-            })
-        })
-        dispatch(addEmoji(currentChat._id, message._id, emoj))
-    }
 }
 
 /*****************************************************************************************************************************************************************/

@@ -131,6 +131,14 @@
         &.temporary {
             display     : flex;
             align-items : center;
+            .conversation_inner {
+                width : 100%;
+                .conversation-infos {
+                    .last-message-wrapper {
+                        width : 100%;
+                    }
+                }
+            }
         }
 
         &:hover, &.active {

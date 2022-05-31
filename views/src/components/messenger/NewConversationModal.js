@@ -70,6 +70,7 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
 
     return (
         <Modal open={open} setOpen={setOpen} className="add-conversation-modal">
+            <h2>Nouvelle conversation</h2>
             <div className="modal_nav pb-2 border-b">
                 <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Membres</div>
                 <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À propos</div>
@@ -127,14 +128,14 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
                 </>
             ) : (
                 <>
-                    <div className="pt-3">
+                    <div className="pt-1">
                         <div className="title">Nom</div>
                         <div className="info">
                             <ClassicInput className="full" value={name} onChange={e => setName((e.target.value).substring(0, 50))} placeholder="Nom de la conversation..." />
                             <div className="field_infos !w-full">{name.length} / 50 caractères</div>
                         </div>
                     </div>
-                    <div className="pt-3">
+                    <div className="pt-1">
                         <div className="title">Description</div>
                         <div className="info">
                             <Textarea className="w-full" value={description} onChange={e => setDescription((e.target.value).substring(0, 500))} placeholder="Description de la conversation..." />

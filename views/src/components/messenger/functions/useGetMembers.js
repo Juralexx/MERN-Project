@@ -13,5 +13,5 @@ export function useGetMembers(uid, conversation) {
         }
     }, [uid, conversation.members])
 
-    return members
+    return { members }
 }

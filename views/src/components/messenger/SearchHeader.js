@@ -4,17 +4,17 @@ import { isInResults } from '../tools/functions/member'
 import { oneLevelSearch } from '../tools/functions/searches'
 import { useClickOutside } from '../tools/functions/useClickOutside'
 import { isConversation, removeSelected, userToMember } from './functions/function'
-import { IoClose } from 'react-icons/io5'
 import { MessengerContext } from '../AppContext'
+import { IoClose } from 'react-icons/io5'
 
 const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBlank, temporaryConv, setTemporaryConv }) => {
     const { user, friendsArr } = useContext(MessengerContext)
     const [search, setSearch] = useState(false)
     const [query, setQuery] = useState("")
     const [isResults, setResults] = useState([])
-    
-    const [friends, setFriends] = useState(friendsArr.filter(f => !temporaryConv.members?.some(m => m._id === f._id)) || friendsArr)
-    const [members, setMembers] = useState(temporaryConv.members || [])
+
+    const [friends, setFriends] = useState(temporaryConv.members ? friendsArr.filter(f => !temporaryConv.members?.some(m => m._id === f._id)) : friendsArr)
+    const [members, setMembers] = useState([])
     const wrapperRef = useRef()
     const [open, setOpen] = useState(friends.length > 0 ? true : false)
     useClickOutside(wrapperRef, setOpen, false)
@@ -37,6 +37,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
                 setCurrentChat({...temporaryConv,  members: mbrsArr, type: mbrsArr.length > 1 ? 'group' : 'dialog' })
             } else {
                 const conversation = {
+                    temporary: true,
                     type: mbrsArr.length > 1 ? 'group' : 'dialog',
                     members: mbrsArr,
                     creator: { _id: user._id, pseudo: user.pseudo, picture: user.picture },
@@ -44,7 +45,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
                     createdAt: new Date().toISOString()
                 }
                 setTemporaryConv(conversation)
-                setCurrentChat(conversation)
+                changeCurrentChat(conversation)
             }
         }
         setBlank(false)
@@ -68,6 +69,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
                     setCurrentChat({...temporaryConv,  members: mbrs, type: mbrs.length > 1 ? 'group' : 'dialog' })
                 } else {
                     const conversation = {
+                        temporary: true,
                         type: mbrs.length > 1 ? 'group' : 'dialog',
                         members: mbrs,
                         creator: { _id: user._id, pseudo: user.pseudo, picture: user.picture },
@@ -75,7 +77,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
                         createdAt: new Date().toISOString()
                     }
                     setTemporaryConv(conversation)
-                    setCurrentChat(conversation)
+                    changeCurrentChat(conversation)
                 }
             }
         } else {
@@ -89,7 +91,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
             <div className="search_container" ref={wrapperRef}>
                 <div className="members_displayer" ref={usersDisplayerRef}>
                     <div className="flex">
-                        {members?.map((element, key) => {
+                        {members.map((element, key) => {
                             return (
                                 <div className="members_item" key={key}>
                                     {element.pseudo}
