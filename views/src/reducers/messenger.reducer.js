@@ -55,7 +55,7 @@ export default function messengerReducer(state = initialState, action) {
             return {
                 ...state,
                 messages: [...state.messages, action.payload.message],
-                files: [...state.files, action.payload.message.files]
+                files: action.payload.message.files ? state.files.concat(action.payload.message.files) : state.files
             }
         case RECEIVE_POST_MESSAGE:
             return {
@@ -73,8 +73,8 @@ export default function messengerReducer(state = initialState, action) {
         case DELETE_MESSAGE:
             return {
                 ...state,
+                files: state.files.filter(file => file.messageId !== action.payload.messageId),
                 messages: state.messages.filter(message => message._id !== action.payload.messageId),
-                files: state.files.filter(file => file.messageId !== action.payload.messageId)
             }
         case ADD_EMOJI:
             let i = findMessage(action.payload.messageId)

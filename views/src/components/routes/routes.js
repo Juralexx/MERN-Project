@@ -11,7 +11,7 @@ import AddProject from '../../pages/AddProject'
 import Dashboard from '../../pages/Dashboard'
 import Messenger from '../messenger/Messenger'
 
-function Paths({ websocket, onlineUsers, friends, user, uid }) {
+function Paths({ websocket, onlineUsers, user, uid }) {
     return (
         <BrowserRouter>
             <Navbar websocket={websocket} user={user} uid={uid} onlineUsers={onlineUsers} />

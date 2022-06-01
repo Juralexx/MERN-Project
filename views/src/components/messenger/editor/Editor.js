@@ -1,52 +1,53 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import ReactQuill from "react-quill";
-import EditorToolbar, { formats, modules } from "./EditorToolbar";
+import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import EmojiPicker from '../tools/EmojiPicker';
 import ErrorModal from '../../tools/components/ErrorModal';
 import Mention from './Mention';
 import Emoji from './Emoji';
 import Link from './Link';
+import Typing from '../tools/Typing';
+import ScrollButton from '../tools/ScrollButton';
 import { MessengerContext } from '../../AppContext';
 import { useQuill } from './useQuill';
 import { useEmoji } from './useEmoji';
 import { useMention } from './useMention';
 import { isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, pickEmoji } from '../functions/function';
-import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
 import { addActive } from '../../Utils';
+import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
 import { IoSend, IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { FaPhotoVideo } from 'react-icons/fa'
-import Typing from '../tools/Typing';
-import ScrollButton from '../tools/ScrollButton';
 
-const Editor = ({ handleSubmit, currentChat, members, isTyping, setTyping, typingContext, lastmessageRef, convWrapperRef }) => {
+const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, lastmessageRef, convWrapperRef }) => {
     const { user, websocket } = useContext(MessengerContext)
-
-    const quillRef = useRef()
-    let quill = quillRef?.current?.getEditor()
-    useQuill(quill)
 
     const [isToolbar, setToolbar] = useState(false)
     const [isTools, setTools] = useState(false)
-    const [position, setPosition] = useState(0)
     const [disabled, setDisabled] = useState(true)
-
-    const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
-    const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, onKeyPressed } = useEmoji(quill)
-
-    const [isLink, setLink] = useState(false)
+    const [focused, setFocused] = useState(false)
+    const [position, setPosition] = useState(0)
 
     const [files, setFiles] = useState([])
-    const [focused, setFocused] = useState(false)
     const [uploadErr, setUploadErr] = useState([])
     const filesRef = useRef()
+
+    const { quill, quillRef } = useQuill()
+
+    const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
+    const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis } = useEmoji(quill)
+
+    const [isLink, setLink] = useState(false)
 
     /**
      * Handle message 
      */
 
     const handleNewMessage = (text, delta, source, editor) => {
+        if (!quill.hasFocus()) {
+            quill.focus()
+        }
         let length = editor.getLength()
         let txt = editor.getText()
 
@@ -64,17 +65,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, setTyping, typin
             setDisabled(false)
         } else setDisabled(true)
 
-        if (length <= 1) {
-            setPosition(0)
-            if (isMention) {
-                setMention(false)
-            }
-            if (isEmoji) {
-                setEmoji(false)
-            }
-        }
-
-        if (length > 1) {
+        if (length >= 1) {
             let index = editor.getSelection().index
             let previous = txt[index - 2]
             let current = txt[index - 1]
@@ -143,24 +134,6 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, setTyping, typin
     }
 
     /**
-     * On message submission
-     */
-
-    const onSubmit = () => {
-        if (quill.getLength() > 1 || files.length > 0) {
-            let messageContent = quill.getLength() > 1 ? quill.getContents() : []
-            handleSubmit(currentChat, messageContent, files)
-            if (quill.getLength() > 1) {
-                quill.deleteText(0, quill.getLength())
-                setTyping(false)
-            }
-            if (files.length > 0) {
-                setFiles([])
-            }
-        }
-    }
-
-    /**
      * Dropzone
      */
 
@@ -171,7 +144,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, setTyping, typin
             files.forEach(file => {
                 if (isImage(file) || isVideo(file) || isFile(file)) {
                     if (file.size > 10000000) {
-                        setUploadErr(err => [...err, { name: file.name, error: 'Fichier trop volumineux' }])
+                        setUploadErr(err => [...err, { name: file.name, error: 'Fichier trop volumineux. Poid maximum accepté : 10Mo' }])
                     } else {
                         setFiles(f => [...f, file])
                         if (disabled) {
@@ -233,7 +206,10 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, setTyping, typin
                             formats={formats}
                             defaultValue=" "
                             onChange={handleNewMessage}
-                            onKeyUp={event => onKeyPressed(event)}
+                            onKeyUp={event => {
+                                detectEmojis(event)
+                                event.keyCode === 13 && handleSubmit(quill, currentChat, files)
+                            }}
                             onBlur={() => setFocused(false)}
                         />
                         <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight(quill, files, filesRef)} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
@@ -268,7 +244,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, setTyping, typin
                     </div>
                     {isTools && <div className="message-text-tools-menu"></div>}
                     <div className="text-tools-right">
-                        <button className="send-tool" disabled={disabled} onClick={onSubmit}><IoSend /></button>
+                        <button className="send-tool" disabled={disabled} onClick={() => { }}><IoSend /></button>
                     </div>
                 </div>
                 {uploadErr.length > 0 &&

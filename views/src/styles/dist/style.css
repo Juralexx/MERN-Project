@@ -11150,9 +11150,9 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   width: 280px;
   height: 58px;
   padding: 10px 50px 10px 10px;
-  border: 1px solid var(--light-border);
+  border: 2px solid var(--light-border);
   border-radius: 5px;
-  background-color: var(--content-light);
+  background-color: var(--content-x-light);
 }
 .files-block .file-doc .file-doc-img {
   min-height: 30px;
@@ -11186,7 +11186,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 .files-block .delete-btn svg {
   height: 16px;
   width: 16px;
-  color: var(--text);
+  color: var(--white);
 }
 .files-block .files-tools {
   display: -webkit-box;

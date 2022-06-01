@@ -13,10 +13,14 @@ import './styles/dist/style.css'
 
 // Outils uniquement en dev, à retirer en prod
 import { composeWithDevTools } from "redux-devtools-extension"
-import logger from "redux-logger"
-// , logger
+import { createLogger } from 'redux-logger'
+
+const logger = createLogger({
+    collapsed: true
+})
+
 const store = createStore(
-    rootReducer, composeWithDevTools(applyMiddleware(thunk))
+    rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))
 )
 
 ReactDOM.render(

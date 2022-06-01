@@ -6,19 +6,17 @@ import Paths from './components/routes/routes';
 import { UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
-import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo, receiveUpdateConversationInfos, receiveUploadConversationPicture, receiveRemoveConversationPicture } from './actions/messenger.action';
+import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 
 function App() {
     const user = useSelector(state => state.userReducer)
     const [uid, setUid] = useState(null)
-    const [friends, setFriends] = useState([])
     const [onlineUsers, setOnlineUsers] = useState([])
-    const [sentNotification, setSentNotification] = useState({})
+    const [notification, setNotification] = useState({})
     const [send, setSend] = useState(false)
     const dispatch = useDispatch()
-    const websocket = useRef()
-    websocket.current = io('http://localhost:3001')
+    const websocket = useRef(io(`${process.env.REACT_APP_API_URL}`))
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -40,12 +38,11 @@ function App() {
         if (Object.keys(user).length > 0) {
             websocket.current.emit("addUser", { userId: user._id })
             websocket.current.on("getUsers", users => {
-                setFriends(user.friends)
                 setOnlineUsers(user.friends.filter(f => users.some(u => u.userId === f.friend)))
             })
         }
         return () => websocket.current.off("getUsers")
-    }, [user, friends.length])
+    }, [user])
 
     useEffect(() => {
         websocket.current.on("logout", data => {
@@ -53,7 +50,7 @@ function App() {
             setOnlineUsers(online)
         })
         websocket.current.on("sendMessageNotification", data => {
-            setSentNotification({ type: "new-message", ...data.message })
+            setNotification({ type: "new-message", ...data.message })
             setSend(true)
         })
         websocket.current.on("getMessage", data => {
@@ -108,7 +105,7 @@ function App() {
 
         websocket.current.on("friendRequest", data => {
             dispatch(receiveFriendRequest(data.notification))
-            setSentNotification(data.notification)
+            setNotification(data.notification)
             setSend(true)
         })
         websocket.current.on("cancelFriendRequest", data => {
@@ -125,7 +122,7 @@ function App() {
         })
         websocket.current.on("memberRequest", data => {
             dispatch(receiveMemberRequest(data.notification))
-            setSentNotification(data.notification)
+            setNotification(data.notification)
             setSend(true)
         })
         websocket.current.on("cancelMemberRequest", data => {
@@ -205,8 +202,21 @@ function App() {
     return (
         <UidContext.Provider value={uid}>
             <UserContext.Provider value={user}>
-                <Paths websocket={websocket} friends={friends} onlineUsers={onlineUsers} user={user} uid={uid} />
-                {send && <NotificationCard sentNotification={sentNotification} setSend={setSend} send={send} user={user} websocket={websocket} />}
+                <Paths
+                    uid={uid}
+                    user={user}
+                    websocket={websocket}
+                    onlineUsers={onlineUsers}
+                />
+                {send &&
+                    <NotificationCard
+                        user={user}
+                        websocket={websocket}
+                        notification={notification}
+                        etSend={setSend}
+                        send={send}
+                    />
+                }
             </UserContext.Provider>
         </UidContext.Provider>
     )

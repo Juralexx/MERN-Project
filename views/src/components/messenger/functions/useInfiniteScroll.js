@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useLayoutEffect, useState } from "react"
 
 export function useInfiniteScroll(conversation, convWrapperRef) {
-    const [number, setNumber] = useState()
+    const [number, setNumber] = useState(null)
     const [pushMore, setMore] = useState(false)
-    const [prevscroll, setPrevscroll] = useState()
+    const [prevscroll, setPrevscroll] = useState(null)
 
     useEffect(() => {
         if (conversation?.messages) {
@@ -22,16 +22,16 @@ export function useInfiniteScroll(conversation, convWrapperRef) {
         }, 2000)
     }, [pushMore, convWrapperRef, prevscroll])
 
-    const loadMore = useCallback(() => {
+    const loadMore = () => {
         const { scrollHeight, scrollTop } = convWrapperRef?.current
         setPrevscroll(scrollHeight)
 
         if (scrollHeight - scrollTop > scrollHeight - 200) {
             setMore(true)
         }
-    }, [convWrapperRef?.current])
+    }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (number > 0 && !pushMore) {
             let wrapper = convWrapperRef?.current
             wrapper?.addEventListener('scroll', loadMore)

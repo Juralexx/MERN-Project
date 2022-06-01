@@ -6,6 +6,8 @@ import { addFavorite, addMember, deleteConversation, deleteFile, deleteMessage, 
 import { coverPicture } from '../../tools/functions/useAvatar';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import axios from 'axios';
+import VideoJS from '../message/Video';
+import { MdPlayCircleOutline } from 'react-icons/md';
 
 /*****************************************************************************************************************************************************************/
 /************************************************************************ EDITOR *********************************************************************************/
@@ -144,6 +146,17 @@ export const returnEditorFiles = (file) => {
         return (
             <div className="file-img-preview" style={coverPicture(URL.createObjectURL(file))}></div>
         )
+    }
+    else if (file.type.includes('video')) {
+        return (
+            <div className="file-doc">
+                <MdPlayCircleOutline className="file-doc-img" />
+                <div className="file-doc-content">
+                    <p>{file.name}</p>
+                    <p>{file.type}</p>
+                </div>
+            </div>
+        )
     } else {
         return (
             <div className="file-doc">
@@ -155,7 +168,9 @@ export const returnEditorFiles = (file) => {
             </div>
         )
     }
-}/**
+}
+
+/**
  * Place autocomplete container upon cursor
  */
 
@@ -406,6 +421,10 @@ export const returnMessageFiles = (file) => {
     if (file.type.includes('image')) {
         return (
             <img className="file-img" src={file.url} alt="" />
+        )
+    } else if (file.type.includes('video')) {
+        return (
+            <VideoJS url={file.url} type={file.type} />
         )
     } else {
         return (

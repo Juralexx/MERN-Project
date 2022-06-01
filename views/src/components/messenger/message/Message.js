@@ -17,7 +17,7 @@ import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/m
 import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'
 import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
 
-const Message = ({ message, uniqueKey, className, handleSubmit, currentChat }) => {
+const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, members }) => {
     const { uid, user, websocket, dispatch } = useContext(MessengerContext)
     const [modify, setModify] = useState(-1)
     const [warning, setWarning] = useState(false)
@@ -82,6 +82,18 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat }) =
                                     </div>
                                     <div className="message-bottom">
                                         <div className="message-text" dangerouslySetInnerHTML={convertDeltaToHTML(message.shared)}></div>
+                                        {message.shared.files && message.shared.files.length > 0 &&
+                                            message.shared.files.map((file, key) => {
+                                                return (
+                                                    <div className="message-files-container" key={key}>
+                                                        <p className="txt-sec f-12">{file.name}</p>
+                                                        <div className="files-block">
+                                                            {returnMessageFiles(file)}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
                                     </div>
                                 </div>
                             }
@@ -91,6 +103,8 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat }) =
                             message={message}
                             setModify={setModify}
                             setOpened={setOpened}
+                            currentChat={currentChat}
+                            members={members}
                         />
                     )}
                     <Emojis
@@ -169,6 +183,8 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat }) =
                         setOpen={setShare}
                         message={message}
                         handleSubmit={handleSubmit}
+                        currentChat={currentChat}
+                        members={members}
                     />
                 }
             </div>

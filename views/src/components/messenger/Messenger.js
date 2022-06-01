@@ -7,7 +7,7 @@ import { useScrollToLast } from './functions/useScrollToLast';
 import { useFetchFriends } from './functions/useFetchFriends';
 import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
-import { useInfiniteScroll } from './functions/useScroll';
+import { useInfiniteScroll } from './functions/useInfiniteScroll';
 import { getConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
 import { getHoursDiff, getMessagesDates, otherMembersIDs } from './functions/function';
 import { randomNbID } from '../Utils';
@@ -116,67 +116,91 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
      * FONCTIONS
      */
 
-    const handleSubmit = (conversation, messageContent, files, shared) => {
-        const message = {
-            _id: randomNbID(24),
-            sender: uid,
-            sender_pseudo: user.pseudo,
-            sender_picture: user.picture,
-            text: messageContent,
-            conversationId: conversation._id,
-            emojis: [],
-            createdAt: new Date().toISOString()
-        }
-        if (files.length > 0) {
-            let filesArr = []
-            files.forEach((file, key) => {
-                if (file.type.includes('image')) {
-                    filesArr.push({
-                        _id: key,
-                        type: 'image',
-                        name: file.name,
-                        url: URL.createObjectURL(file),
-                        date: new Date().toISOString(),
-                        userId: user._id,
-                        userPseudo: user.pseudo,
-                        messageId: message._id,
+    const handleSubmit = (quill, conversation, files, shared) => {
+        if (quill.getLength() > 1 || files.length > 0) {
+            let messageContent = quill.getLength() > 1 ? quill.getContents() : []
+            const message = {
+                _id: randomNbID(24),
+                sender: uid,
+                sender_pseudo: user.pseudo,
+                sender_picture: user.picture,
+                text: messageContent,
+                conversationId: conversation._id,
+                emojis: [],
+                createdAt: new Date().toISOString()
+            }
+            if (files.length > 0) {
+                let filesArr = []
+                files.forEach((file, key) => {
+                    if (file.type.includes('image')) {
+                        filesArr.push({
+                            _id: key,
+                            type: 'image',
+                            name: file.name,
+                            url: URL.createObjectURL(file),
+                            date: new Date().toISOString(),
+                            userId: user._id,
+                            userPseudo: user.pseudo,
+                            messageId: message._id,
+                        })
+                    }
+                    else if (file.type.includes('video')) {
+                        filesArr.push({
+                            _id: key,
+                            type: 'video',
+                            name: file.name,
+                            url: URL.createObjectURL(file),
+                            date: new Date().toISOString(),
+                            userId: user._id,
+                            userPseudo: user.pseudo,
+                            messageId: message._id,
+                        })
+                        console.log(filesArr[key].url)
+                    } else {
+                        filesArr.push({
+                            _id: key,
+                            type: 'document',
+                            name: file.name,
+                            url: URL.createObjectURL(file),
+                            date: new Date().toISOString(),
+                            userId: user._id,
+                            userPseudo: user.pseudo,
+                            messageId: message._id,
+                        })
+                    }
+                })
+                Object.assign(message, { files: filesArr })
+            }
+            if (shared) {
+                Object.assign(message, { shared: shared })
+            }
+            if (conversation.type === "group") {
+                otherMembersIDs(conversation, uid).map(memberId => {
+                    return websocket.current.emit("sendMessage", {
+                        receiverId: memberId,
+                        conversationId: conversation._id,
+                        message: message
                     })
-                } else {
-                    filesArr.push({
-                        _id: key,
-                        type: 'document',
-                        name: file.name,
-                        url: URL.createObjectURL(file),
-                        date: new Date().toISOString(),
-                        userId: user._id,
-                        userPseudo: user.pseudo,
-                        messageId: message._id,
-                    })
-                }
-            })
-            Object.assign(message, { files: filesArr })
-        }
-        if (shared) {
-            Object.assign(message, { shared: shared })
-        }
-        if (conversation.type === "group") {
-            otherMembersIDs(conversation, uid).map(memberId => {
-                return websocket.current.emit("sendMessage", {
-                    receiverId: memberId,
+                })
+            } else {
+                const receiver = conversation.members.find(member => member._id !== uid)
+                websocket.current.emit("sendMessage", {
+                    receiverId: receiver._id,
                     conversationId: conversation._id,
                     message: message
                 })
-            })
-        } else {
-            const receiver = conversation.members.find(member => member._id !== uid)
-            websocket.current.emit("sendMessage", {
-                receiverId: receiver._id,
-                conversationId: conversation._id,
-                message: message
-            })
-        }
-        dispatch(sendMessage(conversation._id, message, files, user))
-        setNewMessage(message)
+            }
+            dispatch(sendMessage(conversation._id, message, files, user))
+            setNewMessage(message)
+
+            if (quill.getLength() > 1) {
+                quill.deleteText(0, quill.getLength())
+                setTyping(false)
+            }
+            if (files.length > 0) {
+                files.splice(0, files.length)
+            }
+        } else return
     }
 
     const changeCurrentChat = (conversation) => {
@@ -288,6 +312,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                                                         className={key > 0 && getHoursDiff(array[key - 1], message)}
                                                                         uniqueKey={key}
                                                                         currentChat={currentChat}
+                                                                        members={members}
                                                                         handleSubmit={handleSubmit}
                                                                     />
                                                                 </div>
@@ -302,14 +327,13 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                             )}
                                         </div>
                                         <Editor
+                                            members={members}
+                                            currentChat={currentChat}
                                             handleSubmit={handleSubmit}
                                             isTyping={isTyping}
-                                            setTyping={setTyping}
                                             typingContext={typingContext}
                                             convWrapperRef={convWrapperRef}
                                             lastmessageRef={lastmessageRef}
-                                            currentChat={currentChat}
-                                            members={members}
                                         />
                                     </>
                                 }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from '../../tools/components/Modal'
 import ReactQuill from "react-quill";
 import EditorToolbar, { formats, modules } from '../editor/EditorToolbar';
@@ -6,30 +6,24 @@ import EmojiPicker from '../tools/EmojiPicker';
 import Mention from '../editor/Mention';
 import Emoji from '../editor/Emoji';
 import Link from '../editor/Link';
-import { MessengerContext } from '../../AppContext';
 import { useQuill } from '../editor/useQuill';
 import { useEmoji } from '../editor/useEmoji';
 import { useMention } from '../editor/useMention';
 import { pickEmoji, convertDeltaToStringNoHTML } from '../functions/function';
+import { SmallAvatar } from '../../tools/components/Avatars';
+import { dateParserWithoutYear, getHourOnly } from '../../Utils';
 import { IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
-import { SmallAvatar } from '../../tools/components/Avatars';
-import { dateParserWithoutYear, getHourOnly } from '../../Utils';
 
-const ShareModal = ({ open, setOpen, message, handleSubmit }) => {
-    const { currentChat, members } = useContext(MessengerContext)
+const ShareModal = ({ open, setOpen, message, handleSubmit, currentChat, members }) => {
+    const { quillRef, quill } = useQuill()
 
-    const quillRef = useRef()
-    let quill = quillRef?.current?.getEditor()
-    useQuill(quill)
-
-    const [isToolbar, setToolbar] = useState(true)
     const [position, setPosition] = useState(0)
     const [disabled, setDisabled] = useState(true)
 
     const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
-    const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, onKeyPressed } = useEmoji(quill)
+    const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis } = useEmoji(quill)
 
     const [isLink, setLink] = useState(false)
 
@@ -130,24 +124,12 @@ const ShareModal = ({ open, setOpen, message, handleSubmit }) => {
         }
     }
 
-    /**
-     * On message submission
-     */
-
-    const onSubmit = () => {
-        if (quill.getLength() > 1) {
-            let messageContent = quill.getLength() > 1 ? quill.getContents() : []
-            handleSubmit(currentChat, messageContent, [], message)
-            setOpen(false)
-        }
-    }
-
     return (
         <Modal open={open} setOpen={setOpen} className="share-message-modal">
             <h2>Partagez ce message</h2>
             <div className="conversation-toolsbox">
                 <div className="message-text-editor">
-                    <EditorToolbar />
+                    <EditorToolbar  />
                     <div className="message-editor-container min-h-[100px]">
                         <Mention
                             quill={quill}
@@ -176,12 +158,18 @@ const ShareModal = ({ open, setOpen, message, handleSubmit }) => {
                         />
                         <ReactQuill
                             ref={quillRef}
-                            placeholder="Modification du message"
+                            placeholder={`Partager le message de ${message.sender_pseudo}`}
                             modules={modules}
                             formats={formats}
                             defaultValue=""
                             onChange={handleNewMessage}
-                            onKeyUp={event => onKeyPressed(event)}
+                            onKeyUp={event => {
+                                detectEmojis(event)
+                                if (event.keyCode === 13) {
+                                    handleSubmit(quill, currentChat, [], message)
+                                    setOpen(false)
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -189,7 +177,6 @@ const ShareModal = ({ open, setOpen, message, handleSubmit }) => {
                     <div className="text-tools-left">
                         <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
                         <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
-                        <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
                         <button className="text-tools" onClick={() => setLink(!isLink)}><MdOutlineLink /></button>
                     </div>
                 </div>
@@ -213,7 +200,7 @@ const ShareModal = ({ open, setOpen, message, handleSubmit }) => {
             </div>
             <div className="btn-container">
                 <button className="cancel-tool" onClick={() => setOpen(false)}>Annuler</button>
-                <button className="save-tool" disabled={disabled} onClick={onSubmit}>Partager</button>
+                <button className="save-tool" disabled={disabled} onClick={() => handleSubmit(quill, currentChat, [], message)}>Partager</button>
             </div>
         </Modal>
     )

@@ -1,6 +1,5 @@
 import React from "react";
 import { Quill } from "react-quill"
-import BlotFormatter from 'quill-blot-formatter'
 import MagicUrl from "quill-magic-url/src"
 import { ImageDrop } from 'quill-image-drop-module';
 import { VideoHandler, AttachmentHandler } from "quill-upload";
@@ -28,7 +27,6 @@ Font.whitelist = [
 
 Quill.register(Size, true);
 Quill.register(Font, true);
-Quill.register('modules/blotFormatter', BlotFormatter)
 Quill.register('modules/magicUrl', MagicUrl)
 Quill.register('modules/imageDrop', ImageDrop);
 

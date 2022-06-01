@@ -12,7 +12,7 @@ import sharp from 'sharp'
  * Upload files
  */
 
- export const uploadFiles = async (req, res) => {
+export const uploadFiles = async (req, res) => {
     const __directory = `${__dirname}/../../uploads/conversations/${req.params.id}/${req.params.messageId}`
     let files = []
 
@@ -42,7 +42,7 @@ import sharp from 'sharp'
             if (filesArr[key].type.includes('image')) {
                 files.push({
                     _id: key,
-                    type: 'image',
+                    type: filesArr[key].type,
                     name: fileName,
                     url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,
                     userId: req.params.userId,
@@ -70,10 +70,27 @@ import sharp from 'sharp'
                             })
                     })
                 })
+            } else if (filesArr[key].type.includes('video')) {
+                files.push({
+                    _id: key,
+                    type: filesArr[key].type,
+                    name: fileName,
+                    url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,
+                    userId: req.params.userId,
+                    userPseudo: req.params.userPseudo,
+                    date: new Date().toISOString(),
+                    messageId: req.params.messageId,
+                })
+                new Promise(async () => {
+                    await pipeline(
+                        file.stream,
+                        fs.createWriteStream(`${__directory}/${fileName}`)
+                    )
+                })
             } else {
                 files.push({
                     _id: key,
-                    type: 'file',
+                    type: filesArr[key].type,
                     name: fileName,
                     url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,
                     userId: req.params.userId,

@@ -1,18 +1,8 @@
 import React from "react";
 import { Quill } from "react-quill";
 import QuillAutoDetectUrl from "quill-auto-detect-url";
-// import { urlEmbed, urlEmbedModule } from 'quill-url-embeds'
-
-// Quill.register({
-//   'blots/urlEmbed': urlEmbed,
-//   'modules/urlEmbeds': urlEmbedModule({
-//     metaApi
-//   })
-// })
 
 Quill.register("modules/autoDetectUrl", QuillAutoDetectUrl);
-
-// Quill.register('modules/magicUrl', MagicUrl)
 
 export const modules = {
     toolbar: {
@@ -68,6 +58,7 @@ export const QuillToolbar = ({ style }) => (
         <span className="ql-formats before">
             <button className="ql-indent" value="-1" />
             <button className="ql-indent" value="+1" />
+            <button className="ql-video" />
         </span>
         {/* <span className="ql-formats border-r">
             <button className="ql-link" />

@@ -32,7 +32,7 @@ export function useEmoji(quill) {
      * Insert emoji if shortcut is detected
      */
 
-    const onKeyPressed = (event) => {
+    const detectEmojis = (event) => {
         let txt = quill.getText()
         let index = quill.getSelection().index
 
@@ -74,5 +74,5 @@ export function useEmoji(quill) {
         }
     }
 
-    return { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, onKeyPressed }
+    return { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis }
 }

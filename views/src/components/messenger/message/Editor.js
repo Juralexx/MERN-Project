@@ -15,19 +15,16 @@ import { IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
 
-const Editor = ({ message, setModify, setOpened }) => {
-    const { uid, websocket, currentChat, members, dispatch } = useContext(MessengerContext)
-
-    const quillRef = useRef()
-    let quill = quillRef?.current?.getEditor()
-    useQuill(quill)
+const Editor = ({ message, setModify, setOpened, currentChat, members }) => {
+    const { uid, websocket, dispatch } = useContext(MessengerContext)
+    const { quill, quillRef } = useQuill()
 
     const [isToolbar, setToolbar] = useState(false)
     const [position, setPosition] = useState(0)
     const [disabled, setDisabled] = useState(true)
 
     const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
-    const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, onKeyPressed } = useEmoji(quill)
+    const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis } = useEmoji(quill)
 
     const [isLink, setLink] = useState(false)
 
@@ -37,6 +34,9 @@ const Editor = ({ message, setModify, setOpened }) => {
 
     const handleNewMessage = (text, delta, source, editor) => {
         if (quill) {
+            if (!quill.hasFocus()) {
+                quill.focus()
+            }
             let length = editor.getLength()
             let txt = editor.getText()
 
@@ -179,7 +179,10 @@ const Editor = ({ message, setModify, setOpened }) => {
                         formats={formats}
                         defaultValue={convertDeltaToString(message)}
                         onChange={handleNewMessage}
-                        onKeyUp={event => onKeyPressed(event)}
+                        onKeyUp={event => {
+                            detectEmojis(event)
+                            event.keyCode === 13 && onSubmit()
+                        }}
                     />
                 </div>
             </div>
