@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../../tools/functions/task'
-import { addActive, dateParserWithoutYear, getDifference, reduceString, reverseArray } from '../../../Utils'
+import { addClass, dateParserWithoutYear, getDifference, reduceString, reverseArray } from '../../../Utils'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import TaskModal from './TaskModal'
@@ -51,10 +51,10 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     </div>
                     <div className="flex justify-between">
                         <div className="home-tasks-nav">
-                            <div className={`home-tasks-nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
-                            <div className={`home-tasks-nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
-                            <div className={`home-tasks-nav-item ${addActive(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
-                            <div className={`home-tasks-nav-item ${addActive(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminée</div>
+                            <div className={`home-tasks-nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
+                            <div className={`home-tasks-nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
+                            <div className={`home-tasks-nav-item ${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
+                            <div className={`home-tasks-nav-item ${addClass(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminée</div>
                         </div>
                         <DropdownInput readOnly placeholder="Filtrer" value={filter} className="small right light ml-3" clean={() => { setFilter(""); setTasks(reverseArray(project.tasks)) }}>
                             <div onClick={() => sortByEndDate(tasks, setTasks, setFilter)}>Par date de fin</div>

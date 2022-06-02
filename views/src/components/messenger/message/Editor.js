@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import ReactQuill from "react-quill";
 import EditorToolbar, { formats, modules } from "../editor/EditorToolbar";
 import EmojiPicker from '../tools/EmojiPicker';

@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import { MediumAvatar } from '../../tools/components/Avatars'
 import Modal from '../../tools/components/Modal'
 import ToolsMenu from '../../tools/components/ToolsMenu'
-import { addActive, dateParser } from '../../Utils'
-import { leaveConversation } from '../functions/function'
+import { addClass, dateParser } from '../../Utils'
+import { leaveConversation } from '../functions/actions'
 
 const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch }) => {
     const [navbar, setNavbar] = useState(1)
@@ -14,8 +14,8 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
     return (
         <Modal open={open} setOpen={setOpen} className="members-modal">
             <div className="modal_nav pb-3 border-b">
-                <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Membres</div>
-                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Administrateurs</div>
+                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Membres</div>
+                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Administrateurs</div>
             </div>
             <div className="conversation-members custom-scrollbar">
                 {navbar === 1 &&

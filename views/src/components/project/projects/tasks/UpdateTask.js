@@ -5,7 +5,7 @@ import Modal from '../../../tools/components/Modal'
 import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tools/components/Inputs'
 import { Button } from '../../../tools/components/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../../tools/functions/task'
-import { addActive, ISOtoNavFormat } from '../../../Utils'
+import { addClass, ISOtoNavFormat } from '../../../Utils'
 import { isInResults, isSelected } from '../../../tools/functions/member'
 import { MediumAvatar, TinyAvatar } from '../../../tools/components/Avatars'
 import { IoClose } from 'react-icons/io5'
@@ -69,8 +69,8 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
             <h2>Modifier la tâche</h2>
 
             <div className="modal_nav">
-                <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
-                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
+                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
+                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
             </div>
 
             {navbar === 1 ? (

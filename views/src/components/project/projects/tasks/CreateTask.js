@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addActive } from '../../../Utils'
+import { addClass } from '../../../Utils'
 import { createTask } from '../../../../actions/project.action'
 import { isInResults, isSelected } from '../../../tools/functions/member'
 import Modal from '../../../tools/components/Modal'
@@ -55,8 +55,8 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
             <h2>Créer une nouvelle tâche</h2>
 
             <div className="modal_nav">
-                <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
-                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
+                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
+                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
             </div>
 
             {navbar === 1 ? (

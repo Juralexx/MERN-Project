@@ -85,7 +85,6 @@
 
 @import 'modules/messenger/messenger';
 @import 'modules/messenger/conversation';
-@import 'modules/messenger/message';
 @import 'modules/messenger/conversations-menu';
 @import 'modules/messenger/online-users';
 @import 'modules/messenger/conversation-tools';
@@ -94,3 +93,8 @@
 @import 'modules/messenger/editor/files';
 @import 'modules/messenger/editor/link';
 @import 'modules/messenger/editor/quill';
+
+@import 'modules/messenger/message/message';
+@import 'modules/messenger/message/shared';
+@import 'modules/messenger/message/emojis';
+@import 'modules/messenger/message/preview';

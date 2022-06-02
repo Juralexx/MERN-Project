@@ -3,14 +3,14 @@ import Warning from '../../tools/components/Warning'
 import ToolsMenu from '../../tools/components/ToolsMenu'
 import { IconInput } from '../../tools/components/Inputs'
 import { coverPicture } from '../../tools/functions/useAvatar'
-import { addActive, dateParser, download } from '../../Utils'
-import { deleteFiles } from '../functions/function'
+import { addClass, dateParser, download } from '../../Utils'
 import { oneLevelSearch } from '../../tools/functions/searches'
 import { isInResults } from '../../tools/functions/member'
 import { BiSearchAlt } from 'react-icons/bi'
 import { MdFileDownload } from 'react-icons/md'
 import { IoArrowRedo, IoDocumentTextOutline, IoTrashBin } from 'react-icons/io5'
 import { HiArrowSmLeft } from 'react-icons/hi'
+import { deleteFiles } from '../functions/actions'
 
 const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
     const [isResults, setResults] = useState([])
@@ -29,8 +29,8 @@ const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
                 <p>Multimédia et fichiers</p>
             </div>
             <div className="tools-nav">
-                <div className={`tools-nav-item ${addActive(files.type === 'medias', "active")}`} onClick={() => setFiles({ open: true, type: 'medias' })}>Multimédia</div>
-                <div className={`tools-nav-item ${addActive(files.type === 'files', "active")}`} onClick={() => setFiles({ open: true, type: 'files' })}>Fichiers</div>
+                <div className={`tools-nav-item ${addClass(files.type === 'medias', "active")}`} onClick={() => setFiles({ open: true, type: 'medias' })}>Multimédia</div>
+                <div className={`tools-nav-item ${addClass(files.type === 'files', "active")}`} onClick={() => setFiles({ open: true, type: 'files' })}>Fichiers</div>
             </div>
             <IconInput
                 className="full is_start_icon small mb-3"

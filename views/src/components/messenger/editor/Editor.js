@@ -14,7 +14,7 @@ import { useQuill } from './useQuill';
 import { useEmoji } from './useEmoji';
 import { useMention } from './useMention';
 import { isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, pickEmoji } from '../functions/function';
-import { addActive } from '../../Utils';
+import { addClass } from '../../Utils';
 import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
 import { IoSend, IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
@@ -170,7 +170,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
                 convWrapperRef={convWrapperRef}
                 scrollTo={lastmessageRef}
             />
-            <div className={`conversation-toolsbox ${addActive(isDragActive, "active")}`}>
+            <div className={`conversation-toolsbox ${addClass(isDragActive, "active")}`}>
                 <div className="message-text-editor">
                     <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
                     <div className="message-editor-container">
@@ -231,7 +231,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
                 </div>
                 <div className="message-text-tools">
                     <div className="text-tools-left">
-                        <button className={`menu-tools-btn ${addActive(isTools, "active")}`} onClick={() => setTools(!isTools)}><MdOutlineAdd /></button>
+                        <button className={`menu-tools-btn ${addClass(isTools, "active")}`} onClick={() => setTools(!isTools)}><MdOutlineAdd /></button>
                         <div className="tools-group">
                             <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
                             <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
@@ -244,7 +244,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
                     </div>
                     {isTools && <div className="message-text-tools-menu"></div>}
                     <div className="text-tools-right">
-                        <button className="send-tool" disabled={disabled} onClick={() => { }}><IoSend /></button>
+                        <button className="send-tool" disabled={disabled} onClick={() => handleSubmit(quill, currentChat, files)}><IoSend /></button>
                     </div>
                 </div>
                 {uploadErr.length > 0 &&

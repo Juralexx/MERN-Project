@@ -1,0 +1,23 @@
+- notification lors d'une mention
+
+- reponse au message (file de discussion)
+
+- masquer conversation
+- desactivation notification
+
+- creation vrai conversation au premier message envoyé d'une conversation temporaire
+- nouveau proprietaire lorsque le createur ou propietaire quitte une conversation
+- verification que tout est supprimé lors de suppression d'une conversation
+
+- fslightbox au clique des image, pdf et autre documents
+- link embed video (youtube...)
+- Ajout image a la creation de la conversation
+
+- conversation dans messenger navbar
+
+
+
+/** fait **/
+
+- partage de message
+- chargement des 30 derniers message et chargement des autre petit a petit

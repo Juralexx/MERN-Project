@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-import { addActive, removeAccents } from '../components/Utils'
+import { addClass, removeAccents } from '../components/Utils'
 import Title from "../components/project/add-project/Title";
 import Location from "../components/project/add-project/Location";
 import Contributors from "../components/project/add-project/Contributors";
@@ -212,23 +212,23 @@ const AddProject = ({ user }) => {
                     </div>
                     <div className="add-project-header-bottom">
                         <div className="header-bottom-container">
-                            <div className={`header-bottom-item ${addActive(nav === 0, "active")}`} onClick={() => setNav(0)}>
+                            <div className={`header-bottom-item ${addClass(nav === 0, "active")}`} onClick={() => setNav(0)}>
                                 <MdOutlineDescription />
                                 <p>Les bases</p>
                             </div>
-                            <div className={`header-bottom-item ${addActive(nav === 1, "active")}`} onClick={() => setNav(1)}>
+                            <div className={`header-bottom-item ${addClass(nav === 1, "active")}`} onClick={() => setNav(1)}>
                                 <RiBook3Line />
                                 <p>Description</p>
                             </div>
-                            <div className={`header-bottom-item ${addActive(nav === 2, "active")}`} onClick={() => setNav(2)}>
+                            <div className={`header-bottom-item ${addClass(nav === 2, "active")}`} onClick={() => setNav(2)}>
                                 <MdOutlinePhotoLibrary />
                                 <p>Galerie</p>
                             </div>
-                            <div className={`header-bottom-item ${addActive(nav === 3, "active")}`} onClick={() => setNav(3)}>
+                            <div className={`header-bottom-item ${addClass(nav === 3, "active")}`} onClick={() => setNav(3)}>
                                 <RiTeamLine />
                                 <p>Équipe</p>
                             </div>
-                            <div className={`header-bottom-item ${addActive(nav === 4, "active")}`} onClick={() => setNav(4)}>
+                            <div className={`header-bottom-item ${addClass(nav === 4, "active")}`} onClick={() => setNav(4)}>
                                 <BsChatLeftQuote />
                                 <p>FAQ</p>
                             </div>

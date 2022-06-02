@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { addActive, reverseArray } from '../../../Utils'
+import { addClass, reverseArray } from '../../../Utils'
 import { StartIconOutlinedButton } from '../../../tools/components/Button'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
@@ -64,8 +64,8 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         <div className="dashboard-tasks-header_left">
                             <h2>Tâches <span>({project.tasks.length})</span></h2>
                             <div className="dashboard-tasks-nav">
-                                <div className={`dashboard-tasks-nav-item ${addActive(layout === "kanban", "active")}`} onClick={handleLayout}>Kanban</div>
-                                <div className={`dashboard-tasks-nav-item ${addActive(layout === "list", "active")}`} onClick={handleLayout}>Liste</div>
+                                <div className={`dashboard-tasks-nav-item ${addClass(layout === "kanban", "active")}`} onClick={handleLayout}>Kanban</div>
+                                <div className={`dashboard-tasks-nav-item ${addClass(layout === "list", "active")}`} onClick={handleLayout}>Liste</div>
                             </div>
                         </div>
                         {(isAdmin || isManager) &&

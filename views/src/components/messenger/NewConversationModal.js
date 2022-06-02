@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import { addActive } from '../Utils';
+import { addClass } from '../Utils';
 import { Button, TextButton } from '../tools/components/Button';
 import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs';
 import { MediumAvatar, TinyAvatar } from '../tools/components/Avatars';
@@ -72,8 +72,8 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
         <Modal open={open} setOpen={setOpen} className="add-conversation-modal">
             <h2>Nouvelle conversation</h2>
             <div className="modal_nav pb-2 border-b">
-                <div className={`modal_nav-item ${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Membres</div>
-                <div className={`modal_nav-item ${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À propos</div>
+                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Membres</div>
+                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À propos</div>
             </div>
             {navbar === 1 ? (
                 <>

@@ -9,8 +9,8 @@ import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
 import { useInfiniteScroll } from './functions/useInfiniteScroll';
 import { getConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
-import { getHoursDiff, getMessagesDates, otherMembersIDs } from './functions/function';
-import { randomNbID } from '../Utils';
+import { convertDeltaToStringNoHTML, getHoursDiff, getMessagesDates, otherMembersIDs } from './functions/function';
+import { isURL, randomNbID } from '../Utils';
 import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
 import { ChatLoader, SmallLoader } from './tools/Loaders';
 import ConversationHeader from './ConversationHeader';
@@ -20,6 +20,7 @@ import MessageDate from './message/MessageDate';
 import Message from './message/Message';
 import SearchHeader from './SearchHeader';
 import Editor from './editor/Editor';
+import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const reducer = useSelector(state => state.messengerReducer)
@@ -38,16 +39,16 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
 
     const [tools, setTools] = useState(false)
 
-    const lastmessageRef = useRef()
     const convWrapperRef = useRef()
+    const { lastmessageRef } = useScrollToLast(isLoading)
+    const { pushMore, number } = useInfiniteScroll(currentChat, convWrapperRef)
     const dispatch = useDispatch()
 
     const { friendsArr, fetchedFriends } = useFetchFriends(user)
     const { isTyping, setTyping, typingContext, setTypingContext } = useTyping(currentChat)
     const { members } = useGetMembers(uid, currentChat)
+
     useLocationchange(user, websocket, currentChat)
-    useScrollToLast(lastmessageRef, isLoading)
-    const { pushMore, number } = useInfiniteScroll(currentChat, convWrapperRef)
 
     /**
      * is on messenger
@@ -129,45 +130,27 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 emojis: [],
                 createdAt: new Date().toISOString()
             }
+            let content = convertDeltaToStringNoHTML(message)
+            if (isURL(content)) {
+                getLinkPreview(content)
+                .then(res =>
+                    console.debug(res)
+                )
+            } else console.log(false)
+
             if (files.length > 0) {
                 let filesArr = []
                 files.forEach((file, key) => {
-                    if (file.type.includes('image')) {
-                        filesArr.push({
-                            _id: key,
-                            type: 'image',
-                            name: file.name,
-                            url: URL.createObjectURL(file),
-                            date: new Date().toISOString(),
-                            userId: user._id,
-                            userPseudo: user.pseudo,
-                            messageId: message._id,
-                        })
-                    }
-                    else if (file.type.includes('video')) {
-                        filesArr.push({
-                            _id: key,
-                            type: 'video',
-                            name: file.name,
-                            url: URL.createObjectURL(file),
-                            date: new Date().toISOString(),
-                            userId: user._id,
-                            userPseudo: user.pseudo,
-                            messageId: message._id,
-                        })
-                        console.log(filesArr[key].url)
-                    } else {
-                        filesArr.push({
-                            _id: key,
-                            type: 'document',
-                            name: file.name,
-                            url: URL.createObjectURL(file),
-                            date: new Date().toISOString(),
-                            userId: user._id,
-                            userPseudo: user.pseudo,
-                            messageId: message._id,
-                        })
-                    }
+                    filesArr.push({
+                        _id: message._id + key,
+                        type: file.type,
+                        name: file.name,
+                        url: URL.createObjectURL(file),
+                        date: new Date().toISOString(),
+                        userId: user._id,
+                        userPseudo: user.pseudo,
+                        messageId: message._id,
+                    })
                 })
                 Object.assign(message, { files: filesArr })
             }
@@ -191,14 +174,16 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 })
             }
             dispatch(sendMessage(conversation._id, message, files, user))
+                .then(() => {
+                    if (files.length > 0) {
+                        files.splice(0, files.length)
+                    }
+                })
             setNewMessage(message)
 
             if (quill.getLength() > 1) {
                 quill.deleteText(0, quill.getLength())
                 setTyping(false)
-            }
-            if (files.length > 0) {
-                files.splice(0, files.length)
             }
         } else return
     }

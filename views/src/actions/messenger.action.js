@@ -266,7 +266,7 @@ export const sendMessage = (conversationId, message, files, user) => {
         await axios
             .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-message`, { message: message })
             .then(async res => {
-                if (res.data && files.length > 0) {
+                if (files.length > 0) {
                     let formData = new FormData()
                     for (let i = 0; i < files.length; i++) {
                         formData.append('files', files[i])
@@ -275,8 +275,9 @@ export const sendMessage = (conversationId, message, files, user) => {
                         .catch(err => console.log(err))
                 }
             })
-            .then(() => {
+            .then(res => {
                 dispatch({ type: POST_MESSAGE, payload: { message } })
+                return res
             })
             .catch(err => console.error(err))
     }

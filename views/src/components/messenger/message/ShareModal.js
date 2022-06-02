@@ -12,7 +12,6 @@ import { useMention } from '../editor/useMention';
 import { pickEmoji, convertDeltaToStringNoHTML } from '../functions/function';
 import { SmallAvatar } from '../../tools/components/Avatars';
 import { dateParserWithoutYear, getHourOnly } from '../../Utils';
-import { IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
 

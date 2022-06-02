@@ -5,7 +5,7 @@ import Modal from "../components/Modal";
 import { IconInput } from "../components/Inputs";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { departments, regions } from "./api";
-import { addActive } from "../../Utils";
+import { addClass } from "../../Utils";
 
 const MapModal = ({ open, setOpen, location, setLocation }) => {
     const [ByDepartments, setDepartments] = useState(false)
@@ -70,8 +70,8 @@ const MapModal = ({ open, setOpen, location, setLocation }) => {
     return (
         <Modal open={open} setOpen={setOpen} className="map_modal">
             <div className="map_modal_nav">
-                <div data-choice="1" className={`map_modal_nav_item anim ${addActive(!ByDepartments, "active")}`} onClick={() => setDepartments(false)}>Régions</div>
-                <div data-choice="2" className={`map_modal_nav_item anim ${addActive(ByDepartments, "active")}`} onClick={() => setDepartments(true)}>Départements</div>
+                <div data-choice="1" className={`map_modal_nav_item anim ${addClass(!ByDepartments, "active")}`} onClick={() => setDepartments(false)}>Régions</div>
+                <div data-choice="2" className={`map_modal_nav_item anim ${addClass(ByDepartments, "active")}`} onClick={() => setDepartments(true)}>Départements</div>
             </div>
             {!ByDepartments ? (
                 <div className="relative">

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 
 export function useInfiniteScroll(conversation, convWrapperRef) {
     const [number, setNumber] = useState(null)

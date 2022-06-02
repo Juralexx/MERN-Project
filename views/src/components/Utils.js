@@ -259,11 +259,18 @@ export const isEmpty = (value) => {
     )
 }
 
+export const isURL = (str) => {
+    const regexp = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi)
+    if (regexp.test(str)) {
+        return true
+    } else return false
+}
+
 /**
  * Check if array or object are empty.
  */
 
-export const addActive = (state, classe) => {
+export const addClass = (state, classe) => {
     if (state) {
         return classe
     } else return

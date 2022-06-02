@@ -21,7 +21,12 @@ export const uploadFiles = async (req, res) => {
             fs.mkdirSync(__directory, { recursive: true })
         }
 
-        let filesArr = req.files.map(file => { return { name: file.originalName, type: file.detectedMimeType || file.clientReportedMimeType } })
+        let filesArr = req.files.map(file => {
+            return {
+                name: file.originalName, 
+                type: file.detectedMimeType || file.clientReportedMimeType
+            }
+        })
 
         if (req.files.length > 1) {
             req.files.forEach((file, key) => {
@@ -41,7 +46,7 @@ export const uploadFiles = async (req, res) => {
 
             if (filesArr[key].type.includes('image')) {
                 files.push({
-                    _id: key,
+                    _id: req.params.messageId + key,
                     type: filesArr[key].type,
                     name: fileName,
                     url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,
@@ -72,7 +77,7 @@ export const uploadFiles = async (req, res) => {
                 })
             } else if (filesArr[key].type.includes('video')) {
                 files.push({
-                    _id: key,
+                    _id: req.params.messageId + key,
                     type: filesArr[key].type,
                     name: fileName,
                     url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,
@@ -89,7 +94,7 @@ export const uploadFiles = async (req, res) => {
                 })
             } else {
                 files.push({
-                    _id: key,
+                    _id: req.params.messageId + key,
                     type: filesArr[key].type,
                     name: fileName,
                     url: `${process.env.SERVER_URL}/uploads/conversations/${req.params.id}/${req.params.messageId}/${fileName}`,

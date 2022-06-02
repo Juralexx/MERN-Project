@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground, randomizeCheckboxID } from '../../../tools/functions/task'
 import { clickOn } from '../../../tools/functions/useClickOutside'
-import { addActive, dateParser, getDifference, reduceString } from '../../../Utils'
+import { addClass, dateParser, getDifference, reduceString } from '../../../Utils'
 import ToolsMenu from '../../../tools/components/ToolsMenu'
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { RiCalendarTodoLine } from 'react-icons/ri'
@@ -33,10 +33,10 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
     return (
         <>
             <div className="content_nav !my-4">
-                <div className={`${addActive(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
-                <div className={`${addActive(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
-                <div className={`${addActive(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
-                <div className={`${addActive(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminées</div>
+                <div className={`${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
+                <div className={`${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
+                <div className={`${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
+                <div className={`${addClass(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminées</div>
             </div>
             {navbar === 1 ? (
                 array.map((arr, uniquekey) => {

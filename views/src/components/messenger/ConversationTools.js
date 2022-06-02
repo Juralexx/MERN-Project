@@ -3,14 +3,16 @@ import { NavLink } from 'react-router-dom'
 import ToolsMenu from '../tools/components/ToolsMenu';
 import Tools from './conversation-tools/Tools';
 import { IconToggle } from '../tools/components/Button';
-import { isConversation, isOnline } from './functions/function';
+import { isConversation } from './functions/function';
 import { OnlineUserLoader } from './tools/Loaders';
 import { avatar } from '../tools/functions/useAvatar';
-import { BiSearchAlt } from 'react-icons/bi';
 import { MessengerContext } from '../AppContext';
+import { BiSearchAlt } from 'react-icons/bi';
+import { useOnline } from './functions/useOnline';
 
 const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setConversations, setCurrentChat, changeCurrentChat, tools, setTools }) => {
     const { uid, user, websocket, friendsArr, dispatch } = useContext(MessengerContext)
+    const { online, offline } = useOnline(friendsArr, onlineUsers)
 
     const handleClick = (receiver) => {
         let isConv = isConversation(conversations, [receiver, user])
@@ -40,25 +42,53 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
                         </div>
                     </div>
                     {!fetchedFriends ? (
-                        friendsArr.length > 0 ? (
-                            friendsArr.map((element, key) => {
-                                let online = isOnline(element, onlineUsers)
-                                return (
-                                    <div className="online-users" key={key}>
-                                        <div className="online-user">
-                                            <div className={`${online ? "online-user-img connected" : "online-user-img"}`} style={avatar(element.picture)}></div>
-                                            <div className="online-user-name">
-                                                <div className="online-user-pseudo">{element.pseudo}</div>
-                                                <div className="online-user-status"><em>{online ? "Actif" : "Déconnecté"}</em></div>
-                                            </div>
-                                        </div>
-                                        <ToolsMenu>
-                                            <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
-                                            <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
-                                        </ToolsMenu>
-                                    </div>
-                                )
-                            })
+                        online.length > 0 || offline.length > 0 ? (
+                            <>
+                                {online.length > 0 &&
+                                    <>
+                                        <div className="online-title">En ligne <span>{online.length}</span></div>
+                                        {online.map((element, key) => {
+                                            return (
+                                                <div className="online-users online" key={key}>
+                                                    <div className="online-user">
+                                                        <div className="online-user-img" style={avatar(element.picture)}></div>
+                                                        <div className="online-user-name">
+                                                            <div className="online-user-pseudo">{element.pseudo}</div>
+                                                            <div className="online-user-status"><em>Actif</em></div>
+                                                        </div>
+                                                    </div>
+                                                    <ToolsMenu>
+                                                        <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
+                                                        <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                                    </ToolsMenu>
+                                                </div>
+                                            )
+                                        })}
+                                    </>
+                                }
+                                {offline.length > 0 &&
+                                    <>
+                                        <div className="online-title">Hors ligne <span>{offline.length}</span></div>
+                                        {offline.map((element, key) => {
+                                            return (
+                                                <div className="online-users offline" key={key}>
+                                                    <div className="online-user">
+                                                        <div className="online-user-img" style={avatar(element.picture)}></div>
+                                                        <div className="online-user-name">
+                                                            <div className="online-user-pseudo">{element.pseudo}</div>
+                                                            <div className="online-user-status"><em>Déconnecté</em></div>
+                                                        </div>
+                                                    </div>
+                                                    <ToolsMenu>
+                                                        <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
+                                                        <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                                    </ToolsMenu>
+                                                </div>
+                                            )
+                                        })}
+                                    </>
+                                }
+                            </>
                         ) : (
                             <div className="no-conversation-yet !mt-10">
                                 <p>Aucun contact à afficher...</p>

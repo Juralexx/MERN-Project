@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateProject } from '../../../../actions/project.action'
-import { addActive, geoJSONStructure, geolocToFloat, ISOtoNavFormat, removeAccents } from '../../../Utils'
+import { addClass, geoJSONStructure, geolocToFloat, ISOtoNavFormat, removeAccents } from '../../../Utils'
 import { Button, OutlinedButton } from '../../../tools/components/Button'
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
@@ -152,9 +152,9 @@ const Edit = ({ project }) => {
                     </div>
                 </div>
                 <div className="content_nav">
-                    <div className={`${addActive(nav === 0, "active")}`} onClick={() => setNav(0)}>Les bases</div>
-                    <div className={`${addActive(nav === 1, "active")}`} onClick={() => setNav(1)}>Description</div>
-                    <div className={`${addActive(nav === 2, "active")}`} onClick={() => setNav(2)}>Recherches</div>
+                    <div className={`${addClass(nav === 0, "active")}`} onClick={() => setNav(0)}>Les bases</div>
+                    <div className={`${addClass(nav === 1, "active")}`} onClick={() => setNav(1)}>Description</div>
+                    <div className={`${addClass(nav === 2, "active")}`} onClick={() => setNav(2)}>Recherches</div>
                 </div>
                 {nav === 0 &&
                     <>

@@ -1,0 +1,64 @@
+.message-emoji-container {
+    display     : flex;
+    padding-top : 8px;
+
+    .emoji {
+        position         : relative;
+        display          : flex;
+        align-items      : center;
+        justify-content  : center;
+        padding          : 3px 7px 1px;
+        margin-right     : 5px;
+        border-radius    : 20px;
+        background-color : var(--mini_nav-btn);
+
+        .tooltip-target {
+            height : 16px;
+        }
+
+        &.own {
+            background : rgba(var(--blue-rgb), 0.55);
+            border     : 1px solid var(--blue);
+            color      : white;
+        }
+
+        p {
+            line-height   : 12px;
+            font-size     : 12px;
+            margin-left   : 5px;
+            margin-bottom : 1px;
+        }
+    }
+
+    .emoji-add {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        max-width       : 30px;
+        max-height      : 24px;
+        margin-right    : 5px;
+        border-radius   : var(--radius);
+        color           : var(--text-secondary);
+        cursor          : pointer;
+
+        svg {
+            width  : 16px;
+            height : 16px;
+        }
+    }
+
+    .emoji-popup {
+        display     : flex;
+        align-items : center;
+        padding     : 5px 0;
+
+        p {
+            margin-left   : 10px;
+            line-height   : 18px;
+            font-size     : 13px;
+            text-align    : left;
+            inline-size   : 150px;
+            overflow-wrap : break-word;
+        }
+    }
+}

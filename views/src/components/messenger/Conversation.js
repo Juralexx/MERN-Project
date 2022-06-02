@@ -3,7 +3,7 @@ import { MessengerContext } from '../AppContext';
 import ToolsMenu from '../tools/components/ToolsMenu';
 import { avatar } from '../tools/functions/useAvatar';
 import { useClickOutside } from '../tools/functions/useClickOutside';
-import { addActive } from '../Utils';
+import { addClass } from '../Utils';
 import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
 
 const Conversation = ({ conversation, currentChat,  newMessage, notification, onConversationClick }) => {
@@ -50,7 +50,7 @@ const Conversation = ({ conversation, currentChat,  newMessage, notification, on
     }, [newMessage, notification, conversation._id])
 
     return (
-        <div className={`conversation ${addActive(conversation._id === currentChat._id || opened, "active")}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
             <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
                 <div className="conversation-img-container">
                     {members.slice(0, 3).map((element, key) => {

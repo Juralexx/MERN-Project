@@ -1,10 +1,14 @@
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 
-export function useScrollToLast(lastmessageRef, isLoading) {
+export function useScrollToLast(isLoading) {
 
-    useEffect(() => {
+    const lastmessageRef = useRef()
+
+    useLayoutEffect(() => {
         if (!isLoading) {
             lastmessageRef?.current?.scrollIntoView()
         }
     }, [lastmessageRef?.current, isLoading])
+
+    return { lastmessageRef }
 }

@@ -2,13 +2,13 @@ import React from 'react';
 import { IconToggle } from '../../tools/components/Button';
 import { avatar } from '../../tools/functions/useAvatar';
 import { returnMembers } from '../functions/function';
-import { addActive } from '../../Utils';
+import { addClass } from '../../Utils';
 import { IoClose } from 'react-icons/io5';
 
 const TemporaryConversation = ({ temporaryConv, setTemporaryConv, conversations, currentChat, setCurrentChat, setSearchHeader }) => {
 
     return (
-        <div className={`conversation temporary ${addActive(temporaryConv._id === currentChat._id, "active")}`}>
+        <div className={`conversation temporary ${addClass(temporaryConv._id === currentChat._id, "active")}`}>
             <div className="conversation_inner" onClick={() => { setSearchHeader(true); setCurrentChat(temporaryConv) }}>
                 <div className="conversation-img-container">
                     {temporaryConv.members.slice(0, 3).map((element, key) => {

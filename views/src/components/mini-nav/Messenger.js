@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { addActive } from "../Utils";
+import { addClass } from "../Utils";
 import { IconInput } from "../tools/components/Inputs";
 import ToolsMenu from "../tools/components/ToolsMenu";
 import { IoMdNotificationsOff } from 'react-icons/io'
@@ -27,8 +27,8 @@ const MessengerMenu = ({ open, setOpen, user, websocket }) => {
                     </div>
                 </div>
                 <div className="messages-navbar">
-                    <div className={`navlink ${addActive(!showUnread, "active")}`} onClick={() => setShowUnread(false)}>Tout</div>
-                    <div className={`navlink ${addActive(showUnread, "active")}`} onClick={() => setShowUnread(true)}>Non lu</div>
+                    <div className={`navlink ${addClass(!showUnread, "active")}`} onClick={() => setShowUnread(false)}>Tout</div>
+                    <div className={`navlink ${addClass(showUnread, "active")}`} onClick={() => setShowUnread(true)}>Non lu</div>
                 </div>
                 <IconInput className="is_start_icon" placeholder="Rechercher un projet" icon={<GoSearch />} cross />
             </div>

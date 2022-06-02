@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { MediumAvatar } from '../../tools/components/Avatars'
 import { isInResults } from '../../tools/functions/member'
 import { oneLevelSearch } from '../../tools/functions/searches'
-import { addNewMember, otherMembersIDs } from '../functions/function'
+import { otherMembersIDs } from '../functions/function'
 import { TextButton } from '../../tools/components/Button'
 import { IconInput } from '../../tools/components/Inputs'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 import { HiArrowSmLeft } from 'react-icons/hi'
+import { addNewMember } from '../functions/actions'
 
 const AddMembers = ({ user, websocket, friendsArr, conversation, setAddMembers, dispatch }) => {
     const membersToAdd = friendsArr.filter(f => !otherMembersIDs(conversation, user._id).includes(f._id))

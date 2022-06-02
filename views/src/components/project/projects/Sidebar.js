@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { addActive } from '../../Utils'
+import { addClass } from '../../Utils'
 import { avatar } from '../../tools/functions/useAvatar'
 import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
 import { BsFillDiagram3Fill, BsFillCaretRightFill } from 'react-icons/bs'
@@ -32,10 +32,10 @@ const Sidebar = ({ user, projects, isLoading }) => {
     }, [isLoading, localStore])
 
     return (
-        <div className={`sidebar ${addActive(reduced, "reduced")}`}>
-            <div className={`sidebar-header ${addActive(reduced, "reduced")}`}>
+        <div className={`sidebar ${addClass(reduced, "reduced")}`}>
+            <div className={`sidebar-header ${addClass(reduced, "reduced")}`}>
                 <Link to="/projects">
-                    <div className={`sidebar-header-inner ${addActive(reduced, "reduced")}`}>
+                    <div className={`sidebar-header-inner ${addClass(reduced, "reduced")}`}>
                         <div className="sidebar-header-icon"><BsFillDiagram3Fill /></div>
                         <p>Mes Projets <span>{projects.length}</span></p>
                     </div>
@@ -48,16 +48,16 @@ const Sidebar = ({ user, projects, isLoading }) => {
                         return (
                             <div className="sidebar-container" key={key}>
                                 <NavLink to={`${element.URLID}/${element.URL}`} className={isThisActive}>
-                                    <div className={`sidebar-title ${addActive(reduced, "reduced")}`} onClick={() => setSubmenu(key)}>
+                                    <div className={`sidebar-title ${addClass(reduced, "reduced")}`} onClick={() => setSubmenu(key)}>
                                         <div className="sidebar-title-inner">
                                             <div className="sidebar-img" style={avatar(element.pictures[0])}></div>
-                                            <div className={`sidebar-name ${addActive(reduced, "reduced")} one_line`}>{element.title}</div>
+                                            <div className={`sidebar-name ${addClass(reduced, "reduced")} one_line`}>{element.title}</div>
                                         </div>
                                         <div className={`${reduced ? "hidden" : ""}`}><BsFillCaretRightFill /></div>
                                     </div>
                                 </NavLink>
                                 {submenu === key && (
-                                    <div className={`sidebar-submenu ${addActive(reduced, "reduced")}`}>
+                                    <div className={`sidebar-submenu ${addClass(reduced, "reduced")}`}>
                                         <NavLink to={`${element.URLID}/${element.URL}/about`} className={isThisActive}>
                                             <MdOutlineDescription />
                                             <div className="sidebar-submenu-text">À propos</div>
@@ -82,7 +82,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                 ) : (
                     [...Array(5)].map((_, key) => {
                         return (
-                            <div className={`sidebar-skeleton ${addActive(reduced, "reduced")}`} key={key}>
+                            <div className={`sidebar-skeleton ${addClass(reduced, "reduced")}`} key={key}>
                                 <div className="sidebar-skeleton-card">
                                     <div className="sidebar-skeleton-round animate-pulse"></div>
                                     <div className="sidebar-skeleton-text animate-pulse"></div>
@@ -94,7 +94,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                 )}
             </div>
             {user &&
-                <div className={`sidebar-bottom ${addActive(reduced, "reduced")}`}>
+                <div className={`sidebar-bottom ${addClass(reduced, "reduced")}`}>
                     <div className="sidebar-bottom-inner">
                         <div className="sidebar-bottom-avatar" style={avatar(user.picture)}></div>
                         <div className="sidebar-bottom-pseudo">{user.pseudo}</div>

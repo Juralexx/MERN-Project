@@ -1,8 +1,8 @@
 .online-users {
     display         : flex;
+    position        : relative;
     align-items     : center;
     justify-content : space-between;
-    position        : relative;
     padding         : 10px 7px;
     border-radius   : var(--radius);
     cursor          : pointer;
@@ -36,6 +36,31 @@
         }
     }
 
+    &.online {
+        .online-user {
+            .online-user-img {
+                &.connected {
+                    border : 3px solid var(--green);
+                }
+            }
+        }
+    }
+
+    &.offline {
+        .online-user-img {
+            opacity : 0.3;
+        }
+        .online-user-name {
+            .online-user-pseudo,
+            .online-user-status {
+                opacity : 0.3;
+            }
+        }
+        .tools_btn {
+            opacity : 0.3;
+        }
+    }
+
     &:hover {
         background : var(--x-light);
 
@@ -64,5 +89,31 @@
                 }
             }
         }
+    }
+}
+
+.online-title {
+    position       : relative;
+    display        : inline-block;
+    color          : var(--text-secondary);
+    margin-left    : 6px;
+    margin-bottom  : 4px;
+    text-transform : uppercase;
+    letter-spacing : .7px;
+    font-weight    : bolder;
+
+    &:before {
+        content          : '';
+        position         : absolute;
+        width            : 14px;
+        height           : 1px;
+        background-color : var(--text-secondary);
+        top              : 50%;
+        transform        : translateY(-50%);
+        right            : 15px;
+    }
+
+    span {
+        margin-left : 24px;
     }
 }

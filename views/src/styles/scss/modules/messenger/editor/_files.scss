@@ -81,29 +81,4 @@
             color  : var(--white);
         }
     }
-
-    .files-tools {
-        display       : flex;
-        position      : absolute;
-        right         : 7px;
-        top           : 7px;
-        border        : 1px solid var(--light-border);
-        border-radius : var(--radius);
-
-        button {
-            padding    : 4px;
-            background : var(--xx-light);
-            cursor     : pointer;
-    
-            svg {
-                height : 18px;
-                width  : 18px;
-                color  : var(--text);
-            }
-
-            &:hover {
-                background: var(--light);
-            }
-        }
-    }
 }

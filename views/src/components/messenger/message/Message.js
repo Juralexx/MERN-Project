@@ -11,9 +11,11 @@ import { useEmojis } from './useEmojis';
 import { useClickOutside } from '../../tools/functions/useClickOutside';
 import { avatar } from '../../tools/functions/useAvatar';
 import { SmallAvatar } from '../../tools/components/Avatars';
-import { convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, deleteFiles, getUserPseudo, like, removeMessage, returnMessageFiles } from '../functions/function';
-import { dateParserWithoutYear, download, getHourOnly } from '../../Utils';
-import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp } from 'react-icons/md'
+import FsLightbox from 'fslightbox-react';
+import { deleteFiles, removeMessage } from '../functions/actions';
+import { convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles } from '../functions/function';
+import { addClass, dateParserWithoutYear, download, getHourOnly } from '../../Utils';
+import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp, MdFullscreen } from 'react-icons/md'
 import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'
 import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
 
@@ -21,11 +23,11 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
     const { uid, user, websocket, dispatch } = useContext(MessengerContext)
     const [modify, setModify] = useState(-1)
     const [warning, setWarning] = useState(false)
+    const [toggler, setToggler] = useState(false)
 
     const [share, setShare] = useState(false)
 
     const messageRef = useRef()
-    const [hovered, setHovered] = useState(false)
     const [opened, setOpened] = useState(false)
     useClickOutside(messageRef, setOpened, false)
 
@@ -36,8 +38,6 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
             ref={messageRef}
             className={opened ? "message-container hovered " + className : "message-container " + className}
             data-hour={getHourOnly(new Date(message.createdAt))}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
         >
             <div className="message">
                 <div className="message-left">
@@ -54,7 +54,8 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                             {Object.keys(message.text).length > 0 &&
                                 <div className="message-text" dangerouslySetInnerHTML={convertDeltaToHTML(message)}></div>
                             }
-                            {message.files && message.files.length > 0 &&
+
+                            {message.files?.length > 0 &&
                                 message.files.map((file, key) => {
                                     return (
                                         <div className="message-files-container" key={key}>
@@ -62,15 +63,22 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                                             <div className="files-block">
                                                 {returnMessageFiles(file)}
                                                 <div className="files-tools">
+                                                    <button onClick={() => setToggler(true)}><MdFullscreen /></button>
                                                     <button><a href={file.url} rel="noreferrer" target="_blank"><IoArrowRedo /></a></button>
                                                     <button className="files-tools-btn" onClick={() => download(file)}><MdFileDownload /></button>
                                                     <button className="files-tools-btn" onClick={() => deleteFiles(file, user, websocket, currentChat, message, dispatch)}><MdClear /></button>
                                                 </div>
                                             </div>
+                                            <FsLightbox
+                                                toggler={toggler}
+                                                sources={[file.url]}
+                                                onClose={() => setToggler(false)}
+                                            />
                                         </div>
                                     )
                                 })
                             }
+
                             {message.shared &&
                                 <div className="shared-message">
                                     <div className="message-top">
@@ -116,35 +124,33 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                     />
                 </div>
 
-                {(hovered || opened) && modify !== uniqueKey &&
-                    <div className="message-actions">
-                        <Tooltip content={<p>Liker</p>}>
-                            <div className="message-actions-btn" onClick={() => handleEmoji(like)}><MdThumbUp /></div>
+                <div className={`message-actions ${addClass(opened, 'active')} ${addClass(modify === uniqueKey, '!hidden')}`}>
+                    <Tooltip content={<p>Liker</p>}>
+                        <div className="message-actions-btn" onClick={() => handleEmoji(like)}><MdThumbUp /></div>
+                    </Tooltip>
+                    <Tooltip content={<p>Réagir</p>}>
+                        <EmojiPicker btnClassName="message-actions-btn" onSelect={emoji => handleEmoji(emoji)} onClick={() => setOpened(!opened)} />
+                    </Tooltip>
+                    <Tooltip content={<p>Répondre</p>}>
+                        <div className="message-actions-btn" onClick={() => setShare(true)}><IoArrowUndo /></div>
+                    </Tooltip>
+                    {message.sender === uid &&
+                        <Tooltip content={<p>Modifier</p>}>
+                            <div className="message-actions-btn" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /></div>
                         </Tooltip>
-                        <Tooltip content={<p>Réagir</p>}>
-                            <EmojiPicker btnClassName="message-actions-btn" onSelect={emoji => handleEmoji(emoji)} onClick={() => setOpened(!opened)} />
-                        </Tooltip>
-                        <Tooltip content={<p>Répondre</p>}>
-                            <div className="message-actions-btn" onClick={() => setShare(true)}><IoArrowUndo /></div>
-                        </Tooltip>
+                    }
+                    <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
+                        <div className="tools_choice" onClick={() => setShare(true)}><IoArrowUndo /> Répondre</div>
+                        <div className="tools_choice"><MdAddReaction /> Ajouter une réaction</div>
+                        <div className="tools_choice" onClick={() => navigator.clipboard.writeText(convertDeltaToString(message))}><RiFileCopyFill /> Copier le message</div>
                         {message.sender === uid &&
-                            <Tooltip content={<p>Modifier</p>}>
-                                <div className="message-actions-btn" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /></div>
-                            </Tooltip>
+                            <>
+                                <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
+                                <div className="tools_choice red" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
+                            </>
                         }
-                        <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
-                            <div className="tools_choice" onClick={() => setShare(true)}><IoArrowUndo /> Répondre</div>
-                            <div className="tools_choice"><MdAddReaction /> Ajouter une réaction</div>
-                            <div className="tools_choice" onClick={() => navigator.clipboard.writeText(convertDeltaToString(message))}><RiFileCopyFill /> Copier le message</div>
-                            {message.sender === uid &&
-                                <>
-                                    <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
-                                    <div className="tools_choice red" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
-                                </>
-                            }
-                        </ToolsMenu>
-                    </div>
-                }
+                    </ToolsMenu>
+                </div>
 
                 {warning &&
                     <Warning

@@ -39,7 +39,8 @@ export function useEmoji(quill) {
         if (event.keyCode === 32 || event.keyCode === 13) {
             if (shortcuts.length > 0) {
                 shortcuts.some(shortcut => {
-                    if (txt.includes(shortcut)) {
+                    let word = quill.getText(index - 4, 3)
+                    if (word.includes(shortcut)) {
                         let emoji = hasShortcuts.find(e => e.emoticons.includes(shortcut))
                         if (event.keyCode === 13) {
                             quill.deleteText(index - shortcut.length, shortcut.length)

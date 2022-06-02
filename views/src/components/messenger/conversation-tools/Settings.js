@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import Warning from '../../tools/components/Warning'
-import { deleteConv, leaveConversation } from '../functions/function'
 import { MdNotificationsActive } from 'react-icons/md'
 import { HiLogout } from 'react-icons/hi'
 import { IoTrashBin } from 'react-icons/io5'
+import { deleteConv, leaveConversation } from '../functions/actions'
 
 const Settings = ({ uid, websocket, conversation, dispatch }) => {
     const [warning, setWarning] = useState(null)
