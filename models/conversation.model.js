@@ -40,16 +40,14 @@ const ConversationModel = new mongoose.Schema(
                     sender: String,
                     sender_pseudo: String,
                     sender_picture: String,
-                    text: {
-                        type: {},
-                    },
-                    emojis: {
-                        type: [],
-                    },
+                    text: {},
+                    emojis: [],
                     createdAt: Date,
-                    modified: Boolean,
                     shared: Object,
-                    files: []
+                    files: [],
+                    modified: Boolean,
+                    embeddable: Boolean,
+                    embeds: []
                 }
             ],
         },

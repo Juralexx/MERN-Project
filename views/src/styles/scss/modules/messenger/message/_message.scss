@@ -64,6 +64,15 @@
                     vertical-align : bottom;
                     line-height    : 20px;
                 }
+                a {
+                    text-decoration : underline !important;
+                    color           : #8ab4f8;
+                    cursor          : pointer;
+                    
+                    &:hover {
+                        color : #6aa3ff;
+                    }
+                }
             }
         }
     }
@@ -148,48 +157,3 @@
         border-radius : var(--radius);
     }
 }
-
-.message-files-container {
-    display : block;
-    width   : 100%;
-    
-    .files-block {
-        position      : relative;
-        display       : inline-block;
-        border-radius : 5px;
-        margin        : 5px 0;
-
-        iframe {
-            border-radius  : var(--radius);
-            pointer-events : none;
-            overflow       : hidden;
-            object-fit     : fill;
-        }
-    }
-
-    .files-tools {
-        display       : flex;
-        position      : absolute;
-        right         : 7px;
-        top           : 7px;
-        border        : 1px solid var(--light-border);
-        border-radius : var(--radius);
-
-        button {
-            padding    : 4px;
-            background : var(--xx-light);
-            cursor     : pointer;
-    
-            svg {
-                height : 18px;
-                width  : 18px;
-                color  : var(--text);
-            }
-
-            &:hover {
-                background: var(--light);
-            }
-        }
-    }
-}
-

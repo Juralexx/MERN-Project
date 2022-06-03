@@ -1,16 +1,16 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { MessengerContext } from '../AppContext';
 import { useLocationchange } from './functions/useLocationchange';
 import { useScrollToLast } from './functions/useScrollToLast';
 import { useFetchFriends } from './functions/useFetchFriends';
 import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
 import { useInfiniteScroll } from './functions/useInfiniteScroll';
+import { MessengerContext } from '../AppContext';
 import { getConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
-import { convertDeltaToStringNoHTML, getHoursDiff, getMessagesDates, otherMembersIDs } from './functions/function';
-import { isURL, randomNbID } from '../Utils';
+import { convertDeltaToStringNoHTML, getHoursDiff, getMessagesDates, isURLInText, otherMembersIDs, returnURLsInText } from './functions/function';
+import { randomNbID } from '../Utils';
 import { EmptyDialog, EmptyGroup, NoConversation } from './tools/Empty'
 import { ChatLoader, SmallLoader } from './tools/Loaders';
 import ConversationHeader from './ConversationHeader';
@@ -20,7 +20,7 @@ import MessageDate from './message/MessageDate';
 import Message from './message/Message';
 import SearchHeader from './SearchHeader';
 import Editor from './editor/Editor';
-import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
+import ReactPlayer from 'react-player'
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const reducer = useSelector(state => state.messengerReducer)
@@ -130,13 +130,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 emojis: [],
                 createdAt: new Date().toISOString()
             }
-            let content = convertDeltaToStringNoHTML(message)
-            if (isURL(content)) {
-                getLinkPreview(content)
-                .then(res =>
-                    console.debug(res)
-                )
-            } else console.log(false)
 
             if (files.length > 0) {
                 let filesArr = []
@@ -154,37 +147,54 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 })
                 Object.assign(message, { files: filesArr })
             }
+
             if (shared) {
                 Object.assign(message, { shared: shared })
             }
-            if (conversation.type === "group") {
-                otherMembersIDs(conversation, uid).map(memberId => {
-                    return websocket.current.emit("sendMessage", {
-                        receiverId: memberId,
-                        conversationId: conversation._id,
-                        message: message
-                    })
-                })
-            } else {
-                const receiver = conversation.members.find(member => member._id !== uid)
-                websocket.current.emit("sendMessage", {
-                    receiverId: receiver._id,
-                    conversationId: conversation._id,
-                    message: message
-                })
-            }
-            dispatch(sendMessage(conversation._id, message, files, user))
-                .then(() => {
-                    if (files.length > 0) {
-                        files.splice(0, files.length)
+
+            let text = convertDeltaToStringNoHTML(message)
+            if (isURLInText(text)) {
+                let embeds = []
+                returnURLsInText(text).forEach(url => {
+                    if (ReactPlayer.canPlay(url)) {
+                        embeds.push(url)
                     }
                 })
-            setNewMessage(message)
-
-            if (quill.getLength() > 1) {
-                quill.deleteText(0, quill.getLength())
-                setTyping(false)
+                if (embeds.length > 0) {
+                    console.log(embeds)
+                    Object.assign(message, { embeds: embeds })
+                }
             }
+
+            // if (conversation.type === "group") {
+            //     otherMembersIDs(conversation, uid).map(memberId => {
+            //         return websocket.current.emit("sendMessage", {
+            //             receiverId: memberId,
+            //             conversationId: conversation._id,
+            //             message: message
+            //         })
+            //     })
+            // } else {
+            //     const receiver = conversation.members.find(member => member._id !== uid)
+            //     websocket.current.emit("sendMessage", {
+            //         receiverId: receiver._id,
+            //         conversationId: conversation._id,
+            //         message: message
+            //     })
+            // }
+
+            // dispatch(
+            //     sendMessage(conversation._id, message, files, user)
+            // ).then(() => {
+            //     setNewMessage(message)
+            //     if (files.length > 0) {
+            //         files.splice(0, files.length)
+            //     }
+            //     if (quill.getLength() > 1) {
+            //         quill.deleteText(0, quill.getLength())
+            //         setTyping(false)
+            //     }
+            // })
         } else return
     }
 

@@ -259,11 +259,100 @@ export const isEmpty = (value) => {
     )
 }
 
+/**
+ * Check file extension
+ */
+
+export const isImage = (file) => {
+    const types = ['image/jpg', 'image/jpeg', 'image/bmp', 'image/gif', 'image/png', 'image/svg+xml'];
+    return types.some(el => file.type === el);
+}
+
+export const isVideo = (file) => {
+    const types = ['video/mp4', 'video/webm', 'video/x-m4v', 'video/quicktime'];
+    return types.some(el => file.type === el);
+}
+
+export const isFile = (file) => {
+    const types = [
+        '.7z',
+        '.ade',
+        '.mde',
+        '.adp',
+        '.apk',
+        '.appx',
+        '.appxbundle',
+        '.aspx',
+        '.bat',
+        '.com',
+        '.dll',
+        '.exe',
+        '.msi',
+        '.cab',
+        '.cmd',
+        '.cpl',
+        '.dmg',
+        '.gz',
+        '.hta',
+        '.ins',
+        '.ipa',
+        '.iso',
+        '.isp',
+        '.jar',
+        '.js',
+        '.jse',
+        '.jsp',
+        '.lib',
+        '.lnk',
+        '.msc',
+        '.msix',
+        '.msixbundle',
+        '.msp',
+        '.mst',
+        '.nsh',
+        '.pif',
+        '.ps1',
+        '.scr',
+        '.sct',
+        '.wsc',
+        '.shb',
+        '.sys',
+        '.vb',
+        '.vbe',
+        '.vbs',
+        '.vxd',
+        '.wsf',
+        '.wsh',
+        '.tar'
+    ]
+    return !types.some(el => file.name.endsWith(el))
+}
+
 export const isURL = (str) => {
     const regexp = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi)
     if (regexp.test(str)) {
         return true
     } else return false
+}
+
+export const isURLInText = (text) => {
+    const regexp = new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+")
+    if (regexp.test(text)) {
+        return true
+    } else return false
+}
+
+export const returnURLsInText = (text) => {
+    const regexp = new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+")
+    let txt = text
+    let arr = []
+    while (regexp.test(txt)) {
+        let matched = regexp.exec(txt)[0]
+        console.log(matched)
+        arr.push(matched)
+        txt = txt.replace(matched, '')
+    }
+    return arr
 }
 
 /**

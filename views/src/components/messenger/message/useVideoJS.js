@@ -19,7 +19,7 @@ export const useVideoJS = (props) => {
                 onReady && onReady(player)
             })
         }
-    }, [props, videoRef])
+    }, [props, videoRef, onReady])
 
     // Dispose the Video.js player when the functional component unmounts
     React.useEffect(() => {

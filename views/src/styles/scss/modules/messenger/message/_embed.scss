@@ -1,0 +1,17 @@
+.embed-block {
+    margin-top  : 8px;
+    padding     : 3px 5px 3px 10px;
+    border-left : 3px solid var(--light-border);
+    
+    .embed-content {
+        position  : relative;
+        max-width : 400px;
+        height    : 220px;
+
+        .embed-player {
+            position : absolute;
+            top      : 0;
+            left     : 0;
+        }
+    }
+}

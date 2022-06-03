@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
 import EmojiPicker from '../tools/EmojiPicker';
+import ReactPlayer from 'react-player/lazy'
 import Tooltip from '../../tools/components/Tooltip';
 import ToolsMenu from '../../tools/components/ToolsMenu';
 import Warning from '../../tools/components/Warning';
@@ -13,7 +14,7 @@ import { avatar } from '../../tools/functions/useAvatar';
 import { SmallAvatar } from '../../tools/components/Avatars';
 import FsLightbox from 'fslightbox-react';
 import { deleteFiles, removeMessage } from '../functions/actions';
-import { convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles } from '../functions/function';
+import { convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles, returnURLsInText } from '../functions/function';
 import { addClass, dateParserWithoutYear, download, getHourOnly } from '../../Utils';
 import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp, MdFullscreen } from 'react-icons/md'
 import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'
@@ -53,6 +54,25 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                         <>
                             {Object.keys(message.text).length > 0 &&
                                 <div className="message-text" dangerouslySetInnerHTML={convertDeltaToHTML(message)}></div>
+                            }
+
+                            {message.embeds?.length > 0 &&
+                                message.embeds.map((url, key) => {
+                                    return (
+                                        <div className="embed-block" key={key}>
+                                            <div className="embed-content">
+                                                <ReactPlayer
+                                                    className="embed-player"
+                                                    onProgress={() => { return 'loading' }}
+                                                    url={url}
+                                                    controls={true}
+                                                    width='100%'
+                                                    height='100%'
+                                                />
+                                            </div>
+                                        </div>
+                                    )
+                                })
                             }
 
                             {message.files?.length > 0 &&

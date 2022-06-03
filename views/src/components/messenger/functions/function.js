@@ -140,6 +140,27 @@ export const isEmbeddable = (file) => {
     return !types.some(el => file.type === el)
 }
 
+export const isURLInText = (text) => {
+    const regexp = new RegExp(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig)
+    if (regexp.test(text)) {
+        return true
+    } else return false
+}
+
+export const returnURLsInText = (text) => {
+    const regexp = new RegExp(/(https?:\/\/[^\s]+)/g)
+    let txt = text
+    let arr = []
+    while (regexp.test(txt)) {
+        let matched = regexp.exec(txt)[0]
+        console.log(matched)
+        arr.push(matched)
+        txt = txt.replace(matched, '')
+    }
+    return arr
+}
+// Coucou, voici une premiere url https://www.youtube.com/watch?v=cuQNkSuQ4jg et en voici une deuxieme https://www.cliken-web.com/ et pourquoi pas une troisieme www.google.com
+
 /**
  * Return the file preview in editor
  */
@@ -149,8 +170,7 @@ export const returnEditorFiles = (file) => {
         return (
             <div className="file-img-preview" style={coverPicture(URL.createObjectURL(file))}></div>
         )
-    }
-    else if (file.type.includes('video')) {
+    } else if (file.type.includes('video')) {
         return (
             <div className="file-doc">
                 <MdPlayCircleOutline className="file-doc-img" />
@@ -326,13 +346,19 @@ export const getHoursDiff = (prev, current) => {
  */
 
 export const returnMessageFiles = (file) => {
-    if (file.type.includes('image')) {
+    if (isImage(file)) {
         return (
             <img className="file-img" src={file.url} alt="" />
         )
-    } else if (file.type.includes('video')) {
+    } else if (isVideo(file)) {
         return (
-            <VideoJS url={file.url} type={file.type} />
+            <div className="video-block">
+                <VideoJS
+                    className="video-player"
+                    url={file.url}
+                    type={file.type}
+                />
+            </div>
         )
     } else {
         if (isEmbeddable(file)) {
@@ -345,7 +371,8 @@ export const returnMessageFiles = (file) => {
                     frameBorder="0"
                     scrolling="no"
                     loading="lazy"
-                ></iframe>
+                >
+                </iframe>
             )
         } else {
             return (
