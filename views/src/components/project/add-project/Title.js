@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react'
-import { ClassicInput, DoubleIconInput, Textarea } from '../../tools/components/Inputs';
-import { useClickOutside } from "../../tools/functions/useClickOutside";
+import { ClassicInput, DoubleIconInput, Textarea } from '../../tools/global/Inputs';
+import { useClickOutside } from "../../tools/hooks/useClickOutside";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { BiCategory } from 'react-icons/bi'
 import CategoriesPicker from '../../home/CategoriesPicker';
-import { ErrorCard } from '../../tools/components/Error';
+import { ErrorCard } from '../../tools/global/Error';
 
 const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, error, isErr, setErr }) => {
     const [display, setDisplay] = useState(false)

@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { geoJSONStructure, geolocToFloat } from '../../Utils'
-import { useClickOutside } from '../../tools/functions/useClickOutside';
+import { useClickOutside } from '../../tools/hooks/useClickOutside';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
-import { ClassicInput } from '../../tools/components/Inputs';
-import { SmallLoader } from '../../tools/components/Loader';
-import { ErrorCard } from '../../tools/components/Error';
+import { ClassicInput } from '../../tools/global/Inputs';
+import { SmallLoader } from '../../tools/global/Loader';
+import { ErrorCard } from '../../tools/global/Error';
 import Oval from 'react-loading-icons/dist/components/oval';
 import { BsInboxFill } from 'react-icons/bs';
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import isURL from 'validator/lib/isURL'
-import { TextButton, Button } from '../../tools/components/Button'
-import { ClassicInput } from '../../tools/components/Inputs'
+import { TextButton, Button } from '../../tools/global/Button'
+import { ClassicInput } from '../../tools/global/Inputs'
 import { placeUponCursor } from '../functions/function'
 import normalizeUrl from 'normalize-url';
 

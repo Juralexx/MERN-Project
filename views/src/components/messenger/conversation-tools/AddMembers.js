@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
-import { MediumAvatar } from '../../tools/components/Avatars'
-import { isInResults } from '../../tools/functions/member'
-import { oneLevelSearch } from '../../tools/functions/searches'
+import React from 'react'
+import { MediumAvatar } from '../../tools/global/Avatars'
 import { otherMembersIDs } from '../functions/function'
-import { TextButton } from '../../tools/components/Button'
-import { IconInput } from '../../tools/components/Inputs'
+import { TextButton } from '../../tools/global/Button'
+import { IconInput } from '../../tools/global/Inputs'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { addNewMember } from '../functions/actions'
+import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
 
 const AddMembers = ({ user, websocket, friendsArr, conversation, setAddMembers, dispatch }) => {
     const membersToAdd = friendsArr.filter(f => !otherMembersIDs(conversation, user._id).includes(f._id))
-    const [isResults, setResults] = useState([])
-    const [search, setSearch] = useState(false)
-    const [query, setQuery] = useState("")
+    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(membersToAdd, 'pseudo')
 
     return (
         <>
@@ -27,13 +24,13 @@ const AddMembers = ({ user, websocket, friendsArr, conversation, setAddMembers, 
                 icon={<BiSearchAlt />}
                 value={query}
                 onInput={e => setQuery(e.target.value)}
-                onChange={() => oneLevelSearch(query, membersToAdd, 'pseudo', isResults, setResults, setSearch)}
+                onChange={oneLevelSearch}
             />
             <div className="conversation-members custom-scrollbar">
                 {membersToAdd.length > 0 ? (
                     membersToAdd.map((member, key) => {
                         return (
-                            <div className={`${isInResults(member, isResults, search, "flex")} conversation-member`} key={key}>
+                            <div className={`${isInResults(member, "flex")} conversation-member`} key={key}>
                                 <div className="flex items-center">
                                     <MediumAvatar pic={member.picture} />
                                     <div>{member.pseudo}</div>

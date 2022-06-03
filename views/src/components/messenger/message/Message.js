@@ -1,20 +1,20 @@
 import React, { useContext, useRef, useState } from 'react';
 import EmojiPicker from '../tools/EmojiPicker';
 import ReactPlayer from 'react-player/lazy'
-import Tooltip from '../../tools/components/Tooltip';
-import ToolsMenu from '../../tools/components/ToolsMenu';
-import Warning from '../../tools/components/Warning';
+import Tooltip from '../../tools/global/Tooltip';
+import ToolsMenu from '../../tools/global/ToolsMenu';
+import Warning from '../../tools/global/Warning';
 import Emojis from './Emojis';
 import Editor from './Editor';
 import ShareModal from './ShareModal';
 import { MessengerContext } from '../../AppContext';
 import { useEmojis } from './useEmojis';
-import { useClickOutside } from '../../tools/functions/useClickOutside';
-import { avatar } from '../../tools/functions/useAvatar';
-import { SmallAvatar } from '../../tools/components/Avatars';
+import { useClickOutside } from '../../tools/hooks/useClickOutside';
+import { avatar } from '../../tools/hooks/useAvatar';
+import { SmallAvatar } from '../../tools/global/Avatars';
 import FsLightbox from 'fslightbox-react';
 import { deleteFiles, removeMessage } from '../functions/actions';
-import { convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles, returnURLsInText } from '../functions/function';
+import { convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles } from '../functions/function';
 import { addClass, dateParserWithoutYear, download, getHourOnly } from '../../Utils';
 import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp, MdFullscreen } from 'react-icons/md'
 import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'

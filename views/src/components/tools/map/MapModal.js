@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import MapDepartments from "./MapDepartments";
 import MapRegions from "./MapRegions";
-import Modal from "../components/Modal";
-import { IconInput } from "../components/Inputs";
+import Modal from "../global/Modal";
+import { IconInput } from "../global/Inputs";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { departments, regions } from "./api";
 import { addClass } from "../../Utils";

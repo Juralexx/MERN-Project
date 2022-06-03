@@ -1,9 +1,9 @@
 import React from 'react'
 import { acceptRequest, refuseRequest } from '../../../tools/functions/friend';
 import { useDispatch } from 'react-redux'
-import { Button } from '../../../tools/components/Button'
+import { Button } from '../../../tools/global/Button'
 import { FaUserFriends } from 'react-icons/fa'
-import { avatar } from '../../../tools/functions/useAvatar'
+import { avatar } from '../../../tools/hooks/useAvatar'
 
 const FriendRequestCard = ({ sentNotification, websocket, user }) => {
     const dispatch = useDispatch()

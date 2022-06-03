@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import SignInForm from "./SignInForm";
-import { Button } from '../tools/components/Button'
-import { DynamicInput, CheckBox } from '../tools/components/Inputs';
-import { ErrorCard } from "../tools/components/Error";
+import { Button } from '../tools/global/Button'
+import { DynamicInput, CheckBox } from '../tools/global/Inputs';
+import { ErrorCard } from "../tools/global/Error";
 import { isEmailValid, onlyLettersNumbersAndDashes } from "../Utils";
-import { useClickOutside } from "../tools/functions/useClickOutside";
+import { useClickOutside } from "../tools/hooks/useClickOutside";
 import { IoCloseCircleOutline, IoCheckmarkCircleOutline } from 'react-icons/io5'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { BsCheckLg } from 'react-icons/bs'

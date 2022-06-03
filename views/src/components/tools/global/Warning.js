@@ -1,6 +1,6 @@
 import React from 'react'
 import { IoClose } from 'react-icons/io5'
-import { Button, TextButton } from './Button'
+import { Button, TextButton } from '../global/Button'
 
 const Warning = (props) => {
     const { open, setOpen, css, title, text, cancelBtn, validateBtn, onValidate, onClose, className } = props

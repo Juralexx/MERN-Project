@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios';
-import { ClassicInput, NumberInput, Textarea } from '../../../tools/components/Inputs';
-import { Button } from '../../../tools/components/Button';
-import { SmallLoader } from '../../../tools/components/Loader';
+import { ClassicInput, NumberInput, Textarea } from '../../../tools/global/Inputs';
+import { Button } from '../../../tools/global/Button';
+import { SmallLoader } from '../../../tools/global/Loader';
 import { BsInboxFill } from 'react-icons/bs';
-import { ErrorCard } from '../../../tools/components/Error';
-import { useClickOutside } from '../../../tools/functions/useClickOutside';
+import { ErrorCard } from '../../../tools/global/Error';
+import { useClickOutside } from '../../../tools/hooks/useClickOutside';
 
 const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
     const [searchQuery, setSearchQuery] = useState("")

@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { MediumAvatar } from '../../tools/components/Avatars'
-import { isInResults } from '../../tools/functions/member'
-import { oneLevelSearch } from '../../tools/functions/searches'
+import { MediumAvatar } from '../../tools/global/Avatars'
 import { dateParser } from '../../Utils'
-import { IconInput } from '../../tools/components/Inputs'
-import ToolsMenu from '../../tools/components/ToolsMenu'
+import { IconInput } from '../../tools/global/Inputs'
+import ToolsMenu from '../../tools/global/ToolsMenu'
 import { leaveConversation } from '../functions/actions'
+import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
 import { MdOutlineMessage } from 'react-icons/md'
 import { IoArrowRedo, IoTrashBin } from 'react-icons/io5'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 
 const Members = ({ uid, websocket, members, setAddMembers, conversation, dispatch }) => {
-    const [isResults, setResults] = useState([])
-    const [search, setSearch] = useState(false)
-    const [query, setQuery] = useState("")
+    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(conversation.files, 'name')
 
     return (
         <div className="tools-displayer-content">
@@ -24,7 +21,7 @@ const Members = ({ uid, websocket, members, setAddMembers, conversation, dispatc
                 icon={<BiSearchAlt />}
                 value={query}
                 onInput={e => setQuery(e.target.value)}
-                onChange={() => oneLevelSearch(query, members, 'pseudo', isResults, setResults, setSearch)}
+                onChange={oneLevelSearch}
             />
             <div className="add-more-users" onClick={() => setAddMembers(true)}>
                 <BiUserPlus />
@@ -33,7 +30,7 @@ const Members = ({ uid, websocket, members, setAddMembers, conversation, dispatc
             <div className="conversation-members custom-scrollbar">
                 {conversation.members.map((member, key) => {
                     return (
-                        <div className={`${isInResults(member, isResults, search, "flex")} conversation-member`} key={key}>
+                        <div className={`${isInResults(member, "flex")} conversation-member`} key={key}>
                             <div className="flex items-center">
                                 <MediumAvatar pic={member.picture} />
                                 <div>

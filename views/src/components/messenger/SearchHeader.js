@@ -1,19 +1,15 @@
 import React, { useContext, useRef, useState } from 'react'
-import { TinyAvatar } from '../tools/components/Avatars'
-import { isInResults } from '../tools/functions/member'
-import { oneLevelSearch } from '../tools/functions/searches'
-import { useClickOutside } from '../tools/functions/useClickOutside'
+import { TinyAvatar } from '../tools/global/Avatars'
+import { useClickOutside } from '../tools/hooks/useClickOutside'
 import { isConversation, removeSelected, userToMember } from './functions/function'
 import { MessengerContext } from '../AppContext'
 import { IoClose } from 'react-icons/io5'
+import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch'
 
 const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBlank, temporaryConv, setTemporaryConv }) => {
     const { user, friendsArr } = useContext(MessengerContext)
-    const [search, setSearch] = useState(false)
-    const [query, setQuery] = useState("")
-    const [isResults, setResults] = useState([])
-
     const [friends, setFriends] = useState(temporaryConv.members ? friendsArr.filter(f => !temporaryConv.members?.some(m => m._id === f._id)) : friendsArr)
+    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(friends, 'pseudo')
     const [members, setMembers] = useState([])
     const wrapperRef = useRef()
     const [open, setOpen] = useState(friends.length > 0 ? true : false)
@@ -105,7 +101,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
                     placeholder="Rechercher..."
                     value={query}
                     onInput={e => setQuery(e.target.value)}
-                    onChange={() => oneLevelSearch(query, friends, 'pseudo', isResults, setResults, setSearch)}
+                    onChange={oneLevelSearch}
                     onClick={() => setOpen(true)}
                     style={{ width: `$calc(100% - ${usersDisplayerRef?.current?.offsetWidth} +50)` }}
                 />
@@ -114,7 +110,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
                         {friends.length > 0 ? (
                             friends.map((element, key) => {
                                 return (
-                                    <div className={`auto-complete-item ${isInResults(element, isResults, search, "flex")}`} onClick={() => onSelect(element)} key={key}>
+                                    <div className={`auto-complete-item ${isInResults(element, "flex")}`} onClick={() => onSelect(element)} key={key}>
                                         <div className="flex items-center">
                                             <TinyAvatar pic={element.picture} />
                                             <p>{element.pseudo}</p>

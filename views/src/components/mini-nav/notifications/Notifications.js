@@ -4,7 +4,7 @@ import FriendRequest from "./FriendRequest";
 import MemberRequest from "./MemberRequest";
 import { setNotifSeen } from "../../tools/functions/notifications";
 import { IoMdNotificationsOff } from 'react-icons/io'
-import ToolsMenu from "../../tools/components/ToolsMenu";
+import ToolsMenu from "../../tools/global/ToolsMenu";
 
 const NotificationsMenu = ({ open, user, websocket }) => {
     const [showUnread, setShowUnread] = useState(false)

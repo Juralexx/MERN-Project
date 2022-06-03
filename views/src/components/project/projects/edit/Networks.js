@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Button } from '../../../tools/components/Button';
-import { ClassicInput } from '../../../tools/components/Inputs';
+import { Button } from '../../../tools/global/Button';
+import { ClassicInput } from '../../../tools/global/Inputs';
 import isURL from 'validator/lib/isURL';
-import { ErrorCard } from '../../../tools/components/Error';
+import { ErrorCard } from '../../../tools/global/Error';
 import { IoClose } from 'react-icons/io5';
 import { FaFacebookF, FaInstagram, FaTwitter, FaSnapchatGhost, FaYoutube, FaTwitch, FaPinterest, FaLinkedinIn, FaLink } from 'react-icons/fa'
 

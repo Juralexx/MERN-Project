@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { coverPicture } from '../tools/functions/useAvatar';
+import { coverPicture } from '../tools/hooks/useAvatar';
 import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im';
 
 const CategoriesSwiper = () => {

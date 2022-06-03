@@ -1,21 +1,18 @@
 import React, { useMemo, useState } from 'react'
-import Warning from '../../tools/components/Warning'
-import ToolsMenu from '../../tools/components/ToolsMenu'
-import { IconInput } from '../../tools/components/Inputs'
-import { coverPicture } from '../../tools/functions/useAvatar'
+import Warning from '../../tools/global/Warning'
+import ToolsMenu from '../../tools/global/ToolsMenu'
+import { IconInput } from '../../tools/global/Inputs'
+import { coverPicture } from '../../tools/hooks/useAvatar'
 import { addClass, dateParser, download } from '../../Utils'
-import { oneLevelSearch } from '../../tools/functions/searches'
-import { isInResults } from '../../tools/functions/member'
 import { BiSearchAlt } from 'react-icons/bi'
 import { MdFileDownload } from 'react-icons/md'
 import { IoArrowRedo, IoDocumentTextOutline, IoTrashBin } from 'react-icons/io5'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { deleteFiles } from '../functions/actions'
+import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
 
 const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
-    const [isResults, setResults] = useState([])
-    const [search, setSearch] = useState(false)
-    const [query, setQuery] = useState("")
+    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(conversation.files, 'name')
 
     const [warning, setWarning] = useState(-1)
 
@@ -38,13 +35,13 @@ const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
                 icon={<BiSearchAlt />}
                 value={query}
                 onInput={e => setQuery(e.target.value)}
-                onChange={() => oneLevelSearch(query, conversation.files, 'name', isResults, setResults, setSearch)}
+                onChange={oneLevelSearch}
             />
             {files.type === 'medias' &&
                 <div className="conversation-files custom-scrollbar">
                     {medias.map((file, key) => {
                         return (
-                            <div className={`${isInResults(file, isResults, search, "flex")} conversation-file`} key={key}>
+                            <div className={`${isInResults(file, "flex")} conversation-file`} key={key}>
                                 <div className="file-doc">
                                     {file.type.includes('image') ? (
                                         <div className="file-img-preview" style={coverPicture(file.url)}></div>
@@ -86,7 +83,7 @@ const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
                 <div className="conversation-files custom-scrollbar">
                     {docs.map((file, key) => {
                         return (
-                            <div className={`${isInResults(file, isResults, search, "flex")} conversation-file`} key={key}>
+                            <div className={`${isInResults(file, "flex")} conversation-file`} key={key}>
                                 <div className="file-doc">
                                     <IoDocumentTextOutline className="file-doc-img" />
                                     <div className="file-doc-content">

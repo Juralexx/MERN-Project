@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import { ErrorCard } from '../../../tools/components/Error'
-import { Textarea } from '../../../tools/components/Inputs'
+import { ErrorCard } from '../../../tools/global/Error'
+import { Textarea } from '../../../tools/global/Inputs'
 
 const Description = ({ description, setDescription, error, setError, isErr, setErr }) => {
     const errorRef = useRef()

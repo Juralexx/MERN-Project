@@ -12,7 +12,7 @@ import Pictures from "../components/project/add-project/Pictures";
 import Description from "../components/project/add-project/Description";
 import Qna from "../components/project/add-project/Qna";
 import FooterLight from "../components/FooterLight";
-import { Button, EndIconButton, StartIconButton, StartIconOutlinedButton } from "../components/tools/components/Button";
+import { Button, EndIconButton, StartIconButton, StartIconOutlinedButton } from "../components/tools/global/Button";
 import { BsFillEyeFill, BsChatLeftQuote } from "react-icons/bs";
 import { MdOutlineDescription, MdOutlinePhotoLibrary } from 'react-icons/md'
 import { RiBook3Line, RiTeamLine } from 'react-icons/ri'

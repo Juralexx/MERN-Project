@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useClickOutside } from '../tools/functions/useClickOutside';
+import { useClickOutside } from '../tools/hooks/useClickOutside';
 import MapModal from '../tools/map/MapModal';
 import LocationsAutocomplete from './LocationsAutocomplete';
 import CategoriesPicker from './CategoriesPicker';
-import { EndIconButton, IconToggle, StartIconTextButton } from '../tools/components/Button';
-import { DropdownInput, IconInput } from '../tools/components/Inputs';
+import { EndIconButton, IconToggle, StartIconTextButton } from '../tools/global/Button';
+import { DropdownInput, IconInput } from '../tools/global/Inputs';
 import { IoSend, IoAlbums } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi'
 import { BsCaretDownFill } from 'react-icons/bs'

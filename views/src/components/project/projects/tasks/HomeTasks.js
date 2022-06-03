@@ -6,9 +6,9 @@ import { addClass, dateParserWithoutYear, getDifference, reduceString, reverseAr
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import TaskModal from './TaskModal'
-import ToolsMenu from '../../../tools/components/ToolsMenu'
-import { TextButton } from '../../../tools/components/Button'
-import { DropdownInput } from '../../../tools/components/Inputs'
+import ToolsMenu from '../../../tools/global/ToolsMenu'
+import { TextButton } from '../../../tools/global/Button'
+import { DropdownInput } from '../../../tools/global/Inputs'
 import { RiCalendarTodoLine } from 'react-icons/ri'
 import { MdOutlineMessage } from 'react-icons/md'
 

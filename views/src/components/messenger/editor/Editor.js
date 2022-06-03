@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import EmojiPicker from '../tools/EmojiPicker';
-import ErrorModal from '../../tools/components/ErrorModal';
+import ErrorModal from '../../tools/global/ErrorModal';
 import Mention from './Mention';
 import Emoji from './Emoji';
 import Link from './Link';
@@ -45,11 +45,11 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
      */
 
     const handleNewMessage = (text, delta, source, editor) => {
-        if (!quill.hasFocus()) {
-            quill.focus()
+        if (!quill?.hasFocus()) {
+            quill?.focus()
         }
-        let length = editor.getLength()
-        let txt = editor.getText()
+        let length = editor?.getLength()
+        let txt = editor?.getText()
 
         if (!isTyping) {
             otherMembersIDs(currentChat, user._id).map(memberId => {
@@ -66,7 +66,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
         } else setDisabled(true)
 
         if (length >= 1) {
-            let index = editor.getSelection().index
+            let index = editor?.getSelection()?.index
             let previous = txt[index - 2]
             let current = txt[index - 1]
 
@@ -205,12 +205,12 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
                             modules={modules}
                             formats={formats}
                             defaultValue=" "
+                            onBlur={() => setFocused(false)}
                             onChange={handleNewMessage}
                             onKeyUp={event => {
                                 detectEmojis(event)
                                 event.keyCode === 13 && handleSubmit(quill, currentChat, files)
                             }}
-                            onBlur={() => setFocused(false)}
                         />
                         <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight(quill, files, filesRef)} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
                             <input {...getInputProps()} name="files" />

@@ -3,7 +3,7 @@ import React from 'react'
 import { MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto, MdClear } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
 import { deleteProjectPictures } from '../../../../actions/project.action'
-import { coverPicture } from '../../../tools/functions/useAvatar'
+import { coverPicture } from '../../../tools/hooks/useAvatar'
 
 const Pictures = ({ files, setFiles, pictures, setPictures, projectId }) => {
     const dispatch = useDispatch()

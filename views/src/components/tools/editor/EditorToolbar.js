@@ -1,16 +1,15 @@
 import React from "react";
 import { Quill } from "react-quill"
-import MagicUrl from "quill-magic-url/src"
+import { Linkify } from 'quill-linkify';
 import { ImageDrop } from 'quill-image-drop-module';
 import { VideoHandler, AttachmentHandler } from "quill-upload";
 
-// register quill-upload
-Quill.register("modules/videoHandler", VideoHandler);
-Quill.register("modules/attachmentHandler", AttachmentHandler);
-
-
-function undoChange() { this.quill.history.undo() }
-function redoChange() { this.quill.history.redo() }
+function undoChange() { 
+    this.quill.history.undo()
+}
+function redoChange() {
+    this.quill.history.redo()
+}
 
 const Size = Quill.import("formats/size");
 Size.whitelist = ["extra-small", "small", "medium", "large"];
@@ -27,8 +26,10 @@ Font.whitelist = [
 
 Quill.register(Size, true);
 Quill.register(Font, true);
-Quill.register('modules/magicUrl', MagicUrl)
+Quill.register('modules/linkify', Linkify);
 Quill.register('modules/imageDrop', ImageDrop);
+Quill.register("modules/videoHandler", VideoHandler);
+Quill.register("modules/attachmentHandler", AttachmentHandler);
 
 export const modules = {
     toolbar: {
@@ -37,14 +38,17 @@ export const modules = {
             undo: undoChange,
             redo: redoChange
         },
-        toolbar: ["image", "video"],
     },
     history: {
         delay: 500,
         maxStack: 100,
         userOnly: true
     },
-    magicUrl: true,
+    linkify: {
+        url: true,
+        mail: true,
+        phoneNumber: false,
+    },
     imageDrop: true,
     videoHandler: {
         upload: (file) => {

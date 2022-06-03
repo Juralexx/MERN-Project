@@ -2,7 +2,7 @@ import React from 'react';
 import SignUpForm from '../components/log/SignUpForm';
 import { Link } from 'react-router-dom';
 import FooterLight from '../components/FooterLight';
-import { TextButton } from '../components/tools/components/Button';
+import { TextButton } from '../components/tools/global/Button';
 
 const Register = ({ uid }) => {
     

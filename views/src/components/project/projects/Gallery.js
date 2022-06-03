@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone';
-import { ErrorCard } from '../../tools/components/Error';
+import { ErrorCard } from '../../tools/global/Error';
 import { deleteProjectPictures, updateProjectPictures } from '../../../actions/project.action'
 import { Oval } from 'react-loading-icons'
 import { ImImage } from 'react-icons/im'

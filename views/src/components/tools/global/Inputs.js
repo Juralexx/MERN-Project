@@ -5,7 +5,7 @@ import 'react-day-picker/dist/style.css';
 import { IoCaretDownOutline } from 'react-icons/io5'
 import { IoClose } from 'react-icons/io5'
 import { FiCalendar } from 'react-icons/fi'
-import { useClickOutside } from '../functions/useClickOutside';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 export const ClassicInput = (props) => {
     const { useRef, type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
@@ -29,11 +29,11 @@ export const ClassicInput = (props) => {
                 min={min}
                 max={max}
             />
-            {(cross && (cross && value && value.length > 0)) && (
+            {cross && (value && value.length > 0) &&
                 <div onClick={onClean} className="svg_container">
                     <IoClose className="cross" />
                 </div>
-            )}
+            }
         </div>
     )
 }

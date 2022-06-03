@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import { ErrorCard } from '../../../tools/components/Error'
-import { CheckBox, NumberInput } from '../../../tools/components/Inputs'
+import { ErrorCard } from '../../../tools/global/Error'
+import { CheckBox, NumberInput } from '../../../tools/global/Inputs'
 
 const Contributors = ({ numberofcontributors, setNumberofcontributors, isErr, setErr, error, setError }) => {
     const errorRef = useRef()

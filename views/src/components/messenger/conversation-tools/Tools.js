@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { returnMembers } from '../functions/function'
-import { avatar } from '../../tools/functions/useAvatar'
+import { avatar } from '../../tools/hooks/useAvatar'
 import { setFavorite, setUnfavorite } from '../functions/actions'
 import Customization from './Customization'
 import Files from './Files'

@@ -1,13 +1,13 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
-import { avatar } from '../../tools/functions/useAvatar'
+import { avatar } from '../../tools/hooks/useAvatar'
 import { dateParser } from '../../Utils'
 import { leaveProject } from '../../tools/functions/member';
 import Breadcrumb from './Breadcrumb';
 import { HiLocationMarker } from 'react-icons/hi'
 import { HiCalendar } from 'react-icons/hi'
 import { NavLink, useLocation } from 'react-router-dom';
-import ToolsMenu from '../../tools/components/ToolsMenu';
+import ToolsMenu from '../../tools/global/ToolsMenu';
 
 const Header = ({ project, websocket, user }) => {
     const dispatch = useDispatch()

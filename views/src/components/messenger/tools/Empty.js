@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { MessengerContext } from "../../AppContext"
-import { avatar } from "../../tools/functions/useAvatar"
+import { avatar } from "../../tools/hooks/useAvatar"
 import { dateParser } from "../../Utils"
 import { getMembers } from "../functions/function"
 

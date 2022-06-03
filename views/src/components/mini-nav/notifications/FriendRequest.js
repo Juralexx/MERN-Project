@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import formatDistance from 'date-fns/formatDistance'
 import fr from 'date-fns/locale/fr'
-import { avatar } from "../../tools/functions/useAvatar";
-import { Button } from '../../tools/components/Button';
+import { avatar } from "../../tools/hooks/useAvatar";
+import { Button } from '../../tools/global/Button';
 import { acceptRequest, refuseRequest } from '../../tools/functions/friend';
 
 const FriendRequest = ({ notification, user, websocket, onClick }) => {

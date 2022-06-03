@@ -1,6 +1,6 @@
 import { Emoji } from 'emoji-mart'
 import React from 'react'
-import Tooltip from '../../tools/components/Tooltip'
+import Tooltip from '../../tools/global/Tooltip'
 import EmojiPicker from '../tools/EmojiPicker'
 
 const Emojis = ({ uid, emojis, handleEmoji, opened, setOpened }) => {

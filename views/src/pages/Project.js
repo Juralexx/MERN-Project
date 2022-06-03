@@ -14,7 +14,7 @@ import Actuality from '../components/project/project-page/Actuality';
 import Works from '../components/project/project-page/Works';
 import QnaCard from '../components/project/project-page/QnaCard';
 import Networks from '../components/project/project-page/Networks';
-import { Button } from '../components/tools/components/Button';
+import { Button } from '../components/tools/global/Button';
 
 const ProjectPage = ({ user, projects }) => {
     const { URLID, URL } = useParams()

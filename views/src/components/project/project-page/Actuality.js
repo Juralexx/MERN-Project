@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { BigAvatar } from '../../tools/components/Avatars'
+import { BigAvatar } from '../../tools/global/Avatars'
 import { dateParser } from '../../Utils'
-import { coverPicture } from '../../tools/functions/useAvatar'
+import { coverPicture } from '../../tools/hooks/useAvatar'
 import { convertDeltaToHTML } from '../../tools/editor/functions'
 
 const Actuality = ({ project }) => {

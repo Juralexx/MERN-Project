@@ -1,5 +1,5 @@
 import React from 'react'
-import { TinyAvatar } from '../../tools/components/Avatars'
+import { TinyAvatar } from '../../tools/global/Avatars'
 import { checkTheme } from '../../Utils'
 import { placeUponCursor } from '../functions/function'
 

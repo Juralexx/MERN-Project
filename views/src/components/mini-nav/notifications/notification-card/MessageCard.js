@@ -1,7 +1,7 @@
 import React from 'react'
 import { BsChatRightTextFill } from 'react-icons/bs'
 import { convertDeltaToHTML } from '../../../messenger/functions/function'
-import { avatar } from '../../../tools/functions/useAvatar'
+import { avatar } from '../../../tools/hooks/useAvatar'
 
 const MessageCard = ({ sentNotification, setSend }) => {
     return (

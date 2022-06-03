@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconToggle } from '../../tools/components/Button';
-import { avatar } from '../../tools/functions/useAvatar';
+import { IconToggle } from '../../tools/global/Button';
+import { avatar } from '../../tools/hooks/useAvatar';
 import { returnMembers } from '../functions/function';
 import { addClass } from '../../Utils';
 import { IoClose } from 'react-icons/io5';

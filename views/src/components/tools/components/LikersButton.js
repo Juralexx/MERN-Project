@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { likeProject, unlikeProject } from '../../../actions/project.action';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
-import { IconToggle } from "./Button";
+import { IconToggle } from "../global/Button";
 
 const LikersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)

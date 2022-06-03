@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { ErrorCard } from '../../tools/components/Error'
-import { ClassicInput, Textarea } from '../../tools/components/Inputs'
+import { ErrorCard } from '../../tools/global/Error'
+import { ClassicInput, Textarea } from '../../tools/global/Inputs'
 
 const Description = ({ description, setDescription, tags, setTags, error, setError, isErr, setErr }) => {
     const errorRef = useRef()

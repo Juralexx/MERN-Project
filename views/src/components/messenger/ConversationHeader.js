@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { avatar } from '../tools/functions/useAvatar'
+import { avatar } from '../tools/hooks/useAvatar'
 import { isOnline, returnMembers } from './functions/function'
 import { HiMenuAlt3 } from 'react-icons/hi'
 import MembersModal from './tools/MembersModal'

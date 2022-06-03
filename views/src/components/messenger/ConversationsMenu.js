@@ -2,21 +2,18 @@ import React, { useState } from 'react'
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import TemporaryConversation from './tools/TemporaryConversation';
-import Tooltip from '../tools/components/Tooltip';
-import { IconInput } from '../tools/components/Inputs';
-import { IconToggle } from '../tools/components/Button';
-import { isInResults } from '../tools/functions/member';
-import { twoLevelSearch } from '../tools/functions/searches';
+import Tooltip from '../tools/global/Tooltip';
+import { IconInput } from '../tools/global/Inputs';
+import { IconToggle } from '../tools/global/Button';
 import { ConversationLoader } from './tools/Loaders';
 import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
+import { useTwoLevelSearch } from '../tools/hooks/useTwoLevelSearch';
 
 const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
     const [open, setOpen] = useState(false)
-    const [search, setSearch] = useState(false)
-    const [query, setQuery] = useState("")
-    const [isResults, setResults] = useState([])
+    const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
     return (
         <div className="conversation-menu">
@@ -38,7 +35,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                     placeholder="Rechercher une conversation..."
                     value={query}
                     onInput={e => setQuery(e.target.value)}
-                    onChange={() => twoLevelSearch(query, [...favorites, ...conversations], 'members', 'pseudo', isResults, setResults, setSearch)}
+                    onChange={twoLevelSearch}
                 />
             </div>
 
@@ -58,7 +55,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                                 <div className="conversation-menu-tool">Favoris <FaCaretDown /></div>
                                 {favorites.map((element, key) => {
                                     return (
-                                        <div className={`${isInResults(element, isResults, search, "block")}`} key={key}>
+                                        <div className={`${isInResults(element, "block")}`} key={key}>
                                             <Conversation
                                                 conversation={element}
                                                 newMessage={newMessage}
@@ -74,7 +71,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                         <div className="conversations_container">
                             <div className="conversation-menu-tool">Conversations <FaCaretDown /></div>
                             {Object.keys(temporaryConv).length > 0 &&
-                                <div className={`${isInResults(temporaryConv, isResults, search, "block")}`}>
+                                <div className={`${isInResults(temporaryConv, "block")}`}>
                                     <TemporaryConversation
                                         temporaryConv={temporaryConv}
                                         setTemporaryConv={setTemporaryConv}
@@ -87,7 +84,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                             }
                             {conversations.map((element, key) => {
                                 return (
-                                    <div className={`${isInResults(element, isResults, search, "block")}`} key={key}>
+                                    <div className={`${isInResults(element, "block")}`} key={key}>
                                         <Conversation
                                             conversation={element}
                                             newMessage={newMessage}

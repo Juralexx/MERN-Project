@@ -2,7 +2,7 @@ import React from 'react';
 import SignInForm from '../components/log/SignInForm';
 import { Link } from 'react-router-dom';
 import FooterLight from '../components/FooterLight';
-import { TextButton } from '../components/tools/components/Button';
+import { TextButton } from '../components/tools/global/Button';
 
 const Login = ({ uid }) => {
 

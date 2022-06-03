@@ -4,11 +4,11 @@ import { getRole } from '../../../tools/functions/member'
 import AddMember from './AddMember'
 import MembersRequests from './MembersRequests'
 import MemberMenu from './MemberMenu'
-import { TextButton, ToolsBtn } from '../../../tools/components/Button'
-import { MediumAvatar } from '../../../tools/components/Avatars'
+import { TextButton, ToolsBtn } from '../../../tools/global/Button'
+import { MediumAvatar } from '../../../tools/global/Avatars'
 import { MdOutlineMessage } from 'react-icons/md'
 import { FaRegUser } from 'react-icons/fa'
-import ToolsMenu from '../../../tools/components/ToolsMenu'
+import ToolsMenu from '../../../tools/global/ToolsMenu'
 
 const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)

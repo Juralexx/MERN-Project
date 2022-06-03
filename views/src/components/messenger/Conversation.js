@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { MessengerContext } from '../AppContext';
-import ToolsMenu from '../tools/components/ToolsMenu';
-import { avatar } from '../tools/functions/useAvatar';
-import { useClickOutside } from '../tools/functions/useClickOutside';
+import ToolsMenu from '../tools/global/ToolsMenu';
+import { avatar } from '../tools/hooks/useAvatar';
+import { useClickOutside } from '../tools/hooks/useClickOutside';
 import { addClass } from '../Utils';
 import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
 

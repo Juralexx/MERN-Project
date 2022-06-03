@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
-import { ErrorCard } from '../tools/components/Error'
-import { IconInput } from '../tools/components/Inputs'
+import { ErrorCard } from '../tools/global/Error'
+import { IconInput } from '../tools/global/Inputs'
 
 const EditPassword = ({ user, password, setPassword, newPassword, setNewPassword, confirmedNewPassword, setConfirmedNewPassword, isErr, setErr, error, checkErr }) => {
     const [passwordShown, setPasswordShown] = useState([])

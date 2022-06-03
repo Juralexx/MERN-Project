@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
-import Modal from '../../../tools/components/Modal'
-import { ClassicInput } from '../../../tools/components/Inputs'
-import { Button } from '../../../tools/components/Button'
-import { MediumAvatar, TinyAvatar } from '../../../tools/components/Avatars'
+import Modal from '../../../tools/global/Modal'
+import { ClassicInput } from '../../../tools/global/Inputs'
+import { Button } from '../../../tools/global/Button'
+import { MediumAvatar, TinyAvatar } from '../../../tools/global/Avatars'
 import { isInResults, isSelected, sendProjectMemberRequest } from '../../../tools/functions/member';
 import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/member';
-import { SmallLoader } from '../../../tools/components/Loader';
+import { SmallLoader } from '../../../tools/global/Loader';
 import { IoClose } from 'react-icons/io5'
 
 const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager }) => {

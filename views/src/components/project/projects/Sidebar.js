@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { addClass } from '../../Utils'
-import { avatar } from '../../tools/functions/useAvatar'
+import { avatar } from '../../tools/hooks/useAvatar'
 import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
 import { BsFillDiagram3Fill, BsFillCaretRightFill } from 'react-icons/bs'
 import { BiDotsVerticalRounded } from 'react-icons/bi'

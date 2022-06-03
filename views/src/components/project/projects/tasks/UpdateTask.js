@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { changeTask } from '../../../../actions/project.action'
-import Modal from '../../../tools/components/Modal'
-import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tools/components/Inputs'
-import { Button } from '../../../tools/components/Button'
+import Modal from '../../../tools/global/Modal'
+import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tools/global/Inputs'
+import { Button } from '../../../tools/global/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../../tools/functions/task'
 import { addClass, ISOtoNavFormat } from '../../../Utils'
 import { isInResults, isSelected } from '../../../tools/functions/member'
-import { MediumAvatar, TinyAvatar } from '../../../tools/components/Avatars'
+import { MediumAvatar, TinyAvatar } from '../../../tools/global/Avatars'
 import { IoClose } from 'react-icons/io5'
 
 const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {

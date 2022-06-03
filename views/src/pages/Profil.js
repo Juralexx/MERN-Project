@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
-import { avatar, coverPicture } from "../components/tools/functions/useAvatar";
+import { avatar, coverPicture } from "../components/tools/hooks/useAvatar";
 import UploadCoverImg from "../components/profil/uploads/UploadCoverImg";
 import UploadImg from "../components/profil/uploads/UploadImg";
 import Footer from '../components/Footer'

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { avatar } from "../../tools/functions/useAvatar";
-import { Button } from "./Button";
+import { avatar } from "../../tools/hooks/useAvatar";
+import { Button } from "../global/Button";
 
 const HoverModal = ({ user, style, open }) => {
 

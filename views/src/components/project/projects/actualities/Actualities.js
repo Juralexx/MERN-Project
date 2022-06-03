@@ -4,11 +4,11 @@ import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import { deleteActuality } from '../../../../actions/project.action'
 import { dateParser } from '../../../Utils'
 import { convertDeltaToHTML } from '../../../tools/editor/functions'
-import { Button, EndIconButton } from '../../../tools/components/Button'
-import Warning from '../../../tools/components/Warning'
+import { Button, EndIconButton } from '../../../tools/global/Button'
+import Warning from '../../../tools/global/Warning'
 import EditActuality from './EditActuality'
 import { MdArrowForward } from 'react-icons/md'
-import { BigAvatar } from '../../../tools/components/Avatars'
+import { BigAvatar } from '../../../tools/global/Avatars'
 import { BiNews } from 'react-icons/bi';
 
 const Actualities = ({ project }) => {

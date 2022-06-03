@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
-import { useClickOutside } from '../../../tools/functions/useClickOutside'
+import { useClickOutside } from '../../../tools/hooks/useClickOutside'
 import CategoriesPicker from '../../../home/CategoriesPicker'
-import { ErrorCard } from '../../../tools/components/Error'
-import { DoubleIconInput, ClassicInput, Textarea } from '../../../tools/components/Inputs'
+import { ErrorCard } from '../../../tools/global/Error'
+import { DoubleIconInput, ClassicInput, Textarea } from '../../../tools/global/Inputs'
 import { BiCategory } from 'react-icons/bi'
 import { BsCaretDownFill } from 'react-icons/bs'
 

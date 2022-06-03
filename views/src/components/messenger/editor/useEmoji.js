@@ -1,5 +1,5 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
+import axios from "axios"
 
 export function useEmoji(quill) {
     const [isEmoji, setEmoji] = useState(false)
@@ -26,7 +26,7 @@ export function useEmoji(quill) {
             }
             fetch()
         }
-    }, [emojiArr])
+    }, [emojiArr.length])
 
     /**
      * Insert emoji if shortcut is detected

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
-import { Button } from '../../../tools/components/Button'
+import { Button } from '../../../tools/global/Button'
 import EditQna from './EditQna'
 import { GrBlockQuote } from 'react-icons/gr';
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../../Utils'
-import { TextButton } from '../../../tools/components/Button'
-import ToolsMenu from '../../../tools/components/ToolsMenu'
+import { TextButton } from '../../../tools/global/Button'
+import ToolsMenu from '../../../tools/global/ToolsMenu'
 import { RiCalendarTodoLine } from 'react-icons/ri'
 import { AiFillCloud } from 'react-icons/ai'
 

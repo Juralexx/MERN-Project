@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { MdOutlinePhotoLibrary } from 'react-icons/md'
-import { projectPicture } from '../../tools/functions/useAvatar'
+import { projectPicture } from '../../tools/hooks/useAvatar'
 import NoContent from './NoContent'
 import FsLightbox from 'fslightbox-react';
 

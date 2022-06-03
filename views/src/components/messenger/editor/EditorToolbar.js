@@ -1,8 +1,8 @@
 import React from "react";
 import { Quill } from "react-quill";
-import QuillAutoDetectUrl from "quill-auto-detect-url";
+import { Linkify } from 'quill-linkify';
 
-Quill.register("modules/autoDetectUrl", QuillAutoDetectUrl);
+Quill.register('modules/linkify', Linkify);
 
 export const modules = {
     toolbar: {
@@ -21,10 +21,11 @@ export const modules = {
             }
         }
     },
-    autoDetectUrl: {
-        urlRegularExpression: /(https?:\/\/|www\.)[\w-.]+\.[\w-.]+[\S]+/i,
+    linkify: {
+        url: true,
+        mail: true,
+        phoneNumber: false,
     },
-    // urlEmbeds: {}
 }
 
 export const formats = [

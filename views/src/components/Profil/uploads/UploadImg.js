@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AvatarEditor from 'react-avatar-editor'
 import { deleteProfilPicture, uploadProfilPicture } from "../../../actions/user.action.upload";
-import { avatar } from "../../tools/functions/useAvatar";
-import Modal from '../../tools/components/Modal'
-import { IconToggle } from "../../tools/components/Button";
+import { avatar } from "../../tools/hooks/useAvatar";
+import Modal from '../../tools/global/Modal'
+import { IconToggle } from "../../tools/global/Button";
 import { MdPhotoCamera } from 'react-icons/md'
 
 const UploadImg = ({ user }) => {

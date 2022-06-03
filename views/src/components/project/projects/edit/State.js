@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
-import { DropdownInput } from '../../../tools/components/Inputs'
-import { useClickOutside } from '../../../tools/functions/useClickOutside'
+import { DropdownInput } from '../../../tools/global/Inputs'
+import { useClickOutside } from '../../../tools/hooks/useClickOutside'
 import { stateToString } from '../../functions'
 
 const State = ({ state, setState }) => {

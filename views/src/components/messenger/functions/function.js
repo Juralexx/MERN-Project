@@ -2,7 +2,7 @@ import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
 import { charSetToChar, dateParserWithoutYear, removeHTMLMarkers } from '../../Utils'
-import { coverPicture } from '../../tools/functions/useAvatar';
+import { coverPicture } from '../../tools/hooks/useAvatar';
 import VideoJS from '../message/Video';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { MdPlayCircleOutline } from 'react-icons/md';
@@ -141,21 +141,17 @@ export const isEmbeddable = (file) => {
 }
 
 export const isURLInText = (text) => {
-    const regexp = new RegExp(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig)
+    const regexp = new RegExp(/(https?:\/\/|www\.)[\w-.]+\.[\w-.]+[\S]+/i)
     if (regexp.test(text)) {
         return true
     } else return false
 }
 
 export const returnURLsInText = (text) => {
-    const regexp = new RegExp(/(https?:\/\/[^\s]+)/g)
-    let txt = text
+    const regexp = new RegExp(/(https?:\/\/|www\.)[\w-.]+\.[\w-.]+[\S]+/i)
     let arr = []
-    while (regexp.test(txt)) {
-        let matched = regexp.exec(txt)[0]
-        console.log(matched)
-        arr.push(matched)
-        txt = txt.replace(matched, '')
+    if (regexp.test(text)) {
+        arr = text.match(/(https?:\/\/|www\.)[\w-.]+\.[\w-.]+[\S]+/i);
     }
     return arr
 }

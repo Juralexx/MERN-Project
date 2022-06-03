@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MiniNav from "./mini-nav/MiniNav";
-import { StartIconButton } from "./tools/components/Button";
-import { useClickOutside } from "./tools/functions/useClickOutside";
+import { StartIconButton } from "./tools/global/Button";
+import { useClickOutside } from "./tools/hooks/useClickOutside";
 import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai'
 import { MdOutlineMessage, MdOutlineScreenSearchDesktop, MdDehaze } from 'react-icons/md'
 import { BiUser } from 'react-icons/bi'

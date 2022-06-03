@@ -1,5 +1,5 @@
 import React from 'react'
-import { DatePicker } from '../../tools/components/Inputs'
+import { DatePicker } from '../../tools/global/Inputs'
 
 const End = ({ start, setStart, end, setEnd }) => {
     return (

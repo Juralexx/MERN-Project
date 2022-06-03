@@ -6,7 +6,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import { Droppable } from "react-beautiful-dnd";
 import { MdOutlineMessage } from 'react-icons/md'
-import ToolsMenu from '../../../tools/components/ToolsMenu'
+import ToolsMenu from '../../../tools/global/ToolsMenu'
 
 const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch, setCreateTask, setUpdateTask, setTask, setOpenTask, setState }) => {
     const todo = tasks.filter(element => element.state === "todo")

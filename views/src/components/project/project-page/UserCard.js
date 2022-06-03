@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { avatar } from '../../tools/functions/useAvatar'
+import { avatar } from '../../tools/hooks/useAvatar'
 
 const UserCard = ({ project }) => {
     const [user, setUser] = useState(null)

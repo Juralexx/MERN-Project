@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { dateParser } from '../../Utils';
 import { stateToBackground, stateToString } from '../../project/functions';
-import { projectPicture } from '../functions/useAvatar';
+import { projectPicture } from '../hooks/useAvatar';
 import FavoriteButton from './FavoriteButton'
 import FollowersButton from './FollowersButton'
 import LikersButton from './LikersButton'
@@ -26,8 +26,14 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal }
                 <div className="three_lines text-sec py-2 mb-2 !leading-6 h-20"><p>{element.description}</p></div>
                 <div className="card-footer flex col-12">
                     <div className="footer-left col-8">
-                        <LikersButton project={element} onClick={() => { setProject(element); setOpenLikersModal(true) }} />
-                        <FollowersButton project={element} onClick={() => { setProject(element); setOpenFollowersModal(true) }} />
+                        <LikersButton project={element} onClick={() => {
+                            setProject(element)
+                            setOpenLikersModal(true)
+                        }} />
+                        <FollowersButton project={element} onClick={() => {
+                            setProject(element)
+                            setOpenFollowersModal(true)
+                        }} />
                     </div>
                     <div className="footer-right col-4 flex pt-2">
                         <div className="footer-name">

@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { ThreeDots } from 'react-loading-icons'
 import { ImCross } from 'react-icons/im'
-import { ClassicInput } from '../../tools/components/Inputs';
-import { Button } from '../../tools/components/Button';
+import { ClassicInput } from '../../tools/global/Inputs';
+import { Button } from '../../tools/global/Button';
 import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io'
-import { IconButton } from '../../tools/components/Button';
+import { IconButton } from '../../tools/global/Button';
 
 const Workers = ({ workArray, setWorkArray, onNext, onBack }) => {
     const [searchQuery, setSearchQuery] = useState("")

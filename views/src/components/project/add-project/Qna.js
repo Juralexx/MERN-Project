@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button } from '../../tools/components/Button'
-import { ErrorCard } from '../../tools/components/Error'
-import { ClassicInput, Textarea } from '../../tools/components/Inputs'
+import { Button } from '../../tools/global/Button'
+import { ErrorCard } from '../../tools/global/Error'
+import { ClassicInput, Textarea } from '../../tools/global/Inputs'
 
 const Qna = ({ qna, setQna, isErr, setErr, error, setError }) => {
     const checkErr = (name) => { if (isErr === name) return "err" }

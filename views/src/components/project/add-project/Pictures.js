@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDropzone } from 'react-dropzone';
-import { coverPicture } from '../../tools/functions/useAvatar'
+import { coverPicture } from '../../tools/hooks/useAvatar'
 import { IoMdCloudDownload } from 'react-icons/io';
 import { MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto, MdClear, MdOutlineFileUpload } from 'react-icons/md'
 import { IoTrash } from 'react-icons/io5';

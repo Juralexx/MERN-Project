@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { createQNA } from '../../../../actions/project.action'
-import { Button } from '../../../tools/components/Button'
-import { ErrorCard } from '../../../tools/components/Error'
-import { ClassicInput, Textarea } from '../../../tools/components/Inputs'
+import { Button } from '../../../tools/global/Button'
+import { ErrorCard } from '../../../tools/global/Error'
+import { ClassicInput, Textarea } from '../../../tools/global/Inputs'
 
 const AddQna = ({ project, user }) => {
     const [qna, setQna] = useState([{ question: "", answer: "" }])

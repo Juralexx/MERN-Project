@@ -5,7 +5,7 @@ import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdOutlinePhotoLibrary } from 'react-icons/md';
-import { coverPicture } from '../../tools/functions/useAvatar';
+import { coverPicture } from '../../tools/hooks/useAvatar';
 import NoContent from './NoContent';
 
 const GalleryCard = ({ project, user }) => {

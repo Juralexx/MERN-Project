@@ -22,20 +22,20 @@
 
 /* components */
 
-@import 'components/tooltip';
-@import 'components/modals';
+@import 'global/Tooltip';
+@import 'global/Modals';
 @import 'components/btn';
 @import 'components/editor';
 
-@import 'components/inputs/auto-complete.scss';
-@import 'components/inputs/classic-input.scss';
-@import 'components/inputs/date-picker.scss';
-@import 'components/inputs/double-icon-input.scss';
-@import 'components/inputs/icon-input.scss';
-@import 'components/inputs/dropdown-input.scss';
-@import 'components/inputs/dynamic-input.scss';
-@import 'components/inputs/number-input.scss';
-@import 'components/inputs/textarea.scss';
+@import 'global/Inputs/auto-complete.scss';
+@import 'global/Inputs/classic-input.scss';
+@import 'global/Inputs/date-picker.scss';
+@import 'global/Inputs/double-icon-input.scss';
+@import 'global/Inputs/icon-input.scss';
+@import 'global/Inputs/dropdown-input.scss';
+@import 'global/Inputs/dynamic-input.scss';
+@import 'global/Inputs/number-input.scss';
+@import 'global/Inputs/textarea.scss';
 
 /* Log */
 

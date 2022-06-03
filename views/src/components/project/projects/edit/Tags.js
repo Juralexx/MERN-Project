@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { ErrorCard } from '../../../tools/components/Error'
-import { ClassicInput } from '../../../tools/components/Inputs'
+import { ErrorCard } from '../../../tools/global/Error'
+import { ClassicInput } from '../../../tools/global/Inputs'
 
 const Tags = ({ tags, setTags, error, setError, isErr, setErr }) => {
     const errorRef = useRef()

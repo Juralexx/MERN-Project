@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { favoriteProject, unfavoriteProject } from '../../../actions/project.action';
-import { IconToggle } from './Button';
+import { IconToggle } from '../global/Button';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
 
 const FavoriteButton = ({ project }) => {

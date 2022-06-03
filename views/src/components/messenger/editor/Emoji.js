@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { useClickOutside } from '../../tools/functions/useClickOutside'
+import { useClickOutside } from '../../tools/hooks/useClickOutside'
 import { checkTheme } from '../../Utils'
 import { placeUponCursor } from '../functions/function'
 

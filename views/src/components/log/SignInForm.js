@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from '../tools/components/Button'
-import { DynamicInput } from '../tools/components/Inputs';
-import { ErrorCard } from '../tools/components/Error';
+import { Button } from '../tools/global/Button'
+import { DynamicInput } from '../tools/global/Inputs';
+import { ErrorCard } from '../tools/global/Error';
 import { handleEnterKey } from '../Utils'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 

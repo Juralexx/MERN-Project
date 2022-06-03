@@ -1,5 +1,5 @@
 import React from "react";
-import { avatar } from "../functions/useAvatar";
+import { avatar } from "../hooks/useAvatar";
 
 export const BigAvatar = (props) => {
     const { className, pic } = props

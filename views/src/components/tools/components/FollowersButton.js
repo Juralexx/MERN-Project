@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { followProject, unfollowProject } from "../../../actions/project.action";
 import { UidContext } from "../../AppContext";
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md'
-import { IconToggle } from "./Button";
+import { IconToggle } from "../global/Button";
 
 const FollowersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)

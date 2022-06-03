@@ -3,7 +3,7 @@ import { BsGeoFill } from 'react-icons/bs'
 import { GiFrance } from 'react-icons/gi'
 import { IoClose } from 'react-icons/io5'
 import { FaMapMarkerAlt } from 'react-icons/fa'
-import { TextButton } from '../tools/components/Button'
+import { TextButton } from '../tools/global/Button'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import { useClickOutside } from '../functions/useClickOutside'
+import { useClickOutside } from '../hooks/useClickOutside'
 import { usePopper } from "react-popper";
 
 const ToolsMenu = (props) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { addClass, reverseArray } from '../../../Utils'
-import { StartIconOutlinedButton } from '../../../tools/components/Button'
+import { StartIconOutlinedButton } from '../../../tools/global/Button'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import Kanban from './Kanban'

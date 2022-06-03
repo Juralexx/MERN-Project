@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import axios from "axios";
-import { useClickOutside } from "../../../tools/functions/useClickOutside";
-import { ClassicInput } from "../../../tools/components/Inputs";
+import { useClickOutside } from "../../../tools/hooks/useClickOutside";
+import { ClassicInput } from "../../../tools/global/Inputs";
 import { BsInboxFill } from 'react-icons/bs'
-import { SmallLoader } from "../../../tools/components/Loader";
-import { ErrorCard } from "../../../tools/components/Error";
+import { SmallLoader } from "../../../tools/global/Loader";
+import { ErrorCard } from "../../../tools/global/Error";
 
 const Location = ({ project, location, setLocation, setDepartment, setCodeDepartment, setRegion, setCodeRegion, setNewRegion, setCodeNewRegion, setGeolocalisation, isErr, setErr, error, setLocationChanged }) => {
     const [searchQuery, setSearchQuery] = useState(location)

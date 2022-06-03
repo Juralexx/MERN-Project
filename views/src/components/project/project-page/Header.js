@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { dateParser } from '../../Utils'
-import { projectPicture } from '../../tools/functions/useAvatar'
+import { projectPicture } from '../../tools/hooks/useAvatar'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../../actions/project.action'
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
 import { MdOutlineBookmark, MdOutlineBookmarkBorder } from 'react-icons/md'
 import { FiMapPin } from 'react-icons/fi'
 import { FiCalendar } from 'react-icons/fi'
-import { SmallAvatar } from '../../tools/components/Avatars'
+import { SmallAvatar } from '../../tools/global/Avatars'
 
 const Header = ({ user, project }) => {
     const [liked, setLiked] = useState(false)

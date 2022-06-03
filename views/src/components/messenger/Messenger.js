@@ -161,40 +161,39 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     }
                 })
                 if (embeds.length > 0) {
-                    console.log(embeds)
                     Object.assign(message, { embeds: embeds })
                 }
             }
 
-            // if (conversation.type === "group") {
-            //     otherMembersIDs(conversation, uid).map(memberId => {
-            //         return websocket.current.emit("sendMessage", {
-            //             receiverId: memberId,
-            //             conversationId: conversation._id,
-            //             message: message
-            //         })
-            //     })
-            // } else {
-            //     const receiver = conversation.members.find(member => member._id !== uid)
-            //     websocket.current.emit("sendMessage", {
-            //         receiverId: receiver._id,
-            //         conversationId: conversation._id,
-            //         message: message
-            //     })
-            // }
+            if (conversation.type === "group") {
+                otherMembersIDs(conversation, uid).map(memberId => {
+                    return websocket.current.emit("sendMessage", {
+                        receiverId: memberId,
+                        conversationId: conversation._id,
+                        message: message
+                    })
+                })
+            } else {
+                const receiver = conversation.members.find(member => member._id !== uid)
+                websocket.current.emit("sendMessage", {
+                    receiverId: receiver._id,
+                    conversationId: conversation._id,
+                    message: message
+                })
+            }
 
-            // dispatch(
-            //     sendMessage(conversation._id, message, files, user)
-            // ).then(() => {
-            //     setNewMessage(message)
-            //     if (files.length > 0) {
-            //         files.splice(0, files.length)
-            //     }
-            //     if (quill.getLength() > 1) {
-            //         quill.deleteText(0, quill.getLength())
-            //         setTyping(false)
-            //     }
-            // })
+            dispatch(
+                sendMessage(conversation._id, message, files, user)
+            ).then(() => {
+                setNewMessage(message)
+                if (files.length > 0) {
+                    files.splice(0, files.length)
+                }
+                if (quill.getLength() > 1) {
+                    quill.deleteText(0, quill.getLength())
+                    setTyping(false)
+                }
+            })
         } else return
     }
 

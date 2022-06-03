@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import { usePopper } from "react-popper";
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
-import { useClickOutside } from '../../tools/functions/useClickOutside'
+import { useClickOutside } from '../../tools/hooks/useClickOutside'
 import { MdAddReaction } from 'react-icons/md';
 
 const EmojiPicker = (props) => {

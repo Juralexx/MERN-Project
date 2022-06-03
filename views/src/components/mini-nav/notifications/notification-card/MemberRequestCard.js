@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { acceptMemberRequest, refuseMemberRequest } from '../../../../actions/project.action'
 import { useDispatch } from 'react-redux'
-import { Button } from '../../../tools/components/Button'
-import { avatar } from '../../../tools/functions/useAvatar'
+import { Button } from '../../../tools/global/Button'
+import { avatar } from '../../../tools/hooks/useAvatar'
 import { FaUserFriends } from 'react-icons/fa'
 
 const MemberRequestCard = ({ sentNotification, websocket, user }) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import ToolsMenu from '../../../tools/components/ToolsMenu'
+import ToolsMenu from '../../../tools/global/ToolsMenu'
 import { excludeMember, nameAdmin, removeAdmin } from '../../../tools/functions/member'
 
 const MemberMenu = ({ element, project, websocket, isAdmin, isManager, user }) => {

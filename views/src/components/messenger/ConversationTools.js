@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom'
-import ToolsMenu from '../tools/components/ToolsMenu';
+import ToolsMenu from '../tools/global/ToolsMenu';
 import Tools from './conversation-tools/Tools';
-import { IconToggle } from '../tools/components/Button';
+import { IconToggle } from '../tools/global/Button';
 import { isConversation } from './functions/function';
 import { OnlineUserLoader } from './tools/Loaders';
-import { avatar } from '../tools/functions/useAvatar';
+import { avatar } from '../tools/hooks/useAvatar';
 import { MessengerContext } from '../AppContext';
 import { BiSearchAlt } from 'react-icons/bi';
 import { useOnline } from './functions/useOnline';

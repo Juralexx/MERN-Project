@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Modal from '../../tools/components/Modal'
+import Modal from '../../tools/global/Modal'
 import ReactQuill from "react-quill";
 import EditorToolbar, { formats, modules } from '../editor/EditorToolbar';
 import EmojiPicker from '../tools/EmojiPicker';
@@ -10,7 +10,7 @@ import { useQuill } from '../editor/useQuill';
 import { useEmoji } from '../editor/useEmoji';
 import { useMention } from '../editor/useMention';
 import { pickEmoji, convertDeltaToStringNoHTML } from '../functions/function';
-import { SmallAvatar } from '../../tools/components/Avatars';
+import { SmallAvatar } from '../../tools/global/Avatars';
 import { dateParserWithoutYear, getHourOnly } from '../../Utils';
 import { BsEmojiSmile } from 'react-icons/bs'
 import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';

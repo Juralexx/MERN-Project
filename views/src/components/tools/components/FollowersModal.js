@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Modal from "./Modal";
+import Modal from "../global/Modal";
 import HoverModal from "./HoverModal";
-import { OutlinedButton } from "./Button";
+import { OutlinedButton } from "../global/Button";
 import { MdOutlineBookmark, MdBookmarkBorder } from 'react-icons/md'
 import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/friend";
-import { MediumAvatar } from "./Avatars";
+import { MediumAvatar } from "../global/Avatars";
 
 const FollowersModal = ({ project, open, setOpen, user, websocket }) => {
     const [followers, setFollowers] = useState([])

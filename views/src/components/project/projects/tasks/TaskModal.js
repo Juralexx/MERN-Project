@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux'
 import { commentTask } from '../../../../actions/project.action'
 import { isDatePassed, stateToBackground, stateToString, statusToBackground, statusToString } from '../../../tools/functions/task'
 import { dateParser, getHourOnly, randomNbLtID } from '../../../Utils'
-import Modal from '../../../tools/components/Modal'
-import { Button } from '../../../tools/components/Button'
-import { Textarea } from '../../../tools/components/Inputs'
+import Modal from '../../../tools/global/Modal'
+import { Button } from '../../../tools/global/Button'
+import { Textarea } from '../../../tools/global/Inputs'
 
 const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
     const [addComment, setAddComment] = useState(false)

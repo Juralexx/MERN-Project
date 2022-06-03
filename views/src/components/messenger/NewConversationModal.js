@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { addClass } from '../Utils';
-import { Button, TextButton } from '../tools/components/Button';
-import { ClassicInput, IconInput, Textarea } from '../tools/components/Inputs';
-import { MediumAvatar, TinyAvatar } from '../tools/components/Avatars';
-import { isInResults, isSelected } from '../tools/functions/member';
+import { Button, TextButton } from '../tools/global/Button';
+import { ClassicInput, IconInput, Textarea } from '../tools/global/Inputs';
+import { MediumAvatar, TinyAvatar } from '../tools/global/Avatars';
+import { isSelected } from '../tools/functions/member';
 import { isConversation, otherMembersIDs, pushUserInArray, removeUserFromArray } from './functions/function';
-import { oneLevelSearch } from '../tools/functions/searches';
-import Modal from '../tools/components/Modal';
+import Modal from '../tools/global/Modal';
 import { IoClose } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi';
 import { MessengerContext } from '../AppContext';
+import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch';
 
 const NewConversationModal = ({ open, setOpen, conversations, setConversations, changeCurrentChat }) => {
     const { uid, user, websocket, friendsArr } = useContext(MessengerContext)
@@ -19,6 +19,8 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
     const [description, setDescription] = useState("")
     const [picture, setPicture] = useState(null)
     const [members, setMembers] = useState([])
+
+    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(friendsArr, 'pseudo')
 
     const createNewConversation = async () => {
         let usr = { _id: user._id, pseudo: user.pseudo, picture: user.picture, date: new Date().toISOString() }
@@ -64,10 +66,6 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
         setOpen(false)
     }
 
-    const [search, setSearch] = useState(false)
-    const [query, setQuery] = useState("")
-    const [isResults, setResults] = useState([])
-
     return (
         <Modal open={open} setOpen={setOpen} className="add-conversation-modal">
             <h2>Nouvelle conversation</h2>
@@ -93,16 +91,17 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
                     <IconInput
                         className="full is_start_icon mb-3 small"
                         placeholder="Rechercher un membre..."
-                        icon={<BiSearchAlt />} value={query}
+                        icon={<BiSearchAlt />}
+                        value={query}
                         onInput={e => setQuery(e.target.value)}
-                        onChange={() => oneLevelSearch(query, friendsArr, 'pseudo', isResults, setResults, setSearch)}
+                        onChange={oneLevelSearch}
                     />
                     <div className="user_selecter">
                         {friendsArr.length > 0 ? (
                             <div className="user_displayer">
                                 {friendsArr.map((element, key) => {
                                     return (
-                                        <div className={`user_display_choice ${isSelected(members, element)} ${isInResults(element, isResults, search, "flex")}`} onClick={() => setMembers(pushUserInArray(element, members))} key={key}>
+                                        <div className={`user_display_choice ${isSelected(members, element)} ${isInResults(element, "flex")}`} onClick={() => setMembers(pushUserInArray(element, members))} key={key}>
                                             <div className="user">
                                                 <MediumAvatar pic={element.picture} />
                                                 <div>

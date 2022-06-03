@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import Modal from "./Modal";
+import Modal from "../global/Modal";
 import HoverModal from "./HoverModal";
 import { Link } from "react-router-dom";
-import { MediumAvatar } from "./Avatars"
-import { OutlinedButton } from "./Button";
+import { MediumAvatar } from "../global/Avatars"
+import { OutlinedButton } from "../global/Button";
 import { IoHeart } from 'react-icons/io5'
 import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/friend";
 import { IoHeartDislike } from "react-icons/io5";

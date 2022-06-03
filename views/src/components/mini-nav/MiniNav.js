@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { avatar } from "../tools/functions/useAvatar";
-import { useClickOutside } from "../tools/functions/useClickOutside";
+import { avatar } from "../tools/hooks/useAvatar";
+import { useClickOutside } from "../tools/hooks/useClickOutside";
 import { useDispatch } from "react-redux";
 import { removeNotifications } from "../../actions/user.action";
 import SettingsMenu from "./SettingsMenu";

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { addClass } from "../Utils";
-import { IconInput } from "../tools/components/Inputs";
-import ToolsMenu from "../tools/components/ToolsMenu";
+import { IconInput } from "../tools/global/Inputs";
+import ToolsMenu from "../tools/global/ToolsMenu";
 import { IoMdNotificationsOff } from 'react-icons/io'
 import { HiPencilAlt } from 'react-icons/hi'
 import { AiOutlineFullscreen } from 'react-icons/ai'

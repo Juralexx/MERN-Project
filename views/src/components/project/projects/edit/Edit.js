@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateProject } from '../../../../actions/project.action'
 import { addClass, geoJSONStructure, geolocToFloat, ISOtoNavFormat, removeAccents } from '../../../Utils'
-import { Button, OutlinedButton } from '../../../tools/components/Button'
+import { Button, OutlinedButton } from '../../../tools/global/Button'
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
 import { Oval } from 'react-loading-icons'
