@@ -108,7 +108,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 setMessagesDates(getMessagesDates(reducer.messages))
             }
             if (Object.keys(currentChat).length > 0) {
-                setTimeout(() => setLoading(false), 1000)
+                console.log('loading')
+                setTimeout(() => setLoading(false), 1500)
             }
         }
     }, [reducer, currentChat])

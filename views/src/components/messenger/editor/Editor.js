@@ -204,7 +204,7 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
                             placeholder={`Envoyer un message à ${returnMembers(members)}`}
                             modules={modules}
                             formats={formats}
-                            defaultValue=" "
+                            defaultValue=""
                             onBlur={() => setFocused(false)}
                             onChange={handleNewMessage}
                             onKeyUp={event => {
