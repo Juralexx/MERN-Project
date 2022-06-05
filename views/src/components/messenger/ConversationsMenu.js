@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useTwoLevelSearch } from '../tools/hooks/useTwoLevelSearch';
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import TemporaryConversation from './tools/TemporaryConversation';
@@ -10,9 +11,8 @@ import { ConversationLoader } from './tools/Loaders';
 import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
-import { useTwoLevelSearch } from '../tools/hooks/useTwoLevelSearch';
 
-const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, newMessage, notification }) => {
+const ConversationsMenu = ({ currentChat, fetched, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, newMessage, notification }) => {
     const [open, setOpen] = useState(false)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
@@ -48,7 +48,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                 setConversations={setConversations}
             />
 
-            {!isLoading ? (
+            {fetched ? (
                 conversations.length > 0 || favorites.length > 0 || Object.keys(temporaryConv).length > 0 ? (
                     <>
                         {favorites.length > 0 &&

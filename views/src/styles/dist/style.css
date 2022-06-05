@@ -4334,8 +4334,8 @@ h1, h2, h3, h4, h5 {
   overflow: auto;
   z-index: 750;
   border-radius: var(--radius);
-  -webkit-box-shadow: var(--shadow-2xl);
-          box-shadow: var(--shadow-2xl);
+  -webkit-box-shadow: var(--shadow-xl);
+          box-shadow: var(--shadow-xl);
   background-color: var(--content-light);
   border: 2px solid var(--light-border);
 }
@@ -9894,11 +9894,11 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 7px 15px;
-  border-bottom: 2px solid var(--light-border);
-  border-left: 2px solid var(--light-border);
-  border-right: 2px solid var(--light-border);
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 0px solid var(--light-border);
+  border-left: 1px solid var(--light-border);
+  border-right: 1px solid var(--light-border);
+  -webkit-box-shadow: var(--shadow-light);
+          box-shadow: var(--shadow-light);
   z-index: 20;
 }
 .conversation-box .conversation-box-wrapper .conversation-box-top .conversation-box-members {
@@ -10005,8 +10005,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   overflow-x: hidden;
   padding: 10px;
   background-color: var(--content-x-light);
-  border-left: 2px solid var(--light-border);
-  border-right: 2px solid var(--light-border);
+  border-left: 1px solid var(--light-border);
+  border-right: 1px solid var(--light-border);
 }
 
 .is-typing {
@@ -10712,8 +10712,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   position: relative;
   padding: 10px;
   background: var(--content-x-light);
-  border-left: 2px solid var(--light-border);
-  border-right: 2px solid var(--light-border);
+  border-left: 1px solid var(--light-border);
+  border-right: 1px solid var(--light-border);
 }
 .conversation-bottom .auto-complete-container {
   bottom: 100%;

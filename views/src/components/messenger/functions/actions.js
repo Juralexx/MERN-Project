@@ -6,8 +6,8 @@ import { otherMembersIDs } from './function';
 * Delete conversation
  */
 
- export const deleteConv = (conversation, uid, websocket, dispatch, isParam) => {
-    isParam(conversation._id, '/messenger/' + conversation._id)
+ export const deleteConv = async (conversation, uid, websocket, dispatch, isParam) => {
+    await isParam(conversation._id, '/messenger/' + conversation._id)
     otherMembersIDs(conversation, uid).map(memberId => {
         return websocket.current.emit("deleteConversation", {
             receiverId: memberId,
@@ -21,8 +21,8 @@ import { otherMembersIDs } from './function';
  * Leave conversation
  */
 
-export const leaveConversation = (conversation, memberId, uid, websocket, dispatch, isParam) => {
-    isParam(conversation._id, '/messenger/' + conversation._id)
+export const leaveConversation = async (conversation, memberId, uid, websocket, dispatch, isParam) => {
+    await isParam(conversation._id, '/messenger/' + conversation._id)
     dispatch(removeMember(conversation._id, memberId))
     otherMembersIDs(conversation, uid).map(member => {
         return websocket.current.emit("removeConversationMember", {
@@ -41,8 +41,8 @@ export const leaveConversation = (conversation, memberId, uid, websocket, dispat
  * Add onversation member
  */
 
-export const addNewMember = (conversation, member, user, websocket, dispatch, isParam) => {
-    isParam(conversation._id, '/messenger/' + conversation._id)
+export const addNewMember = async (conversation, member, user, websocket, dispatch, isParam) => {
+    await isParam(conversation._id, '/messenger/' + conversation._id)
     let newMember = {
         id: member._id,
         pseudo: member.pseudo,
@@ -69,8 +69,8 @@ export const addNewMember = (conversation, member, user, websocket, dispatch, is
  * Remove message
  */
 
-export const removeMessage = (message, conversation, uid, websocket, dispatch, isParam) => {
-    isParam(conversation._id, '/messenger/' + conversation._id)
+export const removeMessage = async (message, conversation, uid, websocket, dispatch, isParam) => {
+    await isParam(conversation._id, '/messenger/' + conversation._id)
     otherMembersIDs(conversation, uid).map(memberId => {
         return websocket.current.emit("deleteMessage", {
             receiverId: memberId,
@@ -85,8 +85,8 @@ export const removeMessage = (message, conversation, uid, websocket, dispatch, i
  * Delete file
  */
 
-export const deleteFiles = (file, user, websocket, conversation, messageId, dispatch, isParam) => {
-    isParam(conversation._id, '/messenger/' + conversation._id)
+export const deleteFiles = async (file, user, websocket, conversation, messageId, dispatch, isParam) => {
+    await isParam(conversation._id, '/messenger/' + conversation._id)
     let message = conversation.messages.find(mess => mess._id === messageId)
     otherMembersIDs(conversation, user._id).map(memberId => {
         return websocket.current.emit("deleteFile", {

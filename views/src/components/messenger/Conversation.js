@@ -11,7 +11,7 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     const { uid, user } = useContext(MessengerContext)
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
 
-    const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : null)
+    const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : {})
     const [date, setDate] = useState()
     const [unseen, setUnseen] = useState(false)
 

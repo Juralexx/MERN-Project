@@ -32,8 +32,8 @@ export function useEmojis(message, conversation) {
      * Add emoji if user didn't add it, else remove it
      */
 
-    const handleEmoji = (emoji) => {
-        isParam(conversation._id, '/messenger/' + conversation._id)
+    const handleEmoji = async (emoji) => {
+        await isParam(conversation._id, '/messenger/' + conversation._id)
         
         let isEmoji = {}
         if (emojis.length > 0) {

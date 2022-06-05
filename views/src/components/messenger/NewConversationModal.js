@@ -1,23 +1,22 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
-import { addClass } from '../Utils';
+import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch';
+import { MessengerContext } from '../AppContext';
+import Modal from '../tools/global/Modal';
 import { Button, TextButton } from '../tools/global/Button';
 import { ClassicInput, IconInput, Textarea } from '../tools/global/Inputs';
 import { MediumAvatar, TinyAvatar } from '../tools/global/Avatars';
 import { isSelected } from '../tools/functions/member';
+import { addClass } from '../Utils';
 import { isConversation, otherMembersIDs, pushUserInArray, removeUserFromArray } from './functions/function';
-import Modal from '../tools/global/Modal';
 import { IoClose } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi';
-import { MessengerContext } from '../AppContext';
-import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch';
 
 const NewConversationModal = ({ open, setOpen, conversations, setConversations, changeCurrentChat }) => {
     const { uid, user, websocket, friendsArr } = useContext(MessengerContext)
     const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
-    const [picture, setPicture] = useState(null)
     const [members, setMembers] = useState([])
 
     const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(friendsArr, 'pseudo')
@@ -28,7 +27,6 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
 
         if (members.length === 1 && isConv !== false) {
             changeCurrentChat(isConv)
-            console.log(isConv)
         } else {
             await axios({
                 method: "post",
@@ -41,14 +39,7 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations, 
                     owner: usr,
                     creator: usr
                 }
-            }).then(async res => {
-                if (res.data && picture !== null) {
-                    let formData = new FormData()
-                    formData.append('file', picture)
-                    await axios
-                        .put(`${process.env.REACT_APP_API_URL}api/conversation/${res.data._id}/upload`, formData)
-                        .catch(err => console.log(err))
-                }
+            }).then(res => {
                 otherMembersIDs(res.data, uid).map(memberId => {
                     return websocket.current.emit("addConversation", {
                         receiverId: memberId,

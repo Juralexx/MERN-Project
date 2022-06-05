@@ -10,7 +10,7 @@ export function useCheckLocation() {
      * @param {*} redirection URL to redirect if param is not present in URL
      */
 
-    function isParam(param, redirection) {
+    async function isParam(param, redirection) {
         if (location.pathname.includes(param)) {
             return
         } else navigate(redirection)

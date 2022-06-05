@@ -24,7 +24,7 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
     const { isParam } = useCheckLocation()
 
     const updateInformations = async () => {
-        isParam(conversation._id, '/messenger/' + conversation._id)
+        await isParam(conversation._id, '/messenger/' + conversation._id)
 
         otherMembersIDs(conversation, uid).map(memberId => {
             return websocket.current.emit("updateConversation", {
@@ -37,8 +37,8 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
         setEdit(false)
     }
 
-    const updatePseudo = (userId) => {
-        isParam(conversation._id, '/messenger/' + conversation._id)
+    const updatePseudo = async (userId) => {
+        await isParam(conversation._id, '/messenger/' + conversation._id)
         
         otherMembersIDs(conversation, uid).map(memberId => {
             return websocket.current.emit("customizeConversationPseudo", {
@@ -52,8 +52,8 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
         setEditPseudo(null)
     }
 
-    const uploadPicture = () => {
-        isParam(conversation._id, '/messenger/' + conversation._id)
+    const uploadPicture = async () => {
+        await isParam(conversation._id, '/messenger/' + conversation._id)
 
         let formData = new FormData()
         formData.append("file", file)
@@ -67,8 +67,8 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
         setFile(null)
     }
 
-    const deletePicture = () => {
-        isParam(conversation._id, '/messenger/' + conversation._id)
+    const deletePicture = async () => {
+        await isParam(conversation._id, '/messenger/' + conversation._id)
         dispatch(removeConversationPicture(conversation._id))
         otherMembersIDs(conversation, uid).map(memberId => {
             return websocket.current.emit("deleteConversationPicture", {

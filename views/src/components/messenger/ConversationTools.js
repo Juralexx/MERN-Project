@@ -22,6 +22,7 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
             navigate('/messenger' + isConv._id)
         } else {
             const conversation = {
+                temporary: true,
                 type: 'dialog',
                 members: [{ _id: user._id, pseudo: user.pseudo, picture: user.picture }, { _id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }],
                 creator: { _id: user._id, pseudo: user.pseudo, picture: user.picture },

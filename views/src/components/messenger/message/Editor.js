@@ -117,8 +117,8 @@ const Editor = ({ message, setModify, setOpened, currentChat, members }) => {
      * On message submission
      */
 
-    const onSubmit = () => {
-        isParam(currentChat._id, '/messenger/' + currentChat._id)
+    const onSubmit = async () => {
+        await isParam(currentChat._id, '/messenger/' + currentChat._id)
         if (quill.getLength() > 1) {
             let messageContent = quill.getLength() > 1 ? quill.getContents() : []
             otherMembersIDs(currentChat, uid).map(memberId => {

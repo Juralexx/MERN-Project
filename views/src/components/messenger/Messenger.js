@@ -6,22 +6,25 @@ import { useFetchFriends } from './functions/useFetchFriends';
 import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
 import { useCheckLocation } from './functions/useCheckLocation';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { MessengerContext } from '../AppContext';
 import ConversationsMenu from './ConversationsMenu';
 import ConversationTools from './ConversationTools';
 import ReactPlayer from 'react-player'
 import ConversationBox from './ConversationBox';
 import New from './New';
-import { sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
+import { receiveCreateConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
 import { convertDeltaToStringNoHTML, isURLInText, otherMembersIDs, returnURLsInText } from './functions/function';
 import { randomNbID } from '../Utils';
+import { ChatLoader } from './tools/Loaders';
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
+    const [allConversations, setAllConversations] = useState([])
     const [conversations, setConversations] = useState([])
     const [favorites, setFavorites] = useState([])
+
     const [currentChat, setCurrentChat] = useState({})
-    const [isLoading, setLoading] = useState(true)
+    const [fetched, setFetched] = useState(false)
 
     const [temporaryConv, setTemporaryConv] = useState({})
 
@@ -37,8 +40,9 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
 
     useLocationchange(user, websocket, currentChat)
     const { isParam } = useCheckLocation()
-    const dispatch = useDispatch()
     const location = useLocation()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     /**
      * is on messenger
@@ -57,13 +61,26 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
      * Redirection
      */
 
+    useEffect(() => {
+        if (location.pathname === '/messenger' || location.pathname === '/messenger/') {
+            if (fetched) {
+                if (user.conversations.length > 0) {
+                    navigate('/messenger/' + allConversations[0]._id)
+                } else {
+                    navigate('/messenger/new')
+                }
+            }
+        }
+    }, [fetched, location.pathname, allConversations, user.conversations, navigate])
+
+
     /**
      * Get conversations
      */
 
     useEffect(() => {
-        if (user && conversations.length === 0 && favorites.length === 0) {
-            if (user.conversations && user.conversations.length > 0) {
+        if (user && allConversations.length === 0) {
+            if (user?.conversations?.length > 0) {
                 try {
                     const promises = user.conversations.map(async conv => {
                         return await axios
@@ -73,125 +90,167 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     })
                     Promise.all(promises).then(res => {
                         if (res.length > 0) {
-                            const sort = res.sort((a, b) => {
-                                return b.updatedAt.localeCompare(a.updatedAt)
-                            })
-                            const favs = user.conversations.filter(conv => conv.favorite === true)
+                            const sort = res.sort((a, b) => { return b.updatedAt.localeCompare(a.updatedAt) })
+                            const favs = user.conversations.filter(conv => conv.favorite)
+                            setAllConversations(sort)
                             if (favs.length > 0) {
-                                setFavorites(
-                                    sort.filter(conv => favs.some(fav => fav.id === conv._id))
-                                )
-                                setConversations(
-                                    sort.filter(conv => !favs.some(fav => fav.id === conv._id))
-                                )
+                                setFavorites(sort.filter(conv => favs.some(fav => fav.id === conv._id)))
+                                setConversations(sort.filter(conv => !favs.some(fav => fav.id === conv._id)))
                             } else {
                                 setConversations(sort)
                             }
-                            setTimeout(() => setLoading(false), 2000)
+                            setTimeout(() => setFetched(true), 2000)
                         }
                     })
                 } catch (err) {
                     console.error(err)
                 }
             } else {
-                setTimeout(() => setLoading(false), 2000)
+                setTimeout(() => setFetched(true), 2000)
             }
         }
-    }, [user, conversations, dispatch])
+    }, [user, conversations, favorites, dispatch])
 
     /**
      * FONCTIONS
      */
 
-    const handleSubmit = (quill, conversation, files, shared) => {
-        isParam(conversation._id, '/messenger/' + conversation._id)
+    const postMessage = (quill, conversation, files, shared) => {
+        let messageContent = quill.getLength() > 1 ? quill.getContents() : []
+        const message = {
+            _id: randomNbID(24),
+            sender: uid,
+            sender_pseudo: user.pseudo,
+            sender_picture: user.picture,
+            text: messageContent,
+            conversationId: conversation._id,
+            emojis: [],
+            createdAt: new Date().toISOString()
+        }
 
-        if (quill.getLength() > 1 || files.length > 0) {
-            let messageContent = quill.getLength() > 1 ? quill.getContents() : []
-            const message = {
-                _id: randomNbID(24),
-                sender: uid,
-                sender_pseudo: user.pseudo,
-                sender_picture: user.picture,
-                text: messageContent,
-                conversationId: conversation._id,
-                emojis: [],
-                createdAt: new Date().toISOString()
-            }
+        if (shared) {
+            Object.assign(message, { shared: shared })
+        }
 
-            if (shared) {
-                Object.assign(message, { shared: shared })
-            }
-
-            let text = convertDeltaToStringNoHTML(message)
-            if (isURLInText(text)) {
-                let embeds = []
-                returnURLsInText(text).forEach(url => {
-                    if (ReactPlayer.canPlay(url)) {
-                        embeds.push(url)
-                    }
-                })
-                if (embeds.length > 0) {
-                    Object.assign(message, { embeds: embeds })
+        let text = convertDeltaToStringNoHTML(message)
+        if (isURLInText(text)) {
+            let embeds = []
+            returnURLsInText(text).forEach(url => {
+                if (ReactPlayer.canPlay(url)) {
+                    embeds.push(url)
                 }
+            })
+            if (embeds.length > 0) {
+                Object.assign(message, { embeds: embeds })
             }
+        }
 
-            let filesArr = []
-            if (files.length > 0) {
-                files.forEach((file, key) => {
-                    filesArr.push({
-                        _id: message._id + key,
-                        type: file.type,
-                        name: file.name,
-                        url: URL.createObjectURL(file),
-                        date: new Date().toISOString(),
-                        userId: user._id,
-                        userPseudo: user.pseudo,
-                        messageId: message._id,
-                    })
+        let filesArr = []
+        if (files.length > 0) {
+            files.forEach((file, key) => {
+                filesArr.push({
+                    _id: message._id + key,
+                    type: file.type,
+                    name: file.name,
+                    url: URL.createObjectURL(file),
+                    date: new Date().toISOString(),
+                    userId: user._id,
+                    userPseudo: user.pseudo,
+                    messageId: message._id,
                 })
-            }
+            })
+        }
 
-            dispatch(sendMessage(conversation._id, { ...message, files: filesArr }))
-                .then(async () => {
-                    let uploads = []
-                    if (files.length > 0) {
-                        let formData = new FormData()
-                        for (let i = 0; i < files.length; i++) {
-                            formData.append('files', files[i])
-                        }
-                        await axios
-                            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/upload-files/${message._id}/${user._id}/${user.pseudo}`, formData)
-                            .then(res => {
-                                uploads = res.data.files
-                                files.splice(0, files.length)
-                            })
-                            .catch(err => console.log(err))
+        dispatch(sendMessage(conversation._id, { ...message, files: filesArr }))
+            .then(async () => {
+                let uploads = []
+                if (files.length > 0) {
+                    let formData = new FormData()
+                    for (let i = 0; i < files.length; i++) {
+                        formData.append('files', files[i])
                     }
-
-                    setNewMessage(message)
-
-                    if (quill.getLength() > 1) {
-                        quill.deleteText(0, quill.getLength())
-                    }
-
-                    if (conversation.type === "group") {
-                        otherMembersIDs(conversation, uid).map(memberId => {
-                            return websocket.current.emit("sendMessage", {
-                                receiverId: memberId,
-                                conversationId: conversation._id,
-                                message: { ...message, files: uploads }
-                            })
+                    await axios
+                        .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/upload-files/${message._id}/${user._id}/${user.pseudo}`, formData)
+                        .then(res => {
+                            uploads = res.data.files
+                            files.splice(0, files.length)
                         })
-                    } else {
-                        const receiver = conversation.members.find(member => member._id !== uid)
-                        websocket.current.emit("sendMessage", {
-                            receiverId: receiver._id,
+                        .catch(err => console.log(err))
+                }
+
+                setNewMessage(message)
+
+                if (quill.getLength() > 1) {
+                    quill.deleteText(0, quill.getLength())
+                }
+
+                if (conversation.type === "group") {
+                    otherMembersIDs(conversation, uid).map(memberId => {
+                        return websocket.current.emit("sendMessage", {
+                            receiverId: memberId,
                             conversationId: conversation._id,
                             message: { ...message, files: uploads }
                         })
-                    }
+                    })
+                } else {
+                    const receiver = conversation.members.find(member => member._id !== uid)
+                    websocket.current.emit("sendMessage", {
+                        receiverId: receiver._id,
+                        conversationId: conversation._id,
+                        message: { ...message, files: uploads }
+                    })
+                }
+            })
+    }
+
+    const handleSubmit = async (quill, conversation, files, shared) => {
+        if (quill.getLength() > 1 || files.length > 0) {
+            if (!conversation.temporary) {
+                await isParam(conversation._id, '/messenger/' + conversation._id)
+                postMessage(quill, conversation, files, shared)
+            } else {
+                let newConversation = {}
+                let members = [{ _id: user._id, pseudo: user.pseudo, picture: user.picture, date: new Date().toISOString() }]
+                conversation.members.map(member => {
+                    return (
+                        members.push({
+                            _id: member._id,
+                            pseudo: member.pseudo,
+                            picture: member.picture,
+                            date: new Date().toISOString(),
+                            requester: user._id,
+                            requester_pseudo: user.pseudo
+                        })
+                    )
                 })
+                await axios({
+                    method: "post",
+                    url: `${process.env.REACT_APP_API_URL}api/conversation/`,
+                    data: {
+                        type: conversation.type,
+                        members: members,
+                        owner: conversation.owner,
+                        creator: conversation.creator
+                    }
+                }).then(async res => {
+                    dispatch(receiveCreateConversation(res.data._id))
+                    newConversation = res.data
+                    await isParam(res.data._id, '/messenger/' + res.data._id)
+
+                    otherMembersIDs(res.data, uid).map(memberId => {
+                        return websocket.current.emit("addConversation", {
+                            receiverId: memberId,
+                            conversationId: res.data._id
+                        })
+                    })
+                    setTemporaryConv({})
+                    setAllConversations(convs => [res.data, ...convs])
+                    setConversations(convs => [res.data, ...convs])
+                    changeCurrentChat(res.data)
+                }).then(async () => {
+                    postMessage(quill, newConversation, files, shared)
+                })
+            }
         } else return
     }
 
@@ -234,8 +293,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
         })
     }, [websocket.current, websocket, setTyping, setTypingContext])
 
-    console.log(isLoading)
-
     return (
         <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, dispatch }}>
             <div className="messenger">
@@ -248,51 +305,52 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     changeCurrentChat={changeCurrentChat}
                     temporaryConv={temporaryConv}
                     setTemporaryConv={setTemporaryConv}
-                    isLoading={isLoading}
+                    fetched={fetched}
                     newMessage={newMessage}
                     notification={notification}
                 />
+                <div className="conversation-box">
+                    <div className="conversation-box-wrapper">
+                        {!fetched &&
+                            (location.pathname === '/messenger' || location.pathname === '/messenger/') && (
+                                <ChatLoader />
+                            )
+                        }
 
-                <Routes>
-                    {!isLoading &&
-                        conversations.length > 0 ? (
-                            <Route path="*" element={<Navigate to={conversations[0]?._id} />} />
-                        ) : (
-                            <Route path="*" element={<Navigate to='new' />} />
-                        )
-                    }
+                        <Routes>
+                            <Route path=":id" element={
+                                <ConversationBox
+                                    conversations={allConversations}
+                                    currentChat={currentChat}
+                                    setCurrentChat={setCurrentChat}
+                                    onlineUsers={onlineUsers}
+                                    messagesDates={messagesDates}
+                                    setMessagesDates={setMessagesDates}
+                                    handleSubmit={handleSubmit}
+                                    typingContext={typingContext}
+                                    isTyping={isTyping}
+                                    setTools={setTools}
+                                />
+                            } />
 
-                    <Route path=":id" element={
-                        <ConversationBox
-                            isLoading={isLoading}
-                            currentChat={currentChat}
-                            setCurrentChat={setCurrentChat}
-                            onlineUsers={onlineUsers}
-                            messagesDates={messagesDates}
-                            setMessagesDates={setMessagesDates}
-                            handleSubmit={handleSubmit}
-                            typingContext={typingContext}
-                            isTyping={isTyping}
-                            setTools={setTools}
-                        />
-                    } />
-
-                    <Route path="new" element={
-                        <New
-                            conversations={conversations}
-                            currentChat={currentChat}
-                            setCurrentChat={setCurrentChat}
-                            changeCurrentChat={changeCurrentChat}
-                            temporaryConv={temporaryConv}
-                            setTemporaryConv={setTemporaryConv}
-                            isTyping={isTyping}
-                            typingContext={typingContext}
-                            handleSubmit={handleSubmit}
-                            messagesDates={messagesDates}
-                            setMessagesDates={setMessagesDates}
-                        />
-                    } />
-                </Routes>
+                            <Route path="new" element={
+                                <New
+                                    conversations={conversations}
+                                    currentChat={currentChat}
+                                    setCurrentChat={setCurrentChat}
+                                    changeCurrentChat={changeCurrentChat}
+                                    temporaryConv={temporaryConv}
+                                    setTemporaryConv={setTemporaryConv}
+                                    isTyping={isTyping}
+                                    typingContext={typingContext}
+                                    handleSubmit={handleSubmit}
+                                    messagesDates={messagesDates}
+                                    setMessagesDates={setMessagesDates}
+                                />
+                            } />
+                        </Routes>
+                    </div>
+                </div>
 
                 <ConversationTools
                     onlineUsers={onlineUsers}
@@ -301,7 +359,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     changeCurrentChat={changeCurrentChat}
                     tools={tools}
                     setTools={setTools}
-                    conversations={conversations.concat(favorites)}
+                    conversations={allConversations}
                     setConversations={setConversations}
                     currentChat={currentChat}
                     members={members}

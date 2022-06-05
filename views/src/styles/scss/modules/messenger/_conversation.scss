@@ -14,10 +14,10 @@
             align-items     : center;
             justify-content : space-between;
             padding         : 7px 15px;
-            border-bottom   : 2px solid var(--light-border);
-            border-left     : 2px solid var(--light-border);
-            border-right    : 2px solid var(--light-border);
-            box-shadow      : 0 0 4px rgba(0, 0, 0, 0.2);
+            border-bottom   : 0px solid var(--light-border);
+            border-left     : 1px solid var(--light-border);
+            border-right    : 1px solid var(--light-border);
+            box-shadow      : var(--shadow-light);
             z-index         : 20;
 
             .conversation-box-members {
@@ -108,8 +108,8 @@
             overflow-x       : hidden;
             padding          : 10px;
             background-color : var(--content-x-light);
-            border-left      : 2px solid var(--light-border);
-            border-right     : 2px solid var(--light-border);
+            border-left      : 1px solid var(--light-border);
+            border-right     : 1px solid var(--light-border);
         }
     }
 }
