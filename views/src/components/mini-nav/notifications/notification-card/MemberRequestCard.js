@@ -6,14 +6,14 @@ import { Button } from '../../../tools/global/Button'
 import { avatar } from '../../../tools/hooks/useAvatar'
 import { FaUserFriends } from 'react-icons/fa'
 
-const MemberRequestCard = ({ sentNotification, websocket, user }) => {
+const MemberRequestCard = ({ notification, websocket, user }) => {
     const [accepted, setAccepted] = useState(false)
     const [refused, setRefused] = useState(false)
     const dispatch = useDispatch()
 
     const acceptProjectMemberRequest = async () => {
         const member = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
-        await axios.get(`${process.env.REACT_APP_API_URL}api/project/${sentNotification.projectId}`)
+        await axios.get(`${process.env.REACT_APP_API_URL}api/project/${notification.projectId}`)
             .then(res => {
                 res.data.members.map(member => {
                     return websocket.current.emit("acceptMemberRequest", {
@@ -22,12 +22,12 @@ const MemberRequestCard = ({ sentNotification, websocket, user }) => {
                     })
                 })
             })
-        dispatch(acceptMemberRequest(user._id, member, sentNotification.projectId, "project-member-request"))
+        dispatch(acceptMemberRequest(user._id, member, notification.projectId, "project-member-request"))
         setAccepted(true)
     }
 
     const refuseProjectMemberRequest = () => {
-        dispatch(refuseMemberRequest(user._id, sentNotification.projectId, "project-member-request"))
+        dispatch(refuseMemberRequest(user._id, notification.projectId, "project-member-request"))
         setRefused(true)
     }
 
@@ -42,21 +42,21 @@ const MemberRequestCard = ({ sentNotification, websocket, user }) => {
                 <>
                     <div className="notification-content">
                         <div className="left">
-                            <div className="sender">{sentNotification.requester}</div>
-                            <div className="content">{sentNotification.requester} vous invite à rejoindre le project :<br />{sentNotification.projectTitle}</div>
+                            <div className="sender">{notification.requester}</div>
+                            <div className="content">{notification.requester} vous invite à rejoindre le project :<br />{notification.projectTitle}</div>
                         </div>
-                        <div className="right" style={avatar(sentNotification.requesterPicture)}></div>
+                        <div className="right" style={avatar(notification.requesterPicture)}></div>
                     </div>
                     <div className="flex bottom">
                         <Button
                             text="Accepter"
                             className="btn btn-primary"
-                            onClick={() => acceptProjectMemberRequest(sentNotification)}
+                            onClick={() => acceptProjectMemberRequest(notification)}
                         />
                         <Button
                             text="Refuser"
                             className="btn btn-primary"
-                            onClick={() => refuseProjectMemberRequest(sentNotification)}
+                            onClick={() => refuseProjectMemberRequest(notification)}
                         />
                     </div>
                 </>
@@ -65,10 +65,10 @@ const MemberRequestCard = ({ sentNotification, websocket, user }) => {
                 <>
                     <div className="notification-content">
                         <div className="left">
-                            <div className="sender">{sentNotification.requester}</div>
-                            <div className="content">Vous avez rejoint le project {sentNotification.projectTitle} !</div>
+                            <div className="sender">{notification.requester}</div>
+                            <div className="content">Vous avez rejoint le project {notification.projectTitle} !</div>
                         </div>
-                        <div className="right" style={avatar(sentNotification.requesterPicture)}></div>
+                        <div className="right" style={avatar(notification.requesterPicture)}></div>
                     </div>
                 </>
             )}
@@ -76,10 +76,10 @@ const MemberRequestCard = ({ sentNotification, websocket, user }) => {
                 <>
                     <div className="notification-content">
                         <div className="left">
-                            <div className="sender">{sentNotification.requester}</div>
-                            <div className="content">Vous avez refuser le demande d'invitation de {sentNotification.requester}</div>
+                            <div className="sender">{notification.requester}</div>
+                            <div className="content">Vous avez refuser le demande d'invitation de {notification.requester}</div>
                         </div>
-                        <div className="right" style={avatar(sentNotification.requesterPicture)}></div>
+                        <div className="right" style={avatar(notification.requesterPicture)}></div>
                     </div>
                 </>
             )}

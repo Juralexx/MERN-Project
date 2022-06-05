@@ -4,9 +4,11 @@ import { MdNotificationsActive } from 'react-icons/md'
 import { HiLogout } from 'react-icons/hi'
 import { IoTrashBin } from 'react-icons/io5'
 import { deleteConv, leaveConversation } from '../functions/actions'
+import { useCheckLocation } from '../functions/useCheckLocation'
 
 const Settings = ({ uid, websocket, conversation, dispatch }) => {
     const [warning, setWarning] = useState(null)
+    const { isParam } = useCheckLocation()
 
     return (
         <div className="tools-displayer-content">
@@ -23,7 +25,7 @@ const Settings = ({ uid, websocket, conversation, dispatch }) => {
                 className="delete"
                 open={warning === 'leave'}
                 setOpen={setWarning}
-                onValidate={() => leaveConversation(conversation, uid)}
+                onValidate={() => leaveConversation(conversation, uid, uid, websocket, dispatch, isParam)}
                 onClose={() => setWarning(null)}
             >
             </Warning>
@@ -34,7 +36,7 @@ const Settings = ({ uid, websocket, conversation, dispatch }) => {
                 className="delete"
                 open={warning === 'delete'}
                 setOpen={setWarning}
-                onValidate={() => deleteConv(conversation, uid, websocket, dispatch)}
+                onValidate={() => deleteConv(conversation, uid, websocket, dispatch, isParam)}
                 onClose={() => setWarning(null)}
             >
             </Warning>

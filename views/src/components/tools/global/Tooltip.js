@@ -23,7 +23,7 @@ const Tooltip = (props) => {
                     element: arrowElement,
                     padding: 5,
                 },
-            }
+            },
         ]
     })
 

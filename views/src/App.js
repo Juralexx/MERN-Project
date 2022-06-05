@@ -208,15 +208,13 @@ function App() {
                     websocket={websocket}
                     onlineUsers={onlineUsers}
                 />
-                {send &&
-                    <NotificationCard
-                        user={user}
-                        websocket={websocket}
-                        notification={notification}
-                        etSend={setSend}
-                        send={send}
-                    />
-                }
+                <NotificationCard
+                    user={user}
+                    websocket={websocket}
+                    notification={notification}
+                    setSend={setSend}
+                    send={send}
+                />
             </UserContext.Provider>
         </UidContext.Provider>
     )

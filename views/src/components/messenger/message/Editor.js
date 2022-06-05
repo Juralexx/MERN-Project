@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react'
+import { MessengerContext } from '../../AppContext';
+import { useQuill } from '../editor/useQuill';
+import { useEmoji } from '../editor/useEmoji';
+import { useMention } from '../editor/useMention';
+import { useCheckLocation } from '../functions/useCheckLocation';
 import ReactQuill from "react-quill";
 import EditorToolbar, { formats, modules } from "../editor/EditorToolbar";
 import EmojiPicker from '../tools/EmojiPicker';
 import Mention from '../editor/Mention';
 import Emoji from '../editor/Emoji';
 import Link from '../editor/Link';
-import { MessengerContext } from '../../AppContext';
-import { useQuill } from '../editor/useQuill';
-import { useEmoji } from '../editor/useEmoji';
-import { useMention } from '../editor/useMention';
 import { pickEmoji, convertDeltaToString, otherMembersIDs } from '../functions/function';
 import { updateMessage } from '../../../actions/messenger.action';
 import { IoText } from 'react-icons/io5'
@@ -18,14 +19,13 @@ import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
 const Editor = ({ message, setModify, setOpened, currentChat, members }) => {
     const { uid, websocket, dispatch } = useContext(MessengerContext)
     const { quill, quillRef } = useQuill()
-
     const [isToolbar, setToolbar] = useState(false)
     const [position, setPosition] = useState(0)
     const [disabled, setDisabled] = useState(true)
+    const { isParam } = useCheckLocation()
 
     const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
     const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis } = useEmoji(quill)
-
     const [isLink, setLink] = useState(false)
 
     /**
@@ -43,16 +43,6 @@ const Editor = ({ message, setModify, setOpened, currentChat, members }) => {
             if (length > 1) {
                 setDisabled(false)
             } else setDisabled(true)
-
-            if (length <= 1) {
-                setPosition(0)
-                if (isMention) {
-                    setMention(false)
-                }
-                if (isEmoji) {
-                    setEmoji(false)
-                }
-            }
 
             if (length > 1) {
                 let index = editor.getSelection().index
@@ -128,12 +118,14 @@ const Editor = ({ message, setModify, setOpened, currentChat, members }) => {
      */
 
     const onSubmit = () => {
+        isParam(currentChat._id, '/messenger/' + currentChat._id)
         if (quill.getLength() > 1) {
             let messageContent = quill.getLength() > 1 ? quill.getContents() : []
             otherMembersIDs(currentChat, uid).map(memberId => {
                 return websocket.current.emit("updateMessage", {
                     receiverId: memberId,
                     messageId: message._id,
+                    conversationId: currentChat._id,
                     text: messageContent
                 })
             })

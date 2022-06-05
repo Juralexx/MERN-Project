@@ -72,7 +72,7 @@ const io = new Server(server, {
     }
 });
 
-let users = new Array()
+const users = new Array()
 
 const addUser = (userId, socketId) => {
     !users.some(user => user.userId === userId)
@@ -100,13 +100,15 @@ io.on("connect", (socket) => {
 
     socket.on("changeCurrentConversation", ({ userId, conversationId }) => {
         const user = users.find(member => member.userId === userId)
-        if (user) user.conversationId = conversationId
+        if (user) {
+            user.conversationId = conversationId
+        }
     })
 
     socket.on('typing', ({ sender, receiverId, conversationId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            if (user.conversationId === conversationId) {
+            if (user.conversationId && user.conversationId === conversationId) {
                 return io.to(user.socketId).emit('typing', {
                     sender,
                     conversationId
@@ -126,7 +128,7 @@ io.on("connect", (socket) => {
 
     socket.on('updateConversation', ({ receiverId, conversationId, name, description }) => {
         const user = users.filter(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('updateConversation', {
                 name,
                 description
@@ -136,7 +138,7 @@ io.on("connect", (socket) => {
 
     socket.on('updateConversationPicture', ({ receiverId, conversationId, picture }) => {
         const user = users.filter(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('updateConversationPicture', {
                 picture
             })
@@ -145,7 +147,7 @@ io.on("connect", (socket) => {
 
     socket.on('deleteConversationPicture', ({ receiverId, conversationId }) => {
         const user = users.filter(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('deleteConversationPicture')
         }
     })
@@ -161,7 +163,7 @@ io.on("connect", (socket) => {
 
     socket.on('addConversationMember', ({ receiverId, newMember }) => {
         const user = users.filter(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('addConversationMember', {
                 newMember
             })
@@ -179,7 +181,7 @@ io.on("connect", (socket) => {
 
     socket.on('removeConversationMember', ({ receiverId, memberId }) => {
         const user = users.filter(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('removeConversationMember', {
                 memberId
             })
@@ -188,7 +190,7 @@ io.on("connect", (socket) => {
 
     socket.on('leaveConversation', ({ receiverId, conversationId }) => {
         const user = users.filter(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('leaveConversation', {
                 conversationId
             })
@@ -196,7 +198,7 @@ io.on("connect", (socket) => {
     })
 
     socket.on("sendMessage", ({ receiverId, conversationId, message }) => {
-        let user = users.find(member => member.userId === receiverId)
+        const user = users.find(member => member.userId === receiverId)
         if (user) {
             if (user.conversationId && user.conversationId === conversationId) {
                 return io.to(user.socketId).emit("getMessage", {
@@ -216,7 +218,7 @@ io.on("connect", (socket) => {
 
     socket.on('updateMessage', ({ receiverId, conversationId, messageId, text }) => {
         const user = users.find(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('updateMessage', {
                 messageId,
                 text
@@ -226,7 +228,7 @@ io.on("connect", (socket) => {
 
     socket.on('deleteMessage', ({ receiverId, conversationId, messageId }) => {
         const user = users.find(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('deleteMessage', {
                 messageId
             })
@@ -235,7 +237,7 @@ io.on("connect", (socket) => {
 
     socket.on('addEmoji', async ({ receiverId, conversationId, messageId, emoji }) => {
         const user = await users.find(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('addEmoji', {
                 conversationId,
                 messageId,
@@ -246,7 +248,7 @@ io.on("connect", (socket) => {
 
     socket.on('removeEmoji', async ({ receiverId, conversationId, messageId, emojiId }) => {
         const user = await users.find(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('removeEmoji', {
                 conversationId,
                 messageId,
@@ -257,7 +259,7 @@ io.on("connect", (socket) => {
 
     socket.on('deleteFile', ({ receiverId, conversationId, messageId, file }) => {
         const user = users.find(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('deleteFile', {
                 messageId,
                 file
@@ -267,7 +269,7 @@ io.on("connect", (socket) => {
 
     socket.on('customizeConversationPseudo', ({ receiverId, conversationId, userId, pseudo }) => {
         const user = users.find(member => member.userId === receiverId)
-        if (user) {
+        if (user && user.conversationId && user.conversationId === conversationId) {
             return io.to(user.socketId).emit('customizeConversationPseudo', {
                 userId,
                 pseudo

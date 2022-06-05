@@ -2203,6 +2203,103 @@ h1, h2, h3, h4, h5 {
   font-size: 14px;
 }
 
+.notification-message {
+  position: fixed;
+  height: auto;
+  width: 370px;
+  right: -110%;
+  bottom: 20px;
+  background: var(--content-light);
+  z-index: 1000;
+  font-size: 13px;
+  border-radius: var(--radius);
+  -webkit-box-shadow: var(--shadow-lg);
+          box-shadow: var(--shadow-lg);
+  border: 2px solid var(--light-border);
+  cursor: pointer;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.notification-message.active {
+  right: 20px;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.notification-message .top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 7px 15px 0;
+  line-height: 14px;
+}
+.notification-message .top .icon {
+  width: 11px;
+  height: 11px;
+  margin-right: 10px;
+  color: var(--primary);
+}
+.notification-message .top .subject {
+  margin-right: 10px;
+  color: var(--text-secondary);
+}
+.notification-message .notification-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 6px 15px 10px;
+}
+.notification-message .notification-content .left {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.notification-message .notification-content .right {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.notification-message .notification-content .right .sender {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.notification-message .notification-content .right p {
+  color: var(--text-secondary);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  line-height: 18px;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.notification-message .bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 15px 10px;
+}
+.notification-message .bottom button {
+  color: var(--primary);
+}
+.notification-message .bottom button:hover {
+  color: var(--primary-light);
+}
+.notification-message .bottom button:nth-child(1) {
+  margin-right: 15px;
+}
+
 /* components */
 #tooltip {
   display: -webkit-box;
@@ -2213,12 +2310,12 @@ h1, h2, h3, h4, h5 {
   padding: 7px 10px;
   border-radius: var(--radius);
   background: var(--tooltip);
+  border: 1px solid var(--light-border);
   z-index: 700;
   visibility: hidden;
   opacity: 0;
   -webkit-transition: visibility 5s, opacity 0.2s;
   transition: visibility 5s, opacity 0.2s;
-  border: 1px solid var(--light-border);
 }
 #tooltip.open {
   visibility: visible;
@@ -2240,6 +2337,7 @@ h1, h2, h3, h4, h5 {
   height: 12px;
   background: inherit;
   visibility: hidden;
+  border-radius: 3px;
   content: "";
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
@@ -2302,7 +2400,6 @@ h1, h2, h3, h4, h5 {
   visibility: hidden;
 }
 .modal_wrapper .modal_container {
-  position: relative;
   margin: auto;
   width: 500px;
   padding: 15px;
@@ -2383,7 +2480,8 @@ h1, h2, h3, h4, h5 {
   color: var(--text-tertiary);
   margin-left: 3px;
 }
-.modal_wrapper .modal_cover {
+
+.modal_cover {
   display: none;
   position: fixed;
   top: 0;
@@ -2393,7 +2491,7 @@ h1, h2, h3, h4, h5 {
   background: var(--modal-cover);
   z-index: 100000;
 }
-.modal_wrapper .modal_cover.modal_cover-active {
+.modal_cover.modal_cover-active {
   display: block;
 }
 
@@ -8934,7 +9032,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   font-weight: 500;
 }
 .notifications-menu .notifications-header .title {
-  font-size: 22px;
+  font-size: 20px;
 }
 .notifications-menu .notifications-navbar {
   display: -webkit-box;
@@ -8947,12 +9045,15 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   border-bottom: 1px solid var(--content-light);
 }
 .notifications-menu .notifications-navbar .navlink {
-  padding: 4px 12px;
-  cursor: pointer;
+  padding: 3px 10px;
   background-color: var(--content-light);
   border-radius: var(--radius);
-  -webkit-box-shadow: var(--shadow-tiny);
-          box-shadow: var(--shadow-tiny);
+  background: var(--x-light);
+  border: 1px solid var(--light-border);
+  cursor: pointer;
+}
+.notifications-menu .notifications-navbar .navlink:hover {
+  background: var(--x-light);
 }
 .notifications-menu .notifications-navbar .navlink.active {
   background-color: var(--primary);
@@ -8994,6 +9095,64 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
     right: 0;
   }
 }
+.notification-ticket {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px;
+  padding-right: 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.notification-ticket:hover {
+  background-color: var(--x-light);
+}
+.notification-ticket .left {
+  margin-right: 10px;
+}
+.notification-ticket .right .notification-infos {
+  color: var(--text-secondary);
+  line-height: 18px;
+}
+.notification-ticket .right .notification-infos a {
+  font-weight: 600;
+  color: var(--text);
+}
+.notification-ticket .right .date {
+  font-size: 12px;
+  color: var(--primary);
+}
+.notification-ticket .right .notification-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-top: 8px;
+}
+.notification-ticket .right .notification-actions button {
+  width: 48.5%;
+  height: 30px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.notification-ticket .right .notification-actions button:nth-child(2) {
+  background: var(--x-light);
+  border: 1px solid var(--light-border);
+}
+.notification-ticket.unseen:before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--primary);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
 .settings-menu {
   width: 300px;
   height: auto;
@@ -9708,65 +9867,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   margin-right: 6px;
 }
 
-.notification-message {
-  position: absolute;
-  height: auto;
-  width: 370px;
-  right: 20px;
-  bottom: 20px;
-  background: var(--content);
-  z-index: 1000;
-  font-size: 13px;
-  border-radius: var(--radius);
-}
-.notification-message .top {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 15px 15px 0 15px;
-}
-.notification-message .top svg {
-  width: 16px;
-  height: 16px;
-  margin-right: 10px;
-  color: var(--primary);
-}
-.notification-message .top .subject {
-  margin-right: 10px;
-  color: white;
-}
-.notification-message .notification-content {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 7px 15px 15px;
-}
-.notification-message .notification-content .left .sender {
-  font-size: 16px;
-  color: white;
-}
-.notification-message .notification-content .left p {
-  margin: 0;
-}
-.notification-message .notification-content .right {
-  width: 35px;
-  height: 35px;
-  border-radius: 30px;
-}
-.notification-message .bottom {
-  padding: 10px 15px;
-  background: #474c56;
-  border-radius: 0 0 3px 3px;
-}
-.notification-message .bottom button {
-  background: none;
-  border: none;
-  color: white;
-}
-
 .conversation-box {
   position: relative;
   width: 50%;
@@ -9793,8 +9893,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  height: 60px;
-  padding: 8px 15px;
+  padding: 7px 15px;
   border-bottom: 2px solid var(--light-border);
   border-left: 2px solid var(--light-border);
   border-right: 2px solid var(--light-border);
@@ -9810,7 +9909,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
       -ms-flex-align: center;
           align-items: center;
   cursor: pointer;
-  padding: 6px;
+  padding: 2px 4px;
   border-radius: var(--radius);
 }
 .conversation-box .conversation-box-wrapper .conversation-box-top .conversation-box-members:hover {
@@ -10058,17 +10157,20 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   margin-top: 2px;
   font-size: 12px;
   color: var(--text-secondary);
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
 }
 .conversation-menu .conversation .conversation_inner .conversation-infos .last-message-wrapper .last-message {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 .conversation-menu .conversation .conversation_inner .conversation-infos .last-message-wrapper .last-message div:nth-child(1) {
   white-space: nowrap;
@@ -10080,7 +10182,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   color: var(--text-secondary);
   text-overflow: ellipsis;
   overflow: hidden;
-  max-width: 90%;
+  max-width: 70%;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -10095,8 +10197,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .conversation-menu .conversation .conversation_inner .conversation-infos .last-message-wrapper .unseen-badge {
   position: absolute;
-  right: 5px;
-  bottom: 0;
+  right: 3px;
+  bottom: 3px;
   width: 11px;
   height: 11px;
   border-radius: 50%;
@@ -11335,15 +11437,13 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .message-preview .message-preview-right .message-text {
   color: var(--text-secondary);
-}
-.message-preview .message-preview-right .message-text p {
   vertical-align: bottom;
   line-height: 20px;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 85%;
+  width: 97%;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 .message-preview.small {

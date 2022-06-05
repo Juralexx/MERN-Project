@@ -1,6 +1,6 @@
 import ReactQuill from "react-quill"
 import EditorToolbar, { formats, modules } from '../editor/EditorToolbar'
-import EmojiPicker from "./EmojiPicker"
+import EmojiPicker from "../tools/EmojiPicker"
 import { MdOutlineAdd, MdOutlineAlternateEmail, MdOutlineLink } from "react-icons/md"
 import { BsEmojiSmile } from "react-icons/bs"
 import { FaPhotoVideo } from "react-icons/fa"

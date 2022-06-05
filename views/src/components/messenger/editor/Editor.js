@@ -1,5 +1,9 @@
 import React, { useContext, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
+import { MessengerContext } from '../../AppContext';
+import { useQuill } from './useQuill';
+import { useEmoji } from './useEmoji';
+import { useMention } from './useMention';
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 import EmojiPicker from '../tools/EmojiPicker';
@@ -9,10 +13,6 @@ import Emoji from './Emoji';
 import Link from './Link';
 import Typing from '../tools/Typing';
 import ScrollButton from '../tools/ScrollButton';
-import { MessengerContext } from '../../AppContext';
-import { useQuill } from './useQuill';
-import { useEmoji } from './useEmoji';
-import { useMention } from './useMention';
 import { isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, pickEmoji } from '../functions/function';
 import { addClass } from '../../Utils';
 import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
@@ -51,21 +51,21 @@ const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, l
         let length = editor?.getLength()
         let txt = editor?.getText()
 
-        if (!isTyping) {
-            otherMembersIDs(currentChat, user._id).map(memberId => {
-                return websocket.current.emit('typing', {
-                    sender: user.pseudo,
-                    receiverId: memberId,
-                    conversationId: currentChat._id
-                })
-            })
-        }
-
         if (length > 1) {
             setDisabled(false)
+            if (!isTyping) {
+                otherMembersIDs(currentChat, user._id).map(memberId => {
+                    return websocket.current.emit('typing', {
+                        sender: user.pseudo,
+                        receiverId: memberId,
+                        conversationId: currentChat._id
+                    })
+                })
+            }
         } else setDisabled(true)
 
         if (length >= 1) {
+
             let index = editor?.getSelection()?.index
             let previous = txt[index - 2]
             let current = txt[index - 1]

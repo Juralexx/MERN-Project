@@ -31,17 +31,15 @@
         }
         
         .message-text {
-            color : var(--text-secondary);
-            p {
-                vertical-align     : bottom;
-                line-height        : 20px;
-                text-overflow      : ellipsis;
-                overflow           : hidden;
-                width              : 85%;
-                display            : -webkit-box;
-                -webkit-line-clamp : 1;
-                -webkit-box-orient : vertical;
-            }
+            color              : var(--text-secondary);
+            vertical-align     : bottom;
+            line-height        : 20px;
+            text-overflow      : ellipsis;
+            overflow           : hidden;
+            width              : 97%;
+            display            : -webkit-box;
+            -webkit-line-clamp : 2;
+            -webkit-box-orient : vertical;
         }
     }
 

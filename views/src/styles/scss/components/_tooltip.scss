@@ -5,11 +5,11 @@
     padding       : 7px 10px;
     border-radius : var(--radius);
     background    : var(--tooltip);
+    border        : 1px solid var(--light-border);
     z-index       : 700;
     visibility    : hidden;
     opacity       : 0;
     transition    : visibility 5s, opacity .2s;
-    border        : 1px solid var(--light-border);
 
     &.open {
         visibility : visible;
@@ -30,14 +30,15 @@
         visibility : hidden;
         
         &:before {
-            position   : absolute;
-            width      : 12px;
-            height     : 12px;
-            background : inherit;
-            visibility : hidden;
-            content    : '';
-            transform  : rotate(45deg);
-            transition : visibility 5s;
+            position      : absolute;
+            width         : 12px;
+            height        : 12px;
+            background    : inherit;
+            visibility    : hidden;
+            border-radius : 3px;
+            content       : '';
+            transform     : rotate(45deg);
+            transition    : visibility 5s;
         }
     }
 

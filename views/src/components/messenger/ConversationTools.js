@@ -1,24 +1,26 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { MessengerContext } from '../AppContext';
+import { useOnline } from './functions/useOnline';
 import ToolsMenu from '../tools/global/ToolsMenu';
 import Tools from './conversation-tools/Tools';
+import { OnlineUserLoader } from './tools/Loaders';
 import { IconToggle } from '../tools/global/Button';
 import { isConversation } from './functions/function';
-import { OnlineUserLoader } from './tools/Loaders';
 import { avatar } from '../tools/hooks/useAvatar';
-import { MessengerContext } from '../AppContext';
 import { BiSearchAlt } from 'react-icons/bi';
-import { useOnline } from './functions/useOnline';
 
 const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setConversations, setCurrentChat, changeCurrentChat, tools, setTools }) => {
     const { uid, user, websocket, friendsArr, dispatch } = useContext(MessengerContext)
     const { online, offline } = useOnline(friendsArr, onlineUsers)
+    const navigate = useNavigate()
 
     const handleClick = (receiver) => {
         let isConv = isConversation(conversations, [receiver, user])
-        if (isConv !== false)
+        if (isConv !== false) {
             changeCurrentChat(isConv)
-        else {
+            navigate('/messenger' + isConv._id)
+        } else {
             const conversation = {
                 type: 'dialog',
                 members: [{ _id: user._id, pseudo: user.pseudo, picture: user.picture }, { _id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }],

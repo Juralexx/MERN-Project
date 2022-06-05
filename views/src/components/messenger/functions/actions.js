@@ -6,7 +6,8 @@ import { otherMembersIDs } from './function';
 * Delete conversation
  */
 
- export const deleteConv = (conversation, uid, websocket, dispatch) => {
+ export const deleteConv = (conversation, uid, websocket, dispatch, isParam) => {
+    isParam(conversation._id, '/messenger/' + conversation._id)
     otherMembersIDs(conversation, uid).map(memberId => {
         return websocket.current.emit("deleteConversation", {
             receiverId: memberId,
@@ -20,11 +21,13 @@ import { otherMembersIDs } from './function';
  * Leave conversation
  */
 
-export const leaveConversation = (conversation, memberId, uid, websocket, dispatch) => {
+export const leaveConversation = (conversation, memberId, uid, websocket, dispatch, isParam) => {
+    isParam(conversation._id, '/messenger/' + conversation._id)
     dispatch(removeMember(conversation._id, memberId))
     otherMembersIDs(conversation, uid).map(member => {
         return websocket.current.emit("removeConversationMember", {
             receiverId: member,
+            conversationId: conversation._id,
             memberId: memberId,
         })
     })
@@ -38,7 +41,8 @@ export const leaveConversation = (conversation, memberId, uid, websocket, dispat
  * Add onversation member
  */
 
-export const addNewMember = (conversation, member, user, websocket, dispatch) => {
+export const addNewMember = (conversation, member, user, websocket, dispatch, isParam) => {
+    isParam(conversation._id, '/messenger/' + conversation._id)
     let newMember = {
         id: member._id,
         pseudo: member.pseudo,
@@ -51,6 +55,7 @@ export const addNewMember = (conversation, member, user, websocket, dispatch) =>
     otherMembersIDs(conversation, user._id).map(member => {
         return websocket.current.emit("addConversationMember", {
             receiverId: member,
+            conversationId: conversation._id,
             newMember: newMember,
         })
     })
@@ -64,10 +69,12 @@ export const addNewMember = (conversation, member, user, websocket, dispatch) =>
  * Remove message
  */
 
-export const removeMessage = (message, conversation, uid, websocket, dispatch) => {
+export const removeMessage = (message, conversation, uid, websocket, dispatch, isParam) => {
+    isParam(conversation._id, '/messenger/' + conversation._id)
     otherMembersIDs(conversation, uid).map(memberId => {
         return websocket.current.emit("deleteMessage", {
             receiverId: memberId,
+            conversationId: conversation._id,
             messageId: message._id
         })
     })
@@ -78,26 +85,28 @@ export const removeMessage = (message, conversation, uid, websocket, dispatch) =
  * Delete file
  */
 
-export const deleteFiles = (file, user, websocket, currentChat, message, dispatch) => {
-    otherMembersIDs(currentChat, user._id).map(memberId => {
+export const deleteFiles = (file, user, websocket, conversation, messageId, dispatch, isParam) => {
+    isParam(conversation._id, '/messenger/' + conversation._id)
+    let message = conversation.messages.find(mess => mess._id === messageId)
+    otherMembersIDs(conversation, user._id).map(memberId => {
         return websocket.current.emit("deleteFile", {
             receiverId: memberId,
-            conversationId: currentChat._id,
+            conversationId: conversation._id,
             messageId: message._id,
             file: file
         })
     })
-    dispatch(deleteFile(currentChat._id, message._id, file))
+    dispatch(deleteFile(conversation._id, message._id, file))
     if (message.text) {
         if (message.text.length === 0 && message.files.length - 1 <= 0) {
-            removeMessage(message, currentChat, user._id, websocket, dispatch)
+            removeMessage(message, conversation, user._id, websocket, dispatch)
         }
     } else {
         const fecthMessage = async () => {
-            await axios.get(`${process.env.REACT_APP_API_URL}api/conversation/${currentChat._id}/${message}`)
+            await axios.get(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/${message}`)
                 .then(res => {
                     if (res.data.text.length === 0 && res.data.files.length - 1 <= 0) {
-                        removeMessage(message, currentChat, user._id, websocket, dispatch)
+                        removeMessage(message, conversation, user._id, websocket, dispatch)
                     }
                 })
         }

@@ -13,8 +13,7 @@
             display         : flex;
             align-items     : center;
             justify-content : space-between;
-            height          : 60px;
-            padding         : 8px 15px;
+            padding         : 7px 15px;
             border-bottom   : 2px solid var(--light-border);
             border-left     : 2px solid var(--light-border);
             border-right    : 2px solid var(--light-border);
@@ -25,7 +24,7 @@
                 display       : flex;
                 align-items   : center;
                 cursor        : pointer;
-                padding       : 6px;
+                padding       : 2px 4px;
                 border-radius : var(--radius);
 
                 &:hover {

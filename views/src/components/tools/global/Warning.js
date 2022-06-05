@@ -12,19 +12,21 @@ const Warning = (props) => {
     const validate = onValidate ? () => { setOpen(false); onValidate() } : () => setOpen(false)
 
     return (
-        <div className={wrapperClass}>
-            <div className={containerClass}>
-                <div className="close_modal" onClick={close}><IoClose /></div>
-                <div className="warning_title">{title}</div>
-                <div className="warning_text">{text}</div>
-                {props.children}
-                <div className="btn_container">
-                    <TextButton text={cancelBtn || "Annuler"} className="mr-2" onClick={close} />
-                    <Button text={validateBtn || "Valider"} className={className ? className : "" } onClick={validate} />
+        <>
+            <div className={wrapperClass}>
+                <div className={containerClass}>
+                    <div className="close_modal" onClick={close}><IoClose /></div>
+                    <div className="warning_title">{title}</div>
+                    <div className="warning_text">{text}</div>
+                    {props.children}
+                    <div className="btn_container">
+                        <TextButton text={cancelBtn || "Annuler"} className="mr-2" onClick={close} />
+                        <Button text={validateBtn || "Valider"} className={className ? className : ""} onClick={validate} />
+                    </div>
                 </div>
             </div>
             <div className={coverClass} onClick={close}></div>
-        </div>
+        </>
     )
 }
 

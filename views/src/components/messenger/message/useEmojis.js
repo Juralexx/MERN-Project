@@ -3,10 +3,12 @@ import { addEmoji, removeEmoji } from "../../../actions/messenger.action"
 import { MessengerContext } from "../../AppContext"
 import { randomNbID } from "../../Utils"
 import { otherMembersIDs } from "../functions/function"
+import { useCheckLocation } from "../functions/useCheckLocation"
 
-export function useEmojis(message) {
-    const { user, websocket, currentChat, dispatch } = useContext(MessengerContext)
+export function useEmojis(message, conversation) {
+    const { user, websocket, dispatch } = useContext(MessengerContext)
     const [emojis, setEmojis] = useState([])
+    const { isParam } = useCheckLocation()
 
     /**
      * Concat same emojis
@@ -31,6 +33,8 @@ export function useEmojis(message) {
      */
 
     const handleEmoji = (emoji) => {
+        isParam(conversation._id, '/messenger/' + conversation._id)
+        
         let isEmoji = {}
         if (emojis.length > 0) {
             for (let i = 0; i < emojis.length; i++) {
@@ -45,26 +49,26 @@ export function useEmojis(message) {
         }
 
         if (Object.keys(isEmoji).length > 0) {
-            dispatch(removeEmoji(currentChat._id, message._id, isEmoji._id))
-            otherMembersIDs(currentChat, user._id).map(memberId => {
+            dispatch(removeEmoji(conversation._id, message._id, isEmoji._id))
+            otherMembersIDs(conversation, user._id).map(memberId => {
                 return websocket.current.emit("removeEmoji", {
                     receiverId: memberId,
-                    conversationId: currentChat._id,
+                    conversationId: conversation._id,
                     messageId: message._id,
                     emojiId: isEmoji._id
                 })
             })
         } else {
             let emoj = { ...emoji, _id: randomNbID(24), sender_pseudo: user.pseudo, sender_id: user._id }
-            otherMembersIDs(currentChat, user._id).map(memberId => {
+            otherMembersIDs(conversation, user._id).map(memberId => {
                 return websocket.current.emit("addEmoji", {
                     receiverId: memberId,
-                    conversationId: currentChat._id,
+                    conversationId: conversation._id,
                     messageId: message._id,
                     emoji: emoj
                 })
             })
-            dispatch(addEmoji(currentChat._id, message._id, emoj))
+            dispatch(addEmoji(conversation._id, message._id, emoj))
         }
     }
 

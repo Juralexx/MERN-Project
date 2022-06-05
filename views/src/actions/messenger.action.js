@@ -261,23 +261,12 @@ export const receiveRemoveMember = (conversationId) => {
 
 export const POST_MESSAGE = "POST_MESSAGE"
 
-export const sendMessage = (conversationId, message, files, user) => {
+export const sendMessage = (conversationId, message) => {
     return async (dispatch) => {
         await axios
             .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-message`, { message: message })
-            .then(async res => {
-                if (files.length > 0) {
-                    let formData = new FormData()
-                    for (let i = 0; i < files.length; i++) {
-                        formData.append('files', files[i])
-                    }
-                    await axios.put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload-files/${message._id}/${user._id}/${user.pseudo}`, formData)
-                        .catch(err => console.log(err))
-                }
-            })
             .then(res => {
                 dispatch({ type: POST_MESSAGE, payload: { message } })
-                return res
             })
             .catch(err => console.error(err))
     }

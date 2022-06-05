@@ -3,27 +3,41 @@ import FriendRequestCard from './FriendRequestCard'
 import MemberRequestCard from './MemberRequestCard'
 import MessageCard from './MessageCard'
 
-const NotificationCard = ({ sentNotification, setSend, send, user, websocket }) => {
+const NotificationCard = ({ notification, setSend, send, user, websocket }) => {
 
-    useEffect(() => {
-        let interval
-        if (send) {
-            interval = setInterval(() => { setSend(false) }, 5000)
-        } else clearInterval(interval)
-        return () => clearInterval(interval)
-    }, [send, setSend])
+    // useEffect(() => {
+    //     let interval
+    //     if (send) {
+    //         interval = setInterval(() => { setSend(false) }, 5000)
+    //     } else {
+    //         clearInterval(interval)
+    //     }
+    //     return () => clearInterval(interval)
+    // }, [send, setSend])
 
     return (
-        Object.keys(sentNotification).length !== 0 && (
+        Object.keys(notification).length > 0 && (
             <>
-                {sentNotification.type === "new-message" &&
-                    <MessageCard sentNotification={sentNotification} setSend={setSend} />
+                {notification.type === "new-message" &&
+                    <MessageCard
+                        user={user}
+                        notification={notification}
+                        setSend={setSend}
+                    />
                 }
-                {sentNotification.type === "friend-request" &&
-                    <FriendRequestCard sentNotification={sentNotification} websocket={websocket} user={user} />
+                {notification.type === "friend-request" &&
+                    <FriendRequestCard
+                        user={user}
+                        websocket={websocket}
+                        notification={notification}
+                    />
                 }
-                {sentNotification.type === "project-member-request" &&
-                    <MemberRequestCard sentNotification={sentNotification} websocket={websocket} user={user} />
+                {notification.type === "project-member-request" &&
+                    <MemberRequestCard
+                        user={user}
+                        websocket={websocket}
+                        notification={notification}
+                    />
                 }
             </>
         )

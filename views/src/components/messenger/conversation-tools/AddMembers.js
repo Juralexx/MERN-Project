@@ -1,16 +1,18 @@
 import React from 'react'
+import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
+import { useCheckLocation } from '../functions/useCheckLocation'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import { otherMembersIDs } from '../functions/function'
 import { TextButton } from '../../tools/global/Button'
 import { IconInput } from '../../tools/global/Inputs'
+import { addNewMember } from '../functions/actions'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
 import { HiArrowSmLeft } from 'react-icons/hi'
-import { addNewMember } from '../functions/actions'
-import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
 
 const AddMembers = ({ user, websocket, friendsArr, conversation, setAddMembers, dispatch }) => {
     const membersToAdd = friendsArr.filter(f => !otherMembersIDs(conversation, user._id).includes(f._id))
     const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(membersToAdd, 'pseudo')
+    const { isParam } = useCheckLocation()
 
     return (
         <>
@@ -35,7 +37,7 @@ const AddMembers = ({ user, websocket, friendsArr, conversation, setAddMembers, 
                                     <MediumAvatar pic={member.picture} />
                                     <div>{member.pseudo}</div>
                                 </div>
-                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member, user, websocket, dispatch)} />
+                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member, user, websocket, dispatch, isParam)} />
                             </div>
                         )
                     })

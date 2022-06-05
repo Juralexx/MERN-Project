@@ -786,12 +786,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-height: 430px;
 }
 
-.min-h-\[300px\] {
-  min-height: 300px;
-}
-
 .min-h-\[100px\] {
   min-height: 100px;
+}
+
+.min-h-\[300px\] {
+  min-height: 300px;
 }
 
 .w-7 {
@@ -802,12 +802,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
 }
 
-.\!w-full {
-  width: 100% !important;
-}
-
 .w-1\/2 {
   width: 50%;
+}
+
+.\!w-full {
+  width: 100% !important;
 }
 
 .w-\[80\%\] {
@@ -874,6 +874,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   max-width: 700px;
 }
 
+.flex-auto {
+  flex: 1 1 auto;
+}
+
 .grow {
   flex-grow: 1;
 }
@@ -908,6 +912,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize {
+  resize: both;
 }
 
 .grid-cols-2 {
@@ -964,10 +972,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .border-r {
   border-right-width: 1px;
-}
-
-.border-none {
-  border-style: none;
 }
 
 .bg-primary {
@@ -1075,8 +1079,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.5rem;
 }
 
-.pt-3 {
-  padding-top: 0.75rem;
+.pt-1 {
+  padding-top: 0.25rem;
 }
 
 .pb-5 {
@@ -1087,20 +1091,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 0.5rem;
 }
 
-.pt-1 {
-  padding-top: 0.25rem;
-}
-
 .text-left {
   text-align: left;
 }
 
 .text-center {
   text-align: center;
-}
-
-.text-justify {
-  text-align: justify;
 }
 
 .text-\[26px\] {
@@ -1179,6 +1175,22 @@ Ensure the default browser behavior of the `hidden` attribute.
 .filter {
   -webkit-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
           filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.transition {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ease-in {
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 
 .hover\:bg-background_primary_x_light:hover {

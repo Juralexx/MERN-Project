@@ -1,18 +1,20 @@
 import React, { useMemo, useState } from 'react'
+import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
+import { useCheckLocation } from '../functions/useCheckLocation'
 import Warning from '../../tools/global/Warning'
 import ToolsMenu from '../../tools/global/ToolsMenu'
 import { IconInput } from '../../tools/global/Inputs'
 import { coverPicture } from '../../tools/hooks/useAvatar'
 import { addClass, dateParser, download } from '../../Utils'
+import { deleteFiles } from '../functions/actions'
 import { BiSearchAlt } from 'react-icons/bi'
 import { MdFileDownload } from 'react-icons/md'
 import { IoArrowRedo, IoDocumentTextOutline, IoTrashBin } from 'react-icons/io5'
 import { HiArrowSmLeft } from 'react-icons/hi'
-import { deleteFiles } from '../functions/actions'
-import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
 
-const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
+const Files = ({ uid, user, websocket, conversation, files, setFiles, dispatch }) => {
     const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(conversation.files, 'name')
+    const { isParam } = useCheckLocation()
 
     const [warning, setWarning] = useState(-1)
 
@@ -69,7 +71,7 @@ const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
                                         validateBtn="Supprimer"
                                         open={warning === key}
                                         setOpen={setWarning}
-                                        onValidate={() => deleteFiles(file, uid, websocket, conversation, file.messageId, dispatch)}
+                                        onValidate={() => deleteFiles(file, uid, websocket, conversation, file.messageId, dispatch, isParam)}
                                         onClose={() => setWarning(false)}
                                     >
                                     </Warning>
@@ -107,7 +109,7 @@ const Files = ({ uid, websocket, conversation, files, setFiles, dispatch }) => {
                                         validateBtn="Supprimer"
                                         open={warning === key}
                                         setOpen={setWarning}
-                                        onValidate={() => deleteFiles(file, uid, websocket, conversation, file.messageId, dispatch)}
+                                        onValidate={() => deleteFiles(file, user, websocket, conversation, file.messageId, dispatch, isParam)}
                                         onClose={() => setWarning(false)}
                                     >
                                     </Warning>

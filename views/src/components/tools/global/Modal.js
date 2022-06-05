@@ -12,13 +12,15 @@ const Modal = (props) => {
     )
 
     return (
-        <div className={wrapperClass}>
-            <div className={containerClass}>
-                <div className="close_modal" onClick={() => setOpen(false)}><IoClose /></div>
-                {props.children}
+        <>
+            <div className={wrapperClass}>
+                <div className={containerClass}>
+                    <div className="close_modal" onClick={() => setOpen(false)}><IoClose /></div>
+                    {props.children}
+                </div>
             </div>
             <div className={coverClass} onClick={() => setOpen(false)}></div>
-        </div>
+        </>
     )
 }
 

@@ -17,13 +17,10 @@ import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
 
 const ShareModal = ({ open, setOpen, message, handleSubmit, currentChat, members }) => {
     const { quillRef, quill } = useQuill()
-
     const [position, setPosition] = useState(0)
     const [disabled, setDisabled] = useState(true)
-
     const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
     const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis } = useEmoji(quill)
-
     const [isLink, setLink] = useState(false)
 
     useEffect(() => {
@@ -43,16 +40,6 @@ const ShareModal = ({ open, setOpen, message, handleSubmit, currentChat, members
             if (length > 1) {
                 setDisabled(false)
             } else setDisabled(true)
-
-            if (length <= 1) {
-                setPosition(0)
-                if (isMention) {
-                    setMention(false)
-                }
-                if (isEmoji) {
-                    setEmoji(false)
-                }
-            }
 
             if (length > 1) {
                 let index = editor.getSelection().index

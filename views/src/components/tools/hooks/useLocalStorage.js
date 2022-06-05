@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, } from 'react';
 import { useEventListener } from './useEventListener';
 
 function useLocalStorage(key, initialValue) {
+
     const readValue = useCallback(() => {
         if (typeof window === 'undefined') {
             return initialValue;
@@ -15,8 +16,10 @@ function useLocalStorage(key, initialValue) {
             return initialValue;
         }
     }, [initialValue, key]);
+
     const [storedValue, setStoredValue] = useState(readValue);
     const setValueRef = useRef();
+
     setValueRef.current = value => {
         if (typeof window == 'undefined') {
             console.warn(`Tried setting localStorage key “${key}” even though environment is not a client`);
@@ -31,18 +34,23 @@ function useLocalStorage(key, initialValue) {
             console.warn(`Error setting localStorage key “${key}”:`, error);
         }
     };
+
     const setValue = useCallback(value => setValueRef.current?.(value), []);
+
     useEffect(() => {
         setStoredValue(readValue());
     }, []);
+    
     const handleStorageChange = useCallback((event) => {
         if (event?.key && event.key !== key) {
             return;
         }
         setStoredValue(readValue());
     }, [key, readValue]);
+
     useEventListener('storage', handleStorageChange);
     useEventListener('local-storage', handleStorageChange);
+
     return [storedValue, setValue];
 }
 

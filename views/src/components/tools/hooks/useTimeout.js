@@ -3,9 +3,11 @@ import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
 
 function useTimeout(callback, delay) {
     const savedCallback = useRef(callback);
+
     useIsomorphicLayoutEffect(() => {
         savedCallback.current = callback;
     }, [callback]);
+    
     useEffect(() => {
         if (!delay && delay !== 0) {
             return;

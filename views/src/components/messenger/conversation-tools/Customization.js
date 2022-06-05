@@ -9,6 +9,7 @@ import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { IoText, IoTrashBin } from 'react-icons/io5'
 import { MdCheck, MdClear, MdOutlineImage, MdOutlineImageNotSupported } from 'react-icons/md'
 import { otherMembersIDs } from '../functions/function'
+import { useCheckLocation } from '../functions/useCheckLocation'
 
 const Customization = ({ uid, websocket, conversation, dispatch }) => {
     const [file, setFile] = useState()
@@ -20,8 +21,11 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
 
     const [name, setName] = useState(conversation.name)
     const [description, setDescription] = useState(conversation.description)
+    const { isParam } = useCheckLocation()
 
     const updateInformations = async () => {
+        isParam(conversation._id, '/messenger/' + conversation._id)
+
         otherMembersIDs(conversation, uid).map(memberId => {
             return websocket.current.emit("updateConversation", {
                 receiverId: memberId,
@@ -34,6 +38,8 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
     }
 
     const updatePseudo = (userId) => {
+        isParam(conversation._id, '/messenger/' + conversation._id)
+        
         otherMembersIDs(conversation, uid).map(memberId => {
             return websocket.current.emit("customizeConversationPseudo", {
                 receiverId: memberId,
@@ -47,6 +53,8 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
     }
 
     const uploadPicture = () => {
+        isParam(conversation._id, '/messenger/' + conversation._id)
+
         let formData = new FormData()
         formData.append("file", file)
         dispatch(uploadConversationPicture(conversation._id, formData))
@@ -60,6 +68,7 @@ const Customization = ({ uid, websocket, conversation, dispatch }) => {
     }
 
     const deletePicture = () => {
+        isParam(conversation._id, '/messenger/' + conversation._id)
         dispatch(removeConversationPicture(conversation._id))
         otherMembersIDs(conversation, uid).map(memberId => {
             return websocket.current.emit("deleteConversationPicture", {

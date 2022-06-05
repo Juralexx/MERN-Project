@@ -1,30 +1,59 @@
-import React from 'react'
-import { BsChatRightTextFill } from 'react-icons/bs'
-import { convertDeltaToHTML } from '../../../messenger/functions/function'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
 import { avatar } from '../../../tools/hooks/useAvatar'
+import { addClass } from '../../../Utils'
+import { convertDeltaToHTML } from '../../../messenger/functions/function'
+import { setLastMessageSeen } from '../../../../actions/messenger.action'
+import ToolsMenu from '../../../tools/global/ToolsMenu'
+import { BsChatRightTextFill } from 'react-icons/bs'
 
-const MessageCard = ({ sentNotification, setSend }) => {
+const MessageCard = ({ notification, user, setSend }) => {
+    const [name, setName] = useState('Message')
+    const dispatch = useDispatch()
+
+    const setSeen = () => {
+        dispatch(setLastMessageSeen(user._id, notification.conversationId, notification._id))
+    }
+
+    useEffect(() => {
+        if (notification.conversationId) {
+            const fetch = async () => {
+                await axios
+                    .get(`${process.env.REACT_APP_API_URL}api/conversation/${notification.conversationId}`)
+                    .then(res => {
+                        if (res.data.name) setName(res.data.name)
+                    })
+                    .catch(err => console.error(err))
+            }
+            fetch()
+        }
+    }, [notification])
+
     return (
-        sentNotification.type === "new-message" && (
-            <div className="notification-message">
-                <div className="top">
-                    <BsChatRightTextFill />
-                    <div className="subject">Messages</div>
-                    <div className="date">now</div>
+        <div className={`notification-message ${addClass(notification.type === "new-message", "active")}`}>
+            <div className="top">
+                <div className="flex items-center">
+                    <BsChatRightTextFill className="icon" />
+                    <div className="subject">{name} - À l'instant</div>
                 </div>
-                <div className="notification-content">
-                    <div className="left">
-                        <div className="sender">{sentNotification.sender_pseudo}</div>
-                        <div className="content" dangerouslySetInnerHTML={convertDeltaToHTML(sentNotification.text[0])}></div>
-                    </div>
-                    <div className="right" style={avatar(sentNotification.sender_picture)}></div>
-                </div>
-                <div className="bottom">
-                    <button>Répondre</button>
-                    <button onClick={() => setSend(false)}>Fermer</button>
+                <ToolsMenu>
+                    <div className="tools_choice" onClick={setSeen}>Marquer comme lu</div>
+                    <div className="tools_choice">Désactiver les notifications</div>
+                </ToolsMenu>
+            </div>
+            <div className="notification-content">
+                <div className="left" style={avatar(notification.sender_picture)}></div>
+                <div className="right">
+                    <div className="sender">{notification.sender_pseudo}</div>
+                    <div className="content" dangerouslySetInnerHTML={convertDeltaToHTML(notification)}></div>
                 </div>
             </div>
-        )
+            <div className="bottom">
+                <button>Répondre</button>
+                <button onClick={() => setSend(false)}>Fermer</button>
+            </div>
+        </div>
     )
 }
 

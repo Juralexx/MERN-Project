@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import TemporaryConversation from './tools/TemporaryConversation';
@@ -11,7 +12,7 @@ import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { useTwoLevelSearch } from '../tools/hooks/useTwoLevelSearch';
 
-const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, onConversationClick, setSearchHeader, setBlank, newMessage, notification }) => {
+const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, newMessage, notification }) => {
     const [open, setOpen] = useState(false)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
@@ -24,7 +25,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                         <IconToggle icon={<AiOutlineUsergroupAdd />} className="mx-2" onClick={() => setOpen(true)} />
                     </Tooltip>
                     <Tooltip content={<p>Nouvelle&nbsp;conversation</p>} placement="bottom">
-                        <IconToggle icon={<AiOutlineEdit />} onClick={() => { setSearchHeader(true); Object.keys(temporaryConv).length === 0 ? setBlank(true) : setCurrentChat(temporaryConv) }} />
+                        <Link to="/messenger/new"><IconToggle icon={<AiOutlineEdit />} /></Link>
                     </Tooltip>
                 </div>
             </div>
@@ -60,7 +61,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                                                 conversation={element}
                                                 newMessage={newMessage}
                                                 notification={notification}
-                                                onConversationClick={onConversationClick}
+                                                onConversationClick={() => changeCurrentChat(element)}
                                                 currentChat={currentChat}
                                             />
                                         </div>
@@ -76,7 +77,6 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                                         temporaryConv={temporaryConv}
                                         setTemporaryConv={setTemporaryConv}
                                         setCurrentChat={setCurrentChat}
-                                        setSearchHeader={setSearchHeader}
                                         conversations={conversations}
                                         currentChat={currentChat}
                                     />
@@ -89,7 +89,7 @@ const ConversationsMenu = ({ currentChat, isLoading, conversations, favorites, s
                                             conversation={element}
                                             newMessage={newMessage}
                                             notification={notification}
-                                            onConversationClick={onConversationClick}
+                                            onConversationClick={() => changeCurrentChat(element)}
                                             currentChat={currentChat}
                                         />
                                     </div>

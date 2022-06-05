@@ -136,6 +136,7 @@ const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, fr
             <div className={`${files.open === true ? "conversation-tools-content" : "conversation-tools-content vanish-right"}`}>
                 <Files
                     uid={uid}
+                    user={user}
                     websocket={websocket}
                     files={files}
                     setFiles={setFiles}

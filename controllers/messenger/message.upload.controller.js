@@ -131,7 +131,7 @@ export const uploadFiles = async (req, res) => {
             },
             { new: true },
         )
-            .then(docs => { res.send(docs) })
+            .then(docs => { res.status(200).json({ files }) })
             .catch(err => { return res.status(500).send({ message: err }) })
     } catch (err) {
         res.status(400).json(err)
@@ -147,7 +147,7 @@ export const deleteFiles = async (req, res) => {
 
     fs.unlink(`${__directory}/${req.body.file.name}`, (err) => {
         if (err) {
-            console.error(err)
+            throw err
         }
     })
 

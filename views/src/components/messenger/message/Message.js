@@ -10,13 +10,15 @@ import ShareModal from './ShareModal';
 import { MessengerContext } from '../../AppContext';
 import { useEmojis } from './useEmojis';
 import { useClickOutside } from '../../tools/hooks/useClickOutside';
+import useClipboard from '../../tools/hooks/useClipboard';
+import { useCheckLocation } from '../functions/useCheckLocation';
 import { avatar } from '../../tools/hooks/useAvatar';
 import { SmallAvatar } from '../../tools/global/Avatars';
 import FsLightbox from 'fslightbox-react';
 import { deleteFiles, removeMessage } from '../functions/actions';
-import { convertDeltaToHTML, convertDeltaToString, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles } from '../functions/function';
+import { convertDeltaToHTML, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles } from '../functions/function';
 import { addClass, dateParserWithoutYear, download, getHourOnly } from '../../Utils';
-import { MdClear, MdFileDownload, MdAddReaction, MdThumbUp, MdFullscreen } from 'react-icons/md'
+import { MdClear, MdFileDownload, MdThumbUp, MdFullscreen } from 'react-icons/md'
 import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'
 import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
 
@@ -25,6 +27,8 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
     const [modify, setModify] = useState(-1)
     const [warning, setWarning] = useState(false)
     const [toggler, setToggler] = useState(false)
+    const { copy } = useClipboard()
+    const { isParam } = useCheckLocation()
 
     const [share, setShare] = useState(false)
 
@@ -32,7 +36,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
     const [opened, setOpened] = useState(false)
     useClickOutside(messageRef, setOpened, false)
 
-    const { emojis, handleEmoji } = useEmojis(message)
+    const { emojis, handleEmoji } = useEmojis(message, currentChat)
 
     return (
         <div
@@ -83,10 +87,20 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                                             <div className="files-block">
                                                 {returnMessageFiles(file)}
                                                 <div className="files-tools">
-                                                    <button onClick={() => setToggler(true)}><MdFullscreen /></button>
-                                                    <button><a href={file.url} rel="noreferrer" target="_blank"><IoArrowRedo /></a></button>
-                                                    <button className="files-tools-btn" onClick={() => download(file)}><MdFileDownload /></button>
-                                                    <button className="files-tools-btn" onClick={() => deleteFiles(file, user, websocket, currentChat, message, dispatch)}><MdClear /></button>
+                                                    <Tooltip content={<p>Agrandir</p>}>
+                                                        <button onClick={() => setToggler(true)}><MdFullscreen /></button>
+                                                    </Tooltip>
+                                                    <Tooltip content={<p>Ouvrir&nbsp;dans&nbsp;une&nbsp;nouvelle&nbsp;fenêtre</p>}>
+                                                        <button><a href={file.url} rel="noreferrer" target="_blank"><IoArrowRedo /></a></button>
+                                                    </Tooltip>
+                                                    <Tooltip content={<p>Télécharger</p>}>
+                                                        <button className="files-tools-btn" onClick={() => download(file)}><MdFileDownload /></button>
+                                                    </Tooltip>
+                                                    {file.userId === uid &&
+                                                        <Tooltip content={<p>Supprimer</p>}>
+                                                            <button className="files-tools-btn" onClick={() => deleteFiles(file, user, websocket, currentChat, message._id, dispatch, isParam)}><MdClear /></button>
+                                                        </Tooltip>
+                                                    }
                                                 </div>
                                             </div>
                                             <FsLightbox
@@ -161,7 +175,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                     }
                     <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
                         <div className="tools_choice" onClick={() => setShare(true)}><IoArrowUndo /> Répondre</div>
-                        <div className="tools_choice" onClick={() => navigator.clipboard.writeText(convertDeltaToString(message))}><RiFileCopyFill /> Copier le message</div>
+                        <div className="tools_choice" onClick={() => copy(convertDeltaToStringNoHTML(message))}><RiFileCopyFill /> Copier le message</div>
                         {message.sender === uid &&
                             <>
                                 <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
@@ -179,7 +193,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                         className="delete"
                         open={warning}
                         setOpen={setWarning}
-                        onValidate={() => removeMessage(message, currentChat, uid, websocket, dispatch)}
+                        onValidate={() => removeMessage(message, currentChat, uid, websocket, dispatch, isParam)}
                         onClose={() => setOpened(false)}
                     >
                         <div className="message-preview">

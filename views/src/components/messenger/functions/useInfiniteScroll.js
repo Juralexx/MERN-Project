@@ -18,7 +18,7 @@ export function useInfiniteScroll(conversation, convWrapperRef) {
         setTimeout(async () => {
             setNumber(prevState => prevState - 20)
             setMore(false)
-            await convWrapperRef.current.scrollTo({ top: convWrapperRef.current.scrollHeight - prevscroll, behavior: 'auto' })
+            await convWrapperRef?.current?.scrollTo({ top: convWrapperRef?.current?.scrollHeight - prevscroll, behavior: 'auto' })
         }, 2000)
     }, [pushMore, convWrapperRef, prevscroll])
 
