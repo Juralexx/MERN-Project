@@ -11,8 +11,9 @@ import { ConversationLoader } from './tools/Loaders';
 import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
+import { HiMenuAlt3 } from 'react-icons/hi';
 
-const ConversationsMenu = ({ currentChat, fetched, conversations, favorites, setConversations, temporaryConv, setTemporaryConv, setCurrentChat, changeCurrentChat, newMessage, notification }) => {
+const ConversationsMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, newMessage, notification, setRightbar }) => {
     const [open, setOpen] = useState(false)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
@@ -20,12 +21,15 @@ const ConversationsMenu = ({ currentChat, fetched, conversations, favorites, set
         <div className="conversation-menu">
             <div className="flex items-center justify-between py-1">
                 <h2 className="bold">Conversations</h2>
-                <div className="relative flex">
+                <div className="conversation-menu-tools">
                     <Tooltip content={<p>Nouvelle&nbsp;conversation de groupe</p>} placement="bottom">
-                        <IconToggle icon={<AiOutlineUsergroupAdd />} className="mx-2" onClick={() => setOpen(true)} />
+                        <IconToggle icon={<AiOutlineUsergroupAdd />} onClick={() => setOpen(true)} />
                     </Tooltip>
                     <Tooltip content={<p>Nouvelle&nbsp;conversation</p>} placement="bottom">
                         <Link to="/messenger/new"><IconToggle icon={<AiOutlineEdit />} /></Link>
+                    </Tooltip>
+                    <Tooltip content={<p>Contacts&nbsp;en&nbsp;ligne</p>} placement="bottom">
+                        <IconToggle icon={<HiMenuAlt3 />} onClick={() => setRightbar(prev => ({ ...prev, state: prev.state === 'open' ? 'closed' : 'open' }))} />
                     </Tooltip>
                 </div>
             </div>

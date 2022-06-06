@@ -14,7 +14,7 @@ import { ChatLoader, SmallLoader } from './tools/Loaders'
 import { getHoursDiff, getMessagesDates } from './functions/function'
 import { getConversation } from '../../actions/messenger.action'
 
-const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUsers, messagesDates, setMessagesDates, handleSubmit, typingContext, isTyping, setTools }) => {
+const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUsers, messagesDates, setMessagesDates, handleSubmit, typingContext, isTyping, setRightbar }) => {
     const { uid, user } = useContext(MessengerContext)
     const { id } = useParams()
     const reducer = useSelector(state => state.messengerReducer)
@@ -41,7 +41,7 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                 }
             }
         }
-    }, [isLoading, user.conversations, conversations, reducer, id, navigate])
+    }, [isLoading, user, user.conversations, conversations, reducer, id, navigate])
 
     useEffect(() => {
         if (id) {
@@ -49,7 +49,7 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                 setLoading(true)
                 dispatch(getConversation(id))
             }
-            if (Object.keys(reducer).length > 0 && !currentChat.temporary) {
+            if (Object.keys(reducer).length > 0) {
                 setCurrentChat(reducer)
                 if (reducer.messages.length > 0) {
                     setMessagesDates(getMessagesDates(reducer.messages))
@@ -66,7 +66,7 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                 <>
                     <ConversationHeader
                         onlineUsers={onlineUsers}
-                        setTools={setTools}
+                        setRightbar={setRightbar}
                         currentChat={currentChat}
                         members={members}
                     />

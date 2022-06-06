@@ -15,7 +15,6 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     const [date, setDate] = useState()
     const [unseen, setUnseen] = useState(false)
 
-    const [open, setOpen] = useState(false)
     const [opened, setOpened] = useState(false)
     const menuRef = useRef()
     useClickOutside(menuRef, setOpened, false)
@@ -51,7 +50,7 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     }, [newMessage, notification, conversation._id])
 
     return (
-        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`}>
             <Link to={`/messenger/` + conversation._id}>
                 <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
                     <div className="conversation-img-container">
@@ -88,15 +87,13 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
                     </div>
                 </div>
             </Link>
-            {(open || opened) &&
-                <div ref={menuRef}>
-                    <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)}>
-                        <div className="tools_choice">Marquer comme lu</div>
-                        <div className="tools_choice">Supprimer la conversation</div>
-                        <div className="tools_choice">Quitter la conversation</div>
-                    </ToolsMenu>
-                </div>
-            }
+            <div className={`conversation-toolbox ${addClass(opened, 'active')}`} ref={menuRef}>
+                <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)}>
+                    <div className="tools_choice">Marquer comme lu</div>
+                    <div className="tools_choice">Supprimer la conversation</div>
+                    <div className="tools_choice">Quitter la conversation</div>
+                </ToolsMenu>
+            </div>
         </div>
     );
 };

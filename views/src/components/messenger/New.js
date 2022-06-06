@@ -23,17 +23,17 @@ const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingC
 
     const [isLoading, setLoading] = useState(true)
     const [blank, setBlank] = useState(true)
-    const [currentChat, setCurrentChat] = useState({})
+    const [currentChat, setCurrentChat] = useState(temporaryConv)
+
+    const convWrapperRef = useRef()
+    const { pushMore, number } = useInfiniteScroll(currentChat, convWrapperRef)
+    const { lastmessageRef } = useScrollToLast(isLoading)
 
     const wrapperRef = useRef()
     const [open, setOpen] = useState(friends.length > 0 ? true : false)
     useClickOutside(wrapperRef, setOpen, false)
 
     const usersDisplayerRef = useRef()
-
-    const convWrapperRef = useRef()
-    const { pushMore, number } = useInfiniteScroll(currentChat, convWrapperRef)
-    const { lastmessageRef } = useScrollToLast(isLoading)
 
     useEffect(() => {
         if (friendsArr && blank) {
@@ -42,7 +42,12 @@ const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingC
             if (arr.length)
                 setOpen(true)
         }
-    }, [friendsArr, blank, temporaryConv])
+        if (Object.keys(temporaryConv).length > 0) {
+            setMembers(temporaryConv.members)
+            setCurrentChat(temporaryConv)
+            setBlank(false)
+        }
+    }, [friendsArr, blank, temporaryConv, currentChat])
 
     const onSelect = (receiver) => {
         let mbrs = [...members]
@@ -129,44 +134,46 @@ const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingC
         <>
             <div className="conversation-box-top">
                 <div className="search_container" ref={wrapperRef}>
-                    <div className="members_displayer" ref={usersDisplayerRef}>
-                        <div className="flex">
-                            {members.map((element, key) => {
-                                return (
-                                    <div className="members_item" key={key}>
-                                        {element.pseudo}
-                                        <IoClose onClick={() => onRemove(element)} />
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
-                    <input
-                        placeholder="Rechercher..."
-                        value={query}
-                        onInput={e => setQuery(e.target.value)}
-                        onChange={oneLevelSearch}
-                        onClick={() => setOpen(true)}
-                        style={{ width: `$calc(100% - ${usersDisplayerRef?.current?.offsetWidth} +50)` }}
-                    />
-                    {open &&
-                        <div tabIndex="0" className="auto-complete-container custom-scrollbar w-1/2 top-full">
-                            {friends.length > 0 ? (
-                                friends.map((element, key) => {
+                    <div className="search_container-content custom-scrollbar">
+                        <div className="members_displayer" ref={usersDisplayerRef}>
+                            <div className="flex">
+                                {members.map((element, key) => {
                                     return (
-                                        <div className={`auto-complete-item ${isInResults(element, "flex")}`} onClick={() => onSelect(element)} key={key}>
-                                            <div className="flex items-center">
-                                                <TinyAvatar pic={element.picture} />
-                                                <p>{element.pseudo}</p>
-                                            </div>
+                                        <div className="members_item" key={key}>
+                                            {element.pseudo}
+                                            <IoClose onClick={() => onRemove(element)} />
                                         </div>
                                     )
-                                })
-                            ) : (
-                                <div className="py-2 text-center">Aucun contact à afficher</div>
-                            )}
+                                })}
+                            </div>
                         </div>
-                    }
+                        <input
+                            placeholder="Rechercher..."
+                            value={query}
+                            onInput={e => setQuery(e.target.value)}
+                            onChange={oneLevelSearch}
+                            onClick={() => setOpen(true)}
+                            style={{ width: `$calc(100% - ${usersDisplayerRef?.current?.offsetWidth} +50)` }}
+                        />
+                        {open &&
+                            <div tabIndex="0" className="auto-complete-container custom-scrollbar w-1/2 top-full">
+                                {friends.length > 0 ? (
+                                    friends.map((element, key) => {
+                                        return (
+                                            <div className={`auto-complete-item ${isInResults(element, "flex")}`} onClick={() => onSelect(element)} key={key}>
+                                                <div className="flex items-center">
+                                                    <TinyAvatar pic={element.picture} />
+                                                    <p>{element.pseudo}</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                ) : (
+                                    <div className="py-2 text-center">Aucun contact à afficher</div>
+                                )}
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
 

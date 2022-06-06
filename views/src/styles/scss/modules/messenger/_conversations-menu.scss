@@ -1,7 +1,24 @@
 .conversation-menu {
-    position : relative;
-    width    : 25%;
-    padding  : 10px;
+    position    : relative;
+    flex-shrink : 0;
+    width       : 25%;
+    padding     : 10px;
+
+    .conversation-menu-tools {
+        display     : flex;
+        align-items : center;
+        
+        .icon_toggle {
+            background-color : var(--x-light);
+            color            : var(--primary);
+            margin           : 0 3px;
+
+            &:hover {
+                color            : white;
+                background-color : var(--primary);
+            }
+        }
+    }
 
     .conversation-menu-tool {
         display     : flex;
@@ -129,22 +146,38 @@
             }
         }
 
-        &.temporary {
-            display     : flex;
-            align-items : center;
-            .conversation_inner {
-                width : 100%;
-                .conversation-infos {
-                    .last-message-wrapper {
-                        width : 100%;
-                    }
-                }
+        .conversation-toolbox {
+            display : none;
+
+            &.active {
+                display : block;
+            }
+        }
+
+        &:hover {
+            .conversation-toolbox {
+                display : block;
             }
         }
 
         &:hover, &.active {
             background    : var(--x-light);
             border-radius : var(--radius);
+        }
+
+        &.temporary {
+            display     : flex;
+            align-items : center;
+
+            .conversation_inner {
+                width : 100%;
+
+                .conversation-infos {
+                    .last-message-wrapper {
+                        width : 100%;
+                    }
+                }
+            }
         }
     }
 
@@ -178,7 +211,9 @@
     }
 
     .close-item {
-        background-color : var(--light);
-        box-shadow       : var(--shadow-tiny);
+        background-color : var(--x-light);
+        &:hover {
+            background-color : var(--light);
+        }
     }
 }

@@ -4,14 +4,16 @@ import { MessengerContext } from '../AppContext';
 import { useOnline } from './functions/useOnline';
 import ToolsMenu from '../tools/global/ToolsMenu';
 import Tools from './conversation-tools/Tools';
+import OnlineMembers from './OnlineMembers';
 import { OnlineUserLoader } from './tools/Loaders';
 import { IconToggle } from '../tools/global/Button';
 import { isConversation } from './functions/function';
 import { avatar } from '../tools/hooks/useAvatar';
+import { addClass } from '../Utils';
 import { BiSearchAlt } from 'react-icons/bi';
 
-const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setConversations, setCurrentChat, changeCurrentChat, tools, setTools }) => {
-    const { uid, user, websocket, friendsArr, dispatch } = useContext(MessengerContext)
+const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setTemporaryConv, setCurrentChat, changeCurrentChat, rightbar, setRightbar }) => {
+    const { user, friendsArr } = useContext(MessengerContext)
     const { online, offline } = useOnline(friendsArr, onlineUsers)
     const navigate = useNavigate()
 
@@ -19,24 +21,26 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
         let isConv = isConversation(conversations, [receiver, user])
         if (isConv !== false) {
             changeCurrentChat(isConv)
-            navigate('/messenger' + isConv._id)
+            navigate('/messenger/' + isConv._id)
         } else {
             const conversation = {
                 temporary: true,
                 type: 'dialog',
-                members: [{ _id: user._id, pseudo: user.pseudo, picture: user.picture }, { _id: receiver._id, pseudo: receiver.pseudo, picture: receiver.picture }],
+                members: [receiver],
+                owner: { _id: user._id, pseudo: user.pseudo, picture: user.picture },
                 creator: { _id: user._id, pseudo: user.pseudo, picture: user.picture },
                 messages: [],
                 createdAt: new Date().toISOString()
             }
-            setConversations(convs => [conversation, ...convs])
+            navigate('/messenger/new')
+            setTemporaryConv(conversation)
             setCurrentChat(conversation)
         }
     }
 
     return (
-        <div className="conversation-tools">
-            {!tools ? (
+        <div className={`conversation-tools ${addClass(rightbar.state !== 'open', "closed")}`}>
+            {rightbar.displayed === 'contacts' &&
                 <>
                     <div className="flex items-center justify-between p-1 mb-3">
                         <h2 className="bold">Contact</h2>
@@ -101,19 +105,25 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
                         <OnlineUserLoader />
                     )}
                 </>
-            ) : (
-                <Tools
-                    uid={uid}
-                    user={user}
-                    websocket={websocket}
+            }
+
+            {rightbar.displayed === 'members' &&
+                <OnlineMembers
+                    onlineUsers={onlineUsers}
                     members={members}
-                    open={tools}
-                    setOpen={setTools}
-                    conversation={currentChat}
-                    friendsArr={friendsArr}
-                    dispatch={dispatch}
+                    setRightbar={setRightbar}
+                    handleClick={handleClick}
                 />
-            )}
+            }
+
+            {rightbar.displayed === 'tools' &&
+                <Tools
+                    members={members}
+                    open={rightbar.displayed === 'tools'}
+                    setOpen={setRightbar}
+                    conversation={currentChat}
+                />
+            }
         </div>
     )
 }

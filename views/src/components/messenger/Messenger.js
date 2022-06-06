@@ -32,6 +32,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [newMessage, setNewMessage] = useState({})
     const [notification, setNotification] = useState({})
 
+    const [rightbar, setRightbar] = useState({ state: 'open', displayed: 'contacts' })
     const [tools, setTools] = useState(false)
 
     const { friendsArr, fetchedFriends } = useFetchFriends(user)
@@ -308,6 +309,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     fetched={fetched}
                     newMessage={newMessage}
                     notification={notification}
+                    setRightbar={setRightbar}
                 />
                 <div className="conversation-box">
                     <div className="conversation-box-wrapper">
@@ -329,7 +331,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                     handleSubmit={handleSubmit}
                                     typingContext={typingContext}
                                     isTyping={isTyping}
-                                    setTools={setTools}
+                                    setRightbar={setRightbar}
                                 />
                             } />
 
@@ -357,10 +359,10 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     fetchedFriends={fetchedFriends}
                     setCurrentChat={setCurrentChat}
                     changeCurrentChat={changeCurrentChat}
-                    tools={tools}
-                    setTools={setTools}
+                    rightbar={rightbar}
+                    setRightbar={setRightbar}
                     conversations={allConversations}
-                    setConversations={setConversations}
+                    setTemporaryConv={setTemporaryConv}
                     currentChat={currentChat}
                     members={members}
                 />

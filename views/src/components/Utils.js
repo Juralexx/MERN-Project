@@ -360,9 +360,8 @@ export const returnURLsInText = (text) => {
  */
 
 export const addClass = (state, classe) => {
-    if (state) {
-        return classe
-    } else return
+    if (state) return classe
+    else return 'un' + classe
 }
 
 /**

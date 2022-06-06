@@ -88,7 +88,6 @@
 @import 'modules/messenger/conversation';
 @import 'modules/messenger/conversations-menu';
 @import 'modules/messenger/online-users';
-@import 'modules/messenger/conversation-tools';
 
 @import 'modules/messenger/editor/editor';
 @import 'modules/messenger/editor/files';
@@ -101,3 +100,7 @@
 @import 'modules/messenger/message/preview';
 @import 'modules/messenger/message/files';
 @import 'modules/messenger/message/embed';
+
+@import 'modules/messenger/conversation-tools/conversation-tools';
+@import 'modules/messenger/conversation-tools/files';
+@import 'modules/messenger/conversation-tools/members';

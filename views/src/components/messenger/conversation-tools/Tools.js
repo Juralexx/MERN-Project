@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
-import { returnMembers } from '../functions/function'
-import { avatar } from '../../tools/hooks/useAvatar'
-import { setFavorite, setUnfavorite } from '../functions/actions'
+import React, { useContext, useState } from 'react'
+import { MessengerContext } from '../../AppContext'
 import Customization from './Customization'
 import Files from './Files'
 import Members from './Members'
 import Main from './Main'
 import Settings from './Settings'
 import AddMembers from './AddMembers'
+import { returnMembers } from '../functions/function'
+import { avatar } from '../../tools/hooks/useAvatar'
+import { setFavorite, setUnfavorite } from '../functions/actions'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { TiStarOutline, TiStar } from 'react-icons/ti'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
 
-const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, friendsArr, members }) => {
+const Tools = ({ open, setOpen, conversation, members }) => {
+    const { uid, user, websocket, friendsArr, dispatch } = useContext(MessengerContext)
     const [navbar, setNavbar] = useState(null)
     const [addMembers, setAddMembers] = useState(false)
     const [files, setFiles] = useState({ open: false, type: null })
@@ -29,7 +31,7 @@ const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, fr
         <div className="conversation-tools-container custom-scrollbar">
             <div className={`${!addMembers && files.open === false && open ? "conversation-tools-content" : "conversation-tools-content vanish-left"}`}>
                 <div className="go-back absolute">
-                    <HiArrowSmLeft onClick={() => setOpen(false)} />
+                    <HiArrowSmLeft onClick={() => setOpen(prev => ({ ...prev, displayed: 'contacts' }))} />
                 </div>
                 <div className="conversation-tools-header">
                     <div className="conversation-img-container">
@@ -51,7 +53,7 @@ const Tools = ({ uid, user, websocket, dispatch, open, setOpen, conversation, fr
                             <div className="conversation-name">{returnMembers(members)}</div>
                         </div>
                     )}
-                    
+
                     {user.favorite_conversations && user.favorite_conversations.includes(conversation._id) ? (
                         <div className="tools-choice" onClick={() => setUnfavorite(conversation._id, uid, dispatch)}><TiStar />Retirer des favoris</div>
                     ) : (

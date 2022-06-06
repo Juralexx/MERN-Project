@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
+import { MessengerContext } from '../AppContext'
+import MembersModal from './tools/MembersModal'
 import { avatar } from '../tools/hooks/useAvatar'
 import { isOnline, returnMembers } from './functions/function'
 import { HiMenuAlt3 } from 'react-icons/hi'
-import MembersModal from './tools/MembersModal'
-import { MessengerContext } from '../AppContext'
+import { AiOutlineInfo, AiOutlineTeam } from 'react-icons/ai'
 
-const ConversationHeader = ({ setTools, onlineUsers, currentChat, members }) => {
+const ConversationHeader = ({ setRightbar, onlineUsers, currentChat, members }) => {
     const { uid, websocket, dispatch } = useContext(MessengerContext)
     const [membersModal, setMembersModal] = useState(false)
 
@@ -42,9 +43,14 @@ const ConversationHeader = ({ setTools, onlineUsers, currentChat, members }) => 
                             <div className="conversation-name">{returnMembers(members)}</div>
                         )}
                     </div>
-                    <button className="tools_btn" onClick={() => setTools(true)}>
-                        <HiMenuAlt3 />
-                    </button>
+                    <div className="conversation-box-tools">
+                        <button className="tools_btn" onClick={() => setRightbar({ state: 'open', displayed: 'members' })}>
+                            <AiOutlineTeam />
+                        </button>
+                        <button className="tools_btn" onClick={() => setRightbar({ state: 'open', displayed: 'tools' })}>
+                            <AiOutlineInfo />
+                        </button>
+                    </div>
                 </div>
             }
             <MembersModal

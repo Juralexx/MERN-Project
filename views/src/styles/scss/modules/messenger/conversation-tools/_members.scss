@@ -1,0 +1,23 @@
+.conversation-members {
+    // overflow-y : auto;
+    // overflow-x : hidden;
+
+    .conversation-member {
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        padding         : 6px 0;
+
+        p {
+            &:nth-child(1) {
+                line-height : 18px;
+                font-weight : 600;
+            }
+            &:nth-child(2) {
+                font-size   : 12px;
+                line-height : 16px;
+                color       : var(--text-secondary);
+            }
+        }
+    }
+}

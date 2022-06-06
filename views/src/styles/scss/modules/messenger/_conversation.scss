@@ -1,6 +1,6 @@
 .conversation-box {
     position : relative;
-    width    : 50%;
+    flex-grow: 1;
 
     .conversation-box-wrapper {
         position       : relative;
@@ -67,6 +67,22 @@
                 }
             }
 
+            .conversation-box-tools {
+                display     : flex;
+                align-items : center;
+                
+                button {
+                    background-color : var(--x-light);
+                    color            : var(--primary);
+                    margin           : 0 3px;
+
+                    &:hover {
+                        color            : white;
+                        background-color : var(--primary);
+                    }
+                }
+            }
+
             .search_container {
                 position     : relative;
                 display      : flex;
@@ -74,29 +90,38 @@
                 height       : 100%;
                 padding-left : 30px;
 
-                input {
-                    display    : block;
-                    width      : 100%;
-                    height     : 100%;
-                    padding    : 8px 12px;
-                    color      : var(--input-text);
-                    background : var(--content-light);
-                    border     : 2px solid transparent;
-                    outline    : none;
-                    z-index    : 12;
-
-                    &::placeholder {
-                        color      : var(--placeholder);
-                        font-style : italic;
-                    }
-                }
-
                 &:before {
                     content   : 'À :';
                     position  : absolute;
                     left      : 10px;
                     top       : 50%;
                     transform : translateY(-50%);
+                }
+
+                .search_container-content {
+                    display     : flex;
+                    align-items : center;
+                    height      : 100%;
+                    flex-grow   : 1;
+                    overflow-x  : auto;
+
+                    input {
+                        display    : block;
+                        min-width  : 150px;
+                        width      : 100%;
+                        height     : 100%;
+                        padding    : 8px 12px;
+                        color      : var(--input-text);
+                        background : var(--content-light);
+                        border     : 2px solid transparent;
+                        outline    : none;
+                        z-index    : 12;
+    
+                        &::placeholder {
+                            color      : var(--placeholder);
+                            font-style : italic;
+                        }
+                    }
                 }
             }
         }
@@ -136,8 +161,7 @@
     position  : relative;
     left      : 0;
     max-width : 100%;
-    height    : 100%;
-    padding   : 4px 0;
+    height    : 27px;
     color     : var(--text);
     z-index   : 25;
 
