@@ -4,11 +4,12 @@ import MiniNav from "./mini-nav/MiniNav";
 import { StartIconButton } from "./tools/global/Button";
 import { useClickOutside } from "./tools/hooks/useClickOutside";
 import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai'
-import { MdOutlineMessage, MdOutlineScreenSearchDesktop, MdDehaze } from 'react-icons/md'
+import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
 import { BiUser } from 'react-icons/bi'
 import { RiLoginCircleLine } from 'react-icons/ri'
 import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
+import { HiOutlineMenu } from "react-icons/hi";
 
 const Navbar = ({ websocket, user, uid, onlineUsers }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
@@ -25,11 +26,11 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                 {location.pathname !== "/register" && location.pathname !== "/login" ? (
                     <>
                         <div className="logo_container">
-                            {uid && <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />}
+                            {uid && <HiOutlineMenu className="toggle_icon" onClick={() => setToggled(!toggled)} />}
                             <Link to="/">
                                 <div className="logo_inner">
                                     <img className="logo-main sm:block hidden" src="/img/logo-top.png" alt="" />
-                                    <img className="logo-small block sm:hidden" src="/img/logo.png" alt="" />
+                                    {/* <img className="logo-small block sm:hidden" src="/img/logo.png" alt="" /> */}
                                 </div>
                             </Link>
                             <div className="hidden lg:flex ml-8">
@@ -144,7 +145,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                     </ul>
                                 </div>
                                 <div className="mini_nav_container lg:!hidden">
-                                    <MdDehaze className="toggle_icon" onClick={() => setToggled(!toggled)} />
+                                    <HiOutlineMenu className="toggle_icon" onClick={() => setToggled(!toggled)} />
                                 </div>
                             </>
                         )}

@@ -16,7 +16,7 @@
     --x-light         : rgba(var(--primary-rgb), 0.1);
     --xx-light        : #ffffff;
     --navbar-txt      : #232221;
-    --mini_nav-btn    : #eef0fc;
+    --mini_nav-btn    : rgba(var(--primary-rgb), 0.1);
     --menu            : #ffffff;
     --modal-cover     : rgba(0, 0, 0, 0.5);
     --tooltip         : #222121;
@@ -35,7 +35,7 @@
     --x-light         : #272b31;
     --xx-light        : #272b31;
     --light           : #1a1d22;
-    --mini_nav-btn    : #1a1d22;
+    --mini_nav-btn    : #141619;
     --text            : #ffffff;
     --text-secondary  : rgba(255, 255, 255, 0.7);
     --text-tertiary   : rgba(255, 255, 255, 0.5);
@@ -96,6 +96,7 @@
     --radius          : 4px;
     --shadow-custom   : 0 8px 16px rgba(12, 65, 154, .1);
     --shadow-left     : 16px 0 16px -5px rgb(0 0 0 / 0.1);
+    --shadow-right     : -16px 0 16px -5px rgb(0 0 0 / 0.1);
     --shadow-top      : 0 -10px 25px -10px rgb(0 0 0 / 0.3);
     --shadow-lg       : 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl       : 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);

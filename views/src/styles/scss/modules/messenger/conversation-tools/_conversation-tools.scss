@@ -1,10 +1,18 @@
 .conversation-tools {
-    position    : relative;
-    width       : 25%;
-    flex-shrink : 0;
-    padding     : 10px;
-    opacity     : 1;
-    transition  : opacity .2s, width .2s;
+    position   : relative;
+    width      : 25%;
+    padding    : 10px;
+    opacity    : 1;
+    transition : opacity .2s, width .2s;
+    background : var(--content-light);
+
+    .conversation-tools-header {
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        padding         : 4px 0;
+        margin-bottom   : 10px;
+    }
 
     h3 {
         padding : 8px 15px;
@@ -15,7 +23,26 @@
         padding    : 10px 0;
         opacity    : 0;
         transition : opacity .1s, width .5s;
+
+        .search {
+            display : none;
+        }
     }
+        
+    .icon_toggle {
+        background-color : var(--x-light);
+        color            : var(--primary);
+        margin           : 0 3px;
+
+        &:hover {
+            color            : white;
+            background-color : var(--primary);
+        }
+    }
+}
+
+.conversation-tools-inner {
+    overflow-y : auto;
 }
 
 .conversation-tools-container {
@@ -190,23 +217,6 @@
     }
 }
 
-
-
-.add-conversation-modal {
-    height : 500px;
-
-    .conversation-btn_container {
-        position : fixed;
-        padding  : 15px 20px;
-        left     : 0;
-        bottom   : 0;
-        width    : 100%;
-        button {
-            width : 100%;
-        }
-    }
-}
-
 .go-back {
     display       : flex;
     align-items   : center;
@@ -228,5 +238,29 @@
         &:hover {
             background : var(--x-light);
         }
+    }
+}
+
+@media(max-width: 1200px) {
+    .conversation-tools {
+       position   : absolute;
+       width      : 400px;
+       right      : 0;
+       top        : 60px;
+       bottom     : 0;
+       z-index    : 700;
+       box-shadow : var(--shadow-right);
+    }
+}
+
+@media(max-width: 1200px) {
+    .conversation-tools {
+       top : 54px;
+    }
+}
+
+@media(max-width: 576px) {
+    .conversation-tools {
+       width : 100%;
     }
 }

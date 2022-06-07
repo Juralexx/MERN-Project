@@ -13,6 +13,8 @@
             pointer-events : none;
             overflow       : hidden;
             object-fit     : fill;
+            width          : 100%;
+            max-width      : 500px;
         }
 
         .video-block {

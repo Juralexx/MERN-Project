@@ -6,6 +6,7 @@ import { IconToggle } from '../tools/global/Button';
 import { avatar } from '../tools/hooks/useAvatar';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiArrowSmLeft } from 'react-icons/hi';
+import { IoClose } from 'react-icons/io5';
 
 const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
     const { online, offline } = useOnline(members, onlineUsers)
@@ -19,6 +20,7 @@ const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
                 <h2 className="bold ml-11">Membres</h2>
                 <div className="flex">
                     <IconToggle icon={<BiSearchAlt />} />
+                    <IconToggle icon={<IoClose />} onClick={() => setRightbar({ open: false, displayed: "contacts" })} />
                 </div>
             </div>
             {online.length > 0 || offline.length > 0 ? (

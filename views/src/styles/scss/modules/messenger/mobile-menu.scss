@@ -1,0 +1,81 @@
+.conversation-menu-mobile {
+    position   : relative;
+    min-width  : 100%;
+    padding    : 10px;
+    background : var(--content-light);
+
+    .conversation-menu-mobile-header {
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        padding         : 4px 0;
+        margin-bottom   : 10px;
+    }
+
+    .conversation-menu-mobile-tools {
+        display     : flex;
+        align-items : center;
+        
+        .icon_toggle {
+            background-color : var(--x-light);
+            color            : var(--primary);
+            margin           : 0 3px;
+
+            &:hover {
+                color            : white;
+                background-color : var(--primary);
+            }
+        }
+    }
+
+    .conversation-menu-mobile-tool {
+        display     : flex;
+        align-items : center;
+        padding     : 5px 10px;
+        color       : var(--text-secondary);
+        font-weight : 600;
+        cursor      : pointer;
+
+        svg {
+            width       : 16px;
+            height      : 16px;
+            margin-left : 5px;
+        }
+    }
+
+    .tools_box {
+        position  : absolute;
+        top       : 50%;
+        transform : translateY(-50%);
+        right     : 60px;
+        z-index   : 2;
+
+        .tools_btn {
+            height           : 26px;
+            width            : 26px;
+            background-color : var(--light);
+            border-radius    : 50%;
+            box-shadow       : var(--shadow-tiny);
+
+            svg {
+                height : 20px;
+                width  : 20px;
+            }
+
+            &:hover {
+                background-color : var(--xx-light);
+            }
+        }
+
+        &.active {
+            display : flex;
+        }
+    }
+
+    .close-item {
+        background-color : var(--x-light);
+        &:hover {
+            background-color : var(--light);
+        }
+    }
+}

@@ -14,8 +14,10 @@ import { TiStarOutline, TiStar } from 'react-icons/ti'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
+import { IconToggle } from '../../tools/global/Button'
+import { IoClose } from 'react-icons/io5'
 
-const Tools = ({ open, setOpen, conversation, members }) => {
+const Tools = ({ open, setOpen, conversation, members, setRightbar }) => {
     const { uid, user, websocket, friendsArr, dispatch } = useContext(MessengerContext)
     const [navbar, setNavbar] = useState(null)
     const [addMembers, setAddMembers] = useState(false)
@@ -30,9 +32,10 @@ const Tools = ({ open, setOpen, conversation, members }) => {
     return (
         <div className="conversation-tools-container custom-scrollbar">
             <div className={`${!addMembers && files.open === false && open ? "conversation-tools-content" : "conversation-tools-content vanish-left"}`}>
-                <div className="go-back absolute">
+                <div className="go-back absolute top-1">
                     <HiArrowSmLeft onClick={() => setOpen(prev => ({ ...prev, displayed: 'contacts' }))} />
                 </div>
+                <IconToggle icon={<IoClose />} className="absolute right-0 top-1" onClick={() => setOpen({ open: false, displayed: "contacts" })} />
                 <div className="conversation-tools-header">
                     <div className="conversation-img-container">
                         {conversation.picture ? (

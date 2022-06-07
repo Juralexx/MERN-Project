@@ -1,6 +1,6 @@
 .conversation-box {
     position : relative;
-    flex-grow: 1;
+    width    : 50%;
 
     .conversation-box-wrapper {
         position       : relative;
@@ -124,6 +124,10 @@
                     }
                 }
             }
+
+            .go-back {
+                display : none;
+            }
         }
 
         .conversation-box-container {
@@ -192,5 +196,26 @@
         color         : var(--primary);
         background    : rgba(var(--primary-rgb), .1);
         border-radius : var(--radius);
+    }
+}
+
+@media(max-width: 1200px) {
+    .conversation-box {
+       width : 100%;
+    }
+}
+
+@media(max-width: 576px) {
+    .conversation-box {
+        .conversation-box-wrapper {
+            .conversation-box-top {
+                padding-left : 50px;
+                .go-back {
+                    display : flex;
+                    left    : 10px;
+                    margin  : 0;
+                }
+            }
+        }
     }
 }

@@ -3,8 +3,10 @@ import { MessengerContext } from '../AppContext'
 import MembersModal from './tools/MembersModal'
 import { avatar } from '../tools/hooks/useAvatar'
 import { isOnline, returnMembers } from './functions/function'
-import { HiMenuAlt3 } from 'react-icons/hi'
+import { HiArrowSmLeft } from 'react-icons/hi'
 import { AiOutlineInfo, AiOutlineTeam } from 'react-icons/ai'
+import Tooltip from '../tools/global/Tooltip'
+import { Link } from 'react-router-dom'
 
 const ConversationHeader = ({ setRightbar, onlineUsers, currentChat, members }) => {
     const { uid, websocket, dispatch } = useContext(MessengerContext)
@@ -14,6 +16,9 @@ const ConversationHeader = ({ setRightbar, onlineUsers, currentChat, members }) 
         <>
             {currentChat.type === "dialog" &&
                 <div className="conversation-box-top">
+                    <div className="go-back absolute">
+                        <Link to="/messenger/"><HiArrowSmLeft /></Link>
+                    </div>
                     <div className="conversation-box-members">
                         <div className="conversation-img-container">
                             <div className={`${isOnline(members[0], onlineUsers) ? "conversation-img connected" : "conversation-img"}`} style={avatar(members[0].picture)}></div>
@@ -25,6 +30,9 @@ const ConversationHeader = ({ setRightbar, onlineUsers, currentChat, members }) 
 
             {currentChat.type === "group" &&
                 <div className="conversation-box-top">
+                    <div className="go-back absolute">
+                        <Link to="/messenger/"><HiArrowSmLeft /></Link>
+                    </div>
                     <div className="conversation-box-members" onClick={() => setMembersModal(true)}>
                         <div className="conversation-img-container">
                             {currentChat.picture ? (
@@ -44,12 +52,16 @@ const ConversationHeader = ({ setRightbar, onlineUsers, currentChat, members }) 
                         )}
                     </div>
                     <div className="conversation-box-tools">
-                        <button className="tools_btn" onClick={() => setRightbar({ state: 'open', displayed: 'members' })}>
-                            <AiOutlineTeam />
-                        </button>
-                        <button className="tools_btn" onClick={() => setRightbar({ state: 'open', displayed: 'tools' })}>
-                            <AiOutlineInfo />
-                        </button>
+                        <Tooltip content={<p>Membres en ligne</p>} placement="bottom">
+                            <button className="tools_btn" onClick={() => setRightbar({ state: 'open', displayed: 'members' })}>
+                                <AiOutlineTeam />
+                            </button>
+                        </Tooltip>
+                        <Tooltip content={<p>Paramètres</p>} placement="bottom">
+                            <button className="tools_btn" onClick={() => setRightbar({ state: 'open', displayed: 'tools' })}>
+                                <AiOutlineInfo />
+                            </button>
+                        </Tooltip>
                     </div>
                 </div>
             }

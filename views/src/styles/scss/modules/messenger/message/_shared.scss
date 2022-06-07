@@ -37,6 +37,40 @@
     }
 }
 
+@media(max-width:576px) {
+    .conversation-box-wrapper {
+        .modal_wrapper {
+            padding : 0;
+            overflow-y: hidden;
+            .modal_container {
+                margin : 0;
+            }
+            .share-message-modal {
+                width         : 100%;
+                height        : 100vh;
+                border        : none;
+                border-radius : 0;
+                .btn-container {
+                    position        : fixed;
+                    bottom          : 0;
+                    left            : 0;
+                    justify-content : space-around;
+                    padding         : 10px;
+                    width           : 100%;
+                    button {
+                        font-size     : 12px;
+                        padding       : 8px 8px 6px;
+                        margin-right  : 0;
+                        border        : 1px solid var(--light-border);
+                        border-radius : 3px;
+                        width         : 49%;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .shared-message {
     margin-top  : 8px;
     padding     : 3px 5px 3px 10px;

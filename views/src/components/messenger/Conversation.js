@@ -54,7 +54,7 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
             <Link to={`/messenger/` + conversation._id}>
                 <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
                     <div className="conversation-img-container">
-                        {members.slice(0, 3).map((element, key) => {
+                        {members.slice(0, 2).map((element, key) => {
                             return <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
                         })}
                     </div>
@@ -77,7 +77,6 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
                                         )}
                                     </p>
                                 </div>
-                                {unseen && <div className="unseen-badge"></div>}
                             </div>
                         ) : (
                             <div className="last-message-wrapper">
@@ -85,6 +84,7 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
                             </div>
                         )}
                     </div>
+                    {unseen && <div className="unseen-badge"></div>}
                 </div>
             </Link>
             <div className={`conversation-toolbox ${addClass(opened, 'active')}`} ref={menuRef}>

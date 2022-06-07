@@ -8,54 +8,41 @@ import Tooltip from '../tools/global/Tooltip';
 import { IconInput } from '../tools/global/Inputs';
 import { IconToggle } from '../tools/global/Button';
 import { ConversationLoader } from './tools/Loaders';
-import { addClass } from '../Utils';
 import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
-import { HiMenuAlt3, HiOutlineMenu } from 'react-icons/hi';
-import { IoClose } from 'react-icons/io5';
+import { HiMenuAlt3 } from 'react-icons/hi';
 
-const ConversationsMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, newMessage, notification, setRightbar }) => {
+const MobileMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, newMessage, notification, setRightbar }) => {
     const [open, setOpen] = useState(false)
-    const [search, setSearch] = useState(false)
-    const [leftbar, setLeftbar] = useState(true)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
     return (
-        <div className={`conversation-menu ${addClass(!leftbar, 'closed')}`}>
-            <div className="conversation-menu-header">
+        <div className="conversation-menu-mobile">
+            <div className="conversation-menu-mobile-header">
                 <h2 className="bold">Conversations</h2>
-                <div className="conversation-menu-tools">
-                    <IconToggle className="toggle" icon={leftbar ? <IoClose /> : <HiOutlineMenu />} onClick={() => setLeftbar(!leftbar)} />
-
-                    <div className="tools flex items-center">
-                        <Tooltip content={<p>Rechercher</p>} placement="bottom">
-                            <IconToggle icon={<BiSearchAlt />} onClick={() => setSearch(!search)} />
-                        </Tooltip>
-                        <Tooltip content={<p>Nouvelle&nbsp;conversation de groupe</p>} placement="bottom">
-                            <IconToggle icon={<AiOutlineUsergroupAdd />} onClick={() => setOpen(true)} />
-                        </Tooltip>
-                        <Tooltip content={<p>Nouvelle&nbsp;conversation</p>} placement="bottom">
-                            <Link to="/messenger/new"><IconToggle icon={<AiOutlineEdit />} /></Link>
-                        </Tooltip>
-                        <Tooltip content={<p>Contacts&nbsp;en&nbsp;ligne</p>} placement="bottom">
-                            <IconToggle icon={<HiMenuAlt3 />} onClick={() => setRightbar(prev => ({ ...prev, state: prev.state === 'open' ? 'closed' : 'open' }))} />
-                        </Tooltip>
-                    </div>
+                <div className="conversation-menu-mobile-tools">
+                    <Tooltip content={<p>Nouvelle&nbsp;conversation de groupe</p>} placement="bottom">
+                        <IconToggle icon={<AiOutlineUsergroupAdd />} onClick={() => setOpen(true)} />
+                    </Tooltip>
+                    <Tooltip content={<p>Nouvelle&nbsp;conversation</p>} placement="bottom">
+                        <Link to="/messenger/new"><IconToggle icon={<AiOutlineEdit />} /></Link>
+                    </Tooltip>
+                    <Tooltip content={<p>Contacts&nbsp;en&nbsp;ligne</p>} placement="bottom">
+                        <IconToggle icon={<HiMenuAlt3 />} onClick={() => setRightbar(prev => ({ ...prev, state: prev.state === 'open' ? 'closed' : 'open' }))} />
+                    </Tooltip>
                 </div>
             </div>
-            {search &&
-                <div className="search py-2 mb-2">
-                    <IconInput
-                        className="full is_start_icon small"
-                        icon={<BiSearchAlt />}
-                        placeholder="Rechercher une conversation..."
-                        value={query}
-                        onInput={e => setQuery(e.target.value)}
-                        onChange={twoLevelSearch}
-                    />
-                </div>
-            }
+            <div className="search py-2 mb-2">
+                <IconInput
+                    className="full is_start_icon small"
+                    icon={<BiSearchAlt />}
+                    placeholder="Rechercher une conversation..."
+                    value={query}
+                    onInput={e => setQuery(e.target.value)}
+                    onChange={twoLevelSearch}
+                />
+            </div>
 
             <NewConversationModal
                 open={open}
@@ -70,7 +57,7 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
                     <>
                         {favorites.length > 0 &&
                             <div className="conversations_container">
-                                <div className="conversation-menu-tool">Favoris <FaCaretDown /></div>
+                                <div className="conversation-menu-mobile-tool">Favoris <FaCaretDown /></div>
                                 {favorites.map((element, key) => {
                                     return (
                                         <div className={`${isInResults(element, "block")}`} key={key}>
@@ -87,7 +74,7 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
                             </div>
                         }
                         <div className="conversations_container">
-                            <div className="conversation-menu-tool">Messages <FaCaretDown /></div>
+                            <div className="conversation-menu-mobile-tool">Messages <FaCaretDown /></div>
                             {Object.keys(temporaryConv).length > 0 &&
                                 <div className={`${isInResults(temporaryConv, "block")}`}>
                                     <TemporaryConversation
@@ -126,4 +113,4 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
     )
 }
 
-export default ConversationsMenu
+export default MobileMenu

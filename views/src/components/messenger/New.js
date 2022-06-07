@@ -1,5 +1,6 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useClickOutside } from '../tools/hooks/useClickOutside'
 import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch'
 import { useInfiniteScroll } from './functions/useInfiniteScroll'
@@ -14,6 +15,7 @@ import Message from './message/Message'
 import { SmallLoader } from './tools/Loaders'
 import MessageDate from './message/MessageDate'
 import { IoClose } from 'react-icons/io5'
+import { HiArrowSmLeft } from 'react-icons/hi'
 
 const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingContext, handleSubmit, messagesDates, setMessagesDates }) => {
     const { user, friendsArr } = useContext(MessengerContext)
@@ -133,6 +135,9 @@ const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingC
     return (
         <>
             <div className="conversation-box-top">
+                <div className="go-back absolute">
+                    <Link to="/messenger/"><HiArrowSmLeft /></Link>
+                </div>
                 <div className="search_container" ref={wrapperRef}>
                     <div className="search_container-content custom-scrollbar">
                         <div className="members_displayer" ref={usersDisplayerRef}>
