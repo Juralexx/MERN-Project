@@ -1,0 +1,174 @@
+.conversation {
+    position : relative;
+    padding  : 7px;
+    margin   : 5px 0;
+    width    : 100%;
+    cursor   : pointer;
+
+    .conversation_inner {
+        display     : flex;
+        align-items : center;
+        z-index     : 1;
+
+        .conversation-img-container {
+            display      : flex;
+            position     : relative;
+            margin-right : 10px;
+
+            .conversation-img {
+                min-width     : 40px;
+                min-height    : 40px;
+                border-radius : 50%;
+                border        : 2px solid var(--content-light);
+
+                &:nth-child(n+2) {
+                    margin-left : -32px;
+                }
+            }
+        }
+
+        .conversation-infos {
+            position : relative;
+            flex     : 1;
+            z-index  : 1;
+
+            .conversation-infos-top {
+                display : flex;
+
+                .conversation-name {
+                    color              : var(--text);
+                    font-size          : 14px;
+                    line-height        : 24px;
+                    font-weight        : 600;
+                    text-overflow      : ellipsis;
+                    overflow           : hidden;
+                    max-width          : 60%;
+                    display            : -webkit-box;
+                    -webkit-line-clamp : 1;
+                    -webkit-box-orient : vertical;
+                }
+
+                .conversation-date {
+                    font-size   : 12px;
+                    margin-left : auto;
+                    color       : var(--text-secondary);
+                }
+            }
+
+            .last-message-wrapper {
+                display    : flex;
+                flex-grow  : 1;
+                margin-top : 2px;
+                font-size  : 12px;
+                color      : var(--text-secondary);
+
+                .last-message {
+                    display   : flex;
+                    flex-grow : 1;
+
+                    div {
+                        &:nth-child(1) {
+                            white-space: nowrap;
+                        }
+                    }
+
+                    p {
+                        margin-top         : 1px;
+                        font-size          : 12px;
+                        line-height        : 16px;
+                        color              : var(--text-secondary);
+                        text-overflow      : ellipsis;
+                        overflow           : hidden;
+                        max-width          : 70%;
+                        display            : -webkit-box;
+                        -webkit-line-clamp : 1;
+                        -webkit-box-orient : vertical;
+                    }
+
+                    &.notification {
+                        font-weight : 600;
+                        color       : var(--primary) !important;
+                        p {
+                            font-weight : 600;
+                            color       : var(--primary) !important;
+                        }
+                    }
+                }
+
+                .unseen-badge {
+                    position      : absolute;
+                    right         : 3px;
+                    bottom        : 3px;
+                    width         : 11px;
+                    height        : 11px;
+                    border-radius : 50%;
+                    background    : var(--primary);
+                    color         : white;
+                }
+            }
+        }
+    }
+
+    .conversation-toolbox {
+        display : none;
+
+        &.active {
+            display : block;
+        }
+    }
+
+    &:hover {
+        .conversation-toolbox {
+            display : block;
+        }
+    }
+
+    &:hover, &.active {
+        background    : var(--x-light);
+        border-radius : var(--radius);
+    }
+
+    &.temporary {
+        display     : flex;
+        align-items : center;
+
+        .conversation_inner {
+            width : 100%;
+
+            .conversation-infos {
+                .last-message-wrapper {
+                    width : 100%;
+                }
+            }
+        }
+    }
+    
+    .tools_box {
+        position  : absolute;
+        top       : 50%;
+        transform : translateY(-50%);
+        right     : 60px;
+        z-index   : 2;
+
+        .tools_btn {
+            height           : 26px;
+            width            : 26px;
+            background-color : var(--light);
+            border-radius    : 50%;
+            box-shadow       : var(--shadow-tiny);
+
+            svg {
+                height : 20px;
+                width  : 20px;
+            }
+
+            &:hover {
+                background-color : var(--xx-light);
+            }
+        }
+
+        &.active {
+            display : flex;
+        }
+    }
+}

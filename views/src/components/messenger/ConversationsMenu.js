@@ -14,11 +14,13 @@ import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiMenuAlt3, HiOutlineMenu } from 'react-icons/hi';
 import { IoClose } from 'react-icons/io5';
+import useMediaQuery from '../tools/hooks/useMediaQuery';
 
 const ConversationsMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, newMessage, notification, setRightbar }) => {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
-    const [leftbar, setLeftbar] = useState(true)
+    const mediaMd = useMediaQuery('(min-width: 1024px)')
+    const [leftbar, setLeftbar] = useState(mediaMd ? true : false)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
     return (

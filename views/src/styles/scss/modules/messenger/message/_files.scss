@@ -25,10 +25,16 @@
                 max-height : 220px;
             }
         }
+
+        &:hover, &:active {
+            .files-tools {
+                display : flex;
+            }
+        }
     }
 
     .files-tools {
-        display       : flex;
+        display       : none;
         position      : absolute;
         right         : 7px;
         top           : 7px;
@@ -36,9 +42,9 @@
         border-radius : var(--radius);
 
         button {
-            padding    : 4px;
-            background : var(--xx-light);
-            cursor     : pointer;
+            padding          : 4px;
+            background-color : var(--content-light);
+            cursor           : pointer;
     
             svg {
                 height : 18px;

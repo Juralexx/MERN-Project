@@ -357,20 +357,20 @@ export const returnMessageFiles = (file) => {
             </div>
         )
     } else {
-        if (isEmbeddable(file)) {
-            return (
-                <iframe
-                    src={file.url}
-                    title={file.name}
-                    name={file.name}
-                    width="500"
-                    frameBorder="0"
-                    scrolling="no"
-                    loading="lazy"
-                >
-                </iframe>
-            )
-        } else {
+        // if (isEmbeddable(file)) {
+        //     return (
+        //         <iframe
+        //             src={file.url}
+        //             title={file.name}
+        //             name={file.name}
+        //             width="500"
+        //             frameBorder="0"
+        //             scrolling="no"
+        //             loading="lazy"
+        //         >
+        //         </iframe>
+        //     )
+        // } else {
             return (
                 <div className="file-doc">
                     <IoDocumentTextOutline className="file-doc-img" />
@@ -380,7 +380,7 @@ export const returnMessageFiles = (file) => {
                     </div>
                 </div>
             )
-        }
+        // }
     }
 }
 

@@ -14,7 +14,8 @@ import { isConversation } from './functions/function';
 import { avatar } from '../tools/hooks/useAvatar';
 import { addClass } from '../Utils';
 import { BiSearchAlt } from 'react-icons/bi';
-import { IoClose } from 'react-icons/io5';
+import { IoArrowRedo, IoClose } from 'react-icons/io5';
+import { MdOutlineMessage } from 'react-icons/md';
 
 const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setTemporaryConv, setCurrentChat, changeCurrentChat, rightbar, setRightbar }) => {
     const { user, friendsArr } = useContext(MessengerContext)
@@ -87,8 +88,8 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
                                                             </div>
                                                         </div>
                                                         <ToolsMenu>
-                                                            <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
-                                                            <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                                            <div className="tools_choice" onClick={() => handleClick(element)}><MdOutlineMessage />Envoyer un message</div>
+                                                            <div className="tools_choice"><IoArrowRedo /><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
                                                         </ToolsMenu>
                                                     </div>
                                                 )
@@ -109,8 +110,8 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
                                                             </div>
                                                         </div>
                                                         <ToolsMenu>
-                                                            <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
-                                                            <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                                            <div className="tools_choice" onClick={() => handleClick(element)}><MdOutlineMessage />Envoyer un message</div>
+                                                            <div className="tools_choice"><IoArrowRedo /><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
                                                         </ToolsMenu>
                                                     </div>
                                                 )

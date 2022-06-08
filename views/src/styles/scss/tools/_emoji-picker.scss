@@ -6,7 +6,9 @@
     box-shadow : var(--shadow-xl);
 
     .emoji-mart {
-        width : 300px !important;
+        width         : 300px !important;
+        border        : none;
+        border-radius : 10px;
 
         .emoji-mart-category {
             width : 277px;
@@ -19,7 +21,7 @@
         }
 
         .emoji-mart-bar {
-            background-color : var(--content-light);
+            background-color : var(--content-x-light);
             .emoji-mart-preview {
                 height : 42px;
 
@@ -126,11 +128,12 @@
 }
 
 .emoji-mart-dark {
-    background-color : var(--content);
+    background-color : var(--content-x-light);
 
     .emoji-mart-search {
         input {
-            background-color : var(--content);
+            background-color : var(--content-light);
+            border           : 1px solid transparent;
         }
     }
 }
@@ -141,7 +144,9 @@
     input {
         padding       : 7px 10px 5px 30px;
         font-size     : 14px;
-        border-radius : 3px;
+        border-radius : 8px;
+        border        : 1px solid transparent;
+        background-color : var(--content-light);
 
         &:focus {
             border : 1px solid var(--primary);
@@ -165,7 +170,7 @@
 
 .emoji-mart-category-label {
     span {
-        background-color : var(--content) !important;
+        background-color : var(--content-x-light) !important;
         font-size        : 14px;
     }
 }

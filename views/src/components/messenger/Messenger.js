@@ -34,8 +34,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [newMessage, setNewMessage] = useState({})
     const [notification, setNotification] = useState({})
 
-    const mediaMd = useMediaQuery('(min-width: 992px)')
-    const mediaXs = useMediaQuery('(min-width: 576px)')
+    const mediaMd = useMediaQuery('(min-width: 1024px)')
+    const mediaXs = useMediaQuery('(max-width: 576px)')
     const [rightbar, setRightbar] = useState({ state: mediaMd ? 'open' : 'closed', displayed: 'contacts' })
 
     const { friendsArr, fetchedFriends } = useFetchFriends(user)
@@ -66,7 +66,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
      */
 
     useEffect(() => {
-        if (mediaXs) {
+        if (!mediaXs) {
             if (location.pathname === '/messenger' || location.pathname === '/messenger/') {
                 if (fetched) {
                     if (user.conversations.length > 0) {
@@ -300,7 +300,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     }, [websocket.current, websocket, setTyping, setTypingContext])
 
     return (
-        <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, dispatch }}>
+        <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, dispatch, mediaXs }}>
             <div className="messenger">
                 <ConversationsMenu
                     favorites={favorites}
@@ -318,11 +318,11 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 />
                 <div className="conversation-box">
                     <div className="conversation-box-wrapper">
-                        {!fetched && !mediaXs &&
+                        {/* {!fetched && mediaXs &&
                             (location.pathname === '/messenger' || location.pathname === '/messenger/') && (
                                 <ChatLoader />
                             )
-                        }
+                        } */}
 
                         <Routes>
                             <Route index element={

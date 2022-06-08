@@ -27,6 +27,8 @@
 @import 'components/modals';
 @import 'components/btn';
 @import 'components/editor';
+@import 'components/small-menu';
+@import 'components/mobile-menu';
 
 @import 'components/inputs/auto-complete.scss';
 @import 'components/inputs/classic-input.scss';
@@ -86,6 +88,7 @@
 
 @import 'modules/messenger/messenger';
 @import 'modules/messenger/conversation';
+@import 'modules/messenger/conversation-box';
 @import 'modules/messenger/conversations-menu';
 @import 'modules/messenger/online-users';
 @import 'modules/messenger/mobile-menu';
@@ -97,6 +100,8 @@
 @import 'modules/messenger/editor/quill';
 
 @import 'modules/messenger/message/message';
+@import 'modules/messenger/message/message-date';
+@import 'modules/messenger/message/message-actions';
 @import 'modules/messenger/message/shared';
 @import 'modules/messenger/message/emojis';
 @import 'modules/messenger/message/preview';

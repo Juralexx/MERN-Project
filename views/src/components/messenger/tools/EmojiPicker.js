@@ -59,7 +59,7 @@ const EmojiPicker = (props) => {
                         emoji="grinning"
                         title=":grinning:"
                         useButton={true}
-                        emojiSize={18}
+                        emojiSize={22}
                         onSelect={onSelect}
                         onClick={() => setOpen(false)}
                     />

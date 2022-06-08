@@ -118,3 +118,18 @@
         padding : 3px 5px;
     }
 }
+
+@media (max-width:768px) {
+    .message-text-editor {
+        border-radius : 10px 10px 0 0;
+        background    : var(--content-x-light);
+
+        .message-editor-container {
+            background : var(--content-x-light);
+
+            .ql-editor {
+                background : var(--content-x-light);
+            }
+        }
+    }
+}

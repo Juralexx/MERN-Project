@@ -1,33 +1,31 @@
 import React, { useContext, useRef, useState } from 'react';
-import EmojiPicker from '../tools/EmojiPicker';
 import ReactPlayer from 'react-player/lazy'
 import Tooltip from '../../tools/global/Tooltip';
-import ToolsMenu from '../../tools/global/ToolsMenu';
 import Warning from '../../tools/global/Warning';
 import Emojis from './Emojis';
 import Editor from './Editor';
 import ShareModal from './ShareModal';
+import Actions from './Actions';
 import { MessengerContext } from '../../AppContext';
 import { useEmojis } from './useEmojis';
 import { useClickOutside } from '../../tools/hooks/useClickOutside';
-import useClipboard from '../../tools/hooks/useClipboard';
 import { useCheckLocation } from '../functions/useCheckLocation';
+import { useLongPress } from '../../tools/hooks/useLongPress';
 import { avatar } from '../../tools/hooks/useAvatar';
 import { SmallAvatar } from '../../tools/global/Avatars';
 import FsLightbox from 'fslightbox-react';
 import { deleteFiles, removeMessage } from '../functions/actions';
-import { convertDeltaToHTML, convertDeltaToStringNoHTML, getUserPseudo, like, returnMessageFiles } from '../functions/function';
-import { addClass, dateParserWithoutYear, download, getHourOnly } from '../../Utils';
-import { MdClear, MdFileDownload, MdThumbUp, MdFullscreen } from 'react-icons/md'
-import { IoArrowRedo, IoArrowUndo, IoTrashBin } from 'react-icons/io5'
-import { RiEdit2Fill, RiFileCopyFill } from 'react-icons/ri';
+import { convertDeltaToHTML, convertDeltaToStringNoHTML, getUserPseudo, returnMessageFiles } from '../functions/function';
+import { dateParserWithoutYear, download, getHourOnly } from '../../Utils';
+import { MdClear, MdFileDownload, MdFullscreen } from 'react-icons/md'
+import { IoArrowRedo } from 'react-icons/io5'
+;
 
 const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, members }) => {
-    const { uid, user, websocket, dispatch } = useContext(MessengerContext)
+    const { uid, user, websocket, dispatch, mediaXs } = useContext(MessengerContext)
     const [modify, setModify] = useState(-1)
     const [warning, setWarning] = useState(false)
     const [toggler, setToggler] = useState(false)
-    const { copy } = useClipboard()
     const { isParam } = useCheckLocation()
 
     const [share, setShare] = useState(false)
@@ -35,6 +33,9 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
     const messageRef = useRef()
     const [opened, setOpened] = useState(false)
     useClickOutside(messageRef, setOpened, false)
+    const longPressProps = useLongPress({
+        onLongPress: () => mediaXs ? setOpened(true) : {},
+    })
 
     const { emojis, handleEmoji } = useEmojis(message, currentChat)
 
@@ -43,6 +44,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
             ref={messageRef}
             className={opened ? "message-container hovered " + className : "message-container " + className}
             data-hour={getHourOnly(new Date(message.createdAt))}
+            {...longPressProps}
         >
             <div className="message">
                 <div className="message-left">
@@ -158,32 +160,17 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                     />
                 </div>
 
-                <div className={`message-actions ${addClass(opened, 'active')} ${addClass(modify === uniqueKey, '!hidden')}`}>
-                    <Tooltip content={<p>Liker</p>}>
-                        <div className="message-actions-btn" onClick={() => handleEmoji(like)}><MdThumbUp /></div>
-                    </Tooltip>
-                    <Tooltip content={<p>Réagir</p>}>
-                        <EmojiPicker btnClassName="message-actions-btn" onSelect={emoji => handleEmoji(emoji)} onClick={() => setOpened(!opened)} />
-                    </Tooltip>
-                    <Tooltip content={<p>Répondre</p>}>
-                        <div className="message-actions-btn" onClick={() => setShare(true)}><IoArrowUndo /></div>
-                    </Tooltip>
-                    {message.sender === uid &&
-                        <Tooltip content={<p>Modifier</p>}>
-                            <div className="message-actions-btn" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /></div>
-                        </Tooltip>
-                    }
-                    <ToolsMenu btnClassName="message-actions-btn" onClick={() => setOpened(!opened)}>
-                        <div className="tools_choice" onClick={() => setShare(true)}><IoArrowUndo /> Répondre</div>
-                        <div className="tools_choice" onClick={() => copy(convertDeltaToStringNoHTML(message))}><RiFileCopyFill /> Copier le message</div>
-                        {message.sender === uid &&
-                            <>
-                                <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
-                                <div className="tools_choice red" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
-                            </>
-                        }
-                    </ToolsMenu>
-                </div>
+                <Actions
+                    message={message}
+                    opened={opened}
+                    setOpened={setOpened}
+                    modify={modify}
+                    setModify={setModify}
+                    setShare={setShare}
+                    handleEmoji={handleEmoji}
+                    setWarning={setWarning}
+                    uniqueKey={uniqueKey}
+                />
 
                 {warning &&
                     <Warning

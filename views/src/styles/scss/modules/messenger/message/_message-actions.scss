@@ -1,0 +1,48 @@
+.message-actions {
+    display       : none;
+    position      : absolute;
+    top           : -27px;
+    right         : 0;
+    border-radius : 5px;
+    background    : var(--content-x-light);
+    box-shadow    : var(--shadow-lg);
+    border        : 2px solid var(--light-border);
+    cursor        : pointer;
+
+    &.active {
+        display : flex;
+    }
+
+    .message-actions-btn {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        padding         : 3px 5.5px;
+        width           : 30px;
+        height          : 30px;
+
+        svg {
+            width  : 16px;
+            height : 16px;
+        }
+
+        &:hover, &:hover .tools_box .tools_btn {
+            background-color : var(--light);
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .message-actions {
+        display  : block;
+        position : fixed;
+        top      : unset;
+        bottom   : 0;
+        left     : 0;
+        width    : 100%;
+
+        .message-actions-btn {
+            display : none;
+        }
+    }
+}

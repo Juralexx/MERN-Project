@@ -1,6 +1,7 @@
 .conversation-box {
-    position : relative;
-    width    : 50%;
+    position  : relative;
+    width     : 50%;
+    flex-grow : 1;
 
     .conversation-box-wrapper {
         position       : relative;
@@ -15,8 +16,6 @@
             justify-content : space-between;
             padding         : 7px 15px;
             border-bottom   : 0px solid var(--light-border);
-            border-left     : 1px solid var(--light-border);
-            border-right    : 1px solid var(--light-border);
             box-shadow      : var(--shadow-light);
             z-index         : 20;
 
@@ -137,8 +136,16 @@
             overflow-x       : hidden;
             padding          : 10px;
             background-color : var(--content-x-light);
-            border-left      : 1px solid var(--light-border);
-            border-right     : 1px solid var(--light-border);
+        }
+    }
+}
+
+@media(max-width:576px) {
+    .conversation-box {
+        .conversation-box-wrapper {
+            .conversation-box-container {
+                padding: 10px 0;
+            }
         }
     }
 }

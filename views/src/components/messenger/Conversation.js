@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { HiLogout, HiOutlineCheck } from 'react-icons/hi';
+import { IoTrashBin } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { MessengerContext } from '../AppContext';
 import ToolsMenu from '../tools/global/ToolsMenu';
 import { avatar } from '../tools/hooks/useAvatar';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
+import { useLongPress } from '../tools/hooks/useLongPress';
+import useMediaQuery from '../tools/hooks/useMediaQuery';
 import { addClass } from '../Utils';
 import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
 
@@ -15,9 +19,14 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     const [date, setDate] = useState()
     const [unseen, setUnseen] = useState(false)
 
-    const [opened, setOpened] = useState(false)
+    const [opened, setOpened] = useState(true)
     const menuRef = useRef()
     useClickOutside(menuRef, setOpened, false)
+
+    const mediaXs = useMediaQuery('(max-width: 576px)')
+    const longPressProps = useLongPress({
+        onLongPress: () => mediaXs ? setOpened(true) : {},
+    })
 
     useEffect(() => {
         if (Object.keys(lastMessage).length > 0)
@@ -50,7 +59,7 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     }, [newMessage, notification, conversation._id])
 
     return (
-        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`}>
+        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`} {...longPressProps}>
             <Link to={`/messenger/` + conversation._id}>
                 <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
                     <div className="conversation-img-container">
@@ -88,10 +97,10 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
                 </div>
             </Link>
             <div className={`conversation-toolbox ${addClass(opened, 'active')}`} ref={menuRef}>
-                <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)}>
-                    <div className="tools_choice">Marquer comme lu</div>
-                    <div className="tools_choice">Supprimer la conversation</div>
-                    <div className="tools_choice">Quitter la conversation</div>
+                <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)} btnClassName="hidden-xs" openXs={opened}>
+                    <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
+                    <div className="tools_choice"><HiLogout />Quitter la conversation</div>
+                    <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
                 </ToolsMenu>
             </div>
         </div>
