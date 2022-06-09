@@ -82,48 +82,6 @@
                 }
             }
 
-            .search_container {
-                position     : relative;
-                display      : flex;
-                width        : 100%;
-                height       : 100%;
-                padding-left : 30px;
-
-                &:before {
-                    content   : 'À :';
-                    position  : absolute;
-                    left      : 10px;
-                    top       : 50%;
-                    transform : translateY(-50%);
-                }
-
-                .search_container-content {
-                    display     : flex;
-                    align-items : center;
-                    height      : 100%;
-                    flex-grow   : 1;
-                    overflow-x  : auto;
-
-                    input {
-                        display    : block;
-                        min-width  : 150px;
-                        width      : 100%;
-                        height     : 100%;
-                        padding    : 8px 12px;
-                        color      : var(--input-text);
-                        background : var(--content-light);
-                        border     : 2px solid transparent;
-                        outline    : none;
-                        z-index    : 12;
-    
-                        &::placeholder {
-                            color      : var(--placeholder);
-                            font-style : italic;
-                        }
-                    }
-                }
-            }
-
             .go-back {
                 display : none;
             }
@@ -137,72 +95,6 @@
             padding          : 10px;
             background-color : var(--content-x-light);
         }
-    }
-}
-
-@media(max-width:576px) {
-    .conversation-box {
-        .conversation-box-wrapper {
-            .conversation-box-container {
-                padding: 10px 0;
-            }
-        }
-    }
-}
-
-.is-typing {
-    position    : relative;
-    display     : flex;
-    align-items : center;
-    font-style  : italic;
-    font-size   : 11px;
-    padding     : 0 6px 2px;
-    color       : var(--text);
-
-    svg {
-        margin-left : 10px;
-        margin-top  : 2px;
-        max-height  : 10px;
-        width       : 24px;
-    }
-}
-
-.members_displayer {
-    display   : inline-block;
-    position  : relative;
-    left      : 0;
-    max-width : 100%;
-    height    : 27px;
-    color     : var(--text);
-    z-index   : 25;
-
-    .members_item {
-        display       : inline-flex;
-        align-items   : center;
-        max-width     : 100%;
-        padding       : 3px 10px;
-        margin        : 0 3px;
-        font-weight   : 600;
-        color         : var(--primary);
-        background    : rgba(var(--primary-rgb), .1);
-        border-radius : var(--radius);
-        z-index       : 25;
-
-        svg {
-            width         : 18px;
-            height        : 18px;
-            margin-left   : 7px;
-            border-radius : 50%;
-            cursor        : pointer;
-        }
-    }
-
-    .is_more_members {
-        padding       : 5px 10px;
-        margin        : 0 2px;
-        color         : var(--primary);
-        background    : rgba(var(--primary-rgb), .1);
-        border-radius : var(--radius);
     }
 }
 
@@ -222,6 +114,9 @@
                     left    : 10px;
                     margin  : 0;
                 }
+            }
+            .conversation-box-container {
+                padding: 10px 0;
             }
         }
     }

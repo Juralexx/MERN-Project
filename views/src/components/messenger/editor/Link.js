@@ -1,11 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import isURL from 'validator/lib/isURL'
 import { TextButton, Button } from '../../tools/global/Button'
 import { ClassicInput } from '../../tools/global/Inputs'
 import { placeUponCursor } from '../functions/function'
 import normalizeUrl from 'normalize-url';
+import { MediaContext } from '../../AppContext'
 
 const Link = ({ quill, isLink, setLink, position }) => {
+    const { sm } = useContext(MediaContext)
+    let styles = quill ? placeUponCursor(quill) : { left: 0, right: 0, bottom: 0 }
     const textRef = useRef()
     const linkRef = useRef()
 
@@ -76,21 +79,22 @@ const Link = ({ quill, isLink, setLink, position }) => {
     }
 
     return (
-        isLink &&
-        <div className="quill-link-displayer" style={placeUponCursor(quill)}>
-            <div>
-                <p className="mb-2">Texte</p>
-                <ClassicInput className="full" placeholder="Saisissez le texte à afficher" defaultValue='' useRef={textRef} />
+        isLink && (
+            <div className="quill-link-displayer" style={{ left: !sm && styles.left, right: !sm && styles.right, bottom: !sm && styles.bottom }}>
+                <div>
+                    <p className="mb-2">Texte</p>
+                    <ClassicInput className="full" placeholder="Saisissez le texte à afficher" defaultValue='' useRef={textRef} />
+                </div>
+                <div className="mt-4">
+                    <p className="mb-2">Lien</p>
+                    <ClassicInput className="full" placeholder="Saisissez le lien" defaultValue='' useRef={linkRef} />
+                </div>
+                <div className="btn_container mt-2">
+                    <TextButton text="Annuler" onClick={() => setLink(false)} />
+                    <Button text="Valider" onClick={onLink} className="ml-2" />
+                </div>
             </div>
-            <div className="mt-4">
-                <p className="mb-2">Lien</p>
-                <ClassicInput className="full" placeholder="Saisissez le lien" defaultValue='' useRef={linkRef} />
-            </div>
-            <div className="btn_container mt-2">
-                <TextButton text="Annuler" onClick={() => setLink(false)} />
-                <Button text="Valider" onClick={onLink} className="ml-2" />
-            </div>
-        </div>
+        )
     )
 }
 

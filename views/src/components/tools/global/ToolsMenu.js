@@ -2,14 +2,12 @@ import React, { useState, useRef, useEffect } from 'react'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { useClickOutside } from '../hooks/useClickOutside'
 import { usePopper } from "react-popper";
-import useMediaQuery from '../hooks/useMediaQuery';
 
 const ToolsMenu = (props) => {
-    const { className, btnClassName, disabled, onClick, placement, openXs } = props
+    const { className, btnClassName, disabled, onClick, placement } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
     useClickOutside(ref, setOpen, false)
-    const mediaXs = useMediaQuery('(max-width: 576px)')
 
     const popperElRef = useRef(null);
     const [targetElement, setTargetElement] = useState(null);
@@ -22,7 +20,7 @@ const ToolsMenu = (props) => {
             {
                 name: "offset",
                 options: {
-                    offset: !mediaXs ? [-5, 5] : [0, 0]
+                    offset: [-5, 5]
                 }
             },
             {
@@ -36,54 +34,33 @@ const ToolsMenu = (props) => {
     })
 
     useEffect(() => {
-        if (!mediaXs) {
-            if (open)
-                setPopperElement(popperElRef.current)
-        }
-    }, [mediaXs, open])
+        if (open)
+            setPopperElement(popperElRef.current)
+    }, [open])
 
     return (
-        !mediaXs ? (
-            <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
-                {open &&
-                    <div className="tools_menu" onClick={() => setOpen(false)}
-                        ref={popperElRef}
-                        style={styles.popper}
-                        {...attributes.popper}
-                    >
-                        {props.children}
+        <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
+            {open &&
+                <div className="tools_menu" onClick={() => setOpen(false)}
+                    ref={popperElRef}
+                    style={styles.popper}
+                    {...attributes.popper}
+                >
+                    {props.children}
 
-                        <div className="menu-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div>
-                    </div>
-                }
-                {props.target ? (
-                    <div ref={setTargetElement} onClick={() => setOpen(!open)}>
-                        {props.target}
-                    </div>
-                ) : (
-                    <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} ref={setTargetElement} disabled={disabled} onClick={() => setOpen(!open)}>
-                        <BiDotsHorizontalRounded />
-                    </button>
-                )}
-            </div>
-        ) : (
-            <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
-                {(open || openXs) &&
-                    <div className="tools_menu" onClick={() => setOpen(false)}>
-                        {props.children}
-                    </div>
-                }
-                {props.target ? (
-                    <div onClick={() => setOpen(!open)}>
-                        {props.target}
-                    </div>
-                ) : (
-                    <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} disabled={disabled} onClick={() => setOpen(!open)}>
-                        <BiDotsHorizontalRounded />
-                    </button>
-                )}
-            </div>
-        )
+                    <div className="menu-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div>
+                </div>
+            }
+            {props.target ? (
+                <div ref={setTargetElement} onClick={() => setOpen(!open)}>
+                    {props.target}
+                </div>
+            ) : (
+                <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} ref={setTargetElement} disabled={disabled} onClick={() => setOpen(!open)}>
+                    <BiDotsHorizontalRounded />
+                </button>
+            )}
+        </div>
     )
 }
 

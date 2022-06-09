@@ -11,7 +11,7 @@ const EditorNull = () => {
         <div className="conversation-bottom">
             <div className="conversation-toolsbox">
                 <div className="message-text-editor">
-                    <EditorToolbar style={{ display: "block" }} />
+                    <EditorToolbar style={{ display: "none" }} />
                     <div className="message-editor-container">
                         <ReactQuill
                             defaultValue=""

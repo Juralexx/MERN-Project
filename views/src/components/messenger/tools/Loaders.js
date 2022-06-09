@@ -331,3 +331,18 @@ export const ChatLoader = () => {
         </>
     )
 }
+
+export const OnlineUserMobileLoader = () => {
+    return (
+        [...Array(12)].map((_, key) => {
+            return (
+                <div className="online-user" key={key}>
+                    <div className="loading-circle-38 loading !mr-0 mb-2"></div>
+                    <div className="online-user-name">
+                        <div className="loading-h14-w60 loading"></div>
+                    </div>
+                </div>
+            )
+        })
+    )
+}

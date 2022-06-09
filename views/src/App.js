@@ -3,11 +3,12 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { io } from 'socket.io-client'
 import Paths from './components/routes/routes';
-import { UidContext, UserContext } from "./components/AppContext"
+import { MediaContext, UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
 import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
 import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo, receiveUpdateConversationInfos, receiveUploadConversationPicture, receiveRemoveConversationPicture } from './actions/messenger.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
+import useMediaQuery from './components/tools/hooks/useMediaQuery';
 
 function App() {
     const user = useSelector(state => state.userReducer)
@@ -17,6 +18,12 @@ function App() {
     const [send, setSend] = useState(false)
     const dispatch = useDispatch()
     const websocket = useRef(io(`${process.env.REACT_APP_API_URL}`))
+
+    const xs = useMediaQuery('(max-width: 576px)')
+    const sm = useMediaQuery('(max-width: 768px)')
+    const md = useMediaQuery('(max-width: 1024px)')
+    const lg = useMediaQuery('(max-width: 1200px)')
+    const xl = useMediaQuery('(max-width: 1366px)')
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -204,19 +211,21 @@ function App() {
     return (
         <UidContext.Provider value={uid}>
             <UserContext.Provider value={user}>
-                <Paths
-                    uid={uid}
-                    user={user}
-                    websocket={websocket}
-                    onlineUsers={onlineUsers}
-                />
-                <NotificationCard
-                    user={user}
-                    websocket={websocket}
-                    notification={notification}
-                    setSend={setSend}
-                    send={send}
-                />
+                <MediaContext.Provider value={{ xs, sm, md, lg, xl }}>
+                    <Paths
+                        uid={uid}
+                        user={user}
+                        websocket={websocket}
+                        onlineUsers={onlineUsers}
+                    />
+                    <NotificationCard
+                        user={user}
+                        websocket={websocket}
+                        notification={notification}
+                        setSend={setSend}
+                        send={send}
+                    />
+                </MediaContext.Provider>
             </UserContext.Provider>
         </UidContext.Provider>
     )

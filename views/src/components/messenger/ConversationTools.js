@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { MessengerContext } from '../AppContext';
 import { useOnline } from './functions/useOnline';
 import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch';
@@ -18,11 +18,10 @@ import { IoArrowRedo, IoClose } from 'react-icons/io5';
 import { MdOutlineMessage } from 'react-icons/md';
 
 const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setTemporaryConv, setCurrentChat, changeCurrentChat, rightbar, setRightbar }) => {
-    const { user, friendsArr } = useContext(MessengerContext)
+    const { user, friendsArr, navigate } = useContext(MessengerContext)
     const { online, offline } = useOnline(friendsArr, onlineUsers)
     const [search, setSearch] = useState(false)
     const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch([...online, ...offline], 'pseudo')
-    const navigate = useNavigate()
 
     const handleClick = (receiver) => {
         let isConv = isConversation(conversations, [receiver, user])

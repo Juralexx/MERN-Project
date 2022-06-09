@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
+import { MediaContext } from '../../AppContext'
 import { useClickOutside } from '../../tools/hooks/useClickOutside'
 import { checkTheme } from '../../Utils'
 import { placeUponCursor } from '../functions/function'
@@ -6,6 +7,8 @@ import { placeUponCursor } from '../functions/function'
 const Emoji = ({ quill, isEmoji, setEmoji, emojisResults, setEmojisResults, position, setPosition }) => {
     const emojiRef = useRef()
     useClickOutside(emojiRef, setEmoji, false)
+    const { sm } = useContext(MediaContext)
+    const styles = quill ? placeUponCursor(quill) : { left: 0, right: 0, bottom: 0 }
 
     const onEmoji = (emoji) => {
         quill.focus()
@@ -24,7 +27,7 @@ const Emoji = ({ quill, isEmoji, setEmoji, emojisResults, setEmojisResults, posi
     return (
         isEmoji && (
             emojisResults.length > 0 && (
-                <div tabIndex="0" className="auto-complete-container custom-scrollbar max-w-[300px]" style={placeUponCursor(quill)} ref={emojiRef}>
+                <div tabIndex="0" className="auto-complete-container custom-scrollbar emojis" style={{ left: !sm && styles.left, right: !sm && styles.right, bottom: !sm && styles.bottom}} ref={emojiRef}>
                     {emojisResults.slice(0, 20).map((emoji, key) => {
                         return (
                             <div

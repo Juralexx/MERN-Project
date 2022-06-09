@@ -194,8 +194,7 @@ export const returnEditorFiles = (file) => {
  */
 
 export const placeUponCursor = (quill) => {
-    if (quill) {
-        quill.focus()
+    if (quill?.hasFocus()) {
         let range = quill.getSelection()
         let quillHeight = quill.scroll.domNode.offsetHeight
         let pos = quill.getBounds(range.index)

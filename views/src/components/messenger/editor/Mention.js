@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { MediaContext } from '../../AppContext'
 import { TinyAvatar } from '../../tools/global/Avatars'
 import { checkTheme } from '../../Utils'
 import { placeUponCursor } from '../functions/function'
 
 const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMentionResults, position, setPosition }) => {
+    const { sm } = useContext(MediaContext)
+    const styles = quill ? placeUponCursor(quill) : { left: 0, right: 0, bottom: 0 }
 
     const onMention = (mention) => {
         quill.focus()
@@ -27,24 +30,26 @@ const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMe
     }
 
     return (
-        isMention &&
-        mentionsResults.length > 0 &&
-        <div tabIndex="0" className="auto-complete-container custom-scrollbar max-w-[300px]" style={placeUponCursor(quill)}>
-            {mentionsResults.map((element, key) => {
-                return (
-                    <div
-                        className="auto-complete-item"
-                        key={key}
-                        onClick={() => onMention(element)}
-                    >
-                        <div className="flex items-center">
-                            <TinyAvatar pic={element.picture} />
-                            <p>{element.pseudo}</p>
-                        </div>
-                    </div>
-                )
-            })}
-        </div>
+        isMention && (
+            mentionsResults.length > 0 && (
+                <div tabIndex="0" className="auto-complete-container custom-scrollbar mention" style={{ left: !sm && styles.left, right: !sm && styles.right, bottom: !sm && styles.bottom }}>
+                    {mentionsResults.map((element, key) => {
+                        return (
+                            <div
+                                className="auto-complete-item"
+                                key={key}
+                                onClick={() => onMention(element)}
+                            >
+                                <div className="flex items-center">
+                                    <TinyAvatar pic={element.picture} />
+                                    <p>{element.pseudo}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+        )
     )
 }
 

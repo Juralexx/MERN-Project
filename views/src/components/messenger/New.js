@@ -11,6 +11,7 @@ import { EmptyDialog, EmptyGroup } from './tools/Empty'
 import { getHoursDiff, getMessagesDates, isConversation, removeSelected, userToMember } from './functions/function'
 import EditorNull from './editor/EditorNull'
 import Editor from './editor/Editor'
+import MobileEditor from './editor/MobileEditor'
 import Message from './message/Message'
 import { SmallLoader } from './tools/Loaders'
 import MessageDate from './message/MessageDate'
@@ -18,7 +19,7 @@ import { IoClose } from 'react-icons/io5'
 import { HiArrowSmLeft } from 'react-icons/hi'
 
 const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingContext, handleSubmit, messagesDates, setMessagesDates }) => {
-    const { user, friendsArr } = useContext(MessengerContext)
+    const { user, friendsArr, sm } = useContext(MessengerContext)
     const [friends, setFriends] = useState([])
     const [members, setMembers] = useState([])
     const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(friends, 'pseudo')
@@ -161,7 +162,7 @@ const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingC
                             style={{ width: `$calc(100% - ${usersDisplayerRef?.current?.offsetWidth} +50)` }}
                         />
                         {open &&
-                            <div tabIndex="0" className="auto-complete-container custom-scrollbar w-1/2 top-full">
+                            <div tabIndex="0" className="auto-complete-container custom-scrollbar">
                                 {friends.length > 0 ? (
                                     friends.map((element, key) => {
                                         return (
@@ -221,15 +222,28 @@ const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingC
                                 )}
                             </>
                         </div>
-                        <Editor
-                            members={members}
-                            currentChat={currentChat}
-                            handleSubmit={handleSubmit}
-                            isTyping={isTyping}
-                            typingContext={typingContext}
-                            convWrapperRef={convWrapperRef}
-                            lastmessageRef={lastmessageRef}
-                        />
+
+                        {!sm ? (
+                            <Editor
+                                members={members}
+                                currentChat={currentChat}
+                                handleSubmit={handleSubmit}
+                                isTyping={isTyping}
+                                typingContext={typingContext}
+                                convWrapperRef={convWrapperRef}
+                                lastmessageRef={lastmessageRef}
+                            />
+                        ) : (
+                            <MobileEditor
+                                members={members}
+                                currentChat={currentChat}
+                                handleSubmit={handleSubmit}
+                                isTyping={isTyping}
+                                typingContext={typingContext}
+                                convWrapperRef={convWrapperRef}
+                                lastmessageRef={lastmessageRef}
+                            />
+                        )}
                     </>
                 )
             )}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useLocationchange } from './functions/useLocationchange';
@@ -6,9 +6,8 @@ import { useFetchFriends } from './functions/useFetchFriends';
 import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
 import { useCheckLocation } from './functions/useCheckLocation';
-import useMediaQuery from '../tools/hooks/useMediaQuery';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { MessengerContext } from '../AppContext';
+import { MediaContext, MessengerContext } from '../AppContext';
 import ConversationsMenu from './ConversationsMenu';
 import MobileMenu from './MobileMenu';
 import ConversationTools from './ConversationTools';
@@ -34,9 +33,8 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [newMessage, setNewMessage] = useState({})
     const [notification, setNotification] = useState({})
 
-    const mediaMd = useMediaQuery('(min-width: 1024px)')
-    const mediaXs = useMediaQuery('(max-width: 576px)')
-    const [rightbar, setRightbar] = useState({ state: mediaMd ? 'open' : 'closed', displayed: 'contacts' })
+    const { xs, sm, md, lg } = useContext(MediaContext)
+    const [rightbar, setRightbar] = useState({ state: !lg ? 'open' : 'closed', displayed: 'contacts' })
 
     const { friendsArr, fetchedFriends } = useFetchFriends(user)
     const { isTyping, setTyping, typingContext, setTypingContext } = useTyping(currentChat)
@@ -66,7 +64,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
      */
 
     useEffect(() => {
-        if (!mediaXs) {
+        if (!xs) {
             if (location.pathname === '/messenger' || location.pathname === '/messenger/') {
                 if (fetched) {
                     if (user.conversations.length > 0) {
@@ -77,7 +75,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 }
             }
         }
-    }, [mediaXs, fetched, location.pathname, allConversations, user.conversations, navigate])
+    }, [xs, fetched, location.pathname, allConversations, user.conversations, navigate])
 
 
     /**
@@ -300,7 +298,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     }, [websocket.current, websocket, setTyping, setTypingContext])
 
     return (
-        <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, dispatch, mediaXs }}>
+        <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, dispatch, navigate, xs, sm, md, lg }}>
             <div className="messenger">
                 <ConversationsMenu
                     favorites={favorites}
@@ -318,29 +316,33 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 />
                 <div className="conversation-box">
                     <div className="conversation-box-wrapper">
-                        {/* {!fetched && mediaXs &&
+                        {!fetched && !xs &&
                             (location.pathname === '/messenger' || location.pathname === '/messenger/') && (
                                 <ChatLoader />
                             )
-                        } */}
+                        }
 
                         <Routes>
-                            <Route index element={
-                                <MobileMenu
-                                    favorites={favorites}
-                                    conversations={conversations}
-                                    setConversations={setConversations}
-                                    currentChat={currentChat}
-                                    setCurrentChat={setCurrentChat}
-                                    changeCurrentChat={changeCurrentChat}
-                                    temporaryConv={temporaryConv}
-                                    setTemporaryConv={setTemporaryConv}
-                                    fetched={fetched}
-                                    newMessage={newMessage}
-                                    notification={notification}
-                                    setRightbar={setRightbar}
-                                />
-                            } />
+                            {xs &&
+                                <Route index element={
+                                    <MobileMenu
+                                        favorites={favorites}
+                                        conversations={conversations}
+                                        setConversations={setConversations}
+                                        currentChat={currentChat}
+                                        setCurrentChat={setCurrentChat}
+                                        changeCurrentChat={changeCurrentChat}
+                                        temporaryConv={temporaryConv}
+                                        setTemporaryConv={setTemporaryConv}
+                                        fetched={fetched}
+                                        onlineUsers={onlineUsers}
+                                        fetchedFriends={fetchedFriends}
+                                        newMessage={newMessage}
+                                        notification={notification}
+                                        setRightbar={setRightbar}
+                                    />
+                                } />
+                            }
 
                             <Route path=":id" element={
                                 <ConversationBox

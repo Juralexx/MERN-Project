@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetMembers } from './functions/useGetMembers'
 import { useInfiniteScroll } from './functions/useInfiniteScroll'
@@ -7,6 +7,7 @@ import { useScrollToLast } from './functions/useScrollToLast'
 import { MessengerContext } from '../AppContext';
 import ConversationHeader from './ConversationHeader'
 import Editor from './editor/Editor'
+import MobileEditor from './editor/MobileEditor';
 import Message from './message/Message'
 import MessageDate from './message/MessageDate'
 import { EmptyDialog, EmptyGroup } from './tools/Empty'
@@ -15,7 +16,7 @@ import { getHoursDiff, getMessagesDates } from './functions/function'
 import { getConversation } from '../../actions/messenger.action'
 
 const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUsers, messagesDates, setMessagesDates, handleSubmit, typingContext, isTyping, setRightbar }) => {
-    const { uid, user } = useContext(MessengerContext)
+    const { uid, user, navigate, sm } = useContext(MessengerContext)
     const { id } = useParams()
     const reducer = useSelector(state => state.messengerReducer)
     const [isLoading, setLoading] = useState(true)
@@ -24,7 +25,7 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
     const { pushMore, number } = useInfiniteScroll(currentChat, convWrapperRef)
     const { lastmessageRef } = useScrollToLast(isLoading)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+
 
     useEffect(() => {
         if (isLoading) {
@@ -99,15 +100,27 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                             )}
                         </>
                     </div>
-                    <Editor
-                        members={members}
-                        currentChat={currentChat}
-                        handleSubmit={handleSubmit}
-                        isTyping={isTyping}
-                        typingContext={typingContext}
-                        convWrapperRef={convWrapperRef}
-                        lastmessageRef={lastmessageRef}
-                    />
+                    {!sm ? (
+                        <Editor
+                            members={members}
+                            currentChat={currentChat}
+                            handleSubmit={handleSubmit}
+                            isTyping={isTyping}
+                            typingContext={typingContext}
+                            convWrapperRef={convWrapperRef}
+                            lastmessageRef={lastmessageRef}
+                        />
+                    ) : (
+                        <MobileEditor
+                            members={members}
+                            currentChat={currentChat}
+                            handleSubmit={handleSubmit}
+                            isTyping={isTyping}
+                            typingContext={typingContext}
+                            convWrapperRef={convWrapperRef}
+                            lastmessageRef={lastmessageRef}
+                        />
+                    )}
                 </>
             }
 

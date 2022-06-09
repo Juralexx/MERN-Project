@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { MessengerContext } from '../AppContext';
 import { NavLink } from 'react-router-dom'
 import { useOnline } from './functions/useOnline';
 import ToolsMenu from '../tools/global/ToolsMenu';
@@ -9,13 +10,14 @@ import { HiArrowSmLeft } from 'react-icons/hi';
 import { IoClose } from 'react-icons/io5';
 
 const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
+    const { md } = useContext(MessengerContext)
     const { online, offline } = useOnline(members, onlineUsers)
 
     return (
         <>
             <div className="flex items-center justify-between p-1 mb-3">
                 <div className="go-back !mb-0 absolute">
-                    <HiArrowSmLeft onClick={() => setRightbar(prev => ({ ...prev, displayed: 'contacts' }))} />
+                    <HiArrowSmLeft onClick={() => setRightbar(({ state: !md ? 'open' : 'closed', displayed: 'contacts' }))} />
                 </div>
                 <h2 className="bold ml-11">Membres</h2>
                 <div className="flex">

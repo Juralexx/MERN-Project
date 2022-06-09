@@ -100,10 +100,46 @@
     }
 }
 
-// .conversation-toolbox {
-//     position  : fixed;
-//     min-width : 100%;
-//     bottom    : 0;
-//     left      : 0;
-//     right     : 0 !important;
-// }
+.mobile-menu-swipper {
+   display       : flex;
+   margin-bottom : 5px;
+
+    .online-user {
+        display        : flex;
+        flex-direction : column;
+        align-items    : center;
+        padding        : 5px 12px;
+        cursor         : pointer;
+        width          : unset;
+
+        .online-user-img {
+            width         : 38px;
+            height        : 38px;
+            border-radius : 50%;
+        }
+
+        .online-user-pseudo {
+            line-height : 16px;
+            color       : var(--text);
+            font-weight : 600;
+            padding     : 7px 0 0;
+        }
+
+        &.online {
+            .online-user {
+                .online-user-img {
+                    border : 3px solid var(--green);
+                }
+            }
+        }
+    
+        &.offline {
+            .online-user-img {
+                opacity : 0.3;
+            }
+            .online-user-pseudo {
+                opacity : 0.3;
+            }
+        }
+    }
+}

@@ -1,12 +1,12 @@
 .quill-link-displayer {
-    position         : absolute;
-    width            : 400px;
-    background-color : var(--content-light);
-    border-radius    : var(--radius);
-    padding          : 14px 15px 0;
-    box-shadow       : var(--shadow-lg);
-    border           : 2px solid var(--light-border);
-    z-index          : 750;
+    position      : absolute;
+    width         : 400px;
+    background    : var(--content-x-light);
+    border-radius : var(--radius);
+    padding       : 14px 15px 0;
+    box-shadow    : var(--shadow-lg);
+    border        : 1px solid var(--light-border);
+    z-index       : 750;
 
     .classic-input {
         height     : 36px;
@@ -14,5 +14,12 @@
         input {
             height : 36px;
         }
+    }
+}
+
+@media (max-width:768px) {
+    .quill-link-displayer {
+        width  : 100%;
+        bottom : 40px;
     }
 }

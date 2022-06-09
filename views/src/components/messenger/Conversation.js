@@ -1,31 +1,30 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { HiLogout, HiOutlineCheck } from 'react-icons/hi';
-import { IoTrashBin } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
 import { MessengerContext } from '../AppContext';
-import ToolsMenu from '../tools/global/ToolsMenu';
-import { avatar } from '../tools/hooks/useAvatar';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 import { useLongPress } from '../tools/hooks/useLongPress';
-import useMediaQuery from '../tools/hooks/useMediaQuery';
+import ToolsMenu from '../tools/global/ToolsMenu';
+import MobileMenu from '../tools/global/MobileMenu';
+import { avatar } from '../tools/hooks/useAvatar';
 import { addClass } from '../Utils';
 import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
+import { HiLogout, HiOutlineCheck } from 'react-icons/hi';
+import { IoTrashBin } from 'react-icons/io5';
 
 const Conversation = ({ conversation, currentChat, newMessage, notification, onConversationClick }) => {
-    const { uid, user } = useContext(MessengerContext)
+    const { uid, user, xs, navigate } = useContext(MessengerContext)
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
 
     const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : {})
     const [date, setDate] = useState()
     const [unseen, setUnseen] = useState(false)
 
-    const [opened, setOpened] = useState(true)
+    const [opened, setOpened] = useState(false)
     const menuRef = useRef()
     useClickOutside(menuRef, setOpened, false)
 
-    const mediaXs = useMediaQuery('(max-width: 576px)')
     const longPressProps = useLongPress({
-        onLongPress: () => mediaXs ? setOpened(true) : {},
+        onClick: () => navigate(`/messenger/` + conversation._id),
+        onLongPress: () => xs ? setOpened(true) : {},
     })
 
     useEffect(() => {
@@ -60,48 +59,54 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
 
     return (
         <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`} {...longPressProps}>
-            <Link to={`/messenger/` + conversation._id}>
-                <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
-                    <div className="conversation-img-container">
-                        {members.slice(0, 2).map((element, key) => {
-                            return <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                        })}
-                    </div>
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-top">
-                            <div className="conversation-name">
-                                {conversation.name ? conversation.name : returnMembers(members)}
-                            </div>
-                            <div className="conversation-date">{date}</div>
-                        </div>
-                        {Object.keys(lastMessage)?.length > 0 ? (
-                            <div className="last-message-wrapper">
-                                <div className={`${unseen ? "last-message notification" : "last-message"}`}>
-                                    {returnConversationPseudo(conversation, lastMessage, uid)}
-                                    <p>
-                                        {Object.keys(lastMessage?.text).length > 0 ? (
-                                            convertDeltaToStringNoHTML(lastMessage)
-                                        ) : (
-                                            lastMessage?.files?.length > 0 && lastMessage.files[0].name
-                                        )}
-                                    </p>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="last-message-wrapper">
-                                <div className="last-message"><p>Nouvelle conversation - <em>Envoyer un message</em></p></div>
-                            </div>
-                        )}
-                    </div>
-                    {unseen && <div className="unseen-badge"></div>}
+            <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
+                <div className="conversation-img-container">
+                    {members.slice(0, 2).map((element, key) => {
+                        return <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                    })}
                 </div>
-            </Link>
+                <div className="conversation-infos">
+                    <div className="conversation-infos-top">
+                        <div className="conversation-name">
+                            {conversation.name ? conversation.name : returnMembers(members)}
+                        </div>
+                        <div className="conversation-date">{date}</div>
+                    </div>
+                    {Object.keys(lastMessage)?.length > 0 ? (
+                        <div className="last-message-wrapper">
+                            <div className={`${unseen ? "last-message notification" : "last-message"}`}>
+                                {returnConversationPseudo(conversation, lastMessage, uid)}
+                                <p>
+                                    {Object.keys(lastMessage?.text).length > 0 ? (
+                                        convertDeltaToStringNoHTML(lastMessage)
+                                    ) : (
+                                        lastMessage?.files?.length > 0 && lastMessage.files[0].name
+                                    )}
+                                </p>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="last-message-wrapper">
+                            <div className="last-message"><p>Nouvelle conversation - <em>Envoyer un message</em></p></div>
+                        </div>
+                    )}
+                </div>
+                {unseen && <div className="unseen-badge"></div>}
+            </div>
             <div className={`conversation-toolbox ${addClass(opened, 'active')}`} ref={menuRef}>
-                <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)} btnClassName="hidden-xs" openXs={opened}>
-                    <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
-                    <div className="tools_choice"><HiLogout />Quitter la conversation</div>
-                    <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
-                </ToolsMenu>
+                {!xs ? (
+                    <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)}>
+                        <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
+                        <div className="tools_choice"><HiLogout />Quitter la conversation</div>
+                        <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
+                    </ToolsMenu>
+                ) : (
+                    <MobileMenu open={opened} setOpen={setOpened}>
+                        <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
+                        <div className="tools_choice"><HiLogout />Quitter la conversation</div>
+                        <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
+                    </MobileMenu>
+                )}
             </div>
         </div>
     );

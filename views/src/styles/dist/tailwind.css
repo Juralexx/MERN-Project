@@ -552,6 +552,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   order: 1;
 }
 
+.m-0 {
+  margin: 0px;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -712,6 +716,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mb-10 {
   margin-bottom: 2.5rem;
+}
+
+.mr-0 {
+  margin-right: 0px;
+}
+
+.\!mr-0 {
+  margin-right: 0px !important;
 }
 
 .block {

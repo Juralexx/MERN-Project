@@ -238,3 +238,13 @@
 .leaflet-control {
     z-index : 400;
 }
+
+.overlay {
+    position   : fixed;
+    top        : 0;
+    bottom     : 0;
+    left       : 0;
+    right      : 0;
+    background : var(--modal-cover);
+    z-index    : 1600;
+}

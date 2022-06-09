@@ -7,6 +7,10 @@
         bottom    : 100%;
         width     : auto;
         min-width : 280px;
+
+        &.mention, &.emojis {
+            background : var(--content-x-light);
+        }
     }
 }
 
@@ -16,7 +20,7 @@
     flex-direction  : column;
     justify-content : space-between;
     border          : 2px solid var(--light-border);
-    background      : var(--content-light);
+    background      : var(--content-x-light);
     box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
     border-radius   : var(--radius);
 
@@ -32,7 +36,7 @@
         justify-content : space-between;
         width           : 100%;
         padding         : 3px 5px;
-        background      : var(--content-light);
+        background      : var(--content-x-light);
     
         .text-tools-left {
             display     : flex;
@@ -58,6 +62,9 @@
     
             .text-tools {
                 position        : relative;
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
                 width           : unset;
                 height          : unset;
                 padding         : 3px;
@@ -91,7 +98,6 @@
             margin-right  : 8px;
             border-radius : 50%;
             background    : var(--xx-light);
-            border        : 1px solid var(--light-border);
 
             svg {
                 width      : 16px;
@@ -131,7 +137,7 @@
     
             .send-tool {
                 padding          : 4px 8px;
-                border-radius    : 3px;
+                border-radius    : 5px;
                 background-color : var(--primary);
                 color            : white;
                 &:disabled {
@@ -171,14 +177,43 @@
 @media (max-width:768px) {
     .conversation-bottom {
         padding : 10px 0 0 0;
+        border-radius : 10px 10px 0 0;
 
         .conversation-toolsbox {
             border-radius : 10px 10px 0 0;
             border        : none;
-            border-top    : 1px solid var(--light-border);
 
             .message-text-tools {
                 background : var(--content-x-light);
+                padding: 5px 5px;
+
+                .text-tools-left {
+
+                    .text-tools {
+                        height : 26px;
+                        width  : 31px;
+
+                        svg {
+                            width  : 17px;
+                            height : 17px;
+                        }
+                    }
+                }
+
+                .menu-tools-btn {
+
+                    svg {
+                        width  : 20px;
+                        height : 20px;
+                    }
+                }
+            }
+        }
+
+        .auto-complete-container {
+            &.mention, &.emojis {
+                width  : 100%;
+                bottom : 40px;
             }
         }
     }

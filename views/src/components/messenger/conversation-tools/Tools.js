@@ -6,6 +6,7 @@ import Members from './Members'
 import Main from './Main'
 import Settings from './Settings'
 import AddMembers from './AddMembers'
+import { IconToggle } from '../../tools/global/Button'
 import { returnMembers } from '../functions/function'
 import { avatar } from '../../tools/hooks/useAvatar'
 import { setFavorite, setUnfavorite } from '../functions/actions'
@@ -14,11 +15,10 @@ import { TiStarOutline, TiStar } from 'react-icons/ti'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
-import { IconToggle } from '../../tools/global/Button'
 import { IoClose } from 'react-icons/io5'
 
-const Tools = ({ open, setOpen, conversation, members, setRightbar }) => {
-    const { uid, user, websocket, friendsArr, dispatch } = useContext(MessengerContext)
+const Tools = ({ open, setOpen, conversation, members }) => {
+    const { uid, user, websocket, friendsArr, dispatch, md } = useContext(MessengerContext)
     const [navbar, setNavbar] = useState(null)
     const [addMembers, setAddMembers] = useState(false)
     const [files, setFiles] = useState({ open: false, type: null })
@@ -33,7 +33,7 @@ const Tools = ({ open, setOpen, conversation, members, setRightbar }) => {
         <div className="conversation-tools-container custom-scrollbar">
             <div className={`${!addMembers && files.open === false && open ? "conversation-tools-content" : "conversation-tools-content vanish-left"}`}>
                 <div className="go-back absolute top-1">
-                    <HiArrowSmLeft onClick={() => setOpen(prev => ({ ...prev, displayed: 'contacts' }))} />
+                    <HiArrowSmLeft onClick={() => setOpen(({ state: !md ? 'open' : 'closed', displayed: 'contacts' }))} />
                 </div>
                 <IconToggle icon={<IoClose />} className="absolute right-0 top-1" onClick={() => setOpen({ open: false, displayed: "contacts" })} />
                 <div className="conversation-tools-header">

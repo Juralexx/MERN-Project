@@ -22,7 +22,7 @@ import { IoArrowRedo } from 'react-icons/io5'
 ;
 
 const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, members }) => {
-    const { uid, user, websocket, dispatch, mediaXs } = useContext(MessengerContext)
+    const { uid, user, websocket, dispatch, xs } = useContext(MessengerContext)
     const [modify, setModify] = useState(-1)
     const [warning, setWarning] = useState(false)
     const [toggler, setToggler] = useState(false)
@@ -34,7 +34,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
     const [opened, setOpened] = useState(false)
     useClickOutside(messageRef, setOpened, false)
     const longPressProps = useLongPress({
-        onLongPress: () => mediaXs ? setOpened(true) : {},
+        onLongPress: () => xs ? setOpened(true) : {},
     })
 
     const { emojis, handleEmoji } = useEmojis(message, currentChat)

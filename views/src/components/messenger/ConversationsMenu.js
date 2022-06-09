@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useTwoLevelSearch } from '../tools/hooks/useTwoLevelSearch';
+import { MessengerContext } from '../AppContext';
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import TemporaryConversation from './tools/TemporaryConversation';
@@ -14,13 +15,12 @@ import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiMenuAlt3, HiOutlineMenu } from 'react-icons/hi';
 import { IoClose } from 'react-icons/io5';
-import useMediaQuery from '../tools/hooks/useMediaQuery';
 
 const ConversationsMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, newMessage, notification, setRightbar }) => {
+    const { md } = useContext(MessengerContext)
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
-    const mediaMd = useMediaQuery('(min-width: 1024px)')
-    const [leftbar, setLeftbar] = useState(mediaMd ? true : false)
+    const [leftbar, setLeftbar] = useState(md ? true : false)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
     return (

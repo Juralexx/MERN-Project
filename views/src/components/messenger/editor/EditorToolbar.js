@@ -59,7 +59,6 @@ export const QuillToolbar = ({ style }) => (
         <span className="ql-formats before">
             <button className="ql-indent" value="-1" />
             <button className="ql-indent" value="+1" />
-            <button className="ql-video" />
         </span>
         {/* <span className="ql-formats border-r">
             <button className="ql-link" />
