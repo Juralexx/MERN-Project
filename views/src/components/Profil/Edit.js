@@ -183,7 +183,7 @@ const Edit = ({ user }) => {
                             </div>
                             <div className="col-12 col-lg-9 lg:px-2">
                                 <p className="txt-ter mb-1">Biographie</p>
-                                <Textarea className={`full ${checkErr("bio")}`} type="text" placeholder="Biographie..." onChange={e => setBio(e.target.value)} value={bio} />
+                                <Textarea className={`w-full ${checkErr("bio")}`} type="text" placeholder="Biographie..." onChange={e => setBio(e.target.value)} value={bio} />
                                 {isErr === "bio" && <ErrorCard display={isErr === "bio"} text={error} clean={() => setErr("")} />}
                             </div>
                         </div>

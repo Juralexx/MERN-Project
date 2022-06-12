@@ -9,9 +9,9 @@ import LikersButton from './LikersButton'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { IoAlbums } from 'react-icons/io5'
 
-const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal }) => {
+const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, className }) => {
     return (
-        <div className="card">
+        <div className={className ? 'card ' + className : 'card'}>
             <div className="card-img" style={projectPicture(`${process.env.REACT_APP_API_URL}files/img/paysage-3.jpg`)}></div>
             <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
             <FavoriteButton project={element} />

@@ -77,21 +77,19 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
                 <div className="users_modal-body">
                     {open && (
                         project.likers.length > 0 ? (
-                            <>
-                                {liker.map((element, key) => {
-                                    return (
-                                        <div className="user" key={key} onMouseLeave={() => setHoveredCard(-1)}>
-                                            <HoverModal user={element} open={hoveredCard === key} />
-                                            <Link to={"/" + element.pseudo} className="flex" onMouseEnter={() => setHoveredCard(key)} onClick={() => setHoveredCard(key)} >
-                                                <MediumAvatar pic={element.picture} />
-                                                <p className="pseudo">{element.pseudo}</p>
-                                            </Link>
+                            liker.map((element, key) => {
+                                return (
+                                    <div className="user" key={key} onMouseLeave={() => setHoveredCard(-1)}>
+                                        <HoverModal user={element} open={hoveredCard === key} />
+                                        <Link to={"/" + element.pseudo} className="flex" onMouseEnter={() => setHoveredCard(key)} onClick={() => setHoveredCard(key)} >
+                                            <MediumAvatar pic={element.picture} />
+                                            <p className="pseudo">{element.pseudo}</p>
+                                        </Link>
 
-                                            {findState(element, user)}
-                                        </div>
-                                    )
-                                })}
-                            </>
+                                        {findState(element, user)}
+                                    </div>
+                                )
+                            })
                         ) : (
                             <div className="empty_users">
                                 <div><IoHeartDislike /></div>

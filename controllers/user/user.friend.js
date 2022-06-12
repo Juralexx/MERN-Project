@@ -182,7 +182,11 @@ export const deleteFriend = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { friends: req.body.friendId },
+                $pull: {
+                    friends: {
+                        friend: req.body.friendId
+                    }
+                },
             },
             { new: true, upsert: true },
         )
@@ -191,7 +195,11 @@ export const deleteFriend = async (req, res) => {
         await UserModel.findByIdAndUpdate(
             { _id: req.body.friendId },
             {
-                $pull: { friends: req.params.id },
+                $pull: {
+                    friends: {
+                        friend: req.params.id
+                    }
+                },
             },
             { new: true, upsert: true },
         )

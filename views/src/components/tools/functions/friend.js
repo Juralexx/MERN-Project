@@ -6,7 +6,15 @@ import { randomID } from "../../Utils"
  */
 
 export const sendRequest = (friend, user, websocket, dispatch) => {
-    const notification = { _id: randomID(24), type: "friend-request", requesterId: user._id, requester: user.pseudo, requesterPicture: user.picture, date: new Date().toISOString(), seen: false }
+    const notification = {
+        _id: randomID(24),
+        type: "friend-request",
+        requesterId: user._id,
+        requester: user.pseudo,
+        requesterPicture: user.picture,
+        date: new Date().toISOString(),
+        seen: false
+    }
     websocket.current.emit("friendRequest", {
         receiverId: friend._id,
         notification: notification
@@ -33,11 +41,14 @@ export const cancelRequest = (friend, user, websocket, dispatch) => {
 
 export const acceptRequest = (request, user, websocket, dispatch) => {
     websocket.current.emit("acceptFriendRequest", {
-        friend: user._id,
+        friend: {
+            friend: user._id,
+            requestedAt: request.date
+        },
         receiverId: request.requesterId
     })
     Object.assign(request, { state: "accepted" })
-    dispatch(acceptFriendRequest(request.requesterId, user._id, request.type, request))
+    dispatch(acceptFriendRequest(request, user._id))
 }
 
 /**
@@ -50,7 +61,7 @@ export const refuseRequest = (request, user, websocket, dispatch) => {
         receiverId: request.requesterId
     })
     Object.assign(request, { state: "refused" })
-    dispatch(refuseFriendRequest(request.requesterId, user._id, request.type, request))
+    dispatch(refuseFriendRequest(request, user._id))
 }
 
 /**

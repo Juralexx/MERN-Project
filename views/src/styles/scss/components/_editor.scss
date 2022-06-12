@@ -38,6 +38,7 @@
     white-space   : pre-wrap;
     word-wrap     : break-word;
     border        : 1px solid var(--light-border);
+    overflow-y    : auto;
 }
 .ql-editor > * {
     cursor : text;

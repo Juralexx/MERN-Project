@@ -5,15 +5,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import { IconInput } from '../tools/global/Inputs'
 import { SmallLoader } from '../tools/global/Loader'
 import ToolsMenu from '../tools/global/ToolsMenu'
+import Warning from '../tools/global/Warning'
 import { coverPicture } from '../tools/hooks/useAvatar'
 import { removeFriend } from '../tools/functions/friend'
 import { dateParser } from '../Utils'
 import { BiSearchAlt } from 'react-icons/bi'
-import Warning from '../tools/global/Warning'
+import { IoArrowRedo, IoTrashBin } from 'react-icons/io5'
+import { MdOutlineMessage } from 'react-icons/md'
+import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { useFetchFriends } from '../tools/hooks/useFetchFriends'
 
 const Friends = ({ user, websocket }) => {
-    const [friends, setFriends] = useState([])
-    const [isLoading, setLoading] = useState(true)
+    const { friendsArr, fetchedFriends } = useFetchFriends(user)
     const [warning, setWarning] = useState(-1)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -26,7 +29,7 @@ const Friends = ({ user, websocket }) => {
     const searchFriends = () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         if (searchQuery.length > 2) {
-            const response = friends.filter(f => regexp.test(f.pseudo))
+            const response = friendsArr.filter(f => regexp.test(f.pseudo))
             setResults(response)
             setSearch(true)
             if (isEmpty) {
@@ -35,26 +38,9 @@ const Friends = ({ user, websocket }) => {
         } else { setSearch(false) }
     }
 
-    useEffect(() => {
-        if (user.friends) {
-            const fetch = () => {
-                const promises = user.friends.map(async e => {
-                    return await axios.get(`${process.env.REACT_APP_API_URL}api/user/${e.friend}`)
-                        .then(res => res.data)
-                        .catch(err => console.log(err))
-                })
-                Promise.all(promises).then(res => {
-                    setFriends(res)
-                    setLoading(false)
-                })
-            }
-            fetch()
-        }
-    }, [user.friends])
-
     const since = (element) => {
-        const friend = user.friends.find(e => e.friend === element._id)
-        return friend.requestedAt
+        let friend = user.friends.find(e => e.friend === element._id)
+        return friend?.requestedAt
     }
 
     return (
@@ -64,11 +50,11 @@ const Friends = ({ user, websocket }) => {
                 <IconInput className="is_start_icon" icon={<BiSearchAlt />} placeholder="Rechercher un contact..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchFriends} cross clean={() => setSearchQuery("")} />
             </div>
             <div className="profil_page-body">
-                {!isLoading ? (
-                    friends.length > 0 ? (
-                        friends.map((element, key) => {
+                {!fetchedFriends ? (
+                    friendsArr.length > 0 ? (
+                        friendsArr.map((element, key) => {
                             return (
-                                <div className="card contact_card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
+                                <div className="contact_card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
                                     <div className="contact_card-left" style={coverPicture(element.picture)}></div>
                                     <div className="contact_card-right">
                                         <div className="card-infos">
@@ -77,10 +63,10 @@ const Friends = ({ user, websocket }) => {
                                             <p>{element.created_projects.length} projects crées • {element.projects.length} projects en cours</p>
                                         </div>
                                         <ToolsMenu>
-                                            <div className="tools_choice" onClick={() => navigate("/" + element.pseudo)}>Voir le profil</div>
-                                            <div className="tools_choice">Contacter</div>
-                                            <div className="tools_choice">Inviter à rejoindre un projet</div>
-                                            <div className="tools_choice" onClick={() => setWarning(key)}>Supprimer des contacts</div>
+                                            <div className="tools_choice" onClick={() => navigate("/" + element.pseudo)}><IoArrowRedo />Voir le profil</div>
+                                            <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
+                                            <div className="tools_choice"><AiOutlineUsergroupAdd />Inviter à rejoindre un projet</div>
+                                            <div className="tools_choice red" onClick={() => setWarning(key)}><IoTrashBin />Supprimer des contacts</div>
                                         </ToolsMenu>
                                         <Warning
                                             open={warning === key}

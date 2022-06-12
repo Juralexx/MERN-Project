@@ -37,7 +37,7 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
             {addComment &&
                 <div className="add-comment-container">
                     <div className="mb-2">Commentaire</div>
-                    <Textarea className="full" placeholder="Ajouter un commentaire..." value={comment} onChange={e => setComment(e.target.value)} />
+                    <Textarea className="w-full" placeholder="Ajouter un commentaire..." value={comment} onChange={e => setComment(e.target.value)} />
                 </div>
             }
             {!addComment ? (

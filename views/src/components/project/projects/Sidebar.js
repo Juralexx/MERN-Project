@@ -4,9 +4,9 @@ import { addClass } from '../../Utils'
 import { avatar } from '../../tools/hooks/useAvatar'
 import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
 import { BsFillDiagram3Fill, BsFillCaretRightFill } from 'react-icons/bs'
-import { BiDotsVerticalRounded } from 'react-icons/bi'
 import { BiTask } from 'react-icons/bi'
 import { GoThreeBars } from 'react-icons/go'
+import { IoClose } from 'react-icons/io5'
 
 const Sidebar = ({ user, projects, isLoading }) => {
     const [reduced, setReduced] = useState(false)
@@ -40,7 +40,13 @@ const Sidebar = ({ user, projects, isLoading }) => {
                         <p>Mes Projets <span>{projects.length}</span></p>
                     </div>
                 </Link>
-                <div className="sidebar-header-toggle" onClick={handleState}><GoThreeBars /></div>
+                <div className="sidebar-header-toggle" onClick={handleState}>
+                    {reduced ? (
+                        <GoThreeBars />
+                    ) : (
+                        <IoClose />
+                    )}
+                </div>
             </div>
             <div className="sidebar-inner custom-scrollbar">
                 {!isLoading ? (
@@ -99,7 +105,6 @@ const Sidebar = ({ user, projects, isLoading }) => {
                         <div className="sidebar-bottom-avatar" style={avatar(user.picture)}></div>
                         <div className="sidebar-bottom-pseudo">{user.pseudo}</div>
                     </div>
-                    <div className={`${reduced ? "hidden" : "flex"} tools_btn`}><BiDotsVerticalRounded /></div>
                 </div>
             }
         </div>

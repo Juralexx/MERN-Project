@@ -7,11 +7,11 @@ import { avatar } from "../../tools/hooks/useAvatar";
 import { Button } from '../../tools/global/Button';
 import { acceptRequest, refuseRequest } from '../../tools/functions/friend';
 
-const FriendRequest = ({ notification, user, websocket, onClick, className }) => {
+const FriendRequest = ({ notification, user, websocket, onClick }) => {
     const dispatch = useDispatch()
 
     return (
-        <div className={`${className ? "notification-ticket " + className : "notification-ticket" }`} onClick={onClick}>
+        <div className={`${!notification.seen && !notification.state ? "notification-ticket unseen" : "notification-ticket" }`} onClick={onClick}>
             <div className="left">
                 <NavLink to={'/' + notification.requester}>
                     <div className="w-12 h-12 rounded-full" style={avatar(notification.requesterPicture)}></div>
@@ -31,8 +31,9 @@ const FriendRequest = ({ notification, user, websocket, onClick, className }) =>
                     </>
                 }
                 {notification.state === "accepted" &&
-                    <div className="body">
+                    <div className="notification-infos">
                         <p><strong><NavLink to={'/' + notification.requester}>{notification.requester}</NavLink></strong> et vous êtes maintenant ami</p>
+                        <div className="date">À l'instant</div>
                     </div>
                 }
             </div>

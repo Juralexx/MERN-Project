@@ -9,6 +9,7 @@
         min-width : 280px;
 
         &.mention, &.emojis {
+            max-width  : 320px;
             background : var(--content-x-light);
         }
     }

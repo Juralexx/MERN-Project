@@ -7,6 +7,7 @@ import { convertDeltaToHTML } from '../../../messenger/functions/function'
 import { setLastMessageSeen } from '../../../../actions/messenger.action'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
 import { BsChatRightTextFill } from 'react-icons/bs'
+import { IoClose } from 'react-icons/io5'
 
 const MessageCard = ({ notification, user, setSend }) => {
     const [name, setName] = useState('Message')
@@ -41,6 +42,7 @@ const MessageCard = ({ notification, user, setSend }) => {
                     <div className="tools_choice" onClick={setSeen}>Marquer comme lu</div>
                     <div className="tools_choice">Désactiver les notifications</div>
                 </ToolsMenu>
+                <div className="close-btn"><IoClose /></div>
             </div>
             <div className="notification-content">
                 <div className="left" style={avatar(notification.sender_picture)}></div>

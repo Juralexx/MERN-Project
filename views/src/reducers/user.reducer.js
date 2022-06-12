@@ -107,7 +107,7 @@ export default function userReducer(state = initialState, action) {
         case ACCEPT_FRIEND_REQUEST:
             return {
                 ...state,
-                friends: [...state.friends, action.payload.requesterId],
+                friends: [...state.friends, action.payload.friend],
                 unseen_notifications: decrementNotifIfUpperZero()
             }
         case RECEIVE_ACCEPT_FRIEND_REQUEST:
@@ -130,11 +130,6 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 friends: state.friends.filter(f => f.friend !== action.payload.friendId)
-            }
-        case RECEIVE_DELETE_FRIEND:
-            return {
-                ...state,
-                friends: state.friends.filter(f => f.friend !== action.payload.userId)
             }
 
         /**

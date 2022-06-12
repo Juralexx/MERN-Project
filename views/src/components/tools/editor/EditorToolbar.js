@@ -2,7 +2,6 @@ import React from "react";
 import { Quill } from "react-quill"
 import { Linkify } from 'quill-linkify';
 import { ImageDrop } from 'quill-image-drop-module';
-import { VideoHandler, AttachmentHandler } from "quill-upload";
 
 function undoChange() { 
     this.quill.history.undo()
@@ -28,8 +27,6 @@ Quill.register(Size, true);
 Quill.register(Font, true);
 Quill.register('modules/linkify', Linkify);
 Quill.register('modules/imageDrop', ImageDrop);
-Quill.register("modules/videoHandler", VideoHandler);
-Quill.register("modules/attachmentHandler", AttachmentHandler);
 
 export const modules = {
     toolbar: {
@@ -50,20 +47,6 @@ export const modules = {
         phoneNumber: false,
     },
     imageDrop: true,
-    videoHandler: {
-        upload: (file) => {
-            return new Promise((resolve, reject) => {
-                const fd = new FormData()
-                fd.append("file", file)
-                console.log(file)
-            })
-        }
-    },
-    attachmentHandler: {
-        upload: (file) => {
-            console.log(file)
-        }
-    }
 }
 
 export const formats = [
@@ -137,7 +120,7 @@ export const QuillToolbar = () => (
         <span className="ql-formats">
             <button className="ql-link" />
             <button className="ql-image" />
-            <button className="ql-video" />
+            {/* <button className="ql-video" /> */}
         </span>
         <span className="ql-formats">
             <button className="ql-clean" />

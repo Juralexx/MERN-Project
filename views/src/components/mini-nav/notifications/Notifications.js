@@ -34,20 +34,19 @@ const NotificationsMenu = ({ open, user, websocket }) => {
                 {user.notifications.length !== 0 && (
                     (navbar === 1 ? user.notifications : unread).map((element, key) => {
                         return (
-                            <>
+                            <div key={key}>
                                 {element.type === "friend-request" &&
                                     <FriendRequest
-                                    className={!element.seen && "unseen"}
-                                    notification={element}
-                                    key={key} user={user}
-                                    websocket={websocket}
-                                    onClick={() => setNotifSeen(user._id, element._id, dispatch)}
+                                        notification={element}
+                                        key={key} user={user}
+                                        websocket={websocket}
+                                        onClick={() => setNotifSeen(user._id, element._id, dispatch)}
                                     />
                                 }
                                 {element.type === "project-member-request" &&
                                     <MemberRequest notification={element} key={key} user={user} websocket={websocket} onClick={() => setNotifSeen(user._id, element._id, dispatch)} />
                                 }
-                            </>
+                            </div>
                         )
                     })
                 )}

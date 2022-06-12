@@ -861,7 +861,7 @@ h1, h2, h3, h4, h5 {
 }
 .content_container {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: auto;
   min-height: 100%;
   background: var(--content-light);
@@ -1274,7 +1274,6 @@ h1, h2, h3, h4, h5 {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
-  max-width: 300px;
   margin-bottom: 6px;
   font-size: 16px;
 }
@@ -1284,7 +1283,6 @@ h1, h2, h3, h4, h5 {
 }
 
 .field_infos {
-  width: 300px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1388,7 +1386,7 @@ h1, h2, h3, h4, h5 {
   background: var(--x-light);
   -webkit-box-shadow: var(--shadow-top);
           box-shadow: var(--shadow-top);
-  z-index: 10;
+  z-index: 700;
 }
 #back-actions .btn_first {
   width: 300px;
@@ -2085,6 +2083,18 @@ h1, h2, h3, h4, h5 {
 .notification-message .top .subject {
   margin-right: 10px;
   color: var(--text-secondary);
+}
+.notification-message .top .close-btn {
+  padding: 4px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+.notification-message .top .close-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.notification-message .top .close-btn:hover {
+  background-color: var(--light);
 }
 .notification-message .notification-content {
   display: -webkit-box;
@@ -2825,6 +2835,7 @@ h1, h2, h3, h4, h5 {
   white-space: pre-wrap;
   word-wrap: break-word;
   border: 1px solid var(--light-border);
+  overflow-y: auto;
 }
 
 .ql-editor > * {
@@ -5648,21 +5659,22 @@ h1, h2, h3, h4, h5 {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  width: 100%;
   margin-top: 30px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-columns: 2;
-     -moz-columns: 2;
-          columns: 2;
 }
 .profil_container .profil_page .profil_page-body .contact_card {
-  width: 49%;
-  padding: 15px;
+  min-width: 49.5%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--light-border);
+  border-radius: var(--radius);
 }
 .profil_container .profil_page .profil_page-body .contact_card .contact_card-left {
   min-height: 80px;
   min-width: 80px;
-  border-radius: 8px;
+  border-radius: 50%;
 }
 .profil_container .profil_page .profil_page-body .contact_card .contact_card-right {
   display: -webkit-box;
@@ -6387,11 +6399,7 @@ h1, h2, h3, h4, h5 {
   margin-right: 20px;
 }
 .edit-work-form .work-flex-content .content-form:nth-child(2) {
-  width: 20%;
   margin-right: 20px;
-}
-.edit-work-form .work-flex-content .content-form:nth-child(3) {
-  width: 20%;
 }
 
 .project-page .header .header-inner:before {
@@ -7037,7 +7045,6 @@ h1, h2, h3, h4, h5 {
           justify-content: flex-start;
   margin: 0 auto;
   max-width: 1366px;
-  padding: 0px 50px;
 }
 .dashboard-header .dashboard-header_navbar .dashboard-header_navbar-content .dashboard-header_navbar-item {
   padding: 10px 30px 10px 0;
@@ -9075,7 +9082,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
       -ms-flex-pack: justify;
           justify-content: space-between;
   position: relative;
-  padding: 10px 16px;
+  padding: 10px;
   color: var(--text-secondary);
   border-radius: var(--radius);
   cursor: pointer;
@@ -9099,7 +9106,9 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 .sidebar .sidebar-inner .sidebar-container .sidebar-title .sidebar-title-inner .sidebar-img {
   width: 30px;
   height: 30px;
-  border-radius: 50px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  border-radius: 50%;
   border: 2px solid var(--light-border);
 }
 .sidebar .sidebar-inner .sidebar-container .sidebar-title .sidebar-title-inner .sidebar-name {
@@ -9111,7 +9120,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .sidebar .sidebar-inner .sidebar-container .sidebar-submenu {
   padding: 0 8px 0 0;
-  margin-left: 30px;
+  margin-left: 24px;
   border-left: 1px solid var(--light-border);
 }
 .sidebar .sidebar-inner .sidebar-container .sidebar-submenu a {
@@ -9384,6 +9393,18 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 .notification-ticket .left {
   margin-right: 10px;
 }
+.notification-ticket .right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
 .notification-ticket .right .notification-infos {
   color: var(--text-secondary);
   line-height: 18px;
@@ -9412,14 +9433,15 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
           box-shadow: none;
 }
 .notification-ticket .right .notification-actions button:nth-child(2) {
+  color: var(--text) !important;
   background: var(--x-light);
   border: 1px solid var(--light-border);
 }
 .notification-ticket.unseen:before {
   content: "";
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 7px;
+  right: 5px;
   background-color: var(--primary);
   width: 15px;
   height: 15px;
@@ -10848,6 +10870,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 .edit-conversation-modal .btn-container button:nth-child(1) {
   background-color: var(--x-light);
+  color: var(--text) !important;
+  margin-right: 10px;
 }
 
 @media (max-width: 576px) {
@@ -10928,6 +10952,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   min-width: 280px;
 }
 .conversation-bottom .auto-complete-container.mention, .conversation-bottom .auto-complete-container.emojis {
+  max-width: 320px;
   background: var(--content-x-light);
 }
 

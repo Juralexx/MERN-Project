@@ -5,18 +5,18 @@ import MessageCard from './MessageCard'
 
 const NotificationCard = ({ notification, setSend, send, user, websocket }) => {
 
-    // useEffect(() => {
-    //     let interval
-    //     if (send) {
-    //         interval = setInterval(() => { setSend(false) }, 5000)
-    //     } else {
-    //         clearInterval(interval)
-    //     }
-    //     return () => clearInterval(interval)
-    // }, [send, setSend])
+    useEffect(() => {
+        let interval
+        if (send) {
+            interval = setInterval(() => { setSend(false) }, 5000)
+        } else {
+            clearInterval(interval)
+        }
+        return () => clearInterval(interval)
+    }, [send, setSend])
 
     return (
-        Object.keys(notification).length > 0 && (
+        Object.keys(notification).length > 0 && send && (
             <>
                 {notification.type === "new-message" &&
                     <MessageCard
@@ -30,6 +30,7 @@ const NotificationCard = ({ notification, setSend, send, user, websocket }) => {
                         user={user}
                         websocket={websocket}
                         notification={notification}
+                        setSend={setSend}
                     />
                 }
                 {notification.type === "project-member-request" &&
@@ -37,6 +38,7 @@ const NotificationCard = ({ notification, setSend, send, user, websocket }) => {
                         user={user}
                         websocket={websocket}
                         notification={notification}
+                        setSend={setSend}
                     />
                 }
             </>

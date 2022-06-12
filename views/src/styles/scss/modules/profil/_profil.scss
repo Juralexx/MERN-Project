@@ -81,18 +81,21 @@
         .profil_page-body {
             display         : flex;
             justify-content : space-between;
+            width           : 100%;
             margin-top      : 30px;
             flex-wrap       : wrap;
-            columns         : 2;
 
             .contact_card {
-                width   : 49%;
-                padding : 15px;
+                min-width     : 49.5%;
+                padding       : 10px;
+                margin-bottom : 10px;
+                border        : 1px solid var(--light-border);
+                border-radius : var(--radius);
 
                 .contact_card-left {
                     min-height    : 80px;
                     min-width     : 80px;
-                    border-radius : 8px;
+                    border-radius : 50%;
                 }
                 .contact_card-right {
                     display         : flex;

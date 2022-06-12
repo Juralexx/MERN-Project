@@ -134,7 +134,6 @@
     display         : flex;
     justify-content : space-between;
     align-items     : flex-end;
-    max-width       : 300px;
     margin-bottom   : 6px;
     font-size       : 16px;
 
@@ -145,7 +144,6 @@
 }
 
 .field_infos {
-    width           : 300px;
     display         : flex;
     justify-content : flex-end;
     color           : var(--text-secondary);
@@ -226,7 +224,7 @@
     box-sizing      : border-box;
     background      : var(--x-light);
     box-shadow      : var(--shadow-top);
-    z-index         : 10;
+    z-index         : 700;
 
     .btn_first {
         width : 300px;

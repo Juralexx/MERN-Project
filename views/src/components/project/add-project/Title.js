@@ -36,7 +36,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
                 <div className="card-left">
                     <div className="content-form">
                         <p className="title full">Sous-titre <span>Champ requis</span></p>
-                        <Textarea className={`full small ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 100))} value={subtitle} />
+                        <Textarea className={`w-full small ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 100))} value={subtitle} />
                         <div className="field_infos full">{subtitle.length} / 100 caractères</div>
                         {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={isErr === "subtitle"} text={error} clean={() => setErr("")} />}
                     </div>

@@ -42,171 +42,170 @@ function App() {
     }, [uid, dispatch])
 
     useEffect(() => {
-        const socket = websocket.current
         if (Object.keys(user).length > 0) {
-            socket.emit("addUser", { userId: user._id })
-            socket.on("getUsers", users => {
+            websocket.current.emit("addUser", { userId: user._id })
+            websocket.current.on("getUsers", users => {
                 setOnlineUsers(user.friends.filter(f => users.some(u => u.userId === f.friend)))
             })
         }
-        return () => socket.off("getUsers")
+        return () =>  websocket.current.off("getUsers")
     }, [user])
 
     useEffect(() => {
-        const socket = websocket.current
-        socket.on("logout", data => {
+        websocket.current.on("logout", data => {
             let online = onlineUsers.filter(u => u.friend !== data.userId)
             setOnlineUsers(online)
         })
-        socket.on("sendMessageNotification", data => {
+        websocket.current.on("sendMessageNotification", data => {
             setNotification({ type: "new-message", ...data.message })
             setSend(true)
         })
-        socket.on("getMessage", data => {
+        websocket.current.on("getMessage", data => {
             dispatch(receiveNewMessage(data.message))
         })
-        socket.on("updateMessage", data => {
+        websocket.current.on("updateMessage", data => {
             dispatch(receiveUpdateMessage(data.messageId, data.text))
         })
-        socket.on("deleteMessage", data => {
+        websocket.current.on("deleteMessage", data => {
             dispatch(receiveDeleteMessage(data.messageId))
         })
-        socket.on("deleteFile", data => {
+        websocket.current.on("deleteFile", data => {
             dispatch(receiveRemoveFile(data.messageId, data.file))
         })
-        socket.on("addEmoji", data => {
+        websocket.current.on("addEmoji", data => {
             dispatch(receiveAddEmoji(data.messageId, data.emoji))
         })
-        socket.on("removeEmoji", data => {
+        websocket.current.on("removeEmoji", data => {
             dispatch(receiveRemoveEmoji(data.messageId, data.emojiId))
         })
-        socket.on("addConversation", data => {
+        websocket.current.on("addConversation", data => {
             dispatch(receiveCreateConversation(data.conversationId))
         })
-        socket.on("updateConversation", data => {
+        websocket.current.on("updateConversation", data => {
             dispatch(receiveUpdateConversationInfos(data.name, data.description))
         })
-        socket.on("updateConversationPicture", data => {
+        websocket.current.on("updateConversationPicture", data => {
             dispatch(receiveUploadConversationPicture(data.picture))
         })
-        socket.on("deleteConversationPicture", () => {
+        websocket.current.on("deleteConversationPicture", () => {
             dispatch(receiveRemoveConversationPicture())
         })
-        socket.on("deleteConversation", data => {
+        websocket.current.on("deleteConversation", data => {
             dispatch(receiveDeleteConversation(data.conversationId))
         })
-        socket.on("addConversationMember", data => {
+        websocket.current.on("addConversationMember", data => {
             dispatch(receiveNewMember(data.newMember))
         })
-        socket.on("joinConversation", data => {
+        websocket.current.on("joinConversation", data => {
             dispatch(receiveAddMember(data.conversationId))
         })
-        socket.on("removeConversationMember", data => {
+        websocket.current.on("removeConversationMember", data => {
             dispatch(receiveRemovedMember(data.memberId))
         })
-        socket.on("leaveConversation", data => {
+        websocket.current.on("leaveConversation", data => {
             dispatch(receiveRemoveMember(data.conversationId))
         })
-        socket.on("customizeConversationPseudo", data => {
+        websocket.current.on("customizeConversationPseudo", data => {
             dispatch(receiveCustomizeUserPseudo(data.userId, data.pseudo))
         })
 
-
-        socket.on("friendRequest", data => {
+        websocket.current.on("friendRequest", data => {
             dispatch(receiveFriendRequest(data.notification))
             setNotification(data.notification)
             setSend(true)
         })
-        socket.on("cancelFriendRequest", data => {
+        websocket.current.on("cancelFriendRequest", data => {
             dispatch(receiveCancelFriendRequest(data.type, data.requesterId))
         })
-        socket.on("acceptFriendRequest", data => {
+        websocket.current.on("acceptFriendRequest", data => {
             dispatch(receiveAcceptFriendRequest(data.friend))
         })
-        socket.on("refuseFriendRequest", data => {
+        websocket.current.on("refuseFriendRequest", data => {
             dispatch(receiveRefuseFriendRequest(data.userId))
         })
-        socket.on("deleteFriend", data => {
+        websocket.current.on("deleteFriend", data => {
             dispatch(receiveDeleteFriend(data.userId))
         })
-        socket.on("memberRequest", data => {
+
+        websocket.current.on("memberRequest", data => {
             dispatch(receiveMemberRequest(data.notification))
             setNotification(data.notification)
             setSend(true)
         })
-        socket.on("cancelMemberRequest", data => {
+        websocket.current.on("cancelMemberRequest", data => {
             dispatch(receiveCancelMemberRequest(data.notificationId))
         })
-        socket.on("acceptMemberRequest", data => {
+        websocket.current.on("acceptMemberRequest", data => {
             dispatch(receiveAcceptMemberRequest(data.member, data.activity))
         })
-        socket.on("refuseMemberRequest", data => {
+        websocket.current.on("refuseMemberRequest", data => {
             dispatch(receiveRefuseMemberRequest(data.userId))
         })
-        socket.on("nameAdmin", data => {
+
+        websocket.current.on("nameAdmin", data => {
             dispatch(receiveSetAdmin(data.userId, data.activity))
         })
-        socket.on("removeAdmin", data => {
+        websocket.current.on("removeAdmin", data => {
             dispatch(receiveUnsetAdmin(data.userId))
         })
-        socket.on("removeMember", data => {
+        websocket.current.on("removeMember", data => {
             dispatch(removeMember(data.projectId, data.memberId, data.activity))
         })
-        socket.on("leaveProject", data => {
+        websocket.current.on("leaveProject", data => {
             dispatch(removeProjectFromMember(data.projectId))
         })
-        socket.on("createTask", data => {
+        websocket.current.on("createTask", data => {
             dispatch(receiveCreateTask(data.task, data.activity))
         })
-        socket.on("updateTask", data => {
+        websocket.current.on("updateTask", data => {
             dispatch(receiveChangeTask(data.task, data.activity))
         })
-        socket.on("updateTaskState", data => {
+        websocket.current.on("updateTaskState", data => {
             dispatch(receiveChangeTaskState(data.taskId, data.state, data.activity))
         })
-        socket.on("updateTaskStatus", data => {
+        websocket.current.on("updateTaskStatus", data => {
             dispatch(receiveChangeTaskStatus(data.taskId, data.status, data.activity))
         })
-        socket.on("deleteTask", data => {
+        websocket.current.on("deleteTask", data => {
             dispatch(receiveDeleteTask(data.taskId, data.activity))
         })
         return () => {
-            socket.off("sendMessageNotification")
-            socket.off("updateMessage")
-            socket.off("deleteMessage")
-            socket.off("deleteFile")
-            socket.off("addEmoji")
-            socket.off("removeEmoji")
-            socket.off("addConversation")
-            socket.off("updateConversation")
-            socket.off("updateConversationPicture")
-            socket.off("deleteConversationPicture")
-            socket.off("deleteConversation")
-            socket.off("addConversationMember")
-            socket.off("joinConversation")
-            socket.off("removeConversationMember")
-            socket.off("leaveConversation")
-            socket.off("customizeConversationPseudo")
-            socket.off("friendRequest")
-            socket.off("cancelFriendRequest")
-            socket.off("acceptFriendRequest")
-            socket.off("refuseFriendRequest")
-            socket.off("deleteFriend")
-            socket.off("memberRequest")
-            socket.off("cancelMemberRequest")
-            socket.off("acceptMemberRequest")
-            socket.off("refuseMemberRequest")
-            socket.off("nameAdmin")
-            socket.off("removeAdmin")
-            socket.off("removeMember")
-            socket.off("leaveProject")
-            socket.off("createTask")
-            socket.off("updateTask")
-            socket.off("updateTaskState")
-            socket.off("updateTaskStatus")
-            socket.off("deleteTask")
+             websocket.current.off("sendMessageNotification")
+             websocket.current.off("updateMessage")
+             websocket.current.off("deleteMessage")
+             websocket.current.off("deleteFile")
+             websocket.current.off("addEmoji")
+             websocket.current.off("removeEmoji")
+             websocket.current.off("addConversation")
+             websocket.current.off("updateConversation")
+             websocket.current.off("updateConversationPicture")
+             websocket.current.off("deleteConversationPicture")
+             websocket.current.off("deleteConversation")
+             websocket.current.off("addConversationMember")
+             websocket.current.off("joinConversation")
+             websocket.current.off("removeConversationMember")
+             websocket.current.off("leaveConversation")
+             websocket.current.off("customizeConversationPseudo")
+             websocket.current.off("friendRequest")
+             websocket.current.off("cancelFriendRequest")
+             websocket.current.off("acceptFriendRequest")
+             websocket.current.off("refuseFriendRequest")
+             websocket.current.off("deleteFriend")
+             websocket.current.off("memberRequest")
+             websocket.current.off("cancelMemberRequest")
+             websocket.current.off("acceptMemberRequest")
+             websocket.current.off("refuseMemberRequest")
+             websocket.current.off("nameAdmin")
+             websocket.current.off("removeAdmin")
+             websocket.current.off("removeMember")
+             websocket.current.off("leaveProject")
+             websocket.current.off("createTask")
+             websocket.current.off("updateTask")
+             websocket.current.off("updateTaskState")
+             websocket.current.off("updateTaskStatus")
+             websocket.current.off("deleteTask")
         }
-    }, [websocket.current, onlineUsers, dispatch])
+    }, [websocket.current, websocket, onlineUsers, dispatch])
 
     return (
         <UidContext.Provider value={uid}>
@@ -222,8 +221,8 @@ function App() {
                         user={user}
                         websocket={websocket}
                         notification={notification}
-                        setSend={setSend}
                         send={send}
+                        setSend={setSend}
                     />
                 </MediaContext.Provider>
             </UserContext.Provider>

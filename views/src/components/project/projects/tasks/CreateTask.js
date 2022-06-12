@@ -65,7 +65,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                     <ClassicInput type="text" className="full" placeholder="Titre..." value={title} onChange={e => setTitle(e.target.value)} />
 
                     <div className="mb-2 mt-4">Description</div>
-                    <Textarea type="text" className="full" placeholder="Description... " value={description} onChange={e => setDescription(e.target.value)} />
+                    <Textarea type="text" className="w-full" placeholder="Description... " value={description} onChange={e => setDescription(e.target.value)} />
 
                     <div className="flex items-center mt-4">
                         <div className="mb-2 mt-4 mr-4">Date de fin</div>

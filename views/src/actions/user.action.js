@@ -39,7 +39,7 @@ export const getUser = (uid) => {
  * Update user informations
  */
 
- export const updateUser = (userId, name, lastname, work, bio, location, phone, networks) => {
+export const updateUser = (userId, name, lastname, work, bio, location, phone, networks) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -216,15 +216,15 @@ export const receiveCancelFriendRequest = (type, requesterId) => {
  * Accept friend request
  */
 
-export const acceptFriendRequest = (requesterId, userId, type, notification) => {
+export const acceptFriendRequest = (request, userId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/accept-friend-request/` + userId,
-            data: { requesterId, type }
+            data: { requesterId: request.requesterId, type: request.type }
         })
             .then(() => {
-                dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { requesterId, userId, notification } })
+                dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { friend: { friend: request.requesterId, requestedAt: request.date } } })
             })
             .catch((err) => console.log(err))
     }
@@ -244,15 +244,15 @@ export const receiveAcceptFriendRequest = (friend) => {
  * Refuse the friend request
  */
 
-export const refuseFriendRequest = (requesterId, userId, type, notification) => {
+export const refuseFriendRequest = (request, userId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
             url: `${process.env.REACT_APP_API_URL}api/user/refuse-friend-request/` + userId,
-            data: { requesterId, type }
+            data: { requesterId: request.requesterId, type: request.type }
         })
             .then(() => {
-                dispatch({ type: REFUSE_FRIEND_REQUEST, payload: { requesterId, userId, notification } })
+                dispatch({ type: REFUSE_FRIEND_REQUEST, payload: {notificationId: request._id } })
             })
             .catch((err) => console.log(err))
     }
@@ -272,7 +272,7 @@ export const receiveRefuseFriendRequest = (friendId) => {
  * Delete friend
  */
 
- export const deleteFriend = (userId, friendId) => {
+export const deleteFriend = (userId, friendId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
@@ -290,8 +290,8 @@ export const receiveRefuseFriendRequest = (friendId) => {
  * Receive delete friend
  */
 
- export const receiveDeleteFriend = (friendId) => {
+export const receiveDeleteFriend = (friendId) => {
     return async (dispatch) => {
-        dispatch({ type: RECEIVE_DELETE_FRIEND, payload: { friendId } })
+        dispatch({ type: DELETE_FRIEND, payload: { friendId } })
     }
 }

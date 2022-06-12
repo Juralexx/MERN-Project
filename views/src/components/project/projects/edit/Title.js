@@ -34,7 +34,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, isErr, setErr, error, c
                 <div className="edit-project-flex-content-left">
                     <div className="content-form">
                         <p className="title full">Sous-titre <span>Champ requis</span></p>
-                        <Textarea className={`full ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 120))} value={subtitle} />
+                        <Textarea className={`w-full ${checkErr("subtitle")}`} type="text" placeholder="Sous-titre du projet" onChange={(e) => setSubtitle((e.target.value).substring(0, 120))} value={subtitle} />
                         <div className="field_infos full">{subtitle.length} / 120 caractères</div>
                         {isErr === "subtitle" && <ErrorCard useRef={errorRef} display={isErr === "subtitle"} text={error} clean={() => setErr("")} />}
                     </div>

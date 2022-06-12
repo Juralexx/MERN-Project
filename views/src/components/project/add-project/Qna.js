@@ -48,7 +48,7 @@ const Qna = ({ qna, setQna, isErr, setErr, error, setError }) => {
 
                         <div className="content-form mt-4">
                             <p className="title full">Réponse</p>
-                            <Textarea className={`${checkErr(`answer-${key}`)} full`} type="text" placeholder={`Réponse n°${key + 1}`} onChange={e => handleAnswer(e, key)} value={element.answer} />
+                            <Textarea className={`${checkErr(`answer-${key}`)} w-full`} type="text" placeholder={`Réponse n°${key + 1}`} onChange={e => handleAnswer(e, key)} value={element.answer} />
                             <div className="field_infos full">
                                 {element.answer.length} / 1000 caractères
                             </div>

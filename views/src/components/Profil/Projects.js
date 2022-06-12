@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from '../project/projects/functions'
 import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import { SmallLoader } from '../tools/global/Loader'
+import Card from '../tools/components/Card'
 import { BiSearchAlt } from 'react-icons/bi'
 import { AiFillStar } from 'react-icons/ai'
 import { IoHeart } from 'react-icons/io5'
 import { MdInsertChart } from 'react-icons/md'
 import { MdOutlineBookmark } from 'react-icons/md'
-import Card from '../tools/components/Card'
 
 const Projects = ({ user, websocket }) => {
     const [projects, setProjects] = useState([])
@@ -17,23 +18,7 @@ const Projects = ({ user, websocket }) => {
     const [isLoading, setLoading] = useState(true)
     const [filter, setFilter] = useState("")
     const location = useLocation()
-
-    const [search, setSearch] = useState(false)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [isResults, setResults] = useState([])
-    const isEmpty = !isResults || isResults.length === 0
-    const regexp = new RegExp(searchQuery, 'i')
-    const searchProject = () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        if (searchQuery.length > 2) {
-            const response = projects.filter(f => regexp.test(f.title))
-            setResults(response)
-            setSearch(true)
-            if (isEmpty) {
-                setSearch(false)
-            }
-        } else { setSearch(false) }
-    }
+    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(projectsToDisplay, 'title')
 
     useEffect(() => {
         if (user.projects) {
@@ -49,6 +34,7 @@ const Projects = ({ user, websocket }) => {
                 }
             }
             const fetch = () => {
+                setLoading(true)
                 const promises = chosenProjects().map(async id => {
                     return await axios
                         .get(`${process.env.REACT_APP_API_URL}api/project/${id}`)
@@ -75,7 +61,7 @@ const Projects = ({ user, websocket }) => {
             </div>
             <div className="search_header">
                 <h2>Projects <span>{projectsToDisplay.length}</span></h2>
-                <IconInput className="is_start_icon ml-auto mr-2" icon={<BiSearchAlt />} placeholder="Rechercher un contact..." value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchProject} cross clean={() => setSearchQuery("")} />
+                <IconInput className="is_start_icon ml-auto mr-2" icon={<BiSearchAlt />} placeholder="Rechercher un projet..." value={query} onInput={e => setQuery(e.target.value)} onChange={oneLevelSearch} cross clean={() => setQuery("")} />
                 <DropdownInput readOnly placeholder="Filtrer" value={filter} className="right" cross clean={() => { setFilter(""); setProjectsToDisplay(projects) }}>
                     <div onClick={() => sortByRecent(projects, setProjectsToDisplay, setFilter)}>Plus récent au plus ancien</div>
                     <div onClick={() => sortByOld(projects, setProjectsToDisplay, setFilter)}>Plus ancien au plus récent</div>
@@ -84,20 +70,19 @@ const Projects = ({ user, websocket }) => {
                     <div onClick={() => sortByDone(projects, setProjectsToDisplay, setFilter)}>Terminé</div>
                 </DropdownInput>
             </div>
-            <div className="profil_page-body row">
+            <div className="profil_page-body !justify-start">
                 <Routes>
                     <Route index element={
                         !isLoading ? (
-                            projects.length > 0 ? (
+                            projectsToDisplay.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <div className="col-6 col-md-4">
+                                        <div className="p-2" key={key}>
                                             <Card
-                                                key={key}
+                                                className={isInResults(element, 'block')}
                                                 element={element}
                                                 user={user}
                                                 websocket={websocket}
-                                                style={{ display: search ? (isResults.includes(element) ? "block" : "none") : "block" }}
                                             />
                                         </div>
                                     )
@@ -116,16 +101,17 @@ const Projects = ({ user, websocket }) => {
                     } />
                     <Route path="followed" element={
                         !isLoading ? (
-                            projects.length > 0 ? (
+                            projectsToDisplay.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <Card
-                                            key={key}
-                                            element={element}
-                                            user={user}
-                                            websocket={websocket}
-                                            style={{ display: search ? (isResults.includes(element) ? "block" : "none") : "block" }}
-                                        />
+                                        <div className="p-2" key={key}>
+                                            <Card
+                                                className={isInResults(element, 'block')}
+                                                element={element}
+                                                user={user}
+                                                websocket={websocket}
+                                            />
+                                        </div>
                                     )
                                 })
                             ) : (
@@ -142,16 +128,17 @@ const Projects = ({ user, websocket }) => {
                     } />
                     <Route path="liked" element={
                         !isLoading ? (
-                            projects.length > 0 ? (
+                            projectsToDisplay.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <Card
-                                            key={key}
-                                            element={element}
-                                            user={user}
-                                            websocket={websocket}
-                                            style={{ display: search ? (isResults.includes(element) ? "block" : "none") : "block" }}
-                                        />
+                                        <div className="p-2" key={key}>
+                                            <Card
+                                                className={isInResults(element, 'block')}
+                                                element={element}
+                                                user={user}
+                                                websocket={websocket}
+                                            />
+                                        </div>
                                     )
                                 })
                             ) : (
@@ -168,16 +155,17 @@ const Projects = ({ user, websocket }) => {
                     } />
                     <Route path="favorites" element={
                         !isLoading ? (
-                            projects.length > 0 ? (
+                            projectsToDisplay.length > 0 ? (
                                 projectsToDisplay.map((element, key) => {
                                     return (
-                                        <Card
-                                            key={key}
-                                            element={element}
-                                            user={user}
-                                            websocket={websocket}
-                                            style={{ display: search ? (isResults.includes(element) ? "block" : "none") : "block" }}
-                                        />
+                                        <div className="p-2" key={key}>
+                                            <Card
+                                                className={isInResults(element, 'block')}
+                                                element={element}
+                                                user={user}
+                                                websocket={websocket}
+                                            />
+                                        </div>
                                     )
                                 })
                             ) : (

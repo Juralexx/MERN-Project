@@ -128,17 +128,17 @@ const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
                                     </div>
                                 </div>
                                 <div className="content-form">
-                                    <p className="title full">Nombre trouvé</p>
+                                    <p className="title full">Trouvé</p>
                                     <NumberInput className={`full ${checkErr(`work-${key}`)}`} placeholder="Nombre..." value={element.number} onChange={e => handleNumber(e.target.value, key)} />
                                 </div>
                                 <div className="content-form">
-                                    <p className="title full">Nombre recherché</p>
+                                    <p className="title full">Recherché</p>
                                     <NumberInput className={`full ${checkErr(`work-${key}`)}`} placeholder="Nombre..." value={element.number} onChange={e => handleNumber(e.target.value, key)} />
                                 </div>
                             </div>
                             <div className="content-form mt-4">
                                 <p className="title full">Description</p>
-                                <Textarea className={`full ${checkErr(`work-${key}`)}`} type="text" placeholder="Pourquoi recherchez vous cette compétence ?" onChange={e => handleDescription(e.target.value, key)} value={element.description} />
+                                <Textarea className={`w-full ${checkErr(`work-${key}`)}`} type="text" placeholder="Pourquoi recherchez vous cette compétence ?" onChange={e => handleDescription(e.target.value, key)} value={element.description} />
                                 <div className="field_infos full">
                                     {element.description && element.description.length} / 1000 caractères
                                 </div>

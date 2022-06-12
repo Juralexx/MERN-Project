@@ -3,7 +3,7 @@ import axios from 'axios';
 import { MediaContext, MessengerContext } from '../AppContext';
 import { useDispatch } from 'react-redux';
 import { useLocationchange } from './functions/useLocationchange';
-import { useFetchFriends } from './functions/useFetchFriends';
+import { useFetchFriends } from '../tools/hooks/useFetchFriends';
 import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
 import { useCheckLocation } from './functions/useCheckLocation';

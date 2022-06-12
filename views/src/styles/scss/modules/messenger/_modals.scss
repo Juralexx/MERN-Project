@@ -22,6 +22,8 @@
         button {
             &:nth-child(1) {
                 background-color : var(--x-light);
+                color            : var(--text) !important;
+                margin-right     : 10px;
             }
         }
     }

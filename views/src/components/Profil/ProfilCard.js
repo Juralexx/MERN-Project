@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { replaceHTTP, returnNetworkSVG } from '../tools/functions/networks';
 import { dateParser } from '../Utils';
 import { StartIconButton } from '../tools/global/Button';
@@ -12,12 +12,16 @@ const ProfilCard = ({ user }) => {
         <div className="col-12 col-lg-3 md:pr-5 secondary mb-8">
             <div className="pb-5 border-b">
                 <div className="f-24 bold txt-prim mb-2">{user?.pseudo}</div>
-                <NavLink to="/profil/edit">
-                    <StartIconButton icon={<MdOutlineEditNote />} text="Modifier mon profil" className="mb-2" />
-                </NavLink>
+                <Link to="/profil/edit" className="mb-2">
+                    <StartIconButton icon={<MdOutlineEditNote />} text="Modifier mon profil" className="mb-4" />
+                </Link>
                 <p className="flex items-center mb-1"><MdOutlineCalendarToday className="mr-2 primary" />inscrit le {dateParser(user.createdAt)}</p>
-                <p className="flex items-center mb-1"><HiOutlineLocationMarker className="mr-2 primary" /> {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})</p>
-                <p className="flex items-center"><FaUserShield className="mr-2 primary" /> {user?.work}</p>
+                {user.location &&
+                    <p className="flex items-center mb-1"><HiOutlineLocationMarker className="mr-2 primary" /> {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})</p>
+                }
+                {user.work &&
+                    <p className="flex items-center"><FaUserShield className="mr-2 primary" /> {user?.work}</p>
+                }
             </div>
             <div className="pt-5">
                 <div className="three_lines">{user?.bio}</div>

@@ -146,12 +146,8 @@ const Edit = ({ project }) => {
             <div className="content_box">
                 <div className="header flex justify-between mb-5">
                     <h3>Modification du projet</h3>
-                    <div className="flex">
-                        <Link to={`/projects/${project.URLID}/${project.URL}/about`}><OutlinedButton text="Annuler" className="mx-2" /></Link>
-                        <Button text="Enregistrer" onClick={handleUpdate} disabled={title === project.title && subtitle === project.subtitle && category === project.category && description === project.description && state === project.state && location === project.location && end === ISOtoNavFormat(project.end) && JSON.stringify(workArray) === JSON.stringify(project.works) && !contentChanged} />
-                    </div>
                 </div>
-                <div className="content_nav">
+                <div className="content_nav border-0">
                     <div className={`${addClass(nav === 0, "active")}`} onClick={() => setNav(0)}>Les bases</div>
                     <div className={`${addClass(nav === 1, "active")}`} onClick={() => setNav(1)}>Description</div>
                     <div className={`${addClass(nav === 2, "active")}`} onClick={() => setNav(2)}>Recherches</div>
@@ -361,7 +357,11 @@ const Edit = ({ project }) => {
                     </div>
                 }
             </div>
-        </div >
+            <div id="back-actions">
+                <Link to={`/projects/${project.URLID}/${project.URL}/about`}><OutlinedButton text="Annuler" className="mx-2" /></Link>
+                <Button text="Enregistrer" onClick={handleUpdate} disabled={title === project.title && subtitle === project.subtitle && category === project.category && description === project.description && state === project.state && location === project.location && end === ISOtoNavFormat(project.end) && JSON.stringify(workArray) === JSON.stringify(project.works) && !contentChanged} />
+            </div>
+        </div>
     )
 }
 

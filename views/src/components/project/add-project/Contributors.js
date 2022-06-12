@@ -134,7 +134,7 @@ const Contributors = ({ workArray, setWorkArray, isErr, setErr, error, setError 
                             </div>
                             <div className="content-form mt-4">
                                 <p className="title full">Description</p>
-                                <Textarea className={`full ${checkErr(`work-${key}`)}`} type="text" placeholder="Pourquoi recherchez vous cette compétence ?" onChange={e => handleDescription(e.target.value, key)} value={element.description} />
+                                <Textarea className={`w-full ${checkErr(`work-${key}`)}`} type="text" placeholder="Pourquoi recherchez vous cette compétence ?" onChange={e => handleDescription(e.target.value, key)} value={element.description} />
                                 <div className="field_infos full">
                                     {element.description.length} / 1000 caractères
                                 </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { updateQNA } from '../../../../actions/project.action'
-import { Button } from '../../../tools/global/Button'
+import { Button, TextButton } from '../../../tools/global/Button'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput, Textarea } from '../../../tools/global/Inputs'
 
@@ -72,23 +72,23 @@ const EditQna = ({ project, user }) => {
                                 }
                             </div>
                             <div className="content-form">
-                                <p className="title full">Question <span>Champ requis</span></p>
+                                <p className="title w-full">Question <span>Champ requis</span></p>
                                 <ClassicInput className={`${checkErr(`question-${key}`)} full`} type="text" placeholder={`Question n°${key + 1}`} onChange={e => handleQuestion(e, key)} value={element.question} />
-                                <div className="field_infos full">{element.question.length} / 100 caractères</div>
+                                <div className="field_infos w-full">{element.question.length} / 100 caractères</div>
                                 {isErr === `question-${key}` && <ErrorCard display={isErr === `question-${key}`} text={error} clean={() => setErr("")} />}
                             </div>
 
                             <div className="content-form mt-4">
-                                <p className="title full">Réponse <span>Champ requis</span></p>
-                                <Textarea className={`${checkErr(`answer-${key}`)} full`} type="text" placeholder={`Réponse n°${key + 1}`} onChange={e => handleAnswer(e, key)} value={element.answer} />
-                                <div className="field_infos full">{element.answer.length} / 1000 caractères</div>
+                                <p className="title w-full">Réponse <span>Champ requis</span></p>
+                                <Textarea className={`${checkErr(`answer-${key}`)} w-full`} type="text" placeholder={`Réponse n°${key + 1}`} onChange={e => handleAnswer(e, key)} value={element.answer} />
+                                <div className="field_infos w-full">{element.answer.length} / 1000 caractères</div>
                                 {isErr === `answer-${key}` && <ErrorCard display={isErr === `answer-${key}`} text={error} clean={() => setErr("")} />}
                             </div>
                         </div>
                     )
                 })}
-                <div className="btn_container">
-                    <NavLink to={`/projects/${project.URLID}/${project.URL}/qna`}><Button text="Annuler" /></NavLink>
+                <div id="back-actions">
+                    <NavLink to={`/projects/${project.URLID}/${project.URL}/qna`}><TextButton text="Annuler" /></NavLink>
                     <Button text="Enregistrer" className="ml-2" onClick={handleQna} />
                 </div>
             </div>
