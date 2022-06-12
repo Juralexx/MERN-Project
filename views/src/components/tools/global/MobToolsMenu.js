@@ -1,5 +1,4 @@
 import React from 'react'
-import useMediaQuery from '../hooks/useMediaQuery';
 
 const MobToolsMenu = () => {
     const { className, btnClassName, disabled, onClick } = props

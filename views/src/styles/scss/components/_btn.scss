@@ -257,11 +257,11 @@
     svg {
         height           : 34px;
         width            : 34px;
-        padding          : 5px;
+        padding          : 6px;
         margin-right     : 10px;
         color            : var(--primary);
         background-color : rgba(var(--primary-rgb), 0.15);
-        border-radius    : 5px;
+        border-radius    : 50%;
     }
 
     &:hover {

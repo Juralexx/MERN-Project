@@ -40,7 +40,7 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
                                             </p>
                                         </div>
                                     </div>
-                                    <ToolsMenu>
+                                    <ToolsMenu mobile mobileFull>
                                         {member._id !== uid &&
                                             <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
                                         }
@@ -62,7 +62,7 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
                                     <p>Proriétaire du groupe</p>
                                 </div>
                             </div>
-                            <ToolsMenu>
+                            <ToolsMenu mobile mobileFull>
                                 {conversation.owner._id !== uid &&
                                     <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
                                 }

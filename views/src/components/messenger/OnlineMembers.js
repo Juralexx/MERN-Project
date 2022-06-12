@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { MessengerContext } from '../AppContext';
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useOnline } from './functions/useOnline';
 import ToolsMenu from '../tools/global/ToolsMenu';
 import { IconToggle } from '../tools/global/Button';
 import { avatar } from '../tools/hooks/useAvatar';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiArrowSmLeft } from 'react-icons/hi';
-import { IoClose } from 'react-icons/io5';
+import { IoArrowRedo, IoClose } from 'react-icons/io5';
+import { MdOutlineMessage } from 'react-icons/md';
 
 const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
     const { md } = useContext(MessengerContext)
@@ -15,7 +16,7 @@ const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
 
     return (
         <>
-            <div className="flex items-center justify-between p-1 mb-3">
+            <div className="flex items-center justify-between p-1 mb-[10px]">
                 <div className="go-back !mb-0 absolute">
                     <HiArrowSmLeft onClick={() => setRightbar(({ state: !md ? 'open' : 'closed', displayed: 'contacts' }))} />
                 </div>
@@ -40,9 +41,9 @@ const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
                                                 <div className="online-user-status"><em>Actif</em></div>
                                             </div>
                                         </div>
-                                        <ToolsMenu>
-                                            <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
-                                            <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                        <ToolsMenu  mobile mobileFull>
+                                            <div className="tools_choice" onClick={() => handleClick(element)}><MdOutlineMessage />Envoyer un message</div>
+                                            <div className="tools_choice"><IoArrowRedo /><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
                                         </ToolsMenu>
                                     </div>
                                 )
@@ -62,9 +63,9 @@ const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
                                                 <div className="online-user-status"><em>Déconnecté</em></div>
                                             </div>
                                         </div>
-                                        <ToolsMenu>
-                                            <div className="tools_choice" onClick={() => handleClick(element)}>Conversation</div>
-                                            <div className="tools_choice"><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                        <ToolsMenu  mobile mobileFull>
+                                            <div className="tools_choice" onClick={() => handleClick(element)}><MdOutlineMessage />Envoyer un message</div>
+                                            <div className="tools_choice"><IoArrowRedo /><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
                                         </ToolsMenu>
                                     </div>
                                 )

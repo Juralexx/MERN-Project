@@ -20,8 +20,8 @@ import { IoSend, IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { FaPhotoVideo } from 'react-icons/fa'
 
-const Editor = ({ handleSubmit, currentChat, members, isTyping, typingContext, lastmessageRef, convWrapperRef }) => {
-    const { user, websocket } = useContext(MessengerContext)
+const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef, convWrapperRef }) => {
+    const { user, websocket, currentChat } = useContext(MessengerContext)
 
     const [isToolbar, setToolbar] = useState(false)
     const [isTools, setTools] = useState(false)

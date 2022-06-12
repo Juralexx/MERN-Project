@@ -3,7 +3,7 @@
     position        : relative;
     align-items     : center;
     justify-content : space-between;
-    padding         : 10px 7px;
+    padding         : 10px 10px;
     border-radius   : var(--radius);
     cursor          : pointer;
 
@@ -96,8 +96,8 @@
     position       : relative;
     display        : inline-block;
     color          : var(--text-secondary);
-    margin-left    : 6px;
     margin-bottom  : 4px;
+    padding        : 0 10px;
     text-transform : uppercase;
     letter-spacing : .7px;
     font-weight    : bolder;
@@ -105,15 +105,15 @@
     &:before {
         content          : '';
         position         : absolute;
-        width            : 14px;
+        width            : 16px;
         height           : 1px;
         background-color : var(--text-secondary);
         top              : 50%;
         transform        : translateY(-50%);
-        right            : 15px;
+        right            : 25px;
     }
 
     span {
-        margin-left : 24px;
+        margin-left : 26px;
     }
 }

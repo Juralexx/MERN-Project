@@ -1,4 +1,5 @@
 import ReactQuill from "react-quill"
+import useMediaQuery from "../../tools/hooks/useMediaQuery"
 import EditorToolbar, { formats, modules } from '../editor/EditorToolbar'
 import EmojiPicker from "./EmojiPicker"
 import { MdOutlineAdd, MdOutlineAlternateEmail, MdOutlineLink } from "react-icons/md"
@@ -28,141 +29,100 @@ export const SmallLoader = () => {
 }
 
 export const ConversationLoader = () => {
+    const md = useMediaQuery('(min-width:1024px')
+
+    const arr = [
+        {
+            circle: 'loading-h14-w100',
+            title: 'loading-h12-w30',
+            message: 'loading-h12-w160',
+        },
+        {
+            circle: 'loading-h14-w120',
+            title: 'loading-h12-w30',
+            message: 'loading-h12-w180',
+        },
+        {
+            circle: 'loading-h14-w60',
+            title: 'loading-h12-w30',
+            message: 'loading-h12-w100',
+        },
+        {
+            circle: 'loading-h14-w100',
+            title: 'loading-h12-w30',
+            message: 'loading-h12-w160',
+        },
+        {
+            circle: 'loading-h14-w80',
+            title: 'loading-h12-w30',
+            message: 'loading-h12-w140',
+        }
+
+    ]
+
     return (
-        <>
-            <div className="conversation">
-                <div className="conversation_inner">
-                    <div className="conversation-img-container">
-                        <div className="loading-circle-36 loading"></div>
-                    </div>
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-top mb-2">
-                            <div className="conversation-name loading-h14-w100 loading"></div>
-                            <div className="conversation-date loading-h12-w30 loading"></div>
+        arr.map((el, key) => {
+            return (
+                <div className="conversation" key={key}>
+                    <div className="conversation_inner">
+                        <div className="conversation-img-container">
+                            <div className={`${md ? "loading-circle-36 loading" : "loading-circle-36 !m-0 loading"}`}></div>
                         </div>
-                        <div className="last-message-wrapper">
-                            <div className="last-message loading-h12-w160 loading"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="conversation">
-                <div className="conversation_inner">
-                    <div className="conversation-img-container">
-                        <div className="loading-circle-36 loading"></div>
-                    </div>
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-top mb-2">
-                            <div className="conversation-name loading-h14-w120 loading"></div>
-                            <div className="conversation-date loading-h12-w30 loading"></div>
-                        </div>
-                        <div className="last-message-wrapper">
-                            <div className="last-message loading-h12-w180 loading"></div>
+                        <div className="conversation-infos">
+                            <div className="conversation-infos-top mb-2">
+                                <div className={`conversation-name ${el.circle} loading`}></div>
+                                <div className={`conversation-date ${el.title} loading`}></div>
+                            </div>
+                            <div className="last-message-wrapper">
+                                <div className={`last-message ${el.message} loading`}></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="conversation">
-                <div className="conversation_inner">
-                    <div className="conversation-img-container">
-                        <div className="loading-circle-36 loading"></div>
-                    </div>
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-top mb-2">
-                            <div className="conversation-name loading-h14-w60 loading"></div>
-                            <div className="conversation-date loading-h12-w30 loading"></div>
-                        </div>
-                        <div className="last-message-wrapper">
-                            <div className="last-message loading-h12-w100 loading"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="conversation">
-                <div className="conversation_inner">
-                    <div className="conversation-img-container">
-                        <div className="loading-circle-36 loading"></div>
-                    </div>
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-top mb-2">
-                            <div className="conversation-name loading-h14-w80 loading"></div>
-                            <div className="conversation-date loading-h12-w30 loading"></div>
-                        </div>
-                        <div className="last-message-wrapper">
-                            <div className="last-message loading-h12-w140 loading"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="conversation">
-                <div className="conversation_inner">
-                    <div className="conversation-img-container">
-                        <div className="loading-circle-36 loading"></div>
-                    </div>
-                    <div className="conversation-infos">
-                        <div className="conversation-infos-top mb-2">
-                            <div className="conversation-name loading-h14-w100 loading"></div>
-                            <div className="conversation-date loading-h12-w30 loading"></div>
-                        </div>
-                        <div className="last-message-wrapper">
-                            <div className="last-message loading-h12-w160 loading"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
+            )
+        })
     )
 }
 
 export const OnlineUserLoader = () => {
+    const arr = [
+        {
+            name: 'loading-h14-w80',
+            status: 'loading-h12-w60',
+        },
+        {
+            name: 'loading-h14-w120',
+            status: 'loading-h12-w80',
+        },
+        {
+            name: 'loading-h14-w140',
+            status: 'loading-h12-w60',
+        },
+        {
+            name: 'loading-h14-w80',
+            status: 'loading-h12-w120',
+        },
+        {
+            name: 'loading-h14-w140',
+            status: 'loading-h12-w60',
+        }
+
+    ]
+
     return (
-        <>
-            <div className="online-users">
-                <div className="online-user">
-                    <div className="loading-circle-36 loading"></div>
-                    <div className="online-user-name">
-                        <div className="loading-h14-w80 loading"></div>
-                        <div className="loading-h12-w60 mt-2 pulse loading"></div>
+        arr.map((el, key) => {
+            return (
+                <div className="online-users" key={key}>
+                    <div className="online-user">
+                        <div className="loading-circle-36 loading"></div>
+                        <div className="online-user-name">
+                            <div className={`${el.name} loading`}></div>
+                            <div className={`${el.status} mt-2 pulse loading`}></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="online-users">
-                <div className="online-user">
-                    <div className="loading-circle-36 loading"></div>
-                    <div className="online-user-name">
-                        <div className="loading-h14-w120 loading"></div>
-                        <div className="loading-h12-w80 mt-2 pulse loading"></div>
-                    </div>
-                </div>
-            </div>
-            <div className="online-users">
-                <div className="online-user">
-                    <div className="loading-circle-36 loading"></div>
-                    <div className="online-user-name">
-                        <div className="loading-h14-w140 loading"></div>
-                        <div className="loading-h12-w60 mt-2 pulse loading"></div>
-                    </div>
-                </div>
-            </div>
-            <div className="online-users">
-                <div className="online-user">
-                    <div className="loading-circle-36 loading"></div>
-                    <div className="online-user-name">
-                        <div className="loading-h14-w80 loading"></div>
-                        <div className="loading-h12-w120 mt-2 pulse loading"></div>
-                    </div>
-                </div>
-            </div>
-            <div className="online-users">
-                <div className="online-user">
-                    <div className="loading-circle-36 loading"></div>
-                    <div className="online-user-name">
-                        <div className="loading-h14-w140 loading"></div>
-                        <div className="loading-h12-w60 mt-2 pulse loading"></div>
-                    </div>
-                </div>
-            </div>
-        </>
+            )
+        })
     )
 }
 

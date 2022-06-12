@@ -3,7 +3,7 @@
     z-index    : 700;
     height     : 368px !important;
     width      : 300px !important;
-    box-shadow : var(--shadow-xl);
+    box-shadow : var(--shadow-full);
 
     .emoji-mart {
         width         : 300px !important;
@@ -116,7 +116,7 @@
 
 .emoji-mart-scroll {
     &::-webkit-scrollbar {
-        width  : 10px;
+        width  : 18px;
         cursor : pointer;
     }
 
@@ -126,17 +126,26 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background    : var(--light-border);
-        border-radius : 6px;
-        width         : 10px;
-        cursor        : pointer;
+        background      : var(--light-border);
+        border          : 5px solid rgba(0, 0, 0, 0);
+        background-clip : padding-box;
+        border-radius   : 9999px;
+        cursor          : pointer;
     }
 
     &::-webkit-scrollbar-track {
-        background : transparent;
+        background      : var(--light);
+        border          : 5px solid rgba(0, 0, 0, 0);
+        background-clip : padding-box;
+        border-radius   : 9999px;
+        cursor          : pointer;
 
         &:hover, &:active {
-            background : var(--light);
+            background      : var(--light);
+            border          : 5px solid rgba(0, 0, 0, 0);
+            background-clip : padding-box;
+            border-radius   : 9999px;
+            cursor          : pointer;
         }
     }
 

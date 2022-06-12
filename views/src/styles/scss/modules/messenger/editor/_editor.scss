@@ -95,13 +95,12 @@
 
         .menu-tools-btn {
             padding       : 1px;
-            margin-right  : 8px;
+            margin-right  : 6px;
             border-radius : 50%;
-            background    : var(--xx-light);
 
             svg {
-                width      : 16px;
-                height     : 16px;
+                width      : 18px;
+                height     : 18px;
                 transition : .1s ease;
             }
 

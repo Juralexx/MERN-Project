@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { MessengerContext } from '../AppContext';
 import { useOnline } from './functions/useOnline';
 import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch';
 import ToolsMenu from '../tools/global/ToolsMenu';
-import Tools from './conversation-tools/Tools';
+import GroupTools from './conversation-tools/GroupTools';
 import OnlineMembers from './OnlineMembers';
+import DialogTools from './conversation-tools/DialogTools';
 import Tooltip from '../tools/global/Tooltip';
 import { OnlineUserLoader } from './tools/Loaders';
 import { IconInput } from '../tools/global/Inputs';
@@ -17,11 +18,12 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { IoArrowRedo, IoClose } from 'react-icons/io5';
 import { MdOutlineMessage } from 'react-icons/md';
 
-const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, conversations, setTemporaryConv, setCurrentChat, changeCurrentChat, rightbar, setRightbar }) => {
-    const { user, friendsArr, navigate } = useContext(MessengerContext)
+const ConversationTools = ({ onlineUsers, fetchedFriends, members, conversations, setTemporaryConv, rightbar, setRightbar }) => {
+    const { user, friendsArr, currentChat, setCurrentChat, changeCurrentChat, navigate } = useContext(MessengerContext)
     const { online, offline } = useOnline(friendsArr, onlineUsers)
     const [search, setSearch] = useState(false)
     const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch([...online, ...offline], 'pseudo')
+
 
     const handleClick = (receiver) => {
         let isConv = isConversation(conversations, [receiver, user])
@@ -86,9 +88,9 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
                                                                 <div className="online-user-status"><em>Actif</em></div>
                                                             </div>
                                                         </div>
-                                                        <ToolsMenu>
+                                                        <ToolsMenu mobile mobileFull>
                                                             <div className="tools_choice" onClick={() => handleClick(element)}><MdOutlineMessage />Envoyer un message</div>
-                                                            <div className="tools_choice"><IoArrowRedo /><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                                            <div className="tools_choice"><IoArrowRedo /><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
                                                         </ToolsMenu>
                                                     </div>
                                                 )
@@ -108,9 +110,9 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
                                                                 <div className="online-user-status"><em>Déconnecté</em></div>
                                                             </div>
                                                         </div>
-                                                        <ToolsMenu>
+                                                        <ToolsMenu mobile mobileFull>
                                                             <div className="tools_choice" onClick={() => handleClick(element)}><MdOutlineMessage />Envoyer un message</div>
-                                                            <div className="tools_choice"><IoArrowRedo /><NavLink to={"/" + element.pseudo}>Voir le profil</NavLink></div>
+                                                            <div className="tools_choice"><IoArrowRedo /><Link to={"/" + element.pseudo}>Voir le profil</Link></div>
                                                         </ToolsMenu>
                                                     </div>
                                                 )
@@ -139,14 +141,23 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, currentChat, members, 
                 />
             }
 
-            {rightbar.displayed === 'tools' &&
-                <Tools
-                    members={members}
-                    open={rightbar.displayed === 'tools'}
-                    setOpen={setRightbar}
-                    conversation={currentChat}
-                />
-            }
+            {rightbar.displayed === 'tools' && (
+                currentChat.type === 'group' ? (
+                    <GroupTools
+                        members={members}
+                        open={rightbar.displayed === 'tools'}
+                        setOpen={setRightbar}
+                        conversation={currentChat}
+                    />
+                ) : (
+                    <DialogTools
+                        members={members}
+                        open={rightbar.displayed === 'tools'}
+                        setOpen={setRightbar}
+                        conversation={currentChat}
+                    />
+                )
+            )}
         </div>
     )
 }

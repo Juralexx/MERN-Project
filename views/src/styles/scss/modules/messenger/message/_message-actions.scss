@@ -5,8 +5,7 @@
     right         : 0;
     border-radius : 5px;
     background    : var(--content-x-light);
-    box-shadow    : var(--shadow-lg);
-    border        : 2px solid var(--light-border);
+    box-shadow    : var(--shadow-full);
     cursor        : pointer;
 
     &.active {
@@ -20,14 +19,26 @@
         padding         : 3px 5.5px;
         width           : 30px;
         height          : 30px;
+        border-radius   : 0;
+
+        &:first-child {
+            border-radius : 5px 0 0 5px;
+        }
+        &:last-child {
+            border-radius : 0 5px 5px 0;
+        }
 
         svg {
             width  : 16px;
             height : 16px;
+            color  : var(--text-secondary);
         }
 
-        &:hover, &:hover .tools_box .tools_btn {
+        &:hover {
             background-color : var(--light);
+            svg {
+                color : var(--primary);
+            }
         }
     }
 }

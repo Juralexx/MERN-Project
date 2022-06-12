@@ -8,10 +8,10 @@ import { avatar } from '../tools/hooks/useAvatar';
 import { addClass } from '../Utils';
 import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
 import { HiLogout, HiOutlineCheck } from 'react-icons/hi';
-import { IoTrashBin } from 'react-icons/io5';
+import { IoArrowRedo, IoTrashBin } from 'react-icons/io5';
 
-const Conversation = ({ conversation, currentChat, newMessage, notification, onConversationClick }) => {
-    const { uid, user, xs, navigate } = useContext(MessengerContext)
+const Conversation = ({ conversation, newMessage, notification }) => {
+    const { uid, user, currentChat, changeCurrentChat, xs, navigate } = useContext(MessengerContext)
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
 
     const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : {})
@@ -23,7 +23,11 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     useClickOutside(menuRef, setOpened, false)
 
     const longPressProps = useLongPress({
-        onClick: () => navigate(`/messenger/` + conversation._id),
+        onClick: () => {
+            changeCurrentChat(conversation)
+            setUnseen(null)
+            navigate(`/messenger/` + conversation._id)
+        },
         onLongPress: () => xs ? setOpened(true) : {},
     })
 
@@ -36,11 +40,11 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     useEffect(() => {
         if (conversation.messages.length > 0) {
             const conv = user.conversations.find(e => e.id === conversation._id)
-
-            if (conv.last_message_seen && conv.last_message_seen !== (null || "")) {
+            if (conv?.last_message_seen !== (null || "")) {
                 const index = conversation.messages.findIndex(e => e._id === conv.last_message_seen)
-                if (Math.abs((conversation.messages.length - 1) - index) > 0)
+                if (Math.abs((conversation.messages.length - 1) - index) > 0) {
                     setUnseen(true)
+                }
             }
         }
     }, [user.conversations, conversation.messages, conversation._id])
@@ -58,12 +62,20 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
     }, [newMessage, notification, conversation._id])
 
     return (
-        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`} {...longPressProps}>
-            <div className="conversation_inner" onClick={() => { onConversationClick(conversation); setUnseen(null) }}>
+        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`}>
+            <div className="conversation_inner" {...longPressProps}>
                 <div className="conversation-img-container">
-                    {members.slice(0, 2).map((element, key) => {
-                        return <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
-                    })}
+                    {conversation.type === 'group' ? (
+                        conversation.picture ? (
+                            <div className="conversation-img" style={avatar(conversation.picture)}></div>
+                        ) : (
+                            members.slice(0, 2).map((element, key) => {
+                                return <div className="conversation-group-img" key={key} style={avatar(element.picture)}></div>
+                            })
+                        )
+                    ) : (
+                        <div className="conversation-img" style={avatar(members[0].picture)}></div>
+                    )}
                 </div>
                 <div className="conversation-infos">
                     <div className="conversation-infos-top">
@@ -72,8 +84,8 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
                         </div>
                         <div className="conversation-date">{date}</div>
                     </div>
-                    {Object.keys(lastMessage)?.length > 0 ? (
-                        <div className="last-message-wrapper">
+                    <div className="last-message-wrapper">
+                        {Object.keys(lastMessage)?.length > 0 ? (
                             <div className={`${unseen ? "last-message notification" : "last-message"}`}>
                                 {returnConversationPseudo(conversation, lastMessage, uid)}
                                 <p>
@@ -84,12 +96,10 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
                                     )}
                                 </p>
                             </div>
-                        </div>
-                    ) : (
-                        <div className="last-message-wrapper">
+                        ) : (
                             <div className="last-message"><p>Nouvelle conversation - <em>Envoyer un message</em></p></div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
                 {unseen && <div className="unseen-badge"></div>}
             </div>
@@ -97,12 +107,18 @@ const Conversation = ({ conversation, currentChat, newMessage, notification, onC
                 {!xs ? (
                     <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)}>
                         <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
+                        {conversation.type === 'dialog' &&
+                            <div className="tools_choice"><IoArrowRedo />Voir le profil</div>
+                        }
                         <div className="tools_choice"><HiLogout />Quitter la conversation</div>
                         <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
                     </ToolsMenu>
                 ) : (
                     <MobileMenu open={opened} setOpen={setOpened}>
                         <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
+                        {conversation.type === 'dialog' &&
+                            <div className="tools_choice"><IoArrowRedo />Voir le profil</div>
+                        }
                         <div className="tools_choice"><HiLogout />Quitter la conversation</div>
                         <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
                     </MobileMenu>

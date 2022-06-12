@@ -20,7 +20,7 @@ import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiMenuAlt3 } from 'react-icons/hi';
 
-const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, newMessage, notification, setRightbar }) => {
+const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, newMessage, notification, setRightbar }) => {
     const { friendsArr } = useContext(MessengerContext)
     const [open, setOpen] = useState(false)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
@@ -41,6 +41,12 @@ const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversat
                         <IconToggle icon={<HiMenuAlt3 />} onClick={() => setRightbar(prev => ({ ...prev, state: prev.state === 'open' ? 'closed' : 'open' }))} />
                     </Tooltip>
                 </div>
+            </div>
+
+            <div className="new-conversation-btn">
+                <Link to='/messenger/new'>
+                    <AiOutlineEdit />
+                </Link>
             </div>
 
             {!fetchedFriends ? (
@@ -95,7 +101,6 @@ const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversat
             <NewConversationModal
                 open={open}
                 setOpen={setOpen}
-                changeCurrentChat={changeCurrentChat}
                 conversations={conversations.concat(favorites)}
                 setConversations={setConversations}
             />
@@ -113,8 +118,6 @@ const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversat
                                                 conversation={element}
                                                 newMessage={newMessage}
                                                 notification={notification}
-                                                onConversationClick={() => changeCurrentChat(element)}
-                                                currentChat={currentChat}
                                             />
                                         </div>
                                     )
@@ -128,9 +131,7 @@ const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversat
                                     <TemporaryConversation
                                         temporaryConv={temporaryConv}
                                         setTemporaryConv={setTemporaryConv}
-                                        setCurrentChat={setCurrentChat}
                                         conversations={conversations}
-                                        currentChat={currentChat}
                                     />
                                 </div>
                             }
@@ -141,8 +142,6 @@ const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversat
                                             conversation={element}
                                             newMessage={newMessage}
                                             notification={notification}
-                                            onConversationClick={() => changeCurrentChat(element)}
-                                            currentChat={currentChat}
                                         />
                                     </div>
                                 )

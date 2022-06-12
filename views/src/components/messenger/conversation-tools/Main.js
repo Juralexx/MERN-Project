@@ -4,7 +4,7 @@ import { dateParser } from '../../Utils'
 const Main = ({ conversation }) => {
 
     return (
-        <div className="tools-displayer-content custom-scrollbar">
+        <div className="tools-displayer-content custom-scrollbar !px-5">
             <div className="conversation-infos-bloc">
                 <div className="w-full">
                     <div className="bold mb-2">Nom</div>

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { MediaContext, MessengerContext } from '../AppContext';
 import { useDispatch } from 'react-redux';
 import { useLocationchange } from './functions/useLocationchange';
 import { useFetchFriends } from './functions/useFetchFriends';
@@ -7,7 +8,6 @@ import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
 import { useCheckLocation } from './functions/useCheckLocation';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { MediaContext, MessengerContext } from '../AppContext';
 import ConversationsMenu from './ConversationsMenu';
 import MobileMenu from './MobileMenu';
 import ConversationTools from './ConversationTools';
@@ -76,7 +76,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             }
         }
     }, [xs, fetched, location.pathname, allConversations, user.conversations, navigate])
-
 
     /**
      * Get conversations
@@ -298,22 +297,21 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     }, [websocket.current, websocket, setTyping, setTypingContext])
 
     return (
-        <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, dispatch, navigate, xs, sm, md, lg }}>
+        <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, currentChat, setCurrentChat, changeCurrentChat, dispatch, navigate, xs, sm, md, lg }}>
             <div className="messenger">
-                <ConversationsMenu
-                    favorites={favorites}
-                    conversations={conversations}
-                    setConversations={setConversations}
-                    currentChat={currentChat}
-                    setCurrentChat={setCurrentChat}
-                    changeCurrentChat={changeCurrentChat}
-                    temporaryConv={temporaryConv}
-                    setTemporaryConv={setTemporaryConv}
-                    fetched={fetched}
-                    newMessage={newMessage}
-                    notification={notification}
-                    setRightbar={setRightbar}
-                />
+                {!xs &&
+                    <ConversationsMenu
+                        favorites={favorites}
+                        conversations={conversations}
+                        setConversations={setConversations}
+                        temporaryConv={temporaryConv}
+                        setTemporaryConv={setTemporaryConv}
+                        fetched={fetched}
+                        newMessage={newMessage}
+                        notification={notification}
+                        setRightbar={setRightbar}
+                    />
+                }
                 <div className="conversation-box">
                     <div className="conversation-box-wrapper">
                         {!fetched && !xs &&
@@ -329,9 +327,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                                         favorites={favorites}
                                         conversations={conversations}
                                         setConversations={setConversations}
-                                        currentChat={currentChat}
-                                        setCurrentChat={setCurrentChat}
-                                        changeCurrentChat={changeCurrentChat}
                                         temporaryConv={temporaryConv}
                                         setTemporaryConv={setTemporaryConv}
                                         fetched={fetched}
@@ -347,8 +342,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                             <Route path=":id" element={
                                 <ConversationBox
                                     conversations={allConversations}
-                                    currentChat={currentChat}
-                                    setCurrentChat={setCurrentChat}
                                     onlineUsers={onlineUsers}
                                     messagesDates={messagesDates}
                                     setMessagesDates={setMessagesDates}
@@ -362,9 +355,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                             <Route path="new" element={
                                 <New
                                     conversations={conversations}
-                                    currentChat={currentChat}
-                                    setCurrentChat={setCurrentChat}
-                                    changeCurrentChat={changeCurrentChat}
                                     temporaryConv={temporaryConv}
                                     setTemporaryConv={setTemporaryConv}
                                     isTyping={isTyping}
@@ -381,13 +371,10 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 <ConversationTools
                     onlineUsers={onlineUsers}
                     fetchedFriends={fetchedFriends}
-                    setCurrentChat={setCurrentChat}
-                    changeCurrentChat={changeCurrentChat}
                     rightbar={rightbar}
                     setRightbar={setRightbar}
                     conversations={allConversations}
                     setTemporaryConv={setTemporaryConv}
-                    currentChat={currentChat}
                     members={members}
                 />
             </div>

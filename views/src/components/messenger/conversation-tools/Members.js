@@ -1,33 +1,37 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { MessengerContext } from '../../AppContext'
+import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
 import { useCheckLocation } from '../functions/useCheckLocation'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import { dateParser } from '../../Utils'
 import { IconInput } from '../../tools/global/Inputs'
 import ToolsMenu from '../../tools/global/ToolsMenu'
+import Warning from '../../tools/global/Warning'
 import { leaveConversation } from '../functions/actions'
-import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
 import { MdOutlineMessage } from 'react-icons/md'
 import { IoArrowRedo, IoTrashBin } from 'react-icons/io5'
 import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
-import Warning from '../../tools/global/Warning'
 
-const Members = ({ uid, websocket, members, setAddMembers, conversation, dispatch }) => {
+const Members = ({ setAddMembers, conversation }) => {
+    const { uid, websocket, dispatch } = useContext(MessengerContext)
     const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(conversation.files, 'name')
     const { isParam } = useCheckLocation()
     const [warning, setWarning] = useState(-1)
 
     return (
         <div className="tools-displayer-content">
-            <IconInput
-                className="full is_start_icon small mb-2"
-                placeholder="Rechercher un membre..."
-                icon={<BiSearchAlt />}
-                value={query}
-                onInput={e => setQuery(e.target.value)}
-                onChange={oneLevelSearch}
-            />
-            <div className="add-more-users" onClick={() => setAddMembers(true)}>
+            <div className="px-3">
+                <IconInput
+                    className="full is_start_icon small mb-2"
+                    placeholder="Rechercher un membre..."
+                    icon={<BiSearchAlt />}
+                    value={query}
+                    onInput={e => setQuery(e.target.value)}
+                    onChange={oneLevelSearch}
+                />
+            </div>
+            <div className="add-more-users !px-4" onClick={() => setAddMembers(true)}>
                 <BiUserPlus />
                 <p>Ajouter des personnes</p>
             </div>
@@ -35,7 +39,7 @@ const Members = ({ uid, websocket, members, setAddMembers, conversation, dispatc
                 {conversation.members.map((member, key) => {
                     return (
                         <div key={key}>
-                            <div className={`${isInResults(member, "flex")} conversation-member`}>
+                            <div className={`${isInResults(member, "flex")} conversation-member !px-4`}>
                                 <div className="flex items-center">
                                     <MediumAvatar pic={member.picture} />
                                     <div>
@@ -44,7 +48,7 @@ const Members = ({ uid, websocket, members, setAddMembers, conversation, dispatc
                                     </div>
 
                                 </div>
-                                <ToolsMenu>
+                                <ToolsMenu mobile mobileFull>
                                     {member._id !== uid &&
                                         <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
                                     }

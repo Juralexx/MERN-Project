@@ -16,8 +16,8 @@ import { IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
 
-const Editor = ({ message, setModify, setOpened, currentChat, members }) => {
-    const { uid, websocket, dispatch } = useContext(MessengerContext)
+const Editor = ({ message, setModify, setOpened, members }) => {
+    const { uid, websocket, currentChat, dispatch } = useContext(MessengerContext)
     const { quill, quillRef } = useQuill()
     const [isToolbar, setToolbar] = useState(false)
     const [position, setPosition] = useState(0)

@@ -1,10 +1,10 @@
 import React, { useContext, useRef, useState } from 'react';
 import ReactPlayer from 'react-player/lazy'
-import Tooltip from '../../tools/global/Tooltip';
 import Warning from '../../tools/global/Warning';
 import Emojis from './Emojis';
 import Editor from './Editor';
 import ShareModal from './ShareModal';
+import File from './File';
 import Actions from './Actions';
 import { MessengerContext } from '../../AppContext';
 import { useEmojis } from './useEmojis';
@@ -13,19 +13,15 @@ import { useCheckLocation } from '../functions/useCheckLocation';
 import { useLongPress } from '../../tools/hooks/useLongPress';
 import { avatar } from '../../tools/hooks/useAvatar';
 import { SmallAvatar } from '../../tools/global/Avatars';
-import FsLightbox from 'fslightbox-react';
-import { deleteFiles, removeMessage } from '../functions/actions';
+import { removeMessage } from '../functions/actions';
 import { convertDeltaToHTML, convertDeltaToStringNoHTML, getUserPseudo, returnMessageFiles } from '../functions/function';
-import { dateParserWithoutYear, download, getHourOnly } from '../../Utils';
-import { MdClear, MdFileDownload, MdFullscreen } from 'react-icons/md'
-import { IoArrowRedo } from 'react-icons/io5'
+import { dateParserWithoutYear, getHourOnly } from '../../Utils';
 ;
 
-const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, members }) => {
-    const { uid, user, websocket, dispatch, xs } = useContext(MessengerContext)
+const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
+    const { uid, websocket, currentChat, dispatch, xs } = useContext(MessengerContext)
     const [modify, setModify] = useState(-1)
     const [warning, setWarning] = useState(false)
-    const [toggler, setToggler] = useState(false)
     const { isParam } = useCheckLocation()
 
     const [share, setShare] = useState(false)
@@ -40,8 +36,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
     const { emojis, handleEmoji } = useEmojis(message, currentChat)
 
     return (
-        <div
-            ref={messageRef}
+        <div ref={messageRef}
             className={opened ? "message-container hovered " + className : "message-container " + className}
             data-hour={getHourOnly(new Date(message.createdAt))}
             {...longPressProps}
@@ -53,7 +48,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                 <div className="message-right">
                     <div className="message-right-top">
                         {getUserPseudo(currentChat.members, message.sender, message.sender_pseudo)}
-                        <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "(modifié)"}</span>
+                        <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "- modifié"}</span>
                     </div>
 
                     {message && modify !== uniqueKey ? (
@@ -61,7 +56,6 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                             {Object.keys(message.text).length > 0 &&
                                 <div className="message-text" dangerouslySetInnerHTML={convertDeltaToHTML(message)}></div>
                             }
-
                             {message.embeds?.length > 0 &&
                                 message.embeds.map((url, key) => {
                                     return (
@@ -80,41 +74,18 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                                     )
                                 })
                             }
-
                             {message.files?.length > 0 &&
                                 message.files.map((file, key) => {
                                     return (
-                                        <div className="message-files-container" key={key}>
-                                            <p className="txt-sec f-12">{file.name}</p>
-                                            <div className="files-block">
-                                                {returnMessageFiles(file)}
-                                                <div className="files-tools">
-                                                    <Tooltip content={<p>Agrandir</p>}>
-                                                        <button onClick={() => setToggler(true)}><MdFullscreen /></button>
-                                                    </Tooltip>
-                                                    <Tooltip content={<p>Ouvrir&nbsp;dans&nbsp;une&nbsp;nouvelle&nbsp;fenêtre</p>}>
-                                                        <button><a href={file.url} rel="noreferrer" target="_blank"><IoArrowRedo /></a></button>
-                                                    </Tooltip>
-                                                    <Tooltip content={<p>Télécharger</p>}>
-                                                        <button className="files-tools-btn" onClick={() => download(file)}><MdFileDownload /></button>
-                                                    </Tooltip>
-                                                    {file.userId === uid &&
-                                                        <Tooltip content={<p>Supprimer</p>}>
-                                                            <button className="files-tools-btn" onClick={() => deleteFiles(file, user, websocket, currentChat, message._id, dispatch, isParam)}><MdClear /></button>
-                                                        </Tooltip>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <FsLightbox
-                                                toggler={toggler}
-                                                sources={[file.url]}
-                                                onClose={() => setToggler(false)}
+                                        <div key={key}>
+                                            <File
+                                                file={file}
+                                                message={message}
                                             />
                                         </div>
                                     )
                                 })
                             }
-
                             {message.shared &&
                                 <div className="shared-message">
                                     <div className="message-top">
@@ -147,7 +118,6 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                             message={message}
                             setModify={setModify}
                             setOpened={setOpened}
-                            currentChat={currentChat}
                             members={members}
                         />
                     )}
@@ -155,11 +125,8 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                         uid={uid}
                         emojis={emojis}
                         handleEmoji={handleEmoji}
-                        opened={opened}
-                        setOpened={setOpened}
                     />
                 </div>
-
                 <Actions
                     message={message}
                     opened={opened}
@@ -171,7 +138,6 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                     setWarning={setWarning}
                     uniqueKey={uniqueKey}
                 />
-
                 {warning &&
                     <Warning
                         title="Supprimer le message"
@@ -202,7 +168,6 @@ const Message = ({ message, uniqueKey, className, handleSubmit, currentChat, mem
                         </div>
                     </Warning>
                 }
-
                 {share &&
                     <ShareModal
                         open={share}

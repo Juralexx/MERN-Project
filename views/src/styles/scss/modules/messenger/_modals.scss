@@ -13,6 +13,20 @@
     }
 }
 
+.edit-conversation-modal {
+    .btn-container {
+        display         : flex;
+        justify-content : flex-end;
+        padding         : 24px 0;
+
+        button {
+            &:nth-child(1) {
+                background-color : var(--x-light);
+            }
+        }
+    }
+}
+
 @media(max-width:576px) {
     .conversation-menu-mobile {
         .modal_wrapper {
@@ -41,6 +55,46 @@
                 height        : 100vh;
                 border        : none;
                 border-radius : 0;
+            }
+        }
+    }
+    .tools-displayer {
+        .modal_wrapper {
+            padding : 0;
+            overflow-y: hidden;
+            .modal_container {
+                margin : 0;
+            }
+            .edit-conversation-modal {
+                width         : 100%;
+                height        : 100vh;
+                border        : none;
+                border-radius : 0;
+                z-index       : 800;
+                
+                .btn-container {
+                    position        : absolute;
+                    bottom          : 0;
+                    left            : 0;
+                    width           : 100%;
+                    justify-content : space-between;
+                    padding         : 24px 15px;
+                    button {
+                        &:nth-child(1) {
+                            width : 33%;
+                        }
+                        &:nth-child(2) {
+                            width : 63%;
+                        }
+                    }
+                }
+            }
+            .custom-pseudo-modal {
+                width         : 100%;
+                height        : 100vh;
+                border        : none;
+                border-radius : 0;
+                z-index       : 800;
             }
         }
     }

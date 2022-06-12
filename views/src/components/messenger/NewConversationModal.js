@@ -12,8 +12,8 @@ import { isConversation, otherMembersIDs, pushUserInArray, removeUserFromArray }
 import { IoClose } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi';
 
-const NewConversationModal = ({ open, setOpen, conversations, setConversations, changeCurrentChat }) => {
-    const { uid, user, websocket, friendsArr } = useContext(MessengerContext)
+const NewConversationModal = ({ open, setOpen, conversations, setConversations }) => {
+    const { uid, user, websocket, friendsArr, changeCurrentChat } = useContext(MessengerContext)
     const [navbar, setNavbar] = useState(1)
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")

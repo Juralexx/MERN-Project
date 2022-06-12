@@ -15,8 +15,8 @@ import { ChatLoader, SmallLoader } from './tools/Loaders'
 import { getHoursDiff, getMessagesDates } from './functions/function'
 import { getConversation } from '../../actions/messenger.action'
 
-const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUsers, messagesDates, setMessagesDates, handleSubmit, typingContext, isTyping, setRightbar }) => {
-    const { uid, user, navigate, sm } = useContext(MessengerContext)
+const ConversationBox = ({ conversations, onlineUsers, messagesDates, setMessagesDates, handleSubmit, typingContext, isTyping, setRightbar }) => {
+    const { uid, user, currentChat, setCurrentChat, navigate, sm } = useContext(MessengerContext)
     const { id } = useParams()
     const reducer = useSelector(state => state.messengerReducer)
     const [isLoading, setLoading] = useState(true)
@@ -68,7 +68,6 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                     <ConversationHeader
                         onlineUsers={onlineUsers}
                         setRightbar={setRightbar}
-                        currentChat={currentChat}
                         members={members}
                     />
                     <div className="conversation-box-container custom-scrollbar" ref={convWrapperRef}>
@@ -88,7 +87,6 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                                                 message={message}
                                                 className={key > 0 && getHoursDiff(array[key - 1], message)}
                                                 uniqueKey={key}
-                                                currentChat={currentChat}
                                                 members={members}
                                                 handleSubmit={handleSubmit}
                                             />
@@ -103,7 +101,6 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                     {!sm ? (
                         <Editor
                             members={members}
-                            currentChat={currentChat}
                             handleSubmit={handleSubmit}
                             isTyping={isTyping}
                             typingContext={typingContext}
@@ -113,7 +110,6 @@ const ConversationBox = ({ conversations, currentChat, setCurrentChat, onlineUse
                     ) : (
                         <MobileEditor
                             members={members}
-                            currentChat={currentChat}
                             handleSubmit={handleSubmit}
                             isTyping={isTyping}
                             typingContext={typingContext}

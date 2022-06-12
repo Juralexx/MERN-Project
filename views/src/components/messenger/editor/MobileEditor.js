@@ -19,8 +19,8 @@ import { IoClose, IoSend, IoText } from 'react-icons/io5'
 import { BsEmojiSmile } from 'react-icons/bs'
 import { FaPhotoVideo } from 'react-icons/fa'
 
-const MobileEditor = ({ handleSubmit, currentChat, members, isTyping, typingContext, lastmessageRef, convWrapperRef }) => {
-    const { user, websocket } = useContext(MessengerContext)
+const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef, convWrapperRef }) => {
+    const { user, websocket, currentChat } = useContext(MessengerContext)
     const { quill, quillRef } = useQuill()
 
     const [isToolbar, setToolbar] = useState(false)

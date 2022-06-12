@@ -1,9 +1,8 @@
 import { Emoji } from 'emoji-mart'
 import React from 'react'
 import Tooltip from '../../tools/global/Tooltip'
-import EmojiPicker from '../tools/EmojiPicker'
 
-const Emojis = ({ uid, emojis, handleEmoji, opened, setOpened }) => {
+const Emojis = ({ uid, emojis, handleEmoji }) => {
 
     return (
         emojis.length > 0 &&
@@ -25,12 +24,11 @@ const Emojis = ({ uid, emojis, handleEmoji, opened, setOpened }) => {
                             </div>
                         }>
                             <Emoji emoji={emoji} size={14} set='twitter' />
+                            <p>{emojisGrouped.length}</p>
                         </Tooltip>
-                        <p>{emojisGrouped.length}</p>
                     </div>
                 )
             })}
-            <EmojiPicker btnClassName="emoji-add" onSelect={emoji => handleEmoji(emoji)} onClick={() => setOpened(!opened)} />
         </div>
     )
 }

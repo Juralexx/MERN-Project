@@ -9,9 +9,7 @@
 @import 'tools/accordion';
 @import 'tools/avatars';
 @import 'tools/categories';
-@import 'tools/checkbox';
 @import 'tools/containers';
-@import 'tools/loader';
 @import 'tools/map';
 @import 'tools/no-content';
 @import 'tools/scrollbar';
@@ -29,6 +27,8 @@
 @import 'components/editor';
 @import 'components/small-menu';
 @import 'components/mobile-menu';
+@import 'components/checkbox';
+@import 'components/loader';
 
 @import 'components/inputs/auto-complete.scss';
 @import 'components/inputs/classic-input.scss';
@@ -90,7 +90,6 @@
 @import 'modules/messenger/conversation';
 @import 'modules/messenger/conversation-box';
 @import 'modules/messenger/conversations-menu';
-@import 'modules/messenger/online-users';
 @import 'modules/messenger/mobile-menu';
 @import 'modules/messenger/modals';
 
@@ -111,6 +110,7 @@
 @import 'modules/messenger/conversation-tools/conversation-tools';
 @import 'modules/messenger/conversation-tools/files';
 @import 'modules/messenger/conversation-tools/members';
+@import 'modules/messenger/conversation-tools/online-users';
 
 @import 'modules/messenger/tools/typing';
 @import 'modules/messenger/tools/search-container';

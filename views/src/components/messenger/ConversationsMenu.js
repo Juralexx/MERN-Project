@@ -16,11 +16,11 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { HiMenuAlt3, HiOutlineMenu } from 'react-icons/hi';
 import { IoClose } from 'react-icons/io5';
 
-const ConversationsMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, currentChat, setCurrentChat, changeCurrentChat, newMessage, notification, setRightbar }) => {
+const ConversationsMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, newMessage, notification, setRightbar }) => {
     const { md } = useContext(MessengerContext)
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState(false)
-    const [leftbar, setLeftbar] = useState(md ? true : false)
+    const [leftbar, setLeftbar] = useState(!md ? true : false)
     const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
 
     return (
@@ -28,7 +28,7 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
             <div className="conversation-menu-header">
                 <h2 className="bold">Conversations</h2>
                 <div className="conversation-menu-tools">
-                    <IconToggle className="toggle" icon={leftbar ? <IoClose /> : <HiOutlineMenu />} onClick={() => setLeftbar(!leftbar)} />
+                        <IconToggle className="toggle" icon={leftbar ? <IoClose /> : <HiOutlineMenu />} onClick={() => setLeftbar(!leftbar)} />
 
                     <div className="tools flex items-center">
                         <Tooltip content={<p>Rechercher</p>} placement="bottom">
@@ -47,7 +47,7 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
                 </div>
             </div>
             {search &&
-                <div className="search py-2 mb-2">
+                <div className="search py-2 px-[10px] mb-2">
                     <IconInput
                         className="full is_start_icon small"
                         icon={<BiSearchAlt />}
@@ -62,7 +62,6 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
             <NewConversationModal
                 open={open}
                 setOpen={setOpen}
-                changeCurrentChat={changeCurrentChat}
                 conversations={conversations.concat(favorites)}
                 setConversations={setConversations}
             />
@@ -80,8 +79,6 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
                                                 conversation={element}
                                                 newMessage={newMessage}
                                                 notification={notification}
-                                                onConversationClick={() => changeCurrentChat(element)}
-                                                currentChat={currentChat}
                                             />
                                         </div>
                                     )
@@ -95,9 +92,7 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
                                     <TemporaryConversation
                                         temporaryConv={temporaryConv}
                                         setTemporaryConv={setTemporaryConv}
-                                        setCurrentChat={setCurrentChat}
                                         conversations={conversations}
-                                        currentChat={currentChat}
                                     />
                                 </div>
                             }
@@ -108,8 +103,6 @@ const ConversationsMenu = ({ fetched, favorites, conversations, setConversations
                                             conversation={element}
                                             newMessage={newMessage}
                                             notification={notification}
-                                            onConversationClick={() => changeCurrentChat(element)}
-                                            currentChat={currentChat}
                                         />
                                     </div>
                                 )

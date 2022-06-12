@@ -1,6 +1,7 @@
 .message-files-container {
-    display : block;
-    width   : 100%;
+    position : relative;
+    display  : block;
+    width    : 100%;
     
     .files-block {
         position      : relative;
@@ -40,6 +41,7 @@
         top           : 7px;
         border        : 1px solid var(--light-border);
         border-radius : var(--radius);
+        box-shadow    : var(--shadow-lg);
 
         button {
             padding          : 4px;
@@ -49,11 +51,12 @@
             svg {
                 height : 18px;
                 width  : 18px;
-                color  : var(--text);
+                color  : var(--text-secondary);
             }
 
             &:hover {
-                background: var(--light);
+                background-color : var(--light) !important;
+                opacity          : 1;
             }
         }
     }

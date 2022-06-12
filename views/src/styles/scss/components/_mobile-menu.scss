@@ -6,6 +6,7 @@
     bottom           : 0;
     left             : 0;
     padding-top      : 10px;
+    padding-bottom   : 10px;
     right            : 0 !important;
     background-color : var(--content-x-light);
     z-index          : 700;
@@ -39,6 +40,7 @@
             height       : 16px;
             width        : 16px;
             margin-right : 9px;
+            color        : var(--text-secondary);
         }
 
         &:hover {
@@ -47,6 +49,13 @@
             a,
             p {
                 color : var(--text);
+            }
+        }
+
+        &.red {
+            color : var(--red);
+            svg {
+                color : var(--red);
             }
         }
     }

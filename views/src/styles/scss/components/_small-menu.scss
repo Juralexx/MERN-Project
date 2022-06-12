@@ -1,3 +1,33 @@
+.tools_box {
+    position : relative;
+
+    .tools_menu {
+        right : 30px;
+    }
+
+    &.mobile-full {
+        position : absolute;
+        display  : flex;
+        width    : 100%;
+        top      : 0;
+        bottom   : 0;
+        left     : 0;
+        right    : 0;
+
+        .tools_btn {
+            width         : 100%;
+            height        : 100%;
+            border-radius : 0;
+            svg {
+                display : none;
+            }
+            &:hover {
+                background : none;
+            }
+        }
+    }
+}
+
 .tools_btn {
     position:relative;
     display         : flex;
@@ -13,7 +43,6 @@
     svg {
         height : 18px;
         width  : 18px;
-        cursor : pointer;
     }
 
     &:hover {
@@ -29,28 +58,21 @@
     }
 }
 
-.tools_box {
-    position : relative;
-    .tools_menu {
-        right : 30px;
-    }
-}
-
 .tools_menu {
     position      : absolute;
     padding       : 8px;
     background    : var(--menu);
     box-shadow    : 0 0px 30px 10px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.07);
-    border-radius : 5px;
+    border-radius : var(--radius);
     z-index       : 700;
-    border        : 2px solid var(--light-border);
+    border        : 1px solid var(--light-border);
 
     .tools_choice {
         display       : flex;
         align-items   : center;
         min-width     : 220px;
         text-align    : left;
-        padding       : 6px 10px;
+        padding       : 6px;
         color         : var(--text);
         border-radius : var(--radius);
         cursor        : pointer;
@@ -59,12 +81,20 @@
             height       : 16px;
             width        : 16px;
             margin-right : 9px;
+            color        : var(--text-tertiary);
         }
 
         &:hover {
             background-color : var(--x-light);
             a, p {
                 color : var(--text);
+            }
+        }
+
+        &.red {
+            color : var(--red);
+            svg {
+                color : var(--red);
             }
         }
     }
@@ -80,82 +110,44 @@
             position      : absolute;
             width         : 15px;
             height        : 15px;
-            border-radius : 3px;
             background    : var(--menu);
             transform     : rotate(45deg);
         }
     }
 
     &[data-popper-placement^='top'] > .menu-arrow {
-        bottom : -9px;
+        bottom : -8px;
 
         &:before {
-            border-top   : 2px solid var(--light-border);
-            border-right : 2px solid var(--light-border);
+            border-top   : 1px solid var(--light-border);
+            border-right : 1px solid var(--light-border);
         }
     }
     
     &[data-popper-placement^='bottom'] > .menu-arrow {
-        top : -9px;
+        top : -8px;
 
         &:before {
-            border-top  : 2px solid var(--light-border);
-            border-left : 2px solid var(--light-border);
+            border-top  : 1px solid var(--light-border);
+            border-left : 1px solid var(--light-border);
         }
     }
     
     &[data-popper-placement^='left'] > .menu-arrow {
-        right : -9px;
+        right : -8px;
 
         &:before {
-            border-top   : 2px solid var(--light-border);
-            border-right : 2px solid var(--light-border);
+            border-top   : 1px solid var(--light-border);
+            border-right : 1px solid var(--light-border);
         }
     }
     
     &[data-popper-placement^='right'] > .menu-arrow {
-        left : -9px;
+        left : -8px;
         
         &:before {
-            border-top  : 2px solid var(--light-border);
-            border-left : 2px solid var(--light-border);
-        }
-    }
-}
-
-@media(max-width:576px) {
-    .tools_box {
-        &.mobile {
-            position  : fixed;
-            min-width : 100%;
-            top       : unset;
-            transform : none;
-            bottom    : 0;
-            left      : 0;
-            right     : 0 !important;
-
-            .tools_menu {
-                position         : relative;
-                min-width        : 100%;
-                top              : unset;
-                transform        : none;
-                bottom           : 0;
-                left             : 0;
-                right            : 0 !important;
-                border           : none;
-                border-radius    : 10px 10px 0 0;
-                background-color : var(--content-x-light);
-
-                .tools_choice {
-                    padding : 14px;
-                }
-            }
-        }
-    }
-
-    .tools_btn {
-        &.hidden-xs {
-            display : none;
+            border-top  : 1px solid var(--light-border);
+            border-left : 1px solid var(--light-border);
         }
     }
 }

@@ -203,9 +203,11 @@ header {
                 box-shadow : var(--shadow-left);
                 overflow   : hidden;
                 z-index    : 1000;
+                transition : .1s ease;
                 &.open {
-                    max-width : 75%;
+                    max-width  : 75%;
                     visibility : visible;
+                    transition : .3s ease;
                 }
                 .nav_ul {
                     flex-direction : column;
@@ -214,6 +216,7 @@ header {
                     .nav_li {
                         justify-content : flex-start;
                         height          : auto;
+                        margin          : 2px 0;
                         &:hover {
                             background    : var(--light);
                             border-radius : var(--radius);
@@ -222,12 +225,13 @@ header {
                             flex-direction  : row;
                             justify-content : flex-start;
                             height          : 100%;
-                            padding         : 15px 10px;
+                            padding         : 10px 10px;
 
                             &:before {
                                 content : none;
                             }
                             &.active {
+                                background : var(--light);
                                 &:before {
                                     content : none;
                                 }

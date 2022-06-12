@@ -370,15 +370,17 @@ export const returnMessageFiles = (file) => {
         //         </iframe>
         //     )
         // } else {
-            return (
-                <div className="file-doc">
-                    <IoDocumentTextOutline className="file-doc-img" />
-                    <div className="file-doc-content">
-                        <p><a href={file.url}>{file.name}</a></p>
-                        <p>{file.type}</p>
-                    </div>
+        return (
+            <div className="file-doc">
+                <IoDocumentTextOutline className="file-doc-img" />
+                <div className="file-doc-content">
+                    <p className="bold">
+                        <a href={file.url}>{file.name}</a>
+                    </p>
+                    <p>{file.type}</p>
                 </div>
-            )
+            </div>
+        )
         // }
     }
 }

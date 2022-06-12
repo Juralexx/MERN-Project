@@ -57,6 +57,10 @@
     border-right : 1px solid var(--light-border);
 }
 
+.bg-default {
+    background-color : var(--content-x-light);
+}
+
 .bg-prim-light {
     background-color: rgba(var(--primary-rgb), 0.2);
 }

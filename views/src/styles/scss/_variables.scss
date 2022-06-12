@@ -7,16 +7,16 @@
     --text            : #434343;
     --text-secondary  : #7a7a7a;
     --text-tertiary   : #aaa9a9;
-    --svg             : #abb9c9;
     --light-border    : #DCDEDD;
     --input           : #ffffff;
     --input-text      : #696969;
     --placeholder     : #9a9fa7;
-    --light           : rgba(var(--primary-rgb), 0.1);
-    --x-light         : rgba(var(--primary-rgb), 0.1);
+    --svg             : #9a9fa7;
+    --light           : #F0F2FA;
+    --x-light         : #F0F2FA;
     --xx-light        : #ffffff;
     --navbar-txt      : #232221;
-    --mini_nav-btn    : rgba(var(--primary-rgb), 0.1);
+    --mini_nav-btn    : #F0F2FA;
     --menu            : #ffffff;
     --modal-cover     : rgba(0, 0, 0, 0.5);
     --tooltip         : #222121;
@@ -33,7 +33,7 @@
     --input           : #272b31;
     --navbar          : #272b31;
     --x-light         : #272b31;
-    --xx-light        : #272b31;
+    --xx-light        : #30343a;
     --light           : #1a1d22;
     --mini_nav-btn    : #141619;
     --text            : #ffffff;
@@ -48,7 +48,7 @@
     --modal-cover     : rgba(255, 255, 255, 0.05);
     --tooltip         : #161616;
     --color-skeleton  : linear-gradient(-90deg, rgb(57, 58, 60) 0%, rgb(48, 50, 54) 50%, rgb(57, 58, 60) 100%);
-    --shadow-light    : 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);;
+    --shadow-light    : 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);
     --shadow-tiny     : rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
 }
 
@@ -96,11 +96,12 @@
     --radius          : 4px;
     --shadow-custom   : 0 8px 16px rgba(12, 65, 154, .1);
     --shadow-left     : 16px 0 16px -5px rgb(0 0 0 / 0.1);
-    --shadow-right     : -16px 0 16px -5px rgb(0 0 0 / 0.1);
+    --shadow-right    : -16px 0 16px -5px rgb(0 0 0 / 0.1);
     --shadow-top      : 0 -10px 25px -10px rgb(0 0 0 / 0.15);
     --shadow-lg       : 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl       : 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     --shadow-2xl      : 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --shadow-full     : 0 0px 40px -5px rgb(0 0 0 / 0.15);
 
     --facebook  : #1a478a;
     --instagram : #c72a9d;

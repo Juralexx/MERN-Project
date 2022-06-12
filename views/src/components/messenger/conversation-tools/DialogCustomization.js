@@ -2,42 +2,21 @@ import React, { useContext, useState } from 'react'
 import Modal from '../../tools/global/Modal'
 import { MessengerContext } from '../../AppContext'
 import { useCheckLocation } from '../functions/useCheckLocation'
-import { customizeUserPseudo, removeConversationPicture, updateConversationInfos, uploadConversationPicture } from '../../../actions/messenger.action'
+import { customizeUserPseudo } from '../../../actions/messenger.action'
 import { otherMembersIDs } from '../functions/function'
-import { ClassicInput, Textarea } from '../../tools/global/Inputs'
-import { Button } from '../../tools/global/Button'
+import { ClassicInput } from '../../tools/global/Inputs'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import { RiEdit2Fill } from 'react-icons/ri'
-import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { IoText, IoTrashBin } from 'react-icons/io5'
-import { MdCheck, MdClear, MdOutlineImage, MdOutlineImageNotSupported } from 'react-icons/md'
+import { MdCheck, MdClear } from 'react-icons/md'
 
-const Customization = ({ conversation }) => {
+const DialogCustomization = ({ conversation }) => {
     const { uid, websocket, dispatch } = useContext(MessengerContext)
-    const [file, setFile] = useState()
-    const [edit, setEdit] = useState(false)
 
     const [pseudos, setPseudos] = useState(false)
     const [editPseudo, setEditPseudo] = useState(null)
     const [pseudo, setPseudo] = useState("")
-
-    const [name, setName] = useState(conversation.name)
-    const [description, setDescription] = useState(conversation.description)
     const { isParam } = useCheckLocation()
-
-    const updateInformations = async () => {
-        await isParam(conversation._id, '/messenger/' + conversation._id)
-
-        otherMembersIDs(conversation, uid).map(memberId => {
-            return websocket.current.emit("updateConversation", {
-                receiverId: memberId,
-                name: name,
-                description: description
-            })
-        })
-        dispatch(updateConversationInfos(conversation._id, name, description))
-        setEdit(false)
-    }
 
     const updatePseudo = async (userId) => {
         await isParam(conversation._id, '/messenger/' + conversation._id)
@@ -54,56 +33,9 @@ const Customization = ({ conversation }) => {
         setEditPseudo(null)
     }
 
-    const uploadPicture = async () => {
-        await isParam(conversation._id, '/messenger/' + conversation._id)
-
-        let formData = new FormData()
-        formData.append("file", file)
-        dispatch(uploadConversationPicture(conversation._id, formData))
-        otherMembersIDs(conversation, uid).map(memberId => {
-            return websocket.current.emit("updateConversationPicture", {
-                receiverId: memberId,
-                picture: `${process.env.REACT_APP_API_URL}uploads/conversations/${conversation._id}/${conversation._id}.jpg`
-            })
-        })
-        setFile(null)
-    }
-
-    const deletePicture = async () => {
-        await isParam(conversation._id, '/messenger/' + conversation._id)
-        dispatch(removeConversationPicture(conversation._id))
-        otherMembersIDs(conversation, uid).map(memberId => {
-            return websocket.current.emit("deleteConversationPicture", {
-                receiverId: memberId
-            })
-        })
-    }
-
     return (
         <div className="tools-displayer-content">
-            <div className="tools-choice" onClick={() => setEdit(true)}><HiOutlineMenuAlt2 /> Modifier les informations</div>
-            <div className="tools-choice relative file_upload">
-                <MdOutlineImage /> Modifier la photo
-                <input type="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={uploadPicture} />
-            </div>
-            <div className="tools-choice" onClick={() => deletePicture()}><MdOutlineImageNotSupported /> Supprimer la photo</div>
             <div className="tools-choice" onClick={() => setPseudos(true)}><IoText /> Modifier les pseudos</div>
-
-            <Modal open={edit} setOpen={setEdit} className="edit-conversation-modal">
-                <h2>Modication des informations</h2>
-                <div className="w-full">
-                    <div className="bold mb-2">Nom de la conversation</div>
-                    <ClassicInput className="full" placeholder="Nom de la conversation..." defaultValue={conversation.name} onChange={(e) => setName(e.target.value)} />
-                </div>
-                <div className="w-full mt-4">
-                    <div className="bold mb-2">Description de la conversation</div>
-                    <Textarea className="w-full" placeholder="Description de la conversation..." defaultValue={conversation.description} onChange={(e) => setDescription(e.target.value)} />
-                </div>
-                <div className="btn-container">
-                    <Button text="Annuler" onClick={() => setEdit(false)} />
-                    <Button text="Enregistrer" onClick={updateInformations} />
-                </div>
-            </Modal>
 
             <Modal open={pseudos} setOpen={setPseudos} className="custom-pseudo-modal">
                 <h2>Pseudos</h2>
@@ -146,4 +78,4 @@ const Customization = ({ conversation }) => {
     )
 }
 
-export default Customization
+export default DialogCustomization

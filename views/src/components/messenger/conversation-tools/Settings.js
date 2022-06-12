@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { MessengerContext } from '../../AppContext'
+import { useCheckLocation } from '../functions/useCheckLocation'
 import Warning from '../../tools/global/Warning'
+import { deleteConv, leaveConversation } from '../functions/actions'
 import { MdNotificationsActive } from 'react-icons/md'
 import { HiLogout } from 'react-icons/hi'
 import { IoTrashBin } from 'react-icons/io5'
-import { deleteConv, leaveConversation } from '../functions/actions'
-import { useCheckLocation } from '../functions/useCheckLocation'
 
-const Settings = ({ uid, websocket, conversation, dispatch }) => {
+const Settings = ({ conversation }) => {
+    const { uid, websocket, dispatch } = useContext(MessengerContext)
     const [warning, setWarning] = useState(null)
     const { isParam } = useCheckLocation()
 

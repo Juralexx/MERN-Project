@@ -3,12 +3,14 @@
     height     : 100%;
 
     .conversation-file {
+        position        : relative;
         display         : flex;
         justify-content : space-between;
         align-items     : center;
         cursor          : pointer;
         margin          : 3px 0;
         padding         : 8px 10px;
+        border-radius   : var(--radius);
 
         &:hover, &:active {
             background-color : var(--light);
@@ -73,6 +75,37 @@
                 svg {
                     height : 18px;
                     width  : 18px;
+                }
+            }
+        }
+    }
+}
+
+.conversation-medias {
+    position              : relative;
+    display               : grid;
+    grid-template-columns : repeat(3, 1fr);
+    grid-gap              : 0.5rem;
+    width                 : 100%;
+    height                : auto;
+    padding               : 10px;
+
+    .conversation-medias-item {
+        position : relative;
+        height   : 110px;
+
+        .tools_box {
+            display : none;
+        }
+
+        &:hover {
+            .tools_box {
+                display : flex;
+
+                .tools_btn {
+                    margin-left  : auto;
+                    margin-right : 5px;
+                    margin-top   : 5px;
                 }
             }
         }
