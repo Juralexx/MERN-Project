@@ -69,7 +69,7 @@
         padding       : 12px;
         margin        : 12px 0;
         background    : var(--x-light);
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         box-shadow    : var(--shadow-tiny);
         cursor        : pointer;
 
@@ -127,7 +127,7 @@
                         padding          : 3px 8px;
                         font-size        : 12px;
                         background-color : rgba(var(--light-blue-rgb), 0.6);
-                        border-radius    : var(--radius);
+                        border-radius    : var(--rounded-sm);
                         color            : white;
                     }
                 }

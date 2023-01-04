@@ -4,7 +4,7 @@ import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import { deleteActuality } from '../../../../actions/project.action'
 import { dateParser } from '../../../Utils'
 import { convertDeltaToHTML } from '../../../tools/editor/functions'
-import { Button, EndIconButton } from '../../../tools/global/Button'
+import { Button } from '../../../tools/global/Button'
 import Warning from '../../../tools/global/Warning'
 import EditActuality from './EditActuality'
 import { MdArrowForward } from 'react-icons/md'
@@ -49,9 +49,15 @@ const Actualities = ({ project }) => {
                                                     <p dangerouslySetInnerHTML={convertDeltaToHTML(element.description)}></p>
                                                 </div>
                                                 <div className="btn_container">
-                                                    <Link to={`/project/${project.URLID}/${project.URL}/actuality/${element.urlid}/${element.url}`}><EndIconButton icon={<MdArrowForward />} text="Voir" /></Link>
-                                                    <Link to={`${element.urlid}/${element.url}/edit`} className="mx-2"><Button text="Modifier"></Button></Link>
-                                                    <Button text="Supprimer" onClick={() => setWarning(true)} />
+                                                    <Button>
+                                                        <Link to={`/project/${project.URLID}/${project.URL}/actuality/${element.urlid}/${element.url}`}>
+                                                            Voir<MdArrowForward />
+                                                        </Link>
+                                                    </Button>
+                                                    <Button>
+                                                        <Link to={`${element.urlid}/${element.url}/edit`} className="mx-2">Modifier</Link>
+                                                    </Button>
+                                                    <Button text="" onClick={() => setWarning(true)}>Supprimer</Button>
                                                 </div>
                                             </div>
                                             <Warning

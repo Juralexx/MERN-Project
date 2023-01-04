@@ -10,7 +10,7 @@
         margin        : 5px 0;
 
         iframe {
-            border-radius  : var(--radius);
+            border-radius  : var(--rounded-sm);
             pointer-events : none;
             overflow       : hidden;
             object-fit     : fill;
@@ -40,7 +40,7 @@
         right         : 7px;
         top           : 7px;
         border        : 1px solid var(--light-border);
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         box-shadow    : var(--shadow-lg);
 
         button {

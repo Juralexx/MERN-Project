@@ -1,0 +1,62 @@
+.navbar-toggle {
+    display    : none;
+    right      : 0;
+    top        : 0;
+    cursor     : pointer;
+    margin-top : 5px;
+
+    svg {
+        width  : 55px;
+        height : auto;
+
+        path {
+            stroke-width   : 30;
+            stroke-linecap : round;
+            stroke         : var(--navbar-txt);
+            fill           : none;
+            transition     : all .5s ease-in-out;
+        }
+    }
+
+    svg {
+        &.open {
+            path {
+                stroke : var(--primary);
+            }
+        }
+    }
+
+    .top-bar {
+        stroke-dasharray : 240px 910px;
+    }
+
+    .bottom-bar {
+        stroke-dasharray : 150px 910px;
+    }
+
+    .middle-bar {
+        stroke-dasharray : 240px 240px;
+    }
+
+    // CROSS FORM
+
+    .open .top-bar,
+    .open .bottom-bar {
+        stroke-dashoffset : -650px;
+        stroke-dasharray  : 240px 910px;
+    }
+
+    .open .middle-bar {
+        stroke-dasharray  : 0px 220px;
+        stroke-dashoffset : -120px;
+    }
+}
+
+@media(max-width:992px) {
+    .navbar-toggle {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        margin-bottom   : 3px;
+    }
+}

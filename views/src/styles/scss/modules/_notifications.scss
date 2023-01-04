@@ -7,7 +7,7 @@
     right         : 5px;
     background    : var(--content-light);
     box-shadow    : var(--shadow-xl);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     z-index       : 800;
     border        : 2px solid var(--x-light);
 
@@ -36,7 +36,7 @@
         .navlink {
             padding          : 3px 10px;
             background-color : var(--content-light);
-            border-radius    : var(--radius);
+            border-radius    : var(--rounded-sm);
             background       : var(--x-light);
             border           : 1px solid var(--light-border);
             cursor           : pointer;
@@ -92,7 +92,7 @@
     display         : flex;
     padding         : 5px;
     padding-right   : 20px;
-    border-radius   : var(--radius);
+    border-radius   : var(--rounded-sm);
     cursor          : pointer;
 
     &:hover {

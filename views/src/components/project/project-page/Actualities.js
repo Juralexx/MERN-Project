@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import NoContent from './NoContent'
-import { EndIconButton } from '../../tools/global/Button'
+import { Button } from '../../tools/global/Button'
 import { dateParser, reverseArray } from '../../Utils'
 import { BigAvatar } from '../../tools/global/Avatars'
 import { convertDeltaToHTML } from '../../tools/editor/functions'
@@ -33,7 +33,9 @@ const Actualities = ({ project, user }) => {
                                     <p dangerouslySetInnerHTML={convertDeltaToHTML(element.description)}></p>
                                 </div>
                                 <div className="btn_container">
-                                    <Link to={element.urlid + "/" + element.url}><EndIconButton icon={<MdArrowForward />} text="Voir" /></Link>
+                                    <Button>
+                                        <Link to={element.urlid + "/" + element.url}>Voir<MdArrowForward /></Link>
+                                    </Button>
                                 </div>
                             </div>
                         )

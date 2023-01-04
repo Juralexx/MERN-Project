@@ -619,7 +619,7 @@
 .ql-snow .ql-editor code,
 .ql-snow .ql-editor pre {
     background-color : #f0f0f0;
-    border-radius    : var(--radius);
+    border-radius    : var(--rounded-sm);
 }
 .ql-snow .ql-editor pre {
     white-space   : pre-wrap;
@@ -674,7 +674,7 @@
     cursor        : pointer;
     display       : block;
     padding       : 3px 7px 2px;
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     margin        : 4px 0;
 }
 .ql-snow .ql-picker.ql-expanded .ql-picker-label {
@@ -712,7 +712,7 @@
     width   : 24px;
     padding : 5px;
     &:hover {
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         background    : var(--content-x-light);
     }
 }
@@ -868,15 +868,15 @@
 .ql-toolbar.ql-snow .ql-picker-options {
     border        : 1px solid var(--content-light);
     box-shadow    : rgba(0,0,0,0.2) 0 2px 8px;
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
 }
 .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label {
     border-color  : var(--content-light);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
 }
 .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
     border-color  : var(--content-light);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
 }
 .ql-toolbar.ql-snow .ql-color-picker .ql-picker-item.ql-selected,
 .ql-toolbar.ql-snow .ql-color-picker .ql-picker-item:hover {
@@ -893,7 +893,7 @@
     color            : var(--text);
     padding          : 5px 12px;
     white-space      : nowrap;
-    border-radius    : var(--radius);
+    border-radius    : var(--rounded-sm);
     display          : none;
 }
 .ql-snow .ql-tooltip::before {
@@ -940,7 +940,7 @@
 .ql-snow .ql-tooltip.ql-editing a.ql-action {
     padding       : 3px 10px;
     background    : var(--primary);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     margin-left   : 10px;
 }
 .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
@@ -996,11 +996,11 @@
 .ql-toolbar.ql-snow {
     border        : 1px solid var(--light-border);
     border-bottom : none;
-    border-radius : var(--radius) var(--radius) 0 0;
+    border-radius : var(--rounded-sm) var(--rounded-sm) 0 0;
 }
 .ql-size, .ql-header, .ql-font {
     &.ql-picker {
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         border        : 2px solid var(--content-x-light);
         margin        : 0 2px;
         height        : 28px;

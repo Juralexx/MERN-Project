@@ -32,9 +32,10 @@ const Qna = ({ qna, setQna, isErr, setErr, error, setError }) => {
                     <div className="qna-form mb-4" key={key}>
                         <div className="header flex mb-5">
                             <h3 className="mr-4">Question n°{key + 1}</h3>
-                            <Button text="Supprimer" onClick={() => deleteQuestion(key)} />
+                            <Button onClick={() => deleteQuestion(key)}>Supprimer</Button>
                             {key + 1 === qna.length &&
-                                <Button text="Ajouter une nouvelle question" className="ml-2" onClick={() => setQna(e => [...e, { question: "", answer: "" }])} disabled={qna[key].question.length < 10 || qna[key].answer.length < 10} />
+                                <Button className="ml-2" onClick={() => setQna(e => [...e, { question: "", answer: "" }])} disabled={qna[key].question.length < 10 || qna[key].answer.length < 10}
+                                >Ajouter une nouvelle question</Button>
                             }
                         </div>
                         <div className="content-form">

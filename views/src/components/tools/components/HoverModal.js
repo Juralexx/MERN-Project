@@ -23,12 +23,12 @@ const HoverModal = ({ user, style, open }) => {
                     </div>
                 </div>
                 <div className="flex mt-5">
-                    <Link to={"/" + user.pseudo} className="mr-1">
-                        <Button text="Voir le profil" />
-                    </Link>
-                    <Link to={"/projects/" + user.pseudo}>
-                        <Button text="Voir les projets" />
-                    </Link>
+                    <Button>
+                        <Link to={"/" + user.pseudo} className="mr-1">Voir le profil</Link>
+                    </Button>
+                    <Button>
+                        <Link to={"/projects/" + user.pseudo}>Voir les projets</Link>
+                    </Button>
                 </div>
             </div>
         </div>

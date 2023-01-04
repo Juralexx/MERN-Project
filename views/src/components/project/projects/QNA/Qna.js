@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import { Button } from '../../../tools/global/Button'
 import EditQna from './EditQna'
 import { GrBlockQuote } from 'react-icons/gr';
@@ -14,7 +14,7 @@ const Qna = ({ project }) => {
                             <>
                                 <div className="header flex justify-between mb-5">
                                     <h2>Foire aux questions</h2>
-                                    <NavLink to="edit"><Button text="modifier" /></NavLink>
+                                    <Button><Link to="edit">Modifier</Link></Button>
                                 </div>
                                 {project.QNA.map((element, key) => {
                                     return (
@@ -40,7 +40,9 @@ const Qna = ({ project }) => {
                                     </div>
                                     <p>Vous n'avez pas encore ajouté de FAQ.</p>
                                     <span>Ajoutez une FAQ pour répondre aux questions que vos visiteur pourraient se poser !</span>
-                                    <NavLink to={`/projects/${project.URLID}/${project.URL}/add-qna`}><Button text="Ajouter une FAQ" /></NavLink>
+                                    <Button>
+                                        <NavLink to={`/projects/${project.URLID}/${project.URL}/add-qna`}>Ajouter une FAQ</NavLink>
+                                    </Button>
                                 </div>
                             </>
                         )}

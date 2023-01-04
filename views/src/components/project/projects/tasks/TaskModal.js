@@ -42,13 +42,13 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
             }
             {!addComment ? (
                 <div className="btn_container">
-                    <Button text="Commenter" className="mr-1" onClick={() => setAddComment(true)} />
-                    <Button text="Modifier" onClick={() => { setUpdateTask(true); setOpen(false) }} />
+                    <Button className="mr-1" onClick={() => setAddComment(true)}>Commenter</Button>
+                    <Button onClick={() => { setUpdateTask(true); setOpen(false) }}>Modifier</Button>
                 </div>
             ) : (
                 <div className="btn_container">
-                    <Button text="Enregistrer" className="mr-1" onClick={handleComment} />
-                    <Button text="Annuler" onClick={() => setAddComment(false)} />
+                    <Button className="mr-1" onClick={handleComment}>Enregistrer</Button>
+                    <Button onClick={() => setAddComment(false)}>Annuler</Button>
                 </div>
             )}
             <div className="comments-container">

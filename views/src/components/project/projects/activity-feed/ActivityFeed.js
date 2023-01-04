@@ -26,7 +26,7 @@ const ActivityFeed = ({ project, user, websocket }) => {
             <div className="home-activity-feed-header">
                 <h3>Fil d'activités <span>{activities.length}</span></h3>
                 <div className="flex items-center">
-                    <TextButton text="Voir tous" className="mr-2" />
+                    <TextButton className="mr-2">Voir tous</TextButton>
                     <ToolsMenu>
                         <div className="tools_choice" onClick={() => setActivities(thisDay(reversed))}>Aujourd'hui</div>
                         <div className="tools_choice" onClick={() => setActivities(lastDay(reversed))}>Hier</div>

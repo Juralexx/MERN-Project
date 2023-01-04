@@ -42,7 +42,7 @@
                 justify-content  : center;
                 padding          : 8px;
                 background-color : var(--content);
-                border-radius    : var(--radius);
+                border-radius    : var(--rounded-sm);
 
                 svg {
                     height : 20px;
@@ -61,7 +61,7 @@
                     font-size        : 15px;
                     padding          : 4px 8px 3px;
                     margin-left      : 8px;
-                    border-radius    : var(--radius);
+                    border-radius    : var(--rounded-sm);
                 }
             }
         }
@@ -94,7 +94,7 @@
                 position        : relative;
                 padding         : 10px;
                 color           : var(--text-secondary);
-                border-radius   : var(--radius);
+                border-radius   : var(--rounded-sm);
                 cursor          : pointer;
 
                 &:hover {
@@ -145,7 +145,7 @@
                     width           : 100%;
                     font-size       : 14px;
                     color           : var(--text-secondary);
-                    border-radius   : var(--radius);
+                    border-radius   : var(--rounded-sm);
                     cursor          : pointer;
 
                     &.active {
@@ -167,7 +167,7 @@
                             font-size        : 13px;
                             padding          : 1px 8px;
                             margin-left      : 8px;
-                            border-radius    : var(--radius);
+                            border-radius    : var(--rounded-sm);
                             background-color : var(--content-x-light);
                         }
                     }

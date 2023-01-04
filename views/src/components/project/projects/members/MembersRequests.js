@@ -25,7 +25,7 @@ const MembersRequests = ({ open, setOpen, project, websocket }) => {
                                         <div className="member-requests-details">le {dateParser(element.date)} par {element.requester}</div>
                                     </div>
                                 </div>
-                                <TextButton text="Annuler" onClick={() => cancelProjectMemberRequest(element, project, websocket, dispatch)} className="ml-5" />
+                                <TextButton onClick={() => cancelProjectMemberRequest(element, project, websocket, dispatch)} className="ml-5">Annuler</TextButton>
                             </div>
                         )
                     })

@@ -41,7 +41,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     <div className="home-tasks-nav-header-top">
                         <h3>Tâches <span>{tasks.length}</span></h3>
                         <div className="flex items-center">
-                            <Link to="tasks"><TextButton text="Voir tous" className="mr-2" /></Link>
+                            <TextButton className="mr-2"><Link to="tasks">Voir tous</Link></TextButton>
                             {(isAdmin || isManager) &&
                                 <ToolsMenu>
                                     <div className="tools_choice" onClick={() => setCreateTask(true)}>Créer une nouvelle tâche</div>

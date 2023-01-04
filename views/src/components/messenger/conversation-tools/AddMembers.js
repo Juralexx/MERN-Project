@@ -41,7 +41,7 @@ const AddMembers = ({ conversation, setAddMembers }) => {
                                     <MediumAvatar pic={member.picture} />
                                     <div>{member.pseudo}</div>
                                 </div>
-                                <TextButton text="Ajouter" onClick={() => addNewMember(conversation, member, user, websocket, dispatch, isParam)} />
+                                <TextButton onClick={() => addNewMember(conversation, member, user, websocket, dispatch, isParam)}>Ajouter</TextButton>
                             </div>
                         )
                     })

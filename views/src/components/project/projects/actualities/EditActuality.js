@@ -193,8 +193,10 @@ const EditActuality = ({ project }) => {
                     })}
                 </div>
                 <div className="btn_container">
-                    <Link to={`/projects/${project.URLID}/${project.URL}/actuality`}><Button text="Annuler" /></Link>
-                    <Button text="Valider" className="ml-2" onClick={handleActuality} />
+                    <Button>
+                        <Link to={`/projects/${project.URLID}/${project.URL}/actuality`}>Annuler</Link>
+                    </Button>
+                    <Button className="ml-2" onClick={handleActuality}>Valider</Button>
                 </div>
             </div>
         </div>

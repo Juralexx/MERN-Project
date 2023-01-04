@@ -2,13 +2,15 @@
     background : linear-gradient(to right, var(--content) 30%, var(--content-light) 100%);
 
     .header_container {
+        padding : 50px 0;
         h1 {
-            font-size   : 36px;
-            line-height : 40px;
+            font-size   : 58px;
+            line-height : 64px;
             font-weight : 700;
 
             span {
-                color : var(--primary);
+                color      : var(--primary);
+                font-style : italic;
             }
         }
 
@@ -28,8 +30,8 @@
     height        : 46px;
     padding       : 6px 12px 4px 50px;
     color         : var(--text);
-    background    : var(--content-x-light);
-    border-radius : var(--radius);
+    background    : var(--x-light);
+    border-radius : var(--rounded-sm);
     overflow-x    : hidden;
 
     .start_icon {
@@ -56,7 +58,8 @@
         padding       : 5px 5px 5px 15px;
         margin        : 2px;
         background    : var(--content-light);
-        border-radius : var(--radius);
+        border        : 1px solid var(--light-border);
+        border-radius : var(--rounded-sm);
         white-space   : nowrap;
 
         svg {
@@ -65,7 +68,6 @@
             margin-left   : 10px;
             padding       : 3px;
             border-radius : 50%;
-            background    : var(--content);
             cursor        : pointer;
         }
     }
@@ -74,7 +76,7 @@
         padding       : 5px 10px;
         margin        : 2px;
         background    : var(--content-light);
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
     }
 }
 
@@ -85,7 +87,7 @@
     padding       : 5px 20px;
     margin-top    : 3px;
     background    : var(--content-x-light);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     box-shadow    : var(--shadow-xl);
     z-index       : 900;
 
@@ -152,11 +154,11 @@
 
             .locations_selected_item {
                 display       : inline-flex;
-                border-radius : var(--radius);
+                border-radius : var(--rounded-sm);
                 max-width     : 100%;
                 padding       : 5px 5px 5px 15px;
                 margin        : 2px;
-                background    : var(--content-light);
+                background    : var(--x-light);
                 white-space   : nowrap;
 
                 svg {
@@ -165,7 +167,6 @@
                     margin-left   : 10px;
                     padding       : 3px;
                     border-radius : 50%;
-                    background    : var(--content);
                     cursor        : pointer;
                 }
             }

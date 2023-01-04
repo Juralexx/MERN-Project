@@ -232,7 +232,7 @@ const Edit = ({ user }) => {
                                         <p className="txt-ter mb-1">Email</p>
                                         <div className="secured-email">
                                             <div className="flex items-center"><MdLockOutline />{user.email}</div>
-                                            <TextButton text="Modifier" />
+                                            <TextButton>Modifier</TextButton>
                                         </div>
                                     </div>
                                     <div className="col-12 col-sm-6 mb-5 lg:px-2">
@@ -254,7 +254,7 @@ const Edit = ({ user }) => {
                                         <p className="txt-ter mb-1">Réseaux sociaux et sites internet</p>
                                         <div className="flex">
                                             <ClassicInput className={`w-full !max-w-full mb-4 ${checkErr("networks")}`} inputClassName="w-full" type="text" placeholder="https://" value={network} onChange={e => setNetwork(e.target.value)} />
-                                            <Button className="!h-[46px] ml-2" text="Ajouter" onClick={handleNetwork} />
+                                            <Button className="!h-[46px] ml-2" onClick={handleNetwork}>Ajouter</Button>
                                         </div>
                                         {isErr === "networks" && <ErrorCard display={isErr === "networks"} text={error} clean={() => setErr("")} />}
                                         {networks && networks.length > 0 &&
@@ -295,7 +295,7 @@ const Edit = ({ user }) => {
             </Routes>
             <div id="back-actions">
                 <Link className="no-decoration" to="/profil/about"><TextButton text="Annuler" /></Link>
-                <Button text="Enregistrer" onClick={handleUpdate} />
+                <Button onClick={handleUpdate}>Enregistrer</Button>
             </div>
         </>
     )

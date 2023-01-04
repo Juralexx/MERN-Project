@@ -100,7 +100,7 @@
             width         : unset;
             padding       : 3px;
             margin        : 0 2px;
-            border-radius : var(--radius);
+            border-radius : var(--rounded-sm);
 
             &:hover {
                 background : var(--x-light);
@@ -181,7 +181,7 @@
                         width         : unset;
                         padding       : 5px 4px;
                         margin        : 0 2px;
-                        border-radius : var(--radius);
+                        border-radius : var(--rounded-sm);
             
                         &:hover {
                             background : var(--x-light);

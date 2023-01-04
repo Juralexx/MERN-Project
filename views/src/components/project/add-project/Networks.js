@@ -57,7 +57,7 @@ const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => 
                     <div className="content-form">
                         <div className="flex">
                             <ClassicInput className={`w-full !max-w-full ${checkErr("networks")}`} inputClassName="w-full" type="text" placeholder="https://" value={network} onChange={e => setNetwork(e.target.value)} />
-                            <Button className="!h-[46px] ml-2" text="Ajouter" onClick={handleNetwork} />
+                            <Button className="!h-[46px] ml-2" onClick={handleNetwork}>Ajouter</Button>
                         </div>
                         {isErr === "networks" && <ErrorCard display={isErr === "networks"} text={error} clean={() => setErr("")} />}
                     </div>

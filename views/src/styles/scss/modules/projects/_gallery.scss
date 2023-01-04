@@ -19,7 +19,7 @@
             height        : 100%;
             width         : 100%;
             object-fit    : cover;
-            border-radius : var(--radius);
+            border-radius : var(--rounded-sm);
             cursor        : pointer;
         }
 
@@ -58,7 +58,7 @@
         padding-bottom : 100%;
         background     : var(--light);
         border         : 2px solid var(--light-border);
-        border-radius  : var(--radius);
+        border-radius  : var(--rounded-sm);
 
         svg {
             position      : absolute;
@@ -68,7 +68,7 @@
             height        : 40%;
             width         : 40%;
             object-fit    : cover;
-            border-radius : var(--radius);
+            border-radius : var(--rounded-sm);
             cursor        : pointer;
             color         : var(--text);
         }
@@ -85,7 +85,7 @@
     padding         : 15px 0;
     margin          : 0 auto 25px;
     border          : 2px dashed var(--text-secondary);
-    border-radius   : var(--radius);
+    border-radius   : var(--rounded-sm);
 
     svg {
         width  : 50px;

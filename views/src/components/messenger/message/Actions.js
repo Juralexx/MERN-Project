@@ -47,19 +47,17 @@ const Actions = ({ message, opened, setOpened, modify, setModify, setShare, hand
             </div>
         ) : (
             <>
-                {opened &&
-                    <div className="mobile-menu" onClick={() => setOpened(!opened)}>
-                        <div className="tools_choice" onClick={() => setOpenMobPicker(true)}><MdAddReaction /> Ajouter une réaction</div>
-                        <div className="tools_choice" onClick={() => setShare(true)}><IoArrowUndo /> Répondre</div>
-                        <div className="tools_choice" onClick={() => copy(convertDeltaToStringNoHTML(message))}><RiFileCopyFill /> Copier le message</div>
-                        {message.sender === uid &&
-                            <>
-                                <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
-                                <div className="tools_choice red" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
-                            </>
-                        }
-                    </div>
-                }
+                <div className={`mobile-menu ${addClass(opened, 'active')}`} onClick={() => setOpened(!opened)}>
+                    <div className="tools_choice" onClick={() => setOpenMobPicker(true)}><MdAddReaction /> Ajouter une réaction</div>
+                    <div className="tools_choice" onClick={() => setShare(true)}><IoArrowUndo /> Répondre</div>
+                    <div className="tools_choice" onClick={() => copy(convertDeltaToStringNoHTML(message))}><RiFileCopyFill /> Copier le message</div>
+                    {message.sender === uid &&
+                        <>
+                            <div className="tools_choice" onClick={() => setModify(uniqueKey)}><RiEdit2Fill /> Modifier le message</div>
+                            <div className="tools_choice red" onClick={() => { setWarning(true); setOpened(true) }}><IoTrashBin />Supprimer le message</div>
+                        </>
+                    }
+                </div>
                 <MobileEmojiPicker
                     open={openMobPicker}
                     setOpen={setOpenMobPicker}

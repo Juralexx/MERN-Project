@@ -24,7 +24,7 @@
                 align-items   : center;
                 cursor        : pointer;
                 padding       : 2px 4px;
-                border-radius : var(--radius);
+                border-radius : var(--rounded-sm);
 
                 &:hover {
                     background-color : rgba(var(--primary-rgb), 0.1);

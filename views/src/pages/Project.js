@@ -62,7 +62,7 @@ const ProjectPage = ({ user, projects }) => {
                         <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isActive}>Galerie <span>{project.pictures.length}</span></NavLink>
                         <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isActive}>Actualités <span>{project.actualities.length}</span></NavLink>
                         <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isActive}>FAQ <span>{project.QNA.length}</span></NavLink>
-                        <Button text="Rejoindre le projet" className="ml-auto" style={{ display: displayBtn }} />
+                        <Button className="ml-auto" style={{ display: displayBtn }}>Rejoindre le projet</Button>
                     </div>
                 </div>
                 <div className="container-lg">

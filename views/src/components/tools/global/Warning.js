@@ -20,8 +20,8 @@ const Warning = (props) => {
                     <div className="warning_text">{text}</div>
                     {props.children}
                     <div className="btn_container">
-                        <TextButton text={cancelBtn || "Annuler"} className="mr-2" onClick={close} />
-                        <Button text={validateBtn || "Valider"} className={className ? className : ""} onClick={validate} />
+                        <TextButton className="mr-2" onClick={close}>{cancelBtn || "Annuler"}</TextButton>
+                        <Button className={className ? className : ""} onClick={validate}>{validateBtn || "Valider"}</Button>
                     </div>
                 </div>
             </div>

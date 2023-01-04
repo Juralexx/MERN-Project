@@ -12,7 +12,7 @@ import Pictures from "../components/project/add-project/Pictures";
 import Description from "../components/project/add-project/Description";
 import Qna from "../components/project/add-project/Qna";
 import FooterLight from "../components/FooterLight";
-import { Button, EndIconButton, StartIconButton, StartIconOutlinedButton } from "../components/tools/global/Button";
+import { Button, OutlinedButton } from "../components/tools/global/Button";
 import { BsFillEyeFill, BsChatLeftQuote } from "react-icons/bs";
 import { MdOutlineDescription, MdOutlinePhotoLibrary } from 'react-icons/md'
 import { RiBook3Line, RiTeamLine } from 'react-icons/ri'
@@ -206,8 +206,8 @@ const AddProject = ({ user }) => {
                             </Link>
                         </div>
                         <div className="header-top-right">
-                            <StartIconOutlinedButton text="Aperçu" icon={<BsFillEyeFill />} />
-                            <Button text="Enregistrer et publier" onClick={handleAddProject} />
+                            <OutlinedButton className="btn_icon_start"><BsFillEyeFill />Aperçu</OutlinedButton>
+                            <Button onClick={handleAddProject}>Enregistrer et publier</Button>
                         </div>
                     </div>
                     <div className="add-project-header-bottom">
@@ -295,7 +295,7 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <EndIconButton text="Suivant : Description" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(1)} />
+                                <Button onClick={() => setNav(1)}>Suivant : Description<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -310,8 +310,8 @@ const AddProject = ({ user }) => {
                                 setContent={setContent}
                             />
                             <div className="btn_container">
-                                <StartIconButton text="Retour : Les bases" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(0)} />
-                                <EndIconButton text="Suivant : Galerie" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(2)} />
+                                <Button className="mr-2" onClick={() => setNav(0)}><HiOutlineArrowNarrowLeft />Retour : Les bases</Button>
+                                <Button onClick={() => setNav(2)}>Suivant : Galerie<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -328,8 +328,8 @@ const AddProject = ({ user }) => {
                                 setFiles={setFiles}
                             />
                             <div className="btn_container">
-                                <StartIconButton text="Retour : Description" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(1)} />
-                                <EndIconButton text="Suivant : Équipe" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(3)} />
+                                <Button className="mr-2" onClick={() => setNav(1)}><HiOutlineArrowNarrowLeft />Retour : Description</Button>
+                                <Button onClick={() => setNav(3)}>Suivant : Équipe<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -339,7 +339,8 @@ const AddProject = ({ user }) => {
                                 <h1>Compétences recherchées</h1>
                                 <h2>Séléctionnez les compétences que vous recherchez et décrivez pourquoi.</h2>
                                 {workArray.length === 0 &&
-                                    <Button text="Rechercher des compétences" className="mx-auto mt-8" onClick={() => setWorkArray([{ name: "", number: "", numberFound: "", description: "" }])} />
+                                    <Button className="mx-auto mt-8" onClick={() => setWorkArray([{ name: "", number: "", numberFound: "", description: "" }])}
+                                    >Rechercher des compétences</Button>
                                 }
                             </div>
                             <Contributors
@@ -351,8 +352,8 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <StartIconButton text="Retour : Galerie" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(2)} />
-                                <EndIconButton text="Suivant : FAQ" icon={<HiOutlineArrowNarrowRight />} onClick={() => setNav(4)} />
+                                <Button className="mr-2" onClick={() => setNav(2)}><HiOutlineArrowNarrowLeft />Retour : Galerie</Button>
+                                <Button onClick={() => setNav(4)}>Suivant : FAQ<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -362,7 +363,8 @@ const AddProject = ({ user }) => {
                                 <h1>Foire aux questions</h1>
                                 <h2>Répondez aux questions que votre public pourrait se poser.</h2>
                                 {qna.length === 0 &&
-                                    <Button text="Démarrer une foire aux questions" className="mx-auto mt-8" onClick={() => setQna([{ question: "", answer: "" }])} />
+                                    <Button className="mx-auto mt-8" onClick={() => setQna([{ question: "", answer: "" }])}
+                                    >Démarrer une foire aux questions</Button>
                                 }
                             </div>
                             <Qna
@@ -374,8 +376,8 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <StartIconButton text="Retour : Équipe" icon={<HiOutlineArrowNarrowLeft />} className="mr-2" onClick={() => setNav(3)} />
-                                <Button text="Enregistrer et publier" onClick={handleAddProject} />
+                                <Button className="mr-2" onClick={() => setNav(3)}><HiOutlineArrowNarrowLeft />Retour : Équipe</Button>
+                                <Button onClick={handleAddProject}>Enregistrer et publier</Button>
                             </div>
                         </>
                     }

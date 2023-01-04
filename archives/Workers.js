@@ -131,9 +131,9 @@ const Workers = ({ workArray, setWorkArray, onNext, onBack }) => {
                     value={workNumber}
                 />
                 {(choice !== "" && workNumber !== "" && workNumber !== "0") ? (
-                    <Button text="Valider" onClick={checkIfOk} style={{ maxHeight: 46 }} />
+                    <Button onClick={checkIfOk} style={{ maxHeight: 46 }}>Valider</Button>
                 ) : (
-                    <Button text="Valider" disabled style={{ maxHeight: 46 }} />
+                    <Button disabled style={{ maxHeight: 46 }}>Valider</Button>
                 )}
             </div>
             <p className="submit error"></p>

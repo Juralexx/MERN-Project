@@ -3,7 +3,7 @@
     cursor        : pointer;
     width         : 240px;
     background    : var(--content-x-light);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     
     input {
         display       : block;
@@ -12,7 +12,7 @@
         padding       : 8px;
         color         : var(--input-text);
         background    : var(--input);
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         border        : 2px solid transparent;
         outline       : none;
         cursor        : pointer;
@@ -43,7 +43,7 @@
         left          : 50%;
         transform     : translateX(-50%);
         background    : var(--input);
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         z-index       : 700;
         box-shadow : var(--shadow-lg);
 

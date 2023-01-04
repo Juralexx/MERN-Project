@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
 import ReactQuill from 'react-quill'
-import { Button, StartIconButton } from '../../../tools/global/Button'
+import { Button } from '../../../tools/global/Button'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
 import EditorToolbar, { formats, modules } from '../../../tools/editor/EditorToolbar'
@@ -10,7 +10,7 @@ import { FaCheck } from 'react-icons/fa'
 import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
 import { randomNbLtID, removeAccents } from '../../../Utils'
 import { useDispatch } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { createActuality } from '../../../../actions/project.action'
 
 const AddActuality = ({ project, user }) => {
@@ -163,8 +163,8 @@ const AddActuality = ({ project, user }) => {
                     })}
                 </div>
                 <div className="btn_container">
-                    <NavLink to={`/projects/${project.URLID}/${project.URL}/actuality`}><Button text="Annuler" /></NavLink>
-                    <StartIconButton text="Valider et publier" className="next-btn ml-2" icon={<FaCheck />} onClick={handleActuality} />
+                    <Button><Link to={`/projects/${project.URLID}/${project.URL}/actuality`}>Annuler</Link></Button>
+                    <Button className="next-btn ml-2" onClick={handleActuality}><FaCheck />Valider et publier</Button>
                 </div>
             </div>
         </div>

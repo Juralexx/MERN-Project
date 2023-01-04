@@ -101,9 +101,9 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations }
                                                 </div>
                                             </div>
                                             {members.some(member => member._id === element._id) ? (
-                                                <TextButton text="Retirer" className="light_delete" />
+                                                <TextButton className="light_delete">Retirer</TextButton>
                                             ) : (
-                                                <TextButton text="Ajouter" />
+                                                <TextButton>Ajouter</TextButton>
                                             )}
                                         </div>
                                     )
@@ -135,7 +135,7 @@ const NewConversationModal = ({ open, setOpen, conversations, setConversations }
                 </>
             )}
             <div className='conversation-btn_container'>
-                <Button text="Créer la conversation" disabled={members.length < 1} onClick={createNewConversation} />
+                <Button disabled={members.length < 1} onClick={createNewConversation}>Créer la conversation</Button>
             </div>
         </Modal>
     )

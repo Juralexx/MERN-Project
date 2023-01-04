@@ -5,20 +5,20 @@ import FooterLight from '../components/FooterLight';
 import { TextButton } from '../components/tools/global/Button';
 
 const Register = ({ uid }) => {
-    
+
     if (uid) window.location = '/'
     else return (
         <div className="sign-container">
             <div className="sign-container-inner">
-                <Link to="/">
-                    <img src="/img/logo.png" alt="" className="header-logo" />
-                </Link>
                 <div className="sign-card">
-                    <div className="title"><h1>Inscription</h1></div>
+                    <Link to="/">
+                        <img src="/img/logo.png" alt="" className="header-logo" />
+                    </Link>
+                    <h1>Inscription</h1>
                     <SignUpForm />
                     <div className="sign-card-bottom">
                         Déjà un compte ?
-                        <Link to="/login"><TextButton text="Connexion" className="ml-2" /></Link>
+                        <TextButton className="ml-2"><Link to="/login">Connexion</Link></TextButton>
                     </div>
                 </div>
             </div>

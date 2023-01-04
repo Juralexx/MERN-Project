@@ -87,7 +87,7 @@
 
         &:hover + label span {
             border-color  : rgba(var(--green-rgb), 0.5);
-            border-radius : var(--radius);
+            border-radius : var(--rounded-sm);
         }
     }
     

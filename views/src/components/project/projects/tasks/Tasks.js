@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { addClass, reverseArray } from '../../../Utils'
-import { StartIconOutlinedButton } from '../../../tools/global/Button'
+import { OutlinedButton } from '../../../tools/global/Button'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import Kanban from './Kanban'
@@ -69,7 +69,7 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             </div>
                         </div>
                         {(isAdmin || isManager) &&
-                            <StartIconOutlinedButton text="Ajouter une tâche" icon={<AiOutlinePlusCircle />} onClick={() => setCreateTask(true)} />
+                            <OutlinedButton className="btn_icon_start" onClick={() => setCreateTask(true)}><AiOutlinePlusCircle />Ajouter une tâche</OutlinedButton>
                         }
                     </div>
                     {layout === "list" ? (

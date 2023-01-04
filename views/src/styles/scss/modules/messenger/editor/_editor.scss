@@ -23,7 +23,7 @@
     border          : 2px solid var(--light-border);
     background      : var(--content-x-light);
     box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
-    border-radius   : var(--radius);
+    border-radius   : var(--rounded-sm);
 
     &:focus-within,
     &.active {
@@ -70,7 +70,7 @@
                 height          : unset;
                 padding         : 3px;
                 margin          : 0 2px;
-                border-radius   : var(--radius);
+                border-radius   : var(--rounded-sm);
     
                 &:hover {
                     background : var(--x-light);
@@ -127,7 +127,7 @@
             padding       : 10px;
             background    : var(--xx-light);
             border        : 2px solid var(--light-border);
-            border-radius : var(--radius);
+            border-radius : var(--rounded-sm);
             box-shadow    : rgb(35 34 33 / 17%) 0px 0 2px 0px;
         }
         

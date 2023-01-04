@@ -3,7 +3,7 @@ html {
     margin          : 0;
     padding         : 0;
     position        : relative;
-    font-family     : Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+    font-family     : var(--font-fam-list);
     scroll-behavior : smooth;
 }
 
@@ -12,7 +12,7 @@ body {
     min-height       : 100%;
     margin           : 0;
     padding          : 0;
-    font-family      : Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif;
+    font-family      : var(--font-fam-list);
     scroll-behavior  : smooth;
     background-color : var(--body);
     color            : var(--text);
@@ -31,6 +31,38 @@ body {
 
     ul, li {
         list-style-type: none;
+    }
+
+    ::selection {
+        background-color : rgba(var(--primary-rgb), 0.2);
+        color            : var(--primary);
+    }
+
+    :focus {
+        outline        : 2px dashed var(--primary);
+        outline-offset : 3px;
+    }
+
+    :focus-visible {
+        outline        : 2px dashed var(--primary);
+        outline-offset : 3px;
+    }
+
+    :focus:not(:focus-visible) {
+        outline        : none;
+        outline-offset : 0px;
+    }
+
+    &::-webkit-scrollbar {
+        width : 12px;
+    }
+    &::-webkit-scrollbar-track {
+        background : var(--content-light);
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color : var(--light-border);
+        border           : 3px solid var(--content-light);
+        border-radius    : 10px;
     }
 }
 
@@ -58,4 +90,19 @@ h5 {
 
 h1, h2, h3, h4, h5 {
     font-weight : 500;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border                  : 1px solid green;
+  -webkit-text-fill-color : green;
+  -webkit-box-shadow      : 0 0 0px 1000px #000 inset;
+  transition              : background-color 5000s ease-in-out 0s;
 }

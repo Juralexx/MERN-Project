@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useClickOutside } from '../components/tools/hooks/useClickOutside'
 import CategoriesPicker from '../components/home/CategoriesPicker'
 import LocationsAutocomplete from '../components/home/LocationsAutocomplete'
-import { EndIconButton, StartIconTextButton } from '../components/tools/global/Button'
+import { Button, TextButton } from '../components/tools/global/Button'
 import Card from '../components/tools/components/Card'
 import FollowersModal from '../components/tools/components/FollowersModal'
 import { DropdownInput, IconInput } from '../components/tools/global/Inputs'
@@ -103,10 +103,12 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                             }
                             <div className="btn_container">
                                 <div className="flex">
-                                    <StartIconTextButton text="Voir la carte" className="mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
-                                    <StartIconTextButton text={!moreFilters ? "Plus de filtres" : "Moins de filtres"} icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
+                                    <TextButton className="btn_icon_start mr-2" onClick={() => setOpenMapModal(true)}><GiFrance />Voir la carte</TextButton>
+                                    <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}>
+                                        {!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
+                                    </TextButton>
                                 </div>
-                                <EndIconButton className="px-7" text="Rechercher" icon={<IoSend />} onClick={search} />
+                                <Button className="px-7" onClick={search}>Rechercher<IoSend /></Button>
                             </div>
                         </div>
                     </div>

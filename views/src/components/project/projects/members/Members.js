@@ -5,7 +5,7 @@ import { checkDateSort, getRole, sortByAlpha, sortByOld, sortByRecent, sortByRol
 import AddMember from './AddMember'
 import MemberMenu from './MemberMenu'
 import MembersRequests from './MembersRequests'
-import { StartIconOutlinedButton, ToolsBtn } from '../../../tools/global/Button'
+import { OutlinedButton, ToolsBtn } from '../../../tools/global/Button'
 import { ClassicInput, DropdownInput } from '../../../tools/global/Inputs'
 import { BigAvatar } from '../../../tools/global/Avatars'
 import { MdOutlineMessage } from 'react-icons/md'
@@ -45,8 +45,8 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                         <h2>Membres <span>{project.members.length}</span></h2>
                         {(isAdmin || isManager) &&
                             <div className="flex">
-                                {project.member_requests.length > 0 && <StartIconOutlinedButton text="Demandes en cours" icon={<FaTasks />} onClick={() => setOpenRequests(true)} />}
-                                <StartIconOutlinedButton text="Ajouter un membre" icon={<AiOutlinePlusCircle />} onClick={() => setAddMembers(true)} />
+                                {project.member_requests.length > 0 && <OutlinedButton className="btn_icon_start" onClick={() => setOpenRequests(true)}><FaTasks />Demandes en cours</OutlinedButton>}
+                                <OutlinedButton className="btn_icon_start" onClick={() => setAddMembers(true)}><AiOutlinePlusCircle />Ajouter un membre</OutlinedButton>
                             </div>
                         }
                     </div>

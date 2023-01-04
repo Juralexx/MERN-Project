@@ -10,17 +10,15 @@ const Login = ({ uid }) => {
     else return (
         <div className="sign-container">
             <div className="sign-container-inner">
-                <Link to="/">
-                    <img src="/img/logo.png" alt="" className="header-logo" />
-                </Link>
                 <div className="sign-card">
-                    <div className="title">
-                        <h1>Connexion</h1>
-                    </div>
+                    <Link to="/">
+                        <img src="/img/logo.png" alt="" className="header-logo" />
+                    </Link>
+                    <h1>Connexion</h1>
                     <SignInForm />
                     <div className="sign-card-bottom">
                         Par encore de compte ?
-                        <Link to="/register"><TextButton text="Inscription" className="ml-2" /></Link>
+                        <TextButton className="ml-2"><Link to="/register">Inscription</Link></TextButton>
                     </div>
                 </div>
             </div>

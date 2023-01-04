@@ -20,7 +20,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                 <div className="home-members-header">
                     <h3>Membres <span>{project.members.length}</span></h3>
                     <div className="flex">
-                        <Link to="members"><TextButton text="Voir tous" className="mr-2" /></Link>
+                        <TextButton className="mr-2"><Link to="members">Voir tous</Link></TextButton>
                         {(isAdmin || isManager) &&
                             <ToolsMenu>
                                 <div className="tools_choice" onClick={() => setAddMembers(true)}>Ajouter des membres</div>

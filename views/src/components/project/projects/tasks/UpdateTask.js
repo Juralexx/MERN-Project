@@ -138,7 +138,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                     </div>
                 </>
             )}
-            <Button text="Enregistrer" className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={updateTask} />
+            <Button className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={updateTask}>Enregistrer</Button>
         </Modal>
     )
 }

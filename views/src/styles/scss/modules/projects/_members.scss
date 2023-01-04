@@ -23,7 +23,7 @@
     justify-content : space-between;
     align-items     : center;
     margin          : 12px 0 8px;
-    border-radius   : var(--radius);
+    border-radius   : var(--rounded-sm);
     background      : var(--xx-light);
     box-shadow      : var(--shadow-tiny);
 
@@ -33,7 +33,7 @@
         padding       : 10px 20px;
         width         : 25%;
         cursor        : pointer;
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
 
         &:hover {
             background : var(--content-x-light);
@@ -108,7 +108,7 @@
     max-height    : 470px;
     background    : var(--content-light);
     color         : var(--text);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     box-shadow    : var(--shadow-tiny);
 
     .home-members-header {

@@ -359,7 +359,8 @@ const Edit = ({ project }) => {
             </div>
             <div id="back-actions">
                 <Link to={`/projects/${project.URLID}/${project.URL}/about`}><OutlinedButton text="Annuler" className="mx-2" /></Link>
-                <Button text="Enregistrer" onClick={handleUpdate} disabled={title === project.title && subtitle === project.subtitle && category === project.category && description === project.description && state === project.state && location === project.location && end === ISOtoNavFormat(project.end) && JSON.stringify(workArray) === JSON.stringify(project.works) && !contentChanged} />
+                <Button onClick={handleUpdate} disabled={title === project.title && subtitle === project.subtitle && category === project.category && description === project.description && state === project.state && location === project.location && end === ISOtoNavFormat(project.end) && JSON.stringify(workArray) === JSON.stringify(project.works) && !contentChanged}
+                >Enregistrer</Button>
             </div>
         </div>
     )

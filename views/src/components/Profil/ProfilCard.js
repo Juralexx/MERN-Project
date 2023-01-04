@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { replaceHTTP, returnNetworkSVG } from '../tools/functions/networks';
 import { dateParser } from '../Utils';
-import { StartIconButton } from '../tools/global/Button';
+import { Button } from '../tools/global/Button';
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { MdOutlineCalendarToday, MdOutlineEditNote } from 'react-icons/md'
 import { FaUserShield } from "react-icons/fa";
@@ -13,7 +13,7 @@ const ProfilCard = ({ user }) => {
             <div className="pb-5 border-b">
                 <div className="f-24 bold txt-prim mb-2">{user?.pseudo}</div>
                 <Link to="/profil/edit" className="mb-2">
-                    <StartIconButton icon={<MdOutlineEditNote />} text="Modifier mon profil" className="mb-4" />
+                    <Button className="mb-4"><MdOutlineEditNote />Modifier mon profil</Button>
                 </Link>
                 <p className="flex items-center mb-1"><MdOutlineCalendarToday className="mr-2 primary" />inscrit le {dateParser(user.createdAt)}</p>
                 {user.location &&

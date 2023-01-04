@@ -20,7 +20,7 @@
         padding          : 15px;
         color            : var(--text);
         background-color : var(--content-light);
-        border-radius    : var(--radius);
+        border-radius    : var(--rounded-sm);
         box-shadow       : var(--shadow-xl);
         z-index          : 100000000000;
     
@@ -76,7 +76,7 @@
                 padding       : 4px 20px;
                 margin-right  : 7px;
                 cursor        : pointer;
-                border-radius : var(--radius);
+                border-radius : var(--rounded-sm);
     
                 &:hover {
                     background-color : var(--x-light);
@@ -240,7 +240,7 @@
         padding          : 16px;
         box-shadow       : var(--shadow-xl);
         width            : auto;
-        border-radius    : var(--radius);
+        border-radius    : var(--rounded-sm);
         border           : 2px solid var(--content-x-light);
 
         .hovered-modal_head {

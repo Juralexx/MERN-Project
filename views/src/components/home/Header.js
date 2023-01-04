@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 import MapModal from '../tools/map/MapModal';
 import LocationsAutocomplete from './LocationsAutocomplete';
 import CategoriesPicker from './CategoriesPicker';
-import { EndIconButton, IconToggle, StartIconTextButton } from '../tools/global/Button';
+import { IconToggle, Button, TextButton } from '../tools/global/Button';
 import { DropdownInput, IconInput } from '../tools/global/Inputs';
-import { IoSend, IoAlbums } from 'react-icons/io5'
+import { MdOutlineDoubleArrow } from 'react-icons/md'
+import { IoAlbums } from 'react-icons/io5'
 import { BiSearchAlt } from 'react-icons/bi'
 import { BsCaretDownFill } from 'react-icons/bs'
 import { FaUserShield } from 'react-icons/fa'
@@ -37,10 +39,15 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
     return (
         <div id="header">
             <div className="container pt-8">
-                <div className="header_container row py-7">
+                <div className="header_container row">
                     <div className="col-12 col-lg-6 lg:pr-5">
-                        <h1>Where <span>all projects</span> become <span>reality</span></h1>
-                        <p> Circa hos dies Lollianus primae lanuginis adulesce, lampadi filius ex praefecto, exploratius causam Maximino spectante, convictus codicem noxiarum artium nondum per aetatem</p>
+                        <h1><span>Donner vie</span><br />aux bonne idées</h1>
+                        <p>Circa hos dies Lollianus primae lanuginis adulesce, lampadi filius ex praefecto, exploratius causam Maximino spectante.</p>
+                        <Button className="btn_icon_start mt-5">
+                            <Link to="/add-project">
+                                <AiOutlinePlus />Déposer un projet
+                            </Link>
+                        </Button>
                     </div>
                     <div className="col-12 col-lg-6 pt-5 lg:pt-0 lg:pl-5 relative">
                         <IconInput
@@ -103,14 +110,15 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                         }
                         <div className="btn-container flex justify-between items-center py-3">
                             <div className="hidden sm:flex">
-                                <StartIconTextButton text="Voir la carte" className="primary mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
-                                <StartIconTextButton text={!moreFilters ? "Plus de filtres" : "Moins de filtres"} icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
+                                <TextButton className="btn_icon_start primary mr-2" onClick={() => setOpenMapModal(true)}><GiFrance />Voir la carte</TextButton>
+                                <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}
+                                >{!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}</TextButton>
                             </div>
                             <div className="flex sm:hidden">
                                 <IconToggle className="primary mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
                                 <IconToggle className="primary" icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
                             </div>
-                            <EndIconButton text="Rechercher" icon={<IoSend />} onClick={search} />
+                            <Button className="btn_icon_end" onClick={search}>Rechercher<MdOutlineDoubleArrow /></Button>
                         </div>
                     </div>
                 </div>

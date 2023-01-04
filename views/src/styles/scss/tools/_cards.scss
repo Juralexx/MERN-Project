@@ -4,14 +4,14 @@
     max-width        : 317px;
     color            : var(--text);
     background-color : var(--content-light);
-    border-radius    : var(--radius);
+    border-radius    : var(--rounded-sm);
     border           : 1px solid var(--light-border);
     cursor           : pointer;
 
     .card-img {
         height        : 160px;
         width         : 100%;
-        border-radius : var(--radius) var(--radius) 0 0;
+        border-radius : var(--rounded-sm) var(--rounded-sm) 0 0;
     }
 
     .state {
@@ -19,7 +19,7 @@
         top           : 10px;
         left          : 10px;
         padding       : 2px 12px;
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         font-size     : 14px;
         color         : white;
 

@@ -100,8 +100,8 @@ const Customization = ({ conversation }) => {
                     <Textarea className="w-full" placeholder="Description de la conversation..." defaultValue={conversation.description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
                 <div className="btn-container">
-                    <Button text="Annuler" onClick={() => setEdit(false)} />
-                    <Button text="Enregistrer" onClick={updateInformations} />
+                    <Button onClick={() => setEdit(false)}>Annuler</Button>
+                    <Button onClick={updateInformations}>Enregistrer</Button>
                 </div>
             </Modal>
 

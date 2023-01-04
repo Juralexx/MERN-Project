@@ -91,8 +91,8 @@ const Link = ({ quill, isLink, setLink, position }) => {
                     <IconInput className="full is_start_icon" icon={<MdLink />} placeholder="Saisissez le lien" defaultValue='' useRef={linkRef} />
                 </div>
                 <div className="btn_container mt-2">
-                    <TextButton text="Annuler" onClick={() => setLink(false)} />
-                    <Button text="Valider" onClick={onLink} className="ml-2" />
+                    <TextButton onClick={() => setLink(false)}>Annuler</TextButton>
+                    <Button onClick={onLink} className="ml-2">Valider</Button>
                 </div>
             </div>
         )

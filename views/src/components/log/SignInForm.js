@@ -66,7 +66,7 @@ const SignInForm = () => {
                 <div className="forgot-password"><Link to="/">Mot de passe oublié</Link></div>
                 {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" clean={() => setErr("")} />}
             </div>
-            <Button text="Connexion" className="mt-6 w-full" onClick={handleLogin} />
+            <Button className="mt-6 w-full" onClick={handleLogin}>Connexion</Button>
         </>
     );
 }

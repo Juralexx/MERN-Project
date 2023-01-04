@@ -2,8 +2,7 @@
     position      : relative;
     display       : flex;
     align-items   : center;
-    background    : var(--input);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
 
      input {
         display       : block;
@@ -13,8 +12,7 @@
         outline       : none;
         background    : transparent;
         z-index       : 1;
-        border-bottom : 2px solid transparent;
-        box-shadow    : var(--shadow-tiny);
+        border-bottom : 1px solid var(--placeholder);
 
         &:placeholder-shown {
             + label {

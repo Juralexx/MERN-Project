@@ -90,7 +90,8 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                     <p>Vous n'avez pas de contact a ajouter à ce projet</p>
                 )}
             </div>
-            <Button text="Ajouter" className="mt-5 w-full" disabled={array.length === 0} onClick={() => { sendProjectMemberRequest(array, user, project, websocket, dispatch); setArray([]); setOpen(false) }} />
+            <Button className="mt-5 w-full" disabled={array.length === 0} onClick={() => { sendProjectMemberRequest(array, user, project, websocket, dispatch); setArray([]); setOpen(false) }}
+            >Ajouter</Button>
         </Modal>
     )
 }

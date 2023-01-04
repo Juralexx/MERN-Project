@@ -49,15 +49,13 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
                     </div>
                     <div className="flex bottom">
                         <Button
-                            text="Accepter"
                             className="btn btn-primary"
                             onClick={() => acceptProjectMemberRequest(notification)}
-                        />
+                        >Accepter</Button>
                         <Button
-                            text="Refuser"
                             className="btn btn-primary"
                             onClick={() => refuseProjectMemberRequest(notification)}
-                        />
+                        >Refuser</Button>
                     </div>
                 </>
             )}

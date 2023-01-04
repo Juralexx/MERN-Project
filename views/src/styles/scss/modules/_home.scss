@@ -74,7 +74,7 @@
         height          : 27px;
         width           : 27px;
         padding         : 5px;
-        border-radius   : var(--radius);
+        border-radius   : var(--rounded-sm);
         color           : var(--text);
         z-index         : 10;
         cursor          : pointer;
@@ -98,7 +98,7 @@
                 align-items   : flex-end;
                 height        : 100%;
                 width         : 100%;
-                border-radius : var(--radius);
+                border-radius : var(--rounded-sm);
                 cursor        : pointer;
 
                 &:after {
@@ -108,7 +108,7 @@
                     width         : 100%;
                     background    : linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
                     z-index       : 0;
-                    border-radius : var(--radius);
+                    border-radius : var(--rounded-sm);
                 }
         
                 p {
@@ -141,13 +141,13 @@
             height        : 40px;
             background    : var(--content-light);
             border        : 1px solid var(--light-border);
-            border-radius : var(--radius);
+            border-radius : var(--rounded-sm);
             cursor        : pointer;
     
             .tiny_card-img {
                 width         : 50px;
                 height        : 100%;
-                border-radius : var(--radius) 0 0 var(--radius);
+                border-radius : var(--rounded-sm) 0 0 var(--rounded-sm);
             }
     
             .tiny_card-text {

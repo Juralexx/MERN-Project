@@ -3,7 +3,7 @@
     min-width        : 100%;
     top              : unset;
     transform        : none;
-    bottom           : 0;
+    bottom           : -100px;
     left             : 0;
     padding-top      : 10px;
     padding-bottom   : 10px;
@@ -12,6 +12,16 @@
     z-index          : 700;
     border-radius    : 16px 16px 0 0;
     box-shadow       : var(--shadow-top);
+    visibility       : hidden;
+    opacity          : 0;
+    transition       : visibility .2s, opacity .4s, bottom .4s;
+
+    &.active {
+       visibility : visible;
+       opacity    : 1;
+       bottom     : 0;
+       transition : visibility .4s, opacity .4s, bottom .4s;
+    }
 
     .mobile-menu-tools {
         position         : relative;
@@ -33,7 +43,7 @@
         text-align    : left;
         padding       : 14px;
         color         : var(--text);
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         cursor        : pointer;
 
         svg {
@@ -45,6 +55,9 @@
 
         &:hover {
             background-color : var(--x-light);
+            svg {
+                color : var(--primary);
+            }
 
             a,
             p {

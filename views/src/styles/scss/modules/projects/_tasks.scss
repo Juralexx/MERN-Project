@@ -30,10 +30,10 @@
                 cursor          : pointer;
 
                 &:nth-child(1) {
-                    border-radius : var(--radius) 0 0 var(--radius);
+                    border-radius : var(--rounded-sm) 0 0 var(--rounded-sm);
                 }
                 &:nth-child(2) {
-                    border-radius : 0 var(--radius) var(--radius) 0;
+                    border-radius : 0 var(--rounded-sm) var(--rounded-sm) 0;
                 }
 
                 &.active {
@@ -54,7 +54,7 @@
     width           : auto;
     font-size       : 12px;
     padding         : 5px 10px 4px;
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
 
     &.blue {
         background : rgba(var(--blue-rgb), 0.2);
@@ -88,7 +88,7 @@
         padding          : 13px 35px 10px;
         background-color : var(--xx-light);
         box-shadow       : var(--shadow-tiny);
-        border-radius    : var(--radius);
+        border-radius    : var(--rounded-sm);
         cursor           : pointer;
 
         p {
@@ -117,7 +117,7 @@
         align-items     : center;
         padding         : 5px 10px;
         cursor          : pointer;
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
 
         &:hover {
             background-color : var(--light);
@@ -154,7 +154,7 @@
                             padding          : 4px 8px;
                             font-size        : 12px;
                             background-color : rgba(var(--light-blue-rgb), 0.6);
-                            border-radius    : var(--radius);
+                            border-radius    : var(--rounded-sm);
                             color            : white;
                         }
                     }
@@ -206,7 +206,7 @@
     padding       : 12px 12px 18px;
     background    : var(--content-light);
     color         : var(--text);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     box-shadow    : var(--shadow-tiny);
 
     .home-tasks-header {
@@ -308,7 +308,7 @@
                             padding          : 4px 8px;
                             font-size        : 12px;
                             background-color : rgba(var(--light-blue-rgb), 0.6);
-                            border-radius    : var(--radius);
+                            border-radius    : var(--rounded-sm);
                             color            : white;
                         }
                     }
@@ -322,7 +322,7 @@
                 min-width       : 64px;
                 font-size       : 10px;
                 padding         : 3px 3px 1px;
-                border-radius : var(--radius);
+                border-radius : var(--rounded-sm);
         
                 &.blue {
                     background : rgba(var(--blue-rgb), 0.2);
@@ -361,7 +361,7 @@
             padding          : 3px 8px;
             font-size        : 12px;
             background-color : rgba(var(--light-blue-rgb), 0.6);
-            border-radius    : var(--radius);
+            border-radius    : var(--rounded-sm);
             color            : white;
         }
     }
@@ -391,7 +391,7 @@
             .comment-body {
                 padding       : 15px 20px;
                 background    : var(--content-x-light);
-                border-radius : var(--radius);
+                border-radius : var(--rounded-sm);
             }
 
             &:last-child {

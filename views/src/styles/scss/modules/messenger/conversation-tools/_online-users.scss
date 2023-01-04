@@ -4,7 +4,7 @@
     align-items     : center;
     justify-content : space-between;
     padding         : 10px 10px;
-    border-radius   : var(--radius);
+    border-radius   : var(--rounded-sm);
     cursor          : pointer;
 
     .online-user {
@@ -74,7 +74,7 @@
         left          : -155px;
         top           : 0px;
         background    : var(--content);
-        border-radius : var(--radius);
+        border-radius : var(--rounded-sm);
         padding       : 10px 0;
 
         ul {

@@ -29,8 +29,8 @@ const MemberRequest = ({ notification, user, websocket, onClick }) => {
                             </div>
                             <div className="text-primary text-sm">il y a {formatDistance(new Date(notification.date), new Date(), { locale: fr })}</div>
                             <div className="flex mt-3">
-                                <Button text="Accepter" className="btn btn-primary" onClick={() => acceptProjectMemberRequest(notification, user, websocket, dispatch)} />
-                                <Button text="Refuser" className="btn btn-secondary" onClick={() => refuseProjectMemberRequest(notification, user, websocket, dispatch)} />
+                                <Button className="btn btn-primary" onClick={() => acceptProjectMemberRequest(notification, user, websocket, dispatch)}>Accepter</Button>
+                                <Button className="btn btn-secondary" onClick={() => refuseProjectMemberRequest(notification, user, websocket, dispatch)}>Refuser</Button>
                             </div>
                         </div>
                     )}

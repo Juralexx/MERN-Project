@@ -123,7 +123,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                     </div>
                 </>
             )}
-            <Button text="Ajouter" className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={newTask} />
+            <Button className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={newTask}>Ajouter</Button>
         </Modal>
     )
 }

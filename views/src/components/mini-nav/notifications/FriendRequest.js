@@ -25,8 +25,8 @@ const FriendRequest = ({ notification, user, websocket, onClick }) => {
                         </div>
                         <div className="date">il y a {formatDistance(new Date(notification.date), new Date(), { locale: fr })}</div>
                         <div className="notification-actions">
-                            <Button text="Accepter" onClick={() => acceptRequest(notification, user, websocket, dispatch)} />
-                            <Button text="Refuser" onClick={() => refuseRequest(notification, user, websocket, dispatch)} />
+                            <Button onClick={() => acceptRequest(notification, user, websocket, dispatch)}>Accepter</Button>
+                            <Button onClick={() => refuseRequest(notification, user, websocket, dispatch)}>Refuser</Button>
                         </div>
                     </>
                 }

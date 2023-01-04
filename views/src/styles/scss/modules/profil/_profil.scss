@@ -90,7 +90,7 @@
                 padding       : 10px;
                 margin-bottom : 10px;
                 border        : 1px solid var(--light-border);
-                border-radius : var(--radius);
+                border-radius : var(--rounded-sm);
 
                 .contact_card-left {
                     min-height    : 80px;
@@ -140,7 +140,7 @@
     justify-content : space-between;
     border          : 1px solid var(--light-border);
     padding         : 5px 10px;
-    border-radius   : var(--radius);
+    border-radius   : var(--rounded-sm);
     svg {
         margin-right : 5px;
     }

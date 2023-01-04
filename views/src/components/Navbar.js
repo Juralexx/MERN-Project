@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import MiniNav from "./mini-nav/MiniNav";
-import { StartIconButton } from "./tools/global/Button";
+import { Button } from "./tools/global/Button";
 import { useClickOutside } from "./tools/hooks/useClickOutside";
 import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai'
 import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
@@ -10,6 +10,7 @@ import { RiLoginCircleLine } from 'react-icons/ri'
 import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
 import { HiOutlineMenu } from "react-icons/hi";
+import NavbarToggle from "./tools/global/NavbarToggle";
 
 const Navbar = ({ websocket, user, uid, onlineUsers }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
@@ -29,13 +30,13 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                             {uid && <HiOutlineMenu className="toggle_icon" onClick={() => setToggled(!toggled)} />}
                             <Link to="/">
                                 <div className="logo_inner">
-                                    <img className="logo-main sm:block hidden" src="/img/logo-top.png" alt="" />
+                                    <img className="logo-main" src="/img/logo-top.png" alt="" />
                                     {/* <img className="logo-small block sm:hidden" src="/img/logo.png" alt="" /> */}
                                 </div>
                             </Link>
                             <div className="hidden lg:flex ml-8">
                                 <NavLink to="/add-project">
-                                    <StartIconButton text="Déposer un projet" icon={<AiOutlinePlus />} />
+                                    <Button className="btn_icon_start"><AiOutlinePlus />Déposer un projet</Button>
                                 </NavLink>
                             </div>
                         </div>
@@ -136,16 +137,10 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                                 <p className="nav_p">Connexion</p>
                                             </NavLink>
                                         </li>
-                                        <li className="nav_li register">
-                                            <NavLink to="/register" className={isThisActive}>
-                                                <RiLoginCircleLine className="nav_icon" />
-                                                <p className="nav_p">Inscription</p>
-                                            </NavLink>
-                                        </li>
                                     </ul>
                                 </div>
                                 <div className="mini_nav_container lg:!hidden">
-                                    <HiOutlineMenu className="toggle_icon" onClick={() => setToggled(!toggled)} />
+                                    <NavbarToggle open={toggled} onClick={() => setToggled(!toggled)} />
                                 </div>
                             </>
                         )}
@@ -154,11 +149,9 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                     <>
                         {location.pathname === "/register" &&
                             <>
-                                <div className="move-back">
-                                    <Link to="/">
-                                        <ImArrowLeft2 />
-                                    </Link>
-                                </div>
+                                <Link to="/" className="move-back">
+                                    <ImArrowLeft2 />
+                                </Link>
                                 <div className="navbar_form_pages">
                                     <Link to="/">
                                         <div className="logo_inner">
@@ -175,11 +168,9 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                         }
                         {location.pathname === "/login" &&
                             <>
-                                <div className="move-back">
-                                    <Link to="/">
-                                        <ImArrowLeft2 />
-                                    </Link>
-                                </div>
+                                <Link to="/" className="move-back">
+                                    <ImArrowLeft2 />
+                                </Link>
                                 <div className="navbar_form_pages">
                                     <Link to="/">
                                         <div className="logo_inner">

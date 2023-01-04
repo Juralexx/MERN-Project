@@ -4,7 +4,7 @@
     align-items     : center;
     justify-content : center;
     padding         : 0 20px;
-    font-size       : 13px;
+    font-size       : 14px;
     line-height     : 19px;
     text-align      : center;
     text-decoration : none;
@@ -14,7 +14,6 @@
     cursor          : pointer;
     white-space     : nowrap;
     transform       : scale(1);
-    box-shadow      : var(--shadow-tiny);
 
     &:disabled {
         opacity : 0.5;
@@ -62,12 +61,38 @@
             background-color : rgba(var(--green-rgb), 0.2);
         }
     }
+
+    &.btn_icon_start {
+        svg {
+            height       : 18px;
+            width        : 18px;
+            margin-right : 8px;
+        }
+    }
+    &.btn_icon_end {
+        svg {
+            height      : 18px;
+            width       : 18px;
+            margin-left : 8px;
+        }
+    }
+
+    a {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        left            : 0;
+        top             : 0;
+        width           : 100%;
+        height          : 100%;
+        color           : white;
+    }
 }
 
 .btn_first {
-    color         : white !important;
+    color         : white;
     background    : var(--primary);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
 
     &:hover {
         background : var(--primary-dark);
@@ -78,120 +103,24 @@
     }
 }
 
-.btn_icon_start {
-    color         : white !important;
-    background    : var(--primary);
-    border-radius : var(--radius);
-
-    svg {
-        height       : 18px;
-        width        : 18px;
-        margin-right : 5px;
-    }
+.outlined_btn {
+    border        : 1px solid var(--primary);
+    color         : var(--primary);
+    border-radius : var(--rounded-sm);
 
     &:hover {
-        background : var(--primary-dark);
-    }
-}
-
-.btn_icon_end {
-    border-radius : var(--radius);
-    color         : white !important;
-    background    : var(--primary);
-
-    svg {
-        height      : 14px;
-        width       : 14px;
-        margin-left : 8px;
-    }
-
-    &:hover {
-        background : var(--primary-dark);
+        background : rgba(var(--primary-rgb), 0.10);
     }
 }
 
 .text_btn {
     color         : var(--primary);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     box-shadow    : none;
+    background : rgba(var(--primary-rgb), 0.15);
 
     &:hover {
-        background : rgba(var(--primary-rgb), 0.15);
-    }
-}
-
-.outlined_btn {
-    border        : 1px solid var(--primary);
-    color         : var(--primary);
-    border-radius : var(--radius);
-
-    &:hover {
-        background : rgba(var(--primary-rgb), 0.10);
-    }
-}
-
-.btn_outlined_icon_end {
-    text-transform  : none;
-    border          : 1px solid var(--primary);
-    border-radius   : var(--radius);
-    color           : var(--primary);
-
-    svg {
-        height      : 18px;
-        width       : 18px;
-        margin-left : 10px;
-    }
-
-    &:hover {
-        background : rgba(var(--primary-rgb), 0.10);
-    }
-}
-
-.btn_outlined_icon_start {
-    border          : 1px solid var(--primary);
-    border-radius   : var(--radius);
-    color           : var(--primary);
-
-    svg {
-        height       : 18px;
-        width        : 18px;
-        margin-right : 10px;
-    }
-
-    &:hover {
-        background : rgba(var(--primary-rgb), 0.10);
-    }
-}
-
-.text_btn_icon_start {
-    border-radius : var(--radius);
-    color         : var(--primary);
-    box-shadow    : none;
-
-    svg {
-        height       : 18px;
-        width        : 18px;
-        margin-right : 5px;
-    }
-
-    &:hover {
-        background : rgba(var(--primary-rgb), 0.10);
-    }
-}
-
-.text_btn_icon_end {
-    color         : var(--primary);
-    box-shadow    : none;
-    border-radius : var(--radius);
-
-    svg {
-        height      : 18px;
-        width       : 18px;
-        margin-left : 5px;
-    }
-
-    &:hover {
-        background : rgba(var(--primary-rgb), 0.10);
+        background : rgba(var(--primary-rgb), 0.22);
     }
 }
 
@@ -229,7 +158,7 @@
     justify-content  : center;
     padding          : 8px;
     cursor           : pointer;
-    border-radius    : var(--radius);
+    border-radius    : var(--rounded-sm);
     color            : var(--text);
     transform        : scale(1);
     background-color : var(--primary);
@@ -251,7 +180,7 @@
     align-items   : center;
     padding       : 5px 0;
     font-weight   : 600;
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     cursor        : pointer;
 
     svg {

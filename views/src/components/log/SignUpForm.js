@@ -197,15 +197,14 @@ const SignUpForm = () => {
                     {isErr === "confirmed-password" && <ErrorCard useRef={errorRef} display={isErr === "confirmed-password"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
-                <div className="flex items-center mb-6 mt-4">
+                <div className="flex items-center mb-6 mt-6">
                     <CheckBox checked={terms} onChange={() => setTerms(!terms)} />
                     <label htmlFor="terms" className="ml-2">J'accepte les <a href="/" target="_blank" rel="noopener noreferrer">conditions générales</a></label>
                 </div>
                 {isErr === "terms" && <ErrorCard useRef={errorRef} display={isErr === "terms"} text={error} className="min-w-full" clean={() => setErr("")} />}
 
                 <Button
-                    text="S'inscrire"
-                    className="w-full !text-sm"
+                    className="w-full"
                     onClick={handleRegister}
                     disabled={!onlyLettersNumbersAndDashes(pseudo) || pseudo.length <= 3 || pseudo.length >= 20 || !isEmailValid(email) || !secured || password !== confirmPassword || !terms}
                 >

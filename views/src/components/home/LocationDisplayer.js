@@ -96,8 +96,8 @@ const LocationDisplayer = ({ location, setLocation, recentLocations, setDisplayL
                 <div className="locations_search_item"><GiFrance /> <div>Toute la France</div></div>
             </div>
             <div className="locations_search_bottom">
-                <TextButton text="Effacer" onClick={() => { setLocation([]); setSliderKey(0); setAroundLocation(0)}}/>
-                <TextButton text="Valider" onClick={() => setDisplayLocation(false)} />
+                <TextButton onClick={() => { setLocation([]); setSliderKey(0); setAroundLocation(0)}}>Effacer</TextButton>
+                <TextButton onClick={() => setDisplayLocation(false)}>Valider</TextButton>
             </div>
         </div>
     )

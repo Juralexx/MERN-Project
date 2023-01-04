@@ -97,9 +97,10 @@ const Contributors = ({ workArray, setWorkArray, isErr, setErr, error, setError 
                     <div className="mb-4" key={key}>
                         <div className="header flex mb-5">
                             <h3 className="mr-4">Métier n°{key + 1}</h3>
-                            <Button text="Supprimer" onClick={() => deleteItem(key)} />
+                            <Button onClick={() => deleteItem(key)}>Supprimer</Button>
                             {key + 1 === workArray.length &&
-                                <Button text="Rechercher un autre métier" className="ml-2" onClick={() => checkArrayErrors(key)} disabled={workArray[key].name === "" || workArray[key].number === ("" || 0 || null)} />
+                                <Button className="ml-2" onClick={() => checkArrayErrors(key)} disabled={workArray[key].name === "" || workArray[key].number === ("" || 0 || null)}
+                                >Rechercher un autre métier</Button>
                             }
                         </div>
                         <div className="work-form">

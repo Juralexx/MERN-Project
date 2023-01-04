@@ -19,7 +19,7 @@ const ErrorModal = (props) => {
                 <div className="warning_text">{text}</div>
                 {props.children}
                 <div className="btn_container">
-                    <Button text="Fermer" onClick={close} />
+                    <Button onClick={close}>Fermer</Button>
                 </div>
             </div>
             <div className={coverClass} onClick={close}></div>

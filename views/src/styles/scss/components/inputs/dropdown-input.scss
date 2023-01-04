@@ -3,7 +3,7 @@
     height        : 44px;
     cursor        : pointer;
     background    : var(--input);
-    border-radius : var(--radius);
+    border-radius : var(--rounded-sm);
     z-index       : 1;
     box-shadow    : var(--shadow-tiny);
 
@@ -11,7 +11,7 @@
         padding            : 10px;
         color              : var(--input-text);
         background         : var(--content-x-light);
-        border-radius      : var(--radius);
+        border-radius      : var(--rounded-sm);
         border             : 2px solid transparent;
         outline            : none;
         cursor             : pointer;
@@ -46,13 +46,13 @@
         background-color : var(--content-x-light);
         z-index          : 700;
         box-shadow       : var(--shadow-xl);
-        border-radius    : var(--radius);
+        border-radius    : var(--rounded-sm);
 
         div {
             padding       : 8px 12px;
             cursor        : pointer;
             color         : var(--text-secondary);
-            border-radius : var(--radius);
+            border-radius : var(--rounded-sm);
 
             &:hover {
                 color            : var(--primary);

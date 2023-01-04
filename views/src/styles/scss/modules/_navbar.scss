@@ -11,7 +11,6 @@ header {
         width         : 100vw;
         background    : var(--navbar);
         box-shadow    : var(--shadow-light);
-        // border-bottom : 2px solid var(--primary);
         z-index       : 800;
 
         .logo_container {
@@ -29,6 +28,7 @@ header {
                 align-items : center;
                 width       : auto;
                 height      : 100%;
+                min-width   : 123px;
 
                 .logo-main {
                     height      : 36px;
@@ -52,7 +52,8 @@ header {
             }
         }
 
-        .nav_container, .nav_container-right {
+        .nav_container,
+        .nav_container-right {
             position        : relative;
             display         : flex;
             justify-content : space-between;
@@ -76,12 +77,11 @@ header {
                     .nav_link {
                         position        : relative;
                         display         : flex;
-                        flex-direction  : column;
                         align-items     : center;
                         justify-content : center;
                         height          : 100%;
                         width           : 100%;
-                        padding         : 0 37px 0;
+                        padding         : 0 20px 0;
                         color           : var(--text);
                         overflow        : hidden;
 
@@ -92,18 +92,18 @@ header {
                             transform        : translateX(-50%);
                             bottom           : -7px;
                             width            : 0;
-                            height           : 10px;
-                            border-radius    : 20px;
+                            height           : 9px;
+                            border-radius    : 2px;
                             background-color : transparent;
                             transition       : 0.2s ease;
                         }
 
                         .nav_icon {
-                            width         : 20px;
-                            height        : 20px;
-                            margin-bottom : 5px;
-                            color         : var(--navbar-txt);
-                            transition    : 0.2s ease;
+                            width        : 16px;
+                            height       : 16px;
+                            margin-right : 8px;
+                            color        : var(--navbar-txt);
+                            transition   : 0.2s ease;
                         }
 
                         .nav_p {
@@ -144,8 +144,9 @@ header {
         }
         
         .nav_container-right {
-            right  : 10px;
-            margin : 0;
+            right        : 10px;
+            margin       : 0;
+            margin-right : 20px;
             .nav_ul {
                 .nav_li {
                     .nav_link {
@@ -166,11 +167,11 @@ header {
         .navbar {
             .nav_container {
                 margin-left  : auto;
-                margin-right : 50px;
+                margin-right : 30px;
                 .nav_ul {
                     .nav_li {
                         .nav_link {
-                            padding : 0 20px 0;
+                            padding : 0 15px 0;
                         }
                     }
                 }
@@ -216,30 +217,28 @@ header {
                     .nav_li {
                         justify-content : flex-start;
                         height          : auto;
-                        margin          : 2px 0;
-                        &:hover {
-                            background    : var(--light);
-                            border-radius : var(--radius);
-                        }
+                        margin          : 0;
+                        padding         : 7px 0;
                         .nav_link {
                             flex-direction  : row;
                             justify-content : flex-start;
                             height          : 100%;
                             padding         : 10px 10px;
-
                             &:before {
                                 content : none;
                             }
                             &.active {
-                                background : var(--light);
-                                &:before {
-                                    content : none;
+                                .nav_p {
+                                    color : var(--primary);
                                 }
                             }
                             .nav_icon {
                                 margin-right  : 13px;
                                 margin-bottom : 0;
                                 font-size     : 16px;
+                            }
+                            .nav_p {
+                                font-size : 16px;
                             }
                         }
                     }
@@ -255,7 +254,7 @@ header {
                     }
                     .nav_li {
                         .nav_link {
-                            padding:0 15px;
+                            padding:0 0 0 15px;
                             &:before {
                                 content : none;
                             }
@@ -266,10 +265,11 @@ header {
                             }
                             .nav_icon {
                                 margin-bottom : 0;
+                                margin-right  : 0;
                                 height        : 30px;
                                 width         : 56px;
                                 border-right  : 1px solid var(--light-border);
-                                padding        : 0 15px;
+                                padding       : 0 15px;
                             }
                             .nav_p {
                                 display : none;
@@ -344,22 +344,16 @@ header {
 
 .move-back {
     position         : absolute;
-    top              : 7px;
+    top              : 50%;
+    transform        : translateY(-50%);
     left             : 30px;
     padding          : 8px;
     background-color : var(--x-light);
-    border-radius    : 30px;
-    cursor           : pointer;
+    border-radius    : var(--rounded-full);
 
     svg {
         height : 23px;
         width  : 23px;
-    }
-
-    a {
-        display : block;
-        height  : 100%;
-        width   : 100%;
     }
 
     &:hover {

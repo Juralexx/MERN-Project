@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { createQNA } from '../../../../actions/project.action'
 import { Button } from '../../../tools/global/Button'
 import { ErrorCard } from '../../../tools/global/Error'
@@ -67,9 +67,10 @@ const AddQna = ({ project, user }) => {
                         <div className="qna-form mt-8" key={key}>
                             <div className="header flex mb-5">
                                 <h3>Question n°{key + 1}</h3>
-                                <Button text="Supprimer" className="ml-4" onClick={() => deleteQuestion(key)} />
+                                <Button className="ml-4" onClick={() => deleteQuestion(key)}>Supprimer</Button>
                                 {key + 1 === qna.length &&
-                                    <Button text="Ajouter une nouvelle question" className="ml-2" onClick={() => setQna(e => [...e, { question: "", answer: "" }])} disabled={qna[key].question.length < 10 || qna[key].answer.length < 10} />
+                                    <Button className="ml-2" onClick={() => setQna(e => [...e, { question: "", answer: "" }])} disabled={qna[key].question.length < 10 || qna[key].answer.length < 10}
+                                    >Ajouter une nouvelle question</Button>
                                 }
                             </div>
 
@@ -90,10 +91,10 @@ const AddQna = ({ project, user }) => {
                     )
                 })}
                 <div className="btn_container">
-                    <Button text="Ajouter une nouvelle question" onClick={() => setQna(e => [...e, { question: "", answer: "" }])} />
+                    <Button onClick={() => setQna(e => [...e, { question: "", answer: "" }])}>Ajouter une nouvelle question</Button>
                     <div className="flex">
-                        <NavLink to={`/projects/${project.URLID}/${project.URL}/qna`}><Button text="Annuler" /></NavLink>
-                        <Button text="Enregistrer" className="ml-2" onClick={handleQna} />
+                        <Button><Link to={`/projects/${project.URLID}/${project.URL}/qna`}>Annuler</Link></Button>
+                        <Button className="ml-2" onClick={handleQna}>Enregistrer</Button>
                     </div>
                 </div>
             </div>
