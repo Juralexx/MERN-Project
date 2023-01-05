@@ -131,9 +131,8 @@
     .map_modal_nav {
         display       : flex;
         position      : relative;
-        width         : 100%;
+        width         : 70%;
         margin-bottom : 16px;
-        border-bottom : 1px solid var(--light-border);
 
         .map_modal_nav_item {
             position      : relative;
@@ -142,8 +141,15 @@
             text-align    : center;
             color         : var(--text);
             cursor        : pointer;
-            padding       : 10px 5px;
+            padding       : 5px;
+            margin        : 0 3px;
             overflow      : hidden;
+            border-radius : var(--rounded-sm);
+ 
+            &.active, &:hover {
+                color      : var(--primary);
+                background : var(--x-light);
+            }
         }
     }
 }

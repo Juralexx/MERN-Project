@@ -70,8 +70,8 @@ const MapModal = ({ open, setOpen, location, setLocation }) => {
     return (
         <Modal open={open} setOpen={setOpen} className="map_modal">
             <div className="map_modal_nav">
-                <div data-choice="1" className={`map_modal_nav_item anim ${addClass(!ByDepartments, "active")}`} onClick={() => setDepartments(false)}>Régions</div>
-                <div data-choice="2" className={`map_modal_nav_item anim ${addClass(ByDepartments, "active")}`} onClick={() => setDepartments(true)}>Départements</div>
+                <div data-choice="1" className={`map_modal_nav_item ${addClass(!ByDepartments, "active")}`} onClick={() => setDepartments(false)}>Régions</div>
+                <div data-choice="2" className={`map_modal_nav_item ${addClass(ByDepartments, "active")}`} onClick={() => setDepartments(true)}>Départements</div>
             </div>
             {!ByDepartments ? (
                 <div className="relative">

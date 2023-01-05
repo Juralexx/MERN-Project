@@ -5,14 +5,13 @@
     background    : var(--input);
     border-radius : var(--rounded-sm);
     z-index       : 1;
-    box-shadow    : var(--shadow-tiny);
+    border        : 1px solid var(--light-border);
 
     input {
         padding            : 10px;
         color              : var(--input-text);
         background         : var(--content-x-light);
         border-radius      : var(--rounded-sm);
-        border             : 2px solid transparent;
         outline            : none;
         cursor             : pointer;
         width              : 85%;

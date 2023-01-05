@@ -213,7 +213,7 @@
   --text-secondary: #7a7a7a;
   --text-tertiary: #aaa9a9;
   --light-border: #DCDEDD;
-  --input: var(--x-light);
+  --input: var(--xx-light);
   --input-text: #696969;
   --placeholder: #9a9fa7;
   --svg: #9a9fa7;
@@ -234,12 +234,12 @@
   --body: #0b0c0e;
   --content: #141619;
   --content-light: #1a1d22;
-  --content-x-light: #21242a;
+  --content-x-light: #020203;
   --input: #272b31;
   --navbar: #272b31;
+  --light: #1a1d22;
   --x-light: #272b31;
   --xx-light: #30343a;
-  --light: #1a1d22;
   --mini_nav-btn: #141619;
   --text: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
@@ -261,7 +261,9 @@
   --primary: #5a7df0;
   --primary-rgb: 90, 125, 240;
   --primary-light: #90a1f3;
+  --primary-light-rgb: 144, 161, 243;
   --primary-dark: #4c73f1;
+  --primary-dark-rgb: 76, 115, 241;
   --shadow-custom: 0 8px 16px rgba(12, 65, 154, .1);
   --shadow-top: 0 -10px 25px -10px rgb(0 0 0 / 0.15);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -381,8 +383,7 @@ select:-webkit-autofill:focus {
 }
 
 #header {
-  background: -webkit-gradient(linear, left top, right top, color-stop(30%, var(--content)), to(var(--content-light)));
-  background: linear-gradient(to right, var(--content) 30%, var(--content-light) 100%);
+  background: var(--light);
 }
 #header .header_container {
   padding: 50px 0;
@@ -409,12 +410,25 @@ select:-webkit-autofill:focus {
   position: relative;
   width: 100%;
   max-width: 100%;
-  height: 46px;
+  min-height: 46px;
   padding: 6px 12px 4px 50px;
   color: var(--text);
-  background: var(--x-light);
+  background: var(--input);
   border-radius: var(--rounded-sm);
-  overflow-x: hidden;
+  overflow: auto;
+  overflow-y: hidden;
+}
+.locations_displayer::-webkit-scrollbar {
+  height: 8px;
+  margin-top: 5px;
+}
+.locations_displayer::-webkit-scrollbar-track {
+  background: var(--content-light);
+}
+.locations_displayer::-webkit-scrollbar-thumb {
+  background-color: var(--light-border);
+  border: 2px solid var(--content-light);
+  border-radius: 5px;
 }
 .locations_displayer .start_icon {
   height: 100%;
@@ -445,7 +459,7 @@ select:-webkit-autofill:focus {
   max-width: 100%;
   padding: 5px 5px 5px 15px;
   margin: 2px;
-  background: var(--content-light);
+  background: var(--content);
   border: 1px solid var(--light-border);
   border-radius: var(--rounded-sm);
   white-space: nowrap;
@@ -514,6 +528,9 @@ select:-webkit-autofill:focus {
 .location_search_displayer .location_range .range .rc-slider-handle {
   background-color: var(--primary);
   border: solid 2px var(--primary-light);
+  width: 14px;
+  height: 14px;
+  margin-top: -4px;
 }
 .location_search_displayer .locations_search_bottom {
   display: -webkit-box;
@@ -522,7 +539,7 @@ select:-webkit-autofill:focus {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  padding-top: 5px;
+  padding-top: 7px;
   border-top: 1px solid var(--light-border);
 }
 .location_search_displayer .locations_search_top {
@@ -2603,9 +2620,8 @@ select:-webkit-autofill:focus {
   display: -ms-flexbox;
   display: flex;
   position: relative;
-  width: 100%;
+  width: 70%;
   margin-bottom: 16px;
-  border-bottom: 1px solid var(--light-border);
 }
 .map_modal .map_modal_nav .map_modal_nav_item {
   position: relative;
@@ -2614,8 +2630,14 @@ select:-webkit-autofill:focus {
   text-align: center;
   color: var(--text);
   cursor: pointer;
-  padding: 10px 5px;
+  padding: 5px;
+  margin: 0 3px;
   overflow: hidden;
+  border-radius: var(--rounded-sm);
+}
+.map_modal .map_modal_nav .map_modal_nav_item.active, .map_modal .map_modal_nav .map_modal_nav_item:hover {
+  color: var(--primary);
+  background: var(--x-light);
 }
 
 @media (max-width: 576px) {
@@ -4816,6 +4838,7 @@ select:-webkit-autofill:focus {
 }
 .auto-complete-container .auto-complete-item:hover {
   background: var(--x-light);
+  color: var(--primary);
 }
 .auto-complete-container .no-result {
   display: -webkit-box;
@@ -5130,11 +5153,11 @@ select:-webkit-autofill:focus {
   outline: none;
   background: transparent;
   z-index: 1;
-  border: 1px solid transparent;
+  border: 1px solid var(--light-border);
   color: var(--input-text);
 }
 .icon-input input:focus {
-  border: 1px solid var(--light-border);
+  border: 1px solid var(--primary);
 }
 .icon-input input:focus + label {
   -webkit-transform: scale(0.75);
@@ -5255,15 +5278,13 @@ select:-webkit-autofill:focus {
   background: var(--input);
   border-radius: var(--rounded-sm);
   z-index: 1;
-  -webkit-box-shadow: var(--shadow-tiny);
-          box-shadow: var(--shadow-tiny);
+  border: 1px solid var(--light-border);
 }
 .dropdown-input input {
   padding: 10px;
   color: var(--input-text);
   background: var(--content-x-light);
   border-radius: var(--rounded-sm);
-  border: 2px solid transparent;
   outline: none;
   cursor: pointer;
   width: 85%;

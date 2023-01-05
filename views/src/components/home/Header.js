@@ -41,7 +41,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
             <div className="container pt-8">
                 <div className="header_container row">
                     <div className="col-12 col-lg-6 lg:pr-5">
-                        <h1><span>Donner vie</span><br />aux bonne idées</h1>
+                        <h1><span>Donner vie</span><br />aux bonnes idées</h1>
                         <p>Circa hos dies Lollianus primae lanuginis adulesce, lampadi filius ex praefecto, exploratius causam Maximino spectante.</p>
                         <Button className="btn_icon_start mt-5">
                             <Link to="/add-project">

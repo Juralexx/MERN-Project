@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import axios from 'axios'
 import LocationDisplayer from './LocationDisplayer'
 import { useClickOutside } from '../tools/hooks/useClickOutside'
@@ -9,30 +9,6 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
 
 const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRecentLocations, aroundLocation, setAroundLocation }) => {
-    const locationsDisplayerRef = useRef()
-    const [locationsToDisplay, setLocationsToDisplay] = useState(location)
-    const locationsRefs = []
-    const [tooLong, setTooLoong] = useState(false)
-
-    useEffect(() => {
-        if (locationsToDisplay.length < location.length && !tooLong)
-            setLocationsToDisplay(location)
-    }, [location.length, locationsToDisplay.length])
-
-    useEffect(() => {
-        if (locationsRefs.length > 0 && !tooLong) {
-            let locsLength = 0
-            for (var i = 0; i < locationsRefs.length; i++) {
-                locsLength = locsLength + locationsRefs[i].offsetWidth
-                if (locsLength > locationsDisplayerRef?.current?.offsetWidth - 50) {
-                    setLocationsToDisplay(locationsToDisplay.slice(0, i))
-                    setTooLoong(true)
-                    break;
-                }
-            }
-        }
-    }, [locationsRefs, locationsDisplayerRef])
-
     const [searchQuery, setSearchQuery] = useState("")
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -86,14 +62,9 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
         setLoading(false)
     }
 
-    const deleteItem = (value) => {
-        if (value.type === "city")
-            setLocation(locations => locations.filter(e => e.location !== value.location))
-        else if (value.type === "department")
-            setLocation(locations => locations.filter(e => e.type === "department" && e.department !== value.department))
-        else
-            setLocation(locations => locations.filter(e => e.type === "region" && e.region !== value.region))
-        setTooLoong(false)
+    const deleteItem = (key) => {
+        let newLocs = location.filter((x, i) => i !== key)
+        setLocation(newLocs)
     }
 
     return (
@@ -110,11 +81,11 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
                     onClick={() => setDisplayLocation(true)}
                 />
             ) : (
-                <div className="locations_displayer" onClick={() => setDisplayLocation(!displayLocation)} ref={locationsDisplayerRef}>
+                <div className="locations_displayer" onClick={() => setDisplayLocation(!displayLocation)}>
                     <div className="start_icon"><FaMapMarkerAlt /></div>
-                    {locationsToDisplay.map((element, key) => {
+                    {location.map((element, key) => {
                         return (
-                            <div className="locations_item" key={key} ref={ref => locationsRefs[key] = ref}>
+                            <div className="locations_item" key={key}>
                                 {element.type === "city" &&
                                     <div>{element.location} ({element.department_code})</div>
                                 }
@@ -124,13 +95,13 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
                                 {element.type === "region" &&
                                     <div>{element.region}</div>
                                 }
-                                <IoClose onClick={() => deleteItem(element)} />
+                                {!element.type &&
+                                    <div>{element}</div>
+                                }
+                                <IoClose onClick={() => deleteItem(key)} />
                             </div>
                         )
                     })}
-                    {tooLong &&
-                        <div className="is_more_locations">+ {location.length - locationsToDisplay.length}</div>
-                    }
                 </div>
             )}
 

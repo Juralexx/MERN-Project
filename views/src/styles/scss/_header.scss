@@ -1,5 +1,5 @@
 #header {
-    background : linear-gradient(to right, var(--content) 30%, var(--content-light) 100%);
+    background : var(--light);
 
     .header_container {
         padding : 50px 0;
@@ -27,12 +27,26 @@
     position      : relative;
     width         : 100%;
     max-width     : 100%;
-    height        : 46px;
+    min-height        : 46px;
     padding       : 6px 12px 4px 50px;
     color         : var(--text);
-    background    : var(--x-light);
+    background    : var(--input);
     border-radius : var(--rounded-sm);
-    overflow-x    : hidden;
+    overflow      : auto;
+    overflow-y    : hidden;
+
+    &::-webkit-scrollbar {
+        height : 8px;
+        margin-top: 5px;
+    }
+    &::-webkit-scrollbar-track {
+        background : var(--content-light);
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color : var(--light-border);
+        border           : 2px solid var(--content-light);
+        border-radius    : 5px;
+    }
 
     .start_icon {
         height           : 100%;
@@ -57,7 +71,7 @@
         max-width     : 100%;
         padding       : 5px 5px 5px 15px;
         margin        : 2px;
-        background    : var(--content-light);
+        background    : var(--content);
         border        : 1px solid var(--light-border);
         border-radius : var(--rounded-sm);
         white-space   : nowrap;
@@ -132,6 +146,9 @@
             .rc-slider-handle {
                 background-color : var(--primary);
                 border           : solid 2px var(--primary-light);
+                width            : 14px;
+                height           : 14px;
+                margin-top       : -4px;
             }
         }
     }
@@ -139,7 +156,7 @@
     .locations_search_bottom {
         display         : flex;
         justify-content : flex-end;
-        padding-top     : 5px;
+        padding-top     : 7px;
         border-top      : 1px solid var(--light-border);
     }
 

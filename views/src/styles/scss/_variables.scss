@@ -239,7 +239,7 @@
     --text-tertiary   : #aaa9a9;
 
     --light-border    : #DCDEDD;
-    --input           : var(--x-light);
+    --input           : var(--xx-light);
     --input-text      : #696969;
     --placeholder     : #9a9fa7;
     --svg             : #9a9fa7;
@@ -261,12 +261,12 @@
     --body            : #0b0c0e;
     --content         : #141619;
     --content-light   : #1a1d22;
-    --content-x-light : #21242a;
+    --content-x-light : #020203;
     --input           : #272b31;
     --navbar          : #272b31;
+    --light           : #1a1d22;
     --x-light         : #272b31;
     --xx-light        : #30343a;
-    --light           : #1a1d22;
     --mini_nav-btn    : #141619;
 
     --text            : #ffffff;
@@ -288,10 +288,12 @@
 }
 
 :root, .dark {
-    --primary         : #5a7df0;
-    --primary-rgb     : 90, 125, 240;
-    --primary-light   : #90a1f3;
-    --primary-dark    : #4c73f1;
+    --primary           : #5a7df0;
+    --primary-rgb       : 90, 125, 240;
+    --primary-light     : #90a1f3;
+    --primary-light-rgb : 144, 161, 243;
+    --primary-dark      : #4c73f1;
+    --primary-dark-rgb  : 76, 115, 241;
 
     --shadow-custom   : 0 8px 16px rgba(12, 65, 154, .1);
     --shadow-top      : 0 -10px 25px -10px rgb(0 0 0 / 0.15);
