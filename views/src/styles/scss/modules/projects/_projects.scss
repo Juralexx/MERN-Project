@@ -2,7 +2,7 @@
     position   : relative;
     width      : 100%;
     padding    : 20px 0;
-    background : var(--xx-light);
+    background : var(--content);
 
     .dashboard-projects-header-top {
         position : relative;
@@ -11,12 +11,9 @@
 
         h1 {
             span {
-                font-size     : 20px;
-                color         : var(--text-secondary);
-                margin-left   : 10px;
-                background    : var(--content-x-light);
-                padding       : 1px 6px 0;
-                border-radius : var(--rounded-sm);
+                font-size   : 20px;
+                color       : var(--text-secondary);
+                margin-left : 10px;
             }
         }
     }
@@ -48,19 +45,16 @@
     > div {
         display : flex;
         
-        .infos {
-            padding       : 5px 15px;
+        button {
+            padding       : 10px 20px;
             border-radius : var(--rounded-sm);
-            width         : auto;
-
-            &.blue {
-                background-color : rgba(var(--light-blue-rgb), 0.3);
-                color            : var(--light-blue);
-            }
-
-            &.green {
-                background-color : rgba(var(--green-rgb), 0.3);
-                color            : var(--green);
+            background    : var(--content-x-light);
+            margin        : 0 3px;
+            font-weight   : 500;
+            span {
+                color       : var(--text-secondary);
+                margin-left : 5px;
+                font-weight : 400;
             }
         }
     }
@@ -70,11 +64,13 @@
     position      : relative;
     display       : flex;
     width         : 100%;
-    max-height    : 400px;
-    margin-bottom : 20px;
-    background    : var(--content-light);
+    padding       : 20px 0;
     border-radius : var(--rounded-sm);
-    box-shadow    : var(--shadow-tiny);
+    border-bottom : 1px solid var(--light-border);
+
+    &:last-child {
+        border : none;
+    }
 
     .project-picture {
         position       : relative;
@@ -88,7 +84,7 @@
             height        : 100%;
             width         : 100%;
             object-fit    : cover;
-            border-radius : var(--rounded-sm) 0 0 var(--rounded-sm);
+            border-radius : var(--rounded-md);
         }
     }
 
@@ -98,62 +94,54 @@
         width    : 75%;
 
         .project-card-content-top {
-            .project-title {
-                display         : flex;
-                align-items     : center;
-                justify-content : space-between;
+            position : relative;
 
-                h2 {
-                    text-overflow      : ellipsis;
-                    overflow           : hidden;
-                    width              : 75%;
-                    font-size          : 18px;
-                    line-height        : 24px;
-                    display            : -webkit-box;
-                    -webkit-line-clamp : 1;
-                    -webkit-box-orient : vertical;
-                    margin-bottom      : 2px;
+            h2 {
+                width         : 75%;
+                line-height   : 30px;
+                margin-bottom : 6px;
+                font-size     : 20px;
+            }
+
+            h3 {
+                width         : 75%;
+                font-size     : 14px;
+                font-weight   : 400;
+                color         : var(--text-secondary);
+                margin-bottom : 10px;
+            }
+
+            .state {
+                position      : absolute;
+                top           : 0;
+                right         : 0;
+                padding       : 4px 14px;
+                border-radius : var(--rounded-sm);
+                font-size     : 14px;
+
+                &.orange {
+                    background : rgba(var(--orange-rgb), 0.2);
+                    color      : var(--orange);
                 }
-
-                .state {
-                    padding       : 2px 12px;
-                    border-radius : var(--rounded-sm);
-                    font-size     : 14px;
-
-                    &.orange {
-                        background : rgba(var(--orange-rgb), 0.2);
-                        color      : var(--orange);
-                    }
-                    &.blue {
-                        background : rgba(var(--light-blue-rgb), 0.2);
-                        color      : var(--light-blue);
-                    }
-                    &.green {
-                        background : rgba(var(--green-rgb), 0.2);
-                        color      : var(--green);
-                    }
+                &.blue {
+                    background : rgba(var(--light-blue-rgb), 0.2);
+                    color      : var(--light-blue);
+                }
+                &.green {
+                    background : rgba(var(--green-rgb), 0.2);
+                    color      : var(--green);
                 }
             }
 
-            .location {
+            .infos_field {
+                display     : flex;
+                align-items : center;
                 font-size   : 14px;
+                line-height : 24px;
                 color       : var(--text-secondary);
-                line-height : 22px;
-            }
-        }
-
-        .project-card-content-infos {
-            display         : flex;
-            align-items     : center;
-            padding         : 8px 0;
-
-            .contributors {
-                display      : flex;
-                align-items  : center;
-                margin-right : 10px;
-
-                p {
-                    margin-left : 6px;
+                svg {
+                    margin-right : 5px;
+                    color        : var(--text);
                 }
             }
         }
@@ -162,15 +150,22 @@
             font-size          : 14px;
             padding            : 8px 0;
             text-align         : justify;
-            height             : 90px;
+            max-height         : 90px;
             text-overflow      : ellipsis;
             overflow           : hidden;
-            width              : 100%;
-            line-height        : 21px;
+            width              : 90%;
+            line-height        : 24px;
             display            : -webkit-box;
             -webkit-line-clamp : 4;
             -webkit-box-orient : vertical;
             color              : var(--text-secondary);
+        }
+
+        .project-tags {
+            padding : 0;
+            .tag {
+                color : var(--text-secondary);
+            }
         }
     }
 }

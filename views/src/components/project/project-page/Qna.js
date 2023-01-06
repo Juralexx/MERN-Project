@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { MdKeyboardArrowRight, MdKeyboardArrowDown, MdOutlineNotificationsActive } from 'react-icons/md'
 import NoContent from './NoContent'
+import { MdKeyboardArrowRight, MdKeyboardArrowDown, MdOutlineNotificationsActive } from 'react-icons/md'
 
 const Qna = ({ project, user }) => {
     const [displayed, setDislayed] = useState([])

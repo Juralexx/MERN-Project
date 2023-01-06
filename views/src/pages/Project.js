@@ -114,7 +114,7 @@ const ProjectPage = ({ user, projects }) => {
                             <div className="explore-more-tags">
                                 {project.tags.map((element, key) => {
                                     return (
-                                        <div className="tag" key={key}><span>#</span> {element}</div>
+                                        <div className="tag" key={key}><span>#</span>{element}</div>
                                     )
                                 })}
                             </div>

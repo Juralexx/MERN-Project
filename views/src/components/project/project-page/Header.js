@@ -6,11 +6,7 @@ import { projectPicture } from '../../tools/hooks/useAvatar'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import Share from './Share'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../../actions/project.action'
-import { IoHeart, IoHeartOutline } from 'react-icons/io5'
-import { MdOutlineBookmark, MdOutlineBookmarkBorder } from 'react-icons/md'
-import { FiMapPin } from 'react-icons/fi'
-import { FiCalendar } from 'react-icons/fi'
-import { HiOutlineShare } from 'react-icons/hi'
+import { MdOutlineBookmark, MdOutlineBookmarkBorder, MdCalendarToday, MdOutlineLocationOn, MdOutlineShare, MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md'
 
 const Header = ({ user, project }) => {
     const [liked, setLiked] = useState(false)
@@ -19,7 +15,8 @@ const Header = ({ user, project }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (project.likers.includes(user._id)) setLiked(true)
+        if (project.likers.includes(user._id))
+            setLiked(true)
         else setLiked(false)
     }, [project.likers, user._id])
 
@@ -28,8 +25,9 @@ const Header = ({ user, project }) => {
 
     useEffect(() => {
         if (user._id)
-            if (project.followers.includes(user._id)) { setFollowed(true) }
-            else { setFollowed(false) }
+            if (project.followers.includes(user._id))
+                setFollowed(true)
+            else setFollowed(false)
     }, [project.followers, user._id])
 
     const follow = () => { dispatch(followProject(project._id, user._id)); setFollowed(true) }
@@ -58,21 +56,21 @@ const Header = ({ user, project }) => {
                         <h2 className="txt-prim text-[16px] max-w-[700px] font-normal">{project.subtitle}</h2>
                         <div className="py-2">
                             <div className="flex items-center py-1 txt-prim">
-                                <FiMapPin className="mr-2" /> <p><Link to="/" className="bold">{project.location} ({project.code_department})</Link></p>
+                                <MdOutlineLocationOn className="mr-2" /> <p><Link to="/" className="bold">{project.location} ({project.code_department})</Link></p>
                             </div>
                             {project.start && !project.end &&
                                 <div className="flex items-center py-1 txt-prim">
-                                    <FiCalendar className="mr-2 txt-sec" /> <p>le <span className="bold">{dateParser(project.start)}</span></p>
+                                    <MdCalendarToday className="mr-2 txt-sec" /> <p>le <span className="bold">{dateParser(project.start)}</span></p>
                                 </div>
                             }
                             {project.end && !project.start &&
                                 <div className="flex items-center py-1 txt-prim">
-                                    <FiCalendar className="mr-2 txt-sec" /> <p>jusqu'au <span className="bold">{dateParser(project.end)}</span></p>
+                                    <MdCalendarToday className="mr-2 txt-sec" /> <p>jusqu'au <span className="bold">{dateParser(project.end)}</span></p>
                                 </div>
                             }
                             {project.end && project.start &&
                                 <div className="flex items-center py-1 txt-prim">
-                                    <FiCalendar className="mr-2 txt-sec" /> <p>du <span className="bold">{dateParser(project.start)}</span> au <span className="bold">{dateParser(project.end)}</span></p>
+                                    <MdCalendarToday className="mr-2 txt-sec" /> <p>du <span className="bold">{dateParser(project.start)}</span> au <span className="bold">{dateParser(project.end)}</span></p>
                                 </div>
                             }
 
@@ -91,13 +89,25 @@ const Header = ({ user, project }) => {
                             })}
                         </div>
                         <div className="flex flex-wrap pt-5">
-                            {user._id === null && <button className="btn action-btn like">Soutenir <IoHeartOutline /></button>}
-                            {user._id && !liked && <button className="btn action-btn like" onClick={like}>Soutenir <IoHeartOutline /></button>}
-                            {user._id && liked && <button className="btn action-btn like" onClick={unlike}>Ne plus soutenir <IoHeart /></button>}
-                            {user._id === null && <button className="btn action-btn follow">Suivre <MdOutlineBookmarkBorder /></button>}
-                            {user._id && !followed && <button className="btn action-btn follow" onClick={follow}>Suivre <MdOutlineBookmarkBorder /></button>}
-                            {user._id && followed && <button className="btn action-btn follow" onClick={unfollow}>Ne plus suivre <MdOutlineBookmark /></button>}
-                            <button className="btn action-btn share" onClick={() => setShare(!share)}>Partager <HiOutlineShare /></button>
+                            {user._id === null &&
+                                <button className="btn action-btn like">Soutenir <MdOutlineFavoriteBorder /></button>
+                            }
+                            {user._id && !liked &&
+                                <button className="btn action-btn like" onClick={like}>Soutenir <MdOutlineFavoriteBorder /></button>
+                            }
+                            {user._id && liked &&
+                                <button className="btn action-btn like" onClick={unlike}>Ne plus soutenir <MdOutlineFavorite /></button>
+                            }
+                            {user._id === null &&
+                                <button className="btn action-btn follow">Suivre <MdOutlineBookmarkBorder /></button>
+                            }
+                            {user._id && !followed &&
+                                <button className="btn action-btn follow" onClick={follow}>Suivre <MdOutlineBookmarkBorder /></button>
+                            }
+                            {user._id && followed &&
+                                <button className="btn action-btn follow" onClick={unfollow}>Ne plus suivre <MdOutlineBookmark /></button>}
+
+                            <button className="btn action-btn share" onClick={() => setShare(!share)}>Partager <MdOutlineShare /></button>
                         </div>
                     </div>
                 </div>

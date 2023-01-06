@@ -103,6 +103,11 @@
         border-radius    : var(--rounded-sm);
         background-color : var(--x-light);
 
+        p {
+            font-size : 14px;
+            color     : var(--text-secondary);
+        }
+
         .card-title {
             display         : flex;
             justify-content : space-between;
@@ -203,7 +208,6 @@
                 color        : var(--primary);
                 font-weight  : 700;
                 font-size    : 18px;
-                margin-right : 5px;
             }
         }
     }
@@ -265,6 +269,11 @@
             &.copy-link {
                 border : 2px solid var(--primary);
                 color  : var(--primary);
+            }
+
+            &:hover {
+                background-color : var(--primary);
+                color            : var(--white);
             }
         }
     }

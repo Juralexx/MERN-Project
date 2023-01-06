@@ -521,10 +521,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   z-index: 10;
 }
 
-.order-2 {
-  order: 2;
-}
-
 .order-1 {
   order: 1;
 }
@@ -561,16 +557,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-}
-
-.my-1 {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-}
-
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
 }
 
 .mb-3 {
@@ -611,10 +597,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .mt-3 {
   margin-top: 0.75rem;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
 }
 
 .mb-4 {
@@ -705,6 +687,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 8px;
 }
 
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -775,10 +761,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-\[350px\] {
   height: 350px;
-}
-
-.h-20 {
-  height: 5rem;
 }
 
 .h-\[90px\] {
@@ -953,12 +935,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: flex-start;
 }
 
-.justify-end {
-  justify-content: flex-end;
-}
-
 .\!justify-end {
   justify-content: flex-end !important;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-center {
@@ -1056,9 +1038,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 1.75rem;
 }
 
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .py-2 {
@@ -1106,19 +1088,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.25rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .py-11 {
   padding-top: 2.75rem;
   padding-bottom: 2.75rem;
-}
-
-.\!py-2 {
-  padding-top: 0.5rem !important;
-  padding-bottom: 0.5rem !important;
-}
-
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 }
 
 .pt-8 {
@@ -1145,6 +1122,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 0.25rem !important;
 }
 
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
 .pb-2 {
   padding-bottom: 0.5rem;
 }
@@ -1159,14 +1140,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pt-2 {
   padding-top: 0.5rem;
-}
-
-.pt-3 {
-  padding-top: 0.75rem;
-}
-
-.\!pt-3 {
-  padding-top: 0.75rem !important;
 }
 
 .text-left {
@@ -1199,14 +1172,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 16px;
 }
 
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .font-normal {
@@ -1227,10 +1200,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .leading-6 {
   line-height: 1.5rem;
-}
-
-.\!leading-6 {
-  line-height: 1.5rem !important;
 }
 
 .leading-4 {
@@ -1351,14 +1320,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (min-width: 992px) {
-  .lg\:order-1 {
-    order: 1;
-  }
-
-  .lg\:order-2 {
-    order: 2;
-  }
-
   .lg\:mr-3 {
     margin-right: 0.75rem;
   }
@@ -1383,14 +1344,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     flex-direction: row;
   }
 
-  .lg\:justify-start {
-    justify-content: flex-start;
-  }
-
-  .lg\:justify-between {
-    justify-content: space-between;
-  }
-
   .lg\:px-2 {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
@@ -1399,11 +1352,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   .lg\:py-7 {
     padding-top: 1.75rem;
     padding-bottom: 1.75rem;
-  }
-
-  .lg\:py-3 {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
   }
 
   .lg\:pr-4 {
@@ -1432,18 +1380,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .lg\:\!pl-7 {
     padding-left: 1.75rem !important;
-  }
-
-  .lg\:pt-14 {
-    padding-top: 3.5rem;
-  }
-
-  .lg\:pl-7 {
-    padding-left: 1.75rem;
-  }
-
-  .lg\:pt-3 {
-    padding-top: 0.75rem;
   }
 
   .lg\:pt-10 {

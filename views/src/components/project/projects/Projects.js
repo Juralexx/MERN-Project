@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { stateToBackground, stateToString } from '../functions'
 import { useClickOutside } from '../../tools/hooks/useClickOutside'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
 import { ClassicInput, DropdownInput, IconInput } from '../../tools/global/Inputs'
 import CategoriesPicker from '../../home/CategoriesPicker'
 import { BiCategoryAlt } from 'react-icons/bi'
-import { BsCaretDownFill, BsFillPeopleFill } from 'react-icons/bs'
+import { BsCaretDownFill } from 'react-icons/bs'
+import { IoAlbumsOutline, IoCalendarClearOutline, IoLocationOutline } from 'react-icons/io5'
+import { dateParser } from '../../Utils'
 
 const Projects = ({ user, websocket, projects, setProjects }) => {
     const [pros, setPros] = useState(projects)
@@ -63,56 +65,58 @@ const Projects = ({ user, websocket, projects, setProjects }) => {
                     </div>
                 </div>
             </div>
-                <div className="container py-11">
-                    <div className="dashboard-projects-tools">
-                        <div>
-                            <div className="infos blue mr-2">Projets en ligne ({(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length})</div>
-                            <div className="infos green">Projects terminés ({(projects.filter(e => e.state === "done")).length})</div>
-                        </div>
-                        <div>
-                            <DropdownInput placeholder="Filtrer" cross readOnly value={filter} className="right ml-3" open={display} clean={() => { setFilter(""); setPros(projects) }}>
-                                <div onClick={() => sortByRecent(projects, setPros, setFilter)}>Plus récent au plus ancien</div>
-                                <div onClick={() => sortByOld(projects, setPros, setFilter)}>Plus ancien au plus récent</div>
-                                <div onClick={() => sortByWorkedOn(projects, setPros, setFilter)}>En préparation</div>
-                                <div onClick={() => sortByInProgress(projects, setPros, setFilter)}>En cours</div>
-                                <div onClick={() => sortByDone(projects, setPros, setFilter)}>Terminé</div>
-                            </DropdownInput>
-                        </div>
+            <div className="container py-11">
+                <div className="dashboard-projects-tools">
+                    <div>
+                        <button>En ligne <span>{(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length}</span></button>
+                        <button>Terminés <span>{(projects.filter(e => e.state === "done")).length}</span></button>
                     </div>
-                    {projects &&
-                        pros.map((element, key) => {
-                            return (
-                                <div className="project-card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
-                                    <div className="project-picture">
-                                        <img src={element.pictures[0]} alt={element.title} />
-                                    </div>
-                                    <div className="project-card-content">
-                                        <div className="project-card-content-top">
-                                            <div className="project-title">
-                                                <h2><NavLink to={`${element.URLID}/${element.URL}`}>{element.title}</NavLink></h2>
-                                                <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
-                                            </div>
-                                            <div className="location">{element.location} - {element.department} ({element.code_department}) - {element.region} | {element.category}</div>
-                                        </div>
-                                        <div className="project-tags">
-                                            {element.tags.slice(0, 5).map((tag, i) => {
-                                                return <div className="tag" key={i}><span>#</span> {tag}</div>
-                                            })}
-                                            {element.tags.length > 5 &&
-                                                <div className="more-tags">+{element.tags.length - 5}</div>
-                                            }
-                                        </div>
-                                        {element.works &&
-                                            <div className="project-card-content-infos">
-                                                <div className="contributors"><BsFillPeopleFill /><p>{element.works.length}</p></div>
-                                            </div>
-                                        }
-                                        <div className="description">{element.description}</div>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                    <div>
+                        <DropdownInput placeholder="Filtrer" cross readOnly value={filter} className="right ml-3" open={display} clean={() => { setFilter(""); setPros(projects) }}>
+                            <div onClick={() => sortByRecent(projects, setPros, setFilter)}>Plus récent au plus ancien</div>
+                            <div onClick={() => sortByOld(projects, setPros, setFilter)}>Plus ancien au plus récent</div>
+                            <div onClick={() => sortByWorkedOn(projects, setPros, setFilter)}>En préparation</div>
+                            <div onClick={() => sortByInProgress(projects, setPros, setFilter)}>En cours</div>
+                            <div onClick={() => sortByDone(projects, setPros, setFilter)}>Terminé</div>
+                        </DropdownInput>
+                    </div>
                 </div>
+                {projects &&
+                    pros.map((element, key) => {
+                        console.log(element)
+                        return (
+                            <div className="project-card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
+                                <div className="project-picture">
+                                    <img src={element.pictures[0]} alt={element.title} />
+                                </div>
+                                <div className="project-card-content">
+                                    <div className="project-card-content-top">
+                                        <h2 className='one_line'>
+                                            <Link to={`${element.URLID}/${element.URL}`}>{element.title}</Link>
+                                        </h2>
+                                        <h3 className='one_line'>{element.subtitle}</h3>
+                                        <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
+                                        <div className="infos_field">
+                                            <IoCalendarClearOutline /> {dateParser(element.createdAt)}
+                                        </div>
+                                        <div className="infos_field">
+                                            <IoLocationOutline /> {element.location} - {element.department} ({element.code_department})
+                                        </div>
+                                        <div className="infos_field">
+                                            <IoAlbumsOutline /> {element.category}
+                                        </div>
+                                    </div>
+                                    <div className="project-tags">
+                                        {element.tags.map((tag, i) => {
+                                            return <div className="tag" key={i}><span>#</span>{tag}</div>
+                                        })}
+                                    </div>
+                                    <div className="description">{element.description}</div>
+                                </div>
+                            </div>
+                        )
+                    })}
+            </div>
         </>
     )
 }

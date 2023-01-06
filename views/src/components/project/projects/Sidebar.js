@@ -3,16 +3,15 @@ import { Link, NavLink } from 'react-router-dom'
 import { addClass } from '../../Utils'
 import { avatar } from '../../tools/hooks/useAvatar'
 import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
-import { BsFillDiagram3Fill, BsFillCaretRightFill } from 'react-icons/bs'
 import { BiTask } from 'react-icons/bi'
-import { GoThreeBars } from 'react-icons/go'
-import { IoClose } from 'react-icons/io5'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 const Sidebar = ({ user, projects, isLoading }) => {
     const [reduced, setReduced] = useState(false)
+    const [hovered, setHovered] = useState(false)
     const [submenu, setSubmenu] = useState(0)
     const localStore = localStorage.getItem("sideState")
-    const isThisActive = ({ isActive }) => (!isActive ? "" : "active")
+    const isThisActive = ({ isActive }) => (!isActive ? "unactive" : "active")
 
     const handleState = () => {
         if (!reduced) {
@@ -27,43 +26,38 @@ const Sidebar = ({ user, projects, isLoading }) => {
     useEffect(() => {
         if (!isLoading)
             if (localStore !== null && localStore === "closed") setReduced(true)
-            else if (localStore !== null && localStore === "closed") setReduced(false)
+            else if (localStore !== null && localStore === "open") setReduced(false)
             else localStorage.setItem("sideState", "open")
     }, [isLoading, localStore])
 
     return (
-        <div className={`sidebar ${addClass(reduced, "reduced")}`}>
-            <div className={`sidebar-header ${addClass(reduced, "reduced")}`}>
+        <div className={`sidebar ${addClass(reduced && !hovered, "reduced")}`}>
+            <div className={`sidebar-header ${addClass(reduced && !hovered, "reduced")}`}>
                 <Link to="/projects">
-                    <div className={`sidebar-header-inner ${addClass(reduced, "reduced")}`}>
-                        <div className="sidebar-header-icon"><BsFillDiagram3Fill /></div>
+                    <div className={`sidebar-header-inner ${addClass(reduced && !hovered, "reduced")}`}>
                         <p>Mes Projets <span>{projects.length}</span></p>
                     </div>
                 </Link>
                 <div className="sidebar-header-toggle" onClick={handleState}>
-                    {reduced ? (
-                        <GoThreeBars />
-                    ) : (
-                        <IoClose />
-                    )}
+                    <IoIosArrowBack /><IoIosArrowBack />
                 </div>
             </div>
             <div className="sidebar-inner custom-scrollbar">
                 {!isLoading ? (
                     projects.map((element, key) => {
                         return (
-                            <div className="sidebar-container" key={key}>
+                            <div className="sidebar-container" key={key} onMouseEnter={() => reduced && setHovered(true)} onMouseLeave={() => reduced && setHovered(false)}>
                                 <NavLink to={`${element.URLID}/${element.URL}`} className={isThisActive}>
-                                    <div className={`sidebar-title ${addClass(reduced, "reduced")}`} onClick={() => setSubmenu(key)}>
+                                    <div className={`sidebar-title ${addClass(reduced && !hovered, "reduced")}`} onClick={() => setSubmenu(key)}>
                                         <div className="sidebar-title-inner">
                                             <div className="sidebar-img" style={avatar(element.pictures[0])}></div>
-                                            <div className={`sidebar-name ${addClass(reduced, "reduced")} one_line`}>{element.title}</div>
+                                            <div className={`sidebar-name ${addClass(reduced && !hovered, "reduced")} one_line`}>{element.title}</div>
                                         </div>
-                                        <div className={`${reduced ? "hidden" : ""}`}><BsFillCaretRightFill /></div>
+                                        <div className={`${reduced && !hovered ? "hidden" : ""}`}><IoIosArrowForward /></div>
                                     </div>
                                 </NavLink>
                                 {submenu === key && (
-                                    <div className={`sidebar-submenu ${addClass(reduced, "reduced")}`}>
+                                    <div className={`sidebar-submenu ${addClass(reduced && !hovered, "reduced")}`}>
                                         <NavLink to={`${element.URLID}/${element.URL}/about`} className={isThisActive}>
                                             <MdOutlineDescription />
                                             <div className="sidebar-submenu-text">À propos</div>
@@ -88,23 +82,21 @@ const Sidebar = ({ user, projects, isLoading }) => {
                 ) : (
                     [...Array(5)].map((_, key) => {
                         return (
-                            <div className={`sidebar-skeleton ${addClass(reduced, "reduced")}`} key={key}>
+                            <div className={`sidebar-skeleton ${addClass(reduced && !hovered, "reduced")}`} key={key}>
                                 <div className="sidebar-skeleton-card">
                                     <div className="sidebar-skeleton-round animate-pulse"></div>
                                     <div className="sidebar-skeleton-text animate-pulse"></div>
                                 </div>
-                                <div className={`${reduced ? "hidden" : "flex"}`}><BsFillCaretRightFill /></div>
+                                <div className={`${reduced && !hovered ? "hidden" : "flex"}`}><IoIosArrowForward /></div>
                             </div>
                         )
                     })
                 )}
             </div>
             {user &&
-                <div className={`sidebar-bottom ${addClass(reduced, "reduced")}`}>
-                    <div className="sidebar-bottom-inner">
-                        <div className="sidebar-bottom-avatar" style={avatar(user.picture)}></div>
-                        <div className="sidebar-bottom-pseudo">{user.pseudo}</div>
-                    </div>
+                <div className={`sidebar-bottom ${addClass(reduced && !hovered, "reduced")}`}>
+                    <div className="sidebar-bottom-avatar" style={avatar(user.picture)}></div>
+                    <div className="sidebar-bottom-pseudo">{user.pseudo}</div>
                 </div>
             }
         </div>

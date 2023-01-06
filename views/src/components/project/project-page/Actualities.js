@@ -34,7 +34,7 @@ const Actualities = ({ project, user }) => {
                                 </div>
                                 <div className="btn_container">
                                     <Button>
-                                        <Link to={element.urlid + "/" + element.url}>Voir<MdArrowForward /></Link>
+                                        <Link to={element.urlid + "/" + element.url}>Voir&nbsp;<MdArrowForward /></Link>
                                     </Button>
                                 </div>
                             </div>
