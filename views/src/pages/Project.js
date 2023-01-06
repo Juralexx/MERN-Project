@@ -41,28 +41,28 @@ const ProjectPage = ({ user, projects }) => {
     const navRef = useRef()
 
     useEffect(() => {
-        if (navRef?.current?.getBoundingClientRect().top > 200) {
-            window.addEventListener('scroll', () => {
-                if (navRef?.current?.getBoundingClientRect().top < 200) {
-                    setDisplayBtn("block")
-                } else setDisplayBtn("none")
-            })
-        }
-    }, [navRef])
+        window.addEventListener('scroll', () => {
+            if (window.matchMedia('(min-width: 993px)').matches && navRef?.current?.getBoundingClientRect().top < 20) {
+                setDisplayBtn("block")
+            } else setDisplayBtn("none")
+        })
+    }, [navRef.current])
 
     return (
         !isLoading &&
         <div className="content_container project-page">
             <Header user={user} project={project} />
             <div className="project-page-body">
-                <div className="container-lg content_nav-sticky overflow-x-auto" ref={navRef}>
-                    <div className="content_nav">
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={isActive}>À propos</NavLink>
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/researches`} className={isActive}>Recherches <span>{project.works.length}</span></NavLink>
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isActive}>Galerie <span>{project.pictures.length}</span></NavLink>
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isActive}>Actualités <span>{project.actualities.length}</span></NavLink>
-                        <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isActive}>FAQ <span>{project.QNA.length}</span></NavLink>
-                        <Button className="ml-auto" style={{ display: displayBtn }}>Rejoindre le projet</Button>
+                <div className='content_nav-sticky' ref={navRef}>
+                    <div className="container-lg">
+                        <div className="content_nav overflow-x-auto custom-scrollbar-x">
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/`} className={isActive}>À propos</NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/researches`} className={isActive}>Recherches <span>{project.works.length}</span></NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`} className={isActive}>Galerie <span>{project.pictures.length}</span></NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`} className={isActive}>Actualités <span>{project.actualities.length}</span></NavLink>
+                            <NavLink to={`/project/${project.URLID}/${project.URL}/qna`} className={isActive}>FAQ <span>{project.QNA.length}</span></NavLink>
+                            <Button className="ml-auto" style={{ display: displayBtn }}>Rejoindre le projet</Button>
+                        </div>
                     </div>
                 </div>
                 <div className="container-lg">
@@ -97,7 +97,7 @@ const ProjectPage = ({ user, projects }) => {
                                 </Routes>
                             }
                         </div>
-                        <div className="content-cards col-lg-4" style={{ maxHeight: getHeight() }}>
+                        <div className="content-cards col-lg-4 custom-scrollbar" style={{ maxHeight: getHeight() }}>
                             {!isLoading &&
                                 <>
                                     <MapCard project={project} user={user} />

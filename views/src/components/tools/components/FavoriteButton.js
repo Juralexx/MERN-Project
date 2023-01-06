@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { favoriteProject, unfavoriteProject } from '../../../actions/project.action';
-import { IconToggle } from '../global/Button';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
 
 const FavoriteButton = ({ project }) => {
@@ -29,19 +28,19 @@ const FavoriteButton = ({ project }) => {
             {!uid &&
                 <div className="favorite-toggle">
                     <p>Ajouter au favoris</p>
-                    <IconToggle icon={<AiOutlineStar />} />
+                    <button><AiOutlineStar /></button>
                 </div>
             }
             {uid && !favorite &&
                 <div className="favorite-toggle" onClick={addFavorite}>
                     <p>Ajouter au favoris</p>
-                    <IconToggle icon={<AiOutlineStar />} />
+                    <button onClick={addFavorite}><AiOutlineStar /></button>
                 </div>
             }
             {uid && favorite &&
                 <div className="favorite-toggle" onClick={pullFavorite}>
                     <p>Retirer des favoris</p>
-                    <IconToggle icon={<AiFillStar />} />
+                    <button onClick={pullFavorite}><AiFillStar /></button>
                 </div>
             }
         </>

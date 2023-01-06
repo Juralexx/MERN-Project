@@ -38,7 +38,7 @@ const TagsSwiper = () => {
     }, [swiper])
 
     return (
-        <div className="home_small_swiper border-b py-7">
+        <div className="home_small_swiper">
             <h2>Les tags les plus populaires</h2>
             <div className="small_swiper mt-3">
                 <div className="nav-buttons">

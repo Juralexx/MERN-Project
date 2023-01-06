@@ -10,10 +10,10 @@ export const Button = (props) => {
 }
 
 export const OutlinedButton = (props) => {
-    const { text, onClick, className, disabled } = props
+    const {children, onClick, className, disabled } = props
     return (
         <button onClick={onClick} className={`${className ? "btn outlined_btn " + className : "btn outlined_btn"}`} disabled={disabled}>
-            {text}
+            {children}
         </button>
     )
 }

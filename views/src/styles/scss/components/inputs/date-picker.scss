@@ -16,7 +16,6 @@
         border        : 2px solid transparent;
         outline       : none;
         cursor        : pointer;
-        box-shadow    : var(--shadow-tiny);
 
         &:focus {
             border     : 2px solid var(--primary);

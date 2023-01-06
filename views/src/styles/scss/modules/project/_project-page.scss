@@ -8,9 +8,8 @@
                 width            : 100%;
                 left             : 50%;
                 transform        : translateX(-50%);
-                height           : 60%;
+                height           : 55%;
                 background-color : var(--x-light);
-                border           : 1px solid var(--light-border);
             }
 
             .header_right-bottom {
@@ -41,11 +40,11 @@
     }
 
     .action-btn {
-        width            : 50%;
         font-weight      : 700;
         border-radius    : var(--rounded-sm);
-        color            : var(--text-secondary);
-        background-color : var(--content-x-light);
+        color            : var(--text);
+        background-color : var(--xx-light);
+        margin           : 5px 7px 5px 0;
 
         svg {
             width       : 22px;
@@ -58,11 +57,14 @@
                 color : var(--red);
             }
         }
-
         &.follow {
-            margin-left : 10px;
             svg {
                 color : var(--green);
+            }
+        }
+        &.share {
+            svg {
+                color : var(--xblue);
             }
         }
     }
@@ -76,6 +78,13 @@
     }
     p {
         font-size : 16px;
+    }
+    .content_nav-sticky {
+        padding : 0;
+        .content_nav {
+            background : var(--content);
+            border     : none;
+        }
     }
 }
 
@@ -92,11 +101,7 @@
         padding          : 20px;
         margin-bottom    : 20px;
         border-radius    : var(--rounded-sm);
-        background-color : var(--content-x-light);
-        border           : 1px solid var(--light-border);
-        &:hover {
-            border : 1px solid var(--primary);
-        }
+        background-color : var(--x-light);
 
         .card-title {
             display         : flex;
@@ -107,7 +112,6 @@
                 text-align     : center;
                 font-weight    : 700;
                 letter-spacing : 0.5px;
-                color          : var(--primary);
             }
 
             .swiper-button {
@@ -118,11 +122,9 @@
                 width           : 28px;
                 padding         : 2px;
                 border-radius   : var(--rounded-sm);
-                box-shadow      : var(--shadow-tiny);
-                color           : var(--primary);
+                background      : var(--content);
                 z-index         : 10;
                 cursor          : pointer;
-                border          : 1px solid var(--primary);
                 &:hover {
                     color            : white;
                     background-color : var(--primary);
@@ -196,7 +198,6 @@
             margin-top    : 10px;
             border-radius : var(--rounded-sm);
             color         : var(--text-secondary);
-            box-shadow    : var(--shadow-tiny);
 
             span {
                 color        : var(--primary);
@@ -204,6 +205,75 @@
                 font-size    : 18px;
                 margin-right : 5px;
             }
+        }
+    }
+}
+
+.share_container {
+    max-width : 992px;
+    margin    : 0 auto;
+    padding   : 30px;
+
+    h3 {
+        font-size     : 23px;
+        line-height   : 30px;
+        font-weight   : 500;
+        text-align    : center;
+        margin-bottom : 20px;
+    }
+
+    .share_buttons_container {
+        display         : flex;
+        justify-content : space-between;
+        flex-wrap       : wrap;
+
+        button {
+            max-width       : 300px;
+            width           : 100%;
+            height          : 50px;
+            margin          : 10px 5px;
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            font-size       : 14px;
+            text-transform  : uppercase;
+            font-weight     : 700;
+            border-radius   : 4px;
+            color           : white;
+
+            svg {
+                margin-right : 10px;
+                width        : 22px;
+                height       : 22px;
+            }
+
+            &.facebook {
+                background-color : var(--facebook);
+            }
+            &.linkedin {
+                background-color : var(--linkedin);
+            }
+            &.pinterest {
+                background-color : var(--pinterest);
+            }
+            &.twitter {
+                background-color : var(--twitter);
+            }
+            &.whatsapp {
+                background-color : var(--whatsapp);
+            }
+            &.copy-link {
+                border : 2px solid var(--primary);
+                color  : var(--primary);
+            }
+        }
+    }
+}
+
+@media(max-width:1200px) {
+    .share_container {
+        .share_buttons_container {
+            justify-content : center;
         }
     }
 }

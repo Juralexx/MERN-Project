@@ -1,68 +1,4 @@
-:root {
-    --body            : #ffffff;
-    --body-rgb        : 255, 255, 255;
-    --body-light      : #F8FAFC;
-    --body-light-rgb  : 248, 250, 252;
-
-    --content         : #F8FAFC;
-    --content-rgb     : 248, 250, 252;
-    --content-light   : #ffffff;
-    --content-x-light : #1A2D48;
-
-    --navbar     : #ffffff;
-    --navbar-rgb : 255, 255, 255;
-    --footer     : #ffffff;
-    --footer-rgb : 255, 255, 255;
-
-    --text           : #475569;
-    --text-secondary : #0F172B;
-    --text-tertiary  : #0F172B;
-
-    --light-border : #E2E8F0;
-
-    --input       : #ffffff;
-    --input-text  : #696969;
-    --placeholder : #9a9fa7;
-    
-    --modal-cover : rgba(0, 0, 0, 0.5);
-
-    --tooltip : var(--body);
-}
-
-.dark {
-    --body            : #0b1120;
-    --body-rgb        : 11, 17, 32;
-    --body-light      : #0A192F;
-    --body-light-rgb  : 10, 25, 47;
-
-    --content         : #182131;
-    --content-rgb     : 24, 33, 49;
-    --content-light   : #253043;
-    --content-x-light : #475569;
-
-    --navbar     : #0A192F;
-    --navbar-rgb : 10, 25, 47;
-    --footer     : #0A192F;
-    --footer-rgb : 10, 25, 47;
-
-    --input : #272b31;
-
-    --text           : #c8d2de;
-    --text-secondary : #A4B1DC;
-    --text-tertiary  : #ffffff;
-    
-    --light-border : rgb(255 255 255/0.1);
-
-    --input       : #ffffff;
-    --input-text  : #ffffff;
-    --placeholder : #b6bac0;
-    
-    --modal-cover : rgba(0, 0, 0, 0.3);
-
-    --tooltip : var(--body);
-}
-
-:root, .dark {
+:root,.dark {
     --slate            : #8892b0;
     --slate-rgb        : 136, 146, 176;
     --dark-slate       : #495670;
@@ -209,6 +145,7 @@
     --youtube   : #e91e00;
     --twitch    : #9147ff;
     --pinterest : #cb2229;
+    --whatsapp  : #25D366;
     --linkedin  : #007bb6;
     --website   : var(--primary);
 
@@ -234,27 +171,27 @@
     --content-x-light : #ffffff;
     --navbar          : #ffffff;
 
-    --text            : #434343;
-    --text-secondary  : #7a7a7a;
-    --text-tertiary   : #aaa9a9;
+    --text           : #434343;
+    --text-secondary : #7a7a7a;
+    --text-tertiary  : #aaa9a9;
 
-    --light-border    : #DCDEDD;
-    --input           : var(--xx-light);
-    --input-text      : #696969;
-    --placeholder     : #9a9fa7;
-    --svg             : #9a9fa7;
-    --light           : #F0F2FA;
-    --x-light         : #F0F2FA;
-    --xx-light        : #ffffff;
-    --navbar-txt      : #232221;
-    --mini_nav-btn    : #F0F2FA;
-    --menu            : #ffffff;
-    --modal-cover     : rgba(0, 0, 0, 0.5);
-    --tooltip         : #222121;
+    --light-border : #DCDEDD;
+    --input        : var(--xx-light);
+    --input-text   : #696969;
+    --placeholder  : #9a9fa7;
+    --svg          : #9a9fa7;
+    --light        : #F0F2FA;
+    --x-light      : #F0F2FA;
+    --xx-light     : #ffffff;
+    --navbar-txt   : #232221;
+    --mini_nav-btn : #F0F2FA;
+    --menu         : #ffffff;
+    --modal-cover  : rgba(0, 0, 0, 0.5);
+    --tooltip      : #222121;
 
-    --color-skeleton  : rgb(203, 213, 225);
-    --shadow-light    : 0 5px 50px 0px rgb(0 0 0 / 0.07), 0 8px 10px -6px rgb(0 0 0 / 0.07);
-    --shadow-tiny     : rgb(35 34 33 / 17%) 0px 1px 4px 1px;
+    --color-skeleton : rgb(203, 213, 225);
+    --shadow-light   : 0 5px 50px 0px rgb(0 0 0 / 0.07), 0 8px 10px -6px rgb(0 0 0 / 0.07);
+    --shadow-tiny    : rgb(35 34 33 / 17%) 0px 1px 4px 1px;
 }
 
 .dark {
@@ -263,28 +200,28 @@
     --content-light   : #1a1d22;
     --content-x-light : #020203;
     --input           : #272b31;
-    --navbar          : #272b31;
+    --navbar          : #141619;
+    --mini_nav-btn    : #141619;
     --light           : #1a1d22;
     --x-light         : #272b31;
     --xx-light        : #30343a;
-    --mini_nav-btn    : #141619;
 
-    --text            : #ffffff;
-    --text-secondary  : rgba(255, 255, 255, 0.7);
-    --text-tertiary   : rgba(255, 255, 255, 0.5);
+    --text           : #c8d2de;
+    --text-secondary : #b2b9d2;
+    --text-tertiary  : #ffffff;
 
-    --svg             : #abb9c9;
-    --light-border    : rgba(255, 255, 255, 0.2);
-    --input-text      : #ffffff;
-    --placeholder     : #b6bac0;
-    --navbar-txt      : #EDF8FC;
-    --menu            : #1a1d22;
-    --modal-cover     : rgba(255, 255, 255, 0.05);
-    --tooltip         : #161616;
+    --svg          : #abb9c9;
+    --light-border : rgba(255, 255, 255, 0.2);
+    --input-text   : #ffffff;
+    --placeholder  : #b6bac0;
+    --navbar-txt   : #EDF8FC;
+    --menu         : #1a1d22;
+    --modal-cover  : rgba(255, 255, 255, 0.05);
+    --tooltip      : #161616;
 
-    --color-skeleton  : linear-gradient(-90deg, rgb(57, 58, 60) 0%, rgb(48, 50, 54) 50%, rgb(57, 58, 60) 100%);
-    --shadow-light    : 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);
-    --shadow-tiny     : rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
+    --color-skeleton : linear-gradient(-90deg, rgb(57, 58, 60) 0%, rgb(48, 50, 54) 50%, rgb(57, 58, 60) 100%);
+    --shadow-light   : 0 20px 25px -5px rgb(0 0 0 / 0), 0 8px 10px -6px rgb(0 0 0 / 0);
+    --shadow-tiny    : rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
 }
 
 :root, .dark {

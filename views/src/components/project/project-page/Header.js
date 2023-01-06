@@ -3,16 +3,19 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { dateParser } from '../../Utils'
 import { projectPicture } from '../../tools/hooks/useAvatar'
+import { MediumAvatar } from '../../tools/global/Avatars'
+import Share from './Share'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../../actions/project.action'
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
 import { MdOutlineBookmark, MdOutlineBookmarkBorder } from 'react-icons/md'
 import { FiMapPin } from 'react-icons/fi'
 import { FiCalendar } from 'react-icons/fi'
-import { SmallAvatar } from '../../tools/global/Avatars'
+import { HiOutlineShare } from 'react-icons/hi'
 
 const Header = ({ user, project }) => {
     const [liked, setLiked] = useState(false)
     const [followed, setFollowed] = useState(false)
+    const [share, setShare] = useState(false)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -33,7 +36,7 @@ const Header = ({ user, project }) => {
     const unfollow = () => { dispatch(unfollowProject(project._id, user._id)); setFollowed(false) }
 
     return (
-        <div className="header lg:pt-14">
+        <div className="header lg:pt-10">
             <img className="block lg:hidden h-auto max-h-[430px] object-cover w-full" src={project.pictures[0]} alt={project.title} />
             <div className="container-lg">
                 <div className="mx-auto py-4 lg:py-7 relative text-left lg:text-center">
@@ -41,21 +44,18 @@ const Header = ({ user, project }) => {
                     <p className="text-[16px]">{project.category}</p>
                 </div>
                 <div className="header-inner row relative xl:px-7 py-3">
-                    <div className="col-12 col-lg-7 z-10 order-2 lg:order-1">
+                    <div className="col-12 col-lg-7 z-10">
                         <div className="hidden lg:block h-[350px] w-full relative" style={projectPicture(project.pictures[0])}></div>
-                        <div className="header_left-bottom txt-sec flex justify-between py-3">
-                            <div>
-                                <p>Créé par</p>
-                                <Link to={"/" + project.posterPseudo} className="flex items-center bold">
-                                    <SmallAvatar pic={project.posterAvatar} className="mr-2" />
-                                    {project.posterPseudo}
-                                </Link>
-                            </div>
+                        <div className="hidden lg:flex txt-sec justify-between py-3">
+                            <Link to={"/" + project.posterPseudo} className="flex items-center bold ml-2">
+                                <MediumAvatar pic={project.posterAvatar} className="mr-2" />
+                                {project.posterPseudo}
+                            </Link>
                             <div>le {dateParser(project.createdAt)}</div>
                         </div>
                     </div>
-                    <div className="col-12 col-lg-5 order-1 lg:order-2 lg:pl-7">
-                        <h2 className="txt-prim text-[16px] max-w-[700px]">{project.subtitle}</h2>
+                    <div className="col-12 col-lg-5 order-1">
+                        <h2 className="txt-prim text-[16px] max-w-[700px] font-normal">{project.subtitle}</h2>
                         <div className="py-2">
                             <div className="flex items-center py-1 txt-prim">
                                 <FiMapPin className="mr-2" /> <p><Link to="/" className="bold">{project.location} ({project.code_department})</Link></p>
@@ -72,26 +72,36 @@ const Header = ({ user, project }) => {
                             }
                             {project.end && project.start &&
                                 <div className="flex items-center py-1 txt-prim">
-                                    <FiCalendar className="mr-2 txt-sec" /> <p>du <span className="bold">{dateParser(project.start)}</span> au <span>{dateParser(project.end)}</span></p>
+                                    <FiCalendar className="mr-2 txt-sec" /> <p>du <span className="bold">{dateParser(project.start)}</span> au <span className="bold">{dateParser(project.end)}</span></p>
                                 </div>
                             }
+
+                            <div className="lg:hidden flex txt-sec justify-start pt-3 mb-6">
+                                <Link to={"/" + project.posterPseudo} className="flex items-center bold text-base mr-2">
+                                    <MediumAvatar pic={project.posterAvatar} className="mr-2" />
+                                    {project.posterPseudo}
+                                </Link>
+                                <div className='flex items-center'>- le {dateParser(project.createdAt)}</div>
+                            </div>
                         </div>
                         <div className="btn join-btn">Rejoindre le projet</div>
                         <div className="project-tags">
                             {project.tags.map((tag, i) => {
-                                return <div className="tag" key={i}><span>#</span> {tag}</div>
+                                return <div className="tag" key={i}><span>#</span>{tag}</div>
                             })}
                         </div>
-                        <div className="flex pt-5">
+                        <div className="flex flex-wrap pt-5">
                             {user._id === null && <button className="btn action-btn like">Soutenir <IoHeartOutline /></button>}
                             {user._id && !liked && <button className="btn action-btn like" onClick={like}>Soutenir <IoHeartOutline /></button>}
                             {user._id && liked && <button className="btn action-btn like" onClick={unlike}>Ne plus soutenir <IoHeart /></button>}
                             {user._id === null && <button className="btn action-btn follow">Suivre <MdOutlineBookmarkBorder /></button>}
                             {user._id && !followed && <button className="btn action-btn follow" onClick={follow}>Suivre <MdOutlineBookmarkBorder /></button>}
                             {user._id && followed && <button className="btn action-btn follow" onClick={unfollow}>Ne plus suivre <MdOutlineBookmark /></button>}
+                            <button className="btn action-btn share" onClick={() => setShare(!share)}>Partager <HiOutlineShare /></button>
                         </div>
                     </div>
                 </div>
+                <Share share={share} />
             </div>
         </div>
     )

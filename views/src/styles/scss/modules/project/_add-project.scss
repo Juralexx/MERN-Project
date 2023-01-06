@@ -11,8 +11,7 @@
             height          : 64px;
             width           : 100%;
             padding         : 0 20px;
-            background      : var(--navbar);
-            border-bottom   : 1px solid var(--light-border);
+            background      : var(--content-light);
             z-index         : 900;
 
             .logo_container {
@@ -49,25 +48,25 @@
             position      : relative;
             top           : 64px;
             width         : 100%;
-            background    : var(--navbar);
+            background    : var(--content-light);
             box-shadow    : var(--shadow-light);
-            border-bottom : 1px solid var(--primary);
+            border-bottom : 1px solid var(--light-border);
             z-index       : 800;
 
             .header-bottom-container {
                 position        : relative;
                 display         : flex;
                 justify-content : center;
-                height          : 66px;
+                height          : 56px;
 
                 .header-bottom-item {
                     position        : relative;
                     display         : flex;
-                    flex-direction  : column;
                     justify-content : center;
                     align-items     : center;
                     height          : 100%;
-                    width           : 150px;
+                    width           : auto;
+                    padding         : 0 20px;
                     color           : var(--text);
                     overflow-y      : hidden;
                     cursor          : pointer;
@@ -79,18 +78,18 @@
                         transform        : translateX(-50%);
                         bottom           : -7px;
                         width            : 0;
-                        height           : 10px;
+                        height           : 9px;
                         border-radius    : 20px;
                         background-color : transparent;
                         transition       : 0.2s ease;
                     }
 
                     svg {
-                        width         : 18px;
-                        height        : 18px;
-                        margin-bottom : 7px;
-                        color         : var(--navbar-txt);
-                        transition    : 0.2s ease;
+                        width        : 18px;
+                        height       : 18px;
+                        color        : var(--navbar-txt);
+                        margin-right : 7px;
+                        transition   : 0.2s ease;
                     }
 
                     p {
@@ -143,7 +142,7 @@
 
         h2 {
             color     : var(--text-secondary);
-            font-size : 20px;
+            font-size : 18px;
             max-width : 800px;
             margin    : 0 auto;
         }
@@ -196,6 +195,34 @@
             position : relative;
             width    : 100%;
         }
+
+        .tags-container {
+            display     : flex;
+            align-items : center;
+            flex-wrap   : wrap;
+            padding-top : 20px;
+    
+            .tag {
+                display       : flex;
+                align-items   : center;
+                padding       : 5px 10px;
+                margin        : 5px 5px 5px 0;
+                border-radius : var(--rounded-sm);
+                color         : var(--text-secondary);
+                background    : var(--x-light);
+    
+                span {
+                    color        : var(--primary);
+                    font-weight  : 700;
+                    font-size    : 18px;
+                    margin-right : 5px;
+                }
+                svg {
+                    margin-left : 5px;
+                    cursor      : pointer;
+                }
+            }
+        }
     }
 }
 
@@ -206,6 +233,17 @@
                 .header-top-right {
                     button {
                         margin : 0 5px;
+                    }
+                }
+            }
+            .add-project-header-bottom {
+                .header-bottom-container {
+                    .header-bottom-item {
+                        flex-direction : column;
+                        svg {
+                            margin-bottom : 7px;
+                            margin-right  : 0;
+                        }
                     }
                 }
             }
@@ -238,6 +276,13 @@
         .add-project-header {
             .add-project-header-top {
                 padding : 0 7px;
+            }
+            .add-project-header-bottom {
+                .header-bottom-container {
+                    .header-bottom-item {
+                        padding : 0 12px;
+                    }
+                }
             }
         }
     }

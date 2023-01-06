@@ -139,7 +139,7 @@ const Edit = ({ project }) => {
             }
             fetchGeolocalisation()
         }
-    }, [project.location, locationChanged])
+    }, [project.location, location, locationChanged])
 
     return (
         <div className="content_container edit-project">

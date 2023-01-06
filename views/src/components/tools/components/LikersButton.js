@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { likeProject, unlikeProject } from '../../../actions/project.action';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
-import { IconToggle } from "../global/Button";
 
 const LikersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)
@@ -43,19 +42,19 @@ const LikersButton = ({ project, onClick }) => {
         <>
             {uid === null &&
                 <div className="action-btn like">
-                    <IconToggle icon={<IoHeartOutline />} />
+                    <button><IoHeartOutline /></button>
                     <p>{action}</p>
                 </div>
             }
             {uid && !liked &&
                 <div className="action-btn like">
-                    <IconToggle icon={<IoHeartOutline />} onClick={like} />
+                    <button onClick={like}><IoHeartOutline /></button>
                     <p onClick={onClick}>{action}</p>
                 </div>
             }
             {uid && liked &&
                 <div className="action-btn like">
-                    <IconToggle icon={<IoHeart />} onClick={unlike} />
+                    <button onClick={unlike}><IoHeart /></button>
                     <p onClick={onClick}>{action}</p>
                 </div>
             }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { geoJSONStructure, geolocToFloat } from '../../Utils'
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
@@ -28,7 +27,7 @@ const MapCard = ({ project }) => {
     return (
         <div className="content-card map_card">
             <div className="card-title">
-                <Link to={`/project/${project.URLID}/${project.URL}/actuality`}><h3>{project.location} ({project.code_department})</h3></Link>
+                <h3>{project.location} ({project.code_department})</h3>
             </div>
             <div className="card-body">
                 <MapContainer

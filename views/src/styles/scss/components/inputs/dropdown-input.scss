@@ -10,7 +10,7 @@
     input {
         padding            : 10px;
         color              : var(--input-text);
-        background         : var(--content-x-light);
+        background         : var(--input);
         border-radius      : var(--rounded-sm);
         outline            : none;
         cursor             : pointer;
@@ -37,15 +37,15 @@
     }
 
     .dropdown-input-choices {
-        position         : absolute;
-        left             : 0;
-        width            : 100%;
-        margin-top       : 5px;
-        padding          : 5px;
-        background-color : var(--content-x-light);
-        z-index          : 700;
-        box-shadow       : var(--shadow-xl);
-        border-radius    : var(--rounded-sm);
+        position      : absolute;
+        left          : 0;
+        width         : 100%;
+        margin-top    : 5px;
+        padding       : 5px;
+        background    : var(--input);
+        z-index       : 700;
+        box-shadow    : var(--shadow-xl);
+        border-radius : var(--rounded-sm);
 
         div {
             padding       : 8px 12px;

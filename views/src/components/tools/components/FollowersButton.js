@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { followProject, unfollowProject } from "../../../actions/project.action";
 import { UidContext } from "../../AppContext";
 import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md'
-import { IconToggle } from "../global/Button";
 
 const FollowersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)
@@ -43,19 +42,19 @@ const FollowersButton = ({ project, onClick }) => {
         <>
             {uid === null &&
                 <div className="action-btn follow">
-                    <IconToggle icon={<MdOutlineBookmarkBorder />} />
+                    <button><MdOutlineBookmarkBorder /></button>
                     <p>{action}</p>
                 </div>
             }
             {uid && !followed &&
                 <div className="action-btn follow">
-                    <IconToggle icon={<MdOutlineBookmarkBorder />} onClick={follow} />
+                    <button onClick={follow}><MdOutlineBookmarkBorder /></button>
                     <p onClick={onClick}>{action}</p>
                 </div>
             }
             {uid && followed &&
                 <div className="action-btn follow">
-                    <IconToggle icon={<MdOutlineBookmark />} onClick={unfollow} />
+                    <button onClick={unfollow}><MdOutlineBookmark /></button>
                     <p onClick={onClick}>{action}</p>
                 </div>
             }

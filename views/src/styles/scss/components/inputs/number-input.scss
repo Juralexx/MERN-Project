@@ -9,10 +9,13 @@
     border        : 2px solid transparent;
     outline       : none;
     z-index       : 10;
-    box-shadow    : var(--shadow-tiny);
 
     &:focus {
         border : 2px solid var(--primary);
+    }
+
+    &:focus-visible {
+        outline : none;
     }
 
     &::placeholder {

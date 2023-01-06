@@ -21,33 +21,27 @@
         font-weight     : 500;
 
         .title {
-            font-size : 20px;
+            font-size : 18px;
         }
     }
 
     .notifications-navbar {
-        display       : flex;
-        width         : 100%;
-        padding       : 0 0 10px;
-        margin-bottom : 16px;
-        color         : var(--text);
-        border-bottom : 1px solid var(--content-light);
+        display : flex;
+        width   : 100%;
+        padding : 0 0 10px;
+        color   : var(--text);
 
         .navlink {
-            padding          : 3px 10px;
+            padding          : 2px 12px;
+            cursor           : pointer;
             background-color : var(--content-light);
             border-radius    : var(--rounded-sm);
-            background       : var(--x-light);
             border           : 1px solid var(--light-border);
-            cursor           : pointer;
-
-            &:hover {
-                background : var(--x-light);
-            }
 
             &.active {
                 background-color : var(--primary);
                 color            : white;
+                border           : 1px solid transparent;
             }
 
             &:nth-child(2) {
@@ -59,15 +53,14 @@
     .empty-notifications {
         display     : flex;
         align-items : center;
-        justify-content: center;
-        padding     : 0 8px;
         color       : var(--text);
         font-size   : 14px;
+        margin-top  : 10px;
 
         svg {
-            width        : 30px;
-            height       : 30px;
-            margin-right : 20px;
+            width        : 22px;
+            height       : 22px;
+            margin-right : 10px;
         }
     }
 }

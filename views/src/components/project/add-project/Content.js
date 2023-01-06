@@ -29,7 +29,7 @@ const Content = ({ content, setContent }) => {
                 </div>
             </div>
             <div className="content-form">
-                <p className="title min-w-[100%]">Description de votre projet <span>Champ requis</span></p>
+                <p className="title min-w-[100%] flex !justify-end"><span>Champ requis</span></p>
                 <div className="text-editor">
                     <EditorToolbar />
                     <ReactQuill

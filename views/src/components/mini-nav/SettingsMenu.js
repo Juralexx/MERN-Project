@@ -73,7 +73,7 @@ const SettingsMenu = ({ open, user, websocket, onlineUsers }) => {
                         <>
                             <div className="settings-menu-header">
                                 <ImArrowLeft2 onClick={() => { setValue(0) }} />
-                                <div className="brand">Affichage</div>
+                                Affichage
                             </div>
                             <ul className="settings-menu-ul">
                                 <li className="settings-menu-li">

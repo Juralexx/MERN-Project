@@ -26,7 +26,7 @@
             font-weight     : 500;
 
             .title {
-                font-size : 22px;
+                font-size : 18px;
             }
 
             .menu {
@@ -36,21 +36,22 @@
         }
 
         .messages-navbar {
-            display       : flex;
-            width         : 100%;
-            padding       : 0 0 10px;
-            color         : var(--text);
+            display : flex;
+            width   : 100%;
+            padding : 0 0 10px;
+            color   : var(--text);
 
             .navlink {
-                padding          : 4px 12px;
+                padding          : 2px 12px;
                 cursor           : pointer;
                 background-color : var(--content-light);
                 border-radius    : var(--rounded-sm);
-                box-shadow    : var(--shadow-tiny);
+                border           : 1px solid var(--light-border);
 
                 &.active {
                     background-color : var(--primary);
                     color            : white;
+                    border           : 1px solid transparent;
                 }
 
                 &:nth-child(2) {
@@ -79,17 +80,15 @@
         padding : 10px 0;
 
         .empty-messages {
-            display         : flex;
-            align-items     : center;
-            justify-content : center;
-            padding         : 0 8px;
-            color           : var(--text);
-            font-size       : 14px;
+            display     : flex;
+            align-items : center;
+            color       : var(--text);
+            font-size   : 14px;
     
             svg {
-                width        : 30px;
-                height       : 30px;
-                margin-right : 20px;
+                width        : 22px;
+                height       : 22px;
+                margin-right : 10px;
             }
         }
     }

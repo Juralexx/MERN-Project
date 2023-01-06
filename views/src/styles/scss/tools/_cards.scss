@@ -35,7 +35,7 @@
     }
 
     .card-body {
-        padding : 12px 16px;
+        padding : 12px 18px;
 
         .card-title {
             display        : flex;
@@ -43,12 +43,16 @@
             padding-bottom : 10px;
             border-bottom  : 1px solid var(--light-border);
 
+            h4 {
+                font-size   : 16px;
+                line-height : 20px;
+            }
+
             p {
                 display       : flex;
                 align-items   : center;
                 font-size     : 12px;
                 color         : var(--text-secondary);
-                margin-bottom : 3px;
 
                 svg {
                     margin-right : 5px;
@@ -56,42 +60,35 @@
             }
         }
 
-        .description {
+        .card-description {
             padding            : 8px 0;
             margin-bottom      : 14px;
             font-size          : 14px;
-            height             : 79px;
+            height             : 70px;
             text-overflow      : ellipsis;
             overflow           : hidden;
             width              : 100%;
-            line-height        : 24px;
+            line-height        : 20px;
             display            : -webkit-box;
             -webkit-line-clamp : 3;
             -webkit-box-orient : vertical;
-            color              : var(--text-secondary);
+            color              : var(--text);
         }
 
         .card-footer {
-
             .footer-left {
-
                 .action-btn {
                     position    : relative;
                     display     : flex;
                     align-items : center;
 
-                    .icon_toggle {
-                        margin-right : 8px;
-                        box-shadow   : var(--shadow-tiny);
-                    }
-
                     &.like {
-                        .icon_toggle {
-                            background-color : rgba(var(--red-rgb), 0.1);
-                        }
                         svg {
+                            height : 18px;
+                            width  : 18px;
                             fill   : var(--red);
                             stroke : var(--red);
+                            margin : 5px 8px 5px 0;
                         }
 
                         &:hover {
@@ -101,13 +98,12 @@
                         }
                     }
                     &.follow {
-                        margin-top : 10px;
-                        .icon_toggle {
-                            background-color : rgba(var(--green-rgb), 0.1);
-                        }
                         svg {
+                            height : 18px;
+                            width  : 18px;
                             fill   : var(--green);
                             stroke : var(--green);
+                            margin : 5px 8px 5px 0;
                         }
 
                         &:hover {
@@ -140,25 +136,30 @@
 }
 
 .favorite-toggle {
-    position         : absolute;
-    top              : 130px;
-    right            : 8px;
-    display          : flex;
-    align-items      : center;
-    background-color : var(--content-x-light);
-    border-radius    : 30px;
-    box-shadow       : var(--shadow-tiny);
+    position        : absolute;
+    top             : 130px;
+    right           : 8px;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    padding         : 7px;
+    background      : var(--content);
+    border-radius   : 30px;
+    box-shadow      : var(--shadow-tiny);
 
     svg {
-        fill : var(--yellow);
+        fill    : var(--yellow);
+        width   : 20px;
+        height  : 20px;
     }
 
     p {
-        position    : absolute;
-        opacity     : 0;
-        visibility  : hidden;
-        font-size   : 13px;
-        white-space : nowrap;
+        position     : absolute;
+        opacity      : 0;
+        visibility   : hidden;
+        font-size    : 13px;
+        white-space  : nowrap;
+        margin-right : 7px;
     }
 
     &:hover {

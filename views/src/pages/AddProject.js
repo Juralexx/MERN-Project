@@ -295,7 +295,7 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button onClick={() => setNav(1)}>Suivant : Description<HiOutlineArrowNarrowRight /></Button>
+                                <Button onClick={() => setNav(1)}>Suivant : Description&nbsp;<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -310,8 +310,8 @@ const AddProject = ({ user }) => {
                                 setContent={setContent}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(0)}><HiOutlineArrowNarrowLeft />Retour : Les bases</Button>
-                                <Button onClick={() => setNav(2)}>Suivant : Galerie<HiOutlineArrowNarrowRight /></Button>
+                                <Button className="mr-2" onClick={() => setNav(0)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Les bases</Button>
+                                <Button onClick={() => setNav(2)}>Suivant : Galerie&nbsp;<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -328,8 +328,8 @@ const AddProject = ({ user }) => {
                                 setFiles={setFiles}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(1)}><HiOutlineArrowNarrowLeft />Retour : Description</Button>
-                                <Button onClick={() => setNav(3)}>Suivant : Équipe<HiOutlineArrowNarrowRight /></Button>
+                                <Button className="mr-2" onClick={() => setNav(1)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Description</Button>
+                                <Button onClick={() => setNav(3)}>Suivant : Équipe&nbsp;<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -352,8 +352,8 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(2)}><HiOutlineArrowNarrowLeft />Retour : Galerie</Button>
-                                <Button onClick={() => setNav(4)}>Suivant : FAQ<HiOutlineArrowNarrowRight /></Button>
+                                <Button className="mr-2" onClick={() => setNav(2)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Galerie</Button>
+                                <Button onClick={() => setNav(4)}>Suivant : FAQ&nbsp;<HiOutlineArrowNarrowRight /></Button>
                             </div>
                         </>
                     }
@@ -376,7 +376,7 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(3)}><HiOutlineArrowNarrowLeft />Retour : Équipe</Button>
+                                <Button className="mr-2" onClick={() => setNav(3)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Équipe</Button>
                                 <Button onClick={handleAddProject}>Enregistrer et publier</Button>
                             </div>
                         </>

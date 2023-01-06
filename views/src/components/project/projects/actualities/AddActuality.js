@@ -10,7 +10,7 @@ import { FaCheck } from 'react-icons/fa'
 import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
 import { randomNbLtID, removeAccents } from '../../../Utils'
 import { useDispatch } from 'react-redux'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { createActuality } from '../../../../actions/project.action'
 
 const AddActuality = ({ project, user }) => {

@@ -18,12 +18,12 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, 
             <div className="card-body">
                 <Link to={"/project/" + element.URLID + "/" + element.URL}>
                     <div className="card-title">
-                        <h4 className="one_line mb-2 !leading-6">{element.title}</h4>
+                        <h4 className="one_line mb-2">{element.title}</h4>
                         <p><FaMapMarkerAlt />{element.location + ", " + element.department}</p>
                         <p><IoAlbums />{element.category}</p>
                     </div>
                 </Link>
-                <div className="three_lines text-sec py-2 mb-2 !leading-6 h-20"><p>{element.description}</p></div>
+                <div className="card-description"><p>{element.description}</p></div>
                 <div className="card-footer flex col-12">
                     <div className="footer-left col-8">
                         <LikersButton project={element} onClick={() => {

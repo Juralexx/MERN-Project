@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 

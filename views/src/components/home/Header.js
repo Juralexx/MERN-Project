@@ -38,18 +38,18 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
 
     return (
         <div id="header">
-            <div className="container pt-8">
+            <div className="container py-8">
                 <div className="header_container row">
                     <div className="col-12 col-lg-6 lg:pr-5">
                         <h1><span>Donner vie</span><br />aux bonnes idées</h1>
                         <p>Circa hos dies Lollianus primae lanuginis adulesce, lampadi filius ex praefecto, exploratius causam Maximino spectante.</p>
-                        <Button className="btn_icon_start mt-5">
+                        <Button className="btn_icon_start">
                             <Link to="/add-project">
                                 <AiOutlinePlus />Déposer un projet
                             </Link>
                         </Button>
                     </div>
-                    <div className="col-12 col-lg-6 pt-5 lg:pt-0 lg:pl-5 relative">
+                    <div className="col-12 col-lg-6 pt-5 lg:pt-0 lg:pl-5 relative flex flex-col justify-center">
                         <IconInput
                             className="is_start_icon mb-3"
                             placeholder="Rechercher un projet"
@@ -108,7 +108,7 @@ const Header = ({ user, search, category, setCategory, location, setLocation, re
                                 </div>
                             </div>
                         }
-                        <div className="btn-container flex justify-between items-center py-3">
+                        <div className="btn-container flex justify-between items-center pt-3">
                             <div className="hidden sm:flex">
                                 <TextButton className="btn_icon_start primary mr-2" onClick={() => setOpenMapModal(true)}><GiFrance />Voir la carte</TextButton>
                                 <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}

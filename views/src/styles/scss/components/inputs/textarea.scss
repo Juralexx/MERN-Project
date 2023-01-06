@@ -10,11 +10,14 @@
     border-radius : var(--rounded-sm);
     border        : 2px solid transparent;
     outline       : none;
-    box-shadow    : var(--shadow-tiny);
 
     &:focus {
         border     : 2px solid var(--primary);
         box-shadow : none;
+    }
+
+    &:focus-visible {
+        outline : none;
     }
 
     &::placeholder {

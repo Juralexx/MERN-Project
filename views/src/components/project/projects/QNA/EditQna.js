@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { updateQNA } from '../../../../actions/project.action'
 import { Button, TextButton } from '../../../tools/global/Button'
 import { ErrorCard } from '../../../tools/global/Error'

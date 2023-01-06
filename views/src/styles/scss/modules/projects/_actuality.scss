@@ -8,9 +8,8 @@
         height        : auto;
         margin-bottom : 20px;
         padding       : 25px;
-        background    : var(--content-x-light);
+        background    : var(--x-light);
         cursor        : pointer;
-        box-shadow    : var(--shadow-tiny);
 
         .actuality-header {
             padding-bottom : 20px;
@@ -94,7 +93,7 @@
                     content    : '';
                     height     : 100px;
                     width      : 100%;
-                    background : linear-gradient(to top, var(--content-x-light) 0%, rgba(0, 0, 0, 0) 100%);
+                    background : linear-gradient(to top, var(--x-light) 0%, rgba(0, 0, 0, 0) 100%);
                     z-index    : 2;
                 }
             }

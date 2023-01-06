@@ -27,7 +27,7 @@ const CategoriesPicker = ({ open, setOpen, setCategory, category, className }) =
                     {categories.slice(0, 4).map((category, key) => {
                         return (
                             <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
-                                {category.name} <ImArrowRight2 />
+                                {category.name}
                             </div>
                         )
                     })}
@@ -36,7 +36,7 @@ const CategoriesPicker = ({ open, setOpen, setCategory, category, className }) =
                     {categories.slice(4, 8).map((category, key) => {
                         return (
                             <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
-                                {category.name} <ImArrowRight2 />
+                                {category.name}
                             </div>
                         )
                     })}
@@ -45,7 +45,7 @@ const CategoriesPicker = ({ open, setOpen, setCategory, category, className }) =
                     {categories.slice(8, 12).map((category, key) => {
                         return (
                             <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
-                                {category.name} <ImArrowRight2 />
+                                {category.name}
                             </div>
                         )
                     })}
@@ -54,7 +54,7 @@ const CategoriesPicker = ({ open, setOpen, setCategory, category, className }) =
                     {categories.slice(12, categories.length).map((category, key) => {
                         return (
                             <div className={`categories_item ${isActive(active === category.name, "active")}`} onClick={e => handleCategory(e, category.name)} data-category={category.name} key={key}>
-                                {category.name} <ImArrowRight2 />
+                                {category.name}
                             </div>
                         )
                     })}

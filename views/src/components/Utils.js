@@ -62,6 +62,7 @@ export const randomNbID = (max) => {
  */
 
 export const onlyLettersSpacesAndDashes = (string) => {
+     // eslint-disable-next-line
     const regexp = new RegExp(/^[A-Za-z\s\-]+$/)
     if (regexp.test(string)) return true
     else return false
@@ -82,6 +83,7 @@ export const onlyLettersNumbersAndDashes = (string) => {
  */
 
 export const isEmailValid = (email) => {
+     // eslint-disable-next-line
     const regexp = new RegExp(/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i)
     if (regexp.test(email)) return true
     else return false
@@ -329,6 +331,7 @@ export const isFile = (file) => {
 }
 
 export const isURL = (str) => {
+     // eslint-disable-next-line
     const regexp = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi)
     if (regexp.test(str)) {
         return true
