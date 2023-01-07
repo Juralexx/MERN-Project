@@ -2,7 +2,8 @@
     position   : relative;
     width      : 100%;
     padding    : 20px 0;
-    background : var(--content);
+    background : var(--light);
+    z-index    : 2;
 
     .dashboard-projects-header-top {
         position : relative;
@@ -10,28 +11,13 @@
         padding  : 0 0 20px;
 
         h1 {
+            font-size   : 22px;
+            font-weight : 400;
             span {
-                font-size   : 20px;
+                font-size   : 18px;
                 color       : var(--text-secondary);
                 margin-left : 10px;
             }
-        }
-    }
-
-    .dashboard-projects-header-bottom {
-        display         : flex;
-        align-items     : center;
-        justify-content : space-between;
-
-        .dashboard-projects-header-bottom-left {
-            position     : relative;
-            width        : 70%;
-            margin-right : 20px;
-        }
-
-        .dashboard-projects-header-bottom-right {
-            position : relative;
-            width    : 30%;
         }
     }
 }

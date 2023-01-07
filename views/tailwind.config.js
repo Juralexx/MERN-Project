@@ -2,10 +2,12 @@ module.exports = {
     experimental: {
         optimizeUniversalDefaults: true
     },
-    content: ['./src/**/**/**/**/*.{js, jsx, html}'],
+    content: [
+        './src/**/**/**/**/*.{js, jsx, html}'
+    ],
     mode: 'jit',
     presets: [],
-    darkMode: 'class', // or 'media'
+    darkMode: 'class',
     theme: {
         screens: {
             sm: '576px',

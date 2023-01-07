@@ -5,16 +5,13 @@
     padding   : 10px 0;
 
     > div {
-        display       : flex;
-        align-items   : center;
-        margin        : 5px 7px 5px 0;
-        border-radius : var(--rounded-sm);
-        color         : var(--text);
+        display     : flex;
+        align-items : center;
+        margin      : 5px 7px 5px 0;
+        color       : var(--text);
 
         span {
-            color        : var(--primary);
-            font-weight  : 700;
-            font-size    : 18px;
+            color : var(--primary);
         }
     }
 }

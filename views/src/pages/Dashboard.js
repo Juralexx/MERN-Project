@@ -30,15 +30,12 @@ const Dashboard = ({ websocket, user }) => {
     return (
         <div className="dashboard">
             <Sidebar user={user} projects={projects} isLoading={isLoading} />
-            <div className="dashboard-content">
+            <div className="dashboard-content custom-scrollbar">
                 {!isLoading &&
                     <Routes>
                         <Route index element={
                             <Projects
-                                user={user}
-                                websocket={websocket}
                                 projects={projects}
-                                setProjects={setProjects}
                             />
                         } />
                         {(Object.keys(user).length > 0 && projects.length > 0) && (

@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import { DayPicker, useInput } from 'react-day-picker';
 import fr from 'date-fns/locale/fr';
 import 'react-day-picker/dist/style.css';
-import { IoCaretDownOutline } from 'react-icons/io5'
 import { IoClose } from 'react-icons/io5'
 import { FiCalendar } from 'react-icons/fi'
 import { useClickOutside } from '../hooks/useClickOutside';
+import { IoIosArrowDown } from 'react-icons/io';
 
 export const ClassicInput = (props) => {
     const { useRef, type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
@@ -66,10 +66,10 @@ export const DropdownInput = (props) => {
             {cross && value && value.length > 0 ? (
                 <IoClose className="cross" onClick={clean} />
             ) : (
-                <IoCaretDownOutline />
+                <IoIosArrowDown />
             )}
             {open &&
-                <div className="dropdown-input-choices" onClick={() => setOpen(false)}>
+                <div className="dropdown-input-choices custom-scrollbar" onClick={() => setOpen(false)}>
                     {props.children}
                 </div>
             }

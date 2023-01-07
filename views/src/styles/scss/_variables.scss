@@ -128,9 +128,9 @@
     --shadow-tiny         : rgb(35 34 33 / 17%) 0px 1px 4px 1px;
     --shadow-relief       : inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
 
-    --font-fam-list : system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-fam1     : 'Faktum', var(--font-fam-list);
-    --font-fam2     : 'Fira Code', var(--font-fam-list);
+    --font-fam-list : 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-fam1     : 'Poppins', var(--font-fam-list);
+    --font-fam2     : 'Poppins', var(--font-fam-list);
 
     --font-3xl : 24px;
     --font-2xl : 22px;
@@ -176,7 +176,6 @@
     --content         : #ffffff;
     --content-light   : #ffffff;
     --content-x-light : #ffffff;
-    --navbar          : #ffffff;
     --light           : #F0F2FA;
     --x-light         : #F0F2FA;
     --xx-light        : #ffffff;
@@ -186,12 +185,14 @@
     --text-tertiary  : #aaa9a9;
 
     --light-border : #DCDEDD;
+
     --input        : var(--xx-light);
     --input-text   : #696969;
     --placeholder  : #9a9fa7;
 
     --svg          : #9a9fa7;
     --svg-light    : #9a9fa7;
+    --navbar          : #ffffff;
     --navbar-txt   : #232221;
     --mini_nav-btn : #F0F2FA;
     --menu         : #ffffff;
@@ -208,23 +209,25 @@
     --content         : #1a1a27;
     --content-light   : #1e1e2d;
     --content-x-light : #2B2B3F;
-    --input           : #262637;
-    --navbar          : #1a1a27;
-    --mini_nav-btn    : #1a1a27;
-    --light           : #1e1e2d;
-    --x-light         : #2B2B3F;
+    --light           : #1a1a27;
+    --x-light         : #1e1e2d;
     --xx-light        : #2B2B3F;
 
     --text           : #c8d2de;
     --text-secondary : #a2a3b7;
     --text-tertiary  : #ffffff;
 
+    --light-border : rgba(255, 255, 255, 0.2);
+
+    --input       : #262637;
+    --input-text  : #ffffff;
+    --placeholder : #b6bac0;
+
     --svg          : #494b74;
     --svg-light    : #5c5e81;
-    --light-border : rgba(255, 255, 255, 0.2);
-    --input-text   : #ffffff;
-    --placeholder  : #b6bac0;
+    --navbar       : #1a1a27;
     --navbar-txt   : #EDF8FC;
+    --mini_nav-btn : #1a1a27;
     --menu         : #1e1e2d;
     --modal-cover  : rgba(255, 255, 255, 0.05);
     --tooltip      : #161616;

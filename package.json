@@ -9,8 +9,7 @@
         "back": "nodemon server.js",
         "front": "npm start --prefix views",
         "gulp": "run gulpfile.js",
-        "socket": "nodemon socketserver.js",
-        "tail": "npx tailwindcss -o ./src/styles/dist/tailwind.css --watch"
+        "socket": "nodemon socketserver.js"
     },
     "repository": {
         "type": "git",
@@ -44,7 +43,6 @@
         "passport-google-oauth20": "^2.0.0",
         "sharp": "^0.30.3",
         "socket.io": "^4.4.1",
-        "tailwindcss": "^3.0.23",
         "validator": "^13.7.0"
     },
     "devDependencies": {

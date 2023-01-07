@@ -3,35 +3,6 @@
     bottom           : 0px;
     width            : 100%;
     height           : auto;
-    background-color : var(--x-light);
+    background-color : var(--light);
     padding          : 10px 0;
-
-    // .footer-slider {
-    //     background : var(--content-light);
-    //     margin     : auto;
-    //     overflow   : hidden;
-    //     position   : relative;
-    
-    //     .footer-slide-track {
-    //         padding   : 10px 0;
-    //         animation : scroll 20s linear infinite;
-    //         display   : flex;
-    //         width     : calc(150px * 15);
-    //     }
-    
-    //     .footer-slide {
-    //         padding    : 10px 0;
-    //         width      : 150px;
-    //         text-align : center;
-    //     }
-
-    //     @keyframes scroll {
-    //         0% {
-    //             transform : translateX(0);
-    //         }
-    //         100% {
-    //             transform : translateX(calc(-150px * 7.5))
-    //         }
-    //     }
-    // }
 }
