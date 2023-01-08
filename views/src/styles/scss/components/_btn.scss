@@ -1,4 +1,5 @@
 .btn {
+    position        : relative;
     height          : 36px;
     display         : flex;
     align-items     : center;
@@ -121,6 +122,30 @@
 
     &:hover {
         background : rgba(var(--primary-rgb), 0.22);
+    }
+}
+
+.string_btn {
+    color      : var(--primary);
+    box-shadow : none;
+    padding    : 0;
+    height     : auto;
+
+    &:active {
+        transform  : none;
+        box-shadow : none;
+    }
+    &:hover,
+    &:active {
+        &:before {
+            content    : '';
+            position   : absolute;
+            left       : 0;
+            bottom     : 0;
+            width      : 100%;
+            height     : 1px;
+            background : var(--primary);
+        }
     }
 }
 

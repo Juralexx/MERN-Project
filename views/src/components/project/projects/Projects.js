@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { stateToBackground, stateToString } from '../functions'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
@@ -17,44 +17,32 @@ const Projects = ({ projects }) => {
     const [isResults, setResults] = useState([])
     const regexp = new RegExp(searchQuery, 'i')
 
-    const searchProject = (selectedCategory) => {
-        if (selectedCategory) {
-            setCategory(selectedCategory)
+    useEffect(() => {
+        if (category.length > 0) {
+            let projectsArr = projectsToShow.filter(project => removeAccents(project.category) === removeAccents(category))
+            setProjectsToShow(projectsArr)
         }
-        if (category.length > 0 || selectedCategory) {
-            let projectsArr = projects.filter(project => removeAccents(project.category) === removeAccents(category))
-            if (projectsArr.length > 0) {
-                setProjectsToShow(projectsArr)
-                if (searchQuery.length > 2) {
-                    const response = projectsArr.filter(project => regexp.test(removeAccents(project.title)))
-                    setResults(response)
-                    setSearch(true)
-                    if (!isResults || isResults.length === 0) {
-                        setProjectsToShow(projects)
-                    }
-                } else {
-                    setSearch(false)
-                }
-            }
-        } else {
-            if (searchQuery.length > 2) {
-                const response = projects.filter(project => regexp.test(removeAccents(project.title)))
-                setResults(response)
-                setSearch(true)
-                if (!isResults || isResults.length === 0) {
-                    setProjectsToShow(projects)
-                }
-            } else {
-                setSearch(false)
+    }, [category, projectsToShow])
+
+    const searchProject = () => {
+        if (searchQuery.length > 2) {
+            const response = projectsToShow.filter(project => regexp.test(removeAccents(project.title)))
+            setResults(response)
+            setSearch(true)
+            if (!isResults || isResults.length === 0) {
                 setProjectsToShow(projects)
             }
+        } else {
+            setSearch(false)
         }
     }
+
+    console.log(projectsToShow)
 
     return (
         <>
             <div className="dashboard-projects-header">
-                <div className="container">
+                <div className="container-lg">
                     <div className="dashboard-projects-header-top">
                         <h1>Mes projects <span>{projects.length}</span></h1>
                     </div>
@@ -79,18 +67,18 @@ const Projects = ({ projects }) => {
                                 clean={() => { setCategory(""); searchProject() }}
                             >
                                 {categories.map((category, key) => {
-                                    return <div key={key} onClick={() => searchProject(category.name)}>{category.name}</div>
+                                    return <div key={key} onClick={() => { setCategory(category.name); searchProject() }}>{category.name}</div>
                                 })}
                             </DropdownInput>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="container py-11 min-h-full">
+            <div className="container-lg py-5 min-h-full">
                 <div className="dashboard-projects-tools">
                     <div>
-                        <button>En ligne <span>{(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length}</span></button>
-                        <button>Terminés <span>{(projects.filter(e => e.state === "done")).length}</span></button>
+                        <button className='mr-1'>En ligne <span>{(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length}</span></button>
+                        <button className='ml-1 '>Terminés <span>{(projects.filter(e => e.state === "done")).length}</span></button>
                     </div>
                     <div>
                         <DropdownInput
@@ -111,11 +99,11 @@ const Projects = ({ projects }) => {
                 {projects &&
                     projectsToShow.map((element, key) => {
                         return (
-                            <div className="project-card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
-                                <div className="project-picture">
+                            <div className="row project-card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
+                                <div className="col-0 col-md-3 project-picture">
                                     <img src={element.pictures[0]} alt={element.title} />
                                 </div>
-                                <div className="project-card-content">
+                                <div className="col-12 col-md-9 project-card-content">
                                     <div className="project-card-content-top">
                                         <h2 className='one_line'>
                                             <Link to={`${element.URLID}/${element.URL}`}>{element.title}</Link>

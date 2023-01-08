@@ -2,7 +2,7 @@
     position   : relative;
     display    : flex;
     width      : 100%;
-    height     : calc(100% - 60px);
+    height     : calc(100% - 54px);
     background : var(--content-light);
 
     .dashboard-content {
@@ -10,5 +10,14 @@
         width       : calc(100% - 80px);
         margin-left : 80px;
         overflow-y  : auto;
+    }
+}
+
+@media(max-width: 768px) {
+    .dashboard {
+        .dashboard-content {
+            width       : 100%;
+            margin-left : 0;
+        }
     }
 }

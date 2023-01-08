@@ -4,8 +4,7 @@ import { avatar } from '../../tools/hooks/useAvatar'
 import { dateParser } from '../../Utils'
 import { leaveProject } from '../../tools/functions/member';
 import Breadcrumb from './Breadcrumb';
-import { HiLocationMarker } from 'react-icons/hi'
-import { HiCalendar } from 'react-icons/hi'
+import { IoCalendarClearOutline, IoLocationOutline } from 'react-icons/io5'
 import { NavLink, useLocation } from 'react-router-dom';
 import ToolsMenu from '../../tools/global/ToolsMenu';
 
@@ -25,8 +24,8 @@ const Header = ({ project, websocket, user }) => {
                         <div className="dashboard-header-content">
                             <h1>{project.title}</h1>
                             <div className="dashboard-header-content-infos">
-                                <div className="infos"><HiLocationMarker />{project.location + ", " + project.department}</div>
-                                <div className="infos"><HiCalendar />{dateParser(project.createdAt)}</div>
+                                <div className="infos"><IoLocationOutline />{project.location + ", " + project.department}</div>
+                                <div className="infos"><IoCalendarClearOutline />{dateParser(project.createdAt)}</div>
                             </div>
                         </div>
                     </div>

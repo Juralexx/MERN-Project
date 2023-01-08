@@ -136,7 +136,7 @@ export const ISOtoNavFormat = (date) => {
 export const getHourOnly = (date) => {
     const hours = date.getUTCHours();
     const minutes = date.getMinutes();
-    return (1 + ((hours - 1))) + " h " + minutes.toString().padStart(2, "0");
+    return (1 + ((hours - 1))) + "h" + minutes.toString().padStart(2, "0");
 }
 
 /**

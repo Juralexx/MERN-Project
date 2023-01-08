@@ -31,24 +31,10 @@ header {
                 min-width   : 123px;
 
                 .logo-main {
-                    height      : 36px;
+                    height      : 32px;
                     width       : auto;
                     margin-left : 4px;
                 }
-
-                .logo-small {
-                    height      : 36px;
-                    width       : auto;
-                    margin-left : 4px;
-                }
-            }
-
-            .toggle_icon {
-                display      : none;
-                height       : 22px;
-                width        : 22px;
-                margin-right : 15px;
-                cursor       : pointer;
             }
         }
 
@@ -110,7 +96,7 @@ header {
                             margin      : 0;
                             line-height : 14px;
                             font-size   : 14px;
-                            font-weight : 500;
+                            font-weight : 400;
                             white-space : nowrap;
                             color       : var(--navbar-txt);
                         }
@@ -162,7 +148,7 @@ header {
 * QUERIES
 */
 
-@media(max-width: 1200px) {
+@media(max-width: 1150px) {
     header {
         .navbar {
             .nav_container {
@@ -171,7 +157,11 @@ header {
                 .nav_ul {
                     .nav_li {
                         .nav_link {
-                            padding : 0 15px 0;
+                            flex-direction : column;
+                            padding        : 0 10px;
+                            .nav_icon {
+                                margin : 0 0 6px;
+                            }
                         }
                     }
                 }
@@ -188,9 +178,6 @@ header {
             .logo_container {
                 padding-left : 15px;
                 margin-right : auto;
-                .toggle_icon {
-                    display : block;
-                }
             }
             .nav_container {
                 position   : absolute;
@@ -279,14 +266,6 @@ header {
                 }
             }
         }
-    }
-}
-
-@media(max-width:576px) {
-    .logo-small {
-        height      : 28px !important;
-        width       : auto;
-        margin-left : 4px;
     }
 }
 

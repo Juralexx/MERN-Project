@@ -35,7 +35,6 @@
             padding       : 10px 20px;
             border-radius : var(--rounded-sm);
             background    : var(--content-x-light);
-            margin        : 0 3px;
             font-weight   : 500;
             span {
                 color       : var(--text-secondary);
@@ -47,10 +46,8 @@
 }
 
 .project-card {
-    position      : relative;
-    display       : flex;
-    width         : 100%;
     padding       : 20px 0;
+    margin        : 0;
     border-radius : var(--rounded-sm);
     border-bottom : 1px solid var(--light-border);
 
@@ -59,9 +56,8 @@
     }
 
     .project-picture {
-        position       : relative;
-        width          : 25%;
-        z-index        : 1;
+        position : relative;
+        z-index  : 1;
 
         img {
             position      : absolute;
@@ -77,7 +73,6 @@
     .project-card-content {
         position : relative;
         padding  : 10px 20px;
-        width    : 75%;
 
         .project-card-content-top {
             position : relative;
@@ -135,14 +130,13 @@
         .description {
             font-size          : 14px;
             padding            : 8px 0;
-            text-align         : justify;
-            max-height         : 90px;
+            max-height         : 80px;
             text-overflow      : ellipsis;
             overflow           : hidden;
             width              : 90%;
             line-height        : 24px;
             display            : -webkit-box;
-            -webkit-line-clamp : 4;
+            -webkit-line-clamp : 3;
             -webkit-box-orient : vertical;
             color              : var(--text-secondary);
         }
@@ -151,6 +145,48 @@
             padding : 0;
             .tag {
                 color : var(--text-secondary);
+            }
+        }
+    }
+}
+
+@media(max-width: 767px) {
+    .project-card {
+        .project-card-content {
+            padding : 10px 0;
+            .project-card-content-top {
+                h2, 
+                h3 {
+                    width : 100%;
+                }
+                .state {
+                    position   : relative;
+                    display    : inline-block;
+                    padding    : 0 0 10px;
+                    background : none !important;
+                }
+            }
+            .description {
+                width : 100%;
+            }
+        }
+    }
+}
+
+@media(max-width: 595px) {
+    .dashboard-projects-tools {
+        flex-direction : column;
+        align-items    : flex-start;
+        margin-bottom  : 10px;
+        > div {
+            width  : 100%;
+            margin : 0 0 10px;
+            button {
+                width : 50%;
+            }
+            .dropdown-input,
+            input {
+                width : 100%;
             }
         }
     }

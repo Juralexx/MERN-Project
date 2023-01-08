@@ -80,10 +80,10 @@
                     }
     
                     .mini_nav-avatar {
-                        width         : 22px;
-                        height        : 22px;
-                        border-radius : 50%;
-                        margin        : 0 auto 2px;
+                        width         : 20px;
+                        height        : 20px;
+                        border-radius : var(--rounded-full);
+                        margin        : 0 auto 4px;
                     }
         
                     .mini_nav-pseudo {
@@ -102,8 +102,8 @@
                     border-radius   : var(--rounded-md);
     
                     svg {
-                        width  : 15px;
-                        height : 15px;
+                        width  : 18px;
+                        height : 18px;
                         color  : var(--navbar-txt);
                     }
     
@@ -114,7 +114,7 @@
             }
     
             .bordered {
-                width         : 2px;
+                width         : 1px;
                 height        : 30px;
                 background    : var(--light-border);
                 margin : 0 10px;
@@ -141,8 +141,9 @@
                     .mini_nav-a {
                         padding : 0;
                         .mini_nav-avatar {
-                            width  : 28px;
-                            height : 28px;
+                            width  : 24px;
+                            height : 24px;
+                            margin : 0;
                         }
                         .mini_nav-pseudo {
                             display : none;
@@ -151,10 +152,6 @@
                     .mini_nav-button {
                         width  : 34px;
                         height : 34px;
-                        svg {
-                            height : 14px;
-                            width  : 14px;
-                        }
                     }
                 }
             }

@@ -21,7 +21,7 @@
     src: url('../font/Poppins/Poppins-Regular.ttf');
     src: local('Poppins Regular'), local('Poppins-Regular'),
         url('../font/Poppins/Poppins-Regular.ttf') format('truetype');
-    font-weight: 400;
+    font-weight: 300;
     font-style: normal;
 }
 

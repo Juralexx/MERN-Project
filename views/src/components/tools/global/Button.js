@@ -27,6 +27,15 @@ export const TextButton = (props) => {
     )
 }
 
+export const StringButton = (props) => {
+    const { children, onClick, className, disabled } = props
+    return (
+        <button onClick={onClick} className={`${className ? "btn string_btn " + className : "btn string_btn"}`} disabled={disabled}>
+            {children}
+        </button>
+    )
+}
+
 export const IconToggle = (props) => {
     const { icon, onClick, className } = props
     return (

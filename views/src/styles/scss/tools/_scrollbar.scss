@@ -3,7 +3,7 @@
         width : 12px;
     }
     &::-webkit-scrollbar-track {
-        background : var(--content-light);
+        background : transparent;
     }
     &::-webkit-scrollbar-thumb {
         background-color : var(--light-border);
@@ -21,7 +21,7 @@
         height : 10px;
     }
     &::-webkit-scrollbar-track {
-        background : var(--content-light);
+        background : transparent;
     }
     &::-webkit-scrollbar-thumb {
         background-color : var(--light-border);

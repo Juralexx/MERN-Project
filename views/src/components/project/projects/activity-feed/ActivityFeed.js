@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../../Utils'
-import { TextButton } from '../../../tools/global/Button'
+import { StringButton } from '../../../tools/global/Button'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
 import { RiCalendarTodoLine } from 'react-icons/ri'
-import { AiFillCloud } from 'react-icons/ai'
 
 const ActivityFeed = ({ project, user, websocket }) => {
     const [dates, setDates] = useState([])
@@ -17,16 +16,12 @@ const ActivityFeed = ({ project, user, websocket }) => {
         }
     }, [project.activity_feed])
 
-    const removeBefore = (element, key) => {
-        if (dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key)) return "no-before"
-    }
-
     return (
         <div className="home-activity-feed">
             <div className="home-activity-feed-header">
                 <h3>Fil d'activités <span>{activities.length}</span></h3>
                 <div className="flex items-center">
-                    <TextButton className="mr-2">Voir tous</TextButton>
+                    <StringButton className="mr-4" onClick={() => setActivities(reversed)}>Voir tous</StringButton>
                     <ToolsMenu>
                         <div className="tools_choice" onClick={() => setActivities(thisDay(reversed))}>Aujourd'hui</div>
                         <div className="tools_choice" onClick={() => setActivities(lastDay(reversed))}>Hier</div>
@@ -44,52 +39,52 @@ const ActivityFeed = ({ project, user, websocket }) => {
                                 {dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key) &&
                                     <div className="activity-date">{dateParser(element.date)}</div>
                                 }
-                                <div className={`home-activity-feed-item-inner ${removeBefore(element, key)}`}>
+                                <div className="home-activity-feed-item-inner">
                                     <div className="activity-hour">
-                                        <div>{getHourOnly(new Date(element.date))}</div>
+                                        {getHourOnly(new Date(element.date))}
                                     </div>
                                     <div className="activity-content">
                                         {element.type === "create-task" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a ajouté une nouvelle tâche : <span className="ml-1">{element.task}</span></p></div>
+                                            <p><span className="mr-1">{element.who}</span> a ajouté une nouvelle tâche : <span className="ml-1">{element.task}</span></p>
                                         }
                                         {element.type === "update-task" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a modifié la tâche <span className="ml-1">{element.task}</span></p></div>
+                                            <p><span className="mr-1">{element.who}</span> a modifié la tâche <span className="ml-1">{element.task}</span></p>
                                         }
                                         {element.type === "update-task-state" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a modifié la tâche <span className="mx-1">{element.task}</span> de <span className="mx-1">{element.prevState}</span> à <span className="ml-1">{element.newState}</span></p></div>
+                                            <p><span className="mr-1">{element.who}</span> a modifié la tâche <span className="mx-1">{element.task}</span> de <span className="mx-1">{element.prevState}</span> à <span className="ml-1">{element.newState}</span></p>
                                         }
                                         {element.type === "delete-task" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a supprimé la tâche <span className="ml-1">{element.task}</span></p></div>
+                                            <p><span className="mr-1">{element.who}</span> a supprimé la tâche <span className="ml-1">{element.task}</span></p>
                                         }
                                         {element.type === "name-admin" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a nommé <span className="mx-1">{element.newAdmin}</span> Administrateur</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a nommé <span className="mx-1">{element.newAdmin}</span> Administrateur</p>
                                         }
                                         {element.type === "join-project" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a rejoint le projet</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a rejoint le projet</p>
                                         }
                                         {element.type === "exclude-from-project" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a exclu <span className="ml-1">{element.excluded}</span></p></div>
+                                            <p><span className="mr-1">{element.who}</span> a exclu <span className="ml-1">{element.excluded}</span></p>
                                         }
                                         {element.type === "leave-project" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.leaver}</span> a quitté le projet</p></div>
+                                            <p><span className="mr-1">{element.leaver}</span> a quitté le projet</p>
                                         }
                                         {element.type === "create-qna" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a créé une FAQ</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a créé une FAQ</p>
                                         }
                                         {element.type === "update-qna" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a modifié une FAQ</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a modifié une FAQ</p>
                                         }
                                         {element.type === "delete-qna" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a supprimé la FAQ</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a supprimé la FAQ</p>
                                         }
                                         {element.type === "add-actuality" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a ajouté une nouvelle actualité : {element.actuality}</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a ajouté une nouvelle actualité : {element.actuality}</p>
                                         }
                                         {element.type === "update-actuality" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a modifié l'actualité : {element.actuality}</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a modifié l'actualité : {element.actuality}</p>
                                         }
                                         {element.type === "delete-actuality" &&
-                                            <div><AiFillCloud /><p><span className="mr-1">{element.who}</span> a supprimé l'actualité : {element.actuality}</p></div>
+                                            <p><span className="mr-1">{element.who}</span> a supprimé l'actualité : {element.actuality}</p>
                                         }
                                     </div>
                                 </div>
