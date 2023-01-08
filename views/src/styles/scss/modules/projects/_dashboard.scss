@@ -6,10 +6,13 @@
     background : var(--content-light);
 
     .dashboard-content {
-        position    : relative;
-        width       : calc(100% - 80px);
-        margin-left : 80px;
-        overflow-y  : auto;
+        position       : relative;
+        width          : calc(100% - 80px);
+        min-height     : 100%;
+        margin-left    : 80px;
+        overflow-y     : auto;
+        display        : flex;
+        flex-direction : column;
     }
 }
 

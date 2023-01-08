@@ -5,7 +5,7 @@ const FooterLight = () => {
         <div id="footer" className='footer-light'>
             <div className="container">
                 <div className="flex justify-between py-4">
-                    <div className="flex items-center lg:flex-row flex-col">
+                    <div className="flex lg:items-center lg:flex-row flex-col">
                         <a href="/" className="txt-sec lg:mr-3">Conditions d'utilisation</a>
                         <a href="/" className="txt-sec lg:mr-3">Politique de confidentialité</a>
                         <a href="/" className="txt-sec lg:mr-3">Politique en matière de cookies</a>

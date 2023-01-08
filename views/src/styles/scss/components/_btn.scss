@@ -147,6 +147,12 @@
             background : var(--primary);
         }
     }
+    a {
+        color      : var(--primary);
+        background : none;
+        padding    : 0;
+        height     : unset;
+    }
 }
 
 .icon_toggle {

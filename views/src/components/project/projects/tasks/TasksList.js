@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground, randomizeCheckboxID } from '../../../tools/functions/task'
-import { clickOn } from '../../../tools/hooks/useClickOutside'
+import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground } from '../../../tools/functions/task'
 import { addClass, dateParser, getDifference, reduceString } from '../../../Utils'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
-import { IoCaretDownOutline } from 'react-icons/io5'
+import Checkbox from '../../../tools/global/Checkbox'
 import { RiCalendarTodoLine } from 'react-icons/ri'
-import { MdOutlineMessage } from 'react-icons/md'
+import { MdOutlineMessage, MdKeyboardArrowDown } from 'react-icons/md'
 
-const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, showTask, setShowTask, websocket, dispatch, setUpdateTask, setTask }) => {
+const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, setOpenTask, websocket, dispatch, setUpdateTask, setTask }) => {
     const todo = tasks.filter(element => element.state === "todo")
     const inProgress = tasks.filter(element => element.state === "in progress")
     const done = tasks.filter(element => element.state === "done")
@@ -32,7 +31,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
 
     return (
         <>
-            <div className="content_nav !my-4">
+            <div className="tasks_nav !my-4">
                 <div className={`${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
                 <div className={`${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
                 <div className={`${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
@@ -46,34 +45,45 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                 <div className="flex">
                                     <p>{returnTitle(uniquekey)} <span>{arr.length}</span></p>
                                 </div>
-                                <div><IoCaretDownOutline /></div>
+                                <MdKeyboardArrowDown />
                             </div>
                             {arr.length > 0 ? (
                                 arr.map((element, key) => {
                                     return (
                                         <div className="tasklist-table-item" key={key}>
-                                            <div className="check-input mr-2">
-                                                <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
-                                                <label htmlFor={randomizeCheckboxID(key)}><span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span></label>
-                                            </div>
-                                            <div className="tasklist-table-item-body" onClick={() => clickOn(showTask, setShowTask, element._id)}>
+                                            <Checkbox
+                                                key={key}
+                                                className="mr-2 mt-1"
+                                                checked={element.state === "done"}
+                                                onChange={() => changeState(element, "done", project, user, websocket, dispatch)}
+                                            />
+                                            <div className="tasklist-table-item-body">
                                                 <div className="tasklist-table-item-top">
                                                     <div className="flex items-center">{reduceString(element.title, 60)}</div>
                                                     <div className="tasklist-table-item-tools">
                                                         {element.comments.length > 0 &&
-                                                            <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
+                                                            <div className="flex items-center mr-2" onClick={() => { setTask(element); setOpenTask(true) }}>
+                                                                <MdOutlineMessage className="mr-1" />
+                                                                <span>{element.comments.length}</span>
+                                                            </div>
                                                         }
                                                         <ToolsMenu>
-                                                            <div className="tools_choice" onClick={() => setTask(element)}>Voir</div>
+                                                            <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
+                                                            <div className="tools_choice">Commenter</div>
                                                             <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
-                                                            {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                            <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
                                                         </ToolsMenu>
                                                     </div>
                                                 </div>
+                                                <div className='tasklist-item-description two_lines'>
+                                                    {element.description ? element.description : <span>Aucune description</span>}
+                                                </div>
                                                 <div className="tasklist-table-item-bottom">
-                                                    <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
-                                                    <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
-                                                    <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                                    <div className='flex'>
+                                                        <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
+                                                        <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
+                                                        <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                                    </div>
                                                     <div className="tasklist-table-item-members">
                                                         {element.members.length <= 5 && (
                                                             <div className="flex">
@@ -118,11 +128,13 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                     return (
                         <div className="tasklist-table" key={key}>
                             <div className="tasklist-table-item" key={key}>
-                                <div className="check-input mr-2">
-                                    <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
-                                    <label htmlFor={randomizeCheckboxID(key)}><span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span></label>
-                                </div>
-                                <div className="tasklist-table-item-body" onClick={() => clickOn(showTask, setShowTask, element._id)}>
+                                <Checkbox
+                                    key={key}
+                                    className="mr-2 mt-1"
+                                    checked={element.state === "done"}
+                                    onChange={() => changeState(element, "done", project, user, websocket, dispatch)}
+                                />
+                                <div className="tasklist-table-item-body">
                                     <div className="tasklist-table-item-top">
                                         <div className="flex items-center">{reduceString(element.title, 60)}</div>
                                         <div className="tasklist-table-item-tools">
@@ -130,16 +142,22 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                                 <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
                                             }
                                             <ToolsMenu>
-                                                <div className="tools_choice" onClick={() => setTask(element)}>Voir</div>
+                                                <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
+                                                <div className="tools_choice">Commenter</div>
                                                 <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
-                                                {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
                                             </ToolsMenu>
                                         </div>
                                     </div>
+                                    <div className='tasklist-item-description two_lines'>
+                                        {element.description ? element.description : <span>Aucune description</span>}
+                                    </div>
                                     <div className="tasklist-table-item-bottom">
-                                        <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
-                                        <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
-                                        <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                        <div className='flex'>
+                                            <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
+                                            <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
+                                            <div className={`details ${isDatePassed(element.end)}`}>{dateParser(element.end)}</div>
+                                        </div>
                                         <div className="tasklist-table-item-members">
                                             {element.members.length <= 5 && (
                                                 <div className="flex">

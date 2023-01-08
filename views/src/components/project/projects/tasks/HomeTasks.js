@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../../tools/functions/task'
-import { addClass, dateParserWithoutYear, getDifference, reduceString, reverseArray } from '../../../Utils'
+import { addClass, dateParserWithoutYear, getDifference, reverseArray } from '../../../Utils'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import TaskModal from './TaskModal'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
-import { TextButton } from '../../../tools/global/Button'
+import { StringButton } from '../../../tools/global/Button'
 import { DropdownInput } from '../../../tools/global/Inputs'
 import { RiCalendarTodoLine } from 'react-icons/ri'
 import { MdOutlineMessage } from 'react-icons/md'
+import Checkbox from '../../../tools/global/Checkbox'
 
 const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
@@ -41,7 +42,9 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     <div className="home-tasks-nav-header-top">
                         <h3>Tâches <span>{tasks.length}</span></h3>
                         <div className="flex items-center">
-                            <TextButton className="mr-2"><Link to="tasks">Voir tous</Link></TextButton>
+                            <StringButton className="mr-4">
+                                <Link to="tasks">Voir tous</Link>
+                            </StringButton>
                             {(isAdmin || isManager) &&
                                 <ToolsMenu>
                                     <div className="tools_choice" onClick={() => setCreateTask(true)}>Créer une nouvelle tâche</div>
@@ -49,14 +52,15 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             }
                         </div>
                     </div>
-                    <div className="flex justify-between">
-                        <div className="home-tasks-nav">
-                            <div className={`home-tasks-nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
-                            <div className={`home-tasks-nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
-                            <div className={`home-tasks-nav-item ${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
-                            <div className={`home-tasks-nav-item ${addClass(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminée</div>
+                    <div className="home-tasks-nav-header-bottom">
+                        <div className="tasks_nav">
+                            <div className={`${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
+                            <div className={`${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
+                            <div className={`${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
+                            <div className={`${addClass(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminée</div>
                         </div>
-                        <DropdownInput readOnly placeholder="Filtrer" value={filter} className="small right light ml-3" clean={() => { setFilter(""); setTasks(reverseArray(project.tasks)) }}>
+                        <DropdownInput readOnly placeholder="Filtrer" value={filter} className="small md:ml-3" clean={() => { setFilter(""); setTasks(reverseArray(project.tasks)) }}>
+                            {filter !== "" && <div onClick={() => { setTask(reverseArray(project.tasks)); setFilter("") }}>Aucun tri</div>}
                             <div onClick={() => sortByEndDate(tasks, setTasks, setFilter)}>Par date de fin</div>
                             <div onClick={() => sortByCreationDate(tasks, setTasks, setFilter)}>Par date de création</div>
                             <div onClick={() => sortByState(tasks, setTasks, setFilter)}>Par état</div>
@@ -69,13 +73,15 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         tasks.map((element, key) => {
                             return (
                                 <div className={`home-tasks-task`} key={key}>
-                                    <div className="check-input mr-2">
-                                        <input id={randomizeCheckboxID(key)} type="checkbox" checked={element.state === "done"} onChange={() => changeState(element, "done", project, user, websocket, dispatch)} />
-                                        <label htmlFor={randomizeCheckboxID(key)}><span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span></label>
-                                    </div>
+                                    <Checkbox
+                                        key={key}
+                                        className="mr-2 mt-1"
+                                        checked={element.state === "done"}
+                                        onChange={() => changeState(element, "done", project, user, websocket, dispatch)}
+                                    />
                                     <div className="home-tasks-task-content">
                                         <div className="home-tasks-task-content-inner">
-                                            <div className="flex items-center">{reduceString(element.title, 60)}</div>
+                                            <div className="flex items-center one_line">{element.title}</div>
                                             <div className="home-tasks-task-tools">
                                                 {element.comments.length > 0 &&
                                                     <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
@@ -87,10 +93,12 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                                 </ToolsMenu>
                                             </div>
                                         </div>
-                                        <div className="flex">
-                                            <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
-                                            <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
-                                            <div className={`details ${isDatePassed(element.end)}`}>{dateParserWithoutYear(element.end)}</div>
+                                        <div className="home-tasks-task-content-bottom">
+                                            <div className="flex">
+                                                <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
+                                                <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
+                                                <div className={`details ${isDatePassed(element.end)}`}>{dateParserWithoutYear(element.end)}</div>
+                                            </div>
                                             <div className="home-tasks-task-members">
                                                 {element.members.length <= 5 && (
                                                     <div className="flex">
@@ -130,9 +138,33 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                 </div>
             </div>
 
-            {openTask && <TaskModal task={getTask} project={project} open={openTask} setOpen={setOpenTask} setUpdateTask={setUpdateTask} user={user} />}
-            {<CreateTask open={createTask} setOpen={setCreateTask} project={project} user={user} websocket={websocket} />}
-            {updateTask && <UpdateTask element={getTask} open={updateTask} setOpen={setUpdateTask} project={project} user={user} websocket={websocket} />}
+            {openTask &&
+                <TaskModal
+                    task={getTask}
+                    open={openTask}
+                    setOpen={setOpenTask}
+                    setUpdateTask={setUpdateTask}
+                    project={project}
+                    user={user}
+                />}
+            {<CreateTask
+                open={createTask}
+                setOpen={setCreateTask}
+                project={project}
+                user={user}
+                websocket={websocket}
+            />
+            }
+            {updateTask &&
+                <UpdateTask
+                    element={getTask}
+                    open={updateTask}
+                    setOpen={setUpdateTask}
+                    project={project}
+                    user={user}
+                    websocket={websocket}
+                />
+            }
         </>
     )
 }

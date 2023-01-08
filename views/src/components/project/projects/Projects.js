@@ -37,8 +37,6 @@ const Projects = ({ projects }) => {
         }
     }
 
-    console.log(projectsToShow)
-
     return (
         <>
             <div className="dashboard-projects-header">

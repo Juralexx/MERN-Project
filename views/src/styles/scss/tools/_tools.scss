@@ -57,7 +57,7 @@
         .user_display_choice {
             display         : flex;
             align-items     : center;
-            justify-content : space-between;
+            justify-content : flex-start;
             padding         : 6px 8px;
             margin          : 4px 0;
             cursor          : pointer;

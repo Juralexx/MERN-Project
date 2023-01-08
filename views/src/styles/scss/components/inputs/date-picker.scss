@@ -1,7 +1,7 @@
 .date-picker-container {
     position      : relative;
     cursor        : pointer;
-    width         : 240px;
+    width         : 180px;
     background    : var(--content-x-light);
     border-radius : var(--rounded-sm);
     
@@ -13,12 +13,12 @@
         color         : var(--input-text);
         background    : var(--input);
         border-radius : var(--rounded-sm);
-        border        : 2px solid transparent;
+        border        : 1px solid var(--light-border);
         outline       : none;
         cursor        : pointer;
 
         &:focus {
-            border     : 2px solid var(--primary);
+            border     : 1px solid var(--primary);
             box-shadow : none;
         }
 
@@ -55,7 +55,7 @@
             }
     
             .today {
-                background-color : var(--content-x-light);
+                background-color : var(--x-light);
                 border-radius    : 10px;
             }
     
@@ -63,7 +63,8 @@
                 &:hover, &:focus {
                     background-color : var(--primary);
                     border           : none;
-                    border-radius    : 5px;
+                    border-radius    : var(--rounded-md);
+                    color            : var(--white);
                 }
             }
 
@@ -78,10 +79,9 @@
                 .rdp-nav_button_previous, .rdp-nav_button_next {
                     display       : flex;
                     align-items   : center;
-                    background    : var(--content-light);
+                    background    : var(--light);
                     border-radius : 5px;
                     margin        : 0 3px;
-                    box-shadow    : var(--shadow-lg);
                     transform     : scale(1);
 
                     svg {
@@ -91,6 +91,9 @@
 
                     &:hover {
                         background-color : rgba(var(--primary-rgb), 0.8);
+                        svg {
+                            color : var(--white);
+                        }
                     }
 
                     &:active {

@@ -1,13 +1,18 @@
 .dashboard-tasks-header {
     display         : flex;
     justify-content : space-between;
-    align-items     : center;
+    align-items     : flex-end;
+    border-bottom   : 1px solid var(--light-border);
+    padding-bottom  : 10px;
+    margin-bottom   : 20px;
 
     .dashboard-tasks-header_left {
         display     : flex;
-        align-items : center;
+        align-items : flex-end;
+        height      : 24px;
 
         h2 {
+            line-height : 24px;
             span {
                 color     : var(--text-secondary);
                 font-size : 16px;
@@ -18,27 +23,21 @@
             display     : flex;
             margin-left : 28px;
             font-size   : 14px;
-            box-shadow    : var(--shadow-tiny);
 
-            .dashboard-tasks-nav-item {
+            > div {
                 display         : flex;
                 justify-content : center;
                 align-items     : center;
-                width           : 75px;
-                padding         : 8px 0;
-                background      : var(--xx-light);
+                padding         : 0 10px;
+                background      : var(--content-light);
                 cursor          : pointer;
 
                 &:nth-child(1) {
-                    border-radius : var(--rounded-sm) 0 0 var(--rounded-sm);
-                }
-                &:nth-child(2) {
-                    border-radius : 0 var(--rounded-sm) var(--rounded-sm) 0;
+                    border-right : 1px solid var(--light-border);
                 }
 
                 &.active {
-                    background-color : var(--primary);
-                    color            : white;
+                    color : var(--primary);
                 }
             }
         }
@@ -57,12 +56,12 @@
     border-radius : var(--rounded-sm);
 
     &.blue {
-        background : rgba(var(--blue-rgb), 0.2);
-        color      : var(--blue);
+        background : rgba(var(--xblue-rgb), 0.2);
+        color      : var(--xblue);
     }
     &.red {
-        background : rgba(var(--red-rgb), 0.2);
-        color      : var(--red);
+        background : rgba(var(--xred-rgb), 0.2);
+        color      : var(--xred);
     }
     &.orange {
         background : rgba(var(--orange-rgb), 0.2);
@@ -71,6 +70,34 @@
     &.green {
         background : rgba(var(--green-rgb), 0.2);
         color      : var(--green);
+    }
+}
+
+.tasks_nav {
+    display : flex;
+    height  : 20px;
+
+    div {
+        display         : flex;
+        justify-content : center;
+        align-items     : center;
+        width           : auto;
+        padding         : 0 12px;
+        border-right    : 1px solid var(--light-border);
+        cursor          : pointer;
+
+        &:first-child {
+            padding-left : 0;
+        }
+
+        &:last-child {
+            border : none;
+        }
+
+        &.active,
+        &:hover {
+            color : var(--primary);
+        }
     }
 }
 
@@ -85,22 +112,24 @@
         justify-content  : space-between;
         align-items      : center;
         width            : 100%;
-        padding          : 13px 35px 10px;
-        background-color : var(--xx-light);
-        box-shadow       : var(--shadow-tiny);
+        padding          : 10px 17px;
+        background-color : var(--light);
         border-radius    : var(--rounded-sm);
         cursor           : pointer;
 
         p {
-            font-size      : 16px;
             text-transform : uppercase;
         }
 
         span {
-            font-size   : 15px;
-            padding-top : 1px;
-            margin-left : 10px;
-            color       : var(--text-tertiary);
+            font-size   : 14px;
+            margin-left : 5px;
+            color       : var(--text-secondary);
+        }
+
+        svg {
+            width  : 22px;
+            height : 22px;
         }
     }
 
@@ -114,10 +143,8 @@
         position        : relative;
         display         : flex;
         justify-content : space-between;
-        align-items     : center;
         padding         : 5px 10px;
         cursor          : pointer;
-        border-radius : var(--rounded-sm);
 
         &:hover {
             background-color : var(--light);
@@ -130,12 +157,20 @@
                 width           : 100%;
                 display         : flex;
                 justify-content : space-between;
-                padding         : 5px 2px;
+            }
+
+            .tasklist-item-description {
+                color   : var(--text-secondary);
+                padding : 5px 0;
+                span {
+                    font-style : italic;
+                }
             }
 
             .tasklist-table-item-bottom {
                 display     : flex;
                 align-items : center;
+                flex-wrap   : wrap;
                 width       : 100%;
                 padding     : 5px 2px;
 
@@ -200,207 +235,38 @@
     }
 }
 
-.home-tasks {
-    position      : relative;
-    min-height    : 150px;
-    padding       : 12px 12px 18px;
-    background    : var(--content-light);
-    color         : var(--text);
-    border-radius : var(--rounded-sm);
-    box-shadow    : var(--shadow-tiny);
-
-    .home-tasks-header {
-        position        : relative;
-        padding         : 0 12px;
-        margin-bottom   : 8px;
-
-        .home-tasks-nav-header-top {
-            display         : flex;
+@media(max-width: 576px) {
+    .dashboard-tasks-header {
+        flex-direction  : column;
+        justify-content : center;
+        align-items     : flex-start;
+        .dashboard-tasks-header_left {
+            width           : 100%;
             justify-content : space-between;
-            align-items     : center;
-            margin-bottom   : 10px;
         }
 
-        h3 {
-            span {
-                font-size   : 14px;
-                margin-left : 4px;
-                color       : var(--text-secondary);
-            }
-        }
-
-        .home-tasks-nav {
-            display     : flex;
-            font-size   : 12px;
-
-            .home-tasks-nav-item {
-                display         : flex;
-                justify-content : center;
-                align-items     : center;
-                width           : auto;
-                height          : 36px;
-                padding         : 3px 12px 2px;
-                background      : var(--content-x-light);
-                cursor          : pointer;
-
-                &.active {
-                    background : rgba(var(--primary-rgb), 0.7);
-                }
-
-                &:nth-child(1) {
-                    border-radius: 5px 0 0 5px;
-                }
-
-                &:nth-child(4) {
-                    border-radius: 0 5px 5px 0;
-                }
-            }
+        button {
+            margin-top : 10px;
+            width      : 100%;
         }
     }
 
-    .home-tasks-container {
-        padding    : 0 12px;
-        max-height : 380px;
-        overflow-y : auto;
-
-        .home-tasks-task {
-            position        : relative;
-            display         : flex;
-            justify-content : space-between;
-            align-items     : center;
-            padding         : 10px 0;
-
-            .home-tasks-task-content {
-                width : 100%;
-
-                .home-tasks-task-content-inner {
-                    display         : flex;
-                    align-items     : center;
-                    justify-content : space-between;
-                    width           : 100%;
-                    padding         : 3px 0;
-
-                    .title {
-                        margin-top         : 3px;
-                        font-size          : 14px;
-                        text-overflow      : ellipsis;
-                        overflow           : hidden;
-                        width              : 100%;
-                        line-height        : 19px;
-                        display            : -webkit-box;
-                        -webkit-line-clamp : 1;
-                        -webkit-box-orient : vertical;
-                    }
-                }
-
-                .home-tasks-task-members {
-                    display     : flex;
-                    margin-left : 10px;
-    
-                    .home-tasks-task-member {
-                        display     : flex;
-                        align-items : center;
-                        margin      : 0 3px;
-    
-                        .pseudo {
-                            display          : flex;
-                            align-items      : center;
-                            padding          : 4px 8px;
-                            font-size        : 12px;
-                            background-color : rgba(var(--light-blue-rgb), 0.6);
-                            border-radius    : var(--rounded-sm);
-                            color            : white;
-                        }
+    .tasklist-table {
+        .tasklist-table-header {
+            padding : 10px 10px;
+        }
+        .tasklist-table-item {
+            padding : 10px 5px;
+            .tasklist-table-item-body {
+                .tasklist-table-item-bottom {
+                    flex-direction : column;
+                    align-items    : flex-start;
+                    .tasklist-table-item-members {
+                        margin-left : 0;
+                        margin-top  : 10px;
                     }
                 }
             }
-
-            .details {
-                display         : flex;
-                align-items     : center;
-                justify-content : center;
-                min-width       : 64px;
-                font-size       : 10px;
-                padding         : 3px 3px 1px;
-                border-radius : var(--rounded-sm);
-        
-                &.blue {
-                    background : rgba(var(--blue-rgb), 0.2);
-                    color      : var(--blue);
-                }
-                &.red {
-                    background : rgba(var(--red-rgb), 0.2);
-                    color      : var(--red);
-                }
-                &.orange {
-                    background : rgba(var(--orange-rgb), 0.2);
-                    color      : var(--orange);
-                }
-                &.green {
-                    background : rgba(var(--green-rgb), 0.2);
-                    color      : var(--green);
-                }
-            }
-        }
-    }
-}
-
-.task-modal {
-    .task-modal_header {
-        padding-bottom : 20px;
-        border-bottom  : 1px solid var(--light-border);
-
-        p {
-            color : var(--text-secondary);
-        }
-
-        .pseudo {
-            display          : flex;
-            align-items      : center;
-            height           : 26px;
-            padding          : 3px 8px;
-            font-size        : 12px;
-            background-color : rgba(var(--light-blue-rgb), 0.6);
-            border-radius    : var(--rounded-sm);
-            color            : white;
-        }
-    }
-
-    .task-modal-description {
-        padding : 20px 0;
-    }
-
-    .add-comment-container {
-        padding    : 20px 0 0;
-        border-top : 1px solid var(--light-border);
-    }
-
-    .comments-container {
-        border-top : 1px solid var(--light-border);
-
-        .comment {
-            padding       : 20px 0;
-            border-bottom : 1px solid var(--light-border);
-
-            .comment-header {
-                display         : flex;
-                justify-content : space-between;
-                margin-bottom   : 6px;
-            }
-    
-            .comment-body {
-                padding       : 15px 20px;
-                background    : var(--content-x-light);
-                border-radius : var(--rounded-sm);
-            }
-
-            &:last-child {
-                border-bottom : none;
-            }
-        }
-
-        .is-empty {
-            padding : 20px 0 0;
         }
     }
 }

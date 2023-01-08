@@ -16,7 +16,7 @@
             position       : relative;
             width          : 24px;
             height         : 24px;
-            border-radius  : 50%;
+            border-radius  : var(--rounded-md);
             transform      : scale(0.8);
             vertical-align : middle;
             border         : 3px solid #B9B8C3;
@@ -47,7 +47,7 @@
                 display          : block;
                 transform        : scale(0);
                 opacity          : 1;
-                border-radius    : 50%;
+                border-radius    : var(--rounded-md);
                 transition-delay : .2s;
             }
         }
@@ -65,8 +65,8 @@
         &:checked {
 
             + label span {
-                border-color : rgba(var(--green-rgb), 0.5);
-                background   : rgba(var(--green-rgb), 0.5);
+                border-color : rgba(var(--primary-rgb), 0.5);
+                background   : rgba(var(--primary-rgb), 0.5);
                 animation    : check .6s ease;
 
                 svg {
@@ -81,12 +81,12 @@
             }
 
             &:hover + label span {
-                background-color : rgba(var(--green-rgb), 0.5);
+                background-color : rgba(var(--primary-rgb), 0.5);
             }
         }
 
         &:hover + label span {
-            border-color  : rgba(var(--green-rgb), 0.5);
+            border-color  : rgba(var(--primary-rgb), 0.5);
             border-radius : var(--rounded-sm);
         }
     }

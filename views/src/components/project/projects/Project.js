@@ -59,16 +59,26 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                 <Header project={project} websocket={websocket} user={user} />
                 <Routes>
                     <Route index element={
-                        <div className="container">
-                            <div className="row py-4">
-                            <div className="col-12 col-lg-6">
-                                <ActivityFeed project={project} user={user} websocket={websocket} />
-                            </div>
-                            <div className="col-12 col-lg-6">
-                                <HomeMembers project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
-                                <HomeTasks project={project} isAdmin={isAdmin} isManager={isManager} user={user} websocket={websocket} />
-                            </div>
-                        </div>
+                        <div className="container py-8">
+                            <HomeMembers
+                                project={project}
+                                isAdmin={isAdmin}
+                                isManager={isManager}
+                                user={user}
+                                websocket={websocket}
+                            />
+                            <ActivityFeed
+                                project={project}
+                                user={user}
+                                websocket={websocket}
+                            />
+                            <HomeTasks
+                                project={project}
+                                isAdmin={isAdmin}
+                                isManager={isManager}
+                                user={user}
+                                websocket={websocket}
+                            />
                         </div>
                     } />
                     <Route path="about" element={
@@ -147,7 +157,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             />
                         } />
                     )}
-                    
+
                     <Route path="qna/*" element={
                         <Qna
                             user={user}

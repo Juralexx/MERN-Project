@@ -29,23 +29,17 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
 
     return (
         <>
-            <div className="kanban-header">
-                {names.map((element, key) => {
-                    return (
-                        <div className="kanban-header-title" key={key}>
-                            <div className="col-title">{stateToString(element)} <span>{array[key].length}</span></div>
-                            <HiPlus onClick={() => { setState(element); setCreateTask(true) }} />
-                        </div>
-                    )
-                })}
-            </div>
-            <div className="kanban">
+            <div className="kanban row">
                 <DragDropContext onDragStart={() => setDragged(true)} onDragEnd={onDragEnd}>
                     {array.map((arr, i) => {
                         return (
                             <Droppable droppableId={names[i]} index={i} key={i}>
                                 {(provided) => (
-                                    <div className="kanban-col" {...provided.droppableProps} ref={provided.innerRef} onMouseEnter={() => getState(i)}>
+                                    <div className="col-12 col-md-4" {...provided.droppableProps} ref={provided.innerRef} onMouseEnter={() => getState(i)}>
+                                        <div className="kanban-header-title" key={i}>
+                                            <div className="col-title">{stateToString(names[i])} <span>{array[i].length}</span></div>
+                                            <HiPlus onClick={() => { setState(names[i]); setCreateTask(true) }} />
+                                        </div>
                                         {arr.map((element, key) => {
                                             return (
                                                 <Draggable draggableId={element._id} index={key} key={element._id}>
@@ -60,12 +54,16 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
                                                             >
                                                                 <div className="kanban-ticket-title">
                                                                     <div className="two_lines">{element.title}</div>
-                                                                    {element.comments.length > 0 && <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" />{element.comments.length}</div>}
+                                                                    {element.comments.length > 0 &&
+                                                                        <div className="flex items-center mr-2">
+                                                                            <MdOutlineMessage className="mr-1" />{element.comments.length}
+                                                                        </div>
+                                                                    }
                                                                     <ToolsMenu>
                                                                         <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
                                                                         <div className="tools_choice">Commenter</div>
                                                                         <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
-                                                                        <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch) }>Supprimer</div>
+                                                                        <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
                                                                     </ToolsMenu>
                                                                 </div>
                                                                 <div className="kanban-ticket-status">

@@ -8,11 +8,11 @@
     color         : var(--input-text);
     background    : var(--input);
     border-radius : var(--rounded-sm);
-    border        : 2px solid transparent;
+    border        : 1px solid var(--light-border);
     outline       : none;
 
     &:focus {
-        border     : 2px solid var(--primary);
+        border     : 1px solid var(--primary);
         box-shadow : none;
     }
 

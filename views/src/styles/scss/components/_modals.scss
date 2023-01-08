@@ -73,14 +73,12 @@
             margin-bottom : 8px;
     
             .modal_nav-item {
-                padding       : 4px 20px;
-                margin-right  : 7px;
-                cursor        : pointer;
-                border-radius : var(--rounded-sm);
-    
-                &:hover {
-                    background-color : var(--x-light);
-                }
+                padding          : 4px 20px;
+                margin-right     : 7px;
+                cursor           : pointer;
+                border-radius    : var(--rounded-sm);
+                background-color : var(--light);
+
                 &.active {
                     color            : var(--white);
                     background-color : var(--primary);

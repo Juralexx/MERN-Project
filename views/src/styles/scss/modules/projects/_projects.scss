@@ -22,29 +22,6 @@
     }
 }
 
-.dashboard-projects-tools {
-    display         : flex;
-    align-items     : center;
-    justify-content : space-between;
-    margin-bottom   : 30px;
-
-    > div {
-        display : flex;
-        
-        button {
-            padding       : 10px 20px;
-            border-radius : var(--rounded-sm);
-            background    : var(--content-x-light);
-            font-weight   : 500;
-            span {
-                color       : var(--text-secondary);
-                margin-left : 5px;
-                font-weight : 400;
-            }
-        }
-    }
-}
-
 .project-card {
     padding       : 20px 0;
     margin        : 0;
@@ -168,6 +145,29 @@
             }
             .description {
                 width : 100%;
+            }
+        }
+    }
+}
+
+.dashboard-projects-tools {
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
+    margin-bottom   : 30px;
+
+    > div {
+        display : flex;
+        
+        button {
+            padding       : 10px 20px;
+            border-radius : var(--rounded-sm);
+            background    : var(--light);
+            font-weight   : 500;
+            span {
+                color       : var(--text-secondary);
+                margin-left : 5px;
+                font-weight : 400;
             }
         }
     }

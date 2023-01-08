@@ -5,9 +5,10 @@
     height           : auto;
     background-color : var(--light);
     padding          : 10px 0;
+    margin-top       : auto;
 
     &.footer-light {
-        font-size : 12px;
+        font-size  : 12px;
 
         .brand-name {
             font-size : 14px;

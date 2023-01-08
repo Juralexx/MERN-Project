@@ -6,7 +6,6 @@
     .dashboard-header-top {
         position        : relative;
         display         : flex;
-        align-items     : center;
         justify-content : space-between;
         margin-top      : 7px;
 
@@ -23,33 +22,34 @@
                 padding : 0 15px;
     
                 h1 {
-                    font-size     : 18px !important;
-                    line-height   : 18px;
-                    color         : var(--text);
-                    margin-bottom : 5px;
+                    font-size          : 18px;
+                    line-height        : 18px;
+                    color              : var(--text);
+                    margin-bottom      : 5px;
+                    text-overflow      : ellipsis;
+                    overflow           : hidden;
+                    width              : 100%;
+                    display            : -webkit-box;
+                    -webkit-line-clamp : 1;
+                    -webkit-box-orient : vertical;
                 }
 
                 .dashboard-header-content-infos {
                     .infos {
                         display      : flex;
-                        align-items  : center;
                         font-size    : 13px;
-                        line-height  : 22px;
+                        line-height  : 20px;
                         color        : var(--text-secondary);
                         margin-right : 20px;
 
                         svg {
                             margin-right : 7px;
+                            margin-top   : 3px;
                             color        : var(--text-tertiary);
                         }
                     }
                 }
             }
-        }
-    
-        .dashboard-header_right {
-            display : flex;
-    
         }
     }
     
@@ -101,6 +101,25 @@
             svg {
                 color  : var(--primary);
                 margin : 0 5px;
+            }
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    .dashboard-header {
+        margin-top : 54px;
+        .dashboard-header-top {
+            .dashboard-header_left {
+                .dashboard-header-img {
+                    display : none;
+                }
+                .dashboard-header-content {
+                    padding : 0 10px 0 0;
+                    h1 {
+                        font-size : 16px;
+                    }
+                }
             }
         }
     }

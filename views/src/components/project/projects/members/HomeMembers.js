@@ -4,7 +4,7 @@ import { getRole } from '../../../tools/functions/member'
 import AddMember from './AddMember'
 import MembersRequests from './MembersRequests'
 import MemberMenu from './MemberMenu'
-import { TextButton, ToolsBtn } from '../../../tools/global/Button'
+import { StringButton, ToolsBtn } from '../../../tools/global/Button'
 import { MediumAvatar } from '../../../tools/global/Avatars'
 import { MdOutlineMessage } from 'react-icons/md'
 import { FaRegUser } from 'react-icons/fa'
@@ -19,8 +19,10 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
             <div className="home-members">
                 <div className="home-members-header">
                     <h3>Membres <span>{project.members.length}</span></h3>
-                    <div className="flex">
-                        <TextButton className="mr-2"><Link to="members">Voir tous</Link></TextButton>
+                    <div className="flex items-center">
+                        <StringButton className="mr-4">
+                            <Link to="members">Voir tous</Link>
+                        </StringButton>
                         {(isAdmin || isManager) &&
                             <ToolsMenu>
                                 <div className="tools_choice" onClick={() => setAddMembers(true)}>Ajouter des membres</div>

@@ -22,7 +22,7 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
     return (
         <Modal open={open} setOpen={setOpen} className="task-modal">
             <div className="task-modal_header">
-                <h3>{task.title}</h3>
+                <h4>{task.title}</h4>
                 <p>Créée par {task.creator} le {dateParser(task.date)} à {getHourOnly(new Date(task.date))}</p>
                 <div className="flex mt-2">
                     <div className={`details mr-1 ${stateToBackground(task.state)}`}>{stateToString(task.state)}</div>

@@ -47,7 +47,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                     projects.map((element, key) => {
                         return (
                             <div className="sidebar-container" key={key} onMouseEnter={() => reduced && setHovered(true)} onMouseLeave={() => reduced && setHovered(false)}>
-                                <NavLink to={`${element.URLID}/${element.URL}`} className={isThisActive}>
+                                <NavLink to={`${element.URLID}/${element.URL}`} className={isThisActive} onClick={() => setReduced(true)}>
                                     <div className={`sidebar-title ${addClass(reduced && !hovered, "reduced")}`} onClick={() => setSubmenu(key)}>
                                         <div className="sidebar-title-inner">
                                             <div className="sidebar-img" style={avatar(element.pictures[0])}></div>
@@ -57,7 +57,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                                     </div>
                                 </NavLink>
                                 {submenu === key && (
-                                    <div className={`sidebar-submenu ${addClass(reduced && !hovered, "reduced")}`}>
+                                    <div className={`sidebar-submenu ${addClass(reduced && !hovered, "reduced")}`} onClick={() => setReduced(true)}>
                                         <NavLink to={`${element.URLID}/${element.URL}/about`} className={isThisActive}>
                                             <MdOutlineDescription />
                                             <div className="sidebar-submenu-text">À propos</div>
