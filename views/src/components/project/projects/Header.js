@@ -8,7 +8,7 @@ import { IoCalendarClearOutline, IoLocationOutline } from 'react-icons/io5'
 import ToolsMenu from '../../tools/global/ToolsMenu';
 import Navbar from './Navbar';
 
-const Header = ({ project, websocket, user }) => {
+const Header = ({ project, websocket, user, isManager }) => {
     const dispatch = useDispatch()
 
     return (
@@ -37,7 +37,10 @@ const Header = ({ project, websocket, user }) => {
                     </div>
                 </div>
             </div>
-            <Navbar project={project} />
+            <Navbar
+                project={project}
+                isManager={isManager}
+            />
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link, NavLink, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import { deleteActuality } from '../../../../actions/project.action'
 import { dateParser } from '../../../Utils'
 import { convertDeltaToHTML } from '../../../tools/editor/functions'
@@ -11,7 +11,7 @@ import { MediumAvatar } from '../../../tools/global/Avatars'
 import { BiNews } from 'react-icons/bi';
 import { HiArrowNarrowRight } from 'react-icons/hi'
 
-const Actualities = ({ project }) => {
+const Actualities = ({ project, isManager }) => {
     const [warning, setWarning] = useState(false)
     const dispatch = useDispatch()
 
@@ -43,13 +43,17 @@ const Actualities = ({ project }) => {
                                             </div>
                                             <div className="actuality-description before" dangerouslySetInnerHTML={convertDeltaToHTML(element.description)}></div>
                                             <div className="actuality-btn">
-                                                <TextButton onClick={() => setWarning(true)}>Supprimer</TextButton>
-                                                <TextButton>
-                                                    <Link to={`${element.urlid}/${element.url}/edit`} className="mx-2">Modifier</Link>
-                                                </TextButton>
+                                                {isManager &&
+                                                    <>
+                                                        <TextButton onClick={() => setWarning(true)}>Supprimer</TextButton>
+                                                        <TextButton>
+                                                            <Link to={`${element.urlid}/${element.url}/edit`} className="mx-2">Modifier</Link>
+                                                        </TextButton>
+                                                    </>
+                                                }
                                                 <Button>
                                                     <Link to={`/project/${project.URLID}/${project.URL}/actuality/${element.urlid}/${element.url}`}>
-                                                        Voir <HiArrowNarrowRight className='ml-2'/>
+                                                        Voir <HiArrowNarrowRight className='ml-2' />
                                                     </Link>
                                                 </Button>
                                             </div>
@@ -72,16 +76,29 @@ const Actualities = ({ project }) => {
                             </div>
                             <p>Vous n'avez pas encore ajouté d'actualité.</p>
                             <span>Ajoutez une actualité pour tenir vos visiteurs au courant de l'avancée de votre projet !</span>
-                            <NavLink to={`/projects/${project.URLID}/${project.URL}/add-actuality`}><Button text="Ajouter une actualité" /></NavLink>
+                            {isManager &&
+                                <Button>
+                                    <Link to={`/projects/${project.URLID}/${project.URL}/add-actuality`}>
+                                        Ajouter une actualité
+                                    </Link>
+                                </Button>
+                            }
                         </div>
                     )}
                 </div>
             } />
 
             <Route path=":urlid/:url/edit" element={
-                <EditActuality
-                    project={project}
-                />
+                isManager ? (
+                    <EditActuality
+                        project={project}
+                    />
+                ) : (
+                    <Navigate
+                        replace
+                        to={`/projects/${project.URLID}/${project.URL}/actuality`}
+                    />
+                )
             } />
         </Routes>
     )

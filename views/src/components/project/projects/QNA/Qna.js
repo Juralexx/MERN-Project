@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link, NavLink, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import { Button } from '../../../tools/global/Button'
 import EditQna from './EditQna'
 import { GrBlockQuote } from 'react-icons/gr';
 
-const Qna = ({ project }) => {
+const Qna = ({ project, isManager }) => {
     return (
         <Routes>
             <Route index element={
@@ -13,9 +13,11 @@ const Qna = ({ project }) => {
                         <>
                             <div className="header flex flex-col sm:flex-row sm:items-center mb-9">
                                 <h2 className='mb-3 sm:mb-0'>Foire aux questions</h2>
-                                <Button className="sm:ml-5">
-                                    <Link to="edit">Modifier</Link>
-                                </Button>
+                                {isManager &&
+                                    <Button className="sm:ml-5">
+                                        <Link to="edit">Modifier</Link>
+                                    </Button>
+                                }
                             </div>
                             {project.QNA.map((element, key) => {
                                 return (
@@ -41,9 +43,11 @@ const Qna = ({ project }) => {
                                 </div>
                                 <p>Vous n'avez pas encore ajouté de FAQ.</p>
                                 <span>Ajoutez une FAQ pour répondre aux questions que vos visiteur pourraient se poser !</span>
-                                <Button>
-                                    <NavLink to={`/projects/${project.URLID}/${project.URL}/add-qna`}>Ajouter une FAQ</NavLink>
-                                </Button>
+                                {isManager &&
+                                    <Button>
+                                        <NavLink to={`/projects/${project.URLID}/${project.URL}/add-qna`}>Ajouter une FAQ</NavLink>
+                                    </Button>
+                                }
                             </div>
                         </>
                     )}
@@ -51,9 +55,16 @@ const Qna = ({ project }) => {
             } />
 
             <Route path="edit" element={
-                <EditQna
-                    project={project}
-                />
+                project.QNA.length === 0 ? (
+                    <EditQna
+                        project={project}
+                    />
+                ) : (
+                    <Navigate
+                        replace
+                        to={`/projects/${project.URLID}/${project.URL}/qna`}
+                    />
+                )
             } />
         </Routes>
     )

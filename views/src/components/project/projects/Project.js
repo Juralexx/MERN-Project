@@ -56,7 +56,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
     return (
         Object.keys(project).length > 0 && !isLoading && (
             <>
-                <Header project={project} websocket={websocket} user={user} />
+                <Header project={project} websocket={websocket} user={user} isManager={isManager} />
                 <Routes>
                     <Route index element={
                         <div className="container-lg py-8">
@@ -109,36 +109,33 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                         />
                     } />
                     <Route path="edit" element={
-                        <Edit
-                            user={user}
-                            websocket={websocket}
-                            project={project}
-                            isAdmin={isAdmin}
-                            isManager={isManager}
-                        />
+                        isManager ? (
+                            <Edit
+                                project={project}
+                            />
+                        ) : (
+                            <Navigate
+                                replace
+                                to={`/projects/${project.URLID}/${project.URL}/`}
+                            />
+                        )
                     } />
                     <Route path="gallery" element={
                         <Gallery
-                            user={user}
-                            websocket={websocket}
                             project={project}
-                            isAdmin={isAdmin}
                             isManager={isManager}
                         />
                     } />
                     <Route path="actuality/*" element={
                         <Actualities
-                            user={user}
-                            websocket={websocket}
                             project={project}
-                            isAdmin={isAdmin}
                             isManager={isManager}
                         />
                     } />
 
 
                     <Route path="add-actuality" element={
-                        project.actualities.length === 0 ? (
+                        project.actualities.length === 0 && isManager ? (
                             <AddActuality
                                 user={user}
                                 websocket={websocket}
@@ -156,22 +153,23 @@ const Project = ({ user, websocket, projects, setProjects }) => {
 
                     <Route path="qna/*" element={
                         <Qna
-                            user={user}
-                            websocket={websocket}
                             project={project}
-                            isAdmin={isAdmin}
                             isManager={isManager}
                         />
                     } />
 
                     <Route path="add-qna" element={
+                        isManager ? (
                             <AddQna
                                 user={user}
-                                websocket={websocket}
                                 project={project}
-                                isAdmin={isAdmin}
-                                isManager={isManager}
                             />
+                        ) : (
+                            <Navigate
+                                replace
+                                to={`/projects/${project.URLID}/${project.URL}/qna`}
+                            />
+                        )
                     } />
                 </Routes>
             </>

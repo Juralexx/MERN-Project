@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-const Navbar = ({ project }) => {
+const Navbar = ({ project, isManager }) => {
     const isThisActive = ({ isActive }) => (isActive ? "active" : "unactive")
 
     return (
@@ -32,12 +32,14 @@ const Navbar = ({ project }) => {
                     >
                         FAQ
                     </NavLink>
-                    <NavLink
-                        to={`/projects/${project.URLID}/${project.URL}/edit`}
-                        className={isThisActive}
-                    >
-                        Modifier
-                    </NavLink>
+                    {isManager &&
+                        <NavLink
+                            to={`/projects/${project.URLID}/${project.URL}/edit`}
+                            className={isThisActive}
+                        >
+                            Modifier
+                        </NavLink>
+                    }
                 </div>
             </div>
         </nav>

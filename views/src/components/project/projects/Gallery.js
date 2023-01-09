@@ -79,9 +79,11 @@ const Gallery = ({ project, isManager }) => {
                                         <div className="img-tools-item" onClick={() => download(element)}>
                                              <IoMdDownload />
                                         </div>
-                                        <div className="img-tools-item" onClick={() => deleteFile(element)}>
-                                             <IoTrashBinSharp />
-                                        </div>
+                                        {isManager &&
+                                             <div className="img-tools-item" onClick={() => deleteFile(element)}>
+                                                  <IoTrashBinSharp />
+                                             </div>
+                                        }
                                    </div>
                               </div>
                          )
