@@ -6,51 +6,51 @@
 /* Tools */
 
 @import 'tools/classes';
-@import 'tools/accordion';
-@import 'tools/avatars';
-@import 'tools/categories';
 @import 'tools/containers';
 @import 'tools/map';
-@import 'tools/no-content';
 @import 'tools/scrollbar';
-@import 'tools/tools';
-@import 'tools/cards';
 @import 'tools/skeleton';
-@import 'tools/emoji-picker';
-@import 'tools/notification-card';
-@import 'tools/navbar-toggle';
+@import 'tools/tools';
 
 /* components */
 
-@import 'components/tooltip';
-@import 'components/modals';
+@import 'components/accordion';
+@import 'components/avatars';
 @import 'components/btn';
-@import 'components/editor';
-@import 'components/small-menu';
-@import 'components/mobile-menu';
+@import 'components/cards';
+@import 'components/categories';
 @import 'components/checkbox';
+@import 'components/editor';
+@import 'components/emoji-picker';
 @import 'components/loader';
+@import 'components/mobile-menu';
+@import 'components/modals';
+@import 'components/navbar-toggle';
+@import 'components/no-content';
+@import 'components/notification-card';
+@import 'components/small-menu';
+@import 'components/tooltip';
 
 @import 'components/inputs/auto-complete.scss';
 @import 'components/inputs/classic-input.scss';
 @import 'components/inputs/date-picker.scss';
 @import 'components/inputs/double-icon-input.scss';
-@import 'components/inputs/icon-input.scss';
 @import 'components/inputs/dropdown-input.scss';
 @import 'components/inputs/dynamic-input.scss';
+@import 'components/inputs/icon-input.scss';
 @import 'components/inputs/number-input.scss';
 @import 'components/inputs/textarea.scss';
 
 /* Log */
 
-@import 'modules/log/signup';
 @import 'modules/log/password-checker';
+@import 'modules/log/signup';
 
 /* Profil */
 
-@import 'modules/profil/profil';
 @import 'modules/profil/profil-header';
 @import 'modules/profil/profil-img-modal';
+@import 'modules/profil/profil';
 
 /* Add project */
 
@@ -62,41 +62,41 @@
 
 /* Project page */
 
-@import 'modules/project-page/project-page';
+@import 'modules/project-page/actuality';
+@import 'modules/project-page/explore-more';
 @import 'modules/project-page/header';
+@import 'modules/project-page/networks';
+@import 'modules/project-page/project-cards';
+@import 'modules/project-page/project-page';
 @import 'modules/project-page/share';
 @import 'modules/project-page/tags';
-@import 'modules/project-page/project-cards';
-@import 'modules/project-page/networks';
-@import 'modules/project-page/explore-more';
-@import 'modules/project-page/actuality';
 
 /* Dashboard */
 
-@import 'modules/projects/dashboard';
-@import 'modules/projects/projects';
-@import 'modules/projects/header';
-@import 'modules/projects/members';
-@import 'modules/projects/tasks';
-@import 'modules/projects/tasks-home';
-@import 'modules/projects/kanban';
-@import 'modules/projects/activity-feed';
-@import 'modules/projects/edit';
-@import 'modules/projects/gallery';
-@import 'modules/projects/actuality';
+@import 'modules/projects-dashboard/activity-feed';
+@import 'modules/projects-dashboard/actuality';
+@import 'modules/projects-dashboard/dashboard';
+@import 'modules/projects-dashboard/edit';
+@import 'modules/projects-dashboard/gallery';
+@import 'modules/projects-dashboard/header';
+@import 'modules/projects-dashboard/kanban';
+@import 'modules/projects-dashboard/members';
+@import 'modules/projects-dashboard/projects';
+@import 'modules/projects-dashboard/tasks-home'; 
+@import 'modules/projects-dashboard/tasks';
 
 /* Modules */
 
-@import 'modules/navbar';
-@import 'modules/mini-nav';
-@import 'modules/sidebar';
-@import 'modules/notifications';
-@import 'modules/settings-menu';
-@import 'modules/messenger';
-@import 'modules/home';
-@import 'modules/footer';
-@import 'modules/search';
 @import 'modules/content-nav';
+@import 'modules/footer';
+@import 'modules/home';
+@import 'modules/messenger';
+@import 'modules/mini-nav';
+@import 'modules/navbar';
+@import 'modules/notifications';
+@import 'modules/search';
+@import 'modules/settings-menu';
+@import 'modules/sidebar';
 
 /* Messenger */
 
