@@ -13,7 +13,7 @@ const SearchHeader = ({ setCurrentChat, changeCurrentChat, conversations, setBla
     const [members, setMembers] = useState([])
     const wrapperRef = useRef()
     const [open, setOpen] = useState(friends.length > 0 ? true : false)
-    useClickOutside(wrapperRef, setOpen, false)
+    useClickOutside(wrapperRef, () => setOpen(false))
     const usersDisplayerRef = useRef()
 
     const onSelect = (receiver) => {

@@ -14,7 +14,11 @@ const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
     const [openNotificationsMenu, setOpenNotificationsMenu] = useState(false)
     const [openMessengerMenu, setOpenMessengerMenu] = useState(false)
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, setOpenSettingsMenu, false, setOpenNotificationsMenu, false, setOpenMessengerMenu, false)
+    useClickOutside(wrapperRef, () => {
+        setOpenSettingsMenu(false)
+        setOpenNotificationsMenu(false)
+        setOpenMessengerMenu(false)
+    })
     const dispatch = useDispatch()
 
     const resetNotifications = () => {

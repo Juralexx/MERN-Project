@@ -20,7 +20,7 @@ const Conversation = ({ conversation, newMessage, notification }) => {
 
     const [opened, setOpened] = useState(false)
     const menuRef = useRef()
-    useClickOutside(menuRef, setOpened, false)
+    useClickOutside(menuRef, () => setOpened(false))
 
     const longPressProps = useLongPress({
         onClick: () => {

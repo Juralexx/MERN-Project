@@ -10,7 +10,7 @@ const ToolsMenu = (props) => {
     const { className, btnClassName, disabled, onClick, placement, mobile, mobileFull } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
-    useClickOutside(ref, setOpen, false)
+    useClickOutside(ref, () => setOpen(false))
     const xs = useMediaQuery('(max-width: 576px)')
 
     const popperElRef = useRef(null);

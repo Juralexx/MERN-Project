@@ -10,7 +10,7 @@ const EmojiPicker = (props) => {
     const [open, setOpen] = useState(false)
     const [visible, setVisible] = useState(false)
     const ref = useRef()
-    useClickOutside(ref, setOpen, false)
+    useClickOutside(ref, () => setOpen(false))
 
     const popperElRef = React.useRef(null);
     const [targetElement, setTargetElement] = React.useState(null);

@@ -19,7 +19,10 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
     const [isLoading, setLoading] = useState(false)
     const [display, setDisplay] = useState(false)
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, setDisplay, false, setLoading, false)
+    useClickOutside(wrapperRef, () => {
+        setDisplay(false)
+        setLoading(false)
+    })
 
     const searchLocation = async () => {
         if (!searchQuery || searchQuery.trim() === "") { return }

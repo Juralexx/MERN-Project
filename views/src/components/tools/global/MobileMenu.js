@@ -4,7 +4,7 @@ import { useClickOutside } from '../hooks/useClickOutside'
 const MobileMenu = (props) => {
     const { className, onClick, open, setOpen } = props
     const ref = useRef()
-    useClickOutside(ref, setOpen, false)
+    useClickOutside(ref, () => setOpen(false))
 
     return (
         open && (

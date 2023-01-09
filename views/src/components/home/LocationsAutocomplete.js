@@ -17,7 +17,11 @@ const LocationsAutocomplete = ({ location, setLocation, recentLocations, setRece
     const isEmpty = !locationsFound || locationsFound.length === 0
     const wrapperRef = useRef()
     const [displayLocation, setDisplayLocation] = useState(false)
-    useClickOutside(wrapperRef, setDisplay, false, setDisplayLocation, false, setLoading, false)
+    useClickOutside(wrapperRef, () => {
+        setDisplay(false)
+        setDisplayLocation(false)
+        setLoading(false)
+    })
 
     const searchLocation = async () => {
         if (!searchQuery || searchQuery.trim() === "") { return }

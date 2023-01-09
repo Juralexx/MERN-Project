@@ -10,7 +10,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
     const [display, setDisplay] = useState(false)
     const wrapperRef = useRef()
     const errorRef = useRef()
-    useClickOutside(wrapperRef, setDisplay, false)
+    useClickOutside(wrapperRef, () => setDisplay(false))
     const checkErr = (name) => { if (isErr === name) return "err" }
 
     return (

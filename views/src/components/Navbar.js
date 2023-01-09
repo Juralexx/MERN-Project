@@ -17,7 +17,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
     const [toggled, setToggled] = useState(false)
     const closeOnClick = () => { if (toggled) setToggled(false) }
     const navRef = useRef()
-    useClickOutside(navRef, setToggled, false)
+    useClickOutside(navRef, () => setToggled(false))
 
     return (
         location.pathname !== "/add-project" && (

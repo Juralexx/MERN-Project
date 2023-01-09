@@ -15,7 +15,7 @@ const Contributors = ({ workArray, setWorkArray, isErr, setErr, error, setError 
     const [display, setDisplay] = useState(false)
     const isEmpty = worksFound.length === 0
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, setDisplay, false)
+    useClickOutside(wrapperRef, () => setDisplay(false))
     const errorRef = useRef()
     const checkErr = (name) => { if (isErr === name) return "err" }
     

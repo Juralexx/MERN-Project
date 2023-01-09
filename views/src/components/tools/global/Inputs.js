@@ -42,7 +42,7 @@ export const DropdownInput = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, onClean, cross } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
-    useClickOutside(ref, setOpen, false)
+    useClickOutside(ref, () => setOpen(false))
 
     return (
         <div ref={ref} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`}>
@@ -81,7 +81,7 @@ export const DatePicker = (props) => {
     const { value, defaultValue, onKeyPress, onChange, onInput, disabled, className, inputClassName, placeholder, selected, onSelect } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
-    useClickOutside(ref, setOpen, false)
+    useClickOutside(ref, () => setOpen(false))
 
     const { inputProps, dayPickerProps } = useInput({
         fromYear: 2020,

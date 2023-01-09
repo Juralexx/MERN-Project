@@ -34,7 +34,7 @@ const New = ({ conversations, temporaryConv, setTemporaryConv, isTyping, typingC
 
     const wrapperRef = useRef()
     const [open, setOpen] = useState(friends.length > 0 ? true : false)
-    useClickOutside(wrapperRef, setOpen, false)
+    useClickOutside(wrapperRef, () => setOpen(false))
 
     const usersDisplayerRef = useRef()
 

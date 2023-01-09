@@ -1,10 +1,11 @@
 import React from 'react'
+import { useClickOutside } from '../hooks/useClickOutside'
 
 const MobToolsMenu = () => {
     const { className, btnClassName, disabled, onClick } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
-    useClickOutside(ref, setOpen, false)
+    useClickOutside(ref, () => setOpen(false))
 
     return (
         <div ref={ref} className={`${className ? "mobile-menu " + className : "mobile-menu"}`} onClick={onClick}>

@@ -28,7 +28,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
 
     const messageRef = useRef()
     const [opened, setOpened] = useState(false)
-    useClickOutside(messageRef, setOpened, false)
+    useClickOutside(messageRef, () => setOpened(false))
     const longPressProps = useLongPress({
         onLongPress: () => xs ? setOpened(true) : {},
     })

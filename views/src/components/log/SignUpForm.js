@@ -19,7 +19,7 @@ const SignUpForm = () => {
     const [passwordShown, setPasswordShown] = useState(false)
     const [display, setDisplay] = useState(false)
     const passwordRef = useRef()
-    useClickOutside(passwordRef, setDisplay, false)
+    useClickOutside(passwordRef, () => setDisplay(false))
     const [terms, setTerms] = useState(false)
     const [error, setError] = useState("")
     const [isErr, setErr] = useState(null)

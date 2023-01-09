@@ -19,7 +19,10 @@ const Location = ({ leafletLoading, geoJSON, geolocalisation, setGeolocalisation
     const isEmpty = !locationsFound || locationsFound.length === 0
     const wrapperRef = useRef()
     const errorRef = useRef()
-    useClickOutside(wrapperRef, setDisplay, false, setLoading, false)
+    useClickOutside(wrapperRef, () => {
+        setDisplay(false)
+        setLoading(false)
+    })
     const checkErr = (name) => { if (isErr === name) return "err" }
 
     const setSelect = (value) => { setSearchQuery(value); setDisplay(false); setLoading(false) }

@@ -52,7 +52,10 @@ const Edit = ({ user }) => {
     const [display, setDisplay] = useState(false)
     const isEmpty = !locationsFound || locationsFound.length === 0
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, setDisplay, false, setLoading, false)
+    useClickOutside(wrapperRef, () => {
+        setDisplay(false)
+        setLoading(false)
+    })
 
     const setSelect = (object, value) => { setSearchQuery(value); setLocation(object); setDisplay(false); setLoading(false) }
 

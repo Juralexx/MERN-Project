@@ -17,15 +17,15 @@ import { GiFrance } from 'react-icons/gi';
 const Header = ({ user, search, category, setCategory, location, setLocation, recentLocations, setRecentLocations, aroundLocation, setAroundLocation, date, setDate, state, setState }) => {
     const [openCategories, setOpenCategories] = useState(false)
     const categoriesRef = useRef()
-    useClickOutside(categoriesRef, setOpenCategories, false)
+    useClickOutside(categoriesRef, () => setOpenCategories(false))
 
     const datesMenu = useRef()
     const [byDate, setByDate] = useState(false)
-    useClickOutside(datesMenu, setByDate, false)
+    useClickOutside(datesMenu, () => setByDate(false))
 
     const stateMenu = useRef()
     const [byState, setByState] = useState(false)
-    useClickOutside(stateMenu, setByState, false)
+    useClickOutside(stateMenu, () => setByState(false))
 
     const [moreFilters, setMoreFilters] = useState(false)
     const [openMapModal, setOpenMapModal] = useState(false)

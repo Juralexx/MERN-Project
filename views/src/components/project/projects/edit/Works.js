@@ -16,7 +16,7 @@ const Works = ({ workArray, setDatas, error, setError }) => {
     const [isLoading, setLoading] = useState(false)
     const [display, setDisplay] = useState({ state: false, key: 0 })
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, setDisplay, { state: false, key: 0 })
+    useClickOutside(wrapperRef, () => setDisplay({ state: false, key: 0 }))
 
     const searchWork = async (key) => {
         if (!searchQuery || searchQuery.trim() === "") { return }

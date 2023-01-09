@@ -22,17 +22,17 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
     const [moreFilters, setMoreFilters] = useState(false)
     const [project, setProject] = useState()
 
-    const [openCategories, setOpenCategories] = useState(false)
     const categoriesRef = useRef()
-    useClickOutside(categoriesRef, setOpenCategories, false)
+    const [openCategories, setOpenCategories] = useState(false)
+    useClickOutside(categoriesRef, () => setOpenCategories(false))
 
     const datesMenu = useRef()
     const [byDate, setByDate] = useState(false)
-    useClickOutside(datesMenu, setByDate, false)
+    useClickOutside(datesMenu, () => setByDate(false))
 
     const stateMenu = useRef()
     const [byState, setByState] = useState(false)
-    useClickOutside(stateMenu, setByState, false)
+    useClickOutside(stateMenu, () => setByState(false))
 
     const locationsStored = localStorage.getItem("search:locations")
 

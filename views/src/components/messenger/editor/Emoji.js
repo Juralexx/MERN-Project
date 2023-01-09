@@ -6,7 +6,7 @@ import { placeUponCursor } from '../functions/function'
 
 const Emoji = ({ quill, isEmoji, setEmoji, emojisResults, setEmojisResults, position, setPosition }) => {
     const emojiRef = useRef()
-    useClickOutside(emojiRef, setEmoji, false)
+    useClickOutside(emojiRef, () => setEmoji(false))
     const { sm } = useContext(MediaContext)
     const styles = quill ? placeUponCursor(quill) : { left: 0, right: 0, bottom: 0 }
 

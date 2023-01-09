@@ -6,7 +6,7 @@ import { useClickOutside } from '../../tools/hooks/useClickOutside'
 const MobileEmojiPicker = (props) => {
     const { className, open, setOpen, onClick, onSelect } = props
     const ref = useRef()
-    useClickOutside(ref, setOpen, false)
+    useClickOutside(ref, () => setOpen(false))
 
     const checkTheme = () => {
         const theme = localStorage.getItem("theme")
