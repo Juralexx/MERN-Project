@@ -3,16 +3,17 @@ import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone';
 import { ErrorCard } from '../../tools/global/Error';
 import { deleteProjectPictures, updateProjectPictures } from '../../../actions/project.action'
+import { download } from '../../Utils';
+import FsLightbox from 'fslightbox-react';
 import { Oval } from 'react-loading-icons'
-import { ImImage } from 'react-icons/im'
-import { IoMdCloudDownload } from 'react-icons/io'
-import { IoTrashSharp } from 'react-icons/io5'
+import { IoTrashBinSharp } from 'react-icons/io5';
+import { BiImageAlt } from 'react-icons/bi';
+import { IoMdCloudDownload, IoMdDownload } from 'react-icons/io';
 
 const Gallery = ({ project, isManager }) => {
-     const [toggler, setToggler] = useState(false)
+     const [toggler, setToggler] = useState({ open: false, imgIndex: 0 })
      const [pictures, setPictures] = useState(project.pictures)
-     const [isErr, setErr] = useState(false)
-     const [error, setError] = useState("")
+     const [error, setError] = useState({ state: false, error: "" })
      const [areLoading, setLoading] = useState([])
      const dispatch = useDispatch()
 
@@ -36,24 +37,24 @@ const Gallery = ({ project, isManager }) => {
                     }, 5000)
                     i++
                } else {
-                    setErr(true)
-                    setError("Vous ne pouvez pas ajouter plus de 6 photos")
+                    setError({ state: true, error: "Vous ne pouvez pas ajouter plus de 6 photos" })
                }
           })
-          if (i > 0)
-               console.log(pictures)
+          if (i > 0) {
                dispatch(updateProjectPictures(project._id, formData, pictures))
+          }
      }
 
      const deleteFile = (file) => {
-          if (!file.includes("blob"))
+          if (!file.includes("blob")) {
                dispatch(deleteProjectPictures(project._id, file))
                setPictures(project.pictures)
+          }
      }
 
      return (
-          <div className="content_container">
-               <div className="content_box">
+          <div className="container-lg py-8">
+               <div className="gallery">
                     {isManager &&
                          <>
                               <div {...getRootProps({ className: `dropzone ${isDragActive && "active"} ${pictures.length === 6 && "disabled"}` })}>
@@ -62,37 +63,42 @@ const Gallery = ({ project, isManager }) => {
                                    {pictures.length === 6 ? (
                                         <p>Votre galerie est pleine</p>
                                    ) : (
-                                        <p>Cliquez ou glisser-déposer vos images ici</p>
+                                        <p>Cliquez ou glissez-déposez<br />vos images ici</p>
                                    )}
                               </div>
-                              {isErr && <ErrorCard display={isErr} text={error} clean={() => setErr(false)} />}
+                              {error.state &&
+                                   <ErrorCard display={error.state} text={error} clean={() => setError(err => ({ ...err, state: false }))} />
+                              }
                          </>
                     }
-                    <div className="gallery">
-                         {pictures.map((element, key) => {
-                              return (
-                                   <div className="gallery-brick" key={key}>
-                                        <img src={element} alt={project.title} title={project.title} onClick={() => setToggler(!toggler)} />
-                                        <div className="img-tools">
-                                             <div className="img-tools-item" onClick={() => deleteFile(element)}>
-                                                  <IoTrashSharp />
-                                             </div>
+                    {pictures.map((element, key) => {
+                         return (
+                              <div className="gallery-brick" key={key} onClick={() => { setToggler({ open: !toggler.open, imgIndex: key }) }}>
+                                   <img src={element} alt={project.title} title={project.title} />
+                                   <div className="img-tools">
+                                        <div className="img-tools-item" onClick={() => download(element)}>
+                                             <IoMdDownload />
+                                        </div>
+                                        <div className="img-tools-item" onClick={() => deleteFile(element)}>
+                                             <IoTrashBinSharp />
                                         </div>
                                    </div>
-                              )
-                         })}
-                         {[...Array(6 - pictures.length)].map((_, key) => {
-                              return (
-                                   <div className="gallery-brick-empty" key={key}>
-                                        {areLoading.includes(pictures.length + key) ? (
-                                             <Oval />
-                                        ) : (
-                                             <ImImage />
-                                        )}
-                                   </div>
-                              )
-                         })}
-                    </div>
+                              </div>
+                         )
+                    })}
+                    {[...Array(6 - pictures.length)].map((_, key) => {
+                         return (
+                              <div className="gallery-brick-empty" key={key}>
+                                   {areLoading.includes(pictures.length + key) ? <Oval /> : <BiImageAlt />}
+                              </div>
+                         )
+                    })}
+                    <FsLightbox
+                         toggler={toggler.open}
+                         sources={project.pictures}
+                         source={project.pictures[toggler.imgIndex]}
+                         types={[...Array(project.pictures.length)].fill('image')}
+                    />
                </div>
           </div>
      )

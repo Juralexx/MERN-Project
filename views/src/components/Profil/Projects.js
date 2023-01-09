@@ -61,13 +61,28 @@ const Projects = ({ user, websocket }) => {
             </div>
             <div className="search_header">
                 <h2>Projects <span>{projectsToDisplay.length}</span></h2>
-                <IconInput className="is_start_icon ml-auto mr-2" icon={<BiSearchAlt />} placeholder="Rechercher un projet..." value={query} onInput={e => setQuery(e.target.value)} onChange={oneLevelSearch} cross clean={() => setQuery("")} />
-                <DropdownInput readOnly placeholder="Filtrer" value={filter} className="right" cross clean={() => { setFilter(""); setProjectsToDisplay(projects) }}>
-                    <div onClick={() => sortByRecent(projects, setProjectsToDisplay, setFilter)}>Plus récent au plus ancien</div>
-                    <div onClick={() => sortByOld(projects, setProjectsToDisplay, setFilter)}>Plus ancien au plus récent</div>
-                    <div onClick={() => sortByWorkedOn(projects, setProjectsToDisplay, setFilter)}>En préparation</div>
-                    <div onClick={() => sortByInProgress(projects, setProjectsToDisplay, setFilter)}>En cours</div>
-                    <div onClick={() => sortByDone(projects, setProjectsToDisplay, setFilter)}>Terminé</div>
+                <IconInput
+                    className="is_start_icon ml-auto mr-2"
+                    icon={<BiSearchAlt />}
+                    placeholder="Rechercher un projet..."
+                    value={query}
+                    onInput={e => setQuery(e.target.value)}
+                    onChange={oneLevelSearch}
+                    cross
+                    onClean={() => setQuery("")}
+                />
+                <DropdownInput
+                    placeholder="Filtrer"
+                    value={filter}
+                    className="right"
+                    cross
+                    onClean={() => { setFilter(""); setProjectsToDisplay(projects) }}
+                >
+                    <div onClick={() => { sortByRecent(projects); setFilter("Plus récent au plus ancien") }}>Plus récent au plus ancien</div>
+                    <div onClick={() => { sortByOld(projects); setFilter("Plus ancien au plus récent") }}>Plus ancien au plus récent</div>
+                    <div onClick={() => { sortByWorkedOn(projects); setFilter("En préparation") }}>En préparation</div>
+                    <div onClick={() => { sortByInProgress(projects); setFilter("En cours") }}>En cours</div>
+                    <div onClick={() => { sortByDone(projects); setFilter("Terminé") }}>Terminé</div>
                 </DropdownInput>
             </div>
             <div className="profil_page-body !justify-start">

@@ -37,6 +37,8 @@ const Projects = ({ projects }) => {
         }
     }
 
+    console.log(isResults)
+
     return (
         <>
             <div className="dashboard-projects-header">
@@ -60,9 +62,8 @@ const Projects = ({ projects }) => {
                             <DropdownInput
                                 placeholder="Catégorie"
                                 cross
-                                readOnly
                                 value={category}
-                                clean={() => { setCategory(""); searchProject() }}
+                                onClean={() => { setCategory(""); searchProject() }}
                             >
                                 {categories.map((category, key) => {
                                     return <div key={key} onClick={() => { setCategory(category.name); searchProject() }}>{category.name}</div>
@@ -82,15 +83,15 @@ const Projects = ({ projects }) => {
                         <DropdownInput
                             placeholder="Filtrer"
                             cross
-                            readOnly
                             value={filter}
-                            clean={() => { setFilter(""); setProjectsToShow(projects) }}
+                            onChange={e => setFilter(e.target.value)}
+                            onClean={() => { setFilter(""); setProjectsToShow(projects) }}
                         >
-                            <div onClick={() => sortByRecent(projects, setProjectsToShow, setFilter)}>Plus récent au plus ancien</div>
-                            <div onClick={() => sortByOld(projects, setProjectsToShow, setFilter)}>Plus ancien au plus récent</div>
-                            <div onClick={() => sortByWorkedOn(projects, setProjectsToShow, setFilter)}>En préparation</div>
-                            <div onClick={() => sortByInProgress(projects, setProjectsToShow, setFilter)}>En cours</div>
-                            <div onClick={() => sortByDone(projects, setProjectsToShow, setFilter)}>Terminé</div>
+                            <div onClick={() => { sortByRecent(projects); setFilter("Plus récent au plus ancien") }}>Plus récent au plus ancien</div>
+                            <div onClick={() => { sortByOld(projects); setFilter("Plus ancien au plus récent") }}>Plus ancien au plus récent</div>
+                            <div onClick={() => { sortByWorkedOn(projects); setFilter("En préparation") }}>En préparation</div>
+                            <div onClick={() => { sortByInProgress(projects); setFilter("En cours") }}>En cours</div>
+                            <div onClick={() => { sortByDone(projects); setFilter("Terminé") }}>Terminé</div>
                         </DropdownInput>
                     </div>
                 </div>

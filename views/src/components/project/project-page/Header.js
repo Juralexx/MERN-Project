@@ -34,17 +34,17 @@ const Header = ({ user, project }) => {
     const unfollow = () => { dispatch(unfollowProject(project._id, user._id)); setFollowed(false) }
 
     return (
-        <div className="header lg:pt-10">
-            <img className="block lg:hidden h-auto max-h-[430px] object-cover w-full" src={project.pictures[0]} alt={project.title} />
+        <div className="project-page_header">
+            <img className='mobile-img' src={project.pictures[0]} alt={project.title} />
             <div className="container-lg">
-                <div className="mx-auto py-4 lg:py-7 relative text-left lg:text-center">
-                    <h1 className="text-[28px] lg:text-[36px] bold">{project.title}</h1>
-                    <p className="text-[16px]">{project.category}</p>
+                <div className="header-title">
+                    <h1>{project.title}</h1>
+                    <p>{project.category}</p>
                 </div>
-                <div className="header-inner row relative xl:px-7 py-3">
+                <div className="header-inner row">
                     <div className="col-12 col-lg-7 z-10">
-                        <div className="hidden lg:block h-[350px] w-full relative" style={projectPicture(project.pictures[0])}></div>
-                        <div className="hidden lg:flex txt-sec justify-between py-3">
+                        <div className="project-picture" style={projectPicture(project.pictures[0])}></div>
+                        <div className="project-infos">
                             <Link to={"/" + project.posterPseudo} className="flex items-center bold ml-2">
                                 <MediumAvatar pic={project.posterAvatar} className="mr-2" />
                                 {project.posterPseudo}
@@ -53,33 +53,33 @@ const Header = ({ user, project }) => {
                         </div>
                     </div>
                     <div className="col-12 col-lg-5 order-1">
-                        <h2 className="txt-prim text-[16px] max-w-[700px] font-normal">{project.subtitle}</h2>
+                        <h2>{project.subtitle}</h2>
                         <div className="py-2">
-                            <div className="flex items-center py-1 txt-prim">
+                            <div className="flex items-center py-1">
                                 <MdOutlineLocationOn className="mr-2" /> <p><Link to="/" className="bold">{project.location} ({project.code_department})</Link></p>
                             </div>
                             {project.start && !project.end &&
-                                <div className="flex items-center py-1 txt-prim">
+                                <div className="flex items-center py-1">
                                     <MdCalendarToday className="mr-2 txt-sec" /> <p>le <span className="bold">{dateParser(project.start)}</span></p>
                                 </div>
                             }
                             {project.end && !project.start &&
-                                <div className="flex items-center py-1 txt-prim">
+                                <div className="flex items-center py-1">
                                     <MdCalendarToday className="mr-2 txt-sec" /> <p>jusqu'au <span className="bold">{dateParser(project.end)}</span></p>
                                 </div>
                             }
                             {project.end && project.start &&
-                                <div className="flex items-center py-1 txt-prim">
+                                <div className="flex items-center py-1">
                                     <MdCalendarToday className="mr-2 txt-sec" /> <p>du <span className="bold">{dateParser(project.start)}</span> au <span className="bold">{dateParser(project.end)}</span></p>
                                 </div>
                             }
 
-                            <div className="lg:hidden flex txt-sec justify-start pt-3 mb-6">
-                                <Link to={"/" + project.posterPseudo} className="flex items-center bold text-base mr-2">
+                            <div className="project-infos_mobile">
+                                <Link to={"/" + project.posterPseudo}>
                                     <MediumAvatar pic={project.posterAvatar} className="mr-2" />
                                     {project.posterPseudo}
                                 </Link>
-                                <div className='flex items-center'>- le {dateParser(project.createdAt)}</div>
+                                <div className='flex items-center'>le {dateParser(project.createdAt)}</div>
                             </div>
                         </div>
                         <div className="btn join-btn">Rejoindre le projet</div>
@@ -88,26 +88,40 @@ const Header = ({ user, project }) => {
                                 return <div className="tag" key={i}><span>#</span>{tag}</div>
                             })}
                         </div>
-                        <div className="flex flex-wrap pt-5">
+                        <div className="project-page_actions">
                             {user._id === null &&
-                                <button className="btn action-btn like">Soutenir <MdOutlineFavoriteBorder /></button>
+                                <button className="btn action-btn like">
+                                    Soutenir <MdOutlineFavoriteBorder />
+                                </button>
                             }
                             {user._id && !liked &&
-                                <button className="btn action-btn like" onClick={like}>Soutenir <MdOutlineFavoriteBorder /></button>
+                                <button className="btn action-btn like" onClick={like}>
+                                    Soutenir <MdOutlineFavoriteBorder />
+                                </button>
                             }
                             {user._id && liked &&
-                                <button className="btn action-btn like" onClick={unlike}>Ne plus soutenir <MdOutlineFavorite /></button>
+                                <button className="btn action-btn like" onClick={unlike}>
+                                    Ne plus soutenir <MdOutlineFavorite />
+                                </button>
                             }
                             {user._id === null &&
-                                <button className="btn action-btn follow">Suivre <MdOutlineBookmarkBorder /></button>
+                                <button className="btn action-btn follow">
+                                    Suivre <MdOutlineBookmarkBorder />
+                                </button>
                             }
                             {user._id && !followed &&
-                                <button className="btn action-btn follow" onClick={follow}>Suivre <MdOutlineBookmarkBorder /></button>
+                                <button className="btn action-btn follow" onClick={follow}>
+                                    Suivre <MdOutlineBookmarkBorder />
+                                </button>
                             }
                             {user._id && followed &&
-                                <button className="btn action-btn follow" onClick={unfollow}>Ne plus suivre <MdOutlineBookmark /></button>}
+                                <button className="btn action-btn follow" onClick={unfollow}>
+                                    Ne plus suivre <MdOutlineBookmark />
+                                </button>}
 
-                            <button className="btn action-btn share" onClick={() => setShare(!share)}>Partager <MdOutlineShare /></button>
+                            <button className="btn action-btn share" onClick={() => setShare(!share)}>
+                                Partager <MdOutlineShare />
+                            </button>
                         </div>
                     </div>
                 </div>

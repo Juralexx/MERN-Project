@@ -1,0 +1,94 @@
+.content-cards {
+    position       : sticky;
+    top            : 90px;
+    overflow-y     : auto;
+    padding-bottom : 80px;
+    padding-right  : 5px;
+
+    .content-card {
+        display          : flex;
+        flex-direction   : column;
+        padding          : 20px;
+        margin-bottom    : 20px;
+        border-radius    : var(--rounded-sm);
+        background-color : var(--x-light);
+
+        p {
+            font-size : 14px;
+            color     : var(--text-secondary);
+        }
+
+        .card-title {
+            display         : flex;
+            justify-content : space-between;
+
+            h3 {
+                font-size      : 18px;
+                text-align     : center;
+                font-weight    : 700;
+                letter-spacing : 0.5px;
+            }
+
+            .swiper-button {
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                height          : 28px;
+                width           : 28px;
+                padding         : 2px;
+                border-radius   : var(--rounded-sm);
+                background      : var(--content);
+                z-index         : 10;
+                cursor          : pointer;
+                &:hover {
+                    color            : white;
+                    background-color : var(--primary);
+                }
+
+                svg {
+                    width  : 24px;
+                    height : 24px;
+                }
+            }
+        }
+
+        .card-body {
+            margin-top : 30px;
+            h4 {
+                font-weight : 600;
+            }
+        }
+
+        .actuality-slide {
+            h4 {
+                @include line-clamp(100%, 21px, 2);
+                text-align         : center;
+                margin-bottom      : 20px;
+            }
+            > div {
+                @include line-clamp(100%, 21px, 5);
+            }
+        }
+
+        .gallery-slide {
+            > div {
+                height : 200px;
+            }
+        }
+    }
+}
+
+@media(max-width:992px) {
+    .content-cards {
+        padding-bottom : 0;
+        .content-card {
+            &.actuality_card, &.qna_card, &.gallery_card {
+                display : none;
+            }
+            &.map_card {
+                display    : none;
+                margin-top : 20px;
+            }
+        }
+    }
+}

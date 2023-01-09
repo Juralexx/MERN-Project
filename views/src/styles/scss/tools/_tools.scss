@@ -39,9 +39,6 @@
                 background-color : rgba(var(--primary-rgb), 0.3);
             }
         }
-        p {
-            margin-top : 1px;
-        }
     }
 }
 
@@ -64,7 +61,7 @@
             border-radius   : var(--rounded-sm);
 
             &:hover {
-                background-color: var(--x-light);
+                background-color: var(--light);
             }
 
             &.selected {

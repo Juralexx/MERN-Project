@@ -1291,6 +1291,10 @@ video {
     flex-direction: row;
   }
 
+  .sm\:justify-between {
+    justify-content: space-between;
+  }
+
   .sm\:\!pr-1 {
     padding-right: 0.25rem !important;
   }
@@ -1319,6 +1323,10 @@ video {
 
   .md\:hidden {
     display: none;
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
   }
 
   .md\:items-center {

@@ -190,42 +190,24 @@ export const removeAdmin = (member, project, user, websocket, dispatch) => {
 /***************************************************************************************************************************************************/
 /**************************************************************** SORTED ARRAY *********************************************************************/
 
-export const sortByRecent = (members, setMembers, setFilter, setDisplay) => {
+export const sortByRecent = (members) => {
     const array = members.sort((a, b) => { return new Date(b.since) - new Date(a.since) })
-    setMembers(array)
-    setFilter("Plus récent au plus ancien")
-    setDisplay(false)
+    return array
 }
 
-export const sortByOld = (members, setMembers, setFilter, setDisplay) => {
+export const sortByOld = (members) => {
     const array = members.sort((a, b) => { return new Date(a.since) - new Date(b.since) })
-    setMembers(array)
-    setFilter("Plus ancien au plus récent")
-    setDisplay(false)
+    return array
 }
 
-export const sortByRole = (members, setMembers, setFilter, setDisplay) => {
+export const sortByRole = (members) => {
     const manager = members.filter(element => element.role === "manager")
     const admins = members.filter(element => element.role === "admin")
     const users = members.filter(element => element.role === "user")
-    setMembers(manager.concat(admins, users))
-    setFilter("Par rôle")
-    setDisplay(false)
+    return manager.concat(admins, users)
 }
 
-export const sortByAlpha = (members, setMembers, setFilter, setDisplay) => {
+export const sortByAlpha = (members) => {
     const array = members.sort((a, b) => { return a.pseudo.toString().localeCompare(b.pseudo.toString()) })
-    setMembers(array)
-    setFilter("Ordre alphabétique")
-    setDisplay(false)
-}
-
-export const checkDateSort = (isByRecent, setIsByRecent, members, setMembers, setFilter, setDisplay) => {
-    if (isByRecent) {
-        sortByOld(members, setMembers, setFilter, setDisplay)
-        setIsByRecent(false)
-    } else {
-        sortByRecent(members, setMembers, setFilter, setDisplay)
-        setIsByRecent(true)
-    }
+    return array
 }

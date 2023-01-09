@@ -39,7 +39,7 @@ export const ClassicInput = (props) => {
 }
 
 export const DropdownInput = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, clean, cross } = props
+    const { type, value, defaultValue, onKeyPress, onChange, onInput, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, onClean, cross } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
     useClickOutside(ref, setOpen, false)
@@ -64,7 +64,7 @@ export const DropdownInput = (props) => {
                 max={max}
             />
             {cross && value && value.length > 0 ? (
-                <IoClose className="cross" onClick={clean} />
+                <IoClose className="cross" onClick={onClean} />
             ) : (
                 <IoIosArrowDown />
             )}

@@ -7,7 +7,7 @@ import { BiTask } from 'react-icons/bi'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 const Sidebar = ({ user, projects, isLoading }) => {
-    const [reduced, setReduced] = useState(false)
+    const [reduced, setReduced] = useState(true)
     const [hovered, setHovered] = useState(false)
     const [submenu, setSubmenu] = useState(0)
     const localStore = localStorage.getItem("sideState")

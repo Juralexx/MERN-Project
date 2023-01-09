@@ -52,38 +52,6 @@
             }
         }
     }
-    
-
-    .dashboard-header_navbar {
-        position         : relative;
-        width            : 100%;
-        background-color : var(--content-x-light);
-        
-        .dashboard-header_navbar-content {
-            display         : flex;
-            align-items     : center;
-            justify-content : flex-start;
-            margin          : 0 auto;
-            max-width       : 1366px;
-
-            .dashboard-header_navbar-item {
-                padding   : 10px 30px 10px 0;
-                font-size : 16px;
-                color     : var(--text-tertiary);
-                cursor    : pointer;
-
-                a {
-                    &:hover {
-                        color : var(--text-tertiary);
-                    }
-    
-                    &.active {
-                        color : var(--primary);
-                    }
-                }
-            }
-        }
-    }
 
     .dashboard-breadcrumb {
         position    : relative;
@@ -101,6 +69,38 @@
             svg {
                 color  : var(--primary);
                 margin : 0 5px;
+            }
+        }
+    }
+}
+
+.dashboard-header_navbar {
+    background-color : var(--light);
+    
+    .dashboard-header_navbar-content {
+        display         : flex;
+        align-items     : center;
+        justify-content : flex-start;
+        border-top      : 1px solid var(--light-border);
+        padding         : 8px 0;
+        overflow-x      : auto;
+
+        a {
+            padding       : 7px 10px;
+            margin        : 0 3px;
+            color         : var(--text-secondary);
+            border-radius : var(--rounded-sm);
+            white-space   : nowrap;
+
+            &:first-child {
+                padding-left : 0;
+            }
+
+            &:hover {
+                color : var(--text);
+            }
+            &.active {
+                color : var(--primary);
             }
         }
     }

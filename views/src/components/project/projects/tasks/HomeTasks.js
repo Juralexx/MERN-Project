@@ -59,12 +59,18 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             <div className={`${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
                             <div className={`${addClass(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminée</div>
                         </div>
-                        <DropdownInput readOnly placeholder="Filtrer" value={filter} className="small md:ml-3" clean={() => { setFilter(""); setTasks(reverseArray(project.tasks)) }}>
-                            {filter !== "" && <div onClick={() => { setTask(reverseArray(project.tasks)); setFilter("") }}>Aucun tri</div>}
-                            <div onClick={() => sortByEndDate(tasks, setTasks, setFilter)}>Par date de fin</div>
-                            <div onClick={() => sortByCreationDate(tasks, setTasks, setFilter)}>Par date de création</div>
-                            <div onClick={() => sortByState(tasks, setTasks, setFilter)}>Par état</div>
-                            <div onClick={() => sortByStatus(tasks, setTasks, setFilter)}>Par status</div>
+                        <DropdownInput
+                            className="small md:ml-3"
+                            placeholder="Filtrer"
+                            value={filter}
+                            onChange={(e) => setFilter(e.target.value)}
+                            cross
+                            onClean={() => { setFilter(""); setTasks(reverseArray(project.tasks)) }}
+                        >
+                            <div onClick={() => { setTasks(sortByEndDate(tasks)); setFilter("Par date de fin") }}>Par date de fin</div>
+                            <div onClick={() => { setTasks(sortByCreationDate(tasks)); setFilter("Par date de création") }}>Par date de création</div>
+                            <div onClick={() => { setTasks(sortByState(tasks)); setFilter("Par état") }}>Par état</div>
+                            <div onClick={() => { setTasks(sortByStatus(tasks)); setFilter("Par status") }}>Par status</div>
                         </DropdownInput>
                     </div>
                 </div>
@@ -74,7 +80,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             return (
                                 <div className={`home-tasks-task`} key={key}>
                                     <Checkbox
-                                        key={key}
+                                        uniqueKey={key}
                                         className="mr-2 mt-1"
                                         checked={element.state === "done"}
                                         onChange={() => changeState(element, "done", project, user, websocket, dispatch)}
@@ -84,12 +90,16 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                             <div className="flex items-center one_line">{element.title}</div>
                                             <div className="home-tasks-task-tools">
                                                 {element.comments.length > 0 &&
-                                                    <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
+                                                    <div className="flex items-center mr-2">
+                                                        <MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span>
+                                                    </div>
                                                 }
                                                 <ToolsMenu>
                                                     <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
                                                     <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
-                                                    {(isAdmin || isManager) && <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>}
+                                                    {(isAdmin || isManager) &&
+                                                        <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
+                                                    }
                                                 </ToolsMenu>
                                             </div>
                                         </div>

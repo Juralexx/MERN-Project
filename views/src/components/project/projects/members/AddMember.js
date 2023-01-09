@@ -12,6 +12,7 @@ import { IoClose } from 'react-icons/io5'
 
 const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager }) => {
     const [friendsFound, setFriendsFound] = useState([])
+    const [friendsToShow, setFriendsToShow] = useState([])
     const [array, setArray] = useState([])
     const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
@@ -26,6 +27,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                 })
                 Promise.all(friendsArray).then((res) => {
                     setFriendsFound(res)
+                    setFriendsToShow(res)
                     setLoading(false)
                 })
             }
@@ -36,24 +38,22 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
     const [search, setSearch] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
     const [isFriendInResult, setFriendInResult] = useState([])
-    const isEmpty = !isFriendInResult || isFriendInResult.length === 0
     const regexp = new RegExp(searchQuery, 'i');
-    const handleInputChange = (e) => { setSearchQuery(e.target.value) }
+
     const searchFriends = () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         if (searchQuery.length >= 2) {
             const response = friendsFound?.filter(friend => regexp.test(friend.pseudo))
             setFriendInResult(response)
             setSearch(true)
-            if (isEmpty) {
+            if (!isFriendInResult || isFriendInResult.length === 0)
                 setSearch(false)
-            }
-        } else { setSearch(false) }
+        } else setSearch(false)
     }
 
     return (
         <Modal open={open} setOpen={setOpen} className="add-members-modal">
-            <h2 className="title_border">Nouveaux membres</h2>
+            <h2>Nouveaux membres</h2>
             <div className="user_in_array-container">
                 {array.length > 0 && (
                     array.map((element, key) => {
@@ -67,14 +67,27 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                     })
                 )}
             </div>
-            <ClassicInput placeholder="Rechercher un ami..." className="w-full mb-3" value={searchQuery} onInput={handleInputChange} onChange={searchFriends} type="search" />
+            <ClassicInput
+                placeholder="Rechercher un ami..."
+                className="full mb-3"
+                value={searchQuery}
+                onInput={e => setSearchQuery(e.target.value)}
+                onChange={searchFriends}
+                type="text"
+                cross
+                onClean={() => { setSearch(false); setFriendsFound(friendsToShow); setSearchQuery('') }}
+            />
             <div className="user_selecter">
-                {friendsFound ? (
+                {friendsToShow ? (
                     !isLoading ? (
                         <div className="user_displayer">
-                            {friendsFound.map((element, key) => {
+                            {friendsToShow.map((element, key) => {
                                 return (
-                                    <div className={`user_display_choice ${isInResults(element, isFriendInResult, search, "flex")} ${isSelected(array, element)}`} key={key} onClick={() => addMemberToArray(element, user, array, setArray)}>
+                                    <div
+                                        className={`user_display_choice ${isInResults(element, isFriendInResult, search, "flex")} ${isSelected(array, element)}`}
+                                        key={key}
+                                        onClick={() => addMemberToArray(element, user, array, setArray)}
+                                    >
                                         <MediumAvatar pic={element.picture} />
                                         <p>{element.pseudo}</p>
                                     </div>
@@ -90,8 +103,17 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                     <p>Vous n'avez pas de contact a ajouter à ce projet</p>
                 )}
             </div>
-            <Button className="mt-5 w-full" disabled={array.length === 0} onClick={() => { sendProjectMemberRequest(array, user, project, websocket, dispatch); setArray([]); setOpen(false) }}
-            >Ajouter</Button>
+            <Button
+                className="mt-5 w-full"
+                disabled={array.length === 0}
+                onClick={() => {
+                    sendProjectMemberRequest(array, user, project, websocket, dispatch)
+                    setArray([])
+                    setOpen(false)
+                }}
+            >
+                Ajouter
+            </Button>
         </Modal>
     )
 }

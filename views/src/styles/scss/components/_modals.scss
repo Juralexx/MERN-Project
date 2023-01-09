@@ -25,14 +25,9 @@
         z-index          : 100000000000;
     
         h2 {
-            padding-bottom : 7px;
-            margin-bottom  : 10px;
-            font-size      : 20px !important;
-            font-weight    : 600;
-    
-            &.title_border {
-                border-bottom : 1px solid var(--text-tertiary);
-            }
+            margin-bottom : 10px;
+            font-size     : 20px !important;
+            font-weight   : 600;
         }
     
         &.hide_modal {

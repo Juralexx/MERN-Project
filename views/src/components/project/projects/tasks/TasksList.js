@@ -52,7 +52,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                     return (
                                         <div className="tasklist-table-item" key={key}>
                                             <Checkbox
-                                                key={key}
+                                                uniqueKey={key}
                                                 className="mr-2 mt-1"
                                                 checked={element.state === "done"}
                                                 onChange={() => changeState(element, "done", project, user, websocket, dispatch)}
@@ -129,7 +129,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                         <div className="tasklist-table" key={key}>
                             <div className="tasklist-table-item" key={key}>
                                 <Checkbox
-                                    key={key}
+                                    uniqueKey={key}
                                     className="mr-2 mt-1"
                                     checked={element.state === "done"}
                                     onChange={() => changeState(element, "done", project, user, websocket, dispatch)}

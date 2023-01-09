@@ -2,11 +2,17 @@
     display         : flex;
     justify-content : space-between;
     align-items     : center;
+    border-bottom   : 1px solid var(--light-border);
+    padding-bottom  : 10px;
 
     span {
         font-size   : 18px;
         margin-left : 5px;
         color       : var(--text-tertiary);
+    }
+
+    .dashboard-members-btn_container {
+        display : flex;
     }
 }
 
@@ -17,6 +23,34 @@
     margin-bottom : 12px;
 }
 
+@media(max-width:576px) {
+    .dashboard-members-title {
+        flex-direction : column;
+        align-items    : flex-start;
+        .dashboard-members-btn_container {
+            flex-direction : column;
+            width          : 100%;
+            button {
+                width  : 100%;
+                margin : 5px 0;
+            }
+        }
+    }
+    .dashboard-members-tools {
+        flex-direction : column;
+        .classic-input,
+        .dropdown-input {
+            max-width : unset;
+            width     : 100%;
+            margin    : 5px 0;
+        }
+    }
+}
+
+.dashboard-members-table {
+    overflow-x : auto;
+}
+
 .dashboard-members-table-header {
     position        : relative;
     display         : flex;
@@ -24,7 +58,8 @@
     align-items     : center;
     margin          : 12px 0 8px;
     border-radius   : var(--rounded-sm);
-    background      : var(--xx-light);
+    background      : var(--light);
+    min-width     : 768px;
 
     .dashboard-members-table-tools {
         display       : flex;
@@ -33,6 +68,11 @@
         width         : 25%;
         cursor        : pointer;
         border-radius : var(--rounded-sm);
+        border-right  : 1px solid var(--light-border);
+
+        &:last-child {
+            border : none;
+        }
 
         &:hover {
             background : var(--content-x-light);
@@ -49,13 +89,20 @@
     display         : flex;
     justify-content : space-between;
     align-items     : center;
-    border-bottom   : 1px solid var(--light-border);
+    min-width       : 768px;
 
     .dashboard-members-infos {
-        display     : flex;
-        align-items : center;
-        padding     : 10px 20px;
-        width       : 25%;
+        display      : flex;
+        align-items  : center;
+        padding      : 10px 20px;
+        width        : 25%;
+
+        &:first-child {
+            padding-left : 5px;
+        }
+        &:last-child {
+            padding-right : 5px;
+        }
     }
 }
 

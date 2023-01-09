@@ -32,7 +32,7 @@ const MapCard = ({ project }) => {
             <div className="card-body">
                 <MapContainer
                     key={!leafletLoading ? project.location : null}
-                    center={!leafletLoading && project.geolocalisation.length > 0 ? geolocToFloat(project.geolocalisation) : [46.873467013745916, 2.5836305570248217]}
+                    center={!leafletLoading && project?.geolocalisation?.length > 0 ? geolocToFloat(project.geolocalisation) : [46.873467013745916, 2.5836305570248217]}
                     zoom={project.location ? 12 : 5}
                     minZoom={5}
                     maxZoom={project.location && 12}

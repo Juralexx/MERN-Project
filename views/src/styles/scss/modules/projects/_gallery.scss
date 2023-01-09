@@ -8,23 +8,20 @@
     margin                : 0 auto;
 
     .gallery-brick {
-        position       : relative;
-        padding-bottom : 100%;
-        z-index        : 1;
+        position : relative;
+        z-index  : 1;
+        height   : 280px;
 
         img {
             position      : absolute;
             top           : 0;
             left          : 0;
             height        : 100%;
+            max-height    : 280px;
             width         : 100%;
             object-fit    : cover;
             border-radius : var(--rounded-sm);
             cursor        : pointer;
-        }
-
-        &:hover {
-            opacity : .75;
         }
 
         .img-tools {
@@ -39,8 +36,8 @@
                 display          : flex;
                 align-items      : center;
                 justify-content  : center;
-                background-color : black;
-                border-radius    : 50px;
+                background-color : rgb(27, 27, 27);
+                border-radius    : var(--rounded-md);
                 height           : 30px;
                 width            : 30px;
                 margin           : 0 3px;
@@ -54,23 +51,21 @@
     }
 
     .gallery-brick-empty {
-        position       : relative;
-        padding-bottom : 100%;
-        background     : var(--light);
-        border         : 2px solid var(--light-border);
-        border-radius  : var(--rounded-sm);
+        position        : relative;
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        height          : 280px;
+        background      : var(--light);
+        border-radius   : var(--rounded-sm);
 
         svg {
-            position      : absolute;
-            top           : 50%;
-            left          : 50%;
-            transform     : translate(-50%, -50%);
-            height        : 40%;
-            width         : 40%;
-            object-fit    : cover;
-            border-radius : var(--rounded-sm);
-            cursor        : pointer;
-            color         : var(--text);
+            height        : 90px;
+            width         : 90px;
+            padding       : 15px;
+            color         : var(--primary);
+            background    : var(--xx-light);
+            border-radius : var(--rounded-full);
         }
     }
 }
@@ -78,28 +73,54 @@
 .dropzone {
     width           : 100%;
     max-width       : 500px;
+    height          : 280px;
     display         : flex;
     flex-direction  : column;
     align-items     : center;
     justify-content : center;
-    padding         : 15px 0;
-    margin          : 0 auto 25px;
-    border          : 2px dashed var(--text-secondary);
+    border          : 2px dashed var(--primary);
     border-radius   : var(--rounded-sm);
+    background      : var(--xx-light);
 
-    svg {
-        width  : 50px;
-        height : 50px;
+    p {
+        margin-top : 10px;
+        text-align : center;
     }
 
-    &:hover, &:focus, &.active {
+    svg {
+        height        : 90px;
+        width         : 90px;
+        padding       : 15px;
+        object-fit    : cover;
+        color         : var(--primary);
+        background    : var(--x-light);
+        border-radius : var(--rounded-full);
+        cursor        : pointer;
+    }
+
+    &:hover,
+    &:focus,
+    &.active {
         background : var(--light);
     }
 
     &.disabled {
-        opacity: 0.5;
-        &:hover, &:focus, &.active {
+        opacity : 0.5;
+        &:hover,
+        &:focus,
+        &.active {
             background : none;
         }
+    }
+}
+
+@media(max-width: 768px) {
+    .gallery {
+        grid-template-columns : repeat(2, 1fr);
+    }
+}
+@media(max-width: 576px) {
+    .gallery {
+        grid-template-columns : repeat(1, 1fr);
     }
 }

@@ -24,7 +24,13 @@ const Gallery = ({ project, user }) => {
                     }
                 </div>
             ) : (
-                <NoContent className="gallery_card" project={project} user={user} icon={<MdOutlinePhotoLibrary />} text="Suivez le projet pour savoir quand des photos seront ajoutées !" />
+                <NoContent
+                    className="gallery_card"
+                    project={project}
+                    user={user}
+                    icon={<MdOutlinePhotoLibrary />}
+                    text="Suivez le projet pour savoir quand des photos seront ajoutées !"
+                />
             )}
             <FsLightbox
                 toggler={toggler}

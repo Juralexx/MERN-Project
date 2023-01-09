@@ -52,12 +52,24 @@
 @import 'modules/profil/profil-header';
 @import 'modules/profil/profil-img-modal';
 
+/* Add project */
+
+@import 'modules/project-add/add-project';
+@import 'modules/project-add/header';
+@import 'modules/project-add/images';
+@import 'modules/project-add/tags';
+@import 'modules/project-add/works';
+
 /* Project page */
 
-@import 'modules/project/add-project';
-@import 'modules/project/project-page';
-@import 'modules/project/networks-card';
-@import 'modules/project/tags';
+@import 'modules/project-page/project-page';
+@import 'modules/project-page/header';
+@import 'modules/project-page/share';
+@import 'modules/project-page/tags';
+@import 'modules/project-page/project-cards';
+@import 'modules/project-page/networks';
+@import 'modules/project-page/explore-more';
+@import 'modules/project-page/actuality';
 
 /* Dashboard */
 

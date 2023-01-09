@@ -59,7 +59,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                 <Header project={project} websocket={websocket} user={user} />
                 <Routes>
                     <Route index element={
-                        <div className="container py-8">
+                        <div className="container-lg py-8">
                             <HomeMembers
                                 project={project}
                                 isAdmin={isAdmin}

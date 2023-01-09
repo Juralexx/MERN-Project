@@ -1,0 +1,29 @@
+.add-project {
+    .tags-container {
+        display     : flex;
+        align-items : center;
+        flex-wrap   : wrap;
+        padding-top : 20px;
+
+        .tag {
+            display       : flex;
+            align-items   : center;
+            padding       : 5px 10px;
+            margin        : 5px 5px 5px 0;
+            border-radius : var(--rounded-sm);
+            color         : var(--text-secondary);
+            background    : var(--x-light);
+
+            span {
+                color        : var(--primary);
+                font-weight  : 700;
+                font-size    : 18px;
+                margin-right : 5px;
+            }
+            svg {
+                margin-left : 5px;
+                cursor      : pointer;
+            }
+        }
+    }
+}

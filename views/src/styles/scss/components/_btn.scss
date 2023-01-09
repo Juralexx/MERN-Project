@@ -1,6 +1,7 @@
 .btn {
     position        : relative;
     height          : 36px;
+    min-width       : 120px;
     display         : flex;
     align-items     : center;
     justify-content : center;
@@ -122,6 +123,12 @@
 
     &:hover {
         background : rgba(var(--primary-rgb), 0.22);
+    }
+    a {
+        color      : var(--primary);
+        background : none;
+        padding    : 0;
+        height     : unset;
     }
 }
 

@@ -21,6 +21,7 @@
         display            : -webkit-box;
         -webkit-line-clamp : 1;
         -webkit-box-orient : vertical;
+        caret-color: transparent;
 
         &::placeholder {
             color : var(--placeholder);
@@ -34,6 +35,7 @@
         bottom   : 12px;
         right    : 10px;
         color    : var(--text-tertiary);
+        z-index  : 100;
     }
 
     .dropdown-input-choices {

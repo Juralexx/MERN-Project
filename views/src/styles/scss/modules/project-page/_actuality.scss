@@ -1,0 +1,112 @@
+.actuality-page-container {
+    .actuality-content {
+        width         : 100%;
+        height        : auto;
+        margin-bottom : 20px;
+        cursor        : pointer;
+    
+        .actuality-header {
+            padding-bottom : 20px;
+            border-bottom  : 1px solid var(--light-border);
+    
+            .actuality-nb {
+                color : var(--text-secondary);
+            }
+    
+            h3 {
+                font-size : 24px;
+                padding   : 5px 0 20px;
+            }
+    
+            .actuality-infos {
+                display : flex;
+    
+                .actuality-infos-right {
+                    .actuality-poster {
+                        display     : flex;
+                        align-items : center;
+                        line-height : 14px;
+
+                        span {
+                            font-size     : 12px;
+                            padding       : 2px 5px;
+                            background    : var(--light-blue);
+                            color         : white;
+                            border-radius : var(--rounded-sm);
+                            margin-left   : 8px;
+                        }
+                    }
+    
+                    .date {
+                        font-size  : 12px;
+                        color      : var(--text-secondary);
+                        margin-top : 2px;
+                    }
+                }
+            }
+        }
+    
+        .actuality-description {
+            position : relative;
+            width    : 100%;
+            height   : auto;
+            padding  : 20px 0;
+    
+            p {
+                margin-top  : 10px;
+                line-height : 26px;
+            }
+        }
+
+        .actuality-img-container {
+            display               : grid;
+            grid-template-columns : repeat(3, 1fr);
+            grid-gap              : 15px;
+            margin-top            : 20px;
+
+            .actuality-img {
+                position : relative;
+                z-index  : 1;
+                height   : 280px;
+        
+                img {
+                    position      : absolute;
+                    top           : 0;
+                    left          : 0;
+                    height        : 100%;
+                    max-height    : 280px;
+                    width         : 100%;
+                    object-fit    : cover;
+                    border-radius : var(--rounded-sm);
+                    cursor        : pointer;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    .actuality-page-container {
+        .actuality-content {
+            .actuality-header {
+                h3 {
+                    font-size : 18px;
+                }
+            }
+        }
+        .actuality-content {
+            .actuality-img-container {
+                grid-template-columns : repeat(2, 1fr);
+            }
+        }
+    }
+}
+@media(max-width: 576px) {
+    .actuality-page-container {
+        .actuality-content {
+            .actuality-img-container {
+                grid-template-columns : repeat(1, 1fr);
+            }
+        }
+    }
+}

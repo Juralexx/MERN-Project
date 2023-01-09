@@ -123,32 +123,28 @@ export const statusToString = (element) => {
 /***************************************************************************************************************************************************/
 /**************************************************************** SORTED ARRAY *********************************************************************/
 
-export const sortByCreationDate = (tasks, setTasks, setFilter) => {
+export const sortByCreationDate = (tasks) => {
     const array = tasks.sort((a, b) => { return new Date(b.date) - new Date(a.date) })
-    setTasks(array)
-    setFilter("Par date de création")
+    return array
 }
 
-export const sortByEndDate = (tasks, setTasks, setFilter) => {
+export const sortByEndDate = (tasks) => {
     const array = tasks.sort((a, b) => { return new Date(a.end) - new Date(b.end) })
-    setTasks(array)
-    setFilter("Par date de fin")
+    return array
 }
 
-export const sortByState = (tasks, setTasks, setFilter) => {
+export const sortByState = (tasks) => {
     const todo = tasks.filter(element => element.state === "todo")
     const inProgress = tasks.filter(element => element.state === "in progress")
     const done = tasks.filter(element => element.state === "done")
-    setTasks(todo.concat(inProgress, done))
-    setFilter("Par état")
+    return todo.concat(inProgress, done)
 }
 
-export const sortByStatus = (tasks, setTasks, setFilter) => {
+export const sortByStatus = (tasks) => {
     const normal = tasks.filter(element => element.status === "normal")
     const important = tasks.filter(element => element.status === "important")
     const priority = tasks.filter(element => element.status === "priority")
-    setTasks(priority.concat(important, normal))
-    setFilter("Par status")
+    return priority.concat(important, normal)
 }
 
 /***************************************************************************************************************************************************/

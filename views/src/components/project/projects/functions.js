@@ -1,42 +1,27 @@
 /***************************************************************************************************************************************************/
 /**************************************************************** SORTED ARRAY *********************************************************************/
 
-export const sortByRecent = (projects, setProjects, setFilter) => {
+export const sortByRecent = (projects) => {
     const array = projects.sort((a, b) => { return new Date(b.createdAt) - new Date(a.createdAt) })
-    setProjects(array)
-    setFilter("Plus récent au plus ancien")
+    return array
 }
 
-export const sortByOld = (projects, setProjects, setFilter) => {
+export const sortByOld = (projects) => {
     const array = projects.sort((a, b) => { return new Date(a.createdAt) - new Date(b.createdAt) })
-    setProjects(array)
-    setFilter("Plus ancien au plus récent")
+    return array
 }
 
-export const sortByWorkedOn = (projects, setProjects, setFilter) => {
+export const sortByWorkedOn = (projects) => {
     const array = projects.filter(project => project.state === "worked on")
-    setProjects(array)
-    setFilter("En préparation")
+    return array
 }
 
-export const sortByInProgress = (projects, setProjects, setFilter) => {
+export const sortByInProgress = (projects) => {
     const array = projects.filter(project => project.state === "in progress")
-    setProjects(array)
-    setFilter("En cours")
+    return array
 }
 
-export const sortByDone = (projects, setProjects, setFilter) => {
+export const sortByDone = (projects) => {
     const array = projects.filter(project => project.state === "done")
-    setProjects(array)
-    setFilter("Terminé")
-}
-
-export const checkDateSort = (isByRecent, setIsByRecent, projects, setProjects, setFilter) => {
-    if (isByRecent) {
-        sortByOld(projects, setProjects, setFilter)
-        setIsByRecent(false)
-    } else {
-        sortByRecent(projects, setProjects, setFilter)
-        setIsByRecent(true)
-    }
+    return array
 }
