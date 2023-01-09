@@ -39,7 +39,28 @@
     word-wrap     : break-word;
     border        : 1px solid var(--light-border);
     overflow-y    : auto;
+    &::-webkit-scrollbar {
+        width : 10px;
+    }
+    &::-webkit-scrollbar-track {
+        background : transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color : var(--light-border);
+        border           : 3px solid var(--content-light);
+        border-radius    : 10px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background : transparent;
+    }
 }
+@media(max-width: 768px) {
+    .ql-editor {
+        padding : 12px;
+    }
+}
+
 .ql-editor > * {
     cursor : text;
 }

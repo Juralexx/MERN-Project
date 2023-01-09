@@ -3,8 +3,8 @@ import { IoClose } from 'react-icons/io5'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
 
-const Tags = ({ tags, setTags, error, setError }) => {
-    const checkErr = (name) => { if (error.element === name) { return "err" } else return "" }
+const Tags = ({ tags, setDatas, error, setError }) => {
+    const checkErr = name => { if (error.element === name) { return "err" } else return "" }
 
     const addTag = (event, element) => {
         if (event.key === 'Enter') {
@@ -16,32 +16,31 @@ const Tags = ({ tags, setTags, error, setError }) => {
                     cleanTag = cleanTag.replace(/ /g, "-")
                     if (cleanTag.length >= 3) {
                         if (!tags.some(tag => tag === cleanTag)) {
-                            setTags(arr => [...arr, cleanTag])
+                            setDatas(data => ({ ...data, tags: [...data.tags, cleanTag] }))
                             event.target.value = ""
-                        } else {
-                            setError({ element: "tags", error: "Vous avez déjà ajouté ce tag" })
-                        }
-                    } else {
-                        setError({ element: "tags", error: "Les tags doivent être composés d'au moins 3 caractères" })
-                    }
-                } else {
-                    setError({ element: "tags", error: "Vous ne pouvez pas ajouter plus de 12 tags" })
-                }
-            } else {
-                setError({ element: "tags", error: "Les tags doivent être composés d'au moins 3 caractères" })
-            }
+                        } else setError({ element: "tags", error: "Vous avez déjà ajouté ce tag" })
+                    } else setError({ element: "tags", error: "Les tags doivent être composés d'au moins 3 caractères" })
+                } else setError({ element: "tags", error: "Vous ne pouvez pas ajouter plus de 12 tags" })
+            } else setError({ element: "tags", error: "Les tags doivent être composés d'au moins 3 caractères" })
         } else return
     }
 
-    const removeTag = (element) => setTags(tags.filter(tag => tag !== element))
+    const removeTag = (element) => setDatas(data => ({ ...data, tags: tags.filter(tag => tag !== element) }))
 
     return (
 
         <div className="row">
-            <div className="col-12 col-md-6">
-                <p className="title full">Tags</p>
-                {tags.length > 0 && (
-                    <div className="project-tags">
+            <div className="col-12 col-lg-6">
+                <h3>Tags et référencement</h3>
+                <p>
+                    Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                    Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
+                </p>
+            </div>
+            <div className="col-12 col-lg-6">
+                <div className="title full">Tags</div>
+                {tags.length > 0 &&
+                    <div className="project-tags !pt-0">
                         {tags.map((element, key) => {
                             return (
                                 <div className="tag" key={key}>
@@ -51,7 +50,7 @@ const Tags = ({ tags, setTags, error, setError }) => {
                             )
                         })}
                     </div>
-                )}
+                }
                 <ClassicInput
                     className={`full ${checkErr("tags")}`}
                     type="text"
@@ -66,11 +65,6 @@ const Tags = ({ tags, setTags, error, setError }) => {
                         clean={() => setError({ element: "", error: "" })}
                     />
                 }
-            </div>
-            <div className="col-12 col-md-6">
-                <h3>Tags et référencement</h3>
-                <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
-                    Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
             </div>
         </div>
     )

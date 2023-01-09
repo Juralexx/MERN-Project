@@ -29,7 +29,7 @@ export const ClassicInput = (props) => {
                 min={min}
                 max={max}
             />
-            {cross && (value && value.length > 0) &&
+            {cross && ((value || defaultValue) && (value?.length > 0 || defaultValue?.length > 0)) &&
                 <div onClick={onClean} className="svg_container">
                     <IoClose className="cross" />
                 </div>

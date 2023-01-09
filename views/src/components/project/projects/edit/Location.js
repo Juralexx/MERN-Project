@@ -11,34 +11,28 @@ import { Oval } from 'react-loading-icons'
 import { Icon } from "leaflet";
 import 'leaflet/dist/leaflet.css';
 
-const Location = ({ project, location, setLocation, department, setDepartment, setCodeDepartment, region, setRegion, setCodeRegion, setNewRegion, setCodeNewRegion, setGeolocalisation, error, setError, geolocalisation }) => {
+const Location = ({ project, location, department, region, setDatas, geolocalisation, error, setError }) => {
+    const checkErr = name => { if (error.element === name) return "err" }
+
     const [searchQuery, setSearchQuery] = useState(location)
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
-    const [isResponse, setResponse] = useState(true)
     const [display, setDisplay] = useState(false)
-    const isEmpty = !locationsFound || locationsFound.length === 0
     const wrapperRef = useRef()
     useClickOutside(wrapperRef, setDisplay, false, setLoading, false)
-    const checkErr = (name) => { if (error.element === name) return "err" }
-    const [locationChanged, setLocationChanged] = useState(false)
-    const [geoJSON, setGeoJSON] = useState([])
-
-    const setSelect = (value) => { setSearchQuery(value); setLocation(value); setDisplay(false); setLoading(false); setLocationChanged(true) }
-    const handleInputChange = (e) => { setSearchQuery(e.target.value) }
 
     const searchLocation = async () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         else {
-            const response = await axios.get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${searchQuery}`)).catch((err) => { console.log("Error: ", err) })
+            const response = await axios
+                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${searchQuery}`))
+                .catch(err => console.log("Error: ", err))
             if (response) {
                 setLocationsFound(response.data)
                 if (searchQuery.length > 2) {
-                    setResponse(true)
                     setDisplay(true)
                     setLoading(true)
-                    if (isEmpty) {
-                        setResponse(false)
+                    if (locationsFound.length > 0) {
                         setLoading(false)
                     }
                 } else {
@@ -49,23 +43,13 @@ const Location = ({ project, location, setLocation, department, setDepartment, s
         }
     }
 
-    const clean = () => {
-        setSearchQuery("")
-        setGeolocalisation(project.geolocalisation)
-        setLocation(project.location)
-        setDepartment(project.department)
-        setCodeDepartment(project.code_department)
-        setRegion(project.region)
-        setCodeRegion(project.code_region)
-        setNewRegion(project.new_region)
-        setCodeNewRegion(project.code_new_region)
-    }
-
     const myIcon = new Icon({
         iconUrl: `${process.env.REACT_APP_API_URL}files/img/map-marker.png`,
         iconSize: [30, 40]
     })
 
+    const [locationChanged, setLocationChanged] = useState(false)
+    const [geoJSON, setGeoJSON] = useState([])
     const [leafletLoading, setLeafletLoading] = useState(true)
 
     useEffect(() => {
@@ -87,17 +71,34 @@ const Location = ({ project, location, setLocation, department, setDepartment, s
     return (
         <>
             <div className="row">
-                <div className="col-12 col-md-6">
-                    <p className="title full">Localité <span>Champ requis</span></p>
+                <div className="col-12 col-lg-6">
+                    <h3>Lieu du projet</h3>
+                    <p>Saisissez l'emplacement géographique qui correspond au mieux à votre projet.</p>
+                </div>
+                <div className="col-12 col-lg-6 relative">
+                    <div className="title full">Localité <span>Champ requis</span></div>
                     <ClassicInput
                         className={`full ${checkErr("location")}`}
                         type="text"
                         placeholder="Rechercher une adresse..."
                         value={searchQuery}
-                        onInput={handleInputChange}
+                        onInput={e => setSearchQuery(e.target.value)}
                         onChange={searchLocation}
                         cross
-                        onClean={clean}
+                        onClean={() => {
+                            setSearchQuery("")
+                            setDatas(data => ({
+                                ...data,
+                                location: project.location,
+                                department: project.department,
+                                codeDepartment: project.code_department,
+                                region: project.region,
+                                codeRegion: project.code_region,
+                                newRegion: project.new_region,
+                                codeNewRegion: project.code_new_region,
+                                geolocalisation: project.geolocalisation,
+                            }))
+                        }}
                     />
                     {error.element === "location" &&
                         <ErrorCard
@@ -107,40 +108,51 @@ const Location = ({ project, location, setLocation, department, setDepartment, s
                         />
                     }
 
-                    <div tabIndex="0" className="auto-complete-container full custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
-                        {!isEmpty && display && isResponse &&
+                    <div
+                        ref={wrapperRef}
+                        tabIndex="0"
+                        className="auto-complete-container max-w-[660px] custom-scrollbar"
+                        style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }}
+                    >
+                        {display && locationsFound.length > 0 &&
                             locationsFound.map((element, key) => {
                                 return (
-                                    <div className="auto-complete-item"
+                                    <div
+                                        className="auto-complete-item"
+                                        key={key}
                                         onClick={() => {
-                                            setSelect(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
-                                            setLocation(element.COM_NOM)
-                                            setDepartment(element.DEP_NOM)
-                                            setCodeDepartment(element.DEP_CODE)
-                                            setRegion(element.REG_NOM_OLD)
-                                            setCodeRegion(element.REG_CODE_OLD)
-                                            setNewRegion(element.REG_NOM)
-                                            setCodeNewRegion(element.REG_CODE)
-                                            setGeolocalisation(element.geolocalisation)
-                                        }} key={key}>{`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
+                                            setSearchQuery(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
+                                            setDatas(data => ({
+                                                ...data,
+                                                location: element.COM_NOM,
+                                                department: element.DEP_NOM,
+                                                codeDepartment: element.DEP_CODE,
+                                                region: element.REG_NOM_OLD,
+                                                codeRegion: element.REG_CODE_OLD,
+                                                newRegion: element.REG_NOM,
+                                                codeNewRegion: element.REG_CODE,
+                                                geolocalisation: element.geolocalisation,
+                                            }))
+                                            setDisplay(false)
+                                            setLoading(false)
+                                            setLocationChanged(true)
+                                        }}
+                                    >
+                                        {`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
                                     </div>
                                 )
                             })
                         }
-                        {isLoading && isEmpty &&
+                        {isLoading && locationsFound.length === 0 &&
                             <SmallLoader />
                         }
-                        {searchQuery.length > 2 && isEmpty && !isLoading &&
+                        {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
                             <div className="no-result">
-                                <div><BsInboxFill /></div>
+                                <BsInboxFill />
                                 <div>Aucun resultat ne correspond à votre recherche...</div>
                             </div>
                         }
                     </div>
-                </div>
-                <div className="col-12 col-md-6">
-                    <h3>Lieu du projet</h3>
-                    <p>Saisissez l'emplacement géographique qui correspond au mieux à votre projet.</p>
                 </div>
             </div>
             {!leafletLoading ? (

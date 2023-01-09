@@ -2,11 +2,15 @@ import React from 'react'
 import { DropdownInput } from '../../../tools/global/Inputs'
 import { stateToString } from '../../functions'
 
-const State = ({ state, setState }) => {
+const State = ({ state, setDatas }) => {
     return (
         <div className="row">
-            <div className="col-12 col-md-6">
-                <p className="title full">État <span>Champ requis</span></p>
+            <div className="col-12 col-lg-6">
+                <h3>État du projet</h3>
+                <p>La catégorie et la sous-catégorie principales permettent à vos contributeurs de trouver votre projet.</p>
+            </div>
+            <div className="col-12 col-lg-6">
+                <div className="title full">État <span>Champ requis</span></div>
                 <DropdownInput
                     className="full"
                     type="text"
@@ -16,27 +20,47 @@ const State = ({ state, setState }) => {
                 >
                     {state === "worked on" &&
                         <>
-                            <div value="in progress" onClick={() => setState("in progress")}>En cours</div>
-                            <div value="done" onClick={() => setState("done")}>Terminé</div>
+                            <div
+                                onClick={() => setDatas(data => ({ ...data, state: "in progress" }))}
+                            >
+                                En cours
+                            </div>
+                            <div
+                                onClick={() => setDatas(data => ({ ...data, state: "done" }))}
+                            >
+                                Terminé
+                            </div>
                         </>
                     }
                     {state === "in progress" &&
                         <>
-                            <div value="worked on" onClick={() => setState("worked on")}>En préparation</div>
-                            <div value="done" onClick={() => setState("done")}>Terminé</div>
+                            <div
+                                onClick={() => setDatas(data => ({ ...data, state: "worked on" }))}
+                            >
+                                En préparation
+                            </div>
+                            <div
+                                onClick={() => setDatas(data => ({ ...data, state: "done" }))}
+                            >
+                                Terminé
+                            </div>
                         </>
                     }
                     {state === "done" &&
                         <>
-                            <div value="worked on" onClick={() => setState("worked on")}>En préparation</div>
-                            <div value="in progress" onClick={() => setState("in progress")}>En cours</div>
+                            <div
+                                onClick={() => setDatas(data => ({ ...data, state: "worked on" }))}
+                            >
+                                En préparation
+                            </div>
+                            <div
+                                onClick={() => setDatas(data => ({ ...data, state: "in progress" }))}
+                            >
+                                En cours
+                            </div>
                         </>
                     }
                 </DropdownInput>
-            </div>
-            <div className="col-12 col-md-6">
-                <h3>État du projet</h3>
-                <p>La catégorie et la sous-catégorie principales permettent à vos contributeurs de trouver votre projet.</p>
             </div>
         </div>
     )

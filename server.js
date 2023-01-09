@@ -8,9 +8,9 @@ import { checkUser, requireAuth } from './middleware/auth.middleware.js'
 import './config/db.js'
 import userRoutes from './routes/user.routes.js'
 import projectRoutes from './routes/project.routes.js'
-import workRoutes from './api/work.api.routes.js'
-import locationRoutes from './api/location.api.routes.js'
-import geolocationRoutes from './api/geolocations.api.routes.js'
+import workRoutes from './api/work/work.api.routes.js'
+import locationRoutes from './api/location/location.api.routes.js'
+import geolocationRoutes from './api/geolocation/geolocations.api.routes.js'
 import conversationRoutes from './routes/conversation.routes.js'
 
 const app = express();

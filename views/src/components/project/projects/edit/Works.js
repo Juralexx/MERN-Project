@@ -1,90 +1,89 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios';
-import { ClassicInput, NumberInput, Textarea } from '../../../tools/global/Inputs';
-import { Button } from '../../../tools/global/Button';
+import { ClassicInput, Textarea } from '../../../tools/global/Inputs';
+import { Button, TextButton } from '../../../tools/global/Button';
 import { SmallLoader } from '../../../tools/global/Loader';
 import { BsInboxFill } from 'react-icons/bs';
 import { ErrorCard } from '../../../tools/global/Error';
 import { useClickOutside } from '../../../tools/hooks/useClickOutside';
+import { removeSpecialChars } from '../../../Utils';
 
-const Works = ({ workArray, setWorkArray, error, setError }) => {
+const Works = ({ workArray, setDatas, error, setError }) => {
+    const checkErr = (name) => { if (error.element === name) return "err" }
+
     const [searchQuery, setSearchQuery] = useState("")
     const [worksFound, setWorksFound] = useState([])
     const [isLoading, setLoading] = useState(false)
-    const [isResponse, setResponse] = useState(false)
-    const [display, setDisplay] = useState(false)
-    const isEmpty = worksFound.length === 0
+    const [display, setDisplay] = useState({ state: false, key: 0 })
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, setDisplay, false)
-    const checkErr = (name) => { if (error.element === name) return "err" }
+    useClickOutside(wrapperRef, setDisplay, { state: false, key: 0 })
 
-    const searchWork = async () => {
+    const searchWork = async (key) => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         else {
             const response = await axios
-                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/work/${searchQuery}`))
+                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/work/${removeSpecialChars(searchQuery)}`))
+                .then(res => res.data)
                 .catch(err => console.error(err))
             if (response) {
-                setWorksFound(response.data)
+                setWorksFound(response)
                 setLoading(true)
-                if (searchQuery.length > 2) {
-                    setResponse(true)
-                    setDisplay(true)
+                if (searchQuery.length > 4) {
+                    setDisplay({ state: true, key: key })
                     setLoading(true)
-                    if (isEmpty) {
-                        setResponse(false)
+                    if (worksFound.length === 0) {
                         setLoading(false)
                     }
                 } else {
-                    setDisplay(false)
+                    setDisplay({ state: false, key: 0 })
                     setLoading(false)
                 }
             }
         }
     }
 
-    const checkArrayErrors = (key) => {
-        if (workArray[key].name === "" || workArray[key].number === (null || undefined)) {
-            setError({ element: `work-${key}`, error: "Veuillez saisir un métier ou un nombre valide..." })
-        } else {
-            if (workArray[key].number === 0) {
-                setError({ element: `work-${key}`, error: "Le nombre de personnes recherchées ne peut pas être de 0" })
+    const checkArrayErrors = () => {
+        for (let i = 0; i < workArray.length; i++) {
+            if (workArray[i].name === "") {
+                setError({ element: `work-${i}`, error: "Veuillez saisir une compétence..." })
+                break;
             } else {
-                if (JSON.stringify(workArray).includes(JSON.stringify(workArray[key].work))) {
-                    setError({ element: `work-${key}`, error: "Vous avez déjà sélectionné ce métier..." })
+                if (JSON.stringify(workArray).includes(JSON.stringify(workArray[i].work))) {
+                    setError({ element: `work-${i}`, error: "Vous avez déjà sélectionné ce métier..." })
+                    break;
                 } else {
-                    setWorkArray([...workArray, { name: "", number: "", numberFound: "", description: "" }])
+                    setDatas(data => ({ ...data, workArray: [...data.workArray, { name: "", description: "" }] }))
                     setSearchQuery("")
+                    break;
                 }
             }
         }
     }
 
+    const handleInput = (value, key) => {
+        let arr = [...workArray]
+        arr[key].name = value
+        setDatas(data => ({ ...data, workArray: arr }))
+    }
+
     const handleWork = (value, key) => {
         let arr = [...workArray]
         arr[key].name = value
-        setWorkArray(arr)
-        setSearchQuery(value)
-        setDisplay(false)
-        setLoading(false)
-    }
-
-    const handleNumber = (value, key) => {
-        let arr = [...workArray]
-        arr[key].number = value
-        setWorkArray(arr)
+        setDatas(data => ({ ...data, workArray: arr }))
+        setSearchQuery("")
+        setDisplay({ state: false, key: 0 })
     }
 
     const handleDescription = (value, key) => {
         let arr = [...workArray]
         arr[key].description = value
-        setWorkArray(arr)
+        setDatas(data => ({ ...data, workArray: arr }))
     }
 
     const deleteItem = (key) => {
         let storedArray = [...workArray]
         storedArray.splice(key, 1)
-        setWorkArray(storedArray)
+        setDatas(data => ({ ...data, workArray: storedArray }))
     }
 
     return (
@@ -94,91 +93,81 @@ const Works = ({ workArray, setWorkArray, error, setError }) => {
                 return (
                     <div className="mb-4" key={key}>
                         <div className="header flex items-center mb-5">
-                            <h3 className="mr-4">Métier n°{key + 1}</h3>
-                            <Button onClick={() => deleteItem(key)}>Supprimer</Button>
-                            {key + 1 === workArray.length &&
-                                <Button
-                                    className="ml-2"
-                                    onClick={() => checkArrayErrors(key)} disabled={workArray[key].name === "" || workArray[key].number === ("" || 0 || null)}
-                                >
-                                    Rechercher un autre métier
-                                </Button>
-                            }
+                            <h4 className="mr-4">Compétence n°{key + 1}</h4>
+                            <TextButton onClick={() => deleteItem(key)}>Supprimer</TextButton>
                         </div>
                         <div className="edit-work-form">
-                            <div className="work-flex-content">
-                                <div className="content-form">
-                                    <p className="title full">Métier recherché</p>
-                                    <ClassicInput
-                                        className={`full ${checkErr(`work-${key}`)}`}
-                                        type="text"
-                                        placeholder="Rechercher un métier..."
-                                        value={element.name}
-                                        onInput={e => setSearchQuery(e.target.value)}
-                                        onChange={searchWork}
-                                    />
-                                    <div tabIndex="0" className="auto-complete-container full custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
-                                        {!isEmpty && display && isResponse &&
-                                            worksFound.map((element, key) => {
-                                                const choice = element.appelation_metier;
-                                                return (
-                                                    <div className="auto-complete-item" onClick={() => handleWork(choice, key)} key={key}>{choice}</div>
-                                                )
-                                            })
-                                        }
-                                        {isLoading && isEmpty &&
-                                            <SmallLoader />
-                                        }
-                                        {searchQuery.length > 2 && isEmpty && !isLoading &&
-                                            <div className="no-result">
-                                                <div><BsInboxFill /></div>
-                                                <div>Aucun resultat ne correspond à votre recherche...</div>
+                            <div className="title full">Compétence recherchée</div>
+                            <ClassicInput
+                                className={`full ${checkErr(`work-${key}`)}`}
+                                type="text"
+                                placeholder="Rechercher un métier..."
+                                value={element.name}
+                                onInput={() => searchWork(key)}
+                                onChange={e => {
+                                    setSearchQuery(e.target.value)
+                                    handleInput(e.target.value, key)
+                                }}
+                            />
+                            <div
+                                ref={wrapperRef}
+                                tabIndex="0"
+                                className="auto-complete-container full custom-scrollbar"
+                                style={{ display: searchQuery.length < 5 || !display.state ? "none" : "block" }}
+                            >
+                                {display.state && display.key === key && worksFound.length > 0 &&
+                                    worksFound.map((work, i) => {
+                                        return (
+                                            <div
+                                                className="auto-complete-item"
+                                                onClick={() => { handleWork(work.appelation_metier, key); console.log('first') }}
+                                                key={i}
+                                            >
+                                                {work.appelation_metier}
                                             </div>
-                                        }
+                                        )
+                                    })
+                                }
+                                {isLoading && worksFound.length === 0 && display.key === key &&
+                                    <SmallLoader />
+                                }
+                                {searchQuery.length > 4 && worksFound.length === 0 && !isLoading && display.key === key &&
+                                    <div className="no-result">
+                                        <BsInboxFill />
+                                        <div>Aucun resultat ne correspond à votre recherche...</div>
                                     </div>
-                                </div>
-                                <div className="content-form">
-                                    <p className="title full">Trouvé</p>
-                                    <NumberInput
-                                        className={`full ${checkErr(`work-${key}`)}`}
-                                        placeholder="Nombre..."
-                                        value={element.number}
-                                        onChange={e => handleNumber(e.target.value, key)}
-                                    />
-                                </div>
-                                <div className="content-form">
-                                    <p className="title full">Recherché</p>
-                                    <NumberInput
-                                        className={`full ${checkErr(`work-${key}`)}`}
-                                        placeholder="Nombre..."
-                                        value={element.number}
-                                        onChange={e => handleNumber(e.target.value, key)}
-                                    />
-                                </div>
+                                }
                             </div>
-                            <div className="content-form mt-4">
-                                <p className="title full">Description</p>
-                                <Textarea
-                                    className={`w-full ${checkErr(`work-${key}`)}`}
-                                    type="text"
-                                    placeholder="Pourquoi recherchez vous cette compétence ?"
-                                    onChange={e => handleDescription(e.target.value, key)}
-                                    value={element.description}
-                                />
-                                <div className="field_infos full">
-                                    {element.description && element.description.length} / 1000 caractères
-                                </div>
+                            <div className="title full mt-4">Description</div>
+                            <Textarea
+                                className={`w-full ${checkErr(`work-${key}`)}`}
+                                type="text"
+                                placeholder="Pourquoi recherchez vous cette compétence ?"
+                                onChange={e => handleDescription(e.target.value, key)}
+                                value={element?.description}
+                            />
+                            <div className="field_infos full">
+                                {element.description?.length} / 1000
                             </div>
                         </div>
                         {error.element === `work-${key}` &&
                             <ErrorCard
                                 display={error.element === `work-${key}`}
                                 text={error.error}
-                                clean={() => setError({ element: "", error: "" })} />
+                                clean={() => setError({ element: "", error: "" })}
+                            />
                         }
                     </div>
                 )
             })}
+
+            <Button
+                className="mt-5 mx-auto"
+                onClick={() => checkArrayErrors()}
+                disabled={workArray[workArray.length - 1].name === ""}
+            >
+                Rechercher un autre métier
+            </Button>
         </div>
     )
 }

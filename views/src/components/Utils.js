@@ -1,8 +1,55 @@
+import axios from "axios";
+
+/**
+ * Check if were at the root of the site
+ */
+
+export const isHome = window.location.pathname === '/'
+
+/**
+ * Add a body class
+ */
+
+export const addBodyClass = (className) => {
+    document.body.classList.add(className)
+}
+
+/**
+ * Remove a body class
+ */
+
+export const removeBodyClass = (className) => {
+    document.body.classList.remove(className)
+}
+
+/**
+ * Replace first body class by the second
+ */
+
+export const replaceBodyClass = (classToAdd, classToRemove) => {
+    document.body.classList.add(classToAdd)
+    document.body.classList.remove(classToRemove)
+}
+
+/**
+ * Return the value of the required local storage key
+ */
+
+export const getStorage = (item) => {
+    return localStorage.getItem(item)
+}
+
+/**
+ * Sets the value of the pair identified by key to value
+ */
+
+export const setStorage = (item, value) => {
+    return localStorage.setItem(item, value)
+}
+
 /**
  * Return a randam ID.
  */
-
-import axios from "axios";
 
 export const randomID = (max) => {
     const allCapsAlpha = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
@@ -58,6 +105,15 @@ export const randomNbID = (max) => {
 }
 
 /**
+ * Remove all special characters
+ */
+
+export const removeSpecialChars = (string) => {
+    const noSpecialChars = string.replace(/[^\w ]/g, '');
+    return noSpecialChars
+}
+
+/**
  * Check pseudo validity.
  */
 
@@ -79,6 +135,46 @@ export const onlyLettersNumbersAndDashes = (string) => {
 }
 
 /**
+ * Check if string contains any letter.
+ */
+
+export const containsAnyLetters = (string) => {
+    const regexp = new RegExp(/[a-zA-Z]/)
+    if (regexp.test(string)) return true
+    else return false
+}
+
+/**
+ * Check if string contains only letter.
+ */
+
+export const onlyLetters = (string) => {
+    const regexp = new RegExp(/^[a-zA-Z]*$/)
+    if (regexp.test(string)) return true
+    else return false
+}
+
+/**
+ * Check if string contains any numbers.
+ */
+
+export const containsAnyNumbers = (string) => {
+    const regexp = new RegExp(/[0-9]/)
+    if (regexp.test(string)) return true
+    else return false
+}
+
+/**
+ * Check if string contains only numbers.
+ */
+
+export const onlyNumbers = (string) => {
+    const regexp = new RegExp(/^[0-9]*$/)
+    if (regexp.test(string)) return true
+    else return false
+}
+
+/**
  * Check email validity.
  */
 
@@ -86,6 +182,16 @@ export const isEmailValid = (email) => {
      // eslint-disable-next-line
     const regexp = new RegExp(/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i)
     if (regexp.test(email)) return true
+    else return false
+}
+
+/**
+ * Check french phone number validity.
+ */
+
+export const isPhoneValid = (phone) => {
+    const regexp = new RegExp(/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/)
+    if (regexp.test(phone)) return true
     else return false
 }
 

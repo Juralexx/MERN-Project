@@ -1197,11 +1197,11 @@ select:-webkit-autofill:focus {
       -ms-flex-align: end;
           align-items: flex-end;
   margin-bottom: 6px;
-  font-size: 16px;
+  font-size: 14px;
 }
 .title span {
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .field_infos {
@@ -1212,7 +1212,8 @@ select:-webkit-autofill:focus {
       -ms-flex-pack: end;
           justify-content: flex-end;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 200;
   margin-top: 6px;
 }
 
@@ -2242,7 +2243,26 @@ select:-webkit-autofill:focus {
   border: 1px solid var(--light-border);
   overflow-y: auto;
 }
+.ql-editor::-webkit-scrollbar {
+  width: 10px;
+}
+.ql-editor::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ql-editor::-webkit-scrollbar-thumb {
+  background-color: var(--light-border);
+  border: 3px solid var(--content-light);
+  border-radius: 10px;
+}
+.ql-editor::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
+@media (max-width: 768px) {
+  .ql-editor {
+    padding: 12px;
+  }
+}
 .ql-editor > * {
   cursor: text;
 }
@@ -4799,15 +4819,14 @@ select:-webkit-autofill:focus {
 
 .auto-complete-container {
   position: absolute;
-  padding: 10px 0;
   max-height: 300px;
   width: 100%;
   overflow: auto;
   z-index: 750;
   border-radius: var(--rounded-sm);
-  -webkit-box-shadow: var(--shadow-xl);
-          box-shadow: var(--shadow-xl);
-  background-color: var(--content-light);
+  -webkit-box-shadow: var(--shadow-two);
+          box-shadow: var(--shadow-two);
+  background-color: var(--content-x-light);
 }
 .auto-complete-container .auto-complete-item {
   position: relative;
@@ -4836,11 +4855,10 @@ select:-webkit-autofill:focus {
           justify-content: center;
   padding: 15px 35px;
   color: var(--text);
-  font-size: 16px;
 }
 .auto-complete-container .no-result svg {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   margin-right: 20px;
 }
 
@@ -7256,7 +7274,6 @@ select:-webkit-autofill:focus {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   padding: 10px 0;
-  margin-top: 7px;
 }
 .project-tags > div {
   display: -webkit-box;
@@ -7601,6 +7618,10 @@ select:-webkit-autofill:focus {
 .edit-project .edit-container h3 {
   font-size: 18px;
   margin-bottom: 10px;
+}
+.edit-project .edit-container h3 span {
+  font-weight: 200;
+  font-style: italic;
 }
 .edit-project .edit-container p {
   margin-bottom: 10px;
@@ -11835,33 +11856,15 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   overflow-y: auto;
 }
 .message-text-editor .message-editor-container .ql-container::-webkit-scrollbar {
-  width: 18px;
-  cursor: pointer;
-}
-.message-text-editor .message-editor-container .ql-container::-webkit-scrollbar-button {
-  width: 0px;
-  height: 0px;
-}
-.message-text-editor .message-editor-container .ql-container::-webkit-scrollbar-thumb {
-  background: var(--light-border);
-  border: 5px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  border-radius: 9999px;
-  cursor: pointer;
+  width: 10px;
 }
 .message-text-editor .message-editor-container .ql-container::-webkit-scrollbar-track {
-  background: var(--light);
-  border: 5px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  border-radius: 9999px;
-  cursor: pointer;
+  background: transparent;
 }
-.message-text-editor .message-editor-container .ql-container::-webkit-scrollbar-track:hover, .message-text-editor .message-editor-container .ql-container::-webkit-scrollbar-track:active {
-  background: var(--light);
-  border: 5px solid rgba(0, 0, 0, 0);
-  background-clip: padding-box;
-  border-radius: 9999px;
-  cursor: pointer;
+.message-text-editor .message-editor-container .ql-container::-webkit-scrollbar-thumb {
+  background-color: var(--light-border);
+  border: 3px solid var(--content-light);
+  border-radius: 10px;
 }
 .message-text-editor .message-editor-container .ql-container::-webkit-scrollbar-corner {
   background: transparent;
