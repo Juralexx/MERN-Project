@@ -6,14 +6,20 @@
     margin-top : 7px;
 
     > div {
-        display     : flex;
-        align-items : center;
-        margin      : 0 7px 0 0;
-        padding     : 3px 5px;
-        color       : var(--text);
+        display          : flex;
+        align-items      : center;
+        margin           : 2px;
+        padding          : 3px 5px;
+        color            : var(--text);
+        background-color : var(--content-x-light);
+        border-radius    : var(--rounded-sm);
 
         span {
             color : var(--primary);
+        }
+
+        svg {
+            margin-left : 5px;
         }
     }
 }

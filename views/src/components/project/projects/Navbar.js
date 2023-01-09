@@ -6,7 +6,7 @@ const Navbar = ({ project }) => {
 
     return (
         <nav className="dashboard-header_navbar">
-            <div className="container">
+            <div className="container-lg">
                 <div className='dashboard-header_navbar-content custom-scrollbar-x'>
                     <NavLink
                         to={`/projects/${project.URLID}/${project.URL}/about`}

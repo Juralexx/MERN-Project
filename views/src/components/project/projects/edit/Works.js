@@ -7,7 +7,7 @@ import { BsInboxFill } from 'react-icons/bs';
 import { ErrorCard } from '../../../tools/global/Error';
 import { useClickOutside } from '../../../tools/hooks/useClickOutside';
 
-const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
+const Works = ({ workArray, setWorkArray, error, setError }) => {
     const [searchQuery, setSearchQuery] = useState("")
     const [worksFound, setWorksFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -16,13 +16,14 @@ const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
     const isEmpty = worksFound.length === 0
     const wrapperRef = useRef()
     useClickOutside(wrapperRef, setDisplay, false)
-    const errorRef = useRef()
-    const checkErr = (name) => { if (isErr === name) return "err" }
-    
+    const checkErr = (name) => { if (error.element === name) return "err" }
+
     const searchWork = async () => {
         if (!searchQuery || searchQuery.trim() === "") { return }
         else {
-            const response = await axios.get(encodeURI(`${process.env.REACT_APP_API_URL}api/work/${searchQuery}`)).catch(err => console.error(err))
+            const response = await axios
+                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/work/${searchQuery}`))
+                .catch(err => console.error(err))
             if (response) {
                 setWorksFound(response.data)
                 setLoading(true)
@@ -44,16 +45,13 @@ const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
 
     const checkArrayErrors = (key) => {
         if (workArray[key].name === "" || workArray[key].number === (null || undefined)) {
-            setErr(`work-${key}`)
-            setError("Veuillez saisir un métier ou un nombre valide...")
+            setError({ element: `work-${key}`, error: "Veuillez saisir un métier ou un nombre valide..." })
         } else {
             if (workArray[key].number === 0) {
-                setErr(`work-${key}`)
-                setError("Le nombre de personnes recherchées ne peut pas être de 0")
+                setError({ element: `work-${key}`, error: "Le nombre de personnes recherchées ne peut pas être de 0" })
             } else {
                 if (JSON.stringify(workArray).includes(JSON.stringify(workArray[key].work))) {
-                    setErr(`work-${key}`)
-                    setError("Vous avez déjà sélectionné ce métier...")
+                    setError({ element: `work-${key}`, error: "Vous avez déjà sélectionné ce métier..." })
                 } else {
                     setWorkArray([...workArray, { name: "", number: "", numberFound: "", description: "" }])
                     setSearchQuery("")
@@ -99,15 +97,26 @@ const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
                             <h3 className="mr-4">Métier n°{key + 1}</h3>
                             <Button onClick={() => deleteItem(key)}>Supprimer</Button>
                             {key + 1 === workArray.length &&
-                                <Button className="ml-2" onClick={() => checkArrayErrors(key)} disabled={workArray[key].name === "" || workArray[key].number === ("" || 0 || null)}
-                                >Rechercher un autre métier</Button>
+                                <Button
+                                    className="ml-2"
+                                    onClick={() => checkArrayErrors(key)} disabled={workArray[key].name === "" || workArray[key].number === ("" || 0 || null)}
+                                >
+                                    Rechercher un autre métier
+                                </Button>
                             }
                         </div>
                         <div className="edit-work-form">
                             <div className="work-flex-content">
                                 <div className="content-form">
                                     <p className="title full">Métier recherché</p>
-                                    <ClassicInput className={`full ${checkErr(`work-${key}`)}`} type="text" placeholder="Rechercher un métier..." value={element.name} onInput={e => setSearchQuery(e.target.value)} onChange={searchWork} />
+                                    <ClassicInput
+                                        className={`full ${checkErr(`work-${key}`)}`}
+                                        type="text"
+                                        placeholder="Rechercher un métier..."
+                                        value={element.name}
+                                        onInput={e => setSearchQuery(e.target.value)}
+                                        onChange={searchWork}
+                                    />
                                     <div tabIndex="0" className="auto-complete-container full custom-scrollbar" ref={wrapperRef} style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }} >
                                         {!isEmpty && display && isResponse &&
                                             worksFound.map((element, key) => {
@@ -130,22 +139,43 @@ const Works = ({ workArray, setWorkArray, isErr, setErr, error, setError }) => {
                                 </div>
                                 <div className="content-form">
                                     <p className="title full">Trouvé</p>
-                                    <NumberInput className={`full ${checkErr(`work-${key}`)}`} placeholder="Nombre..." value={element.number} onChange={e => handleNumber(e.target.value, key)} />
+                                    <NumberInput
+                                        className={`full ${checkErr(`work-${key}`)}`}
+                                        placeholder="Nombre..."
+                                        value={element.number}
+                                        onChange={e => handleNumber(e.target.value, key)}
+                                    />
                                 </div>
                                 <div className="content-form">
                                     <p className="title full">Recherché</p>
-                                    <NumberInput className={`full ${checkErr(`work-${key}`)}`} placeholder="Nombre..." value={element.number} onChange={e => handleNumber(e.target.value, key)} />
+                                    <NumberInput
+                                        className={`full ${checkErr(`work-${key}`)}`}
+                                        placeholder="Nombre..."
+                                        value={element.number}
+                                        onChange={e => handleNumber(e.target.value, key)}
+                                    />
                                 </div>
                             </div>
                             <div className="content-form mt-4">
                                 <p className="title full">Description</p>
-                                <Textarea className={`w-full ${checkErr(`work-${key}`)}`} type="text" placeholder="Pourquoi recherchez vous cette compétence ?" onChange={e => handleDescription(e.target.value, key)} value={element.description} />
+                                <Textarea
+                                    className={`w-full ${checkErr(`work-${key}`)}`}
+                                    type="text"
+                                    placeholder="Pourquoi recherchez vous cette compétence ?"
+                                    onChange={e => handleDescription(e.target.value, key)}
+                                    value={element.description}
+                                />
                                 <div className="field_infos full">
                                     {element.description && element.description.length} / 1000 caractères
                                 </div>
                             </div>
                         </div>
-                        {isErr === `work-${key}` && <ErrorCard useRef={errorRef} display={isErr === `work-${key}`} text={error} clean={() => setErr("")} />}
+                        {error.element === `work-${key}` &&
+                            <ErrorCard
+                                display={error.element === `work-${key}`}
+                                text={error.error}
+                                clean={() => setError({ element: "", error: "" })} />
+                        }
                     </div>
                 )
             })}

@@ -13,7 +13,7 @@ const Header = ({ project, websocket, user }) => {
 
     return (
         <div className="dashboard-header">
-            <div className="container-lg py-3">
+            <div className="container-lg py-5">
                 {/*<Breadcrumb project={project} />*/}
                 <div className="dashboard-header-top">
                     <div className="dashboard-header_left">

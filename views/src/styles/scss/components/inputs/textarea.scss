@@ -35,4 +35,20 @@
             flex-grow : 1;
         }
     }
+
+    &::-webkit-scrollbar {
+        width : 10px;
+    }
+    &::-webkit-scrollbar-track {
+        background : transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color : var(--light-border);
+        border           : 3px solid var(--content-light);
+        border-radius    : 10px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background : transparent;
+    }
 }

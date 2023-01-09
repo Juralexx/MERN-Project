@@ -1,11 +1,10 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { IoClose } from 'react-icons/io5'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
 
-const Tags = ({ tags, setTags, error, setError, isErr, setErr }) => {
-    const errorRef = useRef()
-    const checkErr = (name) => { if (isErr === name) { return "err" } else return "" }
+const Tags = ({ tags, setTags, error, setError }) => {
+    const checkErr = (name) => { if (error.element === name) { return "err" } else return "" }
 
     const addTag = (event, element) => {
         if (event.key === 'Enter') {
@@ -20,46 +19,59 @@ const Tags = ({ tags, setTags, error, setError, isErr, setErr }) => {
                             setTags(arr => [...arr, cleanTag])
                             event.target.value = ""
                         } else {
-                            setErr("tags")
-                            setError("Vous avez déjà ajouté ce tag")
+                            setError({ element: "tags", error: "Vous avez déjà ajouté ce tag" })
                         }
                     } else {
-                        setErr("tags")
-                        setError("Les tags doivent être composés d'au moins 3 caractères")
+                        setError({ element: "tags", error: "Les tags doivent être composés d'au moins 3 caractères" })
                     }
                 } else {
-                    setErr("tags")
-                    setError("Vous ne pouvez pas ajouter plus de 12 tags")
+                    setError({ element: "tags", error: "Vous ne pouvez pas ajouter plus de 12 tags" })
                 }
             } else {
-                setErr("tags")
-                setError("Les tags doivent être composés d'au moins 3 caractères")
+                setError({ element: "tags", error: "Les tags doivent être composés d'au moins 3 caractères" })
             }
         } else return
     }
 
-    const removeTag = (element) => {
-        setTags(tags.filter(tag => tag !== element))
-    }
+    const removeTag = (element) => setTags(tags.filter(tag => tag !== element))
 
     return (
-        <div className="content-form">
-            <p className="title full">Tags</p>
-            {tags.length > 0 && (
-                <div className="project-tags">
-                    {tags.map((element, key) => {
-                        return (
-                            <div className="tag" key={key}>
-                                <span>#</span> {element}
-                                <IoClose onClick={() => removeTag(element)} />
-                            </div>
-                        )
-                    })}
-                </div>
-            )}
-            <ClassicInput className={`full ${checkErr("tags")}`} type="text" placeholder="Ajouter des tags" onKeyPress={e => addTag(e, e.target.value)} />
-            <div className="field_infos full">{tags.length} / 12</div>
-            {isErr === "tags" && <ErrorCard useRef={errorRef} display={isErr === "tags"} text={error} clean={() => setErr("")} />}
+
+        <div className="row">
+            <div className="col-12 col-md-6">
+                <p className="title full">Tags</p>
+                {tags.length > 0 && (
+                    <div className="project-tags">
+                        {tags.map((element, key) => {
+                            return (
+                                <div className="tag" key={key}>
+                                    <span>#</span> {element}
+                                    <IoClose onClick={() => removeTag(element)} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
+                <ClassicInput
+                    className={`full ${checkErr("tags")}`}
+                    type="text"
+                    placeholder="Ajouter des tags"
+                    onKeyPress={e => addTag(e, e.target.value)}
+                />
+                <div className="field_infos full">{tags.length} / 12</div>
+                {error.element === "tags" &&
+                    <ErrorCard
+                        display={error.element === "tags"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
+                }
+            </div>
+            <div className="col-12 col-md-6">
+                <h3>Tags et référencement</h3>
+                <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                    Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+            </div>
         </div>
     )
 }

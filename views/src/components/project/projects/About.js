@@ -1,12 +1,15 @@
 import React from 'react'
-import Navbar from './Navbar'
+import FooterLight from '../../FooterLight';
 
 const About = ({ project, user, websocket, isAdmin, isManager }) => {
 
     return (
-        <div className="container-lg py-8">
+        <>
+            <div className="container-lg py-8">
 
-        </div>
+            </div>
+            <FooterLight />
+        </>
     )
 }
 

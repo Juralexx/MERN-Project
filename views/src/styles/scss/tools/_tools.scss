@@ -208,26 +208,6 @@
     }
 }
 
-#back-actions {
-    position        : fixed;
-    bottom          : 0;
-    left            : 0;
-    right           : 0;
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    width           : 100%;
-    padding         : 15px 5%;
-    box-sizing      : border-box;
-    background      : var(--x-light);
-    box-shadow      : var(--shadow-top);
-    z-index         : 700;
-
-    .btn_first {
-        width : 300px;
-    }
-}
-
 .leaflet-top,
 .leaflet-bottom,
 .leaflet-control {

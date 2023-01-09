@@ -80,7 +80,7 @@
     justify-content : center;
     border          : 2px dashed var(--primary);
     border-radius   : var(--rounded-sm);
-    background      : var(--xx-light);
+    background    : var(--x-light);
 
     p {
         margin-top : 10px;
@@ -93,7 +93,7 @@
         padding       : 15px;
         object-fit    : cover;
         color         : var(--primary);
-        background    : var(--x-light);
+        background    : var(--xx-light);
         border-radius : var(--rounded-full);
         cursor        : pointer;
     }

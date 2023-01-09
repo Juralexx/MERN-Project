@@ -7,6 +7,13 @@
         padding       : 0 0 20px 0;
     }
 
+    .dashboard-header_navbar {
+        background-color : var(--content-light);
+        .dashboard-header_navbar-content {
+            border : none;
+        }
+    }
+
     .edit-container {
         position   : relative;
         width      : 100%;

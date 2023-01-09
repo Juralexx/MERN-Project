@@ -294,8 +294,12 @@ const Edit = ({ user }) => {
                 } />
             </Routes>
             <div id="back-actions">
-                <Link className="no-decoration" to="/profil/about"><TextButton text="Annuler" /></Link>
-                <Button onClick={handleUpdate}>Enregistrer</Button>
+                <div className='back-actions-inner'>
+                    <TextButton>
+                        <Link to="/profil/about">Annuler</Link>
+                    </TextButton>
+                    <Button className="ml-2" onClick={handleUpdate}>Enregistrer</Button>
+                </div>
             </div>
         </>
     )

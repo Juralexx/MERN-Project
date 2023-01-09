@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes, useParams } from 'react-router-dom';
+import { Route, Routes, useParams, Navigate } from 'react-router-dom';
 import { getProject } from '../../../actions/project.action';
 import Header from './Header'
 import HomeMembers from './members/HomeMembers';
@@ -136,8 +136,9 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                         />
                     } />
 
-                    {project.actualities.length === 0 ? (
-                        <Route path="add-actuality" element={
+
+                    <Route path="add-actuality" element={
+                        project.actualities.length === 0 ? (
                             <AddActuality
                                 user={user}
                                 websocket={websocket}
@@ -145,18 +146,13 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                 isAdmin={isAdmin}
                                 isManager={isManager}
                             />
-                        } />
-                    ) : (
-                        <Route path="add-actuality" element={
-                            <Actualities
-                                user={user}
-                                websocket={websocket}
-                                project={project}
-                                isAdmin={isAdmin}
-                                isManager={isManager}
+                        ) : (
+                            <Navigate
+                                replace
+                                to={`/projects/${project.URLID}/${project.URL}/actuality`}
                             />
-                        } />
-                    )}
+                        )
+                    } />
 
                     <Route path="qna/*" element={
                         <Qna
@@ -168,8 +164,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                         />
                     } />
 
-                    {project.QNA.length === 0 ? (
-                        <Route path="add-qna" element={
+                    <Route path="add-qna" element={
                             <AddQna
                                 user={user}
                                 websocket={websocket}
@@ -177,18 +172,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                 isAdmin={isAdmin}
                                 isManager={isManager}
                             />
-                        } />
-                    ) : (
-                        <Route path="add-qna" element={
-                            <Qna
-                                user={user}
-                                websocket={websocket}
-                                project={project}
-                                isAdmin={isAdmin}
-                                isManager={isManager}
-                            />
-                        } />
-                    )}
+                    } />
                 </Routes>
             </>
         )

@@ -29,9 +29,14 @@
     }
 
     .accordion_body {
-        max-width  : 95%;
         padding    : 10px 0;
         color      : var(--text-secondary);
         text-align : justify;
+    }
+}
+
+@media(max-width: 576px) {
+    .accordion {
+        padding : 10px;
     }
 }

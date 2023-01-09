@@ -1,4 +1,5 @@
 import React from 'react';
+import Oval from 'react-loading-icons/dist/components/oval';
 
 export const Loader = () => {
     return (
@@ -16,6 +17,14 @@ export const SmallLoader = () => {
         <div id="small-loader">
             <span className="loader_animation"></span>
             <p>Chargement...</p>
+        </div>
+    )
+}
+
+export const OvalLoader = () => {
+    return (
+        <div className='oval-loader'>
+            <Oval />
         </div>
     )
 }

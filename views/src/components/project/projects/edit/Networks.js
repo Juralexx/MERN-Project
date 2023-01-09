@@ -6,9 +6,9 @@ import { ErrorCard } from '../../../tools/global/Error';
 import { IoClose } from 'react-icons/io5';
 import { FaFacebookF, FaInstagram, FaTwitter, FaSnapchatGhost, FaYoutube, FaTwitch, FaPinterest, FaLinkedinIn, FaLink } from 'react-icons/fa'
 
-const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => {
+const Networks = ({ networks, setNetworks, error, setError }) => {
     const [network, setNetwork] = useState("")
-    const checkErr = (name) => { if (isErr === name) return "err" }
+    const checkErr = (name) => { if (error.element === name) return "err" }
 
     const returnSVG = (network) => {
         if (network === "facebook") return <FaFacebookF />
@@ -36,10 +36,9 @@ const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => 
             else site = "website"
             setNetworks([...networks, { type: site, url: network }])
             setNetwork("")
-            setErr('')
+            setError({ element: "", error: "" })
         } else {
-            setErr("networks")
-            setError("Veuillez saisir une adresse URL valide")
+            setError({ element: "network", error: "Veuillez saisir une adresse URL valide" })
         }
     }
 
@@ -50,27 +49,48 @@ const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => 
     }
 
     return (
-        <div className="content-form">
-            <p className="title">Réseaux sociaux</p>
-            <div className="flex">
-                <ClassicInput className={`w-full !max-w-full mb-4 ${checkErr("networks")}`} inputClassName="w-full" type="text" placeholder="https://" value={network} onChange={e => setNetwork(e.target.value)} />
-                <Button className="!h-[46px] ml-2" onClick={handleNetwork}>Ajouter</Button>
-            </div>
-            {isErr === "networks" && <ErrorCard display={isErr === "networks"} text={error} clean={() => setErr("")} />}
-            {networks.length > 0 &&
-                networks.map((element, key) => {
-                    return (
-                        <div className="network" key={key}>
-                            <div className="flex items-center w-[80%] relative">
-                                {returnSVG(element.type)}
-                                <a href={element.url} rel="noreferrer" target="_blank" className="ml-4">{element.url}</a>
+        <div className="row">
+            <div className="col-12 col-md-6">
+                <p className="title">Réseaux sociaux</p>
+                <div className="flex">
+                    <ClassicInput
+                        className={`w-full !max-w-full mb-4 ${checkErr("networks")}`}
+                        inputClassName="w-full"
+                        type="text"
+                        placeholder="https://"
+                        value={network}
+                        onChange={e => setNetwork(e.target.value)}
+                    />
+                    <Button className="!h-[46px] ml-2" onClick={handleNetwork}>Ajouter</Button>
+                </div>
+                {error.element === "networks" &&
+                    <ErrorCard
+                        display={error.element === "networks"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
+                }
+                {networks.length > 0 &&
+                    networks.map((element, key) => {
+                        return (
+                            <div className="network" key={key}>
+                                <div className="flex items-center w-[80%] relative">
+                                    {returnSVG(element.type)}
+                                    <a href={element.url} rel="noreferrer" target="_blank" className="ml-4">{element.url}</a>
+                                </div>
+                                <IoClose className='cursor-pointer' onClick={() => deleteItem(key)} />
                             </div>
-                            <IoClose className='cursor-pointer' onClick={() => deleteItem(key)} />
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </div>
+            <div className="col-12 col-md-6">
+                <h3>Date de fin prévu (facultatif)</h3>
+                <p>Vous recevrez des conseils quant au moment où les étapes qui durent plusieurs jours doivent être terminées.
+                    Cette date reste modifiable jusqu'au moment où vous lancez votre projet (ce qui se fait manuellement).</p>
+            </div>
         </div>
+
     )
 }
 

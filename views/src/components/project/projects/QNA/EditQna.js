@@ -8,9 +8,8 @@ import { ClassicInput, Textarea } from '../../../tools/global/Inputs'
 
 const EditQna = ({ project, user }) => {
     const [qna, setQna] = useState(project.QNA)
-    const [isErr, setErr] = useState(false)
-    const [error, setError] = useState(null)
-    const checkErr = (name) => { if (isErr === name) return "err" }
+    const [error, setError] = useState({ element: "", error: "" })
+    const checkErr = name => { if (error.element === name) return "err" }
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -34,14 +33,18 @@ const EditQna = ({ project, user }) => {
 
     const handleQna = () => {
         let i = 0
-        qna.forEach(async (element, key) => {
+        qna.forEach((element, key) => {
             i++
             if (element.question === "" || element.question.length < 10 || element.question.length > 100) {
-                setErr(`question-${key}`)
-                setError("Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères")
+                setError({
+                    element: `question-${key}`,
+                    error: "Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères"
+                })
             } else if (element.answer === "" || element.answer.length < 10 || element.answer.length > 4000) {
-                setErr(`answer-${key}`)
-                setError("Veuillez ajouter une reponse valide à votre question")
+                setError({
+                    element: `answer-${key}`,
+                    error: "Veuillez ajouter une reponse valide à votre question"
+                })
             } else {
                 if (i === qna.length) {
                     const activity = { type: "update-qna", who: user.pseudo, date: new Date().toISOString() }
@@ -56,41 +59,65 @@ const EditQna = ({ project, user }) => {
     }
 
     return (
-        <div className="content_container add-qna">
-            <div className="content_box">
-                <div className="header flex justify-between mb-5">
-                    <h2>Foire aux questions</h2>
-                </div>
-                {qna.map((element, key) => {
-                    return (
-                        <div className="qna-form mt-8" key={key}>
-                            <div className="header flex mb-5">
-                                <h3>Question n°{key + 1}</h3>
-                                <Button className="ml-4" onClick={() => deleteQuestion(key)}>Supprimer</Button>
-                                {key + 1 === qna.length &&
-                                    <Button className="ml-2" onClick={() => setQna(e => [...e, { question: "", answer: "" }])} disabled={qna[key].question.length < 10 || qna[key].answer.length < 10}
-                                    >Ajouter une nouvelle question</Button>
-                                }
-                            </div>
-                            <div className="content-form">
-                                <p className="title w-full">Question <span>Champ requis</span></p>
-                                <ClassicInput className={`${checkErr(`question-${key}`)} full`} type="text" placeholder={`Question n°${key + 1}`} onChange={e => handleQuestion(e, key)} value={element.question} />
-                                <div className="field_infos w-full">{element.question.length} / 100 caractères</div>
-                                {isErr === `question-${key}` && <ErrorCard display={isErr === `question-${key}`} text={error} clean={() => setErr("")} />}
-                            </div>
-
-                            <div className="content-form mt-4">
-                                <p className="title w-full">Réponse <span>Champ requis</span></p>
-                                <Textarea className={`${checkErr(`answer-${key}`)} w-full`} type="text" placeholder={`Réponse n°${key + 1}`} onChange={e => handleAnswer(e, key)} value={element.answer} />
-                                <div className="field_infos w-full">{element.answer.length} / 1000 caractères</div>
-                                {isErr === `answer-${key}` && <ErrorCard display={isErr === `answer-${key}`} text={error} clean={() => setErr("")} />}
-                            </div>
+        <div className="container-lg py-8 pb-[150px] edit-qna">
+            <div className="header flex justify-between mb-5">
+                <h2>Foire aux questions</h2>
+            </div>
+            {qna.map((element, key) => {
+                return (
+                    <div className="qna-form mt-8" key={key}>
+                        <div className="header flex items-center mb-5">
+                            <h3>Question n°{key + 1}</h3>
+                            <TextButton className="ml-4" onClick={() => deleteQuestion(key)}>Supprimer</TextButton>
                         </div>
-                    )
-                })}
-                <div id="back-actions">
-                    <TextButton><Link to={`/projects/${project.URLID}/${project.URL}/qna`}>Annuler</Link></TextButton>
-                    <Button className="ml-2" onClick={handleQna}>Enregistrer</Button>
+                        <div className="content-form">
+                            <p className="title w-full">Question <span>Champ requis</span></p>
+                            <ClassicInput
+                                className={`${checkErr(`question-${key}`)} full`}
+                                type="text"
+                                placeholder={`Question n°${key + 1}`}
+                                onChange={e => handleQuestion(e, key)}
+                                value={element.question}
+                            />
+                            <div className="field_infos w-full">{element.question.length} / 100 caractères</div>
+                            {error.element === `question-${key}` &&
+                                <ErrorCard display={error.name === `question-${key}`} text={error.error} clean={() => setError({ element: "", error: "" })} />
+                            }
+                        </div>
+
+                        <div className="content-form mt-4">
+                            <p className="title w-full">Réponse <span>Champ requis</span></p>
+                            <Textarea
+                                className={`${checkErr(`answer-${key}`)} w-full`}
+                                type="text"
+                                placeholder={`Réponse n°${key + 1}`}
+                                onChange={e => handleAnswer(e, key)}
+                                value={element.answer}
+                            />
+                            <div className="field_infos w-full">{element.answer.length} / 1000 caractères</div>
+                            {error.element === `answer-${key}` &&
+                                <ErrorCard display={error.name === `answer-${key}`} text={error.error} clean={() => setError({ element: "", error: "" })} />
+                            }
+                        </div>
+                    </div>
+                )
+            })}
+            <div id="back-actions">
+                <div className='back-actions-inner'>
+                    <div className='flex flex-col justify-center flex-grow'>
+                        <TextButton
+                            className="mb-2"
+                            onClick={() => setQna(e => [...e, { question: "", answer: "" }])}
+                        >
+                            Ajouter une nouvelle question
+                        </TextButton>
+                        <div className='flex justify-center'>
+                            <TextButton>
+                                <Link to={`/projects/${project.URLID}/${project.URL}/qna`}>Annuler</Link>
+                            </TextButton>
+                            <Button className="ml-2" onClick={handleQna}>Enregistrer</Button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

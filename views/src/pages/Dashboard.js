@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/project/projects/Sidebar'
 import Projects from '../components/project/projects/Projects';
 import Project from '../components/project/projects/Project';
-import FooterLight from '../components/FooterLight';
+import { OvalLoader } from '../components/tools/global/Loader';
 
 const Dashboard = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
@@ -14,13 +14,13 @@ const Dashboard = ({ websocket, user }) => {
 
     useEffect(() => {
         if (Object.keys(user).length > 0 && user.projects.length > 0) {
-            const currents = user.projects.map(async (projectId) => {
+            const userProjects = user.projects.map(async projectId => {
                 return await axios
                     .get(`${process.env.REACT_APP_API_URL}api/project/${projectId}`)
                     .then(res => res.data)
                     .catch(err => console.error(err))
             })
-            Promise.all(currents).then(res => {
+            Promise.all(userProjects).then(res => {
                 setProjects(res)
                 setLoading(false)
             })
@@ -29,7 +29,11 @@ const Dashboard = ({ websocket, user }) => {
 
     return (
         <div className="dashboard">
-            <Sidebar user={user} projects={projects} isLoading={isLoading} />
+            <Sidebar
+                user={user}
+                projects={projects}
+                isLoading={isLoading}
+            />
             <div className="dashboard-content custom-scrollbar">
                 {!isLoading &&
                     <Routes>
@@ -50,7 +54,9 @@ const Dashboard = ({ websocket, user }) => {
                         )}
                     </Routes>
                 }
-                <FooterLight />
+                {isLoading &&
+                    <OvalLoader />
+                }
             </div>
         </div>
     )

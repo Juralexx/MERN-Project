@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { stateToBackground, stateToString } from '../functions'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
 import { ClassicInput, DropdownInput } from '../../tools/global/Inputs'
 import { dateParser, removeAccents } from '../../Utils'
 import { categories } from '../../../api/categories'
 import { IoAlbumsOutline, IoCalendarClearOutline, IoLocationOutline, IoSearchOutline } from 'react-icons/io5'
+import { MdOutlineInsertChart } from 'react-icons/md'
+import { Button } from '../../tools/global/Button'
+import FooterLight from '../../FooterLight';
 
 const Projects = ({ projects }) => {
     const [projectsToShow, setProjectsToShow] = useState(projects)
@@ -32,12 +35,8 @@ const Projects = ({ projects }) => {
             if (!isResults || isResults.length === 0) {
                 setProjectsToShow(projects)
             }
-        } else {
-            setSearch(false)
-        }
+        } else setSearch(false)
     }
-
-    console.log(isResults)
 
     return (
         <>
@@ -63,6 +62,7 @@ const Projects = ({ projects }) => {
                                 placeholder="Catégorie"
                                 cross
                                 value={category}
+                                onChange={() => { }}
                                 onClean={() => { setCategory(""); searchProject() }}
                             >
                                 {categories.map((category, key) => {
@@ -95,7 +95,7 @@ const Projects = ({ projects }) => {
                         </DropdownInput>
                     </div>
                 </div>
-                {projects &&
+                {projects.length > 0 ? (
                     projectsToShow.map((element, key) => {
                         return (
                             <div className="row project-card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
@@ -128,7 +128,19 @@ const Projects = ({ projects }) => {
                                 </div>
                             </div>
                         )
-                    })}
+                    })
+                ) : (
+                    <div className="no_content">
+                        <div className="svg_container">
+                            <MdOutlineInsertChart />
+                        </div>
+                        <p>Vous n'avez pas encore ajouté de FAQ.</p>
+                        <span>Ajoutez une FAQ pour répondre aux questions que vos visiteur pourraient se poser !</span>
+                        <Button>
+                            <NavLink to={`/add-project`}>Déposer un projet</NavLink>
+                        </Button>
+                    </div>
+                )}
                 {search && isResults.length === 0 &&
                     <div className="empty-array">
                         <div><IoSearchOutline /></div>
@@ -136,6 +148,7 @@ const Projects = ({ projects }) => {
                     </div>
                 }
             </div>
+            <FooterLight />
         </>
     )
 }
