@@ -6,6 +6,7 @@ import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import { OvalLoader } from '../tools/global/Loader'
 import Card from '../tools/components/Card'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { addClass } from '../Utils'
 
 const Projects = ({ user, websocket }) => {
     const [projects, setProjects] = useState({
@@ -39,71 +40,73 @@ const Projects = ({ user, websocket }) => {
 
     return (
         <div className="profil-page col-12 col-lg-9">
-            <div className="content_nav !mb-4">
-                <div onClick={() => setProjects(pros => ({ ...pros, type: "projects" }))}>
+            <div className="content_nav !mb-4 custom-scrollbar-x">
+                <div className={addClass(projects.type === "projects", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "projects" }))}>
                     Projets<span>{user.projects?.length}</span>
                 </div>
-                <div onClick={() => setProjects(pros => ({ ...pros, type: "favorites" }))}>
+                <div className={addClass(projects.type === "favorites", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "favorites" }))}>
                     Favoris<span>{user.favorites?.length}</span>
                 </div>
-                <div onClick={() => setProjects(pros => ({ ...pros, type: "followed" }))}>
+                <div className={addClass(projects.type === "followed", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "followed" }))}>
                     Suivis<span>{user.followed?.length}</span>
                 </div>
-                <div onClick={() => setProjects(pros => ({ ...pros, type: "liked" }))}>
+                <div className={addClass(projects.type === "liked", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "liked" }))}>
                     Soutenus<span>{user.liked?.length}</span>
                 </div>
             </div>
-            <div className="search_header">
-                <h2>Projects <span>{projectsToDisplay.length}</span></h2>
-                <IconInput
-                    type="text"
-                    className="is_start_icon ml-auto mr-2"
-                    icon={<AiOutlineSearch />}
-                    placeholder="Rechercher un projet..."
-                    value={query}
-                    onInput={e => setQuery(e.target.value)}
-                    onChange={oneLevelSearch}
-                    cross
-                    onClean={() => { setProjectsToDisplay(projects.array); setQuery("") }}
-                />
-                <DropdownInput
-                    placeholder="Filtrer"
-                    value={filter}
-                    cross
-                    onChange={() => { }}
-                    onClean={() => { setFilter(""); setProjectsToDisplay(projects.array) }}
-                >
-                    <div onClick={() => {
-                        setProjectsToDisplay(sortByRecent(projects.array))
-                        setFilter("Plus récent au plus ancien")
-                    }}>
-                        Plus récent au plus ancien
-                    </div>
-                    <div onClick={() => {
-                        setProjectsToDisplay(sortByOld(projects.array))
-                        setFilter("Plus ancien au plus récent")
-                    }}>
-                        Plus ancien au plus récent
-                    </div>
-                    <div onClick={() => {
-                        setProjectsToDisplay(sortByWorkedOn(projects.array))
-                        setFilter("En préparation")
-                    }}>
-                        En préparation
-                    </div>
-                    <div onClick={() => {
-                        setProjectsToDisplay(sortByInProgress(projects.array))
-                        setFilter("En cours")
-                    }}>
-                        En cours
-                    </div>
-                    <div onClick={() => {
-                        setProjectsToDisplay(sortByDone(projects.array))
-                        setFilter("Terminé")
-                    }}>
-                        Terminé
-                    </div>
-                </DropdownInput>
+            <div className="search-header">
+                <h2>Projects&nbsp;<span>{projectsToDisplay.length}</span></h2>
+                <div className='search-header_inputs mt-3 md:mt-0'>
+                    <IconInput
+                        type="text"
+                        className="is_start_icon ml-auto mr-2 mb-2 sm:mb-0 md:max-w-[300px]"
+                        icon={<AiOutlineSearch />}
+                        placeholder="Rechercher un projet..."
+                        value={query}
+                        onInput={e => setQuery(e.target.value)}
+                        onChange={oneLevelSearch}
+                        cross
+                        onClean={() => { setProjectsToDisplay(projects.array); setQuery("") }}
+                    />
+                    <DropdownInput
+                        placeholder="Filtrer"
+                        value={filter}
+                        cross
+                        onChange={() => { }}
+                        onClean={() => { setFilter(""); setProjectsToDisplay(projects.array) }}
+                    >
+                        <div onClick={() => {
+                            setProjectsToDisplay(sortByRecent(projects.array))
+                            setFilter("Plus récent au plus ancien")
+                        }}>
+                            Plus récent au plus ancien
+                        </div>
+                        <div onClick={() => {
+                            setProjectsToDisplay(sortByOld(projects.array))
+                            setFilter("Plus ancien au plus récent")
+                        }}>
+                            Plus ancien au plus récent
+                        </div>
+                        <div onClick={() => {
+                            setProjectsToDisplay(sortByWorkedOn(projects.array))
+                            setFilter("En préparation")
+                        }}>
+                            En préparation
+                        </div>
+                        <div onClick={() => {
+                            setProjectsToDisplay(sortByInProgress(projects.array))
+                            setFilter("En cours")
+                        }}>
+                            En cours
+                        </div>
+                        <div onClick={() => {
+                            setProjectsToDisplay(sortByDone(projects.array))
+                            setFilter("Terminé")
+                        }}>
+                            Terminé
+                        </div>
+                    </DropdownInput>
+                </div>
             </div>
             <div className="profil-page_body !justify-start">
                 {!isLoading ? (

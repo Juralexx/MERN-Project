@@ -27,34 +27,6 @@
                 padding       : 8px;
                 color         : white;
                 border-radius : 3px;
-
-                &.facebook {
-                    background-color : var(--facebook);
-                }
-                &.instagram {
-                    background-color : var(--instagram);
-                }
-                &.twitter {
-                    background-color : var(--twitter);
-                }
-                &.snapchat {
-                    background-color : var(--snapchat);
-                }
-                &.youtube {
-                    background-color : var(--youtube);
-                }
-                &.twitch {
-                    background-color : var(--twitch);
-                }
-                &.pinterest {
-                    background-color : var(--pinterest);
-                }
-                &.linkedin {
-                    background-color : var(--linkedin);
-                }
-                &.website {
-                    background-color : var(--website);
-                }
             }
 
             a {
@@ -77,10 +49,6 @@
     svg {
         height : 20px;
         width  : 20px;
-
-        &:nth-child(1) {
-            color : var(--primary);
-        }
     }
 
     a {

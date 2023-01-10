@@ -118,7 +118,7 @@ export const removeSpecialChars = (string) => {
  */
 
 export const onlyLettersSpacesAndDashes = (string) => {
-     // eslint-disable-next-line
+    // eslint-disable-next-line
     const regexp = new RegExp(/^[A-Za-z\s\-]+$/)
     if (regexp.test(string)) return true
     else return false
@@ -179,7 +179,7 @@ export const onlyNumbers = (string) => {
  */
 
 export const isEmailValid = (email) => {
-     // eslint-disable-next-line
+    // eslint-disable-next-line
     const regexp = new RegExp(/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i)
     if (regexp.test(email)) return true
     else return false
@@ -227,6 +227,7 @@ export const dateParserWithoutYear = (num) => {
     let date = new Date(timestamp).toLocaleDateString('fr-FR', options)
     return date.toString()
 }
+
 /**
  * ISO date to navigator date input format.
  */
@@ -300,6 +301,16 @@ export const timeBetween = (array, days) => {
     }).sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
     });
+}
+
+/**
+ * Remove choosen item from specified array
+ */
+
+export const deleteItemFromArray = (array, key) => {
+    let arr = [...array]
+    arr.splice(key, 1)
+    return arr
 }
 
 /**
@@ -437,7 +448,7 @@ export const isFile = (file) => {
 }
 
 export const isURL = (str) => {
-     // eslint-disable-next-line
+    // eslint-disable-next-line
     const regexp = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi)
     if (regexp.test(str)) {
         return true
