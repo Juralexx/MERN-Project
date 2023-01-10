@@ -14,7 +14,7 @@ const FooterLight = () => {
                         <div className="w-7 h-7 mr-2">
                             <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} alt="" />
                         </div>
-                        <div className='brand-name'>Redux Ltd. © 2022</div>
+                        <div className='brand-name'>Projectit Ltd. © 2022</div>
                     </div>
                 </div>
             </div>

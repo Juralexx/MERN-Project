@@ -1,9 +1,9 @@
 import React from "react";
 
-const MapRegions = ({ location, setLocation }) => {
+const MapRegions = ({ datas, setDatas }) => {
 
     const addActiveClass = (value) => {
-        let locs = location.filter(loc => loc.type === "region" && loc.region === value)
+        let locs = datas.location.filter(loc => loc.type === "region" && loc.region === value)
         if (locs.length > 0) {
             return "active"
         }
@@ -17,7 +17,7 @@ const MapRegions = ({ location, setLocation }) => {
             new_region: e.target.dataset.newregion,
             new_region_code: e.target.dataset.codenewregion
         }
-        setLocation(locations => [...locations, reg])
+        setDatas(datas => ({ ...datas, location: [...datas.location, reg] }))
     }
 
     return (

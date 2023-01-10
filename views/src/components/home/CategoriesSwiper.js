@@ -40,7 +40,7 @@ const CategoriesSwiper = () => {
     return (
         <div className="home_small_swiper border-b py-7">
             <h2>Catégories</h2>
-            <div className="small_swiper relative mt-3">
+            <div className="small_swiper">
                 <div className="nav-buttons">
                     <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
                     <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>

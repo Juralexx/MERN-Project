@@ -8,14 +8,12 @@ import FollowersModal from '../components/tools/components/FollowersModal'
 import { DropdownInput, IconInput } from '../components/tools/global/Inputs'
 import LikersModal from '../components/tools/components/LikersModal'
 import MapModal from '../components/tools/map/MapModal'
-import { BiSearchAlt } from 'react-icons/bi'
-import { BsCaretDownFill } from 'react-icons/bs'
-import { FaUserShield } from 'react-icons/fa'
-import { IoAlbums, IoSend } from 'react-icons/io5'
+import { AiOutlineMinus, AiOutlinePlus, AiOutlineSearch, AiOutlineUnorderedList, AiOutlineUser } from 'react-icons/ai'
+import { MdOutlineDoubleArrow } from 'react-icons/md'
+import { IoIosArrowDown } from 'react-icons/io'
 import { GiFrance } from 'react-icons/gi'
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
-const Search = ({ websocket, user, search, results, category, setCategory, location, setLocation, recentLocations, setRecentLocations, aroundLocation, setAroundLocation, date, setDate, state, setState }) => {
+const Search = ({ websocket, user, search, results, datas, setDatas }) => {
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
     const [openLikersModal, setOpenLikersModal] = useState(false)
     const [openMapModal, setOpenMapModal] = useState(false)
@@ -26,20 +24,12 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
     const [openCategories, setOpenCategories] = useState(false)
     useClickOutside(categoriesRef, () => setOpenCategories(false))
 
-    const datesMenu = useRef()
-    const [byDate, setByDate] = useState(false)
-    useClickOutside(datesMenu, () => setByDate(false))
-
-    const stateMenu = useRef()
-    const [byState, setByState] = useState(false)
-    useClickOutside(stateMenu, () => setByState(false))
-
     const locationsStored = localStorage.getItem("search:locations")
 
     useEffect(() => {
         if (locationsStored && JSON.parse(locationsStored).length > 0)
-            setRecentLocations(JSON.parse(locationsStored))
-    }, [locationsStored, setRecentLocations])
+            setDatas(data => ({ ...data, recentLocations: JSON.parse(locationsStored) }))
+    }, [locationsStored])
 
     return (
         <>
@@ -52,21 +42,24 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                                     className="is_start_icon"
                                     placeholder="Rechercher un projet"
                                     type="search"
-                                    icon={<BiSearchAlt />}
+                                    icon={<AiOutlineSearch />}
                                 />
                                 <div ref={categoriesRef} className="relative">
                                     <IconInput
-                                        className="is_start_icon"
-                                        inputClassName="cursor-pointer"
+                                        className="is_start_icon cursor-pointer"
                                         placeholder="Catégorie"
                                         readOnly
-                                        icon={<IoAlbums />}
-                                        endIcon={<BsCaretDownFill />}
+                                        icon={<AiOutlineUnorderedList />}
+                                        endIcon={<IoIosArrowDown />}
                                         onClick={() => setOpenCategories(!openCategories)}
-                                        onChange={() => setCategory(category)}
-                                        value={category}
+                                        onChange={() => setDatas(data => ({ ...data, category: datas.category }))}
+                                        value={datas.category}
                                     />
-                                    <CategoriesPicker className="top-[56px]" open={openCategories} setOpen={setOpenCategories} category={category} setCategory={setCategory} />
+                                    <CategoriesPicker
+                                        open={openCategories}
+                                        setOpen={setOpenCategories}
+                                        setDatas={setDatas}
+                                    />
                                 </div>
                             </div>
                             <div className="header_input_flex">
@@ -74,48 +67,61 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                                     className="is_start_icon"
                                     placeholder="Métier"
                                     type="text"
-                                    fullwidth
-                                    icon={<FaUserShield />}
+                                    icon={<AiOutlineUser />}
                                 />
                                 <LocationsAutocomplete
-                                    location={location}
-                                    setLocation={setLocation}
-                                    recentLocations={recentLocations}
-                                    setRecentLocations={setRecentLocations}
-                                    aroundLocation={aroundLocation}
-                                    setAroundLocation={setAroundLocation}
+                                    datas={datas}
+                                    setDatas={setDatas}
                                 />
                             </div>
                             {moreFilters &&
                                 <div className="header_input_flex">
-                                    <DropdownInput useRef={datesMenu} readOnly placeholder="Date de mise en ligne" value={date} open={byDate} onClick={() => setByDate(!byDate)} cross clean={() => setDate("")}>
-                                        <div onClick={() => setDate("Moins d'un jour")}>Moins d'un jour</div>
-                                        <div onClick={() => setDate("Moins d'une semaine")}>Moins d'une semaine</div>
-                                        <div onClick={() => setDate("Moins d'un mois")}>Moins d'un mois</div>
-                                        <div onClick={() => setDate("Moins d'un an")}>Moins d'un an</div>
+                                    <DropdownInput
+                                        readOnly
+                                        placeholder="Date de mise en ligne"
+                                        value={datas.date}
+                                        cross
+                                        onClean={() => setDatas(data => ({ ...data, date: "" }))}
+                                    >
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un jour" }))}>Moins d'un jour</div>
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'une semaine" }))}>Moins d'une semaine</div>
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un mois" }))}>Moins d'un mois</div>
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un an" }))}>Moins d'un an</div>
                                     </DropdownInput>
-                                    <DropdownInput useRef={stateMenu} readOnly placeholder="État" value={state} open={byState} onClick={() => setByState(!byState)} cross clean={() => setState("")}>
-                                        <div onClick={() => setState("En préparation")}>En préparation</div>
-                                        <div onClick={() => setState("En cours")}>En cours</div>
-                                        <div onClick={() => setState("Terminé")}>Terminé</div>
+                                    <DropdownInput
+                                        readOnly
+                                        placeholder="État"
+                                        value={datas.state}
+                                        cross
+                                        onClean={() => setDatas(data => ({ ...data, state: "" }))}
+                                    >
+                                        <div onClick={() => setDatas(data => ({ ...data, state: "En préparation" }))}>En préparation</div>
+                                        <div onClick={() => setDatas(data => ({ ...data, state: "En cours" }))}>En cours</div>
+                                        <div onClick={() => setDatas(data => ({ ...data, state: "Terminé" }))}>Terminé</div>
                                     </DropdownInput>
                                 </div>
                             }
                             <div className="btn_container">
                                 <div className="flex">
-                                    <TextButton className="btn_icon_start mr-2" onClick={() => setOpenMapModal(true)}><GiFrance />Voir la carte</TextButton>
+                                    <TextButton className="btn_icon_start mr-2" onClick={() => setOpenMapModal(true)}>
+                                        <GiFrance />Voir la carte
+                                    </TextButton>
                                     <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}>
                                         {!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
                                     </TextButton>
                                 </div>
-                                <Button className="px-7" onClick={search}>Rechercher<IoSend /></Button>
+                                <Button className="px-7" onClick={search}>
+                                    Rechercher<MdOutlineDoubleArrow />
+                                </Button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="results-container">
                     <div className="content_box">
-                        <div className="results-top">Resultats de votre recherche <span>({results.length} projets)</span></div>
+                        <div className="results-top">
+                            Resultats de votre recherche <span>({results.length} projets)</span>
+                        </div>
                         <div className="results-content">
                             {results.map((element, key) => {
                                 return (
@@ -130,11 +136,32 @@ const Search = ({ websocket, user, search, results, category, setCategory, locat
                         </div>
                     </div>
                 </div>
-                <MapModal open={openMapModal} setOpen={setOpenMapModal} location={location} setLocation={setLocation} />
+                <MapModal
+                    open={openMapModal}
+                    setOpen={setOpenMapModal}
+                    datas={datas}
+                    setDatas={setDatas}
+                />
             </div>
 
-            {openFollowersModal && <FollowersModal project={project} open={openFollowersModal} setOpen={setOpenFollowersModal} websocket={websocket} user={user} />}
-            {openLikersModal && <LikersModal project={project} open={openLikersModal} setOpen={setOpenLikersModal} websocket={websocket} user={user} />}
+            {openFollowersModal &&
+                <FollowersModal
+                    project={project}
+                    open={openFollowersModal}
+                    setOpen={setOpenFollowersModal}
+                    websocket={websocket}
+                    user={user}
+                />
+            }
+            {openLikersModal &&
+                <LikersModal
+                    project={project}
+                    open={openLikersModal}
+                    setOpen={setOpenLikersModal}
+                    websocket={websocket}
+                    user={user}
+                />
+            }
         </>
     )
 }

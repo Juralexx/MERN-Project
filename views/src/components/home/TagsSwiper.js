@@ -12,20 +12,62 @@ const TagsSwiper = () => {
     const nextRef = useRef()
 
     const tags = [
-        { name: "Art", url: `${process.env.REACT_APP_API_URL}files/tags/art.jpg` },
-        { name: "Artisanat", url: `${process.env.REACT_APP_API_URL}files/tags/artisanat.jpg` },
-        { name: "Cuisine", url: `${process.env.REACT_APP_API_URL}files/tags/cuisine.jpg` },
-        { name: "Bien-être", url: `${process.env.REACT_APP_API_URL}files/tags/bien-etre.jpg` },
-        { name: "Edition", url: `${process.env.REACT_APP_API_URL}files/tags/edition-et-journal.jpg` },
-        { name: "Education", url: `${process.env.REACT_APP_API_URL}files/tags/education.jpg` },
-        { name: "Film et vidéo", url: `${process.env.REACT_APP_API_URL}files/tags/film-et-video.jpg` },
-        { name: "Jeux", url: `${process.env.REACT_APP_API_URL}files/tags/jeux.jpg` },
-        { name: "Mode et design", url: `${process.env.REACT_APP_API_URL}files/tags/mode-et-design.jpg` },
-        { name: "Musique", url: `${process.env.REACT_APP_API_URL}files/tags/musique.jpg` },
-        { name: "Spectacle", url: `${process.env.REACT_APP_API_URL}files/tags/spectacle.jpg` },
-        { name: "Patrimoine", url: `${process.env.REACT_APP_API_URL}files/tags/patrimoine.jpg` },
-        { name: "Sport", url: `${process.env.REACT_APP_API_URL}files/tags/sport.jpg` },
-        { name: "Technologie", url: `${process.env.REACT_APP_API_URL}files/tags/technologie.jpg` }
+        {
+            name: "Art",
+            url: `${process.env.REACT_APP_API_URL}files/tags/art.jpg`
+        },
+        {
+            name: "Artisanat",
+            url: `${process.env.REACT_APP_API_URL}files/tags/artisanat.jpg`
+        },
+        {
+            name: "Cuisine",
+            url: `${process.env.REACT_APP_API_URL}files/tags/cuisine.jpg`
+        },
+        {
+            name: "Bien-être",
+            url: `${process.env.REACT_APP_API_URL}files/tags/bien-etre.jpg`
+        },
+        {
+            name: "Edition",
+            url: `${process.env.REACT_APP_API_URL}files/tags/edition-et-journal.jpg`
+        },
+        {
+            name: "Education",
+            url: `${process.env.REACT_APP_API_URL}files/tags/education.jpg`
+        },
+        {
+            name: "Film et vidéo",
+            url: `${process.env.REACT_APP_API_URL}files/tags/film-et-video.jpg`
+        },
+        {
+            name: "Jeux",
+            url: `${process.env.REACT_APP_API_URL}files/tags/jeux.jpg`
+        },
+        {
+            name: "Mode et design",
+            url: `${process.env.REACT_APP_API_URL}files/tags/mode-et-design.jpg`
+        },
+        {
+            name: "Musique",
+            url: `${process.env.REACT_APP_API_URL}files/tags/musique.jpg`
+        },
+        {
+            name: "Spectacle",
+            url: `${process.env.REACT_APP_API_URL}files/tags/spectacle.jpg`
+        },
+        {
+            name: "Patrimoine",
+            url: `${process.env.REACT_APP_API_URL}files/tags/patrimoine.jpg`
+        },
+        {
+            name: "Sport",
+            url: `${process.env.REACT_APP_API_URL}files/tags/sport.jpg`
+        },
+        {
+            name: "Technologie",
+            url: `${process.env.REACT_APP_API_URL}files/tags/technologie.jpg`
+        }
     ]
 
     useEffect(() => {
@@ -38,12 +80,16 @@ const TagsSwiper = () => {
     }, [swiper])
 
     return (
-        <div className="home_small_swiper">
+        <div className="home_small_swiper !pb-[80px]">
             <h2>Les tags les plus populaires</h2>
-            <div className="small_swiper mt-3">
+            <div className="small_swiper">
                 <div className="nav-buttons">
-                    <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
-                    <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
+                    <div className="swiper-button previous" ref={prevRef}>
+                        <ImArrowLeft2 />
+                    </div>
+                    <div className="swiper-button next" ref={nextRef}>
+                        <ImArrowRight2 />
+                    </div>
                 </div>
                 <Swiper
                     keyboard={{ enabled: true }}
@@ -88,7 +134,6 @@ const TagsSwiper = () => {
                     loop="true"
                     modules={[Navigation, Keyboard, Mousewheel]}
                     onSwiper={setSwiper}
-                    // navigation={{ prevEl: prevRef?.current, nextEl: nextRef?.current }}
                     slidesPerView="auto"
                     spaceBetween={20}
                 >

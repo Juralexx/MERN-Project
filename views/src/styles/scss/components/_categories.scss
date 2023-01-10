@@ -109,9 +109,9 @@
 
 .categories_container {
     position      : absolute;
-    top           : 56px;
+    top           : 46px;
     width         : 97%;
-    background    : var(--content);
+    background    : var(--content-light);
     height        : auto;
     z-index       : 700;
     border-radius : var(--rounded-sm);
@@ -119,9 +119,6 @@
 
     .categories_header {
         padding : 15px 20px 0;
-        h4 {
-            text-transform : uppercase;
-        }
     }
 
     .categories_inner {
@@ -136,8 +133,12 @@
             padding        : 10px 20px;
 
             .categories_item {
-                padding     : 6px 0;
-                cursor      : pointer;
+                padding : 6px 0;
+                color   : var(--text-secondary);
+                cursor  : pointer;
+                svg {
+                    display : none;
+                }
     
                 &:hover,
                 &.active {
@@ -170,16 +171,6 @@
                 }
             }
         }
-    }
-
-    &.no_bottom {
-        .categories_bottom_link {
-            display : none;
-        }
-    }
-
-    &.right {
-        right : 0;
     }
 }
 
@@ -216,8 +207,13 @@
                 padding : 0 20px;
                 width   : 100%;
                 .categories_item {
-                    padding       : 13px 10px;
-                    border-bottom : 1px solid var(--light-border);
+                    padding         : 13px 0;
+                    border-bottom   : 1px solid var(--light-border);
+                    display         : flex;
+                    justify-content : space-between;
+                    svg {
+                        display : block;
+                    }
                 }
                 &:last-child {
                     .categories_item {

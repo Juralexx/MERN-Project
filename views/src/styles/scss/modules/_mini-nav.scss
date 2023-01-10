@@ -115,7 +115,7 @@
     
             .bordered {
                 width         : 1px;
-                height        : 30px;
+                height        : 24px;
                 background    : var(--light-border);
                 margin : 0 10px;
             }
@@ -138,6 +138,7 @@
             height : 54px;
             .mini_nav-ul {
                 .mini_nav-li {
+                    min-width: 34px;
                     .mini_nav-a {
                         padding : 0;
                         .mini_nav-avatar {

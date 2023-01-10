@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import MiniNav from "./mini-nav/MiniNav";
-import { OutlinedButton } from "./tools/global/Button";
 import { useClickOutside } from "./tools/hooks/useClickOutside";
+import { TextButton } from "./tools/global/Button";
+import MiniNav from "./mini-nav/MiniNav";
+import NavbarToggle from "./tools/global/NavbarToggle";
 import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai'
 import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
 import { BiUser } from 'react-icons/bi'
 import { RiLoginCircleLine } from 'react-icons/ri'
 import { MdOutlineInsertChart } from 'react-icons/md'
 import { ImArrowLeft2 } from 'react-icons/im'
-import NavbarToggle from "./tools/global/NavbarToggle";
 
 const Navbar = ({ websocket, user, uid, onlineUsers }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
@@ -32,9 +32,11 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                     </div>
                                 </Link>
                                 <div className="hidden lg:flex ml-8">
-                                    <NavLink to="/add-project">
-                                        <OutlinedButton className="btn_icon_start"><AiOutlinePlus />Déposer un projet</OutlinedButton>
-                                    </NavLink>
+                                    <TextButton className="btn_icon_start">
+                                        <Link to="/add-project">
+                                            <AiOutlinePlus />Déposer un projet
+                                        </Link>
+                                    </TextButton>
                                 </div>
                             </div>
 
