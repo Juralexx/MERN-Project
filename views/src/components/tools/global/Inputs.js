@@ -129,31 +129,6 @@ export const DatePicker = (props) => {
     )
 }
 
-export const DoubleIconInput = (props) => {
-    const { text, type, value, defaultValue, onChange, onInput, onClick, readOnly, disabled, className, inputClassName, placeholder, startIcon, endIcon, name, id } = props
-    return (
-        <div className={`${className ? "double-icon-input " + className : "double-icon-input"}`}>
-            <input
-                className={inputClassName}
-                type={type}
-                name={name}
-                id={id}
-                placeholder={placeholder}
-                value={value}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                onInput={onInput}
-                onClick={onClick}
-                readOnly={readOnly}
-                disabled={disabled}
-            />
-            {startIcon && <div className="start_icon">{startIcon}</div>}
-            {text}
-            {endIcon && <div className="end-icon">{endIcon}</div>}
-        </div>
-    )
-}
-
 export const NumberInput = (props) => {
     const { value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, max } = props
     return (

@@ -14,35 +14,69 @@ import Messenger from '../messenger/Messenger'
 function Paths({ websocket, onlineUsers, user, uid }) {
     return (
         <BrowserRouter>
-            <Navbar websocket={websocket} user={user} uid={uid} onlineUsers={onlineUsers} />
+            <Navbar
+                websocket={websocket}
+                user={user}
+                uid={uid}
+                onlineUsers={onlineUsers}
+            />
             <Routes>
-                <Route path="/*" element={<Home websocket={websocket} user={user} />} />
-                <Route path=":pseudo" element={<MemberProfil />} />
+                <Route path="/*" element={
+                    <Home
+                        websocket={websocket}
+                        user={user}
+                    />
+                } />
+                <Route path=":pseudo" element={
+                    <MemberProfil />
+                } />
 
-                <Route path="login" element={<Login uid={uid} />} />
-                <Route path="register" element={<Register uid={uid} />} />
+                <Route path="login" element={
+                    <Login
+                        uid={uid}
+                    />
+                } />
+                <Route path="register" element={
+                    <Register
+                        uid={uid}
+                    />
+                } />
 
                 <Route path="projects/*" element={
                     <ProtectedRoute>
-                        <Dashboard user={user} websocket={websocket} />
+                        <Dashboard
+                            user={user}
+                            websocket={websocket}
+                        />
                     </ProtectedRoute>
                 } />
 
                 <Route path="add-project" element={
                     <ProtectedRoute>
-                        <AddProject user={user} websocket={websocket} />
+                        <AddProject
+                            user={user}
+                            websocket={websocket}
+                        />
                     </ProtectedRoute>
                 } />
 
                 <Route path="messenger/*" element={
                     <ProtectedRoute>
-                        <Messenger uid={uid} user={user} websocket={websocket} onlineUsers={onlineUsers} />
+                        <Messenger
+                            uid={uid}
+                            user={user}
+                            websocket={websocket}
+                            onlineUsers={onlineUsers}
+                        />
                     </ProtectedRoute>
                 } />
 
                 <Route path="profil/*" element={
                     <ProtectedRoute>
-                        <Profil user={user} websocket={websocket} />
+                        <Profil
+                            user={user}
+                            websocket={websocket}
+                        />
                     </ProtectedRoute>
                 } />
 

@@ -1,4 +1,11 @@
 .profil_container {
+    position     : relative;
+    width        : 100%;
+    height       : auto;
+    min-height   : 100%;
+    background   : var(--content);
+    margin-right : auto;
+    margin-left  : auto;
 
     .header {
         padding-bottom : 20px;
@@ -18,117 +25,92 @@
             color         : white;
             border-radius : 3px;
             flex          : 0 0 30px;
-
-            &.facebook {
-                background-color : var(--facebook);
-            }
-            &.instagram {
-                background-color : var(--instagram);
-            }
-            &.twitter {
-                background-color : var(--twitter);
-            }
-            &.snapchat {
-                background-color : var(--snapchat);
-            }
-            &.youtube {
-                background-color : var(--youtube);
-            }
-            &.twitch {
-                background-color : var(--twitch);
-            }
-            &.pinterest {
-                background-color : var(--pinterest);
-            }
-            &.linkedin {
-                background-color : var(--linkedin);
-            }
-            &.website {
-                background-color : var(--website);
-            }
         }
 
         a {
-            color : var(--primary);
+            &:hover {
+                color : var(--primary);
+            }
+        }
+    }
+}
+
+.profil-page {
+    .search_header {
+        position        : relative;
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+
+        h2 {
+            span {
+                font-size   : 18px;
+                color       : var(--text-secondary);
+                margin-left : 8px;
+            }
+        }
+
+        .icon-input {
+            width     : 40%;
+            max-width : unset;
+            input {
+                width : 100%;
+            }
         }
     }
 
-    .profil_page {
-        
-        .search_header {
-            position        : relative;
-            display         : flex;
-            align-items     : center;
-            justify-content : space-between;
+    .profil-page_body {
+        width                 : 100%;
+        margin-top            : 30px;
 
-            h2 {
-                span {
-                    font-size   : 18px;
-                    color       : var(--text-secondary);
-                    margin-left : 8px;
-                }
+        .profil-page_projects {
+            display               : grid;
+            grid-template-columns : repeat(3, 1fr);
+            grid-gap              : 10px;
+        }
+
+        .card {
+            width : auto;
+        }
+
+        .contact_card {
+            min-width     : 49.5%;
+            padding       : 10px;
+            margin-bottom : 10px;
+            border        : 1px solid var(--light-border);
+            border-radius : var(--rounded-sm);
+
+            .contact_card-left {
+                min-height    : 80px;
+                min-width     : 80px;
+                border-radius : 50%;
             }
+            .contact_card-right {
+                display         : flex;
+                justify-content : space-between;
+                align-items     : center;
+                padding-left    : 20px;
+                width           : 100%;
 
-            .icon-input {
-                width     : 40%;
-                max-width : unset;
-                input {
-                    width : 100%;
+                .pseudo {
+                    font-weight : 600;
+                    font-size   : 16px;
+                    color       : var(--text);
+                }
+
+                p {
+                    font-size : 12px;
+                    color     : var(--text-secondary);
                 }
             }
         }
 
-        .profil_page-body {
-            display         : flex;
-            justify-content : space-between;
-            width           : 100%;
-            margin-top      : 30px;
-            flex-wrap       : wrap;
+        .loading-container {
+            width   : 100%;
+            padding : 50px 0;
 
-            .contact_card {
-                min-width     : 49.5%;
-                padding       : 10px;
-                margin-bottom : 10px;
-                border        : 1px solid var(--light-border);
-                border-radius : var(--rounded-sm);
-
-                .contact_card-left {
-                    min-height    : 80px;
-                    min-width     : 80px;
-                    border-radius : 50%;
-                }
-                .contact_card-right {
-                    display         : flex;
-                    justify-content : space-between;
-                    align-items     : center;
-                    padding-left    : 20px;
-                    width           : 100%;
-
-                    .pseudo {
-                        font-weight : 600;
-                        font-size   : 16px;
-                        color       : var(--text);
-                    }
-
-                    p {
-                        font-size : 12px;
-                        color     : var(--text-secondary);
-                    }
-                }
-            }
-
-            .loading-container {
-                width   : 100%;
-                padding : 50px 0;
-
-                .icon-loading {
-                    margin  : 0 auto;
-                    height  : 70px;
-                    width   : 70px;
-                    color   : var(--primary);
-                    fill    : var(--primary);
-                    z-index : 100;
-                }
+            .icon-loading {
+                margin  : 0 auto;
             }
         }
     }

@@ -36,7 +36,7 @@ const Home = ({ websocket, user }) => {
                         byLikes: res.data.sort((a, b) => {
                             return parseInt(a.likers.length) > parseInt(b.likers.length) ? -1 : 1
                         }),
-                        byFollows: res.data.sort((a, b) => {
+                        byFollowings: res.data.sort((a, b) => {
                             return parseInt(a.followers.length) > parseInt(b.followers.length) ? -1 : 1
                         })
                     }))
@@ -50,7 +50,9 @@ const Home = ({ websocket, user }) => {
     /***** RECHERCHE *****/
 
     const [datas, setDatas] = useState({
+        query: "",
         category: "",
+        skills: "",
         location: [],
         recentLocations: [],
         aroundLocation: 0,
@@ -138,7 +140,7 @@ const Home = ({ websocket, user }) => {
                                     </div>
                                     <div className="swiper-inner">
                                         <ProjectsSwiper
-                                            projects={sortedProjects.byFollows}
+                                            projects={sortedProjects.byFollowings}
                                             isLoading={isLoading}
                                             websocket={websocket}
                                             user={user}
@@ -166,6 +168,7 @@ const Home = ({ websocket, user }) => {
                                 results={results}
                                 datas={datas}
                                 setDatas={setDatas}
+                                sortedProjects={sortedProjects}
                             />
                         } />
                     </>

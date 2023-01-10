@@ -41,13 +41,6 @@
     .content_nav {
         justify-content : flex-end;
         border          : none;
-        a {
-            padding     : 15px 20px;
-            font-weight : 400;
-        }
-
-        button {
-            margin-left : 20px;
-        }
+        margin-bottom   : 16px;
     }
 }

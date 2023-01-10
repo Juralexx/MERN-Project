@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { ClassicInput, DoubleIconInput, Textarea } from '../../tools/global/Inputs';
+import { ClassicInput, IconInput, Textarea } from '../../tools/global/Inputs';
 import { useClickOutside } from "../../tools/hooks/useClickOutside";
 import { BsCaretDownFill } from 'react-icons/bs'
 import { BiCategory } from 'react-icons/bi'
@@ -53,7 +53,7 @@ const Title = ({ title, setTitle, subtitle, setSubtitle, category, setCategory, 
                     <div className="content-form">
                         <p className="title full">Catégorie <span>Champ requis</span></p>
                         <div className="relative" ref={wrapperRef}>
-                            <DoubleIconInput className={`full ${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
+                            <IconInput className={`full ${checkErr("category")}`} readOnly placeholder="Catégorie" type="text" value={category} onClick={() => setDisplay(!display)} onChange={(e) => setCategory(e.target.value)} startIcon={<BiCategory />} endIcon={<BsCaretDownFill />} />
                             {display && (
                                 <CategoriesPicker className="no_bottom" open={display} setOpen={setDisplay} category={category} setCategory={setCategory} />
                             )}

@@ -143,7 +143,7 @@ const Projects = ({ projects }) => {
                 )}
                 {search && isResults.length === 0 &&
                     <div className="empty-array">
-                        <div><IoSearchOutline /></div>
+                        <IoSearchOutline />
                         <div>Aucun resultat ne correspond à votre recherche</div>
                     </div>
                 }

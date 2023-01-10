@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { removeAccents } from "../../Utils"
 
 /**
  * One level search function : array.filter(element => regexp.test(element[value]))
@@ -17,7 +18,7 @@ export function useOneLevelSearch(array, param) {
 
         if (!query || query.trim() === "") { return }
         if (query.length >= 2) {
-            const response = array.filter(element => regexp.test(element[param]))
+            const response = array.filter(element => regexp.test(removeAccents(element[param])))
             setResults(response)
             setSearch(true)
             if (isEmpty) {

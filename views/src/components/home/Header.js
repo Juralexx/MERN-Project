@@ -44,6 +44,8 @@ const Header = ({ user, search, datas, setDatas }) => {
                             placeholder="Rechercher un projet"
                             type="search"
                             icon={<AiOutlineSearch />}
+                            defaultValue=""
+                            onChange={e => setDatas(data => ({ ...data, query: e.target.value }))}
                         />
                         <div className="relative row my-3">
                             <div className="col-12 col-sm-6 sm:!pr-1 sm:pb-0 pb-3" ref={categoriesRef}>
@@ -55,8 +57,8 @@ const Header = ({ user, search, datas, setDatas }) => {
                                     icon={<AiOutlineUnorderedList />}
                                     endIcon={<IoIosArrowDown />}
                                     onClick={() => setOpenCategories(!openCategories)}
-                                    onChange={() => setDatas(data => ({ ...data, category: datas.category }))}
                                     value={datas.category}
+                                    onChange={() => setDatas(data => ({ ...data, category: datas.category }))}
                                 />
                                 <CategoriesPicker
                                     open={openCategories}
@@ -68,8 +70,10 @@ const Header = ({ user, search, datas, setDatas }) => {
                                 <IconInput
                                     className="is_start_icon"
                                     placeholder="Métier"
-                                    type="text"
+                                    type="search"
                                     icon={<AiOutlineUser />}
+                                    defaultValue=""
+                                    onChange={e => setDatas(data => ({ ...data, skills: e.target.value }))}
                                 />
                             </div>
                         </div>
@@ -108,7 +112,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                                 </div>
                             </div>
                         }
-                        <div className="btn-container flex justify-between items-center pt-3">
+                        <div className={`btn-container flex justify-between items-center ${!moreFilters ? 'pt-3' : 'pt-0'}`}>
                             <div className="hidden sm:flex">
                                 <TextButton className="btn_icon_start primary mr-2" onClick={() => setOpenMapModal(true)}>
                                     <GiFrance />Voir la carte
@@ -119,7 +123,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                             </div>
                             <div className="flex sm:hidden">
                                 <IconToggle className="primary mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
-                                <IconToggle className="primary mr-2" icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
+                                <IconToggle className="primary mr-4" icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
                             </div>
                             <Button className="btn_icon_end" onClick={search}>
                                 Rechercher<MdOutlineDoubleArrow />
