@@ -379,6 +379,19 @@ export const isEmpty = (value) => {
 }
 
 /**
+ * 
+ */
+
+export const fullImage = (props) => {
+    return ({
+        backgroundImage: `url(${props})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover"
+    })
+}
+
+/**
  * Check file extension
  */
 

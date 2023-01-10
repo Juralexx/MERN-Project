@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { avatar } from '../../tools/hooks/useAvatar'
+import { fullImage } from '../../Utils'
 
 const UserCard = ({ project }) => {
     const [user, setUser] = useState(null)
@@ -18,7 +18,7 @@ const UserCard = ({ project }) => {
     return (
         user !== null &&
         <div className="user-card">
-            <div className="user-avatar" style={avatar(user.picture)}></div>
+            <div className="user-avatar" style={fullImage(user.picture)}></div>
             <div className="user-title">{user.pseudo}</div>
             <div className="user-informations">
                 <p><span>•</span> {user.created_projects.length} projets créés</p>

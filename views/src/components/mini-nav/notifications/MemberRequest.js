@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import formatDistance from 'date-fns/formatDistance'
 import fr from 'date-fns/locale/fr'
-import { avatar } from "../../tools/hooks/useAvatar";
 import { Button } from '../../tools/global/Button';
 import { acceptProjectMemberRequest, refuseProjectMemberRequest } from '../../tools/functions/member';
 import { deleteNotif } from '../../tools/functions/notifications';
 import { ImCross } from 'react-icons/im'
+import { fullImage } from '../../Utils'
 
 const MemberRequest = ({ notification, user, websocket, onClick }) => {
     const [hovered, setHovered] = useState(false)
@@ -18,7 +18,7 @@ const MemberRequest = ({ notification, user, websocket, onClick }) => {
             <div className="flex relative" onClick={onClick}>
                 <div className="mr-3">
                     <NavLink to={'/' + notification.requester}>
-                        <div className="w-14 h-14 rounded-full" style={avatar(notification.requesterPicture)}></div>
+                        <div className="w-14 h-14 rounded-full" style={fullImage(notification.requesterPicture)}></div>
                     </NavLink>
                 </div>
                 <div className="right">

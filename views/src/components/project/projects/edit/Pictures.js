@@ -3,7 +3,7 @@ import React from 'react'
 import { MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto, MdClear } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
 import { deleteProjectPictures } from '../../../../actions/project.action'
-import { coverPicture } from '../../../tools/hooks/useAvatar'
+import { fullImage } from '../../../Utils'
 
 const Pictures = ({ files, setFiles, pictures, setPictures, projectId }) => {
     const dispatch = useDispatch()
@@ -52,11 +52,11 @@ const Pictures = ({ files, setFiles, pictures, setPictures, projectId }) => {
                         <div className="img-preview-container" key={key}>
                             {files.length > key ? (
                                 typeof files[key] !== 'object' && files[key] !== null ? (
-                                    <div className="img-preview" style={coverPicture(files[key])}>
+                                    <div className="img-preview" style={fullImage(files[key])}>
                                         <div className="delete-btn" onClick={() => removePicture(key)}><MdClear /></div>
                                     </div>
                                 ) : (
-                                    <div className="img-preview" style={coverPicture(URL.createObjectURL(files[key]))}>
+                                    <div className="img-preview" style={fullImage(URL.createObjectURL(files[key]))}>
                                         <div className="delete-btn" onClick={() => removePicture(key)}><MdClear /></div>
                                     </div>
                                 )

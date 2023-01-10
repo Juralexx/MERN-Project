@@ -11,11 +11,10 @@ import { useEmojis } from './useEmojis';
 import { useClickOutside } from '../../tools/hooks/useClickOutside';
 import { useCheckLocation } from '../functions/useCheckLocation';
 import { useLongPress } from '../../tools/hooks/useLongPress';
-import { avatar } from '../../tools/hooks/useAvatar';
 import { SmallAvatar } from '../../tools/global/Avatars';
 import { removeMessage } from '../functions/actions';
 import { convertDeltaToHTML, convertDeltaToStringNoHTML, getUserPseudo, returnMessageFiles } from '../functions/function';
-import { dateParserWithoutYear, getHourOnly } from '../../Utils';
+import { dateParserWithoutYear, fullImage, getHourOnly } from '../../Utils';
 ;
 
 const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
@@ -43,7 +42,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
         >
             <div className="message">
                 <div className="message-left">
-                    <div className="message-img" style={avatar(message.sender_picture)}></div>
+                    <div className="message-img" style={fullImage(message.sender_picture)}></div>
                 </div>
                 <div className="message-right">
                     <div className="message-right-top">
@@ -89,7 +88,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
                             {message.shared &&
                                 <div className="shared-message">
                                     <div className="message-top">
-                                        <div className="message-img" style={avatar(message.shared.sender_picture)}></div>
+                                        <div className="message-img" style={fullImage(message.shared.sender_picture)}></div>
                                         <div className="message-infos">
                                             {getUserPseudo(currentChat.members, message.shared.sender, message.shared.sender_pseudo)}
                                             <span>{getHourOnly(new Date(message.shared.createdAt))} {message.shared.modified && "(modifié)"}</span>

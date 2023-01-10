@@ -1,8 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { dateParser } from '../../Utils';
+import { dateParser, fullImage } from '../../Utils';
 import { stateToBackground, stateToString } from '../../project/functions';
-import { projectPicture } from '../hooks/useAvatar';
 import FavoriteButton from './FavoriteButton'
 import FollowersButton from './FollowersButton'
 import LikersButton from './LikersButton'
@@ -12,7 +11,7 @@ import { AiOutlineUnorderedList } from 'react-icons/ai';
 const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, className }) => {
     return (
         <div className={className ? 'card ' + className : 'card'}>
-            <div className="card-img" style={projectPicture(`${process.env.REACT_APP_API_URL}files/img/paysage-3.jpg`)}></div>
+            <div className="card-img" style={fullImage(`${process.env.REACT_APP_API_URL}files/img/paysage-3.jpg`)}></div>
             <div className={`state ${stateToBackground(element)}`}>
                 {stateToString(element.state)}
             </div>

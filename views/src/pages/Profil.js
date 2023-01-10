@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { avatar, coverPicture } from "../components/tools/hooks/useAvatar";
+import { addClass, fullImage } from "../components/Utils";
 import UploadCoverImg from "../components/profil/uploads/UploadCoverImg";
 import UploadImg from "../components/profil/uploads/UploadImg";
 import FooterLight from '../components/FooterLight'
@@ -9,7 +9,6 @@ import Edit from "../components/profil/Edit";
 import Friends from "../components/profil/Friends";
 import Projects from "../components/profil/Projects";
 import ProfilCard from "../components/profil/ProfilCard";
-import { addClass } from "../components/Utils";
 
 const Profil = ({ user, websocket }) => {
     const location = useLocation()
@@ -18,16 +17,12 @@ const Profil = ({ user, websocket }) => {
         <>
             <div className="profil_container">
                 <div className="profil_header">
-                    <div className="profil_cover_img" style={coverPicture(user.cover_picture)}>
-                        <UploadCoverImg
-                            user={user}
-                        />
+                    <div className="profil_cover_img" style={fullImage(user.cover_picture)}>
+                        <UploadCoverImg user={user} />
                     </div>
                     <div className="container relative">
-                        <div className="avatar" style={avatar(user.picture)}>
-                            <UploadImg
-                                user={user}
-                            />
+                        <div className="avatar" style={fullImage(user.picture)}>
+                            <UploadImg user={user} />
                         </div>
                         <div className="content_nav">
                             <Link to="/profil" className={addClass(location.pathname === '/profil', 'active')}>
@@ -50,26 +45,16 @@ const Profil = ({ user, websocket }) => {
                         {user &&
                             <Routes>
                                 <Route index element={
-                                    <Projects
-                                        user={user}
-                                        websocket={websocket}
-                                    />
+                                    <Projects user={user} websocket={websocket} />
                                 } />
                                 <Route path="about" element={
-                                    <About
-                                        user={user}
-                                    />
+                                    <About user={user} />
                                 } />
                                 <Route path="contacts" element={
-                                    <Friends
-                                        user={user}
-                                        websocket={websocket}
-                                    />
+                                    <Friends user={user} websocket={websocket} />
                                 } />
                                 <Route path="edit/*" element={
-                                    <Edit
-                                        user={user}
-                                    />
+                                    <Edit user={user} />
                                 } />
                                 <Route path="*" element={<Navigate to="/profil" />} />
                             </Routes>

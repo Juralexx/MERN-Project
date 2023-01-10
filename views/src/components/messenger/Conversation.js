@@ -4,8 +4,7 @@ import { useClickOutside } from '../tools/hooks/useClickOutside';
 import { useLongPress } from '../tools/hooks/useLongPress';
 import ToolsMenu from '../tools/global/ToolsMenu';
 import MobileMenu from '../tools/global/MobileMenu';
-import { avatar } from '../tools/hooks/useAvatar';
-import { addClass } from '../Utils';
+import { addClass, fullImage } from '../Utils';
 import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
 import { HiLogout, HiOutlineCheck } from 'react-icons/hi';
 import { IoArrowRedo, IoTrashBin } from 'react-icons/io5';
@@ -67,14 +66,14 @@ const Conversation = ({ conversation, newMessage, notification }) => {
                 <div className="conversation-img-container">
                     {conversation.type === 'group' ? (
                         conversation.picture ? (
-                            <div className="conversation-img" style={avatar(conversation.picture)}></div>
+                            <div className="conversation-img" style={fullImage(conversation.picture)}></div>
                         ) : (
                             members.slice(0, 2).map((element, key) => {
-                                return <div className="conversation-group-img" key={key} style={avatar(element.picture)}></div>
+                                return <div className="conversation-group-img" key={key} style={fullImage(element.picture)}></div>
                             })
                         )
                     ) : (
-                        <div className="conversation-img" style={avatar(members[0].picture)}></div>
+                        <div className="conversation-img" style={fullImage(members[0].picture)}></div>
                     )}
                 </div>
                 <div className="conversation-infos">

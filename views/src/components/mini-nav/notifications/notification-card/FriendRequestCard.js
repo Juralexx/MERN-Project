@@ -1,8 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { avatar } from '../../../tools/hooks/useAvatar'
 import { acceptRequest, refuseRequest } from '../../../tools/functions/friend';
-import { addClass } from '../../../Utils';
+import { addClass, fullImage } from '../../../Utils';
 import { FaUserFriends } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5';
 
@@ -21,7 +20,7 @@ const FriendRequestCard = ({ notification, websocket, user, setSend }) => {
             {!notification.state &&
                 <>
                     <div className="notification-content mt-2">
-                        <div className="left" style={avatar(notification.requesterPicture)}></div>
+                        <div className="left" style={fullImage(notification.requesterPicture)}></div>
                         <div className="right">
                             <div className="text-[16px] leading-4"><b>{notification.requester}</b></div>
                             <div className="content">vous à envoyer une invitation</div>
@@ -35,7 +34,7 @@ const FriendRequestCard = ({ notification, websocket, user, setSend }) => {
             }
             {notification.state === "refused" &&
                 <div className="notification-content mt-2">
-                    <div className="left" style={avatar(notification.requesterPicture)}></div>
+                    <div className="left" style={fullImage(notification.requesterPicture)}></div>
                     <div className="right">
                         <div className="content">Vous avez refuser le demande d'invitation de {notification.requester}</div>
                     </div>
@@ -43,7 +42,7 @@ const FriendRequestCard = ({ notification, websocket, user, setSend }) => {
             }
             {notification.state === "accepted" &&
                 <div className="notification-content mt-2">
-                    <div className="left" style={avatar(notification.requesterPicture)}></div>
+                    <div className="left" style={fullImage(notification.requesterPicture)}></div>
                     <div className="right">
                         <div className="content">Vous et {notification.requester} êtes maintenant ami !</div>
                     </div>

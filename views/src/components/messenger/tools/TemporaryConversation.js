@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import { IconToggle } from '../../tools/global/Button';
-import { avatar } from '../../tools/hooks/useAvatar';
 import { returnMembers } from '../functions/function';
-import { addClass } from '../../Utils';
+import { addClass, fullImage } from '../../Utils';
 import { IoClose } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { MessengerContext } from '../../AppContext';
@@ -17,7 +16,7 @@ const TemporaryConversation = ({ temporaryConv, setTemporaryConv, conversations 
                     <div className="conversation-img-container">
                         {temporaryConv.members.slice(0, 3).map((element, key) => {
                             return (
-                                <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                                <div className="conversation-img" key={key} style={fullImage(element.picture)}></div>
                             )
                         })}
                     </div>

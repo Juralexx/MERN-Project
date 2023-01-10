@@ -3,8 +3,8 @@ import axios from 'axios'
 import { acceptMemberRequest, refuseMemberRequest } from '../../../../actions/project.action'
 import { useDispatch } from 'react-redux'
 import { Button } from '../../../tools/global/Button'
-import { avatar } from '../../../tools/hooks/useAvatar'
 import { FaUserFriends } from 'react-icons/fa'
+import { fullImage } from '../../../Utils'
 
 const MemberRequestCard = ({ notification, websocket, user }) => {
     const [accepted, setAccepted] = useState(false)
@@ -45,7 +45,7 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
                             <div className="sender">{notification.requester}</div>
                             <div className="content">{notification.requester} vous invite à rejoindre le project :<br />{notification.projectTitle}</div>
                         </div>
-                        <div className="right" style={avatar(notification.requesterPicture)}></div>
+                        <div className="right" style={fullImage(notification.requesterPicture)}></div>
                     </div>
                     <div className="flex bottom">
                         <Button
@@ -66,7 +66,7 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
                             <div className="sender">{notification.requester}</div>
                             <div className="content">Vous avez rejoint le project {notification.projectTitle} !</div>
                         </div>
-                        <div className="right" style={avatar(notification.requesterPicture)}></div>
+                        <div className="right" style={fullImage(notification.requesterPicture)}></div>
                     </div>
                 </>
             )}
@@ -77,7 +77,7 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
                             <div className="sender">{notification.requester}</div>
                             <div className="content">Vous avez refuser le demande d'invitation de {notification.requester}</div>
                         </div>
-                        <div className="right" style={avatar(notification.requesterPicture)}></div>
+                        <div className="right" style={fullImage(notification.requesterPicture)}></div>
                     </div>
                 </>
             )}

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from 'react-router-dom'
-import { dateParser } from "../components/Utils";
-import { avatar, coverPicture } from "../components/tools/hooks/useAvatar";
+import { dateParser, fullImage } from "../components/Utils";
 import { replaceHTTP, returnNetworkSVG } from "../components/tools/functions/networks";
 import Footer from "../components/Footer";
 import { FaUserShield } from "react-icons/fa";
@@ -30,9 +29,9 @@ const UserProfil = () => {
     return (
         <div className="profil_container">
             <div className="profil_header">
-                <div className="profil_cover_img" style={coverPicture(user?.cover_picture)}></div>
+                <div className="profil_cover_img" style={fullImage(user?.cover_picture)}></div>
                 <div className="container relative">
-                    <div className="avatar" style={avatar(user?.picture)}></div>
+                    <div className="avatar" style={fullImage(user?.picture)}></div>
                 </div>
             </div>
             <div className="container mt-8 pb-[100px]">

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { avatar } from '../../../tools/hooks/useAvatar'
-import { addClass } from '../../../Utils'
+import { addClass, fullImage } from '../../../Utils'
 import { convertDeltaToHTML } from '../../../messenger/functions/function'
 import { setLastMessageSeen } from '../../../../actions/messenger.action'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
@@ -45,7 +44,7 @@ const MessageCard = ({ notification, user, setSend }) => {
                 <div className="close-btn"><IoClose /></div>
             </div>
             <div className="notification-content">
-                <div className="left" style={avatar(notification.sender_picture)}></div>
+                <div className="left" style={fullImage(notification.sender_picture)}></div>
                 <div className="right">
                     <div className="sender">{notification.sender_pseudo}</div>
                     <div className="content" dangerouslySetInnerHTML={convertDeltaToHTML(notification)}></div>

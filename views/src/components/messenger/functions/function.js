@@ -1,8 +1,7 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, dateParserWithoutYear, removeHTMLMarkers } from '../../Utils'
-import { coverPicture } from '../../tools/hooks/useAvatar';
+import { charSetToChar, dateParserWithoutYear, fullImage, removeHTMLMarkers } from '../../Utils'
 import VideoJS from '../message/Video';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { MdPlayCircleOutline } from 'react-icons/md';
@@ -164,7 +163,7 @@ export const returnURLsInText = (text) => {
 export const returnEditorFiles = (file) => {
     if (file.type.includes('image')) {
         return (
-            <div className="file-img-preview" style={coverPicture(URL.createObjectURL(file))}></div>
+            <div className="file-img-preview" style={fullImage(URL.createObjectURL(file))}></div>
         )
     } else if (file.type.includes('video')) {
         return (

@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { coverPicture } from '../../tools/hooks/useAvatar';
 import NoContent from './NoContent';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdOutlinePhotoLibrary } from 'react-icons/md';
+import { fullImage } from '../../Utils';
 
 const GalleryCard = ({ project, user }) => {
     const [swiper, setSwiper] = useState()
@@ -48,7 +48,7 @@ const GalleryCard = ({ project, user }) => {
                         {project.pictures.map((element, key) => {
                             return (
                                 <SwiperSlide key={key} className="gallery-slide">
-                                    <div style={coverPicture(element)}></div>
+                                    <div style={fullImage(element)}></div>
                                 </SwiperSlide>
                             )
                         })}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { avatar } from "../../tools/hooks/useAvatar";
+import { fullImage } from "../../Utils";
 import { Button } from "../global/Button";
 
 const HoverModal = ({ user, style, open }) => {
@@ -11,7 +11,7 @@ const HoverModal = ({ user, style, open }) => {
             <div className="hovered-modal_container">
                 <div className="hovered-modal_head">
                     <div className="left">
-                        <Link to={"/" + user.pseudo}><div className="hovered-modal_avatar" style={avatar(user.picture)}></div></Link>
+                        <Link to={"/" + user.pseudo}><div className="hovered-modal_avatar" style={fullImage(user.picture)}></div></Link>
                     </div>
                     <div className="right">
                         <div className="hovered_card-name">

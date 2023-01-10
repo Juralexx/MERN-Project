@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
-import { avatar } from '../../tools/hooks/useAvatar'
-import { dateParser } from '../../Utils'
+import { dateParser, fullImage } from '../../Utils'
 import { leaveProject } from '../../tools/functions/member';
 import Breadcrumb from './Breadcrumb';
 import { IoCalendarClearOutline, IoLocationOutline } from 'react-icons/io5'
@@ -17,7 +16,7 @@ const Header = ({ project, websocket, user, isManager }) => {
                 {/*<Breadcrumb project={project} />*/}
                 <div className="dashboard-header-top">
                     <div className="dashboard-header_left">
-                        <div className="dashboard-header-img" style={avatar(project.pictures[0])}></div>
+                        <div className="dashboard-header-img" style={fullImage(project.pictures[0])}></div>
                         <div className="dashboard-header-content">
                             <h1>{project.title}</h1>
                             <div className="dashboard-header-content-infos">

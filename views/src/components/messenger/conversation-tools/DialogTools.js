@@ -6,7 +6,6 @@ import AddMembers from './AddMembers'
 import DialogCustomization from './DialogCustomization'
 import { IconToggle } from '../../tools/global/Button'
 import { returnMembers } from '../functions/function'
-import { avatar } from '../../tools/hooks/useAvatar'
 import { setFavorite, setUnfavorite } from '../functions/actions'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { TiStarOutline, TiStar } from 'react-icons/ti'
@@ -14,6 +13,7 @@ import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
 import { IoClose } from 'react-icons/io5'
+import { fullImage } from '../../Utils'
 
 const DialogTools = ({ open, setOpen, conversation, members }) => {
     const { uid, user, dispatch, md } = useContext(MessengerContext)
@@ -32,7 +32,7 @@ const DialogTools = ({ open, setOpen, conversation, members }) => {
                 <IconToggle icon={<IoClose />} className="absolute right-2 top-1" onClick={() => setOpen({ open: false, displayed: "contacts" })} />
                 <div className="conversation-tools-header">
                     <div className="conversation-img-container">
-                        <div className="conversation-img" style={avatar(members[0].picture)}></div>
+                        <div className="conversation-img" style={fullImage(members[0].picture)}></div>
                     </div>
                     <div className="flex items-center pb-3">
                         <div className="conversation-name">{returnMembers(members)}</div>

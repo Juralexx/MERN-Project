@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { dateParser } from '../../Utils'
-import { projectPicture } from '../../tools/hooks/useAvatar'
+import { dateParser, fullImage } from '../../Utils'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import Share from './Share'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../../actions/project.action'
@@ -43,7 +42,7 @@ const Header = ({ user, project }) => {
                 </div>
                 <div className="header-inner row">
                     <div className="col-12 col-lg-7 z-10">
-                        <div className="project-picture" style={projectPicture(project.pictures[0])}></div>
+                        <div className="project-picture" style={fullImage(project.pictures[0])}></div>
                         <div className="project-infos">
                             <Link to={"/" + project.posterPseudo} className="flex items-center bold ml-2">
                                 <MediumAvatar pic={project.posterAvatar} className="mr-2" />

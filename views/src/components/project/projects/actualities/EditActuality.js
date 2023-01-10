@@ -7,8 +7,7 @@ import EditorToolbar, { formats, modules } from '../../../tools/editor/EditorToo
 import { Button, TextButton } from '../../../tools/global/Button'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
-import { coverPicture } from '../../../tools/hooks/useAvatar'
-import { removeAccents } from '../../../Utils'
+import { fullImage, removeAccents } from '../../../Utils'
 import { updateActuality } from '../../../../actions/project.action'
 import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
 
@@ -181,13 +180,13 @@ const EditActuality = ({ project }) => {
                         <div className="img-preview-container" key={key}>
                             {files.length > key ? (
                                 typeof files[key] !== 'object' && files[key] !== null ? (
-                                    <div className="img-preview" style={coverPicture(files[key])}>
+                                    <div className="img-preview" style={fullImage(files[key])}>
                                         <div className="delete-btn" onClick={() => removePicture(key)}>
                                             <MdClear />
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="img-preview" style={coverPicture(URL.createObjectURL(files[key]))}>
+                                    <div className="img-preview" style={fullImage(URL.createObjectURL(files[key]))}>
                                         <div className="delete-btn" onClick={() => removePicture(key)}>
                                             <MdClear />
                                         </div>

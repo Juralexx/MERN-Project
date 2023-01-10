@@ -13,12 +13,12 @@ import TemporaryConversation from './tools/TemporaryConversation';
 import Tooltip from '../tools/global/Tooltip';
 import { IconInput } from '../tools/global/Inputs';
 import { IconToggle } from '../tools/global/Button';
-import { avatar } from '../tools/hooks/useAvatar';
 import { ConversationLoader, OnlineUserMobileLoader } from './tools/Loaders';
 import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
 import { FaCaretDown } from 'react-icons/fa';
 import { BiSearchAlt } from 'react-icons/bi';
 import { HiMenuAlt3 } from 'react-icons/hi';
+import { fullImage } from '../Utils';
 
 const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, newMessage, notification, setRightbar }) => {
     const { friendsArr } = useContext(MessengerContext)
@@ -63,7 +63,7 @@ const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversat
                             online.map((element, key) => {
                                 return (
                                     <SwiperSlide key={key} className="online-user online">
-                                        <div className="online-user-img" style={avatar(element.picture)}></div>
+                                        <div className="online-user-img" style={fullImage(element.picture)}></div>
                                         <div className="online-user-pseudo">{element.pseudo}</div>
                                     </SwiperSlide>
                                 )
@@ -73,7 +73,7 @@ const MobileMenu = ({ fetched, fetchedFriends, onlineUsers, favorites, conversat
                             offline.map((element, key) => {
                                 return (
                                     <SwiperSlide key={key} className="online-user offline">
-                                        <div className="online-user-img" style={avatar(element.picture)}></div>
+                                        <div className="online-user-img" style={fullImage(element.picture)}></div>
                                         <div className="online-user-pseudo">{element.pseudo}</div>
                                     </SwiperSlide>
                                 )

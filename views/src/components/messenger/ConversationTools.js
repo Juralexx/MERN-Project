@@ -12,8 +12,7 @@ import { OnlineUserLoader } from './tools/Loaders';
 import { IconInput } from '../tools/global/Inputs';
 import { IconToggle } from '../tools/global/Button';
 import { isConversation } from './functions/function';
-import { avatar } from '../tools/hooks/useAvatar';
-import { addClass } from '../Utils';
+import { addClass, fullImage } from '../Utils';
 import { BiSearchAlt } from 'react-icons/bi';
 import { IoArrowRedo, IoClose } from 'react-icons/io5';
 import { MdOutlineMessage } from 'react-icons/md';
@@ -82,7 +81,7 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, members, conversations
                                                 return (
                                                     <div className={`online-users online ${isInResults(friendsArr, "block")}`} key={key}>
                                                         <div className="online-user">
-                                                            <div className="online-user-img" style={avatar(element.picture)}></div>
+                                                            <div className="online-user-img" style={fullImage(element.picture)}></div>
                                                             <div className="online-user-name">
                                                                 <div className="online-user-pseudo">{element.pseudo}</div>
                                                                 <div className="online-user-status"><em>Actif</em></div>
@@ -104,7 +103,7 @@ const ConversationTools = ({ onlineUsers, fetchedFriends, members, conversations
                                                 return (
                                                     <div className={`online-users offline ${isInResults(friendsArr, "block")}`} key={key}>
                                                         <div className="online-user">
-                                                            <div className="online-user-img" style={avatar(element.picture)}></div>
+                                                            <div className="online-user-img" style={fullImage(element.picture)}></div>
                                                             <div className="online-user-name">
                                                                 <div className="online-user-pseudo">{element.pseudo}</div>
                                                                 <div className="online-user-status"><em>Déconnecté</em></div>

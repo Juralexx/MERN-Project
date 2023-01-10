@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDropzone } from 'react-dropzone';
-import { coverPicture } from '../../tools/hooks/useAvatar'
 import { IoMdCloudDownload } from 'react-icons/io';
 import { MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto, MdClear, MdOutlineFileUpload } from 'react-icons/md'
 import { IoTrash } from 'react-icons/io5';
+import { fullImage } from '../../Utils';
 
 const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
 
@@ -37,7 +37,7 @@ const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
                         </div>
                     ) : (
                         <div className="img-displayer" >
-                            <div className="main-img" style={coverPicture(URL.createObjectURL(mainPic[0]))}></div>
+                            <div className="main-img" style={fullImage(URL.createObjectURL(mainPic[0]))}></div>
                             <div className="main-img-btns">
                                 <button {...getRootProps()}><input {...getInputProps()} name="files" /><MdOutlineFileUpload /></button>
                                 <button onClick={() => setMainPic([])}><IoTrash /></button>
@@ -83,7 +83,7 @@ const Pictures = ({ mainPic, setMainPic, files, setFiles }) => {
                     return (
                         <div className="img-preview-container" key={key}>
                             {files.length > key ? (
-                                <div className="img-preview" style={coverPicture(URL.createObjectURL(files[key]))}>
+                                <div className="img-preview" style={fullImage(URL.createObjectURL(files[key]))}>
                                     <div className="delete-btn" onClick={() => removePicture(key)}><MdClear /></div>
                                 </div>
                             ) : (

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { addClass } from '../../Utils'
-import { avatar } from '../../tools/hooks/useAvatar'
+import { addClass, fullImage } from '../../Utils'
 import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
 import { BiTask } from 'react-icons/bi'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
@@ -50,7 +49,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                                 <NavLink to={`${element.URLID}/${element.URL}`} className={isThisActive} onClick={() => setReduced(true)}>
                                     <div className={`sidebar-title ${addClass(reduced && !hovered, "reduced")}`} onClick={() => setSubmenu(key)}>
                                         <div className="sidebar-title-inner">
-                                            <div className="sidebar-img" style={avatar(element.pictures[0])}></div>
+                                            <div className="sidebar-img" style={fullImage(element.pictures[0])}></div>
                                             <div className={`sidebar-name ${addClass(reduced && !hovered, "reduced")} one_line`}>{element.title}</div>
                                         </div>
                                         <div className={`${reduced && !hovered ? "hidden" : ""}`}><IoIosArrowForward /></div>
@@ -95,7 +94,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
             </div>
             {user &&
                 <div className={`sidebar-bottom ${addClass(reduced && !hovered, "reduced")}`}>
-                    <div className="sidebar-bottom-avatar" style={avatar(user.picture)}></div>
+                    <div className="sidebar-bottom-avatar" style={fullImage(user.picture)}></div>
                     <div className="sidebar-bottom-pseudo">{user.pseudo}</div>
                 </div>
             }

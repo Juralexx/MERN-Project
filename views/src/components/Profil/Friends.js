@@ -5,9 +5,8 @@ import { IconInput } from '../tools/global/Inputs'
 import { OvalLoader } from '../tools/global/Loader'
 import ToolsMenu from '../tools/global/ToolsMenu'
 import Warning from '../tools/global/Warning'
-import { coverPicture } from '../tools/hooks/useAvatar'
 import { removeFriend } from '../tools/functions/friend'
-import { dateParser } from '../Utils'
+import { dateParser, fullImage } from '../Utils'
 import { BiSearchAlt } from 'react-icons/bi'
 import { IoArrowRedo, IoTrashBin } from 'react-icons/io5'
 import { MdOutlineMessage } from 'react-icons/md'
@@ -63,7 +62,7 @@ const Friends = ({ user, websocket }) => {
                                         key={key}
                                         style={{ display: search.state ? (search.results.includes(element) ? "flex" : "none") : "flex" }}
                                     >
-                                        <div className="contact_card-left" style={coverPicture(element.picture)}></div>
+                                        <div className="contact_card-left" style={fullImage(element.picture)}></div>
                                         <div className="contact_card-right">
                                             <div className="card-infos">
                                                 <Link to={"/" + element.pseudo} className="pseudo">{element.pseudo}</Link>

@@ -6,8 +6,7 @@ import Warning from '../../tools/global/Warning'
 import ToolsMenu from '../../tools/global/ToolsMenu'
 import { SmallLoader } from '../tools/Loaders'
 import { IconInput } from '../../tools/global/Inputs'
-import { coverPicture } from '../../tools/hooks/useAvatar'
-import { addClass, dateParser, download } from '../../Utils'
+import { addClass, dateParser, download, fullImage } from '../../Utils'
 import { deleteFiles } from '../functions/actions'
 import { BiSearchAlt } from 'react-icons/bi'
 import { MdFileDownload } from 'react-icons/md'
@@ -62,7 +61,7 @@ const Files = ({ conversation, files, setFiles }) => {
                             <div className="conversation-medias custom-scrollbar">
                                 {medias.map((file, key) => {
                                     return (
-                                        <div className={`${isInResults(file, "block")} conversation-medias-item`} style={coverPicture(file.url)} key={key}>
+                                        <div className={`${isInResults(file, "block")} conversation-medias-item`} style={fullImage(file.url)} key={key}>
 
                                             <ToolsMenu placement="bottom" btnClassName="bg-default" mobile mobileFull>
                                                 <div className="tools_choice"><IoArrowRedo /><a href={file.url} rel="noreferrer" target="_blank">Ouvrir</a></div>

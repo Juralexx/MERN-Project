@@ -5,10 +5,9 @@ import { Button } from '../../../tools/global/Button'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
 import EditorToolbar, { formats, modules } from '../../../tools/editor/EditorToolbar'
-import { coverPicture } from '../../../tools/hooks/useAvatar'
 import { FaCheck } from 'react-icons/fa'
 import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
-import { randomNbLtID, removeAccents } from '../../../Utils'
+import { fullImage, randomNbLtID, removeAccents } from '../../../Utils'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { createActuality } from '../../../../actions/project.action'
@@ -148,7 +147,7 @@ const AddActuality = ({ project, user }) => {
                         return (
                             <div className="img-preview-container" key={key}>
                                 {files.length > key ? (
-                                    <div className="img-preview" style={coverPicture(URL.createObjectURL(files[key]))}>
+                                    <div className="img-preview" style={fullImage(URL.createObjectURL(files[key]))}>
                                         <div className="delete-btn" onClick={() => removePicture(key)}><MdClear /></div>
                                     </div>
                                 ) : (

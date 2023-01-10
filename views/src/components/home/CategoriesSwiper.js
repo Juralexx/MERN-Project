@@ -3,8 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { coverPicture } from '../tools/hooks/useAvatar';
 import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im';
+import { fullImage } from '../Utils';
 
 const CategoriesSwiper = () => {
     const [swiper, setSwiper] = useState()
@@ -72,7 +72,7 @@ const CategoriesSwiper = () => {
                     {categories.map((element, key) => {
                         return (
                             <SwiperSlide key={key} className="small_slide">
-                                <div className="small_slide_card" style={coverPicture(element.url)}>
+                                <div className="small_slide_card" style={fullImage(element.url)}>
                                     <p>{element.name}</p>
                                 </div>
                             </SwiperSlide>

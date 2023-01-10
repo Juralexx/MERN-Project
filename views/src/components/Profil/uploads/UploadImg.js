@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AvatarEditor from 'react-avatar-editor'
 import { deleteProfilPicture, uploadProfilPicture } from "../../../actions/user.action.upload";
-import { avatar } from "../../tools/hooks/useAvatar";
 import Modal from '../../tools/global/Modal'
 import { Button, IconToggle, TextButton } from "../../tools/global/Button";
 import { MdPhotoCamera } from 'react-icons/md'
+import { fullImage } from "../../Utils";
 
 const UploadImg = ({ user }) => {
     const [open, setOpen] = useState(false)
@@ -63,7 +63,7 @@ const UploadImg = ({ user }) => {
             <Modal open={open} setOpen={setOpen} className="profil_img_modal">
                 {!file ? (
                     <div className="profil_img_modal_body">
-                        <div className="modal_avatar" style={avatar(user.picture)}></div>
+                        <div className="modal_avatar" style={fullImage(user.picture)}></div>
                         <h3>Photo de profil</h3>
                         <small>
                             Votre photo ne doit pas être contraire aux bonnes mœurs ou à l'ordre public,

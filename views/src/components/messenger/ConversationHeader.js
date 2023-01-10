@@ -3,10 +3,10 @@ import { MessengerContext } from '../AppContext'
 import { Link } from 'react-router-dom'
 import MembersModal from './tools/MembersModal'
 import Tooltip from '../tools/global/Tooltip'
-import { avatar } from '../tools/hooks/useAvatar'
 import { isOnline, returnMembers } from './functions/function'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { AiOutlineInfo, AiOutlineTeam } from 'react-icons/ai'
+import { fullImage } from '../Utils'
 
 const ConversationHeader = ({ setRightbar, onlineUsers, members }) => {
     const { uid, websocket, currentChat, dispatch } = useContext(MessengerContext)
@@ -22,7 +22,7 @@ const ConversationHeader = ({ setRightbar, onlineUsers, members }) => {
                     <Link to={'/' + members[0].pseudo}>
                         <div className="conversation-box-members">
                             <div className="conversation-img-container">
-                                <div className={`${isOnline(members[0], onlineUsers) ? "conversation-img connected" : "conversation-img"}`} style={avatar(members[0].picture)}></div>
+                                <div className={`${isOnline(members[0], onlineUsers) ? "conversation-img connected" : "conversation-img"}`} style={fullImage(members[0].picture)}></div>
                             </div>
                             <div className="conversation-name">{members[0].pseudo}</div>
                         </div>
@@ -45,11 +45,11 @@ const ConversationHeader = ({ setRightbar, onlineUsers, members }) => {
                     <div className="conversation-box-members" onClick={() => setMembersModal(true)}>
                         <div className="conversation-img-container">
                             {currentChat.picture ? (
-                                <div className="conversation-img" style={avatar(currentChat.picture)}></div>
+                                <div className="conversation-img" style={fullImage(currentChat.picture)}></div>
                             ) : (
                                 members.slice(0, 3).map((element, key) => {
                                     return (
-                                        <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                                        <div className="conversation-img" key={key} style={fullImage(element.picture)}></div>
                                     )
                                 })
                             )}

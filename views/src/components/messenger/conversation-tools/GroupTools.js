@@ -8,7 +8,6 @@ import Settings from './Settings'
 import AddMembers from './AddMembers'
 import { IconToggle } from '../../tools/global/Button'
 import { returnMembers } from '../functions/function'
-import { avatar } from '../../tools/hooks/useAvatar'
 import { setFavorite, setUnfavorite } from '../functions/actions'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { TiStarOutline, TiStar } from 'react-icons/ti'
@@ -16,6 +15,7 @@ import { HiArrowSmLeft } from 'react-icons/hi'
 import { FiFileText } from 'react-icons/fi'
 import { BiImages } from 'react-icons/bi'
 import { IoClose } from 'react-icons/io5'
+import { fullImage } from '../../Utils'
 
 const GroupTools = ({ open, setOpen, conversation, members }) => {
     const { uid, user, dispatch, md } = useContext(MessengerContext)
@@ -35,10 +35,10 @@ const GroupTools = ({ open, setOpen, conversation, members }) => {
                 <div className="conversation-tools-header">
                     <div className="conversation-img-container">
                         {conversation.picture ? (
-                            <div className="conversation-picture" style={avatar(conversation.picture)}></div>
+                            <div className="conversation-picture" style={fullImage(conversation.picture)}></div>
                         ) : (
                             members.slice(0, 3).map((element, key) => {
-                                return <div className="conversation-img" key={key} style={avatar(element.picture)}></div>
+                                return <div className="conversation-img" key={key} style={fullImage(element.picture)}></div>
                             })
                         )}
                     </div>

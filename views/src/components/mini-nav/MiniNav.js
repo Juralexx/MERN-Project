@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { avatar } from "../tools/hooks/useAvatar";
 import { useClickOutside } from "../tools/hooks/useClickOutside";
 import { useDispatch } from "react-redux";
 import { removeNotifications } from "../../actions/user.action";
@@ -8,6 +7,7 @@ import SettingsMenu from "./SettingsMenu";
 import NotificationsMenu from "./notifications/Notifications";
 import MessengerMenu from "./Messenger";
 import { MdOutlineMessage, MdOutlineNotificationsActive, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { fullImage } from "../Utils";
 
 const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
     const [openSettingsMenu, setOpenSettingsMenu] = useState(false)
@@ -33,7 +33,7 @@ const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
             <ul className="mini_nav-ul">
                 <li className="mini_nav-li">
                     <NavLink to="/profil" className={({ isActive }) => (!isActive ? "mini_nav-a" : "mini_nav-a active")}>
-                        <div className="mini_nav-avatar" style={avatar(user.picture)}></div>
+                        <div className="mini_nav-avatar" style={fullImage(user.picture)}></div>
                         <p className="mini_nav-pseudo">{user.pseudo}</p>
                     </NavLink>
                 </li>

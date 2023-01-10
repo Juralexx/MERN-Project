@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { MdOutlinePhotoLibrary } from 'react-icons/md'
-import { projectPicture } from '../../tools/hooks/useAvatar'
 import NoContent from './NoContent'
 import FsLightbox from 'fslightbox-react';
+import { fullImage } from '../../Utils';
 
 const Gallery = ({ project, user }) => {
     const [toggler, setToggler] = useState(false)
@@ -17,7 +17,7 @@ const Gallery = ({ project, user }) => {
                         project.pictures.map((element, key) => {
                             return (
                                 <div className="col-12 col-xl-6 !p-2 min-h-[300px]">
-                                    <div className="w-full h-full" key={key} style={projectPicture(element)} onClick={() => { setToggler(!toggler); setPicture(element) }}></div>
+                                    <div className="w-full h-full" key={key} style={fullImage(element)} onClick={() => { setToggler(!toggler); setPicture(element) }}></div>
                                 </div>
                             )
                         })
