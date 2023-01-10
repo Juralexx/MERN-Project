@@ -5,25 +5,24 @@ import { Button } from './Button'
 const ErrorModal = (props) => {
     const { css, title, text } = props
     const [open, setOpen] = useState(true)
-    const coverClass = open ? 'modal_cover modal_cover-active' : 'modal_cover'
-    const containerClass = open ? `modal_container warning_modal modal_container-active show_modal ${css ? css : null}` : 'modal_container warning_modal hide_modal'
-
-    const close = () => setOpen(false)
 
     return (
-        open &&
-        <div className="modal_wrapper">
-            <div className={containerClass}>
-                <div className="close_modal" onClick={close}><IoClose /></div>
-                <div className="warning_title">{title}</div>
-                <div className="warning_text">{text}</div>
-                {props.children}
-                <div className="btn_container">
-                    <Button onClick={close}>Fermer</Button>
+        open && (
+            <div className="modal_wrapper">
+                <div className={open ? `modal_container warning_modal modal_container-active show_modal ${css ? css : null}` : 'modal_container warning_modal hide_modal'}>
+                    <div className="close_modal" onClick={() => setOpen(false)}>
+                        <IoClose />
+                    </div>
+                    <div className="warning_title">{title}</div>
+                    <div className="warning_text">{text}</div>
+                    {props.children}
+                    <div className="btn_container">
+                        <Button onClick={() => setOpen(false)}>Fermer</Button>
+                    </div>
                 </div>
+                <div className={open ? 'modal_cover modal_cover-active' : 'modal_cover'} onClick={() => setOpen(false)}></div>
             </div>
-            <div className={coverClass} onClick={close}></div>
-        </div>
+        )
     )
 }
 

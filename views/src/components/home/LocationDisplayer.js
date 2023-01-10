@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import { Button, TextButton } from '../tools/global/Button'
+import { FaMapMarkerAlt } from 'react-icons/fa'
 import { BsGeoFill } from 'react-icons/bs'
 import { GiFrance } from 'react-icons/gi'
 import { IoClose } from 'react-icons/io5'
-import { FaMapMarkerAlt } from 'react-icons/fa'
-import { Button, TextButton } from '../tools/global/Button'
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 
 const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
     const [sliderKey, setSliderKey] = useState(0)
 
     const getDistance = (key) => {
         const distance = [0, 5, 10, 20, 50, 100, 200]
-        setDatas(data => ({ ...data, aroundLocation: distance[key] }))
         setSliderKey(key)
+        setDatas(data => ({ ...data, aroundLocation: distance[key] }))
     }
 
     const deleteItem = (key) => {
@@ -28,10 +28,10 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                 .get(`${process.env.REACT_APP_API_URL}api/location/`)
                 .catch(err => console.log("Error: ", err))
 
+            const lat = position.coords.latitude
             const currentLocation = response.data.reduce(
                 (prev, curr) =>
-                    Math.abs(curr.geolocalisation.substring(0, curr.geolocalisation.indexOf(",")) - position.coords.latitude)
-                        < Math.abs(prev.geolocalisation.substring(0, curr.geolocalisation.indexOf(",")) - position.coords.latitude) ? curr : prev
+                    Math.abs(curr.geolocalisation.substring(0, curr.geolocalisation.indexOf(",")) - lat) < Math.abs(prev.geolocalisation.substring(0, curr.geolocalisation.indexOf(",")) - lat) ? curr : prev
             )
             setDatas(data => ({
                 ...data,
@@ -47,8 +47,7 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                 }]
             }))
         }
-        const errorCallback = () => { return }
-
+        const errorCallback = () => { }
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
     }
 

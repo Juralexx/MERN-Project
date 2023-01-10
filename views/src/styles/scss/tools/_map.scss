@@ -10,7 +10,7 @@
         stroke-linecap  : round;
         stroke-linejoin : round;
         stroke-opacity  : 0.25;
-        fill            : var(--primary-light);
+        fill            : var(--xblue);
         cursor          : pointer;
         
         &.active {
@@ -23,14 +23,14 @@
     g {
         &:hover {
             path {
-                fill : var(--primary);
+                fill : rgba(var(--primary-rgb), 0.6);
             }
         }
     }
     g {
         path {
             &:hover {
-                fill : var(--primary-dark);
+                fill : var(--primary);
             }
         }
     }

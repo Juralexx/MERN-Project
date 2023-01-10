@@ -139,9 +139,13 @@
             overflow      : hidden;
             border-radius : var(--rounded-sm);
  
-            &.active, &:hover {
+            &.active {
                 color      : var(--primary);
-                background : var(--x-light);
+                background : rgba(var(--primary-rgb), 0.2);
+            }
+            &:hover {
+                color      : var(--primary);
+                background : var(--light);
             }
         }
     }

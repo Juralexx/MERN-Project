@@ -1,25 +1,23 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { IoClose } from 'react-icons/io5'
+import { useClickOutside } from '../hooks/useClickOutside'
 
 const Modal = (props) => {
     const { open, setOpen, className } = props
-    const wrapperClass = open ? "modal_wrapper" : "modal_wrapper hide_wrapper"
-    const coverClass = open ? 'modal_cover modal_cover-active' : 'modal_cover'
-    const containerClass = open ? (
-        className ? "modal_container show_modal " + className : "modal_container show_modal "
-    ) : (
-        'modal_container hide_modal'
-    )
+    const mapRef = useRef()
+    useClickOutside(mapRef, () => setOpen(false))
 
     return (
         <>
-            <div className={wrapperClass}>
-                <div className={containerClass}>
-                    <div className="close_modal" onClick={() => setOpen(false)}><IoClose /></div>
+            <div className={open ? "modal_wrapper" : "modal_wrapper hide_wrapper"}>
+                <div className={open ? className ? "modal_container show_modal " + className : "modal_container show_modal " : 'modal_container hide_modal'} ref={mapRef}>
+                    <div className="close_modal" onClick={() => setOpen(false)}>
+                        <IoClose />
+                    </div>
                     {props.children}
                 </div>
             </div>
-            <div className={coverClass} onClick={() => setOpen(false)}></div>
+            <div className={open ? 'modal_cover modal_cover-active' : 'modal_cover'} onClick={() => setOpen(false)}></div>
         </>
     )
 }
