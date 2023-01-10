@@ -1,11 +1,12 @@
 .profil_img_modal {
     .modal_avatar {
-        width         : 160px;
-        height        : 160px;
+        width         : 130px;
+        height        : 130px;
         border-radius : 80px;
         margin        : 0 auto;
         top           : 70px;
         left          : 30px;
+        margin-top    : 10px;
     }
 
     .profil_img_modal_body {
@@ -19,7 +20,7 @@
             margin-top  : 20px;
         }
 
-        p {
+        p, small {
             text-align : center;
             margin-top : 10px;
         }
@@ -34,12 +35,12 @@
             display     : flex;
             align-items : center;
             width       : 240px;
-            margin      : 5px auto;
+            margin      : 3px auto;
 
             label {
-                margin      : 0 0 0 0;
-                width       : 70px;
-                font-weight : 600;
+                margin-right : 14px;
+                width        : 70px;
+                font-weight  : 500;
             }
 
             input[type=range] {
@@ -59,25 +60,24 @@
 
             .range_style {
                 width            : 170px;
-                height           : 24px;
+                height           : 16px;
                 border-radius    : 10px;
                 background-color : transparent;
                 @mixin track-style {
-                    display       : flex;
-                    align-items   : center;
-                    height        : 10px;
-                    border-radius : 10px;
-                    box-shadow    : inset -2px -2px 8px white, inset 2px 2px 8px rgba(var(--primary-rgb), 1);
+                    display          : flex;
+                    align-items      : center;
+                    height           : 5px;
+                    border-radius    : 10px;
+                    background-color : rgba(var(--primary-rgb), 0.6);
                 }
                 @mixin thumb-style {
                     position         : relative;
-                    top              : -50%;
-                    width            : 20px;
-                    height           : 20px;
+                    top              : 50%;
+                    transform        : translateY(-50%);
+                    width            : 15px;
+                    height           : 15px;
                     background-color : var(--primary);
-                    background-image : linear-gradient(-45deg, rgba(white, 0.4), rgba(white, 0.2));
-                    border-radius    : 50%;
-                    box-shadow       : -1px -1px 2px white, 1px 1px 2px rgba(white, 0.3);
+                    border-radius    : var(--rounded-full);
                 }
                 &::-webkit-slider-runnable-track {
                     @include track-style;
@@ -106,6 +106,37 @@
             justify-content : space-between;
             align-items     : center;
             width           : 100%;
+            button {
+                width : 49%;
+            }
+        }
+    }
+}
+
+@media(max-width: 576px) {
+    .profil_img_modal {
+        &.modal_container {
+            padding-top   : 100px;
+            padding-left  : 20px;
+            padding-right : 20px;
+        }
+        .modal_avatar {
+            width         : 150px;
+            height        : 150px;
+        }
+        .footer {
+            position : absolute;
+            bottom   : 0;
+            left     : 0;
+            padding  : 20px;
+            .modal_container_btn {
+                flex-direction : column-reverse;
+                button,
+                div {
+                    width  : 100%;
+                    margin : 5px 0;
+                }
+            }
         }
     }
 }

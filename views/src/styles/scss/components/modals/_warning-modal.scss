@@ -1,0 +1,18 @@
+.warning_modal {
+    max-width : 480px;
+
+    .warning_title {
+        font-size : 20px;
+        width     : 90%;
+    }
+
+    .warning_text {
+        padding : 20px 0;
+        color   : var(--text-secondary);
+    }
+
+    .btn_container {
+        margin-top : 10px;
+        padding    : 0;
+    }
+}

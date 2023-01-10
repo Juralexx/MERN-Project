@@ -1,0 +1,39 @@
+.hovered_card {
+    position : absolute;
+    bottom   : 10px;
+    left     : -120px;
+    padding  : 32px;
+    
+    .hovered-modal_container {
+        background-color : var(--content);
+        padding          : 16px;
+        box-shadow       : var(--shadow-xl);
+        width            : auto;
+        border-radius    : var(--rounded-sm);
+        border           : 2px solid var(--content-x-light);
+
+        .hovered-modal_head {
+            display       : flex;
+            width         : 100%;
+            margin-bottom : 12px;
+
+            .hovered-modal_avatar {
+                width         : 76px;
+                height        : 76px;
+                border-radius : 16px;
+            }
+
+            .left {
+                padding-right : 20px;
+            }
+
+            .right {
+                .hovered_card-name {
+                    font-weight   : 500;
+                    font-size     : 20px;
+                    margin-bottom : 6px;
+                }
+            }
+        }
+    }
+}

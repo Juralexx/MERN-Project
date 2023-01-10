@@ -361,7 +361,7 @@ const Edit = ({ user }) => {
                         </div>
                         <div className="row py-6">
                             <div className="col-12 col-lg-3 mb-5">
-                                <h3 className="txt-ter">Réseaux sociaux et sites internet</h3>
+                                <h3 className="txt-ter">Réseaux sociaux<br />et sites internet</h3>
                             </div>
                             <div className="col-12 col-lg-9">
                                 <div className="row">
@@ -376,7 +376,7 @@ const Edit = ({ user }) => {
                                                 value={network}
                                                 onChange={e => setNetwork(e.target.value)}
                                             />
-                                            <Button className="!h-[46px] ml-2" onClick={handleNetwork}>Ajouter</Button>
+                                            <Button className="!h-[44px] ml-2" onClick={handleNetwork}>Ajouter</Button>
                                         </div>
                                         {error.element === "networks" &&
                                             <ErrorCard

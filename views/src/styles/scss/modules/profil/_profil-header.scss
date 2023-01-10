@@ -44,3 +44,14 @@
         margin-bottom   : 16px;
     }
 }
+
+@media(max-width: 576px) {
+    .profil_header {
+        .avatar {
+            width  : 120px;
+            height : 120px;
+            left   : 5px;
+            bottom : 35px;
+        }
+    }
+}

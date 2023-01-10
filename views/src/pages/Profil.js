@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { avatar, coverPicture } from "../components/tools/hooks/useAvatar";
 import UploadCoverImg from "../components/profil/uploads/UploadCoverImg";
 import UploadImg from "../components/profil/uploads/UploadImg";
@@ -9,9 +9,9 @@ import Edit from "../components/profil/Edit";
 import Friends from "../components/profil/Friends";
 import Projects from "../components/profil/Projects";
 import ProfilCard from "../components/profil/ProfilCard";
+import { addClass } from "../components/Utils";
 
 const Profil = ({ user, websocket }) => {
-    const isThisActive = ({ isActive }) => (!isActive ? "" : "active")
     const location = useLocation()
     
     return (
@@ -30,15 +30,15 @@ const Profil = ({ user, websocket }) => {
                             />
                         </div>
                         <div className="content_nav">
-                            <NavLink to="/profil" className={isThisActive}>
+                            <Link to="/profil" className={addClass(location.pathname === '/profil', 'active')}>
                                 Profil
-                            </NavLink>
-                            <NavLink to="about" className={isThisActive}>
+                            </Link>
+                            <Link to="about" className={addClass(location.pathname === '/profil/about', 'active')}>
                                 À propos
-                            </NavLink>
-                            <NavLink to="contacts" className={isThisActive}>
+                            </Link>
+                            <Link to="contacts" className={addClass(location.pathname === '/profil/contacts', 'active')}>
                                 Contacts
-                            </NavLink>
+                            </Link>
                         </div>
                     </div>
                 </div>

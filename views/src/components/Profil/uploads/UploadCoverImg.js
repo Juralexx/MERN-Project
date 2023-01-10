@@ -16,15 +16,20 @@ const UploadCoverImg = ({ user }) => {
         setFile(null)
     }
 
-    const deletePicture = () => {
-        dispatch(deleteCoverPicture(user._id, user.picture))
-    }
+    const deletePicture = () => dispatch(deleteCoverPicture(user._id, user.picture))
 
     return (
         <ToolsMenu className="cover_picture_tools">
             <div className="tools_choice relative file_upload">
                 <p>Modifier ma photo</p>
-                <input type="file" className="upload" name="file" accept=".jpg, .jpeg, .png" onInput={(e) => setFile(e.target.files[0])} onChange={handleSave} />
+                <input
+                    type="file"
+                    className="upload"
+                    name="file"
+                    accept=".jpg, .jpeg, .png"
+                    onInput={(e) => setFile(e.target.files[0])}
+                    onChange={handleSave}
+                />
             </div>
             <div className="tools_choice" onClick={deletePicture}>Supprimer ma photo</div>
         </ToolsMenu>

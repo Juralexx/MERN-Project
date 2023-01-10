@@ -6,10 +6,10 @@ import Login from '../../pages/Login'
 import Register from '../../pages/Register'
 import Navbar from '../Navbar'
 import Profil from '../../pages/Profil'
-import MemberProfil from '../members/MemberProfil'
 import AddProject from '../../pages/AddProject'
 import Dashboard from '../../pages/Dashboard'
 import Messenger from '../messenger/Messenger'
+import UserProfil from '../../pages/UserProfil'
 
 function Paths({ websocket, onlineUsers, user, uid }) {
     return (
@@ -28,7 +28,7 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                     />
                 } />
                 <Route path=":pseudo" element={
-                    <MemberProfil />
+                    <UserProfil />
                 } />
 
                 <Route path="login" element={
