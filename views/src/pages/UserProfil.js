@@ -20,7 +20,7 @@ const UserProfil = () => {
         const fetch = async () => {
             try {
                 const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/profil/${pseudo}`)
-                data.pseudo ? setUser(data) : navigate('/')
+                if (data.pseudo) setUser(data)
             } catch (err) {
                 console.error(err)
             }
@@ -71,10 +71,10 @@ const UserProfil = () => {
                 <div className="container relative">
                     <div className="avatar" style={fullImage(user?.picture)}></div>
                     <div className="content_nav">
-                        <Link to="/profil" className={addClass(location.pathname === '/' + user.pseudo, 'active')}>
+                        <Link to="/profil" className={addClass(location.pathname === '/user/' + user.pseudo, 'active')}>
                             Profil
                         </Link>
-                        <Link to="projects" className={addClass(location.pathname === '/' + user.pseudo + 'projects', 'active')}>
+                        <Link to="projects" className={addClass(location.pathname === '/user/' + user.pseudo + 'projects', 'active')}>
                             Projets
                         </Link>
                     </div>
@@ -261,7 +261,6 @@ const UserProfil = () => {
                                 </div>
                             </div>
                         } />
-                        <Route path="*" element={<Navigate to="/profil" />} />
                     </Routes>
                 </div>
             </div>

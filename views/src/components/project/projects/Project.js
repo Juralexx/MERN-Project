@@ -56,7 +56,12 @@ const Project = ({ user, websocket, projects, setProjects }) => {
     return (
         Object.keys(project).length > 0 && !isLoading && (
             <>
-                <Header project={project} websocket={websocket} user={user} isManager={isManager} />
+                <Header
+                    project={project}
+                    websocket={websocket}
+                    user={user}
+                    isManager={isManager}
+                />
                 <Routes>
                     <Route index element={
                         <div className="container-lg py-8">
@@ -115,7 +120,6 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             />
                         ) : (
                             <Navigate
-                                replace
                                 to={`/projects/${project.URLID}/${project.URL}/`}
                             />
                         )
@@ -145,7 +149,6 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             />
                         ) : (
                             <Navigate
-                                replace
                                 to={`/projects/${project.URLID}/${project.URL}/actuality`}
                             />
                         )
@@ -166,7 +169,6 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             />
                         ) : (
                             <Navigate
-                                replace
                                 to={`/projects/${project.URLID}/${project.URL}/qna`}
                             />
                         )

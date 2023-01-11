@@ -56,7 +56,6 @@ const Profil = ({ user, websocket }) => {
                                 <Route path="edit/*" element={
                                     <Edit user={user} />
                                 } />
-                                <Route path="*" element={<Navigate to="/profil" />} />
                             </Routes>
                         }
                     </div>

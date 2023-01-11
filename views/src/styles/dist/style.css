@@ -7037,7 +7037,7 @@ select:-webkit-autofill:focus {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   height: 55%;
-  background-color: var(--x-light);
+  background-color: var(--light);
 }
 .project-page_header .header-inner .project-picture {
   display: block;
@@ -7268,7 +7268,7 @@ select:-webkit-autofill:focus {
   padding: 20px;
   margin-bottom: 20px;
   border-radius: var(--rounded-sm);
-  background-color: var(--x-light);
+  background-color: var(--light);
 }
 .content-cards .content-card p {
   font-size: 14px;
@@ -7356,6 +7356,10 @@ select:-webkit-autofill:focus {
     margin-top: 20px;
   }
 }
+.project-page {
+  min-height: 100vh;
+}
+
 .project-page-body {
   background: var(--content-light);
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Search from './Search';
 import ProjectPage from './Project';
 import Footer from '../components/Footer';
@@ -173,6 +173,7 @@ const Home = ({ websocket, user }) => {
                         } />
                     </>
                 }
+                <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
             <Footer />
         </>

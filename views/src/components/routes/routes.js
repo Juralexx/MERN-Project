@@ -27,10 +27,9 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         user={user}
                     />
                 } />
-                <Route path=":pseudo/*" element={
+                <Route path="/user/:pseudo/*" element={
                     <UserProfil />
                 } />
-
                 <Route path="login" element={
                     <Login
                         uid={uid}
@@ -41,7 +40,6 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         uid={uid}
                     />
                 } />
-
                 <Route path="projects/*" element={
                     <ProtectedRoute>
                         <Dashboard
@@ -50,7 +48,6 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         />
                     </ProtectedRoute>
                 } />
-
                 <Route path="add-project" element={
                     <ProtectedRoute>
                         <AddProject
@@ -59,7 +56,6 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         />
                     </ProtectedRoute>
                 } />
-
                 <Route path="messenger/*" element={
                     <ProtectedRoute>
                         <Messenger
@@ -70,7 +66,6 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         />
                     </ProtectedRoute>
                 } />
-
                 <Route path="profil/*" element={
                     <ProtectedRoute>
                         <Profil
@@ -79,7 +74,6 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         />
                     </ProtectedRoute>
                 } />
-
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>

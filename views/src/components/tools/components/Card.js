@@ -51,7 +51,7 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, 
                     <div className="footer-right col-4 flex pt-2">
                         <div className="footer-name">
                             <p className="name">
-                                <Link to={`/${element.posterPseudo}`}>
+                                <Link to={`/user/${element.posterPseudo}`}>
                                     {element.posterPseudo}
                                 </Link>
                             </p>

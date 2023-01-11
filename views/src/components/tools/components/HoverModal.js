@@ -10,13 +10,13 @@ const HoverModal = ({ user, style, open }) => {
                 <div className="hovered-modal_container">
                     <div className="hovered-modal_head">
                         <div className="left">
-                            <Link to={"/" + user.pseudo}>
+                            <Link to={`user/${user.pseudo}`}>
                                 <div className="hovered-modal_avatar" style={fullImage(user.picture)}></div>
                             </Link>
                         </div>
                         <div className="right">
                             <div className="hovered_card-name">
-                                <Link to={"/" + user.pseudo}>{user.pseudo}</Link>
+                                <Link to={`user/${user.pseudo}`}>{user.pseudo}</Link>
                                 {user?.work &&
                                     <p>{user.work}</p>
                                 }
@@ -27,10 +27,10 @@ const HoverModal = ({ user, style, open }) => {
                     </div>
                     <div className="flex mt-5">
                         <TextButton className="mr-2">
-                            <Link to={"/projects/" + user.pseudo}>Voir les projets</Link>
+                            <Link to={`user/${user.pseudo}/projects`}>Voir les projets</Link>
                         </TextButton>
                         <Button>
-                            <Link to={"/" + user.pseudo} className="mr-1">Voir le profil</Link>
+                            <Link to={`user/${user.pseudo}`} className="mr-1">Voir le profil</Link>
                         </Button>
                     </div>
                 </div>

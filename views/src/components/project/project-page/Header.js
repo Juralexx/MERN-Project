@@ -19,8 +19,14 @@ const Header = ({ user, project }) => {
         else setLiked(false)
     }, [project.likers, user._id])
 
-    const like = () => { dispatch(likeProject(project._id, user._id)); setLiked(true) }
-    const unlike = () => { dispatch(unlikeProject(project._id, user._id)); setLiked(false) }
+    const like = () => {
+        dispatch(likeProject(project._id, user._id))
+        setLiked(true)
+    }
+    const unlike = () => {
+        dispatch(unlikeProject(project._id, user._id))
+        setLiked(false)
+    }
 
     useEffect(() => {
         if (user._id)
@@ -29,8 +35,14 @@ const Header = ({ user, project }) => {
             else setFollowed(false)
     }, [project.followers, user._id])
 
-    const follow = () => { dispatch(followProject(project._id, user._id)); setFollowed(true) }
-    const unfollow = () => { dispatch(unfollowProject(project._id, user._id)); setFollowed(false) }
+    const follow = () => {
+        dispatch(followProject(project._id, user._id))
+        setFollowed(true)
+    }
+    const unfollow = () => {
+        dispatch(unfollowProject(project._id, user._id))
+        setFollowed(false)
+    }
 
     return (
         <div className="project-page_header">
