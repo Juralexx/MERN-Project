@@ -3,17 +3,14 @@ import axios from "axios";
 import { useClickOutside } from "../../../tools/hooks/useClickOutside";
 import { ClassicInput } from "../../../tools/global/Inputs";
 import { BsInboxFill } from 'react-icons/bs'
-import { SmallLoader } from "../../../tools/global/Loader";
+import Oval from '../../../tools/loaders/Oval'
 import { ErrorCard } from "../../../tools/global/Error";
 import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
-import { geoJSONStructure, geolocToFloat } from '../../../Utils'
-import { Oval } from 'react-loading-icons'
+import { addClass, geoJSONStructure, geolocToFloat } from '../../../Utils'
 import { Icon } from "leaflet";
 import 'leaflet/dist/leaflet.css';
 
 const Location = ({ project, location, department, region, setDatas, geolocalisation, error, setError }) => {
-    const checkErr = name => { if (error.element === name) return "err" }
-
     const [searchQuery, setSearchQuery] = useState(location)
     const [locationsFound, setLocationsFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -81,7 +78,7 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                 <div className="col-12 col-lg-6 relative">
                     <div className="title full">Localité <span>Champ requis</span></div>
                     <ClassicInput
-                        className={`full ${checkErr("location")}`}
+                        className={`full ${addClass(error.element === "location", 'err')}`}
                         type="text"
                         placeholder="Rechercher une adresse..."
                         value={searchQuery}
@@ -147,7 +144,7 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                             })
                         }
                         {isLoading && locationsFound.length === 0 &&
-                            <SmallLoader />
+                            <Oval />
                         }
                         {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
                             <div className="no-result">

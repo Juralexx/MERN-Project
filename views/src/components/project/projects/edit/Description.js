@@ -1,10 +1,9 @@
 import React from 'react'
 import { ErrorCard } from '../../../tools/global/Error'
 import { Textarea } from '../../../tools/global/Inputs'
+import { addClass } from '../../../Utils'
 
 const Description = ({ description, setDatas, error, setError }) => {
-    const checkErr = name => { if (error.element === name) return "err" }
-
     return (
         <div className="row">
             <div className="col-12 col-lg-6">
@@ -17,7 +16,7 @@ const Description = ({ description, setDatas, error, setError }) => {
             <div className="col-12 col-lg-6">
                 <div className="title full">Courte description du projet <span>Champ requis</span></div>
                 <Textarea
-                    className={`w-full ${checkErr("description")}`}
+                    className={`w-full ${addClass(error.element === "description", "err")}`}
                     type="text"
                     placeholder="Courte description du projet"
                     onChange={(e) => setDatas(data => ({ ...data, description: (e.target.value).substring(0, 300) }))}

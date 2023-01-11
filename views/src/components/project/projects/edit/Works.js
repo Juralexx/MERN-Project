@@ -2,15 +2,13 @@ import React, { useState, useRef } from 'react'
 import axios from 'axios';
 import { ClassicInput, Textarea } from '../../../tools/global/Inputs';
 import { Button, TextButton } from '../../../tools/global/Button';
-import { SmallLoader } from '../../../tools/global/Loader';
-import { BsInboxFill } from 'react-icons/bs';
+import Oval from '../../../tools/loaders/Oval'
 import { ErrorCard } from '../../../tools/global/Error';
 import { useClickOutside } from '../../../tools/hooks/useClickOutside';
-import { removeSpecialChars } from '../../../Utils';
+import { addClass, removeSpecialChars } from '../../../Utils';
+import Icon from '../../../tools/icons/Icon';
 
 const Works = ({ workArray, setDatas, error, setError }) => {
-    const checkErr = (name) => { if (error.element === name) return "err" }
-
     const [searchQuery, setSearchQuery] = useState("")
     const [worksFound, setWorksFound] = useState([])
     const [isLoading, setLoading] = useState(false)
@@ -99,7 +97,7 @@ const Works = ({ workArray, setDatas, error, setError }) => {
                         <div className="edit-work-form">
                             <div className="title full">Compétence recherchée</div>
                             <ClassicInput
-                                className={`full ${checkErr(`work-${key}`)}`}
+                                className={`full ${addClass(error.element === `work-${key}`, 'err')}`}
                                 type="text"
                                 placeholder="Rechercher un métier..."
                                 value={element.name}
@@ -129,18 +127,18 @@ const Works = ({ workArray, setDatas, error, setError }) => {
                                     })
                                 }
                                 {isLoading && worksFound.length === 0 && display.key === key &&
-                                    <SmallLoader />
+                                    <Oval />
                                 }
                                 {searchQuery.length > 4 && worksFound.length === 0 && !isLoading && display.key === key &&
                                     <div className="no-result">
-                                        <BsInboxFill />
+                                        <Icon name="BoxEmpty" />
                                         <div>Aucun resultat ne correspond à votre recherche...</div>
                                     </div>
                                 }
                             </div>
                             <div className="title full mt-4">Description</div>
                             <Textarea
-                                className={`w-full ${checkErr(`work-${key}`)}`}
+                                className={`w-full ${addClass(error.element === `work-${key}`, 'err')}`}
                                 type="text"
                                 placeholder="Pourquoi recherchez vous cette compétence ?"
                                 onChange={e => handleDescription(e.target.value, key)}

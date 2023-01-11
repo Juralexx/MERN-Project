@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import axios from 'axios';
 import { ClassicInput, NumberInput, Textarea } from '../../tools/global/Inputs';
 import { Button } from '../../tools/global/Button';
-import { SmallLoader } from '../../tools/global/Loader';
+import Oval from '../../tools/loaders/Oval'
 import { BsInboxFill } from 'react-icons/bs';
 import { ErrorCard } from '../../tools/global/Error';
 import { useClickOutside } from '../../tools/hooks/useClickOutside';
@@ -118,7 +118,7 @@ const Contributors = ({ workArray, setWorkArray, isErr, setErr, error, setError 
                                             })
                                         }
                                         {isLoading && isEmpty &&
-                                            <SmallLoader />
+                                            <Oval />
                                         }
                                         {searchQuery.length > 2 && isEmpty && !isLoading &&
                                             <div className="no-result">

@@ -2,10 +2,9 @@ import React from 'react'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput, Textarea, DropdownInput } from '../../../tools/global/Inputs'
 import { categories } from '../../../../api/categories'
+import { addClass } from '../../../Utils'
 
 const Title = ({ title, subtitle, category, setDatas, error, setError }) => {
-    const checkErr = name => { if (error.element === name) return "err" }
-
     return (
         <>
             <div className="row">
@@ -19,7 +18,7 @@ const Title = ({ title, subtitle, category, setDatas, error, setError }) => {
                 <div className="col-12 col-lg-6">
                     <div className="title full">Titre <span>Champ requis</span></div>
                     <ClassicInput
-                        className={`full ${checkErr("title")}`}
+                        className={`full ${addClass(error.element === "title", 'err')}`}
                         type="text"
                         placeholder="Titre du projet"
                         onChange={(e) => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 60) }))}
@@ -46,7 +45,7 @@ const Title = ({ title, subtitle, category, setDatas, error, setError }) => {
                 <div className="col-12 col-lg-6">
                     <div className="title full">Sous-titre <span>Champ requis</span></div>
                     <Textarea
-                        className={`w-full ${checkErr("subtitle")}`}
+                        className={`w-full ${addClass(error.element === "subtitle", 'err')}`}
                         type="text"
                         placeholder="Sous-titre du projet"
                         onChange={(e) => setDatas(data => ({ ...data, subtitle: (e.target.value).substring(0, 120) }))}
@@ -73,7 +72,7 @@ const Title = ({ title, subtitle, category, setDatas, error, setError }) => {
                 <div className="col-12 col-lg-6">
                     <div className="title full">Catégorie <span>Champ requis</span></div>
                     <DropdownInput
-                        className={`full ${checkErr("category")}`}
+                        className={`full ${addClass(error.element === "category", 'err')}`}
                         readOnly
                         placeholder="Catégorie"
                         type="text"

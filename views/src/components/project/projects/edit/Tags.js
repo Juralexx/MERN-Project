@@ -1,11 +1,11 @@
 import React from 'react'
-import { IoClose } from 'react-icons/io5'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
+import Icon from '../../../tools/icons/Icon'
+import { addClass } from '../../../Utils'
 
 const Tags = ({ tags, setDatas, error, setError }) => {
-    const checkErr = name => { if (error.element === name) { return "err" } else return "" }
-
+    
     const addTag = (event, element) => {
         if (event.key === 'Enter') {
             if (element.length >= 3) {
@@ -45,14 +45,14 @@ const Tags = ({ tags, setDatas, error, setError }) => {
                             return (
                                 <div className="tag" key={key}>
                                     <span>#</span> {element}
-                                    <IoClose onClick={() => removeTag(element)} />
+                                    <Icon name="Cross" onClick={() => removeTag(element)} />
                                 </div>
                             )
                         })}
                     </div>
                 }
                 <ClassicInput
-                    className={`full ${checkErr("tags")}`}
+                    className={`full ${addClass(error.element === "tags", 'err')}`}
                     type="text"
                     placeholder="Ajouter des tags"
                     onKeyPress={e => addTag(e, e.target.value)}

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from '../project/projects/functions'
 import { DropdownInput, IconInput } from '../tools/global/Inputs'
-import { OvalLoader } from '../tools/global/Loader'
+import Oval from '../../components/tools/loaders/Oval'
 import Card from '../tools/components/Card'
 import { addClass } from '../Utils'
 import Icon from '../tools/icons/Icon'
@@ -132,7 +132,7 @@ const Projects = ({ user, websocket }) => {
                     )
                 ) : (
                     <div className="loading-container">
-                        <OvalLoader />
+                        <Oval />
                     </div>
                 )}
             </div>

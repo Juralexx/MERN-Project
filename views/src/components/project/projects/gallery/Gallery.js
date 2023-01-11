@@ -5,7 +5,7 @@ import { ErrorCard } from '../../../tools/global/Error';
 import { deleteProjectPictures, updateProjectPictures } from '../../../../actions/project.action'
 import { download } from '../../../Utils';
 import FsLightbox from 'fslightbox-react';
-import { Oval } from 'react-loading-icons'
+import Oval from '../../../tools/loaders/Oval'
 import { IoTrashBinSharp } from 'react-icons/io5';
 import { BiImageAlt } from 'react-icons/bi';
 import { IoMdCloudDownload, IoMdDownload } from 'react-icons/io';

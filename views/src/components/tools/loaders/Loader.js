@@ -20,11 +20,3 @@ export const SmallLoader = () => {
         </div>
     )
 }
-
-export const OvalLoader = () => {
-    return (
-        <div className='oval-loader'>
-            <Oval />
-        </div>
-    )
-}

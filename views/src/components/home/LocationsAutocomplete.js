@@ -3,7 +3,7 @@ import axios from 'axios'
 import LocationDisplayer from './LocationDisplayer'
 import { useClickOutside } from '../tools/hooks/useClickOutside'
 import { IconInput } from '../tools/global/Inputs'
-import { SmallLoader } from '../tools/global/Loader'
+import Oval from '../../components/tools/loaders/Oval'
 import Icon from '../tools/icons/Icon'
 
 const LocationsAutocomplete = ({ datas, setDatas }) => {
@@ -128,7 +128,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                     })
                 }
                 {isLoading && locationsFound.length === 0 &&
-                    <SmallLoader />
+                    <Oval />
                 }
                 {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
                     <div className="no-result">

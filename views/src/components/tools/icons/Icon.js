@@ -64,10 +64,15 @@ import Picture from './Picture';
 import Layers from './Layers';
 import Share from './Share';
 import Whatsapp from './Whatsapp';
+import FacebookCircle from './FacebookCircle';
 import Facebook from './Facebook';
 import Linkedin from './Linkedin';
 import Twitter from './Twitter';
 import Pinterest from './Pinterest';
+import Snapchat from './Snapchat';
+import Instagram from './Instagram';
+import Youtube from './Youtube';
+import Twitch from './Twitch';
 import Upload from './Upload';
 
 const Icon = (props) => {
@@ -198,6 +203,12 @@ const Icon = (props) => {
             return <Layers {...props} />;
         case 'Facebook':
             return <Facebook {...props} />;
+        case 'FacebookCircle':
+            return <FacebookCircle {...props} />;
+        case 'Instagram':
+            return <Instagram {...props} />;
+        case 'Snapchat':
+            return <Snapchat {...props} />;
         case 'Linkedin':
             return <Linkedin {...props} />;
         case 'Pinterest':
@@ -206,6 +217,10 @@ const Icon = (props) => {
             return <Twitter {...props} />;
         case 'Whatsapp':
             return <Whatsapp {...props} />;
+        case 'Youtube':
+            return <Youtube {...props} />;
+        case 'Twitch':
+            return <Twitch {...props} />;
         case 'Share':
             return <Share {...props} />;
         case 'Upload':

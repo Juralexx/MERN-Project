@@ -5,9 +5,8 @@ import { useClickOutside } from '../../tools/hooks/useClickOutside';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import { ClassicInput } from '../../tools/global/Inputs';
-import { SmallLoader } from '../../tools/global/Loader';
+import Oval from '../../tools/loaders/Oval'
 import { ErrorCard } from '../../tools/global/Error';
-import Oval from 'react-loading-icons/dist/components/oval';
 import { BsInboxFill } from 'react-icons/bs';
 
 const Location = ({ leafletLoading, geoJSON, geolocalisation, setGeolocalisation, location, setLocation, setDepartment, setCodeDepartment, setRegion, setCodeRegion, setNewRegion, setCodeNewRegion, setErr, isErr, error }) => {
@@ -90,7 +89,7 @@ const Location = ({ leafletLoading, geoJSON, geolocalisation, setGeolocalisation
                             })
                         }
                         {isLoading && isEmpty &&
-                            <SmallLoader />
+                            <Oval />
                         }
                         {searchQuery.length > 2 && isEmpty && !isLoading &&
                             <div className="no-result">

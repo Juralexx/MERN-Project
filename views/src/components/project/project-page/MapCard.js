@@ -3,7 +3,7 @@ import axios from 'axios';
 import { geoJSONStructure, geolocToFloat } from '../../Utils'
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
-import Oval from 'react-loading-icons/dist/components/oval';
+import Oval from '../../tools/loaders/Oval'
 
 const MapCard = ({ project }) => {
     const [leafletLoading, setLeafletLoading] = useState(false)

@@ -11,7 +11,7 @@ import isMobilePhone from 'validator/lib/isMobilePhone';
 import { TextButton, Button } from '../tools/global/Button';
 import { ErrorCard } from '../tools/global/Error';
 import { ClassicInput, Textarea } from '../tools/global/Inputs';
-import { OvalLoader } from '../tools/global/Loader';
+import Oval from '../../components/tools/loaders/Oval'
 import EditPassword from './EditPassword';
 import Icon from '../tools/icons/Icon'
 
@@ -309,7 +309,7 @@ const Edit = ({ user }) => {
                                                 })
                                             }
                                             {isLoading && locationsFound.length === 0 &&
-                                                <OvalLoader />
+                                                <Oval />
                                             }
                                             {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
                                                 <div className="no-result">

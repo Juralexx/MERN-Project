@@ -4,7 +4,7 @@ import { useParams, useNavigate, Route, Routes, useLocation, Link } from 'react-
 import { addClass, dateParser, fullImage } from "../components/Utils";
 import { replaceHTTP, returnNetworkSVG } from "../components/tools/functions/networks";
 import Footer from "../components/Footer";
-import { OvalLoader } from "../components/tools/global/Loader";
+import Oval from "../components/tools/loaders/Oval";
 import Card from "../components/tools/components/Card";
 import Icon from "../components/tools/icons/Icon";
 
@@ -254,7 +254,7 @@ const UserProfil = () => {
                                         )
                                     ) : (
                                         <div className="loading-container">
-                                            <OvalLoader />
+                                            <Oval />
                                         </div>
                                     )}
                                 </div>

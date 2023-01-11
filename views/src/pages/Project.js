@@ -15,7 +15,7 @@ import Works from '../components/project/project-page/Works';
 import QnaCard from '../components/project/project-page/QnaCard';
 import Networks from '../components/project/project-page/Networks';
 import { Button } from '../components/tools/global/Button';
-import { OvalLoader } from '../components/tools/global/Loader';
+import Oval from '../components/tools/loaders/Oval';
 
 const ProjectPage = ({ user, projects }) => {
     const { URLID, URL } = useParams()
@@ -156,7 +156,7 @@ const ProjectPage = ({ user, projects }) => {
                     </div>
                 </>
             ) : (
-                <OvalLoader />
+                <Oval />
             )}
         </div>
     )

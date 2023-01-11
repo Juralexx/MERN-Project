@@ -3,32 +3,31 @@ import { Button } from '../../../tools/global/Button';
 import { ClassicInput } from '../../../tools/global/Inputs';
 import isURL from 'validator/lib/isURL';
 import { ErrorCard } from '../../../tools/global/Error';
-import { IoClose } from 'react-icons/io5';
-import { FaFacebookF, FaInstagram, FaTwitter, FaSnapchatGhost, FaYoutube, FaTwitch, FaPinterest, FaLinkedinIn, FaLink } from 'react-icons/fa'
+import { addClass } from '../../../Utils';
+import Icon from '../../../tools/icons/Icon';
 
 const Networks = ({ networks, setDatas, error, setError }) => {
     const [network, setNetwork] = useState("")
-    const checkErr = (name) => { if (error.element === name) return "err" }
 
     const returnSVG = (network) => {
         if (network === "facebook")
-            return <FaFacebookF />
+            return <Icon name="Facebook" />
         else if (network === "instagram")
-            return <FaInstagram />
+            return <Icon name="Instagram" />
         else if (network === "twitter")
-            return <FaTwitter />
+            return <Icon name="Twitter" />
         else if (network === "snapchat")
-            return <FaSnapchatGhost />
+            return <Icon name="Snapchat" />
         else if (network === "youtube")
-            return <FaYoutube />
+            return <Icon name="Youtube" />
         else if (network === "twitch")
-            return <FaTwitch />
+            return <Icon name="Twitch" />
         else if (network === "pinterest")
-            return <FaPinterest />
+            return <Icon name="Pinterest" />
         else if (network === "linkedin")
-            return <FaLinkedinIn />
+            return <Icon name="Linkedin" />
         else
-            return <FaLink />
+            return <Icon name="Link" />
     }
 
     const handleNetwork = () => {
@@ -78,7 +77,7 @@ const Networks = ({ networks, setDatas, error, setError }) => {
                 <div className="title">Réseaux sociaux</div>
                 <div className="flex flex-col sm:flex-row mb-2">
                     <ClassicInput
-                        className={`w-full !max-w-full mb-4 ${checkErr("networks")}`}
+                        className={`w-full !max-w-full mb-4 ${addClass(error.element === "networks", 'err')}`}
                         inputClassName="w-full"
                         type="text"
                         placeholder="https://"
@@ -102,7 +101,7 @@ const Networks = ({ networks, setDatas, error, setError }) => {
                                     {returnSVG(element.type)}
                                     <a href={element.url} rel="noreferrer" target="_blank" className="ml-4">{element.url}</a>
                                 </div>
-                                <IoClose className='cursor-pointer' onClick={() => deleteItem(key)} />
+                                <Icon name="Cross" className='cursor-pointer' onClick={() => deleteItem(key)} />
                             </div>
                         )
                     })

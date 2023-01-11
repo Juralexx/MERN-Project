@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/project/projects/Sidebar'
 import Projects from '../components/project/projects/Projects';
 import Project from '../components/project/projects/Project';
-import { OvalLoader } from '../components/tools/global/Loader';
+import Oval from '../components/tools/loaders/Oval'
 
 const Dashboard = ({ websocket, user }) => {
     const [projects, setProjects] = useState([])
@@ -55,7 +55,7 @@ const Dashboard = ({ websocket, user }) => {
                     </Routes>
                 }
                 {isLoading &&
-                    <OvalLoader />
+                    <Oval />
                 }
             </div>
         </div>

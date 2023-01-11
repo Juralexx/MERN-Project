@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IconInput } from '../tools/global/Inputs'
-import { OvalLoader } from '../tools/global/Loader'
+import Oval from '../../components/tools/loaders/Oval'
 import ToolsMenu from '../tools/global/ToolsMenu'
 import Warning from '../tools/global/Warning'
 import { removeFriend } from '../tools/functions/friend'
@@ -103,7 +103,7 @@ const Friends = ({ user, websocket }) => {
                     )
                 ) : (
                     <div className="loading-container">
-                        <OvalLoader />
+                        <Oval />
                     </div>
                 )}
             </div>

@@ -7,7 +7,7 @@ import { Button } from '../../../tools/global/Button'
 import { MediumAvatar, TinyAvatar } from '../../../tools/global/Avatars'
 import { isInResults, isSelected, sendProjectMemberRequest } from '../../../tools/functions/member';
 import { addMemberToArray, removeMemberFromArray } from '../../../tools/functions/member';
-import { SmallLoader } from '../../../tools/global/Loader';
+import Oval from '../../../tools/loaders/Oval'
 import { IoClose } from 'react-icons/io5'
 
 const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager }) => {
@@ -96,7 +96,7 @@ const AddMember = ({ open, setOpen, project, user, websocket, isAdmin, isManager
                         </div>
                     ) : (
                         <div className="user_selecter">
-                            <SmallLoader />
+                            <Oval />
                         </div>
                     )
                 ) : (
