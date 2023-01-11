@@ -7,7 +7,7 @@ import UpdateTask from './UpdateTask'
 import Kanban from './Kanban'
 import TasksList from './TasksList'
 import TaskModal from './TaskModal'
-import { AiOutlinePlus } from 'react-icons/ai'
+import Icon from '../../../tools/icons/Icon'
 
 const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
@@ -69,7 +69,7 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     </div>
                     {(isAdmin || isManager) &&
                         <TextButton className="btn_icon_start" onClick={() => setCreateTask(true)}>
-                            <AiOutlinePlus />Ajouter une tâche
+                            <Icon name="Plus" />Ajouter une tâche
                         </TextButton>
                     }
                 </div>

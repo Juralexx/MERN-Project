@@ -9,6 +9,7 @@ import Oval from '../../../tools/loaders/Oval'
 import { IoTrashBinSharp } from 'react-icons/io5';
 import { BiImageAlt } from 'react-icons/bi';
 import { IoMdCloudDownload, IoMdDownload } from 'react-icons/io';
+import Icon from '../../../tools/icons/Icon';
 
 const Gallery = ({ project, isManager }) => {
      const [toggler, setToggler] = useState({ open: false, imgIndex: 0 })
@@ -59,7 +60,7 @@ const Gallery = ({ project, isManager }) => {
                          <>
                               <div {...getRootProps({ className: `dropzone ${isDragActive && "active"} ${pictures.length === 6 && "disabled"}` })}>
                                    <input {...getInputProps()} name="files" />
-                                   <IoMdCloudDownload />
+                                   <Icon name="Upload" />
                                    {pictures.length === 6 ? (
                                         <p>Votre galerie est pleine</p>
                                    ) : (
@@ -77,11 +78,11 @@ const Gallery = ({ project, isManager }) => {
                                    <img src={element} alt={project.title} title={project.title} />
                                    <div className="img-tools">
                                         <div className="img-tools-item" onClick={() => download(element)}>
-                                             <IoMdDownload />
+                                             <Icon name="Download" />
                                         </div>
                                         {isManager &&
                                              <div className="img-tools-item" onClick={() => deleteFile(element)}>
-                                                  <IoTrashBinSharp />
+                                                  <Icon name="Trash" />
                                              </div>
                                         }
                                    </div>
@@ -91,7 +92,7 @@ const Gallery = ({ project, isManager }) => {
                     {[...Array(6 - pictures.length)].map((_, key) => {
                          return (
                               <div className="gallery-brick-empty" key={key}>
-                                   {areLoading.includes(pictures.length + key) ? <Oval /> : <BiImageAlt />}
+                                   {areLoading.includes(pictures.length + key) ? <Oval /> : <Icon name="Picture" />}
                               </div>
                          )
                     })}

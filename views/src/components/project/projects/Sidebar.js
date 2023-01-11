@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { addClass, fullImage } from '../../Utils'
-import { MdOutlineMessage, MdGroups, MdOutlineDescription } from 'react-icons/md'
-import { BiTask } from 'react-icons/bi'
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import Icon from '../../tools/icons/Icon'
 
 const Sidebar = ({ user, projects, isLoading }) => {
     const [reduced, setReduced] = useState(true)
@@ -38,7 +36,7 @@ const Sidebar = ({ user, projects, isLoading }) => {
                     </div>
                 </Link>
                 <div className="sidebar-header-toggle" onClick={handleState}>
-                    <IoIosArrowBack /><IoIosArrowBack />
+                    <Icon name="DoubleArrowLeft" />
                 </div>
             </div>
             <div className="sidebar-inner custom-scrollbar">
@@ -52,25 +50,27 @@ const Sidebar = ({ user, projects, isLoading }) => {
                                             <div className="sidebar-img" style={fullImage(element.pictures[0])}></div>
                                             <div className={`sidebar-name ${addClass(reduced && !hovered, "reduced")} one_line`}>{element.title}</div>
                                         </div>
-                                        <div className={`${reduced && !hovered ? "hidden" : ""}`}><IoIosArrowForward /></div>
+                                        <div className={`${reduced && !hovered ? "hidden" : ""}`}>
+                                            <Icon name="CaretRight" />
+                                        </div>
                                     </div>
                                 </NavLink>
                                 {submenu === key && (
                                     <div className={`sidebar-submenu ${addClass(reduced && !hovered, "reduced")}`} onClick={() => setReduced(true)}>
                                         <NavLink to={`${element.URLID}/${element.URL}/about`} className={isThisActive}>
-                                            <MdOutlineDescription />
+                                            <Icon name="FilesMultiples" />
                                             <div className="sidebar-submenu-text">À propos</div>
                                         </NavLink>
                                         <NavLink to={`${element.URLID}/${element.URL}/tasks`} className={isThisActive}>
-                                            <BiTask />
+                                            <Icon name="Tasks" />
                                             <div className="sidebar-submenu-text">Tâches <span>{element.tasks?.length}</span></div>
                                         </NavLink>
                                         <NavLink to={`${element.URLID}/${element.URL}/messenger`} className={isThisActive}>
-                                            <MdOutlineMessage />
+                                            <Icon name="Chat" />
                                             <div className="sidebar-submenu-text">Messenger</div>
                                         </NavLink>
                                         <NavLink to={`${element.URLID}/${element.URL}/members`} className={isThisActive}>
-                                            <MdGroups />
+                                            <Icon name="Group" />
                                             <div className="sidebar-submenu-text">Membres</div>
                                         </NavLink>
                                     </div>
@@ -86,7 +86,9 @@ const Sidebar = ({ user, projects, isLoading }) => {
                                     <div className="sidebar-skeleton-round animate-pulse"></div>
                                     <div className="sidebar-skeleton-text animate-pulse"></div>
                                 </div>
-                                <div className={`${reduced && !hovered ? "hidden" : "flex"}`}><IoIosArrowForward /></div>
+                                <div className={`${reduced && !hovered ? "hidden" : "flex"}`}>
+                                    <Icon name="CaretRight" />
+                                </div>
                             </div>
                         )
                     })

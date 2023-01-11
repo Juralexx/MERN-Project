@@ -7,7 +7,7 @@ import Breadcrumb from './Breadcrumb';
 import Navbar from './Navbar';
 import ToolsMenu from '../../tools/global/ToolsMenu';
 import Warning from '../../tools/global/Warning';
-import { IoCalendarClearOutline, IoLocationOutline } from 'react-icons/io5'
+import Icon from '../../tools/icons/Icon';
 
 const Header = ({ project, websocket, user, isManager }) => {
     const dispatch = useDispatch()
@@ -24,10 +24,10 @@ const Header = ({ project, websocket, user, isManager }) => {
                             <h1>{project.title}</h1>
                             <div className="dashboard-header-content-infos">
                                 <div className="infos">
-                                    <IoLocationOutline />{project.location + ", " + project.department}
+                                    <Icon name="Position" />{project.location + ", " + project.department}
                                 </div>
                                 <div className="infos">
-                                    <IoCalendarClearOutline />{dateParser(project.createdAt)}
+                                    <Icon name="Calendar" />{dateParser(project.createdAt)}
                                 </div>
                             </div>
                         </div>

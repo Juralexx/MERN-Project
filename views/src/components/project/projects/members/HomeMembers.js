@@ -6,9 +6,8 @@ import MembersRequests from './MembersRequests'
 import MemberMenu from './MemberMenu'
 import { StringButton, ToolsBtn } from '../../../tools/global/Button'
 import { MediumAvatar } from '../../../tools/global/Avatars'
-import { MdOutlineMessage } from 'react-icons/md'
-import { FaRegUser } from 'react-icons/fa'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
+import Icon from '../../../tools/icons/Icon'
 
 const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
     const [addMembers, setAddMembers] = useState(false)
@@ -46,9 +45,22 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                 <div className="home-members-infos justify-end">
                                     {element.id !== user._id &&
                                         <>
-                                            <ToolsBtn><MdOutlineMessage /></ToolsBtn>
-                                            <ToolsBtn className="mx-2"><Link to={"/" + element.pseudo}><FaRegUser /></Link></ToolsBtn>
-                                            <MemberMenu element={element} project={project} websocket={websocket} isAdmin={isAdmin} isManager={isManager} user={user} />
+                                            <ToolsBtn>
+                                                <Icon name="Message" />
+                                            </ToolsBtn>
+                                            <ToolsBtn className="mx-2">
+                                                <Link to={"/" + element.pseudo}>
+                                                    <Icon name="User" />
+                                                </Link>
+                                            </ToolsBtn>
+                                            <MemberMenu
+                                                element={element}
+                                                project={project}
+                                                websocket={websocket}
+                                                isAdmin={isAdmin}
+                                                isManager={isManager}
+                                                user={user}
+                                            />
                                         </>
                                     }
                                 </div>

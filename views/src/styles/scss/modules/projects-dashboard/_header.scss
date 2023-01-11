@@ -37,6 +37,7 @@
                 .dashboard-header-content-infos {
                     .infos {
                         display      : flex;
+                        align-items  : center;
                         font-size    : 13px;
                         line-height  : 20px;
                         color        : var(--text-secondary);
@@ -44,8 +45,8 @@
 
                         svg {
                             margin-right : 7px;
-                            margin-top   : 3px;
-                            color        : var(--text-tertiary);
+                            width        : 16px;
+                            height       : 16px;
                         }
                     }
                 }

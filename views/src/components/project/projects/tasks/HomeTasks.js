@@ -9,9 +9,8 @@ import TaskModal from './TaskModal'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
 import { StringButton } from '../../../tools/global/Button'
 import { DropdownInput } from '../../../tools/global/Inputs'
-import { RiCalendarTodoLine } from 'react-icons/ri'
-import { MdOutlineMessage } from 'react-icons/md'
 import Checkbox from '../../../tools/global/Checkbox'
+import Icon from '../../../tools/icons/Icon'
 
 const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
@@ -91,7 +90,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                             <div className="home-tasks-task-tools">
                                                 {element.comments.length > 0 &&
                                                     <div className="flex items-center mr-2">
-                                                        <MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span>
+                                                        <Icon name="Chat" className="mr-1" /><span>{element.comments.length}</span>
                                                     </div>
                                                 }
                                                 <ToolsMenu>
@@ -141,7 +140,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         })
                     ) : (
                         <div className="empty-array">
-                            <div><RiCalendarTodoLine /></div>
+                            <Icon name="Calendar" />
                             <div>Vous n'avez aucunes tâches en cours...</div>
                         </div>
                     )}

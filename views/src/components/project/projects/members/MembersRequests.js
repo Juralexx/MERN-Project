@@ -5,7 +5,7 @@ import { TextButton } from '../../../tools/global/Button'
 import Modal from '../../../tools/global/Modal'
 import { cancelProjectMemberRequest } from '../../../tools/functions/member'
 import { dateParser } from '../../../Utils'
-import { BsSlashSquare } from 'react-icons/bs'
+import Icon from '../../../tools/icons/Icon'
 
 const MembersRequests = ({ open, setOpen, project, websocket }) => {
     const dispatch = useDispatch()
@@ -31,7 +31,7 @@ const MembersRequests = ({ open, setOpen, project, websocket }) => {
                     })
                 ) : (
                     <div className="empty-requests">
-                        <div><BsSlashSquare /></div>
+                        <Icon name="BoxEmpty" />
                         <div>Vous n'avez pas de demandes en cours</div>
                     </div>
                 )}

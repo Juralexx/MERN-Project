@@ -8,7 +8,7 @@ import { addMemberToArray, removeMemberFromArray, statusToString, stateToString 
 import { addClass, ISOtoNavFormat } from '../../../Utils'
 import { isInResults, isSelected } from '../../../tools/functions/member'
 import { MediumAvatar, TinyAvatar } from '../../../tools/global/Avatars'
-import { IoClose } from 'react-icons/io5'
+import Icon from '../../../tools/icons/Icon'
 
 const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
     const [title, setTitle] = useState(element.title)
@@ -115,7 +115,7 @@ const UpdateTask = ({ element, open, setOpen, project, user, websocket }) => {
                                     <div className="user_in_array" key={key}>
                                         <TinyAvatar pic={element.picture} />
                                         <p>{element.pseudo}</p>
-                                        <IoClose onClick={() => removeMemberFromArray(element, array, setArray)} />
+                                        <Icon name="Cross" onClick={() => removeMemberFromArray(element, array, setArray)} />
                                     </div>
                                 )
                             })

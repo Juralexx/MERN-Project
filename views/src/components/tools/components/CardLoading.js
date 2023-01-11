@@ -1,5 +1,4 @@
 import React from 'react'
-import { BsFillPeopleFill } from 'react-icons/bs'
 
 const CardLoading = () => {
     return (

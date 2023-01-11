@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import { stateToBackground, statusToBorder, isDatePassed, stateToString, statusToString, statusToBackground, removeTask, changeState } from '../../../tools/functions/task'
 import { dateParser, getDifference } from '../../../Utils'
-import { HiPlus } from 'react-icons/hi'
-import { DragDropContext } from "react-beautiful-dnd";
-import { Draggable } from "react-beautiful-dnd";
-import { Droppable } from "react-beautiful-dnd";
-import { MdOutlineMessage } from 'react-icons/md'
+import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 import ToolsMenu from '../../../tools/global/ToolsMenu'
+import Icon from '../../../tools/icons/Icon';
 
 const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch, setCreateTask, setUpdateTask, setTask, setOpenTask, setState }) => {
     const todo = tasks.filter(element => element.state === "todo")
@@ -38,7 +35,7 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
                                     <div className="col-12 col-md-4" {...provided.droppableProps} ref={provided.innerRef} onMouseEnter={() => getState(i)}>
                                         <div className="kanban-header-title" key={i}>
                                             <div className="col-title">{stateToString(names[i])} <span>{array[i].length}</span></div>
-                                            <HiPlus onClick={() => { setState(names[i]); setCreateTask(true) }} />
+                                            <Icon name="Plus" onClick={() => { setState(names[i]); setCreateTask(true) }} />
                                         </div>
                                         {arr.map((element, key) => {
                                             return (
@@ -56,7 +53,7 @@ const Kanban = ({ project, user, isAdmin, isManager, tasks, websocket, dispatch,
                                                                     <div className="two_lines">{element.title}</div>
                                                                     {element.comments.length > 0 &&
                                                                         <div className="flex items-center mr-2">
-                                                                            <MdOutlineMessage className="mr-1" />{element.comments.length}
+                                                                            <Icon name="Chat" className="mr-1" />{element.comments.length}
                                                                         </div>
                                                                     }
                                                                     <ToolsMenu>

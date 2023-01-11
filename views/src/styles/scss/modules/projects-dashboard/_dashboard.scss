@@ -2,7 +2,7 @@
     position   : relative;
     display    : flex;
     width      : 100%;
-    height     : calc(100% - 54px);
+    min-height : calc(100% - 54px);
     background : var(--content-light);
 
     .dashboard-content {

@@ -36,15 +36,16 @@
                 display          : flex;
                 align-items      : center;
                 justify-content  : center;
+                padding          : 7px;
                 background-color : rgb(27, 27, 27);
                 border-radius    : var(--rounded-md);
-                height           : 30px;
-                width            : 30px;
                 margin           : 0 3px;
                 cursor           : pointer;
 
                 svg {
-                    color : white;
+                    height  : 16px;
+                    width   : 16px;
+                    color   : white;
                 }
             }
         }

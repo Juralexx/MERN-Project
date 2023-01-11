@@ -1,7 +1,7 @@
 import React from 'react'
-import { IoMdImage } from 'react-icons/io'
 import { Link } from 'react-router-dom'
 import { StringButton } from '../../../tools/global/Button'
+import Icon from '../../../tools/icons/Icon'
 
 const HomeGallery = ({ project, user, websocket }) => {
     return (
@@ -25,7 +25,7 @@ const HomeGallery = ({ project, user, websocket }) => {
                     })
                 ) : (
                     <div className="empty-array">
-                        <IoMdImage />
+                        <Icon name="Picture" />
                         <div>Vous n'avez aucunes images...</div>
                     </div>
                 )}

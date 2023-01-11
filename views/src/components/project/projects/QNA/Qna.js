@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import { Button } from '../../../tools/global/Button'
 import EditQna from './EditQna'
-import { GrBlockQuote } from 'react-icons/gr';
+import Icon from '../../../tools/icons/Icon';
 
 const Qna = ({ project, isManager }) => {
     return (
@@ -39,7 +39,7 @@ const Qna = ({ project, isManager }) => {
                             </div>
                             <div className="no_content">
                                 <div className="svg_container">
-                                    <GrBlockQuote />
+                                    <Icon name="Quotes" />
                                 </div>
                                 <p>Vous n'avez pas encore ajouté de FAQ.</p>
                                 <span>Ajoutez une FAQ pour répondre aux questions que vos visiteur pourraient se poser !</span>

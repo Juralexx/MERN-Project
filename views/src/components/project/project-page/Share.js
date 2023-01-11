@@ -11,11 +11,11 @@ const Share = ({ share }) => {
     }, {
         button: LinkedinShareButton,
         name: 'Linkedin',
-        picto: <Icon name="Linkedin" />
+        picto: <Icon name="LinkedinSquare" />
     }, {
         button: PinterestShareButton,
         name: 'Pinterest',
-        picto: <Icon name="Pinterest" />
+        picto: <Icon name="PinterestCircle" />
     }, {
         button: TwitterShareButton,
         name: 'Twitter',

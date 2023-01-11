@@ -3,8 +3,7 @@ import { changeState, stateToBackground, isDatePassed, removeTask, stateToString
 import { addClass, dateParser, getDifference, reduceString } from '../../../Utils'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
 import Checkbox from '../../../tools/global/Checkbox'
-import { RiCalendarTodoLine } from 'react-icons/ri'
-import { MdOutlineMessage, MdKeyboardArrowDown } from 'react-icons/md'
+import Icon from '../../../tools/icons/Icon'
 
 const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks, setOpenTask, websocket, dispatch, setUpdateTask, setTask }) => {
     const todo = tasks.filter(element => element.state === "todo")
@@ -45,7 +44,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                 <div className="flex">
                                     <p>{returnTitle(uniquekey)} <span>{arr.length}</span></p>
                                 </div>
-                                <MdKeyboardArrowDown />
+                                <Icon name="CaretDown" />
                             </div>
                             {arr.length > 0 ? (
                                 arr.map((element, key) => {
@@ -63,7 +62,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                                     <div className="tasklist-table-item-tools">
                                                         {element.comments.length > 0 &&
                                                             <div className="flex items-center mr-2" onClick={() => { setTask(element); setOpenTask(true) }}>
-                                                                <MdOutlineMessage className="mr-1" />
+                                                                <Icon name="Chat" className="mr-1" />
                                                                 <span>{element.comments.length}</span>
                                                             </div>
                                                         }
@@ -116,7 +115,7 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                 })
                             ) : (
                                 <div className="empty-array">
-                                    <div><RiCalendarTodoLine /></div>
+                                    <Icon name="Calendar" />
                                     <div>Vous n'avez aucunes tâches <span>{returnTitle(uniquekey)}...</span></div>
                                 </div>
                             )}
@@ -139,7 +138,10 @@ const TasksList = ({ project, user, isAdmin, isManager, navbar, setNavbar, tasks
                                         <div className="flex items-center">{reduceString(element.title, 60)}</div>
                                         <div className="tasklist-table-item-tools">
                                             {element.comments.length > 0 &&
-                                                <div className="flex items-center mr-2"><MdOutlineMessage className="mr-1" /><span>{element.comments.length}</span></div>
+                                                <div className="flex items-center mr-2">
+                                                    <Icon name="Chat" className="mr-1" />
+                                                    <span>{element.comments.length}</span>
+                                                </div>
                                             }
                                             <ToolsMenu>
                                                 <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>

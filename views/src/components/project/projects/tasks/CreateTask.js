@@ -8,7 +8,7 @@ import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../../tool
 import { Button } from '../../../tools/global/Button'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../../tools/functions/task'
 import { MediumAvatar, TinyAvatar } from '../../../tools/global/Avatars'
-import { IoClose } from 'react-icons/io5'
+import Icon from '../../../tools/icons/Icon'
 
 const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, description, setDescription, end, setEnd, status, setStatus, state, setState, array, setArray }) => {
     const [displayStatus, setDisplayStatus] = useState(false)
@@ -100,7 +100,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                                     <div className="user_in_array" key={key}>
                                         <TinyAvatar pic={element.picture} />
                                         <p>{element.pseudo}</p>
-                                        <IoClose onClick={() => removeMemberFromArray(element, array, setArray)} />
+                                        <Icon name="Cross" onClick={() => removeMemberFromArray(element, array, setArray)} />
                                     </div>
                                 )
                             })}

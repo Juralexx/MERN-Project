@@ -62,13 +62,14 @@
     min-width     : 768px;
 
     .dashboard-members-table-tools {
-        display       : flex;
-        align-items   : center;
-        padding       : 10px 20px;
-        width         : 25%;
-        cursor        : pointer;
-        border-radius : var(--rounded-sm);
-        border-right  : 1px solid var(--light-border);
+        display         : flex;
+        align-items     : center;
+        justify-content : space-between;
+        padding         : 10px 20px;
+        width           : 25%;
+        cursor          : pointer;
+        border-radius   : var(--rounded-sm);
+        border-right    : 1px solid var(--light-border);
 
         &:last-child {
             border : none;

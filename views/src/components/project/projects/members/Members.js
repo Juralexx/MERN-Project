@@ -8,9 +8,7 @@ import MembersRequests from './MembersRequests'
 import { TextButton, ToolsBtn } from '../../../tools/global/Button'
 import { ClassicInput, DropdownInput } from '../../../tools/global/Inputs'
 import { MediumAvatar } from '../../../tools/global/Avatars'
-import { MdOutlineMessage } from 'react-icons/md'
-import { AiOutlinePlus, AiOutlineUser } from 'react-icons/ai'
-import { CgArrowAlignV } from 'react-icons/cg'
+import Icon from '../../../tools/icons/Icon'
 
 const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
     const [members, setMembers] = useState(project.members)
@@ -50,7 +48,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                 </TextButton>
                             }
                             <TextButton className="btn_icon_start" onClick={() => setAddMembers(true)}>
-                                <AiOutlinePlus />Ajouter un membre
+                                <Icon name="Plus" />Ajouter un membre
                             </TextButton>
                         </div>
                     }
@@ -111,13 +109,13 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                             setMembers(sortByAlpha(members))
                             setFilter("Ordre alphabétique")
                         }}>
-                            Nom <CgArrowAlignV />
+                            Nom <Icon name="UpAndDown" />
                         </div>
                         <div className="dashboard-members-table-tools" onClick={() => {
                             setMembers(sortByRole(members))
                             setFilter("Par rôle")
                         }}>
-                            Rôle <CgArrowAlignV />
+                            Rôle <Icon name="UpAndDown"  />
                         </div>
                         <div className="dashboard-members-table-tools" onClick={
                             isByRecent ? (
@@ -132,7 +130,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                 }
                             )
                         }>
-                            Membre depuis <CgArrowAlignV />
+                            Membre depuis <Icon name="UpAndDown"  />
                         </div>
                         <div className="dashboard-members-table-tools"></div>
                     </div>
@@ -149,11 +147,11 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                     {element.id !== user._id &&
                                         <>
                                             <ToolsBtn>
-                                                <MdOutlineMessage />
+                                                <Icon name="Message" />
                                             </ToolsBtn>
                                             <ToolsBtn className="mx-2">
                                                 <Link to={"/" + element.pseudo}>
-                                                    <AiOutlineUser />
+                                                    <Icon name="User" />
                                                 </Link>
                                             </ToolsBtn>
                                             {(isManager || isAdmin) && element.role !== "manager" &&

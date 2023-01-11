@@ -1,23 +1,23 @@
-import { FaFacebookF, FaInstagram, FaTwitter, FaSnapchatGhost, FaYoutube, FaTwitch, FaPinterest, FaLinkedinIn, FaLink } from 'react-icons/fa'
+import Icon from '../icons/Icon'
 
 export const returnNetworkSVG = (network) => {
     if (network === "facebook")
-        return <FaFacebookF className="bg-facebook" />
+        return <Icon name="Facebook" className="bg-facebook" />
     else if (network === "instagram")
-        return <FaInstagram className="bg-instagram" />
+        return <Icon name="Instagram" className="bg-instagram" />
     else if (network === "twitter")
-        return <FaTwitter className="bg-twitter" />
+        return <Icon name="Twitter" className="bg-twitter" />
     else if (network === "snapchat")
-        return <FaSnapchatGhost className="bg-snapchat" />
+        return <Icon name="Snapchat" className="bg-snapchat" />
     else if (network === "youtube")
-        return <FaYoutube className="bg-youtube" />
+        return <Icon name="Youtube" className="bg-youtube" />
     else if (network === "twitch")
-        return <FaTwitch className="bg-twitch" />
+        return <Icon name="Twitch" className="bg-twitch" />
     else if (network === "pinterest")
-        return <FaPinterest className="bg-pinterest" />
+        return <Icon name="PinterestCircle" className="bg-pinterest" />
     else if (network === "linkedin")
-        return <FaLinkedinIn className="bg-linkedin" />
-    else return <FaLink className="bg-website" />
+        return <Icon name="Linkedin" className="bg-linkedin" />
+    else return <Icon name="Link" className="bg-website" />
 }
 
 export const returnNetworkText = (type) => {

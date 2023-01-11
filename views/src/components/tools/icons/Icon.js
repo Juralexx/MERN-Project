@@ -63,17 +63,46 @@ import BookOpen from './BookOpen';
 import Picture from './Picture';
 import Layers from './Layers';
 import Share from './Share';
-import Whatsapp from './Whatsapp';
-import FacebookCircle from './FacebookCircle';
-import Facebook from './Facebook';
-import Linkedin from './Linkedin';
-import Twitter from './Twitter';
-import Pinterest from './Pinterest';
-import Snapchat from './Snapchat';
-import Instagram from './Instagram';
-import Youtube from './Youtube';
-import Twitch from './Twitch';
 import Upload from './Upload';
+import Download from './Download';
+import PlusCircle from './PlusCircle';
+import MinusCircle from './MinusCircle';
+import UpAndDown from './UpAndDown';
+import Tasks from './Tasks';
+import File from './File';
+import FilesMultiples from './FilesMultiples';
+import Facebook from './Facebook';
+import FacebookCircle from './FacebookCircle';
+import FacebookSquare from './FacebookSquare';
+import FacebookOutline from './FacebookOutline';
+import Snapchat from './Snapchat';
+import SnapchatSquare from './SnapchatSquare';
+import SnapchatCircle from './SnapchatCircle';
+import SnapchatOutline from './SnapchatOutline';
+import Pinterest from './Pinterest';
+import PinterestCircle from './PinterestCircle';
+import PinterestSquare from './PinterestSquare';
+import PinterestOutline from './PinterestOutline';
+import Instagram from './Instagram';
+import InstagramFill from './InstagramFill';
+import InstagramSquare from './InstagramSquare';
+import Youtube from './Youtube';
+import YoutubeOutline from './YoutubeOutline';
+import YoutubeSquare from './YoutubeSquare';
+import YoutubeTextLogo from './YoutubeTextLogo';
+import Twitter from './Twitter';
+import TwitterSquare from './TwitterSquare';
+import TwitterCircle from './TwitterCircle';
+import TwitterOutline from './TwitterOutline';
+import Twitch from './Twitch';
+import TwitchOutline from './TwitchOutline';
+import Linkedin from './Linkedin';
+import LinkedinOutline from './LinkedinOutline';
+import LinkedinSquare from './LinkedinSquare';
+import LinkedinSquareOutline from './LinkedinSquareOutline';
+import Whatsapp from './Whatsapp';
+import WhatsappSquare from './WhatsappSquare';
+import WhatsappOutline from './WhatsappOutline';
 
 const Icon = (props) => {
     switch (props.name) {
@@ -85,8 +114,12 @@ const Icon = (props) => {
             return <Dashboard {...props} />;
         case 'Plus':
             return <Plus {...props} />;
+        case 'PlusCircle':
+            return <PlusCircle {...props} />;
         case 'Minus':
             return <Minus {...props} />;
+        case 'MinusCircle':
+            return <MinusCircle {...props} />;
         case 'Chat':
             return <Chat {...props} />;
         case 'Message':
@@ -107,6 +140,8 @@ const Icon = (props) => {
             return <ArrowUp {...props} />;
         case 'ArrowDown':
             return <ArrowDown {...props} />;
+        case 'UpAndDown':
+            return <UpAndDown {...props} />;
         case 'CaretLeft':
             return <CaretLeft {...props} />;
         case 'CaretRight':
@@ -203,28 +238,80 @@ const Icon = (props) => {
             return <Layers {...props} />;
         case 'Facebook':
             return <Facebook {...props} />;
+        case 'FacebookSquare':
+            return <FacebookSquare {...props} />;
         case 'FacebookCircle':
             return <FacebookCircle {...props} />;
+        case 'FacebookOutline':
+            return <FacebookOutline {...props} />;
         case 'Instagram':
             return <Instagram {...props} />;
+        case 'InstagramFill':
+            return <InstagramFill {...props} />;
+        case 'InstagramSquare':
+            return <InstagramSquare {...props} />;
         case 'Snapchat':
             return <Snapchat {...props} />;
-        case 'Linkedin':
-            return <Linkedin {...props} />;
+        case 'SnapchatSquare':
+            return <SnapchatSquare {...props} />;
+        case 'SnapchatCircle':
+            return <SnapchatCircle {...props} />;
+        case 'SnapchatOutline':
+            return <SnapchatOutline {...props} />;
         case 'Pinterest':
             return <Pinterest {...props} />;
-        case 'Twitter':
-            return <Twitter {...props} />;
-        case 'Whatsapp':
-            return <Whatsapp {...props} />;
+        case 'PinterestCircle':
+            return <PinterestCircle {...props} />;
+        case 'Pinterest':
+            return <PinterestSquare {...props} />;
+        case 'Pinterest':
+            return <PinterestOutline {...props} />;
         case 'Youtube':
             return <Youtube {...props} />;
+        case 'YoutubeOutline':
+            return <YoutubeOutline {...props} />;
+        case 'YoutubeSquare':
+            return <YoutubeSquare {...props} />;
+        case 'YoutubeTextLogo':
+            return <YoutubeTextLogo {...props} />;
+        case 'Twitter':
+            return <Twitter {...props} />;
+        case 'TwitterSquare':
+            return <TwitterSquare {...props} />;
+        case 'TwitterOutline':
+            return <TwitterOutline {...props} />;
+        case 'TwitterCircle':
+            return <TwitterCircle {...props} />;
         case 'Twitch':
             return <Twitch {...props} />;
+        case 'TwitchOutline':
+            return <TwitchOutline {...props} />;
+        case 'Linkedin':
+            return <Linkedin {...props} />;
+        case 'LinkedinOutline':
+            return <LinkedinOutline {...props} />;
+        case 'LinkedinSquare':
+            return <LinkedinSquare {...props} />;
+        case 'LinkedinSquareOutline':
+            return <LinkedinSquareOutline {...props} />;
+        case 'Whatsapp':
+            return <Whatsapp {...props} />;
+        case 'WhatsappSquare':
+            return <WhatsappSquare {...props} />;
+        case 'WhatsappOutline':
+            return <WhatsappOutline {...props} />;
         case 'Share':
             return <Share {...props} />;
         case 'Upload':
             return <Upload {...props} />;
+        case 'Download':
+            return <Download {...props} />;
+        case 'Tasks':
+            return <Tasks {...props} />;
+        case 'File':
+            return <File {...props} />;
+        case 'FilesMultiples':
+            return <FilesMultiples {...props} />;
         default:
             return <Link {...props} />;
     }

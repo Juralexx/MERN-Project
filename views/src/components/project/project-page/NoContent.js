@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { followProject, unfollowProject } from '../../../actions/project.action'
-import { MdOutlineBookmark, MdOutlineBookmarkBorder } from 'react-icons/md'
 import Icon from '../../tools/icons/Icon'
 
 const NoContent = ({ user, project, icon, mainText, text, className }) => {
