@@ -6,8 +6,7 @@ import "swiper/css/navigation";
 import 'swiper/css';
 import { convertDeltaToHTML } from '../../tools/editor/functions';
 import NoContent from './NoContent';
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
-import { BiNews } from 'react-icons/bi';
+import Icon from '../../tools/icons/Icon';
 
 const ActualityCard = ({ project, user }) => {
     const [swiper, setSwiper] = useState()
@@ -26,11 +25,17 @@ const ActualityCard = ({ project, user }) => {
     return (
         <div className="content-card actuality_card">
             <div className="card-title">
-                <Link to={`/project/${project.URLID}/${project.URL}/actuality`}><h3>Actualités</h3></Link>
+                <h3>
+                    <Link to={`/project/${project.URLID}/${project.URL}/actuality`}>Actualités</Link>
+                </h3>
                 {project.actualities.length > 0 &&
                     <div className="flex">
-                        <div className="swiper-button previous mr-1" ref={prevRef}><MdOutlineKeyboardArrowLeft /></div>
-                        <div className="swiper-button next" ref={nextRef}><MdOutlineKeyboardArrowRight /></div>
+                        <div className="swiper-button previous mr-1" ref={prevRef}>
+                            <Icon name="CaretLeft" />
+                        </div>
+                        <div className="swiper-button next" ref={nextRef}>
+                            <Icon name="CaretRight" />
+                        </div>
                     </div>
                 }
             </div>
@@ -56,7 +61,13 @@ const ActualityCard = ({ project, user }) => {
                     </Swiper>
                 </div>
             ) : (
-                <NoContent className="actuality_card" project={project} user={user} icon={<BiNews />} text="Suivez le projet pour savoir quand une nouvelle actualité sera ajoutée !" />
+                <NoContent
+                    className="actuality_card"
+                    project={project}
+                    user={user}
+                    icon={<Icon name="BookOpen" />}
+                    text="Suivez le projet pour savoir quand une nouvelle actualité sera ajoutée !"
+                />
             )}
         </div>
     )

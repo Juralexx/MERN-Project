@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { MdOutlinePhotoLibrary } from 'react-icons/md'
 import NoContent from './NoContent'
 import FsLightbox from 'fslightbox-react';
 import { fullImage } from '../../Utils';
+import Icon from '../../tools/icons/Icon';
 
 const Gallery = ({ project, user }) => {
     const [toggler, setToggler] = useState(false)
@@ -28,7 +28,7 @@ const Gallery = ({ project, user }) => {
                     className="gallery_card"
                     project={project}
                     user={user}
-                    icon={<MdOutlinePhotoLibrary />}
+                    icon={<Icon name="Picture" />}
                     text="Suivez le projet pour savoir quand des photos seront ajoutées !"
                 />
             )}

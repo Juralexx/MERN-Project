@@ -4,9 +4,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import NoContent from './NoContent';
-import { GrBlockQuote } from 'react-icons/gr';
+import Icon from '../../tools/icons/Icon';
 
 const QnaCard = ({ project, user }) => {
     const [swiper, setSwiper] = useState()
@@ -28,8 +27,12 @@ const QnaCard = ({ project, user }) => {
                 <Link to={`/project/${project.URLID}/${project.URL}/qna`}><h3>Foire aux questions</h3></Link>
                 {project.QNA.length > 0 &&
                     <div className="flex">
-                        <div className="swiper-button previous mr-1" ref={prevRef}><MdOutlineKeyboardArrowLeft /></div>
-                        <div className="swiper-button next" ref={nextRef}><MdOutlineKeyboardArrowRight /></div>
+                        <div className="swiper-button previous mr-1" ref={prevRef}>
+                            <Icon name="CaretLeft" />
+                        </div>
+                        <div className="swiper-button next" ref={nextRef}>
+                            <Icon name="CaretRight" />
+                        </div>
                     </div>
                 }
             </div>
@@ -55,7 +58,13 @@ const QnaCard = ({ project, user }) => {
                     </Swiper>
                 </div>
             ) : (
-                <NoContent className="qna_card" project={project} user={user} icon={<GrBlockQuote />} text="Suivez le projet pour savoir quand une nouvelle actualité sera ajoutée !" />
+                <NoContent
+                    className="qna_card"
+                    project={project}
+                    user={user}
+                    icon={<Icon name="Quotes" />}
+                    text="Suivez le projet pour savoir quand une nouvelle actualité sera ajoutée !"
+                />
             )}
         </div>
     )

@@ -8,7 +8,7 @@ import Header from '../components/home/Header';
 import ProjectsSwiper from '../components/home/ProjectsSwiper';
 import CategoriesSwiper from '../components/home/CategoriesSwiper';
 import TagsSwiper from '../components/home/TagsSwiper';
-import { MdArrowRightAlt } from 'react-icons/md';
+import Icon from '../components/tools/icons/Icon';
 
 const Home = ({ websocket, user }) => {
     const [isLoading, setLoading] = useState(true)
@@ -87,7 +87,7 @@ const Home = ({ websocket, user }) => {
                                     <div className="swiper-header">
                                         <h2>Les plus récent</h2>
                                         <Link to="/">
-                                            Voir plus <MdArrowRightAlt />
+                                            Voir plus <Icon name="ArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -103,7 +103,7 @@ const Home = ({ websocket, user }) => {
                                     <div className="swiper-header">
                                         <h2>Tous les projets</h2>
                                         <Link to="/">
-                                            Voir plus <MdArrowRightAlt />
+                                            Voir plus <Icon name="ArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -119,7 +119,7 @@ const Home = ({ websocket, user }) => {
                                     <div className="swiper-header">
                                         <h2>Les plus aimés</h2>
                                         <Link to="/">
-                                            Voir plus <MdArrowRightAlt />
+                                            Voir plus <Icon name="ArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -135,7 +135,7 @@ const Home = ({ websocket, user }) => {
                                     <div className="swiper-header">
                                         <h2>Les plus suivis</h2>
                                         <Link to="/">
-                                            Voir plus <MdArrowRightAlt />
+                                            Voir plus <Icon name="ArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">

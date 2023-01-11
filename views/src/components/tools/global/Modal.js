@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { IoClose } from 'react-icons/io5'
 import { useClickOutside } from '../hooks/useClickOutside'
+import Icon from '../icons/Icon'
 
 const Modal = (props) => {
     const { open, setOpen, className } = props
@@ -27,7 +27,7 @@ const Modal = (props) => {
             <div className={open ? "modal_wrapper" : "modal_wrapper hide_wrapper"}>
                 <div className={open ? className ? "modal_container show_modal " + className : "modal_container show_modal " : 'modal_container hide_modal'} ref={mapRef}>
                     <div className="close_modal" onClick={close}>
-                        <IoClose />
+                        <Icon name="Cross" />
                     </div>
                     {props.children}
                 </div>

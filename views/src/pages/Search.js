@@ -8,10 +8,7 @@ import FollowersModal from '../components/tools/components/FollowersModal'
 import { DropdownInput, IconInput } from '../components/tools/global/Inputs'
 import LikersModal from '../components/tools/components/LikersModal'
 import MapModal from '../components/tools/map/MapModal'
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineSearch, AiOutlineUnorderedList, AiOutlineUser } from 'react-icons/ai'
-import { MdOutlineDoubleArrow } from 'react-icons/md'
-import { IoIosArrowDown } from 'react-icons/io'
-import { GiFrance } from 'react-icons/gi'
+import Icon from '../components/tools/icons/Icon'
 
 const Search = ({ websocket, user, search, results, datas, setDatas, sortedProjects }) => {
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
@@ -40,7 +37,7 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
                             className="is_start_icon mb-3"
                             placeholder="Rechercher un projet"
                             type="search"
-                            icon={<AiOutlineSearch />}
+                            icon={<Icon name="Search" />}
                             defaultValue={datas.query}
                             onChange={e => setDatas(data => ({ ...data, query: e.target.value }))}
                         />
@@ -50,8 +47,8 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
                                     className="is_start_icon cursor-pointer"
                                     placeholder="Catégorie"
                                     readOnly
-                                    icon={<AiOutlineUnorderedList />}
-                                    endIcon={<IoIosArrowDown />}
+                                    icon={<Icon name="List" />}
+                                    endIcon={<Icon name="CaretDown" />}
                                     onClick={() => setOpenCategories(!openCategories)}
                                     onChange={() => setDatas(data => ({ ...data, category: datas.category }))}
                                     value={datas.category}
@@ -67,7 +64,7 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
                                     className="is_start_icon"
                                     placeholder="Métier"
                                     type="text"
-                                    icon={<AiOutlineUser />}
+                                    icon={<Icon name="User" />}
                                     defaultValue=""
                                     onChange={e => setDatas(data => ({ ...data, skills: e.target.value }))}
                                 />
@@ -111,18 +108,18 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
                         <div className={`btn-container flex justify-between items-center ${!moreFilters ? 'pt-3' : 'pt-0'}`}>
                             <div className="hidden sm:flex">
                                 <TextButton className="btn_icon_start primary mr-2" onClick={() => setOpenMapModal(true)}>
-                                    <GiFrance />Voir la carte
+                                    <Icon name="France" />Voir la carte
                                 </TextButton>
                                 <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}>
-                                    {!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
+                                    {!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
                                 </TextButton>
                             </div>
                             <div className="flex sm:hidden">
-                                <IconToggle className="primary mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
-                                <IconToggle className="primary mr-4" icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
+                                <IconToggle className="primary mr-2" icon={<Icon name="France" />} onClick={() => setOpenMapModal(true)} />
+                                <IconToggle className="primary mr-4" icon={!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />} onClick={() => setMoreFilters(!moreFilters)} />
                             </div>
                             <Button className="btn_icon_end" onClick={search}>
-                                Rechercher<MdOutlineDoubleArrow />
+                                Rechercher<Icon name="DoubleArrowRight" />
                             </Button>
                         </div>
                     </div>

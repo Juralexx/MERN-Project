@@ -101,35 +101,19 @@
     display   : flex;
     flex-wrap : wrap;
     padding   : 20px 0;
+}
 
-    .action-btn {
-        font-weight      : 700;
-        border-radius    : var(--rounded-sm);
-        color            : var(--text);
-        background-color : var(--xx-light);
-        margin           : 5px 7px 5px 0;
+.action-btn {
+    font-weight      : 700;
+    border-radius    : var(--rounded-sm);
+    color            : var(--text);
+    background-color : var(--xx-light);
+    margin           : 5px 7px 5px 0;
 
-        svg {
-            width       : 22px;
-            height      : 22px;
-            margin-left : 10px;
-        }
-
-        &.like {
-            svg {
-                color : var(--red);
-            }
-        }
-        &.follow {
-            svg {
-                color : var(--green);
-            }
-        }
-        &.share {
-            svg {
-                color : var(--xblue);
-            }
-        }
+    svg {
+        width       : 16px;
+        height      : 16px;
+        margin-left : 10px;
     }
 }
 

@@ -156,7 +156,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                             {location.pathname === "/register" &&
                                 <>
                                     <Link to="/" className="move-back">
-                                        <Icon name="ArrowLeft" className="nav_icon" />
+                                        <Icon name="ArrowLeft" />
                                     </Link>
                                     <div className="navbar_form_pages">
                                         <Link to="/">
@@ -165,7 +165,6 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                             </div>
                                         </Link>
                                         <div className="right">
-                                            <Icon name="Register" className="nav_icon" />
                                             <p>Inscription</p>
                                         </div>
                                     </div>
@@ -174,7 +173,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                             {location.pathname === "/login" &&
                                 <>
                                     <Link to="/" className="move-back">
-                                        <Icon name="ArrowLeft" className="nav_icon" />
+                                        <Icon name="ArrowLeft" />
                                     </Link>
                                     <div className="navbar_form_pages">
                                         <Link to="/">
@@ -183,7 +182,6 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                             </div>
                                         </Link>
                                         <div className="right">
-                                            <Icon name="User" className="nav_icon" />
                                             <p>Connexion</p>
                                         </div>
                                     </div>

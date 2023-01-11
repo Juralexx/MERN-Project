@@ -4,8 +4,8 @@ import AvatarEditor from 'react-avatar-editor'
 import { deleteProfilPicture, uploadProfilPicture } from "../../../actions/user.action.upload";
 import Modal from '../../tools/global/Modal'
 import { Button, IconToggle, TextButton } from "../../tools/global/Button";
-import { MdPhotoCamera } from 'react-icons/md'
 import { fullImage } from "../../Utils";
+import Icon from "../../tools/icons/Icon";
 
 const UploadImg = ({ user }) => {
     const [open, setOpen] = useState(false)
@@ -57,7 +57,7 @@ const UploadImg = ({ user }) => {
         <>
             <IconToggle
                 className="btn_img_edit"
-                icon={<MdPhotoCamera />}
+                icon={<Icon name="Camera" />}
                 onClick={() => setOpen(!open)}
             />
             <Modal open={open} setOpen={setOpen} className="profil_img_modal">

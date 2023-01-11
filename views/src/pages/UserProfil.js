@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate, Route, Routes, Navigate, useLocation, Link } from 'react-router-dom'
+import { useParams, useNavigate, Route, Routes, useLocation, Link } from 'react-router-dom'
 import { addClass, dateParser, fullImage } from "../components/Utils";
 import { replaceHTTP, returnNetworkSVG } from "../components/tools/functions/networks";
 import Footer from "../components/Footer";
-import { FaUserShield } from "react-icons/fa";
-import { MdOutlineCalendarToday } from "react-icons/md";
-import { HiOutlineLocationMarker } from "react-icons/hi";
 import { OvalLoader } from "../components/tools/global/Loader";
 import Card from "../components/tools/components/Card";
+import Icon from "../components/tools/icons/Icon";
 
 const UserProfil = () => {
     const { pseudo } = useParams()
@@ -21,6 +19,7 @@ const UserProfil = () => {
             try {
                 const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/profil/${pseudo}`)
                 if (data.pseudo) setUser(data)
+                else navigate('/')
             } catch (err) {
                 console.error(err)
             }
@@ -87,17 +86,17 @@ const UserProfil = () => {
                             <div className='col-12 col-sm-6 col-lg-12'>
                                 <div className="f-24 bold txt-prim mb-2">{user?.pseudo}</div>
                                 <p className="flex items-center mb-1">
-                                    <MdOutlineCalendarToday className="mr-2 primary" />inscrit le {dateParser(user.createdAt)}
+                                    <Icon name="Calendar" className="mr-2" />inscrit le {dateParser(user.createdAt)}
                                 </p>
                                 {user.location &&
                                     <p className="flex items-center mb-1">
-                                        <HiOutlineLocationMarker className="mr-2 primary" />
+                                        <Icon name="Position" className="mr-2" />
                                         {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})
                                     </p>
                                 }
                                 {user.work &&
                                     <p className="flex items-center">
-                                        <FaUserShield className="mr-2 primary" /> {user?.work}
+                                        <Icon name="User" className="mr-2" /> {user?.work}
                                     </p>
                                 }
                             </div>

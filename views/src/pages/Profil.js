@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { addClass, fullImage } from "../components/Utils";
 import UploadCoverImg from "../components/profil/uploads/UploadCoverImg";
 import UploadImg from "../components/profil/uploads/UploadImg";

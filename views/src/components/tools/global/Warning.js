@@ -1,6 +1,6 @@
 import React from 'react'
-import { IoClose } from 'react-icons/io5'
 import { Button, TextButton } from '../global/Button'
+import Icon from '../icons/Icon'
 
 const Warning = (props) => {
     const { open, setOpen, css, title, text, cancelBtn, validateBtn, onValidate, onClose, className } = props
@@ -20,7 +20,7 @@ const Warning = (props) => {
             <div className={open ? "modal_wrapper" : "modal_wrapper hide_wrapper"}>
                 <div className={open ? `modal_container warning_modal modal_container-active show_modal ${css ? css : null}` : 'modal_container warning_modal hide_modal'}>
                     <div className="close_modal" onClick={close}>
-                        <IoClose />
+                        <Icon name="Cross" />
                     </div>
                     <div className="warning_title">{title}</div>
                     <div className="warning_text">{text}</div>

@@ -7,11 +7,8 @@ import ToolsMenu from '../tools/global/ToolsMenu'
 import Warning from '../tools/global/Warning'
 import { removeFriend } from '../tools/functions/friend'
 import { dateParser, fullImage } from '../Utils'
-import { BiSearchAlt } from 'react-icons/bi'
-import { IoArrowRedo, IoTrashBin } from 'react-icons/io5'
-import { MdOutlineMessage } from 'react-icons/md'
-import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { useFetchFriends } from '../tools/hooks/useFetchFriends'
+import Icon from '../tools/icons/Icon'
 
 const Friends = ({ user, websocket }) => {
     const { friendsArr, fetchedFriends } = useFetchFriends(user)
@@ -42,7 +39,7 @@ const Friends = ({ user, websocket }) => {
                 <h2>Contacts <span>{user?.friends?.length}</span></h2>
                 <IconInput
                     className="is_start_icon md:max-w-[350px] mt-2 md:mt-0"
-                    icon={<BiSearchAlt />}
+                    icon={<Icon name="Search" />}
                     placeholder="Rechercher un contact..."
                     value={search.query}
                     onInput={e => setSearch(content => ({ ...content, query: e.target.value }))}
@@ -71,16 +68,16 @@ const Friends = ({ user, websocket }) => {
                                             </div>
                                             <ToolsMenu>
                                                 <Link className="tools_choice" to={"/" + element.pseudo}>
-                                                    <IoArrowRedo />Voir le profil
+                                                    <Icon name="External" /> Voir le profil
                                                 </Link>
                                                 <div className="tools_choice">
-                                                    <MdOutlineMessage />Envoyer un message
+                                                    <Icon name="Chat" />Envoyer un message
                                                 </div>
                                                 <div className="tools_choice">
-                                                    <AiOutlineUsergroupAdd />Inviter à rejoindre un projet
+                                                    <Icon name="Group" />Inviter à rejoindre un projet
                                                 </div>
                                                 <div className="tools_choice red" onClick={() => setWarning(key)}>
-                                                    <IoTrashBin />Supprimer des contacts
+                                                    <Icon name="Trash" />Supprimer des contacts
                                                 </div>
                                             </ToolsMenu>
                                             <Warning

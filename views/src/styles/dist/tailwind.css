@@ -513,10 +513,6 @@ video {
   top: 50%;
 }
 
-.top-2 {
-  top: 0.5rem;
-}
-
 .z-10 {
   z-index: 10;
 }
@@ -735,8 +731,8 @@ video {
   height: 100%;
 }
 
-.h-6 {
-  height: 1.5rem;
+.h-4 {
+  height: 1rem;
 }
 
 .\!h-\[44px\] {
@@ -755,12 +751,12 @@ video {
   height: 3.5rem;
 }
 
-.h-4 {
-  height: 1rem;
-}
-
 .\!h-\[46px\] {
   height: 46px !important;
+}
+
+.h-3 {
+  height: 0.75rem;
 }
 
 .h-\[46px\] {
@@ -777,6 +773,10 @@ video {
 
 .h-2 {
   height: 0.5rem;
+}
+
+.h-6 {
+  height: 1.5rem;
 }
 
 .max-h-\[500px\] {
@@ -799,10 +799,6 @@ video {
   width: 1.75rem;
 }
 
-.w-6 {
-  width: 1.5rem;
-}
-
 .w-full {
   width: 100%;
 }
@@ -813,6 +809,10 @@ video {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .w-\[80\%\] {
@@ -831,8 +831,8 @@ video {
   width: 3.5rem;
 }
 
-.w-4 {
-  width: 1rem;
+.w-3 {
+  width: 0.75rem;
 }
 
 .w-\[110px\] {
@@ -847,8 +847,8 @@ video {
   width: 400px;
 }
 
-.min-w-full {
-  min-width: 100%;
+.w-6 {
+  width: 1.5rem;
 }
 
 .min-w-\[100\%\] {
@@ -1063,6 +1063,11 @@ video {
   padding-bottom: 0.25rem;
 }
 
+.\!px-0 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1071,16 +1076,6 @@ video {
 .py-9 {
   padding-top: 2.25rem;
   padding-bottom: 2.25rem;
-}
-
-.px-0 {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-.\!px-0 {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
 }
 
 .pt-8 {
@@ -1244,11 +1239,6 @@ video {
   background-color: rgb(45 45 45 / var(--tw-bg-opacity));
 }
 
-.dark .dark\:bg-background_primary_light {
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 30 30 / var(--tw-bg-opacity));
-}
-
 .dark .dark\:text-slate-300 {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
@@ -1297,20 +1287,6 @@ video {
 
   .sm\:justify-between {
     justify-content: space-between;
-  }
-
-  .sm\:p-0 {
-    padding: 0px;
-  }
-
-  .sm\:px-0 {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-
-  .sm\:px-3 {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
   }
 
   .sm\:\!px-3 {

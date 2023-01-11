@@ -15,6 +15,7 @@
     cursor          : pointer;
     white-space     : nowrap;
     transform       : scale(1);
+    box-shadow      : var(--shadow-tiny);
 
     &:disabled {
         opacity : 0.5;
@@ -71,8 +72,8 @@
     }
     &.btn_icon_end {
         svg {
-            height      : 18px;
-            width       : 18px;
+            height      : 22px;
+            width       : 22px;
             margin-left : 8px;
         }
     }
@@ -93,6 +94,10 @@
     color         : white;
     background    : var(--primary);
     border-radius : var(--rounded-sm);
+
+    svg {
+        color : white;
+    }
 
     &:hover {
         background : var(--primary-dark);
@@ -127,6 +132,9 @@
         background : none;
         padding    : 0;
         height     : unset;
+    }
+    svg {
+        color : var(--primary);
     }
 }
 

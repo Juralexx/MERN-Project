@@ -5,8 +5,8 @@ import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
 import NoContent from './NoContent';
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight, MdOutlinePhotoLibrary } from 'react-icons/md';
 import { fullImage } from '../../Utils';
+import Icon from '../../tools/icons/Icon';
 
 const GalleryCard = ({ project, user }) => {
     const [swiper, setSwiper] = useState()
@@ -26,11 +26,17 @@ const GalleryCard = ({ project, user }) => {
 
         <div className="content-card gallery_card">
             <div className="card-title">
-                <Link to={`/project/${project.URLID}/${project.URL}/gallery`}><h3>Galerie</h3></Link>
+                <h3>
+                    <Link to={`/project/${project.URLID}/${project.URL}/gallery`}>Galerie</Link>
+                </h3>
                 {project.pictures.length > 1 &&
                     <div className="flex">
-                        <div className="swiper-button previous mr-1" ref={prevRef}><MdOutlineKeyboardArrowLeft /></div>
-                        <div className="swiper-button next" ref={nextRef}><MdOutlineKeyboardArrowRight /></div>
+                        <div className="swiper-button previous mr-1" ref={prevRef}>
+                            <Icon name="CaretLeft" />
+                        </div>
+                        <div className="swiper-button next" ref={nextRef}>
+                            <Icon name="CaretRight" />
+                        </div>
                     </div>
                 }
             </div>
@@ -55,7 +61,13 @@ const GalleryCard = ({ project, user }) => {
                     </Swiper>
                 </div>
             ) : (
-                <NoContent className="gallery_card" project={project} user={user} icon={<MdOutlinePhotoLibrary />} text="Suivez le projet pour savoir quand des photos seront ajoutées !" />
+                <NoContent
+                    className="gallery_card"
+                    project={project}
+                    user={user}
+                    icon={<Icon name="Picture" />}
+                    text="Suivez le projet pour savoir quand des photos seront ajoutées !"
+                />
             )}
         </div>
     )

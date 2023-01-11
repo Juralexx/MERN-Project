@@ -3,9 +3,9 @@ import MapDepartments from "./MapDepartments";
 import MapRegions from "./MapRegions";
 import Modal from "../global/Modal";
 import { IconInput } from "../global/Inputs";
-import { BsCaretDownFill } from 'react-icons/bs'
 import { departments, regions } from "./api";
 import { addClass } from "../../Utils";
+import Icon from "../icons/Icon";
 
 const MapModal = ({ open, setOpen, datas, setDatas }) => {
 
@@ -99,7 +99,7 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
                     <IconInput
                         type="text"
                         placeholder="Région"
-                        endIcon={<BsCaretDownFill />}
+                        endIcon={<Icon name="CaretDown" />}
                         value={regionQuery}
                         onChange={e => setRegionQuery(e.target.value)}
                         onInput={searchRegions}
@@ -152,7 +152,7 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
                     <IconInput
                         type="text"
                         placeholder="Département"
-                        endIcon={<BsCaretDownFill />}
+                        endIcon={<Icon name="CaretDown" />}
                         value={departmentQuery}
                         onChange={e => setDepartmentQuery(e.target.value)}
                         onInput={searchDepartments}

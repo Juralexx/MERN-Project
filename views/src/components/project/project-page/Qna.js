@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import NoContent from './NoContent'
-import { MdKeyboardArrowRight, MdKeyboardArrowDown, MdOutlineNotificationsActive } from 'react-icons/md'
+import Icon from '../../tools/icons/Icon'
 
 const Qna = ({ project, user }) => {
     const [displayed, setDislayed] = useState([])
@@ -19,7 +19,7 @@ const Qna = ({ project, user }) => {
                         <div className="accordion" key={key} onClick={() => openAnswer(key)}>
                             <div className="accordion_top">
                                 <p>{element.question}</p>
-                                {displayed.includes(key) ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
+                                {displayed.includes(key) ? <Icon name="CaretDown" /> : <Icon name="CaretRight" />}
                             </div>
                             {displayed.includes(key) &&
                                 <div className="accordion_body">
@@ -30,7 +30,12 @@ const Qna = ({ project, user }) => {
                     )
                 })
             ) : (
-                <NoContent user={user} project={project} icon={<MdOutlineNotificationsActive />} mainText="Recevez les news du projet directement dans vos notifications !" text="Suivez le projet pour être tenu au courant de son avancement." />
+                <NoContent
+                    user={user}
+                    project={project}
+                    icon={<Icon name="Notifications" />}
+                    mainText="Recevez les news du projet directement dans vos notifications !" text="Suivez le projet pour être tenu au courant de son avancement."
+                />
             )}
         </>
     )

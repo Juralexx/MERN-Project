@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { ErrorCard } from '../tools/global/Error'
 import { IconInput } from '../tools/global/Inputs'
+import Icon from '../tools/icons/Icon'
 
 const EditPassword = ({ password, setPassword, error, setError, checkErr }) => {
     const [passwordShown, setPasswordShown] = useState([])
@@ -22,7 +22,7 @@ const EditPassword = ({ password, setPassword, error, setError, checkErr }) => {
                 placeholder="Ancien mot de passe..."
                 defaultValue={password.password}
                 onChange={(e) => setPassword(datas => ({ ...datas, password: e.target.value }))}
-                endIcon={passwordShown.includes(1) ? <AiFillEyeInvisible /> : <AiFillEye />}
+                endIcon={passwordShown.includes(1) ? <Icon name="Hidden" /> : <Icon name="Visible" />}
                 endIconClick={() => showPassword(1)}
             />
             {error.element === "password" &&
@@ -39,7 +39,7 @@ const EditPassword = ({ password, setPassword, error, setError, checkErr }) => {
                 placeholder="Nouveau mot de passe..."
                 defaultValue={password.newPassword}
                 onChange={e => setPassword(datas => ({ ...datas, password: e.target.value }))}
-                endIcon={passwordShown.includes(2) ? <AiFillEyeInvisible /> : <AiFillEye />}
+                endIcon={passwordShown.includes(2) ? <Icon name="Hidden" /> : <Icon name="Visible" />}
                 endIconClick={() => showPassword(2)}
             />
             {error.element === "new-password" &&
@@ -56,7 +56,7 @@ const EditPassword = ({ password, setPassword, error, setError, checkErr }) => {
                 placeholder="Confirmation nouveau mot de passe..."
                 defaultValue={password.confirmedNewPassword}
                 onChange={(e) => setPassword(datas => ({ ...datas, confirmedNewPassword: e.target.value }))}
-                endIcon={passwordShown.includes(3) ? <AiFillEyeInvisible /> : <AiFillEye />}
+                endIcon={passwordShown.includes(3) ? <Icon name="Hidden" /> : <Icon name="Visible" />}
                 endIconClick={() => showPassword(3)}
             />
             {error.element === "confirmed-new-password" &&

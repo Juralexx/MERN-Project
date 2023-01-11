@@ -293,6 +293,9 @@ body::-webkit-scrollbar-thumb {
   border: 3px solid var(--content-light);
   border-radius: 10px;
 }
+body svg {
+  color: var(--svg-x-light);
+}
 
 #main {
   position: relative;
@@ -1565,6 +1568,8 @@ select:-webkit-autofill:focus {
   white-space: nowrap;
   -webkit-transform: scale(1);
           transform: scale(1);
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
 }
 .btn:disabled {
   opacity: 0.5;
@@ -1612,8 +1617,8 @@ select:-webkit-autofill:focus {
   margin-right: 8px;
 }
 .btn.btn_icon_end svg {
-  height: 18px;
-  width: 18px;
+  height: 22px;
+  width: 22px;
   margin-left: 8px;
 }
 .btn a {
@@ -1637,6 +1642,9 @@ select:-webkit-autofill:focus {
   color: white;
   background: var(--primary);
   border-radius: var(--rounded-sm);
+}
+.btn_first svg {
+  color: white;
 }
 .btn_first:hover {
   background: var(--primary-dark);
@@ -1669,6 +1677,9 @@ select:-webkit-autofill:focus {
   background: none;
   padding: 0;
   height: unset;
+}
+.text_btn svg {
+  color: var(--primary);
 }
 
 .string_btn {
@@ -4068,7 +4079,7 @@ select:-webkit-autofill:focus {
   height: 16px;
   width: 16px;
   margin-right: 9px;
-  color: var(--text-secondary);
+  color: var(--svg-x-light);
 }
 .mobile-menu .tools_choice:hover {
   background-color: var(--x-light);
@@ -4311,6 +4322,7 @@ select:-webkit-autofill:focus {
   width: 50px;
   height: 50px;
   z-index: 2;
+  color: white;
 }
 .no_content.actuality_card {
   background-color: rgba(var(--light-blue-rgb), 0.2);
@@ -4538,7 +4550,7 @@ select:-webkit-autofill:focus {
   height: 16px;
   width: 16px;
   margin-right: 9px;
-  color: var(--text-tertiary);
+  color: var(--svg-x-light);
 }
 .tools_menu .tools_choice:hover {
   background-color: var(--light);
@@ -5261,7 +5273,7 @@ select:-webkit-autofill:focus {
 .dynamic-input .end-icon {
   position: absolute;
   right: 20px;
-  top: 55%;
+  top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   z-index: 2;
@@ -5726,6 +5738,7 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: var(--shadow-xl);
           box-shadow: var(--shadow-xl);
   z-index: 10;
+  font-size: 12px;
 }
 .password-checker .checker-header {
   color: var(--text);
@@ -5740,9 +5753,12 @@ select:-webkit-autofill:focus {
           align-items: center;
   padding: 2px 0;
 }
+.password-checker .checker p {
+  font-size: 12px;
+}
 .password-checker .checker svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   margin-right: 8px;
 }
 .password-checker .checker.is-valid {
@@ -5763,9 +5779,9 @@ select:-webkit-autofill:focus {
   margin-bottom: 10px;
 }
 .password-strength .strength-item {
-  height: 14px;
+  height: 8px;
   width: 24%;
-  background-color: var(--x-light);
+  background-color: var(--xx-light);
 }
 .password-strength .strength-item:nth-child(1) {
   border-radius: var(--rounded-sm) 0 0 var(--rounded-sm);
@@ -5793,11 +5809,12 @@ select:-webkit-autofill:focus {
 }
 .password-strength .strength {
   width: 25%;
-  height: 28px;
-  padding: 4px;
+  height: 20px;
+  padding: 2px;
   text-align: center;
   border-radius: var(--rounded-sm);
   margin-left: auto;
+  font-size: 12px;
 }
 .password-strength .strength.weak {
   color: var(--danger);
@@ -5862,7 +5879,7 @@ select:-webkit-autofill:focus {
 }
 .sign-container .sign-container-inner .sign-card .validated {
   position: absolute;
-  top: 18px;
+  top: 13px;
   right: 20px;
   z-index: 2;
   color: var(--green);
@@ -5966,10 +5983,12 @@ select:-webkit-autofill:focus {
   position: absolute;
   right: 6px;
   bottom: 6px;
-  color: white;
   background: var(--primary);
   -webkit-box-shadow: var(--shadow-tiny);
           box-shadow: var(--shadow-tiny);
+}
+.profil_header .avatar .btn_img_edit svg {
+  color: white;
 }
 .profil_header .content_nav {
   -webkit-box-pack: end;
@@ -7103,26 +7122,18 @@ select:-webkit-autofill:focus {
       flex-wrap: wrap;
   padding: 20px 0;
 }
-.project-page_actions .action-btn {
+
+.action-btn {
   font-weight: 700;
   border-radius: var(--rounded-sm);
   color: var(--text);
   background-color: var(--xx-light);
   margin: 5px 7px 5px 0;
 }
-.project-page_actions .action-btn svg {
-  width: 22px;
-  height: 22px;
+.action-btn svg {
+  width: 16px;
+  height: 16px;
   margin-left: 10px;
-}
-.project-page_actions .action-btn.like svg {
-  color: var(--red);
-}
-.project-page_actions .action-btn.follow svg {
-  color: var(--green);
-}
-.project-page_actions .action-btn.share svg {
-  color: var(--xblue);
 }
 
 @media (max-width: 992px) {
@@ -7299,8 +7310,10 @@ select:-webkit-autofill:focus {
   cursor: pointer;
 }
 .content-cards .content-card .card-title .swiper-button:hover {
-  color: white;
   background-color: var(--primary);
+}
+.content-cards .content-card .card-title .swiper-button:hover svg {
+  color: white;
 }
 .content-cards .content-card .card-title .swiper-button svg {
   width: 24px;
@@ -7413,6 +7426,9 @@ select:-webkit-autofill:focus {
   width: 22px;
   height: 22px;
 }
+.share_container .share_buttons_container button svg {
+  color: white;
+}
 .share_container .share_buttons_container button.facebook {
   background-color: var(--facebook);
 }
@@ -7431,6 +7447,16 @@ select:-webkit-autofill:focus {
 .share_container .share_buttons_container button.copy-link {
   border: 2px solid var(--primary);
   color: var(--primary);
+}
+.share_container .share_buttons_container button.copy-link svg {
+  color: var(--primary);
+}
+.share_container .share_buttons_container button.copy-link:hover {
+  background-color: var(--primary);
+  color: var(--white);
+}
+.share_container .share_buttons_container button.copy-link:hover svg {
+  color: white;
 }
 .share_container .share_buttons_container button:hover {
   background-color: var(--primary);
@@ -9413,9 +9439,9 @@ select:-webkit-autofill:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: var(--primary);
   margin-top: 5px;
 }
@@ -9423,12 +9449,10 @@ select:-webkit-autofill:focus {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  height: 20px;
-  width: 26px;
-  margin-left: 3px;
+  height: 16px;
+  width: 16px;
+  margin-left: 8px;
+  color: var(--primary);
 }
 .home-body .swiper-container .swiper-inner {
   position: relative;
@@ -10235,11 +10259,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
           justify-content: center;
   padding-left: 25px;
 }
-.navbar_form_pages .right svg {
-  height: 30px;
-  width: 30px;
-  margin-right: 7px;
-}
 .navbar_form_pages .right p {
   font-size: 18px;
 }
@@ -10268,12 +10287,6 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 @media (max-width: 576px) {
   .navbar_form_pages .logo_inner {
     padding-right: 15px;
-  }
-  .navbar_form_pages .logo_inner .logo-main {
-    display: none;
-  }
-  .navbar_form_pages .logo_inner .logo-small {
-    display: block;
   }
   .navbar_form_pages .right {
     padding-left: 15px;

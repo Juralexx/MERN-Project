@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IoClose } from 'react-icons/io5'
+import Icon from '../icons/Icon'
 import { Button } from './Button'
 
 const ErrorModal = (props) => {
@@ -11,7 +11,7 @@ const ErrorModal = (props) => {
             <div className="modal_wrapper">
                 <div className={open ? `modal_container warning_modal modal_container-active show_modal ${css ? css : null}` : 'modal_container warning_modal hide_modal'}>
                     <div className="close_modal" onClick={() => setOpen(false)}>
-                        <IoClose />
+                        <Icon name="Cross" />
                     </div>
                     <div className="warning_title">{title}</div>
                     <div className="warning_text">{text}</div>

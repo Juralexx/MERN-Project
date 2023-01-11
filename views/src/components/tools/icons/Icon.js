@@ -51,10 +51,23 @@ import List from './List';
 import Like from './Like';
 import Trash from './Trash';
 import BoxEmpty from './BoxEmpty';
+import Box from './Box';
 import Clock from './Clock';
 import Calendar from './Calendar';
 import Visible from './Visible';
 import Hidden from './Hidden';
+import Camera from './Camera';
+import France from './France';
+import Book from './Book';
+import BookOpen from './BookOpen';
+import Picture from './Picture';
+import Layers from './Layers';
+import Share from './Share';
+import Whatsapp from './Whatsapp';
+import Facebook from './Facebook';
+import Linkedin from './Linkedin';
+import Twitter from './Twitter';
+import Pinterest from './Pinterest';
 
 const Icon = (props) => {
     switch (props.name) {
@@ -160,14 +173,40 @@ const Icon = (props) => {
             return <Trash {...props} />;
         case 'BoxEmpty':
             return <BoxEmpty {...props} />;
+        case 'Box':
+            return <Box {...props} />;
         case 'Clock':
             return <Clock {...props} />;
         case 'Calendar':
             return <Calendar {...props} />;
+        case 'Book':
+            return <Book {...props} />;
+        case 'BookOpen':
+            return <BookOpen {...props} />;
         case 'Visible':
             return <Visible {...props} />;
         case 'Hidden':
             return <Hidden {...props} />;
+        case 'Camera':
+            return <Camera {...props} />;
+        case 'France':
+            return <France {...props} />;
+        case 'Picture':
+            return <Picture {...props} />;
+        case 'Layers':
+            return <Layers {...props} />;
+        case 'Facebook':
+            return <Facebook {...props} />;
+        case 'Linkedin':
+            return <Linkedin {...props} />;
+        case 'Pinterest':
+            return <Pinterest {...props} />;
+        case 'Twitter':
+            return <Twitter {...props} />;
+        case 'Whatsapp':
+            return <Whatsapp {...props} />;
+        case 'Share':
+            return <Share {...props} />;
         default:
             return <Link {...props} />;
     }

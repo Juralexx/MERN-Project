@@ -5,7 +5,7 @@ import { dateParser, fullImage } from '../../Utils'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import Share from './Share'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../../actions/project.action'
-import { MdOutlineBookmark, MdOutlineBookmarkBorder, MdCalendarToday, MdOutlineLocationOn, MdOutlineShare, MdOutlineFavoriteBorder, MdOutlineFavorite } from 'react-icons/md'
+import Icon from '../../tools/icons/Icon'
 
 const Header = ({ user, project }) => {
     const [liked, setLiked] = useState(false)
@@ -67,21 +67,25 @@ const Header = ({ user, project }) => {
                         <h2>{project.subtitle}</h2>
                         <div className="py-2">
                             <div className="flex items-center py-1">
-                                <MdOutlineLocationOn className="mr-2" /> <p><Link to="/" className="bold">{project.location} ({project.code_department})</Link></p>
+                                <Icon name="Position" className="mr-2 w-5 h-5" />
+                                <p><Link to="/" className="bold">{project.location} ({project.code_department})</Link></p>
                             </div>
                             {project.start && !project.end &&
                                 <div className="flex items-center py-1">
-                                    <MdCalendarToday className="mr-2 txt-sec" /> <p>le <span className="bold">{dateParser(project.start)}</span></p>
+                                    <Icon name="Calendar" className="mr-2 w-5 h-5" />
+                                    <p>le <span className="bold">{dateParser(project.start)}</span></p>
                                 </div>
                             }
                             {project.end && !project.start &&
                                 <div className="flex items-center py-1">
-                                    <MdCalendarToday className="mr-2 txt-sec" /> <p>jusqu'au <span className="bold">{dateParser(project.end)}</span></p>
+                                    <Icon name="Calendar" className="mr-2 w-5 h-5" />
+                                    <p>jusqu'au <span className="bold">{dateParser(project.end)}</span></p>
                                 </div>
                             }
                             {project.end && project.start &&
                                 <div className="flex items-center py-1">
-                                    <MdCalendarToday className="mr-2 txt-sec" /> <p>du <span className="bold">{dateParser(project.start)}</span> au <span className="bold">{dateParser(project.end)}</span></p>
+                                    <Icon name="Calendar" className="mr-2 w-5 h-5" />
+                                    <p>du <span className="bold">{dateParser(project.start)}</span> au <span className="bold">{dateParser(project.end)}</span></p>
                                 </div>
                             }
 
@@ -101,37 +105,37 @@ const Header = ({ user, project }) => {
                         </div>
                         <div className="project-page_actions">
                             {user._id === null &&
-                                <button className="btn action-btn like">
-                                    Soutenir <MdOutlineFavoriteBorder />
+                                <button className="btn action-btn">
+                                    Soutenir <Icon name="Like" />
                                 </button>
                             }
                             {user._id && !liked &&
-                                <button className="btn action-btn like" onClick={like}>
-                                    Soutenir <MdOutlineFavoriteBorder />
+                                <button className="btn action-btn" onClick={like}>
+                                    Soutenir <Icon name="Like" />
                                 </button>
                             }
                             {user._id && liked &&
-                                <button className="btn action-btn like" onClick={unlike}>
-                                    Ne plus soutenir <MdOutlineFavorite />
+                                <button className="btn action-btn" onClick={unlike}>
+                                    Ne plus soutenir <Icon name="Like" />
                                 </button>
                             }
                             {user._id === null &&
-                                <button className="btn action-btn follow">
-                                    Suivre <MdOutlineBookmarkBorder />
+                                <button className="btn action-btn">
+                                    Suivre <Icon name="Bookmark" />
                                 </button>
                             }
                             {user._id && !followed &&
-                                <button className="btn action-btn follow" onClick={follow}>
-                                    Suivre <MdOutlineBookmarkBorder />
+                                <button className="btn action-btn" onClick={follow}>
+                                    Suivre <Icon name="Bookmark" />
                                 </button>
                             }
                             {user._id && followed &&
-                                <button className="btn action-btn follow" onClick={unfollow}>
-                                    Ne plus suivre <MdOutlineBookmark />
+                                <button className="btn action-btn" onClick={unfollow}>
+                                    Ne plus suivre <Icon name="Bookmark" />
                                 </button>}
 
-                            <button className="btn action-btn share" onClick={() => setShare(!share)}>
-                                Partager <MdOutlineShare />
+                            <button className="btn action-btn" onClick={() => setShare(!share)}>
+                                Partager <Icon name="Share" />
                             </button>
                         </div>
                     </div>

@@ -1,48 +1,50 @@
 import React from 'react'
 import { FacebookShareButton, LinkedinShareButton, PinterestShareButton, TwitterShareButton, WhatsappShareButton } from "react-share";
-import { BsFacebook, BsLink45Deg, BsLinkedin, BsPinterest, BsTwitter } from 'react-icons/bs'
-import { IoLogoWhatsapp } from 'react-icons/io5';
+import Icon from '../../tools/icons/Icon';
 
 const Share = ({ share }) => {
     const url = window.location.href
     const socialsArr = [{
         button: FacebookShareButton,
         name: 'Facebook',
-        picto: <BsFacebook />
+        picto: <Icon name="Facebook" />
     }, {
         button: LinkedinShareButton,
         name: 'Linkedin',
-        picto: <BsLinkedin />
+        picto: <Icon name="Linkedin" />
     }, {
         button: PinterestShareButton,
         name: 'Pinterest',
-        picto: <BsPinterest />
+        picto: <Icon name="Pinterest" />
     }, {
         button: TwitterShareButton,
         name: 'Twitter',
-        picto: <BsTwitter />
+        picto: <Icon name="Twitter" />
     }, {
         button: WhatsappShareButton,
         name: 'Whatsapp',
-        picto: <IoLogoWhatsapp />
+        picto: <Icon name="Whatsapp" />
     }]
 
     return (
-        share &&
-        <div className='share_container'>
-            <h3>Partager cette page</h3>
-            <div className='share_buttons_container'>
-                {socialsArr.map((network, key) => {
-                    return (
-                        <network.button className={network.name.toLowerCase()} resetButtonStyle={false} url={url} media={url} key={key}>
-                            {network.picto}
-                            <p>{network.name}</p>
-                        </network.button>
-                    )
-                })}
-                <button className='copy-link' onClick={() => navigator.clipboard.writeText(url)}><BsLink45Deg />Copier le lien</button>
+        share && (
+            <div className='share_container'>
+                <h3>Partager cette page</h3>
+                <div className='share_buttons_container'>
+                    {socialsArr.map((network, key) => {
+                        return (
+                            <network.button className={network.name.toLowerCase()} resetButtonStyle={false} url={url} media={url} key={key}>
+                                {network.picto}
+                                <p>{network.name}</p>
+                            </network.button>
+                        )
+                    })}
+                    <button className='copy-link' onClick={() => navigator.clipboard.writeText(url)}>
+                        <Icon name="Link" />Copier le lien
+                    </button>
+                </div>
             </div>
-        </div>
+        )
     )
 }
 

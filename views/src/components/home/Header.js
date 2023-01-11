@@ -6,7 +6,6 @@ import LocationsAutocomplete from './LocationsAutocomplete';
 import CategoriesPicker from './CategoriesPicker';
 import { IconToggle, Button, TextButton } from '../tools/global/Button';
 import { DropdownInput, IconInput } from '../tools/global/Inputs';
-import { GiFrance } from 'react-icons/gi';
 import Icon from '../tools/icons/Icon';
 
 const Header = ({ user, search, datas, setDatas }) => {
@@ -113,14 +112,14 @@ const Header = ({ user, search, datas, setDatas }) => {
                         <div className={`btn-container flex justify-between items-center ${!moreFilters ? 'pt-3' : 'pt-0'}`}>
                             <div className="hidden sm:flex">
                                 <TextButton className="btn_icon_start primary mr-2" onClick={() => setOpenMapModal(true)}>
-                                    <GiFrance />Voir la carte
+                                    <Icon name="France" />Voir la carte
                                 </TextButton>
                                 <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}>
                                     {!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
                                 </TextButton>
                             </div>
                             <div className="flex sm:hidden">
-                                <IconToggle className="primary mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
+                                <IconToggle className="primary mr-2" icon={<Icon name="France" />} onClick={() => setOpenMapModal(true)} />
                                 <IconToggle className="primary mr-4" icon={!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />} onClick={() => setMoreFilters(!moreFilters)} />
                             </div>
                             <Button className="btn_icon_end" onClick={search}>

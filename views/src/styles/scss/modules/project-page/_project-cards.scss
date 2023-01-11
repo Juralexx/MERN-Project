@@ -41,8 +41,10 @@
                 z-index         : 10;
                 cursor          : pointer;
                 &:hover {
-                    color            : white;
                     background-color : var(--primary);
+                    svg {
+                        color : white;
+                    }
                 }
 
                 svg {

@@ -13,9 +13,7 @@ import { ErrorCard } from '../tools/global/Error';
 import { ClassicInput, Textarea } from '../tools/global/Inputs';
 import { OvalLoader } from '../tools/global/Loader';
 import EditPassword from './EditPassword';
-import { BsInboxFill } from 'react-icons/bs';
-import { MdLockOutline } from 'react-icons/md';
-import { IoClose } from 'react-icons/io5';
+import Icon from '../tools/icons/Icon'
 
 const Edit = ({ user }) => {
     const [userDatas, setUserDatas] = useState({
@@ -180,7 +178,7 @@ const Edit = ({ user }) => {
                                     <div className="col-12 col-md-6 mb-5 lg:px-2 sm:pr-2">
                                         <p className="txt-ter mb-1">Pseudo</p>
                                         <div className="flex items-center">
-                                            <MdLockOutline className="mr-1" />{user.pseudo}
+                                            <Icon name="Lock" className="mr-1 w-4 h-4" />{user.pseudo}
                                         </div>
                                     </div>
                                     <div className="col-12 col-md-6 mb-5 lg:px-2 sm:pl-2">
@@ -315,7 +313,7 @@ const Edit = ({ user }) => {
                                             }
                                             {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
                                                 <div className="no-result">
-                                                    <BsInboxFill />
+                                                    <Icon name="BoxEmpty" />
                                                     <div>Aucun resultat ne correspond à votre recherche...</div>
                                                 </div>
                                             }
@@ -334,7 +332,7 @@ const Edit = ({ user }) => {
                                         <p className="txt-ter mb-1">Email</p>
                                         <div className="secured-email">
                                             <div className="flex items-center">
-                                                <MdLockOutline />{user.email}
+                                                <Icon name="Lock" className="w-4 h-4" />{user.email}
                                             </div>
                                             <TextButton>Modifier</TextButton>
                                         </div>
@@ -394,7 +392,7 @@ const Edit = ({ user }) => {
                                                             {returnNetworkSVG(element.type)}
                                                             <a href={element.url} rel="noreferrer" target="_blank" className="ml-4">{element.url}</a>
                                                         </div>
-                                                        <IoClose
+                                                        <Icon name="Cross"
                                                             className='cursor-pointer'
                                                             onClick={() => setUserDatas(datas => ({
                                                                 ...datas,

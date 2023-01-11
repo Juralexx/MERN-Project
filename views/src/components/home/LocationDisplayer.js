@@ -3,7 +3,6 @@ import axios from 'axios'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { Button, TextButton } from '../tools/global/Button'
-import { GiFrance } from 'react-icons/gi'
 import Icon from '../tools/icons/Icon';
 
 const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
@@ -133,7 +132,7 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                         className="locations_search_item"
                         onClick={() => setDatas(data => ({ ...data, location: ['Toute la France'] }))}
                     >
-                        <GiFrance />
+                        <Icon name="France" />
                         <div>Toute la France</div>
                     </div>
                 }

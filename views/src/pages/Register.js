@@ -18,7 +18,9 @@ const Register = ({ uid }) => {
                     <SignUpForm />
                     <div className="sign-card-bottom">
                         Déjà un compte ?
-                        <TextButton className="ml-2"><Link to="/login">Connexion</Link></TextButton>
+                        <TextButton className="ml-2">
+                            <Link to="/login">Connexion</Link>
+                        </TextButton>
                     </div>
                 </div>
             </div>

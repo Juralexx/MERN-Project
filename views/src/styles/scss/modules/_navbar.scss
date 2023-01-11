@@ -309,12 +309,6 @@ header {
         justify-content : center;
         padding-left    : 25px;
 
-        svg {
-            height       : 30px;
-            width        : 30px;
-            margin-right : 7px;
-        }
-
         p {
             font-size : 18px;
         }
@@ -348,12 +342,6 @@ header {
     .navbar_form_pages {
         .logo_inner {
             padding-right : 15px;
-            .logo-main {
-                display : none;
-            }
-            .logo-small {
-                display : block;
-            }
         }
         .right {
             padding-left : 15px;

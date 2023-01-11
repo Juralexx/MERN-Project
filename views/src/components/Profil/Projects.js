@@ -5,8 +5,8 @@ import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn }
 import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import { OvalLoader } from '../tools/global/Loader'
 import Card from '../tools/components/Card'
-import { AiOutlineSearch } from 'react-icons/ai'
 import { addClass } from '../Utils'
+import Icon from '../tools/icons/Icon'
 
 const Projects = ({ user, websocket }) => {
     const [projects, setProjects] = useState({
@@ -60,7 +60,7 @@ const Projects = ({ user, websocket }) => {
                     <IconInput
                         type="text"
                         className="is_start_icon ml-auto mr-2 mb-2 sm:mb-0 md:max-w-[300px]"
-                        icon={<AiOutlineSearch />}
+                        icon={<Icon name="Search" />}
                         placeholder="Rechercher un projet..."
                         value={query}
                         onInput={e => setQuery(e.target.value)}

@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { replaceHTTP, returnNetworkSVG } from '../tools/functions/networks';
 import { dateParser } from '../Utils';
 import { Button } from '../tools/global/Button';
-import { HiOutlineLocationMarker } from 'react-icons/hi'
-import { MdOutlineCalendarToday } from 'react-icons/md'
-import { FaUserShield } from "react-icons/fa";
+import Icon from '../tools/icons/Icon';
 
 const ProfilCard = ({ user }) => {
     return (
@@ -19,16 +17,16 @@ const ProfilCard = ({ user }) => {
                         </Link>
                     </Button>
                     <p className="flex items-center mb-1">
-                        <MdOutlineCalendarToday className="mr-2 primary" />inscrit le {dateParser(user.createdAt)}
+                        <Icon name="Calendar" className="mr-2" />inscrit le {dateParser(user.createdAt)}
                     </p>
                     {user.location &&
                         <p className="flex items-center mb-1">
-                            <HiOutlineLocationMarker className="mr-2 primary" /> {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})
+                            <Icon name="Position" className="mr-2" /> {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})
                         </p>
                     }
                     {user.work &&
                         <p className="flex items-center">
-                            <FaUserShield className="mr-2 primary" /> {user?.work}
+                            <Icon name="User" className="mr-2" /> {user?.work}
                         </p>
                     }
                 </div>

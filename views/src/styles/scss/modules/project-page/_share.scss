@@ -36,6 +36,10 @@
                 height       : 22px;
             }
 
+            svg {
+                color : white;
+            }
+
             &.facebook {
                 background-color : var(--facebook);
             }
@@ -54,6 +58,16 @@
             &.copy-link {
                 border : 2px solid var(--primary);
                 color  : var(--primary);
+                svg {
+                    color : var(--primary);
+                }
+                &:hover {
+                    background-color : var(--primary);
+                    color            : var(--white);
+                    svg {
+                        color : white;
+                    }
+                }
             }
 
             &:hover {
