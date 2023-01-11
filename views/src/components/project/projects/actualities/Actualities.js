@@ -8,8 +8,7 @@ import { Button, TextButton } from '../../../tools/global/Button'
 import Warning from '../../../tools/global/Warning'
 import EditActuality from './EditActuality'
 import { MediumAvatar } from '../../../tools/global/Avatars'
-import { BiNews } from 'react-icons/bi';
-import { HiArrowNarrowRight } from 'react-icons/hi'
+import Icon from '../../../tools/icons/Icon'
 
 const Actualities = ({ project, isManager }) => {
     const [warning, setWarning] = useState(false)
@@ -45,7 +44,9 @@ const Actualities = ({ project, isManager }) => {
                                             <div className="actuality-btn">
                                                 {isManager &&
                                                     <>
-                                                        <TextButton onClick={() => setWarning(true)}>Supprimer</TextButton>
+                                                        <TextButton onClick={() => setWarning(true)}>
+                                                            Supprimer
+                                                        </TextButton>
                                                         <TextButton>
                                                             <Link to={`${element.urlid}/${element.url}/edit`} className="mx-2">Modifier</Link>
                                                         </TextButton>
@@ -53,7 +54,7 @@ const Actualities = ({ project, isManager }) => {
                                                 }
                                                 <Button>
                                                     <Link to={`/project/${project.URLID}/${project.URL}/actuality/${element.urlid}/${element.url}`}>
-                                                        Voir <HiArrowNarrowRight className='ml-2' />
+                                                        Voir
                                                     </Link>
                                                 </Button>
                                             </div>
@@ -72,7 +73,7 @@ const Actualities = ({ project, isManager }) => {
                     ) : (
                         <div className="no_content actuality_card">
                             <div className="svg_container">
-                                <BiNews />
+                                <Icon name="BookOpen" />
                             </div>
                             <p>Vous n'avez pas encore ajouté d'actualité.</p>
                             <span>Ajoutez une actualité pour tenir vos visiteurs au courant de l'avancée de votre projet !</span>

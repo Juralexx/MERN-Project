@@ -9,17 +9,19 @@ import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
 import { fullImage, removeAccents } from '../../../Utils'
 import { updateActuality } from '../../../../actions/project.action'
-import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
+import Icon from '../../../tools/icons/Icon'
 
 const EditActuality = ({ project }) => {
     const { urlid, url } = useParams()
     const actuality = project.actualities.find(actu => actu.url === url && actu.urlid === urlid)
-    const [title, setTitle] = useState(actuality.title)
-    const [uri, setUri] = useState(actuality.url)
-    const [description, setDescription] = useState(actuality.description.ops)
+    const [datas, setDatas] = useState({
+        title: actuality.title,
+        uri: actuality.url,
+        description: actuality.description.ops,
+        files: actuality.pictures
+    })
     const [count, setCount] = useState(0)
     const quillRef = useRef()
-    const [files, setFiles] = useState(actuality.pictures)
     const [deletedFiles, setDeletedFiles] = useState([])
     const [pictures, setPictures] = useState([])
     const [error, setError] = useState({ element: "", error: "" })
@@ -28,7 +30,7 @@ const EditActuality = ({ project }) => {
     const navigate = useNavigate()
 
     const handleChange = (text, delta, source, editor) => {
-        setDescription(editor.getContents())
+        setDatas(data => ({ ...data, description: editor.getContents() }))
         setCount(editor.getText().length - 1)
         if (quillRef.current) {
             quillRef.current.getEditor().on('text-change', () => {
@@ -40,53 +42,53 @@ const EditActuality = ({ project }) => {
     }
 
     const removePicture = (index) => {
-        const array = files.slice()
+        const array = datas.files.slice()
         array.splice(index, 1)
-        setFiles(array)
+        setDatas(data => ({ ...data, files: array }))
 
-        if (typeof files[index] === 'object') {
+        if (typeof datas.files[index] === 'object') {
             const arr = pictures.slice()
             arr.splice(index, 1)
             setPictures(arr)
         }
 
-        if (typeof files[index] !== 'object') {
-            setDeletedFiles(arr => [...arr, files[index].substring(files[index].indexOf(`${actuality._id}`) + actuality._id.length + 1)])
+        if (typeof datas.files[index] !== 'object') {
+            setDeletedFiles(arr => [...arr, datas.files[index].substring(datas.files[index].indexOf(`${actuality._id}`) + actuality._id.length + 1)])
         }
     }
 
     const getFiles = (filesArray) => {
-        setFiles(files.concat(Array.from(filesArray)))
+        setDatas(data => ({ ...data, files: datas.files.concat(Array.from(filesArray)) }))
         setPictures(pictures.concat(Array.from(filesArray)))
     }
 
     const handleActuality = async () => {
-        if (title === "" || title.length < 10 || title.length > 100) {
+        if (datas.title === "" || datas.title.length < 10 || datas.title.length > 100) {
             setError({
                 element: "title",
                 error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 100 caractères"
             })
-        } else if (description === "" || description.length < 10 || description.length > 4000) {
+        } else if (datas.description === "" || datas.description.length < 10 || datas.description.length > 4000) {
             setError({
                 element: "description",
                 error: "Veuillez ajouter une description à votre actualité"
             })
         } else {
-            if (title !== actuality.title) {
-                let cleanTitle = title.toLowerCase();
+            if (datas.title !== actuality.title) {
+                let cleanTitle = datas.title.toLowerCase();
                 cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1)
                 cleanTitle = cleanTitle.replace(/[&#,+()$~%^.|_@°=§µ£¤"`*?!;<>[\]{}/\\\\]/g, " ")
                 cleanTitle = cleanTitle.replace(/ +/g, " ")
                 cleanTitle = cleanTitle.trim()
-                setTitle(cleanTitle)
+                setDatas(data => ({ ...data, title: cleanTitle }))
 
                 let URL = cleanTitle.toLowerCase();
                 URL = removeAccents(URL)
                 URL = URL.replace(/ /g, "-")
-                setUri(URL)
+                setDatas(data => ({ ...data, uri: URL }))
             }
 
-            dispatch(updateActuality(project._id, actuality._id, title, uri, description))
+            dispatch(updateActuality(project._id, actuality._id, datas.title, datas.uri, datas.description))
                 .then(async () => {
                     if (deletedFiles.length > 0) {
                         await axios({
@@ -126,7 +128,7 @@ const EditActuality = ({ project }) => {
     return (
         <div className="container-lg py-8 pb-[100px]">
             <div className="header flex justify-between mb-5">
-                <h3>Modifier l'actualité : {title}</h3>
+                <h3>Modifier l'actualité : {datas.title}</h3>
             </div>
             <div className="content-form">
                 <p className="title full">Titre <span>Champ requis</span></p>
@@ -134,11 +136,16 @@ const EditActuality = ({ project }) => {
                     className={`full ${checkErr("title")}`}
                     type="text"
                     placeholder="Titre de l'actualité"
-                    onChange={(e) => setTitle((e.target.value).substring(0, 100))} value={title}
+                    onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 100) }))}
+                    value={datas.title}
                 />
-                <div className="field_infos full">{title.length} / 100 caractères</div>
+                <div className="field_infos full">{datas.title.length} / 100 caractères</div>
                 {error.element === "title" &&
-                    <ErrorCard display={error.element === "title"} text={error.error} clean={() => setError({ element: "", error: "" })} />
+                    <ErrorCard
+                        display={error.element === "title"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 }
             </div>
 
@@ -149,7 +156,7 @@ const EditActuality = ({ project }) => {
                     <ReactQuill
                         ref={quillRef}
                         style={{ height: 300 }}
-                        value={description}
+                        value={datas.description}
                         onChange={handleChange}
                         modules={modules}
                         formats={formats}
@@ -165,37 +172,37 @@ const EditActuality = ({ project }) => {
                         type="file"
                         name="files"
                         multiple
-                        disabled={files.length >= 3}
+                        disabled={datas.files.length >= 3}
                         accept="image/jpeg, image/jpg, image/png, image/gif, image/heic, image/heif, image/tiff, image/webp"
                         onChange={e => getFiles(e.target.files)}
                     />
                     <div className="img-preview active">
                         <div className="svg_container">
-                            <MdOutlineAddPhotoAlternate />
+                            <Icon name="Upload" />
                         </div>
                     </div>
                 </div>
                 {[...Array(3)].map((_, key) => {
                     return (
                         <div className="img-preview-container" key={key}>
-                            {files.length > key ? (
-                                typeof files[key] !== 'object' && files[key] !== null ? (
-                                    <div className="img-preview" style={fullImage(files[key])}>
+                            {datas.files.length > key ? (
+                                typeof datas.files[key] !== 'object' && datas.files[key] !== null ? (
+                                    <div className="img-preview" style={fullImage(datas.files[key])}>
                                         <div className="delete-btn" onClick={() => removePicture(key)}>
-                                            <MdClear />
+                                            <Icon name="Cross" />
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="img-preview" style={fullImage(URL.createObjectURL(files[key]))}>
+                                    <div className="img-preview" style={fullImage(URL.createObjectURL(datas.files[key]))}>
                                         <div className="delete-btn" onClick={() => removePicture(key)}>
-                                            <MdClear />
+                                            <Icon name="Cross" />
                                         </div>
                                     </div>
                                 )
                             ) : (
                                 <div className="img-preview">
                                     <div className="svg_container">
-                                        <MdOutlineInsertPhoto />
+                                        <Icon name="Picture" />
                                     </div>
                                 </div>
                             )}

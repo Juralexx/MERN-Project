@@ -1,64 +1,68 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 import ReactQuill from 'react-quill'
-import { Button } from '../../../tools/global/Button'
+import { Button, TextButton } from '../../../tools/global/Button'
 import { ErrorCard } from '../../../tools/global/Error'
 import { ClassicInput } from '../../../tools/global/Inputs'
 import EditorToolbar, { formats, modules } from '../../../tools/editor/EditorToolbar'
-import { FaCheck } from 'react-icons/fa'
-import { MdClear, MdOutlineAddPhotoAlternate, MdOutlineInsertPhoto } from 'react-icons/md'
 import { fullImage, randomNbLtID, removeAccents } from '../../../Utils'
-import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
 import { createActuality } from '../../../../actions/project.action'
+import Icon from '../../../tools/icons/Icon'
 
 const AddActuality = ({ project, user }) => {
-    const [title, setTitle] = useState("")
-    const [isErr, setErr] = useState(false)
-    const [error, setError] = useState(null)
-    const checkErr = (name) => { if (isErr === name) return "err" }
-    const [description, setDescription] = useState("")
+    const [datas, setDatas] = useState({
+        title: '',
+        description: '',
+        files: []
+    })
     const [count, setCount] = useState(0)
     const quillRef = useRef()
-    const [files, setFiles] = useState([])
+    const [error, setError] = useState({ element: "", error: "" })
+    const checkErr = name => { if (error.element === name) return "err" }
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleChange = (text, delta, source, editor) => {
-        setDescription(editor.getContents())
+        setDatas(data => ({ ...data, description: editor.getContents() }))
         setCount(editor.getText().length - 1)
 
         quillRef.current.getEditor().on('text-change', () => {
             if (editor.getLength() > 10000) {
-                quillRef.current.getEditor().deleteText(4000, editor.getLength());
+                quillRef.current.getEditor().deleteText(10000, editor.getLength());
             }
         })
     }
 
     const removePicture = (index) => {
-        const array = files.slice()
+        const array = datas.files.slice()
         array.splice(index, 1)
-        setFiles(array)
+        setDatas(data => ({ ...data, files: array }))
     }
 
     const getFiles = (filesArray) => {
-        return files.concat(Array.from(filesArray))
+        return datas.files.concat(Array.from(filesArray))
     }
 
     const handleActuality = async () => {
-        if (title === "" || title.length < 10 || title.length > 100) {
-            setErr("title")
-            setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 100 caractères")
-        } else if (description === "" || description.length < 10 || description.length > 4000) {
-            setErr("description")
-            setError("Veuillez ajouter une description à votre actualité")
+        if (datas.title === "" || datas.title.length < 10 || datas.title.length > 200) {
+            setError({
+                element: "title",
+                error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 200 caractères"
+            })
+        } else if (datas.description === "" || datas.description.length < 10 || datas.description.length > 10000) {
+            setError({
+                element: "description",
+                error: "Veuillez ajouter une description à votre actualité"
+            })
         } else {
-            let cleanTitle = title.toLowerCase();
+            let cleanTitle = datas.title.toLowerCase();
             cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
             cleanTitle = cleanTitle.replace(/[&#,+()$~%^.|_@°=§µ£¤"`*?!;<>[\]{}/\\\\]/g, " ")
             cleanTitle = cleanTitle.replace(/ +/g, " ")
             cleanTitle = cleanTitle.trim()
-            setTitle(cleanTitle)
+            setDatas(data => ({ ...data, title: cleanTitle }))
 
             let URL = cleanTitle.toLowerCase();
             URL = URL.replace(/[&#,+()$~%^.|_@°=§µ£¤"'`*?!;<>[\]{}/\\\\]/g, " ")
@@ -74,17 +78,17 @@ const AddActuality = ({ project, user }) => {
                 title: cleanTitle,
                 url: URL,
                 urlid: URLID,
-                description: description,
+                description: datas.description,
                 date: new Date().toISOString()
             }
 
             const activity = { type: "add-actuality", who: user.pseudo, actuality: actuality.title, date: new Date().toISOString() }
             dispatch(createActuality(project._id, actuality, activity))
                 .then(async () => {
-                    if (files.length > 0) {
+                    if (datas.files.length > 0) {
                         let formData = new FormData()
-                        for (let i = 0; i < files.length; i++) {
-                            formData.append('files', files[i])
+                        for (let i = 0; i < datas.files.length; i++) {
+                            formData.append('files', datas.files[i])
                         }
                         await axios
                             .put(`${process.env.REACT_APP_API_URL}api/project/add-actuality-pictures/${project._id}/${actuality._id}`, formData)
@@ -98,72 +102,90 @@ const AddActuality = ({ project, user }) => {
     }
 
     return (
-        <div className="content_container add-actuality">
-            <div className="content_box">
-                <div className="header flex justify-between mb-5">
-                    <h2>Ajouter une actualité</h2>
-                </div>
-                <div className="content-form">
-                    <p className="title full">Titre <span>Champ requis</span></p>
-                    <ClassicInput className={`full ${checkErr("title")}`} type="text" placeholder="Titre de l'actualité" onChange={(e) => setTitle((e.target.value).substring(0, 100))} value={title} />
-                    <div className="field_infos full">{title.length} / 100 caractères</div>
-                    {isErr === "title" && <ErrorCard display={isErr === "title"} text={error} clean={() => setErr("")} />}
-                </div>
+        <div className="container-lg pt-8 pb-[100px] add-actuality">
+            <div className="header flex justify-between mb-5">
+                <h2>Ajouter une actualité</h2>
+            </div>
+            <div className="content-form">
+                <p className="title full">Titre <span>Champ requis</span></p>
+                <ClassicInput
+                    className={`full ${checkErr("title")}`}
+                    type="text"
+                    placeholder="Titre de l'actualité"
+                    onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 200) }))}
+                    value={datas.title}
+                />
+                <div className="field_infos full">{datas.title.length} / 200 caractères</div>
+                {error.element === "title" &&
+                    <ErrorCard
+                        display={error.element === "title"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
+                }
+            </div>
 
-                <div className="content-form">
-                    <p className="title min-w-[100%]">Description de votre actualité <span>Champ requis</span></p>
-                    <div className="text-editor">
-                        <EditorToolbar />
-                        <ReactQuill
-                            ref={quillRef}
-                            style={{ height: 300 }}
-                            value={description}
-                            onChange={handleChange}
-                            modules={modules}
-                            formats={formats}
-                        />
-                        <div className="field_infos ml-auto">{count} / 4000 caractères</div>
-                    </div>
+            <div className="content-form">
+                <p className="title min-w-[100%]">Description de votre actualité <span>Champ requis</span></p>
+                <div className="text-editor">
+                    <EditorToolbar />
+                    <ReactQuill
+                        ref={quillRef}
+                        style={{ height: 300 }}
+                        value={datas.description}
+                        onChange={handleChange}
+                        modules={modules}
+                        formats={formats}
+                    />
+                    <div className="field_infos ml-auto">{count} / 10 000 caractères</div>
                 </div>
+            </div>
 
-                <div className="add-img-container py-3">
-                    <div className="img-preview-container">
-                        <input
-                            className="img-input"
-                            type="file"
-                            name="files"
-                            multiple
-                            disabled={files.length >= 3}
-                            accept="image/jpeg, image/jpg, image/png, image/gif, image/heic, image/heif, image/tiff, image/webp"
-                            onChange={e => setFiles(getFiles(e.target.files))}
-                        />
-                        <div className="img-preview active">
-                            <div className="svg_container">
-                                <MdOutlineAddPhotoAlternate />
-                            </div>
+            <div className="add-img-container py-3">
+                <div className="img-preview-container">
+                    <input
+                        className="img-input"
+                        type="file"
+                        name="files"
+                        multiple
+                        disabled={datas.files.length >= 3}
+                        accept="image/jpeg, image/jpg, image/png, image/gif, image/heic, image/heif, image/tiff, image/webp"
+                        onChange={e => setDatas(data => ({ ...data, files: getFiles(e.target.files) }))}
+                    />
+                    <div className="img-preview active">
+                        <div className="svg_container">
+                            <Icon name="Upload" />
                         </div>
                     </div>
-                    {[...Array(3)].map((_, key) => {
-                        return (
-                            <div className="img-preview-container" key={key}>
-                                {files.length > key ? (
-                                    <div className="img-preview" style={fullImage(URL.createObjectURL(files[key]))}>
-                                        <div className="delete-btn" onClick={() => removePicture(key)}><MdClear /></div>
-                                    </div>
-                                ) : (
-                                    <div className="img-preview">
-                                        <div className="svg_container">
-                                            <MdOutlineInsertPhoto />
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        )
-                    })}
                 </div>
-                <div className="btn_container">
-                    <Button><Link to={`/projects/${project.URLID}/${project.URL}/actuality`}>Annuler</Link></Button>
-                    <Button className="next-btn ml-2" onClick={handleActuality}><FaCheck />Valider et publier</Button>
+                {[...Array(3)].map((_, key) => {
+                    return (
+                        <div className="img-preview-container" key={key}>
+                            {datas.files.length > key ? (
+                                <div className="img-preview" style={fullImage(URL.createObjectURL(datas.files[key]))}>
+                                    <div className="delete-btn" onClick={() => removePicture(key)}>
+                                        <Icon name="Cross" />
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="img-preview">
+                                    <div className="svg_container">
+                                        <Icon name="Picture" />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )
+                })}
+            </div>
+            <div id="back-actions">
+                <div className='back-actions-inner'>
+                    <TextButton>
+                        <Link to={`/projects/${project.URLID}/${project.URL}/actuality`}>Annuler</Link>
+                    </TextButton>
+                    <Button className="ml-2" onClick={handleActuality}>
+                        Valider et publier
+                    </Button>
                 </div>
             </div>
         </div>

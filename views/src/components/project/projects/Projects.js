@@ -5,10 +5,9 @@ import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn }
 import { ClassicInput, DropdownInput } from '../../tools/global/Inputs'
 import { dateParser, removeAccents } from '../../Utils'
 import { categories } from '../../../api/categories'
-import { IoAlbumsOutline, IoCalendarClearOutline, IoLocationOutline, IoSearchOutline } from 'react-icons/io5'
-import { MdOutlineInsertChart } from 'react-icons/md'
 import { Button } from '../../tools/global/Button'
 import FooterLight from '../../FooterLight';
+import Icon from '../../tools/icons/Icon'
 
 const Projects = ({ projects }) => {
     const [projectsToShow, setProjectsToShow] = useState(projects)
@@ -73,7 +72,7 @@ const Projects = ({ projects }) => {
                     </div>
                 </div>
             </div>
-            <div className="container-lg py-5 min-h-full">
+            <div className="container-lg py-5">
                 <div className="dashboard-projects-tools">
                     <div>
                         <button className='mr-1'>En ligne <span>{(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length}</span></button>
@@ -110,13 +109,13 @@ const Projects = ({ projects }) => {
                                         <h3 className='one_line'>{element.subtitle}</h3>
                                         <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
                                         <div className="infos_field">
-                                            <IoCalendarClearOutline /> {dateParser(element.createdAt)}
+                                            <Icon name="Calendar" /> {dateParser(element.createdAt)}
                                         </div>
                                         <div className="infos_field">
-                                            <IoLocationOutline /> {element.location} - {element.department} ({element.code_department})
+                                            <Icon name="Position" /> {element.location} - {element.department} ({element.code_department})
                                         </div>
                                         <div className="infos_field">
-                                            <IoAlbumsOutline /> {element.category}
+                                            <Icon name="List" /> {element.category}
                                         </div>
                                     </div>
                                     <div className="project-tags">
@@ -132,10 +131,9 @@ const Projects = ({ projects }) => {
                 ) : (
                     <div className="no_content">
                         <div className="svg_container">
-                            <MdOutlineInsertChart />
+                            <Icon name="Dashboard" />
                         </div>
-                        <p>Vous n'avez pas encore ajouté de FAQ.</p>
-                        <span>Ajoutez une FAQ pour répondre aux questions que vos visiteur pourraient se poser !</span>
+                        <p>Vous n'avez pas encore déposé de projet.</p>
                         <Button>
                             <NavLink to={`/add-project`}>Déposer un projet</NavLink>
                         </Button>
@@ -143,7 +141,7 @@ const Projects = ({ projects }) => {
                 )}
                 {search && isResults.length === 0 &&
                     <div className="empty-array">
-                        <IoSearchOutline />
+                        <Icon name="Search" />
                         <div>Aucun resultat ne correspond à votre recherche</div>
                     </div>
                 }

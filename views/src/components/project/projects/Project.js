@@ -154,7 +154,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
 
 
                     <Route path="add-actuality" element={
-                        project.actualities.length === 0 && isManager ? (
+                        isManager ? (
                             <AddActuality
                                 user={user}
                                 websocket={websocket}

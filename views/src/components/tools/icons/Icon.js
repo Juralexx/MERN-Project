@@ -68,6 +68,7 @@ import Facebook from './Facebook';
 import Linkedin from './Linkedin';
 import Twitter from './Twitter';
 import Pinterest from './Pinterest';
+import Upload from './Upload';
 
 const Icon = (props) => {
     switch (props.name) {
@@ -207,6 +208,8 @@ const Icon = (props) => {
             return <Whatsapp {...props} />;
         case 'Share':
             return <Share {...props} />;
+        case 'Upload':
+            return <Upload {...props} />;
         default:
             return <Link {...props} />;
     }

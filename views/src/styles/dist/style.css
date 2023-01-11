@@ -6786,13 +6786,13 @@ select:-webkit-autofill:focus {
   top: -5px;
   padding: 4px;
   border-radius: 50px;
-  color: white;
   cursor: pointer;
   background-color: black;
 }
 .add-img-container .img-preview-container .delete-btn svg {
   width: 20px;
   height: 20px;
+  color: white;
 }
 
 @media (max-width: 992px) {
@@ -7751,7 +7751,6 @@ select:-webkit-autofill:focus {
   width: calc(100% - 80px);
   min-height: 100%;
   margin-left: 80px;
-  overflow-y: auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8632,6 +8631,8 @@ select:-webkit-autofill:focus {
 .project-card .project-card-content .project-card-content-top .infos_field svg {
   margin-right: 5px;
   color: var(--text);
+  height: 16px;
+  width: 16px;
 }
 .project-card .project-card-content .description {
   font-size: 14px;

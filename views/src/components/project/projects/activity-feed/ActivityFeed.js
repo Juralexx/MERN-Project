@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../../Utils'
 import { StringButton } from '../../../tools/global/Button'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
-import { RiCalendarTodoLine } from 'react-icons/ri'
+import Icon from '../../../tools/icons/Icon'
 
 const ActivityFeed = ({ project, user, websocket }) => {
     const [dates, setDates] = useState([])
@@ -93,7 +93,7 @@ const ActivityFeed = ({ project, user, websocket }) => {
                     })
                 ) : (
                     <div className="empty-array">
-                        <div><RiCalendarTodoLine /></div>
+                        <Icon name="Calendar" />
                         <div>Vous n'avez aucunes activité récentes...</div>
                     </div>
                 )}
