@@ -1,13 +1,4 @@
 .home-tasks {
-    position      : relative;
-    min-height    : 150px;
-    padding       : 12px 0;
-    background    : var(--content-light);
-    color         : var(--text);
-    border-radius : var(--rounded-sm);
-    border-bottom : 1px solid var(--light-border);
-    margin-bottom : 10px;
-
     .home-tasks-header {
         position       : relative;
         padding-bottom : 6px;
@@ -37,9 +28,6 @@
     }
 
     .home-tasks-container {
-        max-height : 380px;
-        overflow-y : auto;
-
         .home-tasks-task {
             position        : relative;
             display         : flex;
@@ -171,6 +159,7 @@
             }
         }
         .home-tasks-container {
+            max-height : 300px;
             .home-tasks-task {
                 .home-tasks-task-content {
                     .home-tasks-task-content-bottom {

@@ -1,18 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
 import { dateParser, fullImage } from '../../Utils'
 import { leaveProject } from '../../tools/functions/member';
 import Breadcrumb from './Breadcrumb';
-import { IoCalendarClearOutline, IoLocationOutline } from 'react-icons/io5'
-import ToolsMenu from '../../tools/global/ToolsMenu';
 import Navbar from './Navbar';
+import ToolsMenu from '../../tools/global/ToolsMenu';
+import Warning from '../../tools/global/Warning';
+import { IoCalendarClearOutline, IoLocationOutline } from 'react-icons/io5'
 
 const Header = ({ project, websocket, user, isManager }) => {
     const dispatch = useDispatch()
+    const [warning, setWarning] = useState(false)
 
     return (
         <div className="dashboard-header">
-            <div className="container-lg py-5">
+            <div className="container-lg pt-7 pb-5">
                 {/*<Breadcrumb project={project} />*/}
                 <div className="dashboard-header-top">
                     <div className="dashboard-header_left">
@@ -31,7 +34,14 @@ const Header = ({ project, websocket, user, isManager }) => {
                     </div>
                     <div className="dashboard-header_right">
                         <ToolsMenu>
-                            <div className="tools_choice" onClick={() => leaveProject(user, project, websocket, dispatch)}>Quitter le projet</div>
+                            <Link className='tools_choice' to={`/project/${project.URLID}/${project.URL}`}>
+                                Voir la page du projet
+                            </Link>
+                            {project.posterId !== user._id &&
+                                <div className="tools_choice" onClick={() => setWarning(true)}>
+                                    Quitter le projet
+                                </div>
+                            }
                         </ToolsMenu>
                     </div>
                 </div>
@@ -39,6 +49,16 @@ const Header = ({ project, websocket, user, isManager }) => {
             <Navbar
                 project={project}
                 isManager={isManager}
+            />
+            <Warning
+                open={warning}
+                setOpen={setWarning}
+                title="Etes-vous sur de vouloir quitter ce projet ?"
+                text="Cette action est définitive"
+                onValidate={() => {
+                    leaveProject(user, project, websocket, dispatch)
+                    setWarning(false)
+                }}
             />
         </div>
     )

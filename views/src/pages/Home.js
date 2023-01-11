@@ -171,9 +171,9 @@ const Home = ({ websocket, user }) => {
                                 sortedProjects={sortedProjects}
                             />
                         } />
+                        <Route path="/*" element={<Navigate to="/" />} />
                     </>
                 }
-                <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
             <Footer />
         </>

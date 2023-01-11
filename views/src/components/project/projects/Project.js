@@ -10,11 +10,12 @@ import ActivityFeed from './activity-feed/ActivityFeed';
 import Tasks from './tasks/Tasks';
 import About from './About';
 import Edit from './edit/Edit';
-import Gallery from './Gallery';
+import Gallery from './gallery/Gallery';
 import Actualities from './actualities/Actualities';
 import AddActuality from './actualities/AddActuality';
 import Qna from './QNA/Qna';
 import AddQna from './QNA/AddQna';
+import HomeGallery from './gallery/HomeGallery';
 
 const Project = ({ user, websocket, projects, setProjects }) => {
     const reducer = useSelector(state => state.projectReducer)
@@ -47,7 +48,8 @@ const Project = ({ user, websocket, projects, setProjects }) => {
         socket.on("leaveProject", data => {
             let index = projects.filter(element => element._id !== data.projectId)
             setProjects(index)
-            if (index.length > 0) setProject(index[0])
+            if (index.length > 0)
+                setProject(index[0])
             else setProject(null)
         })
         return () => socket.off("leaveProject")
@@ -64,26 +66,39 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                 />
                 <Routes>
                     <Route index element={
-                        <div className="container-lg py-8">
-                            <HomeMembers
-                                project={project}
-                                isAdmin={isAdmin}
-                                isManager={isManager}
-                                user={user}
-                                websocket={websocket}
-                            />
-                            <ActivityFeed
-                                project={project}
-                                user={user}
-                                websocket={websocket}
-                            />
-                            <HomeTasks
-                                project={project}
-                                isAdmin={isAdmin}
-                                isManager={isManager}
-                                user={user}
-                                websocket={websocket}
-                            />
+                        <div className='dashboard-project'>
+                            <div className="container-lg py-8">
+                                <div className='row'>
+                                    <div className='col-12 col-xl-6 !px-0 sm:!px-3'>
+                                        <HomeMembers
+                                            project={project}
+                                            isAdmin={isAdmin}
+                                            isManager={isManager}
+                                            user={user}
+                                            websocket={websocket}
+                                        />
+                                        <HomeTasks
+                                            project={project}
+                                            isAdmin={isAdmin}
+                                            isManager={isManager}
+                                            user={user}
+                                            websocket={websocket}
+                                        />
+                                    </div>
+                                    <div className='col-12 col-xl-6 !px-0 sm:!px-3'>
+                                        <ActivityFeed
+                                            project={project}
+                                            user={user}
+                                            websocket={websocket}
+                                        />
+                                        <HomeGallery
+                                            project={project}
+                                            user={user}
+                                            websocket={websocket}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     } />
                     <Route path="about" element={

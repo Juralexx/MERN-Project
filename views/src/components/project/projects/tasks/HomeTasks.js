@@ -37,7 +37,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
 
     return (
         <>
-            <div className="home-tasks mt-5">
+            <div className="dashboard-card home-tasks">
                 <div className="home-tasks-header">
                     <div className="home-tasks-nav-header-top">
                         <h3>Tâches <span>{tasks.length}</span></h3>
@@ -74,7 +74,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                         </DropdownInput>
                     </div>
                 </div>
-                <div className="home-tasks-container custom-scrollbar">
+                <div className="dashboard-card-container home-tasks-container custom-scrollbar">
                     {tasks.length > 0 ? (
                         tasks.map((element, key) => {
                             return (

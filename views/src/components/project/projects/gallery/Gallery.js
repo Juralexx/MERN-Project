@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone';
-import { ErrorCard } from '../../tools/global/Error';
-import { deleteProjectPictures, updateProjectPictures } from '../../../actions/project.action'
-import { download } from '../../Utils';
+import { ErrorCard } from '../../../tools/global/Error';
+import { deleteProjectPictures, updateProjectPictures } from '../../../../actions/project.action'
+import { download } from '../../../Utils';
 import FsLightbox from 'fslightbox-react';
 import { Oval } from 'react-loading-icons'
 import { IoTrashBinSharp } from 'react-icons/io5';

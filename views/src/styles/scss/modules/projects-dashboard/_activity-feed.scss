@@ -1,13 +1,4 @@
 .home-activity-feed {
-    position      : relative;
-    padding       : 12px 0;
-    min-height    : 150px;
-    max-height    : 470px;
-    background    : var(--content-light);
-    border-radius : var(--rounded-sm);
-    border-bottom : 1px solid var(--light-border);
-    margin-bottom : 10px;
-
     .home-activity-feed-header {
         position        : relative;
         display         : flex;
@@ -28,9 +19,6 @@
     }
 
     .home-activity-feed-container {
-        max-height : 380px;
-        overflow-y : auto;
-
         .home-activity-feed-item {
             position : relative;
             padding  : 10px 0;

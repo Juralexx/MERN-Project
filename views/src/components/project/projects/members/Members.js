@@ -105,7 +105,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                         </div>
                     </DropdownInput>
                 </div>
-                <div className="dashboard-members-table custom-scrollbar-x">
+                <div className="dashboard-members-table custom-scrollbar">
                     <div className="dashboard-members-table-header">
                         <div className="dashboard-members-table-tools" onClick={() => {
                             setMembers(sortByAlpha(members))

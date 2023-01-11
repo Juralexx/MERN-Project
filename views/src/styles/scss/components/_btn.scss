@@ -135,6 +135,7 @@
     box-shadow : none;
     padding    : 0;
     height     : auto;
+    min-width  : unset;
 
     &:active {
         transform  : none;

@@ -1,7 +1,7 @@
 .dashboard-header {
     position   : relative;
     width      : 100%;
-    background : var(--light);
+    background : var(--content-light);
 
     .dashboard-header-top {
         position        : relative;
@@ -75,7 +75,7 @@
 }
 
 .dashboard-header_navbar {
-    background-color : var(--light);
+    background : var(--content-light);
     
     .dashboard-header_navbar-content {
         display         : flex;

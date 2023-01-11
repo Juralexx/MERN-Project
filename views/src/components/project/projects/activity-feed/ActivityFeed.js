@@ -17,7 +17,7 @@ const ActivityFeed = ({ project, user, websocket }) => {
     }, [project.activity_feed])
 
     return (
-        <div className="home-activity-feed">
+        <div className="dashboard-card home-activity-feed">
             <div className="home-activity-feed-header">
                 <h3>Fil d'activités <span>{activities.length}</span></h3>
                 <div className="flex items-center">
@@ -31,7 +31,7 @@ const ActivityFeed = ({ project, user, websocket }) => {
                     </ToolsMenu>
                 </div>
             </div>
-            <div className="home-activity-feed-container custom-scrollbar">
+            <div className="dashboard-card-container home-activity-feed-container custom-scrollbar">
                 {activities.length > 0 ? (
                     activities.map((element, key) => {
                         return (

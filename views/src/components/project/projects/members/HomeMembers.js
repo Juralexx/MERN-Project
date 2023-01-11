@@ -16,7 +16,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
 
     return (
         <>
-            <div className="home-members">
+            <div className="dashboard-card home-members">
                 <div className="home-members-header">
                     <h3>Membres <span>{project.members.length}</span></h3>
                     <div className="flex items-center">
@@ -32,7 +32,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                     </div>
                 </div>
 
-                <div className="home-members-container custom-scrollbar">
+                <div className="dashboard-card-container home-members-container custom-scrollbar">
                     {project.members.map((element, key) => {
                         return (
                             <div className="home-members-member" key={key}>
