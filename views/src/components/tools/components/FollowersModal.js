@@ -7,7 +7,7 @@ import HoverModal from "./HoverModal";
 import { TextButton } from "../global/Button";
 import { MediumAvatar } from "../global/Avatars";
 import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/friend";
-import { MdOutlineBookmark, MdBookmarkBorder } from 'react-icons/md'
+import Icon from "../icons/Icon";
 
 const FollowersModal = ({ project, open, setOpen, user, websocket }) => {
     const [followers, setFollowers] = useState([])
@@ -104,7 +104,7 @@ const FollowersModal = ({ project, open, setOpen, user, websocket }) => {
     return (
         <Modal open={open} setOpen={setOpen} className='users_modal'>
             <div className="users_modal-header">
-                <MdOutlineBookmark />
+                <Icon name="Bookmark" />
                 <p>Suivi par {project.followers.length} personnes</p>
             </div>
             <div className="users_modal-body">
@@ -135,7 +135,7 @@ const FollowersModal = ({ project, open, setOpen, user, websocket }) => {
                     </>
                 ) : (
                     <div className="empty_users">
-                        <MdBookmarkBorder />
+                        <Icon name="Bookmark" />
                         <div>Personne n'a encore suivi ce projet</div>
                     </div>
                 )}

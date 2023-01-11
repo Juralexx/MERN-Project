@@ -2,8 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { acceptRequest, refuseRequest } from '../../../tools/functions/friend';
 import { addClass, fullImage } from '../../../Utils';
-import { FaUserFriends } from 'react-icons/fa'
-import { IoClose } from 'react-icons/io5';
+import Icon from '../../../tools/icons/Icon';
 
 const FriendRequestCard = ({ notification, websocket, user, setSend }) => {
     const dispatch = useDispatch()
@@ -12,10 +11,12 @@ const FriendRequestCard = ({ notification, websocket, user, setSend }) => {
         <div className={`notification-message ${addClass(notification.type === "friend-request", "active")}`}>
             <div className="top">
                 <div className="flex items-center">
-                    <FaUserFriends className="icon" />
+                    <Icon name="Group" className="icon" />
                     <div className="subject">Demande d'ami - À l'instant</div>
                 </div>
-                <div className="close-btn" onClick={() => setSend(false)}><IoClose /></div>
+                <div className="close-btn" onClick={() => setSend(false)}>
+                    <Icon name="Cross" />
+                </div>
             </div>
             {!notification.state &&
                 <>

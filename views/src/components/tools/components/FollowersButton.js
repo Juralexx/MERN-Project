@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { followProject, unfollowProject } from "../../../actions/project.action";
 import { UidContext } from "../../AppContext";
-import { MdOutlineBookmarkBorder, MdOutlineBookmark } from 'react-icons/md'
+import Icon from "../icons/Icon";
 
 const FollowersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)
@@ -62,7 +62,7 @@ const FollowersButton = ({ project, onClick }) => {
             {uid === null &&
                 <div className="action-btn follow">
                     <button>
-                        <MdOutlineBookmarkBorder />
+                        <Icon name="Bookmark" />
                     </button>
                     <p>{text}</p>
                 </div>
@@ -71,7 +71,7 @@ const FollowersButton = ({ project, onClick }) => {
                 !followed &&
                 <div className="action-btn follow">
                     <button onClick={follow}>
-                        <MdOutlineBookmarkBorder />
+                        <Icon name="Bookmark" />
                     </button>
                     <p onClick={onClick}>{text}</p>
                 </div>
@@ -80,7 +80,7 @@ const FollowersButton = ({ project, onClick }) => {
                 followed &&
                 <div className="action-btn follow">
                     <button onClick={unfollow}>
-                        <MdOutlineBookmark />
+                        <Icon name="Bookmark" />
                     </button>
                     <p onClick={onClick}>{text}</p>
                 </div>

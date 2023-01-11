@@ -6,8 +6,8 @@ import { removeNotifications } from "../../actions/user.action";
 import SettingsMenu from "./SettingsMenu";
 import NotificationsMenu from "./notifications/Notifications";
 import MessengerMenu from "./Messenger";
-import { MdOutlineMessage, MdOutlineNotificationsActive, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { fullImage } from "../Utils";
+import Icon from "../tools/icons/Icon";
 
 const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
     const [openSettingsMenu, setOpenSettingsMenu] = useState(false)
@@ -39,8 +39,12 @@ const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
                 </li>
                 <div className="bordered"></div>
                 <li className="mini_nav-li">
-                    <div className="mini_nav-button" onClick={() => { setOpenMessengerMenu(!openMessengerMenu); setOpenNotificationsMenu(false); setOpenSettingsMenu(false) }}>
-                        <MdOutlineMessage />
+                    <div className="mini_nav-button" onClick={() => {
+                        setOpenMessengerMenu(!openMessengerMenu)
+                        setOpenNotificationsMenu(false)
+                        setOpenSettingsMenu(false)
+                    }}>
+                        <Icon name="Message" />
                     </div>
                 </li>
                 <li className="mini_nav-li">
@@ -48,12 +52,16 @@ const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
                         {user.unseen_notifications > 0 && (
                             <div className="mini-badge">{user.unseen_notifications}</div>
                         )}
-                        <MdOutlineNotificationsActive />
+                        <Icon name="Notification" />
                     </div>
                 </li>
                 <li className="mini_nav-li">
-                    <div className="mini_nav-button" onClick={() => { setOpenSettingsMenu(!openSettingsMenu); setOpenMessengerMenu(false); setOpenNotificationsMenu(false) }}>
-                        <MdOutlineKeyboardArrowDown />
+                    <div className="mini_nav-button" onClick={() => {
+                        setOpenSettingsMenu(!openSettingsMenu)
+                        setOpenMessengerMenu(false)
+                        setOpenNotificationsMenu(false)
+                    }}>
+                        <Icon name="Checkbox" />
                     </div>
                 </li>
             </ul>

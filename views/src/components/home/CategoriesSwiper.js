@@ -3,8 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im';
 import { fullImage } from '../Utils';
+import Icon from '../tools/icons/Icon';
 
 const CategoriesSwiper = () => {
     const [swiper, setSwiper] = useState()
@@ -42,8 +42,12 @@ const CategoriesSwiper = () => {
             <h2>Catégories</h2>
             <div className="small_swiper">
                 <div className="nav-buttons">
-                    <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
-                    <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
+                    <div className="swiper-button previous" ref={prevRef}>
+                        <Icon name="ArrowLeft" />
+                    </div>
+                    <div className="swiper-button next" ref={nextRef}>
+                        <Icon name="ArrowRight" />
+                    </div>
                 </div>
                 <Swiper
                     keyboard={{ enabled: true }}

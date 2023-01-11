@@ -1,6 +1,5 @@
 import React from 'react'
-import { VscError } from 'react-icons/vsc'
-import { IoCloseOutline } from 'react-icons/io5'
+import Icon from '../icons/Icon'
 
 export const ErrorCard = (props) => {
     const { text, display, useRef, className, clean } = props
@@ -12,11 +11,11 @@ export const ErrorCard = (props) => {
                 ref={useRef}
                 display={(display).toString()}
             >
-                <VscError className="error-icon" />
+                <Icon name="CrossCircle" className="error-icon" />
                 <div className="is_error-content">
                     <div className="text">{text}</div>
                 </div>
-                <IoCloseOutline className="close-icon" onClick={clean} />
+                <Icon name="Cross" className="close-icon" onClick={clean} />
             </div>
         )
     )

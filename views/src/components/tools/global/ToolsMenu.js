@@ -4,7 +4,7 @@ import useMediaQuery from '../hooks/useMediaQuery'
 import { usePopper } from "react-popper";
 import { useLongPress } from '../hooks/useLongPress';
 import { addClass } from '../../Utils'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import Icon from '../icons/Icon';
 
 const ToolsMenu = (props) => {
     const { className, btnClassName, disabled, onClick, placement, mobile, mobileFull } = props
@@ -55,7 +55,6 @@ const ToolsMenu = (props) => {
 
     return (
         !mobile ? (
-
             <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
                 <div className={`tools_menu ${addClass(open, 'active')}`} onClick={() => setOpen(false)}
                     ref={popperElRef}
@@ -72,15 +71,12 @@ const ToolsMenu = (props) => {
                     </div>
                 ) : (
                     <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`} ref={setTargetElement} disabled={disabled} onClick={() => setOpen(!open)}>
-                        <BiDotsHorizontalRounded />
+                        <Icon name="ThreeDots" />
                     </button>
                 )}
             </div>
-
         ) : (
-
             !xs ? (
-
                 <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
                     <div className={`tools_menu ${addClass(open, 'active')}`} onClick={() => setOpen(false)}
                         ref={popperElRef}
@@ -97,13 +93,11 @@ const ToolsMenu = (props) => {
                         </div>
                     ) : (
                         <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`} ref={setTargetElement} disabled={disabled} onClick={() => setOpen(!open)}>
-                            <BiDotsHorizontalRounded />
+                            <Icon name="ThreeDots" />
                         </button>
                     )}
                 </div>
-
             ) : (
-
                 <div ref={ref} className={`${className ? (mobileFull ? "tools_box mobile-full" + className : "tools_box " + className) : (mobileFull ? "tools_box mobile-full" : "tools_box")}`} onClick={onClick}>
                     <div className={`mobile-menu ${addClass(open, 'active')}`}>
                         <div className="mobile-menu-tools" onClick={() => setOpen(false)}>
@@ -117,14 +111,13 @@ const ToolsMenu = (props) => {
                     ) : (
                         !mobileFull ? (
                             <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`} disabled={disabled} onClick={() => setOpen(!open)}>
-                                <BiDotsHorizontalRounded />
+                                <Icon name="ThreeDots" />
                             </button>
                         ) : (
                             <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} disabled={disabled} {...longPressProps}></button>
                         )
                     )}
                 </div>
-
             )
         )
     )

@@ -3,8 +3,8 @@ import axios from 'axios'
 import { acceptMemberRequest, refuseMemberRequest } from '../../../../actions/project.action'
 import { useDispatch } from 'react-redux'
 import { Button } from '../../../tools/global/Button'
-import { FaUserFriends } from 'react-icons/fa'
 import { fullImage } from '../../../Utils'
+import Icon from '../../../tools/icons/Icon';
 
 const MemberRequestCard = ({ notification, websocket, user }) => {
     const [accepted, setAccepted] = useState(false)
@@ -34,7 +34,7 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
     return (
         <div className="notification-message">
             <div className="top">
-                <FaUserFriends />
+                <Icon name="Group" />
                 <div className="subject">Demande d'adhésion</div>
                 <div className="date">À l'instant</div>
             </div>

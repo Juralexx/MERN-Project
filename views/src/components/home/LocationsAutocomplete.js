@@ -4,8 +4,7 @@ import LocationDisplayer from './LocationDisplayer'
 import { useClickOutside } from '../tools/hooks/useClickOutside'
 import { IconInput } from '../tools/global/Inputs'
 import { SmallLoader } from '../tools/global/Loader'
-import { BsInboxFill } from 'react-icons/bs'
-import { IoLocationOutline, IoClose } from 'react-icons/io5'
+import Icon from '../tools/icons/Icon'
 
 const LocationsAutocomplete = ({ datas, setDatas }) => {
     const [searchQuery, setSearchQuery] = useState("")
@@ -77,7 +76,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                     className="is_start_icon"
                     placeholder="Rechercher une localité"
                     type="text"
-                    icon={<IoLocationOutline />}
+                    icon={<Icon name="Position" />}
                     value={searchQuery}
                     onInput={e => setSearchQuery(e.target.value)}
                     onChange={searchLocation}
@@ -86,7 +85,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
             ) : (
                 <div className="locations_displayer" onClick={() => setDisplayLocation(!displayLocation)}>
                     <div className="start_icon">
-                        <IoLocationOutline />
+                        <Icon name="Position" />
                     </div>
                     {datas.location.map((element, key) => {
                         return (
@@ -103,7 +102,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                                 {!element.type &&
                                     <div>{element}</div>
                                 }
-                                <IoClose onClick={() => deleteItem(key)} />
+                                <Icon name="Cross" onClick={() => deleteItem(key)} />
                             </div>
                         )
                     })}
@@ -133,7 +132,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                 }
                 {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
                     <div className="no-result">
-                        <BsInboxFill />
+                        <Icon name="BoxEmpty" />
                         <div>Aucun resultat ne correspond à votre recherche...</div>
                     </div>
                 }

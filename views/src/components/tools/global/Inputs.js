@@ -2,10 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { DayPicker, useInput } from 'react-day-picker';
 import fr from 'date-fns/locale/fr';
 import 'react-day-picker/dist/style.css';
-import { IoClose } from 'react-icons/io5'
-import { FiCalendar } from 'react-icons/fi'
 import { useClickOutside } from '../hooks/useClickOutside';
-import { IoIosArrowDown } from 'react-icons/io';
+import Icon from '../icons/Icon';
 
 export const ClassicInput = (props) => {
     const { useRef, type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
@@ -31,7 +29,7 @@ export const ClassicInput = (props) => {
             />
             {cross && ((value || defaultValue) && (value?.length > 0 || defaultValue?.length > 0)) &&
                 <div onClick={onClean} className="svg_container">
-                    <IoClose className="cross" />
+                    <Icon name="Cross" className="cross" />
                 </div>
             }
         </div>
@@ -64,9 +62,9 @@ export const DropdownInput = (props) => {
                 max={max}
             />
             {cross && value && value.length > 0 ? (
-                <IoClose className="cross" onClick={onClean} />
+                <Icon name="Cross" className="cross" onClick={onClean} />
             ) : (
-                <IoIosArrowDown />
+                <Icon name="CaretDown" />
             )}
             {open &&
                 <div className="dropdown-input-choices custom-scrollbar" onClick={() => setOpen(false)}>
@@ -108,7 +106,7 @@ export const DatePicker = (props) => {
                 onClick={() => setOpen(!open)}
                 {...inputProps}
             />
-            <FiCalendar />
+            <Icon name="Calendar" />
             {open &&
                 <div className="datepicker">
                     <DayPicker
@@ -195,7 +193,7 @@ export const IconInput = (props) => {
             }
             {(cross && (cross && value && value.length > 0)) && (
                 <div onClick={onClean} className="svg_container">
-                    <IoClose className="cross" />
+                    <Icon name="Cross" className="cross" />
                 </div>
             )}
         </div>

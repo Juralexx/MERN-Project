@@ -117,7 +117,7 @@
     color         : var(--primary);
     border-radius : var(--rounded-sm);
     box-shadow    : none;
-    background : rgba(var(--primary-rgb), 0.15);
+    background    : rgba(var(--primary-rgb), 0.15);
 
     &:hover {
         background : rgba(var(--primary-rgb), 0.22);

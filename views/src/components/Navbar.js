@@ -4,12 +4,7 @@ import { useClickOutside } from "./tools/hooks/useClickOutside";
 import { TextButton } from "./tools/global/Button";
 import MiniNav from "./mini-nav/MiniNav";
 import NavbarToggle from "./tools/global/NavbarToggle";
-import { AiOutlineHome, AiOutlinePlus } from 'react-icons/ai'
-import { MdOutlineMessage, MdOutlineScreenSearchDesktop } from 'react-icons/md'
-import { BiUser } from 'react-icons/bi'
-import { RiLoginCircleLine } from 'react-icons/ri'
-import { MdOutlineInsertChart } from 'react-icons/md'
-import { ImArrowLeft2 } from 'react-icons/im'
+import Icon from "./tools/icons/Icon";
 
 const Navbar = ({ websocket, user, uid, onlineUsers }) => {
     const isThisActive = ({ isActive }) => (!isActive ? "nav_link" : "nav_link active")
@@ -34,7 +29,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                 <div className="hidden lg:flex ml-8">
                                     <TextButton className="btn_icon_start">
                                         <Link to="/add-project">
-                                            <AiOutlinePlus />Déposer un projet
+                                            <Icon name="Plus" className="nav_icon" />Déposer un projet
                                         </Link>
                                     </TextButton>
                                 </div>
@@ -46,39 +41,47 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                         <ul className="nav_ul">
                                             <li className="nav_li flex lg:!hidden border-b" onClick={closeOnClick}>
                                                 <NavLink to="/add-project" className={isThisActive}>
-                                                    <AiOutlinePlus className="nav_icon" />
+                                                    <Icon name="Plus" className="nav_icon" />
                                                     <p className="nav_p">Déposer un projet</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/" className={isThisActive}>
-                                                    <AiOutlineHome className="nav_icon" />
+                                                    <Icon name="Home" className="nav_icon" />
                                                     <p className="nav_p">Accueil</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/searches" className={isThisActive}>
-                                                    <MdOutlineScreenSearchDesktop className="nav_icon" />
+                                                    <Icon name="Computer" className="nav_icon" />
                                                     <p className="nav_p">Recherches</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/projects" className={isThisActive}>
-                                                    <MdOutlineInsertChart className="nav_icon" />
+                                                    <Icon name="Dashboard" className="nav_icon" />
                                                     <p className="nav_p">Projets</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/messenger" className={isThisActive}>
-                                                    <MdOutlineMessage className="nav_icon" />
+                                                    <Icon name="Chat" className="nav_icon" />
                                                     <p className="nav_p">Messages</p>
                                                 </NavLink>
                                             </li>
                                         </ul>
                                     </div>
                                     <div className="mini_nav_container">
-                                        <MiniNav user={user} websocket={websocket} onlineUsers={onlineUsers} onClick={closeOnClick} />
-                                        <NavbarToggle open={toggled} onClick={() => setToggled(!toggled)} />
+                                        <MiniNav
+                                            user={user}
+                                            websocket={websocket}
+                                            onlineUsers={onlineUsers}
+                                            onClick={closeOnClick}
+                                        />
+                                        <NavbarToggle
+                                            open={toggled}
+                                            onClick={() => setToggled(!toggled)}
+                                        />
                                     </div>
                                 </>
                             ) : (
@@ -87,43 +90,43 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                         <ul className="nav_ul">
                                             <li className="nav_li flex lg:!hidden border-b" onClick={closeOnClick}>
                                                 <NavLink to="/add-project" className={isThisActive}>
-                                                    <AiOutlinePlus className="nav_icon" />
+                                                    <Icon name="Plus" className="nav_icon" />
                                                     <p className="nav_p">Déposer un projet</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/" className={isThisActive}>
-                                                    <AiOutlineHome className="nav_icon" />
+                                                    <Icon name="Home" className="nav_icon" />
                                                     <p className="nav_p">Accueil</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/login" className={isThisActive}>
-                                                    <MdOutlineScreenSearchDesktop className="nav_icon" />
+                                                    <Icon name="Computer" className="nav_icon" />
                                                     <p className="nav_p">Recherches</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/login" className={isThisActive}>
-                                                    <MdOutlineInsertChart className="nav_icon" />
+                                                    <Icon name="Dashboard" className="nav_icon" />
                                                     <p className="nav_p">Projets</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
                                                 <NavLink to="/login" className={isThisActive}>
-                                                    <MdOutlineMessage className="nav_icon" />
+                                                    <Icon name="Chat" className="nav_icon" />
                                                     <p className="nav_p">Messages</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li flex lg:!hidden border-t mt-10" onClick={closeOnClick}>
                                                 <NavLink to="/login" className={isThisActive}>
-                                                    <BiUser className="nav_icon" />
+                                                    <Icon name="User" className="nav_icon" />
                                                     <p className="nav_p">Connexion</p>
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li flex lg:!hidden" onClick={closeOnClick}>
                                                 <NavLink to="/register" className={isThisActive}>
-                                                    <RiLoginCircleLine className="nav_icon" />
+                                                    <Icon name="Register" className="nav_icon" />
                                                     <p className="nav_p">Inscription</p>
                                                 </NavLink>
                                             </li>
@@ -133,14 +136,17 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                         <ul className="nav_ul">
                                             <li className="nav_li login">
                                                 <NavLink to="/login" className={isThisActive}>
-                                                    <BiUser className="nav_icon" />
+                                                    <Icon name="User" className="nav_icon" />
                                                     <p className="nav_p">Connexion</p>
                                                 </NavLink>
                                             </li>
                                         </ul>
                                     </div>
                                     <div className="mini_nav_container lg:!hidden">
-                                        <NavbarToggle open={toggled} onClick={() => setToggled(!toggled)} />
+                                        <NavbarToggle
+                                            open={toggled}
+                                            onClick={() => setToggled(!toggled)}
+                                        />
                                     </div>
                                 </>
                             )}
@@ -150,7 +156,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                             {location.pathname === "/register" &&
                                 <>
                                     <Link to="/" className="move-back">
-                                        <ImArrowLeft2 />
+                                        <Icon name="ArrowLeft" className="nav_icon" />
                                     </Link>
                                     <div className="navbar_form_pages">
                                         <Link to="/">
@@ -159,7 +165,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                             </div>
                                         </Link>
                                         <div className="right">
-                                            <RiLoginCircleLine className="nav_icon" />
+                                            <Icon name="Register" className="nav_icon" />
                                             <p>Inscription</p>
                                         </div>
                                     </div>
@@ -168,7 +174,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                             {location.pathname === "/login" &&
                                 <>
                                     <Link to="/" className="move-back">
-                                        <ImArrowLeft2 />
+                                        <Icon name="ArrowLeft" className="nav_icon" />
                                     </Link>
                                     <div className="navbar_form_pages">
                                         <Link to="/">
@@ -177,7 +183,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                             </div>
                                         </Link>
                                         <div className="right">
-                                            <BiUser className="nav_icon" />
+                                            <Icon name="User" className="nav_icon" />
                                             <p>Connexion</p>
                                         </div>
                                     </div>

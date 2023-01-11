@@ -5,7 +5,7 @@ import MemberRequest from "./MemberRequest";
 import { setNotifSeen } from "../../tools/functions/notifications";
 import { addClass } from '../../Utils'
 import ToolsMenu from "../../tools/global/ToolsMenu";
-import { IoMdNotificationsOff } from 'react-icons/io'
+import Icon from "../../tools/icons/Icon";
 
 const NotificationsMenu = ({ open, user, websocket }) => {
     const [navbar, setNavbar] = useState(1)
@@ -52,13 +52,13 @@ const NotificationsMenu = ({ open, user, websocket }) => {
                 )}
                 {navbar === 1 && user.notifications.length === 0 &&
                     <div className="empty-notifications">
-                        <div><IoMdNotificationsOff /></div>
+                        <Icon name="Notification" />
                         <div>Vous n'avez pas de nouvelles notifications</div>
                     </div>
                 }
                 {navbar === 2 && unread.length === 0 &&
                     <div className="empty-notifications">
-                        <div><IoMdNotificationsOff /></div>
+                        <Icon name="Notification" />
                         <div>Vous n'avez pas de nouvelles notifications non lu</div>
                     </div>
                 }

@@ -6,9 +6,7 @@ import { DynamicInput, CheckBox } from '../tools/global/Inputs';
 import { ErrorCard } from "../tools/global/Error";
 import { isEmailValid, onlyLettersNumbersAndDashes } from "../Utils";
 import { useClickOutside } from "../tools/hooks/useClickOutside";
-import { IoCloseCircleOutline, IoCheckmarkCircleOutline } from 'react-icons/io5'
-import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
-import { BsCheckLg } from 'react-icons/bs'
+import Icon from "../tools/icons/Icon";
 
 const SignUpForm = () => {
     const [submitted, setSubmitted] = useState(false)
@@ -152,26 +150,26 @@ const SignUpForm = () => {
     const addErrorClass = (name) => { if (isErr === name) { return "err" } else { return "" } }
     const validateParameter = (value) => { if (value) { return "is-valid" } else { return "not-valid" } }
     const addSuccessClass = (value) => { if (valid.includes(value)) return "succes" }
-    const returnSVG = (value) => { if (value) { return <IoCheckmarkCircleOutline /> } else return <IoCloseCircleOutline /> }
+    const returnSVG = (value) => { if (value) { return <Icon name="CheckCircle" /> } else return <Icon name="CrossCircle" /> }
 
     return (
         !submitted ? (
             <>
                 <div className="relative mb-4">
                     <DynamicInput type="text" text="Pseudo" placeholder=" " className={`${addErrorClass("pseudo")} ${addSuccessClass("pseudo")}`} onClick={() => setErr(null)} onChange={(e) => setPseudo(e.target.value)} value={pseudo} />
-                    {valid.includes("pseudo") && <BsCheckLg className="validated" />}
+                    {valid.includes("pseudo") && <Icon name="Check" className="validated" />}
                     {isErr === "pseudo" && <ErrorCard useRef={errorRef} display={isErr === "pseudo"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
                 <div className="relative mb-4">
                     <DynamicInput type="email" text="Email" placeholder=" " className={`${addErrorClass("email")} ${addSuccessClass("email")}`} onChange={(e) => setEmail(e.target.value)} value={email} />
-                    {valid.includes("email") && <BsCheckLg className="validated" />}
+                    {valid.includes("email") && <Icon name="Check" className="validated" />}
                     {isErr === "email" && <ErrorCard useRef={errorRef} display={isErr === "email"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 
                 <div className="relative mb-4" ref={passwordRef}>
-                    <DynamicInput type={passwordShown ? "text" : "password"} text="Mot de passe" className={`${addErrorClass("password")} ${addSuccessClass("password")}`} placeholder=" " onClick={() => setDisplay(!display)} onChange={(e) => setPassword(e.target.value)} value={password} endIcon={passwordShown ? <AiFillEyeInvisible /> : <AiFillEye />} endIconClick={() => setPasswordShown(!passwordShown)} />
-                    {valid.includes("password") && <BsCheckLg className="validated" />}
+                    <DynamicInput type={passwordShown ? "text" : "password"} text="Mot de passe" className={`${addErrorClass("password")} ${addSuccessClass("password")}`} placeholder=" " onClick={() => setDisplay(!display)} onChange={(e) => setPassword(e.target.value)} value={password} endIcon={passwordShown ? <Icon name="Hidden" /> : <Icon name="Visible" />} endIconClick={() => setPasswordShown(!passwordShown)} />
+                    {valid.includes("password") && <Icon name="Check" className="validated" />}
                     {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" clean={() => setErr("")} />}
                     {display &&
                         <div className="password-checker">
@@ -193,7 +191,7 @@ const SignUpForm = () => {
 
                 <div className="relative mb-4">
                     <DynamicInput type="password" text="Confirmation mot de passe" className={`${addErrorClass("confirmed-password")} ${addSuccessClass("confirmed-password")}`} placeholder=" " onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} />
-                    {valid.includes("confirmed-password") && <BsCheckLg className="validated" />}
+                    {valid.includes("confirmed-password") && <Icon name="Check" className="validated" />}
                     {isErr === "confirmed-password" && <ErrorCard useRef={errorRef} display={isErr === "confirmed-password"} text={error} className="min-w-full" clean={() => setErr("")} />}
                 </div>
 

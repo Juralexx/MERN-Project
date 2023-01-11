@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { likeProject, unlikeProject } from '../../../actions/project.action';
-import { IoHeart, IoHeartOutline } from 'react-icons/io5'
+import Icon from "../icons/Icon";
 
 const LikersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)
@@ -64,7 +64,7 @@ const LikersButton = ({ project, onClick }) => {
             {uid === null &&
                 <div className="action-btn like">
                     <Link to='/login'>
-                        <IoHeartOutline />
+                        <Icon name="Like" />
                     </Link>
                     <p>{text}</p>
                 </div>
@@ -73,7 +73,7 @@ const LikersButton = ({ project, onClick }) => {
                 !liked &&
                 <div className="action-btn like">
                     <button onClick={like}>
-                        <IoHeartOutline />
+                        <Icon name="Like" />
                     </button>
                     <p onClick={onClick}>{text}</p>
                 </div>
@@ -82,7 +82,7 @@ const LikersButton = ({ project, onClick }) => {
                 liked &&
                 <div className="action-btn like">
                     <button onClick={unlike}>
-                        <IoHeart />
+                        <Icon name="Like" />
                     </button>
                     <p onClick={onClick}>{text}</p>
                 </div>

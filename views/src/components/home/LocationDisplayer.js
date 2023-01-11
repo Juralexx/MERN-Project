@@ -3,10 +3,8 @@ import axios from 'axios'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { Button, TextButton } from '../tools/global/Button'
-import { FaMapMarkerAlt } from 'react-icons/fa'
-import { BsGeoFill } from 'react-icons/bs'
 import { GiFrance } from 'react-icons/gi'
-import { IoClose } from 'react-icons/io5'
+import Icon from '../tools/icons/Icon';
 
 const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
     const [sliderKey, setSliderKey] = useState(0)
@@ -74,7 +72,7 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                                             {!element.type &&
                                                 <div>{element}</div>
                                             }
-                                            <IoClose onClick={() => deleteItem(key)} />
+                                            <Icon name="Cross" onClick={() => deleteItem(key)} />
                                         </div>
                                     )
                                 })}
@@ -87,7 +85,7 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                             {datas.recentLocations.map((element, key) => {
                                 return (
                                     <div className="locations_search_item" key={key} onClick={() => setDatas(data => ({ ...data, location: [...datas.location, element] }))}>
-                                        <FaMapMarkerAlt />
+                                        <Icon name="Position" />
                                         {element.type === "city" &&
                                             <div>{element.location} ({element.department_code})</div>
                                         }
@@ -126,7 +124,7 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                         className="locations_search_item"
                         onClick={() => { getCurrentLocation() }}
                     >
-                        <BsGeoFill />
+                        <Icon name="Compass" />
                         <div>Autour de moi</div>
                     </div>
                 }

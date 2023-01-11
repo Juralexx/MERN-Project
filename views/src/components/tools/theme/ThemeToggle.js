@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeContext, themes } from './Theme';
-import { BsFillSunFill, BsFillMoonStarsFill } from 'react-icons/bs'
 import { updateTheme } from '../../../actions/user.action';
+import Icon from '../icons/Icon';
 
 const ThemeToggle = () => {
     const userData = useSelector((state) => state.userReducer)
@@ -26,12 +26,12 @@ const ThemeToggle = () => {
         <>
             {localStorageTheme === "dark" ? (
                 <div className="settings-menu-li-left">
-                    <BsFillSunFill />
+                    <Icon name="Sun" className="nav_icon" />
                     <p>Activer le mode clair</p>
                 </div>
             ) : (
                 <div className="settings-menu-li-left">
-                    <BsFillMoonStarsFill />
+                    <Icon name="Moon" className="nav_icon" />
                     <p>Activer le mode sombre</p>
                 </div>
             )}

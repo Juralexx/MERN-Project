@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { favoriteProject, unfavoriteProject } from '../../../actions/project.action';
-import { AiOutlineStar, AiFillStar } from 'react-icons/ai'
+import Icon from '../icons/Icon';
 
 const FavoriteButton = ({ project }) => {
     const uid = useContext(UidContext)
@@ -32,7 +32,7 @@ const FavoriteButton = ({ project }) => {
                     <p>Ajouter au favoris</p>
                     <button>
                         <Link to='/login'>
-                            <AiOutlineStar />
+                            <Icon name="StarHalf" />
                         </Link>
                     </button>
                 </div>
@@ -42,7 +42,7 @@ const FavoriteButton = ({ project }) => {
                 <div className="favorite-toggle" onClick={addFavorite}>
                     <p>Ajouter au favoris</p>
                     <button onClick={addFavorite}>
-                        <AiOutlineStar />
+                        <Icon name="StarHalf" />
                     </button>
                 </div>
             }
@@ -51,7 +51,7 @@ const FavoriteButton = ({ project }) => {
                 <div className="favorite-toggle" onClick={pullFavorite}>
                     <p>Retirer des favoris</p>
                     <button onClick={pullFavorite}>
-                        <AiFillStar />
+                        <Icon name="Star" />
                     </button>
                 </div>
             }

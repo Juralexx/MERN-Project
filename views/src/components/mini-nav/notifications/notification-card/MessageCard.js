@@ -5,8 +5,7 @@ import { addClass, fullImage } from '../../../Utils'
 import { convertDeltaToHTML } from '../../../messenger/functions/function'
 import { setLastMessageSeen } from '../../../../actions/messenger.action'
 import ToolsMenu from '../../../tools/global/ToolsMenu'
-import { BsChatRightTextFill } from 'react-icons/bs'
-import { IoClose } from 'react-icons/io5'
+import Icon from '../../../tools/icons/Icon'
 
 const MessageCard = ({ notification, user, setSend }) => {
     const [name, setName] = useState('Message')
@@ -34,14 +33,16 @@ const MessageCard = ({ notification, user, setSend }) => {
         <div className={`notification-message ${addClass(notification.type === "new-message", "active")}`}>
             <div className="top">
                 <div className="flex items-center">
-                    <BsChatRightTextFill className="icon" />
+                    <Icon name="Message" className="icon" />
                     <div className="subject">{name} - À l'instant</div>
                 </div>
                 <ToolsMenu>
                     <div className="tools_choice" onClick={setSeen}>Marquer comme lu</div>
                     <div className="tools_choice">Désactiver les notifications</div>
                 </ToolsMenu>
-                <div className="close-btn"><IoClose /></div>
+                <div className="close-btn">
+                    <Icon name="Cross" />
+                </div>
             </div>
             <div className="notification-content">
                 <div className="left" style={fullImage(notification.sender_picture)}></div>

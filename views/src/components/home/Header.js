@@ -6,10 +6,8 @@ import LocationsAutocomplete from './LocationsAutocomplete';
 import CategoriesPicker from './CategoriesPicker';
 import { IconToggle, Button, TextButton } from '../tools/global/Button';
 import { DropdownInput, IconInput } from '../tools/global/Inputs';
-import { MdOutlineDoubleArrow } from 'react-icons/md'
-import { AiOutlinePlus, AiOutlineMinus, AiOutlineUser, AiOutlineSearch, AiOutlineUnorderedList } from 'react-icons/ai';
 import { GiFrance } from 'react-icons/gi';
-import { IoIosArrowDown } from 'react-icons/io';
+import Icon from '../tools/icons/Icon';
 
 const Header = ({ user, search, datas, setDatas }) => {
     const [openCategories, setOpenCategories] = useState(false)
@@ -34,7 +32,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                         <p>Circa hos dies Lollianus primae lanuginis adulesce, lampadi filius ex praefecto, exploratius causam Maximino spectante.</p>
                         <Button className="btn_icon_start">
                             <Link to="/add-project">
-                                <AiOutlinePlus />Déposer un projet
+                                <Icon name="Plus" />Déposer un projet
                             </Link>
                         </Button>
                     </div>
@@ -43,7 +41,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                             className="is_start_icon mb-3"
                             placeholder="Rechercher un projet"
                             type="search"
-                            icon={<AiOutlineSearch />}
+                            icon={<Icon name="Search" />}
                             defaultValue=""
                             onChange={e => setDatas(data => ({ ...data, query: e.target.value }))}
                         />
@@ -54,8 +52,8 @@ const Header = ({ user, search, datas, setDatas }) => {
                                     inputClassName="cursor-pointer"
                                     placeholder="Catégorie"
                                     readOnly
-                                    icon={<AiOutlineUnorderedList />}
-                                    endIcon={<IoIosArrowDown />}
+                                    icon={<Icon name="List" />}
+                                    endIcon={<Icon name="CaretDown" />}
                                     onClick={() => setOpenCategories(!openCategories)}
                                     value={datas.category}
                                     onChange={() => setDatas(data => ({ ...data, category: datas.category }))}
@@ -71,7 +69,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                                     className="is_start_icon"
                                     placeholder="Métier"
                                     type="search"
-                                    icon={<AiOutlineUser />}
+                                    icon={<Icon name="User" />}
                                     defaultValue=""
                                     onChange={e => setDatas(data => ({ ...data, skills: e.target.value }))}
                                 />
@@ -118,15 +116,15 @@ const Header = ({ user, search, datas, setDatas }) => {
                                     <GiFrance />Voir la carte
                                 </TextButton>
                                 <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}>
-                                    {!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
+                                    {!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
                                 </TextButton>
                             </div>
                             <div className="flex sm:hidden">
                                 <IconToggle className="primary mr-2" icon={<GiFrance />} onClick={() => setOpenMapModal(true)} />
-                                <IconToggle className="primary mr-4" icon={!moreFilters ? <AiOutlinePlus /> : <AiOutlineMinus />} onClick={() => setMoreFilters(!moreFilters)} />
+                                <IconToggle className="primary mr-4" icon={!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />} onClick={() => setMoreFilters(!moreFilters)} />
                             </div>
                             <Button className="btn_icon_end" onClick={search}>
-                                Rechercher<MdOutlineDoubleArrow />
+                                Rechercher<Icon name="DoubleArrowRight" />
                             </Button>
                         </div>
                     </div>

@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import cookie from "js-cookie"
-import { HiLogout } from 'react-icons/hi'
-import { AiFillSetting } from 'react-icons/ai'
-import { BsFillSunFill } from 'react-icons/bs'
-import { IoCaretForwardOutline } from 'react-icons/io5'
-import { ImArrowLeft2 } from 'react-icons/im'
 import ThemeToggle from "../tools/theme/ThemeToggle";
+import Icon from "../tools/icons/Icon";
 
 const SettingsMenu = ({ open, user, websocket, onlineUsers }) => {
     const [value, setValue] = useState(0)
@@ -45,25 +41,25 @@ const SettingsMenu = ({ open, user, websocket, onlineUsers }) => {
                         <ul className="settings-menu-ul">
                             <li className="settings-menu-li">
                                 <div className="settings-menu-li-left">
-                                    <AiFillSetting />
+                                    <Icon name="Checkbox" />
                                     <p>Paramètres</p>
                                 </div>
                                 <div className="settings-menu-li-right">
-                                    <IoCaretForwardOutline />
+                                    <Icon name="CaretRight" />
                                 </div>
                             </li>
                             <li className="settings-menu-li" onClick={() => { setValue(1) }}>
                                 <div className="settings-menu-li-left">
-                                    <BsFillSunFill />
+                                    <Icon name="Sun" />
                                     <p>Affichage</p>
                                 </div>
                                 <div className="settings-menu-li-right">
-                                    <IoCaretForwardOutline />
+                                    <Icon name="CaretRight" />
                                 </div>
                             </li>
                             <li className="settings-menu-li" onClick={logout}>
                                 <div className="settings-menu-li-left">
-                                    <HiLogout />
+                                    <Icon name="Logout" />
                                     <p>Se déconnecter</p>
                                 </div>
                             </li>
@@ -72,7 +68,7 @@ const SettingsMenu = ({ open, user, websocket, onlineUsers }) => {
                     {value === 1 &&
                         <>
                             <div className="settings-menu-header">
-                                <ImArrowLeft2 onClick={() => { setValue(0) }} />
+                                <Icon name="ArrowLeft" onClick={() => setValue(0)} />
                                 Affichage
                             </div>
                             <ul className="settings-menu-ul">

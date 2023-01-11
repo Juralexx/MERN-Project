@@ -104,11 +104,14 @@
                     svg {
                         width  : 18px;
                         height : 18px;
-                        color  : var(--navbar-txt);
+                        color  : var(--svg-x-light);
                     }
     
                     &:hover, &.active {
                         background : var(--x-light);
+                        svg{
+                            color : var(--primary);
+                        }
                     }
                 }
             }

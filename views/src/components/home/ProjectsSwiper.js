@@ -7,7 +7,7 @@ import Card from '../tools/components/Card';
 import CardLoading from '../tools/components/CardLoading';
 import LikersModal from '../tools/components/LikersModal';
 import FollowersModal from '../tools/components/FollowersModal';
-import { ImArrowLeft2, ImArrowRight2 } from 'react-icons/im'
+import Icon from '../tools/icons/Icon';
 
 const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
     const [swiper, setSwiper] = useState()
@@ -29,8 +29,12 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
     return (
         <>
             <div className="nav-buttons">
-                <div className="swiper-button previous" ref={prevRef}><ImArrowLeft2 /></div>
-                <div className="swiper-button next" ref={nextRef}><ImArrowRight2 /></div>
+                    <div className="swiper-button previous" ref={prevRef}>
+                        <Icon name="ArrowLeft" />
+                    </div>
+                    <div className="swiper-button next" ref={nextRef}>
+                        <Icon name="ArrowRight" />
+                    </div>
             </div>
             <Swiper
                 keyboard={{ enabled: true }}

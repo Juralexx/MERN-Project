@@ -49,7 +49,6 @@
                 display            : -webkit-box;
                 -webkit-line-clamp : 1;
                 -webkit-box-orient : vertical;
-                color              : var(--text-tertiary);
                 margin-bottom      : 7px;
             }
 
@@ -68,7 +67,9 @@
 
                 svg {
                     margin-right : 5px;
-                    color        : var(--text-tertiary);
+                    width        : 15px;
+                    height       : 15px;
+                    color        : var(--svg-x-light);
                 }
             }
         }
@@ -98,35 +99,11 @@
                         font-size : 12px;
                     }
 
-                    &.like {
-                        svg {
-                            height       : 18px;
-                            width        : 18px;
-                            fill         : var(--red);
-                            stroke       : var(--red);
-                            margin-right : 5px;
-                        }
-
-                        &:hover {
-                            .icon_toggle {
-                                background-color : rgba(var(--red-rgb), 0.15);
-                            }
-                        }
-                    }
-                    &.follow {
-                        svg {
-                            height       : 18px;
-                            width        : 18px;
-                            fill         : var(--primary);
-                            stroke       : var(--primary);
-                            margin-right : 5px;
-                        }
-
-                        &:hover {
-                            .icon_toggle {
-                                background-color : rgba(var(--green-rgb), 0.15);
-                            }
-                        }
+                    svg {
+                        height       : 18px;
+                        width        : 18px;
+                        margin-right : 5px;
+                        color        : var(--svg-x-light);
                     }
                 }
             }
@@ -166,11 +143,12 @@
     padding         : 7px;
     background      : var(--content-light);
     border-radius   : var(--rounded-full);
+    box-shadow      : var(--shadow-tiny);
 
     svg {
-        fill    : var(--yellow);
-        width   : 20px;
-        height  : 20px;
+        color  : var(--yellow);
+        width  : 20px;
+        height : 20px;
     }
 
     p {

@@ -5,8 +5,7 @@ import { stateToBackground, stateToString } from '../../project/functions';
 import FavoriteButton from './FavoriteButton'
 import FollowersButton from './FollowersButton'
 import LikersButton from './LikersButton'
-import { IoLocationOutline } from 'react-icons/io5'
-import { AiOutlineUnorderedList } from 'react-icons/ai';
+import Icon from '../icons/Icon';
 
 const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, className }) => {
     return (
@@ -25,11 +24,11 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, 
                             {element.title}
                         </h4>
                         <p>
-                            <IoLocationOutline />
+                            <Icon name="Position" />
                             <span>{element.location + ", " + element.department}</span>
                         </p>
                         <p>
-                            <AiOutlineUnorderedList />
+                            <Icon name="List" />
                             <span>{element.category}</span>
                         </p>
                     </div>

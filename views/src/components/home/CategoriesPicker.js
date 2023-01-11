@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { categories } from '../../api/categories'
 import { ImArrowLeft2 } from 'react-icons/im'
 import { addBodyClass, removeBodyClass, addClass } from '../Utils'
-import { MdOutlineArrowForwardIos, MdOutlineArrowRightAlt } from 'react-icons/md'
+import Icon from '../tools/icons/Icon'
 
 const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
     const [active, setActive] = useState(0)
@@ -39,7 +39,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
                                     data-category={category.name}
                                     key={key}
                                 >
-                                    {category.name} <MdOutlineArrowForwardIos />
+                                    {category.name} <Icon name="CaretRight" />
                                 </div>
                             )
                         })}
@@ -53,7 +53,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
                                     data-category={category.name}
                                     key={key}
                                 >
-                                    {category.name} <MdOutlineArrowForwardIos />
+                                    {category.name} <Icon name="CaretRight" />
                                 </div>
                             )
                         })}
@@ -67,7 +67,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
                                     data-category={category.name}
                                     key={key}
                                 >
-                                    {category.name} <MdOutlineArrowForwardIos />
+                                    {category.name} <Icon name="CaretRight" />
                                 </div>
                             )
                         })}
@@ -81,7 +81,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
                                     data-category={category.name}
                                     key={key}
                                 >
-                                    {category.name} <MdOutlineArrowForwardIos />
+                                    {category.name} <Icon name="CaretRight" />
                                 </div>
                             )
                         })}
@@ -89,7 +89,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
                 </div>
                 <div className="categories_bottom_link">
                     <Link to="/">
-                        Voir tous les projets <MdOutlineArrowRightAlt className='w-6 h-6' />
+                        Voir tous les projets <Icon name="DoubleArrowRight" />
                     </Link>
                 </div>
             </div>

@@ -1,20 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button } from '../tools/global/Button'
 import { DynamicInput } from '../tools/global/Inputs';
 import { ErrorCard } from '../tools/global/Error';
 import { handleEnterKey } from '../Utils'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import Icon from '../tools/icons/Icon';
 
 const SignInForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [passwordShown, setPasswordShown] = useState(false)
-    const [error, setError] = useState("")
-    const [isErr, setErr] = useState(null)
-    const errorRef = useRef()
-    const addErrorClass = (name) => { if (isErr === name) { return "err" } else { return "" } }
+    const [error, setError] = useState({ element: "", error: "" })
+    const addErrorClass = (name) => { if (error.element === name) { return "err" } else { return "" } }
 
     const handleLogin = async () => {
         await axios({
@@ -25,12 +23,10 @@ const SignInForm = () => {
         }).then(res => {
             if (res.data.errors) {
                 if (res.data.errors.email) {
-                    setErr("email")
-                    setError(res.data.errors.email)
+                    setError({ element: "email", error: res.data.errors.email })
                 } else {
                     if (res.data.errors.password) {
-                        setErr("password")
-                        setError(res.data.errors.password)
+                        setError({ element: "password", error: res.data.errors.password })
                     }
                 }
             } else {
@@ -42,16 +38,22 @@ const SignInForm = () => {
 
     return (
         <>
-            <div className="mb-4" onKeyPress={(e) => handleEnterKey(e, handleLogin)}>
+            <div className="mb-4" onKeyPress={e => handleEnterKey(e, handleLogin)}>
                 <DynamicInput
                     type="email"
                     text="Email"
                     placeholder=" "
                     className={`${addErrorClass("email")}`}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     defaultValue={email}
                 />
-                {isErr === "email" && <ErrorCard useRef={errorRef} display={isErr === "email"} text={error} className="min-w-full" clean={() => setErr("")} />}
+                {error.element === "email" &&
+                    <ErrorCard
+                        display={error.element === "email"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
+                }
             </div>
             <div className="mb-4">
                 <DynamicInput
@@ -59,12 +61,21 @@ const SignInForm = () => {
                     text="Mot de passe"
                     placeholder=" "
                     className={`${addErrorClass("password")}`}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                     defaultValue={password}
-                    endIcon={passwordShown ? <AiFillEyeInvisible /> : <AiFillEye />} endIconClick={() => setPasswordShown(!passwordShown)}
+                    endIcon={passwordShown ? <Icon name="Hidden" /> : <Icon name="Visible" />}
+                    endIconClick={() => setPasswordShown(!passwordShown)}
                 />
-                <div className="forgot-password"><Link to="/">Mot de passe oublié</Link></div>
-                {isErr === "password" && <ErrorCard useRef={errorRef} display={isErr === "password"} text={error} className="min-w-full" clean={() => setErr("")} />}
+                <div className="forgot-password">
+                    <Link to="/">Mot de passe oublié</Link>
+                </div>
+                {error.element === "password" &&
+                    <ErrorCard
+                        display={error.element === "password"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
+                }
             </div>
             <Button className="mt-6 w-full" onClick={handleLogin}>Connexion</Button>
         </>

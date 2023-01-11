@@ -6,8 +6,8 @@ import fr from 'date-fns/locale/fr'
 import { Button } from '../../tools/global/Button';
 import { acceptProjectMemberRequest, refuseProjectMemberRequest } from '../../tools/functions/member';
 import { deleteNotif } from '../../tools/functions/notifications';
-import { ImCross } from 'react-icons/im'
 import { fullImage } from '../../Utils'
+import Icon from '../../tools/icons/Icon'
 
 const MemberRequest = ({ notification, user, websocket, onClick }) => {
     const [hovered, setHovered] = useState(false)
@@ -45,8 +45,10 @@ const MemberRequest = ({ notification, user, websocket, onClick }) => {
                 <div className="absolute right-2 top-1/2 translate-y-[-50%] h-4 w-4 rounded-full bg-primary"></div>
             )}
             {hovered && (
-                <ImCross className="absolute p-1 right-2 top-2 h-6 w-6 rounded-full dark:bg-background_primary_light dark:text-slate-300 z-100"
-                    onClick={() => { deleteNotif(user._id, notification._id, dispatch); refuseProjectMemberRequest(notification, user, websocket, dispatch) }} />
+                <Icon name="Cross" onClick={() => {
+                    deleteNotif(user._id, notification._id, dispatch)
+                    refuseProjectMemberRequest(notification, user, websocket, dispatch)
+                }} />
             )}
         </div>
     )

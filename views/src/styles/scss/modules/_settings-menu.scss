@@ -23,14 +23,14 @@
             padding       : 7px;
             border-radius : 30px;
             cursor        : pointer;
-            background    : var(--x-light);
             margin-right  : 15px;
+            color         : var(--svg-x-light);
 
             &:hover {
                 background : var(--light);
                 
-                path {
-                    fill : var(--primary);
+                svg {
+                    color : var(--primary);
                 }
             }
         }
@@ -61,10 +61,10 @@
                 }
 
                 svg {
-                    height        : 30px;
-                    width         : 30px;
-                    padding       : 7px;
-                    border-radius : 30px;
+                    height  : 28px;
+                    width   : 28px;
+                    padding : 5px;
+                    color   : var(--svg-x-light);
                 }
             }
 
@@ -76,16 +76,19 @@
                 width       : auto;
 
                 svg {
-                    height        : 30px;
-                    width         : 30px;
-                    padding       : 7px;
-                    border-radius : 30px;
-                    margin-right  : 5px;
+                    height       : 30px;
+                    width        : 30px;
+                    padding      : 7px;
+                    margin-right : 5px;
+                    color        : var(--svg-x-light);
                 }
             }
 
             &:hover {
                 background : var(--x-light);
+                svg {
+                    color : var(--primary);
+                }
             }
 
             .switch {

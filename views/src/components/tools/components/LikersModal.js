@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import { MediumAvatar } from "../global/Avatars"
 import { TextButton } from "../global/Button";
 import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/friend";
-import { IoHeartDislike } from "react-icons/io5";
-import { IoHeart } from 'react-icons/io5'
+import Icon from "../icons/Icon";
 
 const LikersModal = ({ project, open, setOpen, user, websocket }) => {
     const [liker, setLiker] = useState([])
@@ -100,7 +99,7 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
     return (
         <Modal open={open} setOpen={setOpen} className='users_modal'>
             <div className="users_modal-header">
-                <IoHeart />
+                <Icon name="Like" />
                 <p>Soutenu par {project.likers.length} personnes</p>
             </div>
             <div className="users_modal-body">
@@ -131,7 +130,7 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
                     </>
                 ) : (
                     <div className="empty_users">
-                        <IoHeartDislike />
+                        <Icon name="Like" />
                         <div>Personne n'a encore soutenu ce projet</div>
                     </div>
                 )}
