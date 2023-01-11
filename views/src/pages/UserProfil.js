@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from 'react-router-dom'
-import { dateParser, fullImage } from "../components/Utils";
+import { useParams, useNavigate, Route, Routes, Navigate, useLocation, Link } from 'react-router-dom'
+import { addClass, dateParser, fullImage } from "../components/Utils";
 import { replaceHTTP, returnNetworkSVG } from "../components/tools/functions/networks";
 import Footer from "../components/Footer";
 import { FaUserShield } from "react-icons/fa";
 import { MdOutlineCalendarToday } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { OvalLoader } from "../components/tools/global/Loader";
+import Card from "../components/tools/components/Card";
 
 const UserProfil = () => {
     const { pseudo } = useParams()
     const [user, setUser] = useState({})
+    const location = useLocation()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -18,7 +21,6 @@ const UserProfil = () => {
             try {
                 const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/profil/${pseudo}`)
                 data.pseudo ? setUser(data) : navigate('/')
-
             } catch (err) {
                 console.error(err)
             }
@@ -26,15 +28,59 @@ const UserProfil = () => {
         fetch()
     }, [pseudo, navigate])
 
+    const [projects, setProjects] = useState({
+        created: [],
+        participation: []
+    })
+    const [projectsToDisplay, setProjectsToDisplay] = useState({
+        type: "created",
+        array: []
+    })
+    const [isLoading, setLoading] = useState(true)
+
+    useEffect(() => {
+        if (user.projects) {
+            const fetch = () => {
+                setLoading(true)
+                const promises = user.projects.map(async id => {
+                    return await axios
+                        .get(`${process.env.REACT_APP_API_URL}api/project/${id}`)
+                        .then(res => res.data)
+                        .catch(err => console.log(err))
+                })
+                Promise.all(promises).then(res => {
+                    setProjects({
+                        created: res.filter(pros => pros.posterId === user._id),
+                        participation: res.filter(pros => pros.posterId !== user._id)
+                    })
+                    setProjectsToDisplay({
+                        type: "created",
+                        array: res.filter(pros => pros.posterId === user._id)
+                    })
+                    setLoading(false)
+                })
+            }
+            fetch()
+        }
+    }, [user, projects.type])
+
     return (
         <div className="profil_container">
             <div className="profil_header">
                 <div className="profil_cover_img" style={fullImage(user?.cover_picture)}></div>
                 <div className="container relative">
                     <div className="avatar" style={fullImage(user?.picture)}></div>
+                    <div className="content_nav">
+                        <Link to="/profil" className={addClass(location.pathname === '/' + user.pseudo, 'active')}>
+                            Profil
+                        </Link>
+                        <Link to="projects" className={addClass(location.pathname === '/' + user.pseudo + 'projects', 'active')}>
+                            Projets
+                        </Link>
+                    </div>
                 </div>
             </div>
-            <div className="container mt-8 pb-[100px]">
+            <div className="container mt-8 pb-[150px]">
                 <div className="row">
                     <div className="col-12 col-lg-3 md:pr-5 mb-8">
                         <div className='row'>
@@ -69,107 +115,154 @@ const UserProfil = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-lg-9">
-                        <h2 className="pb-5">À propos</h2>
-                        <div className="row py-6 border-b">
-                            <div className="col-12 col-lg-3 mb-5">
-                                <h5 className="txt-prim">Informations générales</h5>
-                            </div>
+                    <Routes>
+                        <Route index element={
                             <div className="col-12 col-lg-9">
-                                <div className="row">
-                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
-                                        <p className="txt-ter mb-1">Pseudo</p>
-                                        <p className="txt-sec mb-1">{user?.pseudo ? user.pseudo : <em>Non renseigné</em>}</p>
+                                <h2 className="pb-5">À propos</h2>
+                                <div className="row py-6 border-b">
+                                    <div className="col-12 col-lg-3 mb-5">
+                                        <h5 className="txt-prim">Informations générales</h5>
                                     </div>
-                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
-                                        <p className="txt-ter mb-1">Métier</p>
-                                        <p className="txt-sec mb-1">{user?.work ? user.work : <em>Non renseigné</em>}</p>
+                                    <div className="col-12 col-lg-9">
+                                        <div className="row">
+                                            <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
+                                                <p className="txt-ter mb-1">Pseudo</p>
+                                                <p className="txt-sec mb-1">{user?.pseudo ? user.pseudo : <em>Non renseigné</em>}</p>
+                                            </div>
+                                            <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
+                                                <p className="txt-ter mb-1">Métier</p>
+                                                <p className="txt-sec mb-1">{user?.work ? user.work : <em>Non renseigné</em>}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
+                                                <p className="txt-ter mb-1">Prénom</p>
+                                                <p className="txt-sec mb-1">{user?.name ? user.name : <em>Non renseigné</em>}</p>
+                                            </div>
+                                            <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
+                                                <p className="txt-ter mb-1">Nom</p>
+                                                <p className="txt-sec mb-1">{user?.lastname ? user.lastname : <em>Non renseigné</em>}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
-                                        <p className="txt-ter mb-1">Prénom</p>
-                                        <p className="txt-sec mb-1">{user?.name ? user.name : <em>Non renseigné</em>}</p>
+                                <div className="row py-6 border-b">
+                                    <div className="col-12 col-lg-3 mb-5">
+                                        <h5 className="txt-prim">Biographie</h5>
                                     </div>
-                                    <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
-                                        <p className="txt-ter mb-1">Nom</p>
-                                        <p className="txt-sec mb-1">{user?.lastname ? user.lastname : <em>Non renseigné</em>}</p>
+                                    <div className="col-12 col-lg-9">
+                                        <p className="txt-sec mb-1">{user?.bio ? user.bio : <em>Non renseigné</em>}</p>
+                                    </div>
+                                </div>
+                                <div className="row py-6 border-b">
+                                    <div className="col-12 col-lg-3 mb-5">
+                                        <h5 className="txt-prim">Localisation</h5>
+                                    </div>
+                                    <div className="col-12 col-lg-9">
+                                        <div className="row">
+                                            <div className="col col-lg-6 mb-5 lg:pr-2">
+                                                <p className="txt-ter mb-1">Ville</p>
+                                                <p className="txt-sec mb-1">{user?.location ? user.location.COM_NOM : <em>Non renseigné</em>}</p>
+                                            </div>
+                                            <div className="col col-lg-6 mb-5 lg:pl-2">
+                                                <p className="txt-ter mb-1">Département</p>
+                                                <p className="txt-sec mb-1">{user?.location ? user.location.DEP_NOM + " (" + user.location.DEP_CODE + ")" : <em>Non renseigné</em>}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row py-6 border-b">
+                                    <div className="col-12 col-lg-3 mb-5">
+                                        <h5 className="txt-prim">Coordonnées</h5>
+                                    </div>
+                                    <div className="col-12 col-lg-9">
+                                        <div className="row">
+                                            <div className="col col-lg-6 mb-5 lg:pr-2">
+                                                <p className="txt-ter mb-1">Email</p>
+                                                <p className="txt-sec mb-1">
+                                                    <a href={'mailto:' + user.email}>{user.email}</a>
+                                                </p>
+                                            </div>
+                                            <div className="col col-lg-6 mb-5 lg:pl-2">
+                                                <p className="txt-ter mb-1">Tél.</p>
+                                                <p className="txt-sec mb-1">
+                                                    {user?.phone ? <a href={'tel:' + user.phone}>{user.phone}</a> : <em>Non renseigné</em>}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row py-6">
+                                    <div className="col-12 col-lg-3 mb-5">
+                                        <h5 className="txt-prim">Réseaux sociaux</h5>
+                                    </div>
+                                    <div className="col-12 col-lg-9">
+                                        <div className="row">
+                                            <div className="profil_info">
+                                                {user?.networks?.length > 0 ? (
+                                                    user?.networks?.map((element, key) => {
+                                                        return (
+                                                            <div className="networks-item" key={key}>
+                                                                {returnNetworkSVG(element.type)}
+                                                                <a href={element.url} rel="noreferrer" target="_blank">{element.url}</a>
+                                                            </div>
+                                                        )
+                                                    })
+                                                ) : (
+                                                    <p className="txt-sec">
+                                                        <em>Non renseigné</em>
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="row py-6 border-b">
-                            <div className="col-12 col-lg-3 mb-5">
-                                <h5 className="txt-prim">Biographie</h5>
-                            </div>
+                        } />
+                        <Route path="projects" element={
                             <div className="col-12 col-lg-9">
-                                <p className="txt-sec mb-1">{user?.bio ? user.bio : <em>Non renseigné</em>}</p>
-                            </div>
-                        </div>
-                        <div className="row py-6 border-b">
-                            <div className="col-12 col-lg-3 mb-5">
-                                <h5 className="txt-prim">Localisation</h5>
-                            </div>
-                            <div className="col-12 col-lg-9">
-                                <div className="row">
-                                    <div className="col col-lg-6 mb-5 lg:pr-2">
-                                        <p className="txt-ter mb-1">Ville</p>
-                                        <p className="txt-sec mb-1">{user?.location ? user.location.COM_NOM : <em>Non renseigné</em>}</p>
+                                <div className="content_nav !mb-4 custom-scrollbar-x">
+                                    <div
+                                        className={addClass(projectsToDisplay.type === "created", 'active')}
+                                        onClick={() => setProjectsToDisplay({ type: 'created', array: projects.created })}
+                                    >
+                                        Projets créés<span>{user.projects?.length}</span>
                                     </div>
-                                    <div className="col col-lg-6 mb-5 lg:pl-2">
-                                        <p className="txt-ter mb-1">Département</p>
-                                        <p className="txt-sec mb-1">{user?.location ? user.location.DEP_NOM + " (" + user.location.DEP_CODE + ")" : <em>Non renseigné</em>}</p>
+                                    <div
+                                        className={addClass(projectsToDisplay.type === "participation", 'active')}
+                                        onClick={() => setProjectsToDisplay({ type: 'participation', array: projects.participation })}
+                                    >
+                                        Participation<span>{user.favorites?.length}</span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="row py-6 border-b">
-                            <div className="col-12 col-lg-3 mb-5">
-                                <h5 className="txt-prim">Coordonnées</h5>
-                            </div>
-                            <div className="col-12 col-lg-9">
-                                <div className="row">
-                                    <div className="col col-lg-6 mb-5 lg:pr-2">
-                                        <p className="txt-ter mb-1">Email</p>
-                                        <p className="txt-sec mb-1">
-                                            <a href={'mailto:' + user.email}>{user.email}</a>
-                                        </p>
-                                    </div>
-                                    <div className="col col-lg-6 mb-5 lg:pl-2">
-                                        <p className="txt-ter mb-1">Tél.</p>
-                                        <p className="txt-sec mb-1">
-                                            {user?.phone ? <a href={'tel:' + user.phone}>{user.phone}</a> : <em>Non renseigné</em>}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row py-6">
-                            <div className="col-12 col-lg-3 mb-5">
-                                <h5 className="txt-prim">Réseaux sociaux</h5>
-                            </div>
-                            <div className="col-12 col-lg-9">
-                                <div className="row">
-                                    <div className="profil_info">
-                                        {user?.networks?.length > 0 ? (
-                                            user?.networks?.map((element, key) => {
-                                                return (
-                                                    <div className="networks-item" key={key}>
-                                                        {returnNetworkSVG(element.type)}
-                                                        <a href={element.url} rel="noreferrer" target="_blank">{element.url}</a>
-                                                    </div>
-                                                )
-                                            })
+                                <div className="profil-page_body !justify-start">
+                                    {!isLoading ? (
+                                        projectsToDisplay.array.length > 0 ? (
+                                            <div className="profil-page_projects !justify-start">
+                                                {projectsToDisplay.array.map((element, key) => {
+                                                    return (
+                                                        <div key={key}>
+                                                            <Card element={element} />
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
                                         ) : (
-                                            <p className="txt-sec">
-                                                <em>Non renseigné</em>
-                                            </p>
-                                        )}
-                                    </div>
+                                            <div className="empty-content">
+                                                <img src={`${process.env.REACT_APP_API_URL}files/img/logo.png`} alt="Vous n'avez aucun projets à afficher..." />
+                                                <p>Aucun projets à afficher...</p>
+                                            </div>
+                                        )
+                                    ) : (
+                                        <div className="loading-container">
+                                            <OvalLoader />
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        } />
+                        <Route path="*" element={<Navigate to="/profil" />} />
+                    </Routes>
                 </div>
             </div>
             <Footer />

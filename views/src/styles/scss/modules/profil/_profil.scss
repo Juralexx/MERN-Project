@@ -51,28 +51,28 @@
             width   : 100%;
         }
     }
+}
 
-    .profil-page_body {
-        width                 : 100%;
-        margin-top            : 30px;
+.profil-page_body {
+    width                 : 100%;
+    margin-top            : 30px;
 
-        .profil-page_projects {
-            display               : grid;
-            grid-template-columns : repeat(3, 1fr);
-            grid-gap              : 10px;
-        }
+    .profil-page_projects {
+        display               : grid;
+        grid-template-columns : repeat(3, 1fr);
+        grid-gap              : 10px;
+    }
 
-        .card {
-            width : auto;
-        }
+    .card {
+        width : auto;
+    }
 
-        .loading-container {
-            width   : 100%;
-            padding : 50px 0;
+    .loading-container {
+        width   : 100%;
+        padding : 50px 0;
 
-            .icon-loading {
-                margin  : 0 auto;
-            }
+        .icon-loading {
+            margin  : 0 auto;
         }
     }
 }
@@ -99,34 +99,28 @@
 }
 
 @media (max-width: 480px) {
-    .profil-page {
-        .profil-page_body {
-            .profil-page_projects {
-                grid-template-columns : repeat(1, 1fr);
-                grid-gap              : 10px;
-            }
+    .profil-page_body {
+        .profil-page_projects {
+            grid-template-columns : repeat(1, 1fr);
+            grid-gap              : 15px;
         }
     }
 }
 
 @media (min-width: 480px) and (max-width: 768px) {
-    .profil-page {
-        .profil-page_body {
-            .profil-page_projects {
-                grid-template-columns : repeat(2, 1fr);
-                grid-gap              : 10px;
-            }
+    .profil-page_body {
+        .profil-page_projects {
+            grid-template-columns : repeat(2, 1fr);
+            grid-gap              : 15px;
         }
     }
 }
 
 @media (min-width: 768px) and (max-width: 1200px) {
-    .profil-page {
-        .profil-page_body {
-            .profil-page_projects {
-                grid-template-columns : repeat(3, 1fr);
-                grid-gap              : 10px;
-            }
+    .profil-page_body {
+        .profil-page_projects {
+            grid-template-columns : repeat(3, 1fr);
+            grid-gap              : 10px;
         }
     }
 }

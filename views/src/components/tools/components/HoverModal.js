@@ -1,37 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { fullImage } from "../../Utils";
-import { Button } from "../global/Button";
+import { Button, TextButton } from "../global/Button";
 
 const HoverModal = ({ user, style, open }) => {
-
     return (
-        open &&
-        <div className="hovered_card" style={style}>
-            <div className="hovered-modal_container">
-                <div className="hovered-modal_head">
-                    <div className="left">
-                        <Link to={"/" + user.pseudo}><div className="hovered-modal_avatar" style={fullImage(user.picture)}></div></Link>
-                    </div>
-                    <div className="right">
-                        <div className="hovered_card-name">
-                            <Link to={"/" + user.pseudo}>{user.pseudo}</Link>
+        open && (
+            <div className="hovered_card" style={style}>
+                <div className="hovered-modal_container">
+                    <div className="hovered-modal_head">
+                        <div className="left">
+                            <Link to={"/" + user.pseudo}>
+                                <div className="hovered-modal_avatar" style={fullImage(user.picture)}></div>
+                            </Link>
                         </div>
-                        {user.location && <p>{user.location.COM_NOM}</p>}
-                        <p>{user.created_projects.length} projets créés</p>
-                        <p>A participé à {user.projects.length} projets</p>
+                        <div className="right">
+                            <div className="hovered_card-name">
+                                <Link to={"/" + user.pseudo}>{user.pseudo}</Link>
+                                {user?.work &&
+                                    <p>{user.work}</p>
+                                }
+                            </div>
+                            <p>{user?.created_projects?.length} projets créés</p>
+                            <p>A participé à {user?.projects?.length} projets</p>
+                        </div>
                     </div>
-                </div>
-                <div className="flex mt-5">
-                    <Button>
-                        <Link to={"/" + user.pseudo} className="mr-1">Voir le profil</Link>
-                    </Button>
-                    <Button>
-                        <Link to={"/projects/" + user.pseudo}>Voir les projets</Link>
-                    </Button>
+                    <div className="flex mt-5">
+                        <TextButton className="mr-2">
+                            <Link to={"/projects/" + user.pseudo}>Voir les projets</Link>
+                        </TextButton>
+                        <Button>
+                            <Link to={"/" + user.pseudo} className="mr-1">Voir le profil</Link>
+                        </Button>
+                    </div>
                 </div>
             </div>
-        </div>
+        )
     )
 }
 

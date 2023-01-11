@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
 import { favoriteProject, unfavoriteProject } from '../../../actions/project.action';
@@ -10,7 +11,8 @@ const FavoriteButton = ({ project }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (project.favorites.includes(uid)) setFavorite(true)
+        if (project.favorites.includes(uid))
+            setFavorite(true)
         else setFavorite(false)
     }, [project.favorites, uid])
 
@@ -28,19 +30,29 @@ const FavoriteButton = ({ project }) => {
             {!uid &&
                 <div className="favorite-toggle">
                     <p>Ajouter au favoris</p>
-                    <button><AiOutlineStar /></button>
+                    <button>
+                        <Link to='/login'>
+                            <AiOutlineStar />
+                        </Link>
+                    </button>
                 </div>
             }
-            {uid && !favorite &&
+            {uid &&
+                !favorite &&
                 <div className="favorite-toggle" onClick={addFavorite}>
                     <p>Ajouter au favoris</p>
-                    <button onClick={addFavorite}><AiOutlineStar /></button>
+                    <button onClick={addFavorite}>
+                        <AiOutlineStar />
+                    </button>
                 </div>
             }
-            {uid && favorite &&
+            {uid &&
+                favorite &&
                 <div className="favorite-toggle" onClick={pullFavorite}>
                     <p>Retirer des favoris</p>
-                    <button onClick={pullFavorite}><AiFillStar /></button>
+                    <button onClick={pullFavorite}>
+                        <AiFillStar />
+                    </button>
                 </div>
             }
         </>

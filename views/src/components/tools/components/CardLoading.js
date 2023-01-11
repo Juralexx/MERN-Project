@@ -8,14 +8,7 @@ const CardLoading = () => {
             <div className="card-body">
                 <p className="animate-pulse bg-slate-400 h-4 w-full pb-2 mb-2 rounded-full"></p>
                 <p className="animate-pulse bg-slate-400 h-4 w-full pb-2 mb-2 rounded-full"></p>
-                <div className="flex justify-between items-center py-2">
-                    <div className="flex items-center">
-                        <BsFillPeopleFill />
-                        <div className="animate-pulse bg-slate-400 h-5 w-7 ml-[8px] rounded-full"></div>
-                    </div>
-                    <div className="animate-pulse bg-slate-400 rounded-full w-[130px] h-5"></div>
-                </div>
-                <div className="animate-pulse bg-slate-400 h-[90px] w-full rounded-xl pb-2"></div>
+                <div className="animate-pulse bg-slate-400 h-[46px] w-full rounded-xl pb-2"></div>
 
                 <div className="grid grid-cols-2 mt-3">
                     <div className="flex flex-col">

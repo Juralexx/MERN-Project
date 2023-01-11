@@ -1,32 +1,19 @@
 .users_modal {
-    width : 500px;
-
+    min-height : 300px;
     .users_modal-header {
-        display       : flex;
-        align-items   : center;
-        border-bottom : 1px solid var(--light-border);
-        padding       : 0 0 10px;
+        display        : flex;
+        align-items    : center;
+        padding-bottom : 10px;
 
         svg {
-            width        : 24px;
-            height       : 24px;
+            width        : 20px;
+            height       : 20px;
             margin-right : 8px;
-
-            &.like {
-                color : var(--red);
-            }
-            &.follow {
-                color : var(--light-blue);
-            }
-        }
-
-        p {
-            padding-top : 5px;
         }
     }
 
     .users_modal-body {
-        padding    : 10px 0 0;
+        padding-top : 10px;
         // overflow-y : auto;
         z-index    : 1;
 
@@ -37,12 +24,16 @@
             justify-content : space-between;
             align-items     : center;
             cursor          : pointer;
-            padding         : 12px 0;
+            padding         : 7px 0;
             
             .pseudo {
                 margin-left : 8px;
                 padding-top : 8px;
             }
+        }
+
+        button {
+            font-size : 12px;;
         }
 
         .empty_users {
@@ -51,12 +42,11 @@
             justify-content : center;
             padding         : 12px 0 6px;
             color           : var(--text);
-            font-size       : 18px;
     
             svg {
-                width        : 30px;
-                height       : 30px;
-                margin-right : 20px;
+                width        : 26px;
+                height       : 26px;
+                margin-right : 10px;
             }
         }
     }

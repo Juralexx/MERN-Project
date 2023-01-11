@@ -3,14 +3,24 @@
     bottom   : 10px;
     left     : -120px;
     padding  : 32px;
-    
+
     .hovered-modal_container {
-        background-color : var(--content);
-        padding          : 16px;
-        box-shadow       : var(--shadow-xl);
+        padding          : 12px;
         width            : auto;
-        border-radius    : var(--rounded-sm);
+        min-width        : 320px;
+        background-color : var(--content-light);
         border           : 2px solid var(--content-x-light);
+        border-radius    : var(--rounded-md);
+        box-shadow       : var(--shadow-xl);
+
+        p {
+            font-size   : 12px;
+            font-weight : 300;
+        }
+
+        button {
+            width : 100%;
+        }
 
         .hovered-modal_head {
             display       : flex;
@@ -20,19 +30,18 @@
             .hovered-modal_avatar {
                 width         : 76px;
                 height        : 76px;
-                border-radius : 16px;
+                border-radius : var(--rounded-full);
             }
 
             .left {
                 padding-right : 20px;
             }
 
-            .right {
-                .hovered_card-name {
-                    font-weight   : 500;
-                    font-size     : 20px;
-                    margin-bottom : 6px;
-                }
+            .hovered_card-name {
+                font-weight   : 500;
+                font-size     : 18px;
+                margin-bottom : 6px;
+                line-height   : 20px;
             }
         }
     }

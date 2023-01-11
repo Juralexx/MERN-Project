@@ -27,7 +27,7 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         user={user}
                     />
                 } />
-                <Route path=":pseudo" element={
+                <Route path=":pseudo/*" element={
                     <UserProfil />
                 } />
 
