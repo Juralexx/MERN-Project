@@ -109,7 +109,7 @@ export const randomNbID = (max) => {
  */
 
 export const removeSpecialChars = (string) => {
-    const noSpecialChars = string.replace(/[^\w ]/g, '');
+    const noSpecialChars = string.replace(/[^\w ]/g, ' ');
     return noSpecialChars
 }
 

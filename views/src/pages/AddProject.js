@@ -17,99 +17,106 @@ import Networks from "../components/project-[add]/Networks";
 import FooterLight from "../components/FooterLight";
 
 const AddProject = ({ user }) => {
-    const [title, setTitle] = useState("")
-    const [subtitle, setSubtitle] = useState("")
-    const [category, setCategory] = useState("")
-    const [tags, setTags] = useState([])
-    const [geolocalisation, setGeolocalisation] = useState("")
-    const [location, setLocation] = useState("")
-    const [department, setDepartment] = useState("")
-    const [codeDepartment, setCodeDepartment] = useState("")
-    const [region, setRegion] = useState("")
-    const [codeRegion, setCodeRegion] = useState("")
-    const [newRegion, setNewRegion] = useState("")
-    const [codeNewRegion, setCodeNewRegion] = useState("")
-    const [leafletLoading, setLeafletLoading] = useState(false)
-    const [geoJSON, setGeoJSON] = useState([])
-    const [description, setDescription] = useState("")
-    const [workArray, setWorkArray] = useState([])
-    const [start, setStart] = useState("")
-    const [end, setEnd] = useState("")
-    const [content, setContent] = useState({})
-    const [mainPic, setMainPic] = useState([])
-    const [files, setFiles] = useState([])
-    const [qna, setQna] = useState([])
-    const [networks, setNetworks] = useState([])
-    const [error, setError] = useState(null)
-    const [isErr, setErr] = useState(null)
-    const [nav, setNav] = useState(0)
+    const [datas, setDatas] = useState({
+        title: "",
+        subtitle: "",
+        category: "",
+        tags: [],
+        location: "",
+        geolocalisation: "",
+        department: "",
+        codeDepartment: "",
+        region: "",
+        codeRegion: "",
+        newRegion: "",
+        codeNewRegion: "",
+        description: "",
+        workArray: [],
+        start: "",
+        end: "",
+        content: {},
+        mainPic: [],
+        pictures: [],
+        qna: [],
+        networks: []
+    })
+
+    const [error, setError] = useState({ element: "", error: "" })
+    const [navbar, setNavbar] = useState(0)
     // const navigate = useNavigate()
 
     const handleAddProject = async () => {
-        if (title === "" || title.length < 10 || title.length > 60) {
-            setErr("title")
-            setError("Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères")
-            setNav(0)
-        } else if (subtitle === "" || subtitle.length < 10 || subtitle.length > 100) {
-            setErr("subtitle")
-            setError("Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères")
-            setNav(0)
-        } else if (category === "") {
-            setErr("category")
-            setError("Veuillez saisir une catégorie")
-            setNav(0)
-        } else if (description === "" || description.length < 10 || description.length > 300) {
-            setErr("description")
-            setError("Veuillez ajouter une courte description à votre projet")
-            setNav(0)
-        } else if (content === "" || content.length < 10 || content.length > 100000) {
-            setErr("content")
-            setError("Veuillez saisir une description valide, votre description doit faire entre 10 et 10 000 caractères")
-            setNav(1)
-        } else if (workArray.length > 0) {
-            for (let i = 0; i < workArray.length; i++) {
-                if (workArray[i].name === "" || workArray[i].number === (null || undefined)) {
-                    setErr(`work-${i}`)
-                    setError("Veuillez saisir un métier ou un nombre valide...")
-                    setNav(3)
-                    break
+        if (datas.title === "" || datas.title.length < 10 || datas.title.length > 60) {
+            setNavbar(0)
+            setError({
+                element: "title",
+                error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères"
+            })
+        } else if (datas.subtitle === "" || datas.subtitle.length < 10 || datas.subtitle.length > 100) {
+            setNavbar(0)
+            setError({
+                element: "subtitle",
+                error: "Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères"
+            })
+        } else if (datas.category === "") {
+            setNavbar(0)
+            setError({
+                element: "category",
+                error: "Veuillez saisir une catégorie"
+            })
+        } else if (datas.description === "" || datas.description.length < 10 || datas.description.length > 300) {
+            setNavbar(0)
+            setError({
+                element: "description",
+                error: "Veuillez ajouter une courte description à votre projet"
+            })
+        } else if (datas.content === "" || datas.content.length < 10 || datas.content.length > 100000) {
+            setNavbar(1)
+            setError({
+                element: "content",
+                error: "Veuillez saisir une description valide, votre description doit faire entre 10 et 10 000 caractères"
+            })
+        } else if (datas.workArray.length > 0) {
+            for (let i = 0; i < datas.workArray.length; i++) {
+                if (datas.workArray[i].name === "") {
+                    setNavbar(3)
+                    setError({
+                        element: `work-${i}`,
+                        error: "Veuillez saisir un métier ou un nombre valide..."
+                    })
                 } else {
-                    if (workArray[i].number === 0) {
-                        setErr(`work-${i}`)
-                        setError("Le nombre de personnes recherchées ne peut pas être de 0")
-                        setNav(3)
-                        break
-                    } else {
-                        if (JSON.stringify(workArray).includes(JSON.stringify(workArray[i].work))) {
-                            setErr(`work-${i}`)
-                            setError("Vous avez déjà sélectionné ce métier...")
-                            setNav(3)
-                            break
-                        }
+                    if (JSON.stringify(datas.workArray).includes(JSON.stringify(datas.workArray[i].work))) {
+                        setNavbar(3)
+                        setError({
+                            element: `work-${i}`,
+                            error: "Vous avez déjà sélectionné ce métier..."
+                        })
                     }
                 }
             }
-        } else if (qna.length > 0) {
-            for (let i = 0; i < qna.length; i++) {
-                if (qna[i].question === "" || qna[i].question.length < 10 || qna[i].question.length > 100) {
-                    setErr(`question-${i}`)
-                    setError("Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères")
-                    setNav(4)
-                    break
-                } else if (qna[i].answer === "" || qna[i].answer.length < 10 || qna[i].answer.length > 4000) {
-                    setErr(`answer-${i}`)
-                    setError("Veuillez ajouter une reponse valide à votre question")
-                    setNav(4)
-                    break
+        } else if (datas.qna.length > 0) {
+            for (let i = 0; i < datas.qna.length; i++) {
+                if (datas.qna[i].question === "" || datas.qna[i].question.length < 10 || datas.qna[i].question.length > 100) {
+                    setNavbar(4)
+                    setError({
+                        element: `question-${i}`,
+                        error: "Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères"
+                    })
+                } else if (datas.qna[i].answer === "" || datas.qna[i].answer.length < 10 || datas.qna[i].answer.length > 4000) {
+                    setNavbar(4)
+                    setError({
+                        element: `answer-${i}`,
+                        error: "Veuillez ajouter une reponse valide à votre question"
+                    })
                 }
             }
         } else {
-            let cleanTitle = title.toLowerCase();
+            let cleanTitle = datas.title.toLowerCase();
             cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
             cleanTitle = cleanTitle.replace(/[&#,+()$~%^.|_@°=§µ£¤'"`:*?!;<>[\]{}/\\\\]/g, " ")
             cleanTitle = cleanTitle.replace(/ +/g, " ")
             cleanTitle = cleanTitle.trim()
-            setTitle(cleanTitle)
+            setDatas(data => ({ ...data, title: cleanTitle }))
 
             let URL = cleanTitle.toLowerCase();
             URL = removeAccents(URL)
@@ -126,25 +133,25 @@ const AddProject = ({ user }) => {
                     title: cleanTitle,
                     URL: URL,
                     URLID: URLID,
-                    subtitle: subtitle,
-                    category: category,
-                    tags: tags,
+                    subtitle: datas.subtitle,
+                    category: datas.category,
+                    tags: datas.tags,
                     state: "worked on",
-                    geolocalisation: geolocalisation,
-                    location: location,
-                    department: department,
-                    code_department: codeDepartment,
-                    region: region,
-                    code_region: codeRegion,
-                    new_region: newRegion,
-                    code_new_region: codeNewRegion,
-                    description: description,
-                    content: content,
-                    start: start,
-                    end: end,
-                    works: workArray,
-                    qna: qna,
-                    networks: networks,
+                    geolocalisation: datas.geolocalisation,
+                    location: datas.location,
+                    department: datas.department,
+                    code_department: datas.codeDepartment,
+                    region: datas.region,
+                    code_region: datas.codeRegion,
+                    new_region: datas.newRegion,
+                    code_new_region: datas.codeNewRegion,
+                    description: datas.description,
+                    content: datas.content,
+                    start: datas.start,
+                    end: datas.end,
+                    works: datas.workArray,
+                    qna: datas.qna,
+                    networks: datas.networks,
                     manager: user._id,
                     members: { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "manager", since: new Date().toISOString() }
                 }
@@ -154,7 +161,7 @@ const AddProject = ({ user }) => {
                     else if (res.data.errors.category) setError(res.data.errors.category)
                     else if (res.data.errors.content) setError(res.data.errors.content)
                 } else {
-                    let pictures = mainPic.concat(files)
+                    let pictures = datas.mainPic.concat(datas.pictures)
                     if (pictures.length > 0) {
                         await axios.get(`${process.env.REACT_APP_API_URL}api/project/${URLID}/${URL}`)
                             .then(async response => {
@@ -173,21 +180,6 @@ const AddProject = ({ user }) => {
             }).catch(err => console.log(err))
         }
     }
-
-    useEffect(() => {
-        if (location) {
-            const fetchGeolocalisation = async () => {
-                setLeafletLoading(true)
-                await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${location}`)
-                    .then(res => {
-                        if (res.data)
-                            setGeoJSON(res.data.geometry.coordinates)
-                        setInterval(() => setLeafletLoading(false), 1000)
-                    }).catch(err => console.log(err))
-            }
-            fetchGeolocalisation()
-        }
-    }, [location])
 
     return (
         <>
@@ -210,23 +202,23 @@ const AddProject = ({ user }) => {
                     </div>
                     <div className="add-project-header-bottom">
                         <div className="add-project-header-bottom-container custom-scrollbar-x">
-                            <div className={`${addClass(nav === 0, "active")}`} onClick={() => setNav(0)}>
+                            <div className={`nav-item ${addClass(navbar === 0, "active")}`} onClick={() => setNavbar(0)}>
                                 <Icon name="FilesMultiples" />
                                 <p>Les bases</p>
                             </div>
-                            <div className={`${addClass(nav === 1, "active")}`} onClick={() => setNav(1)}>
+                            <div className={`nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>
                                 <Icon name="Article" />
                                 <p>Description</p>
                             </div>
-                            <div className={`${addClass(nav === 2, "active")}`} onClick={() => setNav(2)}>
+                            <div className={`nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>
                                 <Icon name="Picture" />
                                 <p>Galerie</p>
                             </div>
-                            <div className={`${addClass(nav === 3, "active")}`} onClick={() => setNav(3)}>
+                            <div className={`nav-item ${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>
                                 <Icon name="Group" />
                                 <p>Équipe</p>
                             </div>
-                            <div className={`${addClass(nav === 4, "active")}`} onClick={() => setNav(4)}>
+                            <div className={`nav-item ${addClass(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>
                                 <Icon name="Quotes" />
                                 <p>FAQ</p>
                             </div>
@@ -234,169 +226,139 @@ const AddProject = ({ user }) => {
                     </div>
                 </div>
                 <div className="container-md pb-8 pt-[120px]">
-                    {nav === 0 &&
+                    {navbar === 0 &&
                         <>
                             <div className="titles-container">
                                 <h1>Commençons par les bases</h1>
                                 <h2>Facilitez la tâche de ceux qui veulent en savoir plus.</h2>
                             </div>
                             <Title
-                                title={title}
-                                setTitle={setTitle}
-                                subtitle={subtitle}
-                                setSubtitle={setSubtitle}
-                                category={category}
-                                setCategory={setCategory}
-                                isErr={isErr}
-                                setErr={setErr}
+                                datas={datas}
+                                setDatas={setDatas}
                                 error={error}
+                                setError={setError}
                             />
                             <Location
-                                geolocalisation={geolocalisation}
-                                setGeolocalisation={setGeolocalisation}
-                                location={location}
-                                setLocation={setLocation}
-                                setDepartment={setDepartment}
-                                setCodeDepartment={setCodeDepartment}
-                                setRegion={setRegion}
-                                setCodeRegion={setCodeRegion}
-                                setNewRegion={setNewRegion}
-                                setCodeNewRegion={setCodeNewRegion}
-                                leafletLoading={leafletLoading}
-                                geoJSON={geoJSON}
-                                isErr={isErr}
-                                setErr={setErr}
+                                datas={datas}
+                                setDatas={setDatas}
                                 error={error}
+                                setError={setError}
                             />
                             <Description
-                                description={description}
-                                setDescription={setDescription}
-                                tags={tags}
-                                setTags={setTags}
-                                isErr={isErr}
-                                setErr={setErr}
+                                datas={datas}
+                                setDatas={setDatas}
                                 error={error}
                                 setError={setError}
                             />
                             <End
-                                start={start}
-                                setStart={setStart}
-                                end={end}
-                                setEnd={setEnd}
+                                datas={datas}
+                                setDatas={setDatas}
                             />
                             <Networks
-                                networks={networks}
-                                setNetworks={setNetworks}
-                                isErr={isErr}
-                                setErr={setErr}
+                                datas={datas}
+                                setDatas={setDatas}
                                 error={error}
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button className="btn_icon_end" onClick={() => setNav(1)}>
+                                <Button className="btn_icon_end" onClick={() => setNavbar(1)}>
                                     Suivant : Description <Icon name="DoubleArrowRight" />
                                 </Button>
                             </div>
                         </>
                     }
-                    {nav === 1 &&
+                    {navbar === 1 &&
                         <>
                             <div className="titles-container">
                                 <h1>Il est temps de décrire votre projet en détail !</h1>
                                 <h2>Qu'est-ce qui donnera envie à votre public de se rassembler autour de votre projet ? Ici, clarté, concision et précision sont de mise.</h2>
                             </div>
                             <Content
-                                content={content}
-                                setContent={setContent}
+                                datas={datas}
+                                setDatas={setDatas}
                             />
                             <div className="btn_container">
-                                <Button className="btn_icon_start mr-2" onClick={() => setNav(0)}>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNavbar(0)}>
                                     <Icon name="DoubleArrowLeft" /> Retour : Les bases
                                 </Button>
-                                <Button className="btn_icon_end" onClick={() => setNav(2)}>
+                                <Button className="btn_icon_end" onClick={() => setNavbar(2)}>
                                     Suivant : Galerie <Icon name="DoubleArrowRight" />
                                 </Button>
                             </div>
                         </>
                     }
-                    {nav === 2 &&
+                    {navbar === 2 &&
                         <>
                             <div className="titles-container">
                                 <h1>De belles images vous donne plus de visibilité !</h1>
                                 <h2>Ajoutez des images qui représente clairement votre projet.</h2>
                             </div>
                             <Pictures
-                                mainPic={mainPic}
-                                setMainPic={setMainPic}
-                                files={files}
-                                setFiles={setFiles}
+                                datas={datas}
+                                setDatas={setDatas}
                             />
                             <div className="btn_container">
-                                <Button className="btn_icon_start mr-2" onClick={() => setNav(1)}>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNavbar(1)}>
                                     <Icon name="DoubleArrowLeft" /> Retour : Description
                                 </Button>
-                                <Button onClick={() => setNav(3)}>
+                                <Button onClick={() => setNavbar(3)}>
                                     Suivant : Équipe <Icon name="DoubleArrowRight" />
                                 </Button>
                             </div>
                         </>
                     }
-                    {nav === 3 &&
+                    {navbar === 3 &&
                         <>
                             <div className="titles-container">
                                 <h1>Compétences recherchées</h1>
                                 <h2>Séléctionnez les compétences que vous recherchez et décrivez pourquoi.</h2>
-                                {workArray.length === 0 &&
-                                    <Button
+                                {datas.workArray.length === 0 &&
+                                    <TextButton
                                         className="mx-auto mt-8"
-                                        onClick={() => setWorkArray([{ name: "", number: "", numberFound: "", description: "" }])}
+                                        onClick={() => setDatas(data => ({ ...data, workArray: [{ name: "", description: "" }] }))}
                                     >
                                         Rechercher des compétences
-                                    </Button>
+                                    </TextButton>
                                 }
                             </div>
                             <Contributors
-                                workArray={workArray}
-                                setWorkArray={setWorkArray}
-                                isErr={isErr}
-                                setErr={setErr}
+                                datas={datas}
+                                setDatas={setDatas}
                                 error={error}
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button className="btn_icon_start mr-2" onClick={() => setNav(2)}>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNavbar(2)}>
                                     <Icon name="DoubleArrowLeft" /> Retour : Galerie
                                 </Button>
-                                <Button onClick={() => setNav(4)}>
+                                <Button onClick={() => setNavbar(4)}>
                                     Suivant : FAQ <Icon name="DoubleArrowRight" />
                                 </Button>
                             </div>
                         </>
                     }
-                    {nav === 4 &&
+                    {navbar === 4 &&
                         <>
                             <div className="titles-container">
                                 <h1>Foire aux questions</h1>
                                 <h2>Répondez aux questions que votre public pourrait se poser.</h2>
-                                {qna.length === 0 &&
+                                {datas.qna.length === 0 &&
                                     <Button
                                         className="mx-auto mt-8"
-                                        onClick={() => setQna([{ question: "", answer: "" }])}
+                                        onClick={() => setDatas(data => data({ ...data, qna: [{ question: "", answer: "" }] }))}
                                     >
                                         Démarrer une foire aux questions
                                     </Button>
                                 }
                             </div>
                             <Qna
-                                qna={qna}
-                                setQna={setQna}
-                                isErr={isErr}
-                                setErr={setErr}
+                                datas={datas}
+                                setDatas={setDatas}
                                 error={error}
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button className="btn_icon_start mr-2" onClick={() => setNav(3)}>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNavbar(3)}>
                                     <Icon name="DoubleArrowLeft" /> Retour : Équipe
                                 </Button>
                             </div>
@@ -408,11 +370,13 @@ const AddProject = ({ user }) => {
                         <TextButton className="btn_icon_start mr-2">
                             <Icon name="Visible" />Aperçu
                         </TextButton>
-                        <Button onClick={handleAddProject}>Enregistrer et publier</Button>
+                        <Button onClick={handleAddProject}>
+                            Enregistrer et publier
+                        </Button>
                     </div>
                 </div>
-                <FooterLight />
             </div>
+            <FooterLight />
         </>
     )
 }

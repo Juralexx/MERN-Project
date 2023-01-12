@@ -1,25 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DatePicker } from '../tools/global/Inputs'
 
-const End = ({ start, setStart, end, setEnd }) => {
+const End = ({ datas, setDatas }) => {
+    const [start, setStart] = useState(datas.start)
+    const [end, setEnd] = useState(datas.end)
+
+    useEffect(() => {
+        if (start !== datas.start)
+            setDatas(data => ({ ...data, start: start }))
+        if (end !== datas.end)
+            setDatas(data => ({ ...data, end: end }))
+    }, [start, end, datas, setDatas])
+
     return (
         <div className="add-project-card">
             <h2>Date de fin ou de déroulement</h2>
-            <div className="flex-card">
-                <div className="card-left flex flex-col sm:flex-row">
+            <div className="row py-4">
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                    <h3>Date de fin prévu (facultatif)</h3>
+                    <p>
+                        Vous recevrez des conseils quant au moment où les étapes qui durent plusieurs jours doivent être terminées.
+                        Cette date reste modifiable jusqu'au moment où vous lancez votre projet (ce qui se fait manuellement).
+                    </p>
+                </div>
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                    <div className="mb-4">
+                        <p className="title">Date de fin potentielle</p>
+                        <DatePicker
+                            className="top !w-full"
+                            placeholder="JJ/MM/AAAA"
+                            value={datas.start}
+                            selected={datas.start}
+                            onSelect={setStart}
+                        />
+                    </div>
                     <div>
                         <p className="title">Date de fin potentielle</p>
-                        <DatePicker className="top" placeholder="JJ/MM/AAAA" value={start} selected={start} onSelect={setStart} />
+                        <DatePicker
+                            className="top !w-full"
+                            placeholder="JJ/MM/AAAA"
+                            value={datas.end}
+                            selected={datas.end}
+                            onSelect={setEnd}
+                        />
                     </div>
-                    <div className="mt-6 sm:mt-0 sm:ml-2">
-                        <p className="title">Date de fin potentielle</p>
-                        <DatePicker className="top" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
-                    </div>
-                </div>
-                <div className="card-right">
-                    <h3>Date de fin prévu (facultatif)</h3>
-                    <p>Vous recevrez des conseils quant au moment où les étapes qui durent plusieurs jours doivent être terminées.
-                        Cette date reste modifiable jusqu'au moment où vous lancez votre projet (ce qui se fait manuellement).</p>
                 </div>
             </div>
         </div>

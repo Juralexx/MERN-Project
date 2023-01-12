@@ -1,26 +1,14 @@
 import React, { useState } from 'react'
-import { Button } from '../tools/global/Button';
+import { addClass, deleteItemFromArray } from '../Utils';
+import { returnNetworkSVG } from '../tools/functions/networks'
+import { TextButton } from '../tools/global/Button';
 import { ClassicInput } from '../tools/global/Inputs';
+import Icon from '../tools/icons/Icon';
 import isURL from 'validator/lib/isURL';
 import { ErrorCard } from '../tools/global/Error';
-import { IoClose } from 'react-icons/io5';
-import { FaFacebookF, FaInstagram, FaTwitter, FaSnapchatGhost, FaYoutube, FaTwitch, FaPinterest, FaLinkedinIn, FaLink } from 'react-icons/fa'
 
-const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => {
+const Networks = ({ datas, setDatas, error, setError }) => {
     const [network, setNetwork] = useState("")
-    const checkErr = (name) => { if (isErr === name) return "err" }
-
-    const returnSVG = (network) => {
-        if (network === "facebook") return <FaFacebookF />
-        else if (network === "instagram") return <FaInstagram />
-        else if (network === "twitter") return <FaTwitter />
-        else if (network === "snapchat") return <FaSnapchatGhost />
-        else if (network === "youtube") return <FaYoutube />
-        else if (network === "twitch") return <FaTwitch />
-        else if (network === "pinterest") return <FaPinterest />
-        else if (network === "linkedin") return <FaLinkedinIn />
-        else return <FaLink />
-    }
 
     const handleNetwork = () => {
         if (isURL(network)) {
@@ -34,51 +22,66 @@ const Networks = ({ networks, setNetworks, isErr, setErr, error, setError }) => 
             else if (network.includes("pinterest")) site = "pinterest"
             else if (network.includes("linkedin")) site = "linkedin"
             else site = "website"
-            setNetworks([...networks, { type: site, url: network }])
+            setDatas(data => ({ ...data, networks: [...datas.networks, { type: site, url: network }] }))
             setNetwork("")
-            setErr('')
+            setError({ element: "", error: "" })
         } else {
-            setErr("networks")
-            setError("Veuillez saisir une adresse URL valide")
+            setError({
+                element: "networks",
+                error: "Veuillez saisir une adresse URL valide"
+            })
         }
-    }
-
-    const deleteItem = (key) => {
-        let arr = [...networks]
-        arr.splice(key, 1)
-        setNetworks(arr)
     }
 
     return (
         <div className="add-project-card">
             <h2>Réseaux sociaux et site web</h2>
-            <div className="flex-card">
-                <div className="card-left">
-                    <div className="content-form">
-                        <div className="flex">
-                            <ClassicInput className={`w-full !max-w-full ${checkErr("networks")}`} inputClassName="w-full" type="text" placeholder="https://" value={network} onChange={e => setNetwork(e.target.value)} />
-                            <Button className="!h-[46px] ml-2" onClick={handleNetwork}>Ajouter</Button>
-                        </div>
-                        {isErr === "networks" && <ErrorCard display={isErr === "networks"} text={error} clean={() => setErr("")} />}
-                    </div>
-                </div>
-                <div className="card-right">
+            <div className="row py-4">
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
                     <h3>Réseaux sociaux</h3>
-                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
-                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+                    <p>
+                        Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
+                    </p>
+                </div>
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                    <div className="flex">
+                        <ClassicInput
+                            className={`w-full !max-w-full ${addClass(error.element === "networks", 'err')}`}
+                            inputClassName="w-full"
+                            type="text"
+                            placeholder="https://"
+                            value={datas.network}
+                            onChange={e => setNetwork(e.target.value)}
+                        />
+                        <TextButton className="!h-[44px] ml-2" onClick={handleNetwork}>
+                            Ajouter
+                        </TextButton>
+                    </div>
+                    {error.element === "networks" &&
+                        <ErrorCard
+                            display={error.element === "networks"}
+                            text={error.error}
+                            clean={() => setError({ element: "", error: "" })}
+                        />
+                    }
                 </div>
             </div>
-            <div className="flex-card">
-                <div className="card-left">
-                    {networks.length > 0 &&
-                        networks.map((element, key) => {
+            <div className="row py-4">
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                    {datas.networks.length > 0 &&
+                        datas.networks.map((element, key) => {
                             return (
                                 <div className="network" key={key}>
                                     <div className="flex items-center w-[80%] relative">
-                                        {returnSVG(element.type)}
+                                        {returnNetworkSVG(element.type)}
                                         <a href={element.url} target="_blank" rel="noreferrer" className="ml-4">{element.url}</a>
                                     </div>
-                                    <IoClose className='cursor-pointer' onClick={() => deleteItem(key)} />
+                                    <Icon
+                                        name="Cross"
+                                        className='cursor-pointer'
+                                        onClick={() => setDatas(data => ({ ...data, networks: deleteItemFromArray(datas.networks, key) }))}
+                                    />
                                 </div>
                             )
                         })

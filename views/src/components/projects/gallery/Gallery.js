@@ -57,7 +57,7 @@ const Gallery = ({ project, isManager }) => {
                          <>
                               <div {...getRootProps({ className: `dropzone ${isDragActive && "active"} ${pictures.length === 6 && "disabled"}` })}>
                                    <input {...getInputProps()} name="files" />
-                                   <Icon name="Upload" />
+                                   <Icon name="UploadCloud" />
                                    {pictures.length === 6 ? (
                                         <p>Votre galerie est pleine</p>
                                    ) : (

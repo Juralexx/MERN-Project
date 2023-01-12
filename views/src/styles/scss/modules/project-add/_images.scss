@@ -6,16 +6,16 @@
     width           : 100%;
     height          : 210px;
     border          : 1px solid var(--light-border);
-    background      : var(--light);
+    background      : var(--x-light);
 
     svg {
-        width            : 60px;
-        height           : 60px;
+        width            : 70px;
+        height           : 70px;
         padding          : 15px;
         color            : var(--primary);
         background-color : var(--xx-light);
         box-shadow       : var(--shadow-tiny);
-        border-radius    : 50%;
+        border-radius    : var(--rounded-full);
     }
 
     p {
@@ -37,7 +37,7 @@
     width           : 100%;
     height          : 280px;
     padding         : 10px;
-    background      : var(--xxlight);
+    background      : var(--x-light);
     box-shadow      : var(--shadow-tiny);
 
     .main-img {
@@ -75,9 +75,10 @@
 }
 
 .add-img-container {
-    display         : flex;
-    justify-content : space-between;
-    padding         : 20px 0;
+    display               : grid;
+    grid-template-columns : repeat(4, 1fr);
+    grid-gap              : 15px;
+    padding               : 20px 0;
 
     .img-input {
         position : relative;
@@ -91,13 +92,12 @@
     .img-preview-container {
         position        : relative;
         display         : flex;
-        flex-direction  : column;
         align-items     : center;
         justify-content : center;
-        width           : 24%;
+        width           : 100%;
         height          : 200px;
         border          : 1px solid var(--light-border);
-        background      : var(--light);
+        background      : var(--x-light);
 
         .img-preview {
             position        : absolute;
@@ -110,27 +110,18 @@
             top             : 0;
             border-radius   : var(--rounded-sm);
 
-            .svg_container {
+            svg {
                 width            : 80px;
                 height           : 80px;
                 padding          : 15px;
                 color            : var(--primary);
                 background-color : var(--xx-light);
                 box-shadow       : var(--shadow-tiny);
-                border-radius    : 50%;
-
-                svg {
-                    width  : 100%;
-                    height : 100%;
-                }
+                border-radius    : var(--rounded-full);
             }
 
             &.active {
-                border : 2px solid var(--primary);
-
-                .svg_container {
-                    border : 2px solid var(--primary);
-                }
+                border : 1px solid var(--primary);
             }
         }
 
@@ -154,20 +145,12 @@
 
 @media(max-width: 992px) {
     .add-img-container {
-        flex-wrap : wrap;
-        .img-preview-container {
-            margin-top : 10px;
-            width      : 49%;
-        }
+        grid-template-columns : repeat(2, 1fr);
     }
 }
 
 @media(max-width: 576px) {
     .add-img-container {
-        flex-wrap : wrap;
-        .img-preview-container {
-            margin-top : 10px 0;
-            width      : 100%;
-        }
+        grid-template-columns : repeat(1, 1fr);
     }
 }

@@ -154,7 +154,7 @@ const AddActuality = ({ project, user }) => {
                     />
                     <div className="img-preview active">
                         <div className="svg_container">
-                            <Icon name="Upload" />
+                            <Icon name="UploadCloud" />
                         </div>
                     </div>
                 </div>

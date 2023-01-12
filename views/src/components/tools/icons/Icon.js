@@ -67,6 +67,7 @@ import Picture from './Picture';
 import Layers from './Layers';
 import Share from './Share';
 import Upload from './Upload';
+import UploadCloud from './UploadCloud';
 import Download from './Download';
 import PlusCircle from './PlusCircle';
 import MinusCircle from './MinusCircle';
@@ -312,6 +313,8 @@ const Icon = (props) => {
             return <WhatsappOutline {...props} />;
         case 'Share':
             return <Share {...props} />;
+        case 'UploadCloud':
+            return <UploadCloud {...props} />;
         case 'Upload':
             return <Upload {...props} />;
         case 'Download':

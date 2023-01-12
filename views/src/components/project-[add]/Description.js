@@ -1,11 +1,10 @@
-import React, { useRef } from 'react'
-import { IoClose } from 'react-icons/io5'
+import React from 'react'
 import { ErrorCard } from '../tools/global/Error'
 import { ClassicInput, Textarea } from '../tools/global/Inputs'
+import Icon from '../tools/icons/Icon'
+import { addClass } from '../Utils'
 
-const Description = ({ description, setDescription, tags, setTags, error, setError, isErr, setErr }) => {
-    const errorRef = useRef()
-    const checkErr = (name) => { if (isErr === name) { return "err" } else return "" }
+const Description = ({ datas, setDatas, error, setError }) => {
 
     const addTag = (event, element) => {
         if (event.key === 'Enter') {
@@ -15,72 +14,101 @@ const Description = ({ description, setDescription, tags, setTags, error, setErr
                 cleanTag = cleanTag.trim()
                 cleanTag = cleanTag.replace(/ /g, "-")
                 if (cleanTag.length >= 3) {
-                    if (!tags.some(tag => tag === cleanTag)) {
-                        setTags(arr => [...arr, cleanTag])
+                    if (!datas.tags.some(tag => tag === cleanTag)) {
+                        setDatas(data => ({ ...data, tags: [...datas.tags, cleanTag] }))
                         event.target.value = ""
                     } else {
-                        setErr("tags")
-                        setError("Vous avez déjà ajouté ce tag")
+                        setError({
+                            element: "tags",
+                            error: "Vous avez déjà ajouté ce tag"
+                        })
                     }
                 } else {
-                    setErr("tags")
-                    setError("Les tags doivent être composés d'au moins 3 caractères")
+                    setError({
+                        element: "tags",
+                        error: "Les tags doivent être composés d'au moins 3 caractères"
+                    })
                 }
             } else {
-                setErr("tags")
-                setError("Les tags doivent être composés d'au moins 3 caractères")
+                setError({
+                    element: "tags",
+                    error: "Les tags doivent être composés d'au moins 3 caractères"
+                })
             }
         } else return
     }
 
     const removeTag = (element) => {
-        setTags(tags.filter(tag => tag !== element))
+        setDatas(data => ({ ...data, tags: datas.tags.filter(tag => tag !== element) }))
     }
 
     return (
         <div className="add-project-card">
             <h2>Courte description et tags</h2>
-            <div className="flex-card">
-                <div className="card-left">
-                    <div className="content-form">
-                        <p className="title full">Courte description <span>Champ requis</span></p>
-                        <Textarea className={`w-full ${checkErr("description")}`} type="text" placeholder="Courte description du projet" onChange={e => setDescription((e.target.value).substring(0, 300))} value={description} />
-                        <div className="field_infos full">{description.length} / 300 caractères</div>
-                        {isErr === "description" && <ErrorCard useRef={errorRef} display={isErr === "description"} text={error} clean={() => setErr("")} />}
-                    </div>
-                </div>
-                <div className="card-right">
+            <div className="row py-4">
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
                     <h3>Courte description du projet</h3>
-                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
-                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+                    <p>
+                        Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
+                    </p>
+                </div>
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                    <p className="title full">Courte description <span>Champ requis</span></p>
+                    <Textarea
+                        className={`w-full ${addClass(error.element === "description", 'err')}`}
+                        type="text"
+                        placeholder="Courte description du projet"
+                        value={datas.description}
+                        onChange={e => setDatas(data => ({ ...data, description: (e.target.value).substring(0, 300) }))}
+                    />
+                    <div className="field_infos full">{datas.description.length} / 300 caractères</div>
+                    {error.element === "description" &&
+                        <ErrorCard
+                            display={error.element === "description"}
+                            text={error.error}
+                            clean={() => setError({ element: "", error: "" })}
+                        />
+                    }
                 </div>
             </div>
 
-            <div className="flex-card">
-                <div className="card-left">
-                    <div className="content-form">
-                        <p className="title full">Tags</p>
-                        {tags.length > 0 && (
-                            <div className="tags-container">
-                                {tags.map((element, key) => {
-                                    return (
-                                        <div className="tag" key={key}>
-                                            <span>#</span> {element}
-                                            <IoClose onClick={() => removeTag(element)} />
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        )}
-                        <ClassicInput className={`full ${checkErr("tags")}`} type="text" placeholder="Ajouter des tags" onKeyPress={e => addTag(e, e.target.value)} />
-                        <div className="field_infos full">{tags.length} / 12</div>
-                        {isErr === "tags" && <ErrorCard useRef={errorRef} display={isErr === "tags"} text={error} clean={() => setErr("")} />}
-                    </div>
-                </div>
-                <div className="card-right">
+            <div className="row py-4">
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
                     <h3>Tags et référencement</h3>
-                    <p>Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
-                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.</p>
+                    <p>
+                        Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
+                        Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
+                    </p>
+                </div>
+                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                    <p className="title full">Tags</p>
+                    {datas.tags.length > 0 && (
+                        <div className="tags-container">
+                            {datas.tags.map((element, key) => {
+                                return (
+                                    <div className="tag" key={key}>
+                                        <span>#</span> {element}
+                                        <Icon name="Cross" onClick={() => removeTag(element)} />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )}
+                    <ClassicInput
+                        className={`full ${addClass(error.element === "tags", 'err')}`}
+                        type="text"
+                        placeholder="Ajouter des tags"
+                        onKeyPress={e => addTag(e, e.target.value)}
+                    />
+                    <div className="field_infos full">{datas.tags.length} / 12</div>
+                    {error.element === "tags" &&
+                        <ErrorCard
+                            display={error.element === "tags"}
+                            text={error.error}
+                            clean={() => setError({ element: "", error: "" })}
+                        />
+                    }
                 </div>
             </div>
         </div>
