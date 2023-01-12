@@ -8,7 +8,7 @@ import Icon from '../tools/icons/Icon';
 import { addClass, deleteItemFromArray, removeAccents, removeSpecialChars } from '../Utils';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 
-const Contributors = ({ datas, setDatas, error, setError }) => {
+const Works = ({ datas, setDatas, error, setError }) => {
     const [search, setSearch] = useState({ query: "", results: [] })
     const [isLoading, setLoading] = useState(false)
 
@@ -79,8 +79,8 @@ const Contributors = ({ datas, setDatas, error, setError }) => {
                 {datas.workArray.map((element, key) => {
                     return (
                         <div className="mb-4" key={key}>
-                            <div className="header flex mb-5">
-                                <h3 className="mr-4">Métier n°{key + 1}</h3>
+                            <div className="header flex items-center mb-5">
+                                <h4 className="mr-4 !mb-0">Métier n°{key + 1}</h4>
                                 <Button
                                     onClick={() => setDatas(data => ({ ...data, workArray: deleteItemFromArray(datas.workArray, key) }))}
                                 >
@@ -150,7 +150,7 @@ const Contributors = ({ datas, setDatas, error, setError }) => {
                             {error.element === `work-${key}` &&
                                 <ErrorCard
                                     display={error.element === `work-${key}`}
-                                    text={error}
+                                    text={error.error}
                                     clean={() => setError({ element: "", error: "" })}
                                 />
                             }
@@ -162,4 +162,4 @@ const Contributors = ({ datas, setDatas, error, setError }) => {
     )
 }
 
-export default Contributors
+export default Works

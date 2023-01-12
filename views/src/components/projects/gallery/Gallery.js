@@ -65,7 +65,7 @@ const Gallery = ({ project, isManager }) => {
                                    )}
                               </div>
                               {error.state &&
-                                   <ErrorCard display={error.state} text={error} clean={() => setError(err => ({ ...err, state: false }))} />
+                                   <ErrorCard display={error.state} text={error.error} clean={() => setError(err => ({ ...err, state: false }))} />
                               }
                          </>
                     }

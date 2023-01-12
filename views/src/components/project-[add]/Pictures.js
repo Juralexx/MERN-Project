@@ -19,7 +19,7 @@ const Pictures = ({ datas, setDatas }) => {
         <div className="add-project-card">
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Image principale du projet</h3>
+                    <h4>Image principale du projet</h4>
                     <p>
                         Ajoutez une image qui représente clairement votre projet. Choisissez une image qui supportera d'être redimensionnée.
                         Elle sera visible sur votre page de projet, sur le site et les applications mobiles Kickstarter et sur les réseaux sociaux.<br />
@@ -30,7 +30,7 @@ const Pictures = ({ datas, setDatas }) => {
                 </div>
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
                     {datas.mainPic.length === 0 ? (
-                        <div {...getRootProps({ className: `img-dropzone ${isDragActive && "active"}` })}>
+                        <div {...getRootProps({ className: `img-dropzone ${isDragActive && "active"} mt-5 lg:mt-0` })}>
                             <input {...getInputProps()} name="files" />
                             <Icon name="UploadCloud" />
                             <p>
@@ -54,7 +54,7 @@ const Pictures = ({ datas, setDatas }) => {
                     )}
                 </div>
             </div>
-            <h3 className='mt-7'>Ajouter plus d'images</h3>
+            <h4 className='mt-7'>Ajouter plus d'images</h4>
             <p>
                 Ajoutez une image qui représente clairement votre projet. Choisissez une image qui supportera d'être redimensionnée.
                 Elle sera visible sur votre page de projet, sur le site et les applications mobiles Kickstarter et sur les réseaux sociaux.<br />
@@ -78,7 +78,7 @@ const Pictures = ({ datas, setDatas }) => {
                 {[...Array(3)].map((_, key) => {
                     return (
                         <div className="img-preview-container" key={key}>
-                            {datas.files.length > key ? (
+                            {datas.pictures.length > key ? (
                                 <div className="img-preview" style={fullImage(URL.createObjectURL(datas.files[key]))}>
                                     <div className="delete-btn" onClick={() => setDatas(data => ({ ...data, pictures: deleteItemFromArray(datas.files, key) }))}>
                                         <Icon name="Cross" />

@@ -118,10 +118,11 @@
         }
         .add-project-header-bottom {
             .add-project-header-bottom-container {
-                > div {
+                .nav-item {
                     flex-direction : column;
                     svg {
                         margin-right  : 0;
+                        margin-bottom : 7px;
                     }
                 }
             }

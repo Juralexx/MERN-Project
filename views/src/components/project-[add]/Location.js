@@ -67,7 +67,7 @@ const Location = ({ datas, setDatas, setError, error }) => {
             <h2>Localisation</h2>
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Lieu du projet</h3>
+                    <h4>Lieu du projet</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
@@ -77,7 +77,7 @@ const Location = ({ datas, setDatas, setError, error }) => {
                         les résultats de recherche ou les e-mails que nous envoyons à notre communauté.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center relative">
+                <div className="col-12 col-lg-6 flex flex-col justify-center relative !mt-4 lg:!mt-0">
                     <div>
                         <p className="title full">Localité <span>Champs requis</span></p>
                         <ClassicInput
@@ -106,7 +106,7 @@ const Location = ({ datas, setDatas, setError, error }) => {
                         {error.element === "location" &&
                             <ErrorCard
                                 display={error.element === "location"}
-                                text={error}
+                                text={error.error}
                                 clean={() => setError({ element: "", error: "" })}
                             />
                         }

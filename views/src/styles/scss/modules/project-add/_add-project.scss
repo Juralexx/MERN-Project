@@ -38,7 +38,7 @@
         color         : var(--text);
         border-bottom : 1px solid var(--light-border);
 
-        h3 {
+        h4 {
             margin-bottom : 10px;
         }
 
@@ -73,6 +73,11 @@
                     padding : 15px 0;
                     order   : 1;
                 }
+            }
+        }
+        .btn_container {
+            button {
+                width : 50%;
             }
         }
     }

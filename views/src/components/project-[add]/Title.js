@@ -16,13 +16,13 @@ const Title = ({ datas, setDatas, error, setError }) => {
             <h2>Titre, sous-titre et catégorie</h2>
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Titre du projet</h3>
+                    <h4>Titre du projet</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <p className="title full">Titre <span>Champ requis</span></p>
                     <ClassicInput
                         className={`full ${addClass(error.element === "title", 'err')}`}
@@ -35,7 +35,7 @@ const Title = ({ datas, setDatas, error, setError }) => {
                     {error.element === "title" &&
                         <ErrorCard
                             display={error.element === "title"}
-                            text={error}
+                            text={error.error}
                             clean={() => setError({ element: "", error: "" })}
                         />
                     }
@@ -44,13 +44,13 @@ const Title = ({ datas, setDatas, error, setError }) => {
 
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Sous-titre du projet</h3>
+                    <h4>Sous-titre du projet</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <p className="title full">Sous-titre <span>Champ requis</span></p>
                     <Textarea
                         className={`w-full small ${addClass(error.element === "subtitle", 'err')}`}
@@ -63,7 +63,7 @@ const Title = ({ datas, setDatas, error, setError }) => {
                     {error.element === "subtitle" &&
                         <ErrorCard
                             display={error.element === "subtitle"}
-                            text={error}
+                            text={error.error}
                             clean={() => setError({ element: "", error: "" })}
                         />
                     }
@@ -72,13 +72,13 @@ const Title = ({ datas, setDatas, error, setError }) => {
 
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Catégorie</h3>
+                    <h4>Catégorie</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <p className="title full">Catégorie <span>Champ requis</span></p>
                     <div className="relative" ref={wrapperRef}>
                         <IconInput
@@ -102,7 +102,7 @@ const Title = ({ datas, setDatas, error, setError }) => {
                     {error.element === "category" &&
                         <ErrorCard
                             display={error.element === "category"}
-                            text={error}
+                            text={error.error}
                             clean={() => setError({ element: "", error: "" })}
                         />
                     }

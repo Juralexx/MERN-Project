@@ -14,7 +14,7 @@ const End = ({ datas, setDatas }) => {
 
     return (
         <div className="add-project-card">
-            <h2>Date de fin ou de déroulement</h2>
+            <h4>Date de fin ou de déroulement</h4>
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
                     <h3>Date de fin prévu (facultatif)</h3>
@@ -23,7 +23,7 @@ const End = ({ datas, setDatas }) => {
                         Cette date reste modifiable jusqu'au moment où vous lancez votre projet (ce qui se fait manuellement).
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <div className="mb-4">
                         <p className="title">Date de fin potentielle</p>
                         <DatePicker

@@ -19,7 +19,7 @@ const Content = ({ datas, setDatas }) => {
 
     return (
         <div className="add-project-card">
-            <h3 className="mb-2">Description</h3>
+            <h4 className="mb-2">Description</h4>
             <p>
                 Décrivez ce que vous souhaitez financier en évoquant l'importance que votre projet revêt à vos yeux et comment vous comptez le réaliser.
                 Parlez aussi un peu de vous. Une description complète informe les contributeurs sur l'ensemble de votre projet.

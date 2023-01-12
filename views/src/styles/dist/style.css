@@ -6391,7 +6391,7 @@ select:-webkit-autofill:focus {
   color: var(--text);
   border-bottom: 1px solid var(--light-border);
 }
-.add-project .add-project-card h3 {
+.add-project .add-project-card h4 {
   margin-bottom: 10px;
 }
 .add-project .add-project-card p {
@@ -6431,6 +6431,9 @@ select:-webkit-autofill:focus {
     -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;
             order: 1;
+  }
+  .add-project .btn_container button {
+    width: 50%;
   }
 }
 .add-project-header {
@@ -6556,14 +6559,15 @@ select:-webkit-autofill:focus {
   .add-project-header .add-project-header-top .header-top-right button {
     margin: 0 5px;
   }
-  .add-project-header .add-project-header-bottom .add-project-header-bottom-container > div {
+  .add-project-header .add-project-header-bottom .add-project-header-bottom-container .nav-item {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .add-project-header .add-project-header-bottom .add-project-header-bottom-container > div svg {
+  .add-project-header .add-project-header-bottom .add-project-header-bottom-container .nav-item svg {
     margin-right: 0;
+    margin-bottom: 7px;
   }
 }
 .img-dropzone {

@@ -38,13 +38,13 @@ const Networks = ({ datas, setDatas, error, setError }) => {
             <h2>Réseaux sociaux et site web</h2>
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Réseaux sociaux</h3>
+                    <h4>Réseaux sociaux</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <div className="flex">
                         <ClassicInput
                             className={`w-full !max-w-full ${addClass(error.element === "networks", 'err')}`}

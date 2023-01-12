@@ -10,6 +10,7 @@ import AddProject from '../../pages/AddProject'
 import Dashboard from '../../pages/Dashboard'
 import Messenger from '../messenger/Messenger'
 import UserProfil from '../../pages/UserProfil'
+import FooterLight from '../FooterLight'
 
 function Paths({ websocket, onlineUsers, user, uid }) {
     return (
@@ -54,6 +55,7 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                             user={user}
                             websocket={websocket}
                         />
+                        <FooterLight />
                     </ProtectedRoute>
                 } />
                 <Route path="messenger/*" element={

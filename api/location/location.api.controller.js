@@ -12,7 +12,12 @@ export const getLocation = (req, res) => {
 
 export const findLocation = (req, res) => {
     const query = req.params.query
-    LocationApiModel.find({ COM_NOM: { $regex: query, $options: "i" } },
+    LocationApiModel.find({
+        COM_NOM: {
+            $regex: query,
+            $options: "i"
+        }
+    },
         (err, docs) => {
             if (!err) {
                 res.send(docs)

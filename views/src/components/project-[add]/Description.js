@@ -47,13 +47,13 @@ const Description = ({ datas, setDatas, error, setError }) => {
             <h2>Courte description et tags</h2>
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Courte description du projet</h3>
+                    <h4>Courte description du projet</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <p className="title full">Courte description <span>Champ requis</span></p>
                     <Textarea
                         className={`w-full ${addClass(error.element === "description", 'err')}`}
@@ -75,13 +75,13 @@ const Description = ({ datas, setDatas, error, setError }) => {
 
             <div className="row py-4">
                 <div className="col-12 col-lg-6 flex flex-col justify-center">
-                    <h3>Tags et référencement</h3>
+                    <h4>Tags et référencement</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <p className="title full">Tags</p>
                     {datas.tags.length > 0 && (
                         <div className="tags-container">
