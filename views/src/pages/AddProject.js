@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import { addClass, removeAccents } from '../components/Utils'
+import { Button, TextButton } from "../components/tools/global/Button";
+import Icon from "../components/tools/icons/Icon";
 import Title from "../components/project/add-project/Title";
 import Location from "../components/project/add-project/Location";
 import Contributors from "../components/project/add-project/Contributors";
@@ -11,13 +13,8 @@ import Content from "../components/project/add-project/Content";
 import Pictures from "../components/project/add-project/Pictures";
 import Description from "../components/project/add-project/Description";
 import Qna from "../components/project/add-project/Qna";
-import FooterLight from "../components/FooterLight";
-import { Button, OutlinedButton } from "../components/tools/global/Button";
-import { BsFillEyeFill, BsChatLeftQuote } from "react-icons/bs";
-import { MdOutlineDescription, MdOutlinePhotoLibrary } from 'react-icons/md'
-import { RiBook3Line, RiTeamLine } from 'react-icons/ri'
-import { HiOutlineArrowNarrowRight, HiOutlineArrowNarrowLeft } from 'react-icons/hi'
 import Networks from "../components/project/add-project/Networks";
+import FooterLight from "../components/FooterLight";
 
 const AddProject = ({ user }) => {
     const [title, setTitle] = useState("")
@@ -194,48 +191,49 @@ const AddProject = ({ user }) => {
 
     return (
         <>
-            <div className="content_container add-project">
+            <div className="add-project">
                 <div className="add-project-header">
                     <div className="add-project-header-top">
                         <div className="logo_container">
                             <Link to="/">
-                                <div className="logo_inner">
-                                    <img className="logo-main sm:block hidden" src="/img/logo-top.png" alt="" />
-                                    <img className="logo-small block sm:hidden" src="/img/logo.png" alt="" />
-                                </div>
+                                <img className="logo-main" src="/img/logo-top.png" alt="" />
                             </Link>
                         </div>
-                        <div className="header-top-right">
-                            <OutlinedButton className="btn_icon_start"><BsFillEyeFill />Aperçu</OutlinedButton>
-                            <Button onClick={handleAddProject}>Enregistrer et publier</Button>
+                        <div className="header-top-right !hidden sm:!flex">
+                            <TextButton className="btn_icon_start">
+                                <Icon name="Visible" /> Aperçu
+                            </TextButton>
+                            <Button onClick={handleAddProject}>
+                                Enregistrer et publier
+                            </Button>
                         </div>
                     </div>
                     <div className="add-project-header-bottom">
-                        <div className="header-bottom-container">
-                            <div className={`header-bottom-item ${addClass(nav === 0, "active")}`} onClick={() => setNav(0)}>
-                                <MdOutlineDescription />
+                        <div className="add-project-header-bottom-container custom-scrollbar-x">
+                            <div className={`${addClass(nav === 0, "active")}`} onClick={() => setNav(0)}>
+                                <Icon name="FilesMultiples" />
                                 <p>Les bases</p>
                             </div>
-                            <div className={`header-bottom-item ${addClass(nav === 1, "active")}`} onClick={() => setNav(1)}>
-                                <RiBook3Line />
+                            <div className={`${addClass(nav === 1, "active")}`} onClick={() => setNav(1)}>
+                                <Icon name="Article" />
                                 <p>Description</p>
                             </div>
-                            <div className={`header-bottom-item ${addClass(nav === 2, "active")}`} onClick={() => setNav(2)}>
-                                <MdOutlinePhotoLibrary />
+                            <div className={`${addClass(nav === 2, "active")}`} onClick={() => setNav(2)}>
+                                <Icon name="Picture" />
                                 <p>Galerie</p>
                             </div>
-                            <div className={`header-bottom-item ${addClass(nav === 3, "active")}`} onClick={() => setNav(3)}>
-                                <RiTeamLine />
+                            <div className={`${addClass(nav === 3, "active")}`} onClick={() => setNav(3)}>
+                                <Icon name="Group" />
                                 <p>Équipe</p>
                             </div>
-                            <div className={`header-bottom-item ${addClass(nav === 4, "active")}`} onClick={() => setNav(4)}>
-                                <BsChatLeftQuote />
+                            <div className={`${addClass(nav === 4, "active")}`} onClick={() => setNav(4)}>
+                                <Icon name="Quotes" />
                                 <p>FAQ</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="container pt-8">
+                <div className="container-md pb-8 pt-[120px]">
                     {nav === 0 &&
                         <>
                             <div className="titles-container">
@@ -295,7 +293,9 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button onClick={() => setNav(1)}>Suivant : Description&nbsp;<HiOutlineArrowNarrowRight /></Button>
+                                <Button className="btn_icon_end" onClick={() => setNav(1)}>
+                                    Suivant : Description <Icon name="DoubleArrowRight" />
+                                </Button>
                             </div>
                         </>
                     }
@@ -310,8 +310,12 @@ const AddProject = ({ user }) => {
                                 setContent={setContent}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(0)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Les bases</Button>
-                                <Button onClick={() => setNav(2)}>Suivant : Galerie&nbsp;<HiOutlineArrowNarrowRight /></Button>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNav(0)}>
+                                    <Icon name="DoubleArrowLeft" /> Retour : Les bases
+                                </Button>
+                                <Button className="btn_icon_end" onClick={() => setNav(2)}>
+                                    Suivant : Galerie <Icon name="DoubleArrowRight" />
+                                </Button>
                             </div>
                         </>
                     }
@@ -328,8 +332,12 @@ const AddProject = ({ user }) => {
                                 setFiles={setFiles}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(1)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Description</Button>
-                                <Button onClick={() => setNav(3)}>Suivant : Équipe&nbsp;<HiOutlineArrowNarrowRight /></Button>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNav(1)}>
+                                    <Icon name="DoubleArrowLeft" /> Retour : Description
+                                </Button>
+                                <Button onClick={() => setNav(3)}>
+                                    Suivant : Équipe <Icon name="DoubleArrowRight" />
+                                </Button>
                             </div>
                         </>
                     }
@@ -339,8 +347,12 @@ const AddProject = ({ user }) => {
                                 <h1>Compétences recherchées</h1>
                                 <h2>Séléctionnez les compétences que vous recherchez et décrivez pourquoi.</h2>
                                 {workArray.length === 0 &&
-                                    <Button className="mx-auto mt-8" onClick={() => setWorkArray([{ name: "", number: "", numberFound: "", description: "" }])}
-                                    >Rechercher des compétences</Button>
+                                    <Button
+                                        className="mx-auto mt-8"
+                                        onClick={() => setWorkArray([{ name: "", number: "", numberFound: "", description: "" }])}
+                                    >
+                                        Rechercher des compétences
+                                    </Button>
                                 }
                             </div>
                             <Contributors
@@ -352,8 +364,12 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(2)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Galerie</Button>
-                                <Button onClick={() => setNav(4)}>Suivant : FAQ&nbsp;<HiOutlineArrowNarrowRight /></Button>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNav(2)}>
+                                    <Icon name="DoubleArrowLeft" /> Retour : Galerie
+                                </Button>
+                                <Button onClick={() => setNav(4)}>
+                                    Suivant : FAQ <Icon name="DoubleArrowRight" />
+                                </Button>
                             </div>
                         </>
                     }
@@ -363,8 +379,12 @@ const AddProject = ({ user }) => {
                                 <h1>Foire aux questions</h1>
                                 <h2>Répondez aux questions que votre public pourrait se poser.</h2>
                                 {qna.length === 0 &&
-                                    <Button className="mx-auto mt-8" onClick={() => setQna([{ question: "", answer: "" }])}
-                                    >Démarrer une foire aux questions</Button>
+                                    <Button
+                                        className="mx-auto mt-8"
+                                        onClick={() => setQna([{ question: "", answer: "" }])}
+                                    >
+                                        Démarrer une foire aux questions
+                                    </Button>
                                 }
                             </div>
                             <Qna
@@ -376,14 +396,23 @@ const AddProject = ({ user }) => {
                                 setError={setError}
                             />
                             <div className="btn_container">
-                                <Button className="mr-2" onClick={() => setNav(3)}><HiOutlineArrowNarrowLeft />&nbsp;Retour : Équipe</Button>
-                                <Button onClick={handleAddProject}>Enregistrer et publier</Button>
+                                <Button className="btn_icon_start mr-2" onClick={() => setNav(3)}>
+                                    <Icon name="DoubleArrowLeft" /> Retour : Équipe
+                                </Button>
                             </div>
                         </>
                     }
                 </div>
+                <div id="back-actions" className="block sm:hidden">
+                    <div className="back-actions-inner">
+                        <TextButton className="btn_icon_start mr-2">
+                            <Icon name="Visible" />Aperçu
+                        </TextButton>
+                        <Button onClick={handleAddProject}>Enregistrer et publier</Button>
+                    </div>
+                </div>
+                <FooterLight />
             </div>
-            <FooterLight />
         </>
     )
 }

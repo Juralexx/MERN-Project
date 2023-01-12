@@ -1617,8 +1617,8 @@ select:-webkit-autofill:focus {
   margin-right: 8px;
 }
 .btn.btn_icon_end svg {
-  height: 22px;
-  width: 22px;
+  height: 18px;
+  width: 18px;
   margin-left: 8px;
 }
 .btn a {
@@ -1644,6 +1644,8 @@ select:-webkit-autofill:focus {
   border-radius: var(--rounded-sm);
 }
 .btn_first svg {
+  height: 18px;
+  width: 18px;
   color: white;
 }
 .btn_first:hover {
@@ -6343,8 +6345,17 @@ select:-webkit-autofill:focus {
 }
 
 /* Add project */
+.add-project {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  background: var(--content-light);
+  margin-right: auto;
+  margin-left: auto;
+}
 .add-project .titles-container {
-  padding: 20px 0 40px;
+  padding: 30px 0;
   text-align: center;
   border-bottom: 1px solid var(--light-border);
 }
@@ -6365,9 +6376,6 @@ select:-webkit-autofill:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
   padding: 20px 0 50px;
 }
 .add-project .add-project-card {
@@ -6443,12 +6451,13 @@ select:-webkit-autofill:focus {
   }
 }
 .add-project-header {
-  position: relative;
+  position: fixed;
   width: 100%;
-  height: 130px;
+  height: 120px;
+  background: var(--content-light);
+  z-index: 1000;
 }
 .add-project-header .add-project-header-top {
-  position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -6458,8 +6467,6 @@ select:-webkit-autofill:focus {
   height: 64px;
   width: 100%;
   padding: 0 20px;
-  background: var(--content-light);
-  z-index: 900;
 }
 .add-project-header .add-project-header-top .logo_container {
   position: relative;
@@ -6472,19 +6479,12 @@ select:-webkit-autofill:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-.add-project-header .add-project-header-top .logo_container .logo_inner {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  width: auto;
   height: 100%;
+  width: auto;
+  min-width: 123px;
 }
-.add-project-header .add-project-header-top .logo_container .logo_inner img {
-  height: 36px;
+.add-project-header .add-project-header-top .logo_container img {
+  height: 32px;
   width: auto;
   margin-left: 4px;
 }
@@ -6501,25 +6501,21 @@ select:-webkit-autofill:focus {
 }
 .add-project-header .add-project-header-bottom {
   position: relative;
-  top: 64px;
   width: 100%;
-  background: var(--content-light);
-  -webkit-box-shadow: var(--shadow-light);
-          box-shadow: var(--shadow-light);
+  height: 56px;
   border-bottom: 1px solid var(--light-border);
-  z-index: 800;
 }
-.add-project-header .add-project-header-bottom .header-bottom-container {
-  position: relative;
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 56px;
+  height: 100%;
+  min-width: 460px;
 }
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item {
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container > div {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -6531,13 +6527,12 @@ select:-webkit-autofill:focus {
       -ms-flex-align: center;
           align-items: center;
   height: 100%;
-  width: auto;
+  min-width: 90px;
   padding: 0 20px;
-  color: var(--text);
-  overflow-y: hidden;
+  overflow: hidden;
   cursor: pointer;
 }
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item:before {
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container > div:before {
   content: "";
   position: absolute;
   left: 50%;
@@ -6551,65 +6546,42 @@ select:-webkit-autofill:focus {
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
 }
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item svg {
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container > div svg {
   width: 18px;
   height: 18px;
-  color: var(--navbar-txt);
   margin-right: 7px;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
 }
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item p {
-  margin: 0;
-  line-height: 14px;
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container > div p {
   font-weight: 500;
   white-space: nowrap;
-  color: var(--navbar-txt);
 }
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item:hover svg {
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container > div:hover svg, .add-project-header .add-project-header-bottom .add-project-header-bottom-container > div.active svg {
   color: var(--primary);
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
 }
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item:hover:before {
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container > div:hover:before, .add-project-header .add-project-header-bottom .add-project-header-bottom-container > div.active:before {
   width: 50px;
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
   background-color: var(--primary);
 }
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item.active svg {
-  color: var(--primary);
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
-}
-.add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item.active:before {
+.add-project-header .add-project-header-bottom .add-project-header-bottom-container > div.active:before {
   width: 80%;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
-  background-color: var(--primary);
 }
 
 @media (max-width: 992px) {
   .add-project-header .add-project-header-top .header-top-right button {
     margin: 0 5px;
   }
-  .add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item {
+  .add-project-header .add-project-header-bottom .add-project-header-bottom-container > div {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item svg {
-    margin-bottom: 7px;
+  .add-project-header .add-project-header-bottom .add-project-header-bottom-container > div svg {
     margin-right: 0;
-  }
-}
-@media (max-width: 576px) {
-  .add-project-header .add-project-header-top {
-    padding: 0 7px;
-  }
-  .add-project-header .add-project-header-bottom .header-bottom-container .header-bottom-item {
-    padding: 0 12px;
   }
 }
 .img-dropzone {

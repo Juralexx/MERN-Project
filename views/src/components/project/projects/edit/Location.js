@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useClickOutside } from "../../../tools/hooks/useClickOutside";
 import { ClassicInput } from "../../../tools/global/Inputs";
-import { BsInboxFill } from 'react-icons/bs'
 import Oval from '../../../tools/loaders/Oval'
 import { ErrorCard } from "../../../tools/global/Error";
 import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
@@ -148,7 +147,6 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                         }
                         {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
                             <div className="no-result">
-                                <BsInboxFill />
                                 <div>Aucun resultat ne correspond à votre recherche...</div>
                             </div>
                         }

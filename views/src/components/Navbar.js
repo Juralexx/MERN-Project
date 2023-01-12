@@ -21,11 +21,11 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                     {location.pathname !== "/register" && location.pathname !== "/login" ? (
                         <>
                             <div className="logo_container">
-                                <Link to="/">
-                                    <div className="logo_inner">
+                                <div className="logo_inner">
+                                    <Link to="/">
                                         <img className="logo-main" src="/img/logo-top.png" alt="" />
-                                    </div>
-                                </Link>
+                                    </Link>
+                                </div>
                                 <div className="hidden lg:flex ml-8">
                                     <TextButton className="btn_icon_start">
                                         <Link to="/add-project">

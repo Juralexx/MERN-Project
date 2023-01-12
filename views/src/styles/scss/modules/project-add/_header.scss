@@ -1,35 +1,30 @@
 .add-project-header {
-    position : relative;
-    width    : 100%;
-    height   : 130px;
+    position   : fixed;
+    width      : 100%;
+    height     : 120px;
+    background : var(--content-light);
+    z-index    : 1000;
 
     .add-project-header-top {
-        position        : fixed;
         display         : flex;
         justify-content : space-between;
         height          : 64px;
         width           : 100%;
         padding         : 0 20px;
-        background      : var(--content-light);
-        z-index         : 900;
-
+    
         .logo_container {
             position        : relative;
             display         : flex;
             justify-content : space-between;
             align-items     : center;
+            height          : 100%;
+            width           : auto;
+            min-width       : 123px;
 
-            .logo_inner {
-                display     : flex;
-                align-items : center;
+            img {
+                height      : 32px;
                 width       : auto;
-                height      : 100%;
-
-                img {
-                    height      : 36px;
-                    width       : auto;
-                    margin-left : 4px;
-                }
+                margin-left : 4px;
             }
         }
         
@@ -44,32 +39,28 @@
     }
 
     .add-project-header-bottom {
-        position      : relative;
-        top           : 64px;
-        width         : 100%;
-        background    : var(--content-light);
-        box-shadow    : var(--shadow-light);
-        border-bottom : 1px solid var(--light-border);
-        z-index       : 800;
+        position        : relative;
+        width           : 100%;
+        height          : 56px;
+        border-bottom   : 1px solid var(--light-border);
 
-        .header-bottom-container {
-            position        : relative;
+        .add-project-header-bottom-container {
             display         : flex;
             justify-content : center;
-            height          : 56px;
+            height          : 100%;
+            min-width       : 460px;
 
-            .header-bottom-item {
+            > div {
                 position        : relative;
                 display         : flex;
                 justify-content : center;
                 align-items     : center;
                 height          : 100%;
-                width           : auto;
+                min-width       : 90px;
                 padding         : 0 20px;
-                color           : var(--text);
-                overflow-y      : hidden;
+                overflow        : hidden;
                 cursor          : pointer;
-
+    
                 &:before {
                     content          : '';
                     position         : absolute;
@@ -82,46 +73,34 @@
                     background-color : transparent;
                     transition       : 0.2s ease;
                 }
-
+    
                 svg {
                     width        : 18px;
                     height       : 18px;
-                    color        : var(--navbar-txt);
                     margin-right : 7px;
-                    transition   : 0.2s ease;
                 }
-
+    
                 p {
-                    margin      : 0;
-                    line-height : 14px;
                     font-weight : 500;
                     white-space : nowrap;
-                    color       : var(--navbar-txt);
                 }
-
-                &:hover {
+    
+                &:hover,
+                &.active {
                     svg {
                         color      : var(--primary);
                         transition : 0.2s ease;
                     }
-
                     &:before {
                         width            : 50px;
                         transition       : 0.2s ease;
                         background-color : var(--primary);
                     }
                 }
-
+    
                 &.active {
-                    svg {
-                        color      : var(--primary);
-                        transition : 0.2s ease;
-                    }
-
                     &:before {
-                        width            : 80%;
-                        transition       : 0.2s ease;
-                        background-color : var(--primary);
+                        width : 80%;
                     }
                 }
             }
@@ -139,28 +118,12 @@
             }
         }
         .add-project-header-bottom {
-            .header-bottom-container {
-                .header-bottom-item {
+            .add-project-header-bottom-container {
+                > div {
                     flex-direction : column;
                     svg {
-                        margin-bottom : 7px;
                         margin-right  : 0;
                     }
-                }
-            }
-        }
-    }
-}
-
-@media(max-width: 576px) {
-    .add-project-header {
-        .add-project-header-top {
-            padding : 0 7px;
-        }
-        .add-project-header-bottom {
-            .header-bottom-container {
-                .header-bottom-item {
-                    padding : 0 12px;
                 }
             }
         }

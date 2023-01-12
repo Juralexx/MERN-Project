@@ -1,6 +1,14 @@
 .add-project {
+    position     : relative;
+    width        : 100%;
+    height       : auto;
+    min-height   : 100%;
+    background   : var(--content-light);
+    margin-right : auto;
+    margin-left  : auto;
+
     .titles-container {
-        padding       : 20px 0 40px;
+        padding       : 30px 0;
         text-align    : center;
         border-bottom : 1px solid var(--light-border);
 
@@ -20,7 +28,6 @@
     .btn_container {
         display         : flex;
         align-items     : center;
-        justify-content : flex-end;
         padding         : 20px 0 50px;
     }
 

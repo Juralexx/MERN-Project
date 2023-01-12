@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { categories } from '../../api/categories'
-import { ImArrowLeft2 } from 'react-icons/im'
 import { addBodyClass, removeBodyClass, addClass } from '../Utils'
 import Icon from '../tools/icons/Icon'
 
@@ -25,7 +24,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
             <div className={`${className ? "categories_container " + className : "categories_container"}`}>
                 <div className="categories_header">
                     <div className="move-back md:hidden" onClick={() => setOpen(false)}>
-                        <ImArrowLeft2 />
+                        <Icon name="ArrowLeft" />
                     </div>
                     <h4>Catégories</h4>
                 </div>

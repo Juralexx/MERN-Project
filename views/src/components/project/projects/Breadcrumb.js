@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
-import { IoIosArrowForward } from 'react-icons/io'
 import { useLocation } from 'react-router-dom'
+import Icon from '../../tools/icons/Icon'
 
 const Breadcrumb = ({ project }) => {
     const location = useLocation()
@@ -24,7 +24,7 @@ const Breadcrumb = ({ project }) => {
             {bread.map((crumb, key) => {
                 return (
                     <div className="crumb" key={key}>
-                        <IoIosArrowForward />
+                        <Icon name="CaretRight" />
                         <div>{crumb}</div>
                     </div>
                 )

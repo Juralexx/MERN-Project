@@ -72,8 +72,8 @@
     }
     &.btn_icon_end {
         svg {
-            height      : 22px;
-            width       : 22px;
+            height      : 18px;
+            width       : 18px;
             margin-left : 8px;
         }
     }
@@ -96,7 +96,9 @@
     border-radius : var(--rounded-sm);
 
     svg {
-        color : white;
+        height : 18px;
+        width  : 18px;
+        color  : white;
     }
 
     &:hover {

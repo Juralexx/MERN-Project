@@ -6,9 +6,6 @@ import { deleteProjectPictures, updateProjectPictures } from '../../../../action
 import { download } from '../../../Utils';
 import FsLightbox from 'fslightbox-react';
 import Oval from '../../../tools/loaders/Oval'
-import { IoTrashBinSharp } from 'react-icons/io5';
-import { BiImageAlt } from 'react-icons/bi';
-import { IoMdCloudDownload, IoMdDownload } from 'react-icons/io';
 import Icon from '../../../tools/icons/Icon';
 
 const Gallery = ({ project, isManager }) => {

@@ -71,38 +71,39 @@ import UpAndDown from './UpAndDown';
 import Tasks from './Tasks';
 import File from './File';
 import FilesMultiples from './FilesMultiples';
-import Facebook from './Facebook';
-import FacebookCircle from './FacebookCircle';
-import FacebookSquare from './FacebookSquare';
-import FacebookOutline from './FacebookOutline';
-import Snapchat from './Snapchat';
-import SnapchatSquare from './SnapchatSquare';
-import SnapchatCircle from './SnapchatCircle';
-import SnapchatOutline from './SnapchatOutline';
-import Pinterest from './Pinterest';
-import PinterestCircle from './PinterestCircle';
-import PinterestSquare from './PinterestSquare';
-import PinterestOutline from './PinterestOutline';
-import Instagram from './Instagram';
-import InstagramFill from './InstagramFill';
-import InstagramSquare from './InstagramSquare';
-import Youtube from './Youtube';
-import YoutubeOutline from './YoutubeOutline';
-import YoutubeSquare from './YoutubeSquare';
-import YoutubeTextLogo from './YoutubeTextLogo';
-import Twitter from './Twitter';
-import TwitterSquare from './TwitterSquare';
-import TwitterCircle from './TwitterCircle';
-import TwitterOutline from './TwitterOutline';
-import Twitch from './Twitch';
-import TwitchOutline from './TwitchOutline';
-import Linkedin from './Linkedin';
-import LinkedinOutline from './LinkedinOutline';
-import LinkedinSquare from './LinkedinSquare';
-import LinkedinSquareOutline from './LinkedinSquareOutline';
-import Whatsapp from './Whatsapp';
-import WhatsappSquare from './WhatsappSquare';
-import WhatsappOutline from './WhatsappOutline';
+import Facebook from './networks/Facebook';
+import FacebookCircle from './networks/FacebookCircle';
+import FacebookSquare from './networks/FacebookSquare';
+import FacebookOutline from './networks/FacebookOutline';
+import Snapchat from './networks/Snapchat';
+import SnapchatSquare from './networks/SnapchatSquare';
+import SnapchatCircle from './networks/SnapchatCircle';
+import SnapchatOutline from './networks/SnapchatOutline';
+import Pinterest from './networks/Pinterest';
+import PinterestCircle from './networks/PinterestCircle';
+import PinterestSquare from './networks/PinterestSquare';
+import PinterestOutline from './networks/PinterestOutline';
+import Instagram from './networks/Instagram';
+import InstagramFill from './networks/InstagramFill';
+import InstagramSquare from './networks/InstagramSquare';
+import Youtube from './networks/Youtube';
+import YoutubeOutline from './networks/YoutubeOutline';
+import YoutubeSquare from './networks/YoutubeSquare';
+import YoutubeTextLogo from './networks/YoutubeTextLogo';
+import Twitter from './networks/Twitter';
+import TwitterSquare from './networks/TwitterSquare';
+import TwitterCircle from './networks/TwitterCircle';
+import TwitterOutline from './networks/TwitterOutline';
+import Twitch from './networks/Twitch';
+import TwitchOutline from './networks/TwitchOutline';
+import Linkedin from './networks/Linkedin';
+import LinkedinOutline from './networks/LinkedinOutline';
+import LinkedinSquare from './networks/LinkedinSquare';
+import LinkedinSquareOutline from './networks/LinkedinSquareOutline';
+import Whatsapp from './networks/Whatsapp';
+import WhatsappSquare from './networks/WhatsappSquare';
+import WhatsappOutline from './networks/WhatsappOutline';
+import Article from './Article'
 
 const Icon = (props) => {
     switch (props.name) {
@@ -312,6 +313,8 @@ const Icon = (props) => {
             return <File {...props} />;
         case 'FilesMultiples':
             return <FilesMultiples {...props} />;
+        case 'Article':
+            return <Article {...props} />;
         default:
             return <Link {...props} />;
     }
