@@ -1,5 +1,5 @@
 .actuality-page-container {
-    .actuality-content {
+    .actuality {
         width         : 100%;
         height        : auto;
         margin-bottom : 20px;
@@ -87,7 +87,7 @@
 
 @media(max-width: 768px) {
     .actuality-page-container {
-        .actuality-content {
+        .actuality {
             .actuality-header {
                 h3 {
                     font-size : 18px;
@@ -103,7 +103,7 @@
 }
 @media(max-width: 576px) {
     .actuality-page-container {
-        .actuality-content {
+        .actuality {
             .actuality-img-container {
                 grid-template-columns : repeat(1, 1fr);
             }

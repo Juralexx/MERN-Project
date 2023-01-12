@@ -7,6 +7,8 @@ import ArrowUp from './ArrowUp';
 import ArrowDown from './ArrowDown';
 import DoubleArrowRight from './DoubleArrowRight';
 import DoubleArrowLeft from './DoubleArrowLeft';
+import DoubleArrowUp from './DoubleArrowUp';
+import DoubleArrowDown from './DoubleArrowDown';
 import Chat from './Chat';
 import Checkbox from './Checkbox';
 import Computer from './Computer';
@@ -17,6 +19,7 @@ import Message from './Message';
 import Notification from './Notification';
 import Register from './Register';
 import User from './User';
+import UserOutline from './UserOutline';
 import Logout from './Logout';
 import Settings from './Settings';
 import Moon from './Moon';
@@ -127,6 +130,8 @@ const Icon = (props) => {
             return <Message {...props} />;
         case 'User':
             return <User {...props} />;
+        case 'UserOutline':
+            return <UserOutline {...props} />;
         case 'Checkbox':
             return <Checkbox {...props} />;
         case 'Register':
@@ -155,6 +160,10 @@ const Icon = (props) => {
             return <DoubleArrowLeft {...props} />;
         case 'DoubleArrowRight':
             return <DoubleArrowRight {...props} />;
+        case 'DoubleArrowUp':
+            return <DoubleArrowUp {...props} />;
+        case 'DoubleArrowDown':
+            return <DoubleArrowDown {...props} />;
         case 'Logout':
             return <Logout {...props} />;
         case 'Settings':

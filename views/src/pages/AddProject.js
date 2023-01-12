@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 import { addClass, removeAccents } from '../components/Utils'
 import { Button, TextButton } from "../components/tools/global/Button";
 import Icon from "../components/tools/icons/Icon";
-import Title from "../components/project/add-project/Title";
-import Location from "../components/project/add-project/Location";
-import Contributors from "../components/project/add-project/Contributors";
-import End from "../components/project/add-project/End";
-import Content from "../components/project/add-project/Content";
-import Pictures from "../components/project/add-project/Pictures";
-import Description from "../components/project/add-project/Description";
-import Qna from "../components/project/add-project/Qna";
-import Networks from "../components/project/add-project/Networks";
+import Title from "../components/project-[add]/Title";
+import Location from "../components/project-[add]/Location";
+import Contributors from "../components/project-[add]/Contributors";
+import End from "../components/project-[add]/End";
+import Content from "../components/project-[add]/Content";
+import Pictures from "../components/project-[add]/Pictures";
+import Description from "../components/project-[add]/Description";
+import Qna from "../components/project-[add]/Qna";
+import Networks from "../components/project-[add]/Networks";
 import FooterLight from "../components/FooterLight";
 
 const AddProject = ({ user }) => {

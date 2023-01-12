@@ -2,7 +2,7 @@
     position   : relative;
     width      : 100%;
     padding    : 20px 0;
-    background : var(--light);
+    background : var(--content-light);
     z-index    : 2;
 
     .dashboard-projects-header-top {
@@ -22,11 +22,15 @@
     }
 }
 
+.dashboard-projects-body {
+    background : var(--light);
+}
+
 .project-card {
-    padding       : 20px 0;
-    margin        : 0;
+    padding       : 20px;
+    margin        : 0 0 10px;
+    background    : var(--content-light);
     border-radius : var(--rounded-sm);
-    border-bottom : 1px solid var(--light-border);
 
     &:last-child {
         border : none;
@@ -43,13 +47,13 @@
             height        : 100%;
             width         : 100%;
             object-fit    : cover;
-            border-radius : var(--rounded-md);
+            border-radius : var(--rounded-sm);
         }
     }
 
     .project-card-content {
         position : relative;
-        padding  : 10px 20px;
+        padding  : 0 20px;
 
         .project-card-content-top {
             position : relative;
@@ -94,7 +98,7 @@
             .infos_field {
                 display     : flex;
                 align-items : center;
-                font-size   : 14px;
+                font-size   : 13px;
                 line-height : 24px;
                 color       : var(--text-secondary);
                 svg {
@@ -112,7 +116,6 @@
             max-height         : 80px;
             text-overflow      : ellipsis;
             overflow           : hidden;
-            width              : 90%;
             line-height        : 24px;
             display            : -webkit-box;
             -webkit-line-clamp : 3;
@@ -164,7 +167,7 @@
         button {
             padding       : 10px 20px;
             border-radius : var(--rounded-sm);
-            background    : var(--light);
+            background    : var(--content-light);
             font-weight   : 500;
             span {
                 color       : var(--text-secondary);
@@ -176,6 +179,9 @@
 }
 
 @media(max-width: 595px) {
+    .project-card {
+        padding : 12px;
+    }
     .dashboard-projects-tools {
         flex-direction : column;
         align-items    : flex-start;

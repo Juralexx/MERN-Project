@@ -1,9 +1,9 @@
 .project-page {
     min-height : 100vh;
+    background : var(--content);
 }
 
 .project-page-body {
-    background : var(--content-light);
     .ql-image {
         width  : 100%;
         margin : 30px 0;

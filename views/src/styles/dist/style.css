@@ -167,8 +167,8 @@
   --content: #ffffff;
   --content-light: #ffffff;
   --content-x-light: #ffffff;
-  --light: #E1F0FF;
-  --x-light: #E1F0FF;
+  --light: #EEF0F8;
+  --x-light: #EEF0F8;
   --xx-light: #ffffff;
   --text: #434343;
   --text-secondary: #7a7a7a;
@@ -189,6 +189,7 @@
   --color-skeleton: rgb(203, 213, 225);
   --shadow-light: 0 5px 50px 0px rgb(0 0 0 / 0.07), 0 8px 10px -6px rgb(0 0 0 / 0.07);
   --shadow-tiny: rgb(35 34 33 / 17%) 0px 1px 4px 1px;
+  --shadow-x-tiny: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 
 .dark {
@@ -217,7 +218,8 @@
   --tooltip: #161616;
   --color-skeleton: linear-gradient(-90deg, var(--grey) 0%, var(--grey-light) 50%, var(--grey) 100%);
   --shadow-light: 0 20px 25px -5px rgba(37, 37, 37, 0.17), 0 8px 10px -6px rgba(37, 37, 37, 0.17);
-  --shadow-tiny: rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
+  --shadow-tiny: rgb(35 34 33 / 17%) 0px 1px 3px 1px;
+  --shadow-x-tiny: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 
 :root, .dark {
@@ -344,7 +346,7 @@ select:-webkit-autofill:focus {
 }
 
 #header {
-  background: var(--light);
+  background: var(--x-light);
 }
 #header .header_container {
   padding: 50px 0;
@@ -1905,14 +1907,17 @@ select:-webkit-autofill:focus {
       -ms-flex-align: center;
           align-items: center;
   padding: 3px 0;
+  background: transparent;
 }
 .card .card-body .card-footer .footer-left .action-btn p {
   font-size: 12px;
+  font-weight: 400;
 }
 .card .card-body .card-footer .footer-left .action-btn svg {
   height: 18px;
   width: 18px;
   margin-right: 5px;
+  margin-left: 0;
   color: var(--svg-x-light);
 }
 .card .card-body .card-footer .footer-right .footer-name {
@@ -4518,6 +4523,7 @@ select:-webkit-autofill:focus {
 .tools_menu {
   position: fixed;
   right: 0;
+  padding: 5px 0;
   background: var(--menu);
   border: 1px solid var(--light-border);
   border-radius: var(--rounded-sm);
@@ -6857,29 +6863,29 @@ select:-webkit-autofill:focus {
 }
 
 /* Project page */
-.actuality-page-container .actuality-content {
+.actuality-page-container .actuality {
   width: 100%;
   height: auto;
   margin-bottom: 20px;
   cursor: pointer;
 }
-.actuality-page-container .actuality-content .actuality-header {
+.actuality-page-container .actuality .actuality-header {
   padding-bottom: 20px;
   border-bottom: 1px solid var(--light-border);
 }
-.actuality-page-container .actuality-content .actuality-header .actuality-nb {
+.actuality-page-container .actuality .actuality-header .actuality-nb {
   color: var(--text-secondary);
 }
-.actuality-page-container .actuality-content .actuality-header h3 {
+.actuality-page-container .actuality .actuality-header h3 {
   font-size: 24px;
   padding: 5px 0 20px;
 }
-.actuality-page-container .actuality-content .actuality-header .actuality-infos {
+.actuality-page-container .actuality .actuality-header .actuality-infos {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.actuality-page-container .actuality-content .actuality-header .actuality-infos .actuality-infos-right .actuality-poster {
+.actuality-page-container .actuality .actuality-header .actuality-infos .actuality-infos-right .actuality-poster {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -6888,7 +6894,7 @@ select:-webkit-autofill:focus {
           align-items: center;
   line-height: 14px;
 }
-.actuality-page-container .actuality-content .actuality-header .actuality-infos .actuality-infos-right .actuality-poster span {
+.actuality-page-container .actuality .actuality-header .actuality-infos .actuality-infos-right .actuality-poster span {
   font-size: 12px;
   padding: 2px 5px;
   background: var(--light-blue);
@@ -6896,33 +6902,33 @@ select:-webkit-autofill:focus {
   border-radius: var(--rounded-sm);
   margin-left: 8px;
 }
-.actuality-page-container .actuality-content .actuality-header .actuality-infos .actuality-infos-right .date {
+.actuality-page-container .actuality .actuality-header .actuality-infos .actuality-infos-right .date {
   font-size: 12px;
   color: var(--text-secondary);
   margin-top: 2px;
 }
-.actuality-page-container .actuality-content .actuality-description {
+.actuality-page-container .actuality .actuality-description {
   position: relative;
   width: 100%;
   height: auto;
   padding: 20px 0;
 }
-.actuality-page-container .actuality-content .actuality-description p {
+.actuality-page-container .actuality .actuality-description p {
   margin-top: 10px;
   line-height: 26px;
 }
-.actuality-page-container .actuality-content .actuality-img-container {
+.actuality-page-container .actuality .actuality-img-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 15px;
   margin-top: 20px;
 }
-.actuality-page-container .actuality-content .actuality-img-container .actuality-img {
+.actuality-page-container .actuality .actuality-img-container .actuality-img {
   position: relative;
   z-index: 1;
   height: 280px;
 }
-.actuality-page-container .actuality-content .actuality-img-container .actuality-img img {
+.actuality-page-container .actuality .actuality-img-container .actuality-img img {
   position: absolute;
   top: 0;
   left: 0;
@@ -6936,7 +6942,7 @@ select:-webkit-autofill:focus {
 }
 
 @media (max-width: 768px) {
-  .actuality-page-container .actuality-content .actuality-header h3 {
+  .actuality-page-container .actuality .actuality-header h3 {
     font-size: 18px;
   }
   .actuality-page-container .actuality-content .actuality-img-container {
@@ -6944,7 +6950,7 @@ select:-webkit-autofill:focus {
   }
 }
 @media (max-width: 576px) {
-  .actuality-page-container .actuality-content .actuality-img-container {
+  .actuality-page-container .actuality .actuality-img-container {
     grid-template-columns: repeat(1, 1fr);
   }
 }
@@ -7020,7 +7026,7 @@ select:-webkit-autofill:focus {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   height: 55%;
-  background-color: var(--light);
+  background-color: var(--x-light);
 }
 .project-page_header .header-inner .project-picture {
   display: block;
@@ -7243,7 +7249,7 @@ select:-webkit-autofill:focus {
   padding: 20px;
   margin-bottom: 20px;
   border-radius: var(--rounded-sm);
-  background-color: var(--light);
+  background-color: var(--x-light);
 }
 .content-cards .content-card p {
   font-size: 14px;
@@ -7335,11 +7341,9 @@ select:-webkit-autofill:focus {
 }
 .project-page {
   min-height: 100vh;
+  background: var(--content);
 }
 
-.project-page-body {
-  background: var(--content-light);
-}
 .project-page-body .ql-image {
   width: 100%;
   margin: 30px 0;
@@ -7583,23 +7587,24 @@ select:-webkit-autofill:focus {
   height: auto;
   padding: 15px 0;
 }
-.actuality-container .actuality-content {
+
+.actuality-content {
   width: 100%;
   height: auto;
   margin-bottom: 20px;
-  padding: 20px 0;
-  background: var(--content-light);
-  border-bottom: 1px solid var(--light-border);
+  padding: 20px;
+  border-radius: var(--rounded-sm);
+  border: 1px solid var(--light-border);
   cursor: pointer;
 }
-.actuality-container .actuality-content .actuality-header {
+.actuality-content .actuality-header {
   padding-bottom: 15px;
 }
-.actuality-container .actuality-content .actuality-header .actuality-nb {
+.actuality-content .actuality-header .actuality-nb {
   color: var(--text-secondary);
 }
-.actuality-container .actuality-content .actuality-header h3 {
-  font-size: 20px;
+.actuality-content .actuality-header h3 {
+  font-size: 18px;
   line-height: 26px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -7609,12 +7614,12 @@ select:-webkit-autofill:focus {
   -webkit-box-orient: vertical;
   margin-bottom: 10px;
 }
-.actuality-container .actuality-content .actuality-header .actuality-infos {
+.actuality-content .actuality-header .actuality-infos {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.actuality-container .actuality-content .actuality-header .actuality-infos .actuality-infos-right .actuality-poster {
+.actuality-content .actuality-header .actuality-infos .actuality-infos-right .actuality-poster {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -7623,7 +7628,7 @@ select:-webkit-autofill:focus {
           align-items: center;
   line-height: 14px;
 }
-.actuality-container .actuality-content .actuality-header .actuality-infos .actuality-infos-right .actuality-poster span {
+.actuality-content .actuality-header .actuality-infos .actuality-infos-right .actuality-poster span {
   font-size: 12px;
   padding: 2px 5px;
   background: var(--light-blue);
@@ -7631,13 +7636,13 @@ select:-webkit-autofill:focus {
   border-radius: var(--rounded-sm);
   margin-left: 8px;
 }
-.actuality-container .actuality-content .actuality-header .actuality-infos .actuality-infos-right .date {
+.actuality-content .actuality-header .actuality-infos .actuality-infos-right .date {
   font-size: 12px;
   line-height: 12px;
   color: var(--text-secondary);
   margin-top: 2px;
 }
-.actuality-container .actuality-content .actuality-btn {
+.actuality-content .actuality-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -7645,15 +7650,15 @@ select:-webkit-autofill:focus {
       -ms-flex-pack: end;
           justify-content: flex-end;
 }
-.actuality-container .actuality-content .actuality-btn button {
+.actuality-content .actuality-btn button {
   margin: 0 2px;
 }
-.actuality-container .actuality-content .actuality-img {
+.actuality-content .actuality-img {
   position: relative;
   width: 35%;
   z-index: 1;
 }
-.actuality-container .actuality-content .actuality-img img {
+.actuality-content .actuality-img img {
   position: absolute;
   top: 0;
   left: 0;
@@ -7663,12 +7668,12 @@ select:-webkit-autofill:focus {
      object-fit: cover;
   border-radius: var(--rounded-sm);
 }
-.actuality-container .actuality-content .actuality-description {
+.actuality-content .actuality-description {
   position: relative;
   width: 100%;
   padding: 15px 0;
 }
-.actuality-container .actuality-content .actuality-description p {
+.actuality-content .actuality-description p {
   text-overflow: ellipsis;
   overflow: hidden;
   width: 100%;
@@ -7677,14 +7682,14 @@ select:-webkit-autofill:focus {
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
-.actuality-container .actuality-content .actuality-description.before:before {
+.actuality-content .actuality-description.before:before {
   position: absolute;
   bottom: 0;
   content: "";
   height: 100px;
   width: 100%;
-  background: -webkit-gradient(linear, left bottom, left top, from(var(--content-light)), to(rgba(0, 0, 0, 0)));
-  background: linear-gradient(to top, var(--content-light) 0%, rgba(0, 0, 0, 0) 100%);
+  background: -webkit-gradient(linear, left bottom, left top, from(var(--content)), to(rgba(0, 0, 0, 0)));
+  background: linear-gradient(to top, var(--content) 0%, rgba(0, 0, 0, 0) 100%);
   z-index: 2;
 }
 
@@ -7716,7 +7721,7 @@ select:-webkit-autofill:focus {
   display: flex;
   width: 100%;
   min-height: calc(100% - 54px);
-  background: var(--content-light);
+  background: var(--content);
 }
 .dashboard .dashboard-content {
   position: relative;
@@ -7773,7 +7778,7 @@ select:-webkit-autofill:focus {
   padding: 0 0 20px 0;
 }
 .edit-project .dashboard-header_navbar {
-  background-color: var(--content-light);
+  background-color: var(--content);
 }
 .edit-project .dashboard-header_navbar .dashboard-header_navbar-content {
   border: none;
@@ -7881,7 +7886,7 @@ select:-webkit-autofill:focus {
       -ms-flex-pack: center;
           justify-content: center;
   height: 280px;
-  background: var(--light);
+  background: var(--x-light);
   border-radius: var(--rounded-sm);
 }
 .gallery .gallery-brick-empty svg {
@@ -8169,7 +8174,7 @@ select:-webkit-autofill:focus {
   height: 30px;
   width: 30px;
   padding: 7px;
-  background-color: var(--light);
+  background-color: var(--x-light);
   border-radius: 30px;
   cursor: pointer;
 }
@@ -8181,7 +8186,7 @@ select:-webkit-autofill:focus {
   position: relative;
   padding: 12px;
   margin: 12px 0;
-  background: var(--light);
+  background: var(--x-light);
   border-radius: var(--rounded-sm);
   cursor: pointer;
 }
@@ -8348,7 +8353,7 @@ select:-webkit-autofill:focus {
           align-items: center;
   margin: 12px 0 8px;
   border-radius: var(--rounded-sm);
-  background: var(--light);
+  background: var(--x-light);
   min-width: 768px;
 }
 .dashboard-members-table-header .dashboard-members-table-tools {
@@ -8515,7 +8520,7 @@ select:-webkit-autofill:focus {
   position: relative;
   width: 100%;
   padding: 20px 0;
-  background: var(--light);
+  background: var(--content-light);
   z-index: 2;
 }
 .dashboard-projects-header .dashboard-projects-header-top {
@@ -8533,11 +8538,15 @@ select:-webkit-autofill:focus {
   margin-left: 10px;
 }
 
+.dashboard-projects-body {
+  background: var(--light);
+}
+
 .project-card {
-  padding: 20px 0;
-  margin: 0;
+  padding: 20px;
+  margin: 0 0 10px;
+  background: var(--content-light);
   border-radius: var(--rounded-sm);
-  border-bottom: 1px solid var(--light-border);
 }
 .project-card:last-child {
   border: none;
@@ -8554,11 +8563,11 @@ select:-webkit-autofill:focus {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  border-radius: var(--rounded-md);
+  border-radius: var(--rounded-sm);
 }
 .project-card .project-card-content {
   position: relative;
-  padding: 10px 20px;
+  padding: 0 20px;
 }
 .project-card .project-card-content .project-card-content-top {
   position: relative;
@@ -8603,7 +8612,7 @@ select:-webkit-autofill:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 24px;
   color: var(--text-secondary);
 }
@@ -8619,7 +8628,6 @@ select:-webkit-autofill:focus {
   max-height: 80px;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 90%;
   line-height: 24px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -8671,7 +8679,7 @@ select:-webkit-autofill:focus {
 .dashboard-projects-tools > div button {
   padding: 10px 20px;
   border-radius: var(--rounded-sm);
-  background: var(--light);
+  background: var(--content-light);
   font-weight: 500;
 }
 .dashboard-projects-tools > div button span {
@@ -8681,6 +8689,10 @@ select:-webkit-autofill:focus {
 }
 
 @media (max-width: 595px) {
+  .project-card {
+    padding: 12px;
+  }
+
   .dashboard-projects-tools {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -8942,7 +8954,7 @@ select:-webkit-autofill:focus {
       -ms-flex-align: center;
           align-items: center;
   padding: 0 10px;
-  background: var(--content-light);
+  background: var(--content);
   cursor: pointer;
 }
 .dashboard-tasks-header .dashboard-tasks-header_left .dashboard-tasks-nav > div:nth-child(1) {
@@ -9036,7 +9048,7 @@ select:-webkit-autofill:focus {
           align-items: center;
   width: 100%;
   padding: 10px 17px;
-  background-color: var(--light);
+  background-color: var(--x-light);
   border-radius: var(--rounded-sm);
   cursor: pointer;
 }
@@ -9223,7 +9235,7 @@ select:-webkit-autofill:focus {
   width: 100%;
   top: 0;
   height: 60px;
-  background-color: var(--content-light);
+  background-color: var(--content);
   z-index: 850;
 }
 .content_nav-sticky a, .content_nav-sticky div {
@@ -9360,6 +9372,7 @@ select:-webkit-autofill:focus {
           flex-direction: column;
 }
 .footer-bottom .footer-bottom_top a {
+  font-size: 12px;
   color: var(--text-secondary);
 }
 .footer-bottom .footer-bottom_top a:hover {
@@ -9499,15 +9512,17 @@ select:-webkit-autofill:focus {
   height: 27px;
   width: 27px;
   padding: 5px;
-  background: var(--x-light);
+  background: var(--content-x-light);
   border-radius: var(--rounded-sm);
-  color: var(--text);
   z-index: 10;
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
   cursor: pointer;
 }
 .nav-buttons .swiper-button svg {
   width: 22px;
   height: 22px;
+  color: var(--text);
 }
 
 /* Categories home slide */
@@ -9535,6 +9550,8 @@ select:-webkit-autofill:focus {
   height: 100%;
   width: 100%;
   border-radius: var(--rounded-sm);
+  -webkit-box-shadow: var(--shaodw-tiny);
+          box-shadow: var(--shaodw-tiny);
   cursor: pointer;
 }
 .home_small_swiper .small_swiper .small_slide .small_slide_card:after {

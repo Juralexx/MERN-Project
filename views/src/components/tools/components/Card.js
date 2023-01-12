@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { dateParser, fullImage } from '../../Utils';
-import { stateToBackground, stateToString } from '../../project/functions';
+import { stateToBackground, stateToString } from '../../projects/functions';
 import FavoriteButton from './FavoriteButton'
 import FollowersButton from './FollowersButton'
 import LikersButton from './LikersButton'

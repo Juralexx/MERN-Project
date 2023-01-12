@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { NavLink, useParams, Routes, Route } from 'react-router-dom'
+import { NavLink, useParams, Routes, Route, Navigate } from 'react-router-dom'
 import { getProject } from '../actions/project.action';
 import { convertDeltaToHTML } from '../components/tools/editor/functions';
-import Header from '../components/project/project-page/Header';
-import Actualities from '../components/project/project-page/Actualities';
-import Gallery from '../components/project/project-page/Gallery';
-import Qna from '../components/project/project-page/Qna';
-import ActualityCard from '../components/project/project-page/ActualityCard';
-import GalleryCard from '../components/project/project-page/GalleryCard';
-import MapCard from '../components/project/project-page/MapCard';
-import Actuality from '../components/project/project-page/Actuality';
-import Works from '../components/project/project-page/Works';
-import QnaCard from '../components/project/project-page/QnaCard';
-import Networks from '../components/project/project-page/Networks';
+import Header from '../components/project-[page]/Header';
+import Actualities from '../components/project-[page]/Actualities';
+import Gallery from '../components/project-[page]/Gallery';
+import Qna from '../components/project-[page]/Qna';
+import ActualityCard from '../components/project-[page]/ActualityCard';
+import GalleryCard from '../components/project-[page]/GalleryCard';
+import MapCard from '../components/project-[page]/MapCard';
+import Actuality from '../components/project-[page]/Actuality';
+import Works from '../components/project-[page]/Works';
+import QnaCard from '../components/project-[page]/QnaCard';
+import Networks from '../components/project-[page]/Networks';
 import { Button } from '../components/tools/global/Button';
 import Oval from '../components/tools/loaders/Oval';
 
@@ -126,16 +126,31 @@ const ProjectPage = ({ user, projects }) => {
                                             <Route path="qna" element={
                                                 <Qna user={user} project={project} />
                                             } />
+                                            <Route path="*" element={
+                                                <Navigate replace to="/" />
+                                            } />
                                         </Routes>
                                     }
                                 </div>
                                 <div className="content-cards col-lg-4 custom-scrollbar" style={{ maxHeight: getHeight() }}>
                                     {!isLoading &&
                                         <>
-                                            <MapCard project={project} user={user} />
-                                            <ActualityCard project={project} user={user} />
-                                            <QnaCard project={project} user={user} />
-                                            <GalleryCard project={project} user={user} />
+                                            <MapCard
+                                                project={project}
+                                                user={user}
+                                            />
+                                            <ActualityCard
+                                                project={project}
+                                                user={user}
+                                            />
+                                            <QnaCard
+                                                project={project}
+                                                user={user}
+                                            />
+                                            <GalleryCard
+                                                project={project}
+                                                user={user}
+                                            />
                                         </>
                                     }
                                 </div>

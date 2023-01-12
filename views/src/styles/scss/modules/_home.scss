@@ -91,15 +91,16 @@
         height          : 27px;
         width           : 27px;
         padding         : 5px;
-        background      : var(--x-light);
+        background      : var(--content-x-light);
         border-radius   : var(--rounded-sm);
-        color           : var(--text);
         z-index         : 10;
+        box-shadow      : var(--shadow-tiny);
         cursor          : pointer;
 
         svg {
             width  : 22px;
             height : 22px;
+            color  : var(--text);
         }
     }
 }
@@ -124,6 +125,7 @@
                 height        : 100%;
                 width         : 100%;
                 border-radius : var(--rounded-sm);
+                box-shadow    : var(--shaodw-tiny);
                 cursor        : pointer;
 
                 &:after {

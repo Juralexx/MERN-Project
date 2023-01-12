@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch'
-import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from '../project/projects/functions'
+import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from '../projects/functions'
 import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import Oval from '../../components/tools/loaders/Oval'
 import Card from '../tools/components/Card'

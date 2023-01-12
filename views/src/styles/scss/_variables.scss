@@ -177,8 +177,8 @@
     --content         : #ffffff;
     --content-light   : #ffffff;
     --content-x-light : #ffffff;
-    --light           : #E1F0FF;
-    --x-light         : #E1F0FF;
+    --light           : #EEF0F8;
+    --x-light         : #EEF0F8;
     --xx-light        : #ffffff;
 
     --text           : #434343;
@@ -204,6 +204,7 @@
     --color-skeleton : rgb(203, 213, 225);
     --shadow-light   : 0 5px 50px 0px rgb(0 0 0 / 0.07), 0 8px 10px -6px rgb(0 0 0 / 0.07);
     --shadow-tiny    : rgb(35 34 33 / 17%) 0px 1px 4px 1px;
+    --shadow-x-tiny  : 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 
 .dark {
@@ -237,7 +238,8 @@
 
     --color-skeleton : linear-gradient(-90deg, var(--grey) 0%, var(--grey-light) 50%, var(--grey) 100%);
     --shadow-light   : 0 20px 25px -5px rgba(37, 37, 37, 0.17), 0 8px 10px -6px rgba(37, 37, 37, 0.17);
-    --shadow-tiny    : rgba(137, 137, 137, 0.3) 0px 1px 3px 1px;
+    --shadow-tiny    : rgb(35 34 33 / 17%) 0px 1px 3px 1px;
+    --shadow-x-tiny  : 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 
 :root, .dark {

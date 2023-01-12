@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import Sidebar from '../components/project/projects/Sidebar'
-import Projects from '../components/project/projects/Projects';
-import Project from '../components/project/projects/Project';
+import Sidebar from '../components/projects/Sidebar'
+import Projects from '../components/projects/Projects';
+import Project from '../components/projects/Project';
 import Oval from '../components/tools/loaders/Oval'
 
 const Dashboard = ({ websocket, user }) => {

@@ -68,7 +68,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                                     className="is_start_icon"
                                     placeholder="Métier"
                                     type="search"
-                                    icon={<Icon name="User" />}
+                                    icon={<Icon name="UserOutline" />}
                                     defaultValue=""
                                     onChange={e => setDatas(data => ({ ...data, skills: e.target.value }))}
                                 />
