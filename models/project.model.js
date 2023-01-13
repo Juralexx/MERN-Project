@@ -109,6 +109,10 @@ const ProjectModel = new mongoose.Schema(
             type: [String]
         },
 
+        day: {
+            type: Date
+        },
+
         start: {
             type: Date
         },

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { DatePicker } from '../tools/global/Inputs'
 
 const End = ({ datas, setDatas }) => {
+    const [day, setDay] = useState(datas.start)
     const [start, setStart] = useState(datas.start)
     const [end, setEnd] = useState(datas.end)
 
@@ -25,7 +26,7 @@ const End = ({ datas, setDatas }) => {
                 </div>
                 <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
                     <div className="mb-4">
-                        <p className="title">Date de fin potentielle</p>
+                        <p className="title">Date de début</p>
                         <DatePicker
                             className="top !w-full"
                             placeholder="JJ/MM/AAAA"
@@ -35,7 +36,7 @@ const End = ({ datas, setDatas }) => {
                         />
                     </div>
                     <div>
-                        <p className="title">Date de fin potentielle</p>
+                        <p className="title">Date de fin</p>
                         <DatePicker
                             className="top !w-full"
                             placeholder="JJ/MM/AAAA"

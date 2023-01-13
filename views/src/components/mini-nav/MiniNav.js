@@ -61,7 +61,7 @@ const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
                         setOpenMessengerMenu(false)
                         setOpenNotificationsMenu(false)
                     }}>
-                        <Icon name="Checkbox" />
+                        <Icon name="CheckboxDouble" />
                     </div>
                 </li>
             </ul>

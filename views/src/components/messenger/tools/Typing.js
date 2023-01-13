@@ -1,5 +1,5 @@
 import React from 'react'
-import ThreeDots from '../../tools/icons/ThreeDots'
+import ThreeDots from '../../tools/loaders/ThreeDots'
 
 const Typing = ({ isTyping, typingContext, currentChat }) => {
 

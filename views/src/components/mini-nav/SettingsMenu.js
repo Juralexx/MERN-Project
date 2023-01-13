@@ -41,7 +41,7 @@ const SettingsMenu = ({ open, user, websocket, onlineUsers }) => {
                         <ul className="settings-menu-ul">
                             <li className="settings-menu-li">
                                 <div className="settings-menu-li-left">
-                                    <Icon name="Checkbox" />
+                                    <Icon name="CheckboxDouble" />
                                     <p>Paramètres</p>
                                 </div>
                                 <div className="settings-menu-li-right">

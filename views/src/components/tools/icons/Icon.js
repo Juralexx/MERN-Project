@@ -1,80 +1,114 @@
 import React from 'react';
-import Plus from './Plus';
-import Minus from './Minus';
-import ArrowLeft from './ArrowLeft';
-import ArrowRight from './ArrowRight';
-import ArrowUp from './ArrowUp';
-import ArrowDown from './ArrowDown';
-import DoubleArrowRight from './DoubleArrowRight';
-import DoubleArrowLeft from './DoubleArrowLeft';
-import DoubleArrowUp from './DoubleArrowUp';
-import DoubleArrowDown from './DoubleArrowDown';
-import Chat from './Chat';
-import Checkbox from './Checkbox';
-import Computer from './Computer';
-import Dashboard from './Dashboard';
-import Home from './Home';
-import Link from './Link';
-import Message from './Message';
-import Notification from './Notification';
-import Register from './Register';
-import User from './User';
-import UserOutline from './UserOutline';
-import Logout from './Logout';
-import Settings from './Settings';
-import Moon from './Moon';
-import Sun from './Sun';
-import CaretUp from './CaretUp';
-import CaretDown from './CaretDown';
-import CaretLeft from './CaretLeft';
-import CaretRight from './CaretRight';
-import ThreeDots from './ThreeDots';
-import Cross from './Cross';
-import CrossCircle from './CrossCircle';
-import Check from './Check';
-import CheckCircle from './CheckCircle';
-import Group from './Group';
-import External from './External';
-import Write from './Write';
-import Expand from './Expand';
-import Search from './Search';
-import Map from './Map';
-import Position from './Position';
-import Compass from './Compass';
-import Heart from './Heart';
-import HeartHalf from './HeartHalf';
-import Star from './Star';
-import StarHalf from './StarHalf';
-import Lock from './Lock';
-import LockCircle from './LockCircle';
-import Unlock from './Unlock';
-import Bookmark from './Bookmark';
-import Quotes from './Quotes';
-import List from './List';
-import Like from './Like';
-import Trash from './Trash';
-import BoxEmpty from './BoxEmpty';
-import Box from './Box';
-import Clock from './Clock';
-import Calendar from './Calendar';
-import Visible from './Visible';
-import Hidden from './Hidden';
-import Camera from './Camera';
-import France from './France';
-import Book from './Book';
-import BookOpen from './BookOpen';
-import Picture from './Picture';
-import Layers from './Layers';
-import Share from './Share';
-import Upload from './Upload';
-import UploadCloud from './UploadCloud';
-import Download from './Download';
-import PlusCircle from './PlusCircle';
-import MinusCircle from './MinusCircle';
-import UpAndDown from './UpAndDown';
-import Tasks from './Tasks';
-import File from './File';
-import FilesMultiples from './FilesMultiples';
+
+import Plus from './general/Plus';
+import Minus from './general/Minus';
+import Link from './general/Link';
+import ThreeDots from './general/ThreeDots';
+import Settings from './general/Settings';
+import Check from './general/Check';
+import CheckCircle from './general/CheckCircle';
+import Group from './general/Group';
+import Search from './general/Search';
+import Heart from './general/Heart';
+import Bookmark from './general/Bookmark';
+import Like from './general/Like';
+import Trash from './general/Trash';
+import MinusCircle from './general/MinusCircle';
+import PlusCircle from './general/PlusCircle';
+import HeartHalf from './general/HeartHalf';
+import Star from './general/Star';
+import StarHalf from './general/StarHalf';
+import Lock from './general/Lock';
+import LockCircle from './general/LockCircle'
+import User from './general/User';
+import UserOutline from './general/UserOutline';
+import Unlock from './general/Unlock';
+import Visible from './general/Visible';
+import Hidden from './general/Hidden';
+import Notification from './general/Notification';
+import Checkbox from './general/Checkbox';
+import Calendar from './general/Calendar';
+import EditUnderline from './general/EditUnderline';
+import Edit from './general/Edit';
+
+import ArrowLeft from './navigation/ArrowLeft';
+import ArrowRight from './navigation/ArrowRight';
+import ArrowUp from './navigation/ArrowUp';
+import ArrowDown from './navigation/ArrowDown';
+import DoubleArrowRight from './navigation/DoubleArrowRight';
+import DoubleArrowLeft from './navigation/DoubleArrowLeft';
+import DoubleArrowUp from './navigation/DoubleArrowUp';
+import DoubleArrowDown from './navigation/DoubleArrowDown';
+import CaretUp from './navigation/CaretUp';
+import CaretDown from './navigation/CaretDown';
+import CaretLeft from './navigation/CaretLeft';
+import CaretRight from './navigation/CaretRight';
+import Register from './navigation/Register';
+import Cross from './navigation/Cross';
+import CrossCircle from './navigation/CrossCircle';
+import External from './navigation/External';
+import Expand from './navigation/Expand';
+import Logout from './navigation/Logout';
+import Upload from './navigation/Upload';
+import UpAndDown from './navigation/UpAndDown';
+import Signin from './navigation/Signin';
+import Signout from './navigation/Signout';
+
+import Chat from './communication/Chat';
+import Message from './communication/Message';
+import Quotes from './communication/Quotes';
+import Write from './communication/Write';
+import Share from './communication/Share';
+
+import Computer from './device/Computer';
+
+import Home from './home/Home';
+import Book from './home/Book';
+import BookOpen from './home/BookOpen';
+import Picture from './home/Picture';
+import BoxEmpty from './home/BoxEmpty';
+import Box from './home/Box';
+import Clock from './home/Clock';
+
+import Map from './map/Map';
+import Position from './map/Position';
+import Compass from './map/Compass';
+import France from './map/France';
+import LocationArrow from './map/LocationArrow';
+import LocationArrowHalf from './map/LocationArrowHalf';
+
+import Camera from './device/Camera';
+import Layers from './design/Layers';
+import PositionSquare from './design/PositionSquare';
+import ZoomMinus from './design/ZoomMinus';
+import ZoomPlus from './design/ZoomPlus';
+
+import Moon from './weather/Moon';
+import Sun from './weather/Sun';
+import RainCloud from './weather/RainCloud';
+import Rain from './weather/Rain';
+import SunFog from './weather/SunFog';
+import MoonFog from './weather/MoonFog';
+import Cloudy from './weather/Cloudy';
+import Snowflake from './weather/Snowflake';
+import Thunder from './weather/Thunder';
+import Snow from './weather/Snow';
+import SunCloud from './weather/SunCloud';
+import Rainbow from './weather/Rainbow';
+import Wind from './weather/Wind';
+import Cloud from './weather/Cloud';
+
+import UploadCloud from './files/UploadCloud';
+import Download from './files/Download';
+import File from './files/File';
+import FilesMultiples from './files/FilesMultiples';
+import Tasks from './files/Tasks';
+
+import Article from './text/Article'
+import List from './text/List';
+
+import Dashboard from './layers/Dashboard';
+
 import Facebook from './networks/Facebook';
 import FacebookCircle from './networks/FacebookCircle';
 import FacebookSquare from './networks/FacebookSquare';
@@ -107,7 +141,26 @@ import LinkedinSquareOutline from './networks/LinkedinSquareOutline';
 import Whatsapp from './networks/Whatsapp';
 import WhatsappSquare from './networks/WhatsappSquare';
 import WhatsappOutline from './networks/WhatsappOutline';
-import Article from './Article'
+
+import Music from './media/Music';
+import Note from './media/Note';
+import Play from './media/Play';
+import PlayCircle from './media/PlayCircle';
+import Repeat from './media/Repeat';
+import RepeatOne from './media/RepeatOne';
+import Shuffle from './media/Shuffle';
+import VolumeFull from './media/VolumeFull';
+import VolumeUp from './media/VolumeUp';
+import Rec from './media/Rec';
+import MediaLibrary from './media/MediaLibrary';
+import Pause from './media/Pause';
+import Back from './media/Back';
+import VolumeHalf from './media/VolumeHalf';
+import Mute from './media/Mute';
+import Playlist from './media/Playlist';
+import Forward from './media/Forward';
+import Next from './media/Next';
+import Backward from './media/Backward';
 
 const Icon = (props) => {
     switch (props.name) {
@@ -327,6 +380,86 @@ const Icon = (props) => {
             return <FilesMultiples {...props} />;
         case 'Article':
             return <Article {...props} />;
+        case 'ZoomMinus':
+            return <ZoomMinus {...props} />;
+        case 'ZoomPlus':
+            return <ZoomPlus {...props} />;
+        case 'Edit':
+            return <Edit {...props} />;
+        case 'EditUnderline':
+            return <EditUnderline {...props} />;
+        case 'LocationArrow':
+            return <LocationArrow {...props} />;
+        case 'LocationArrowHalf':
+            return <LocationArrowHalf {...props} />;
+        case 'PositionSquare':
+            return <PositionSquare {...props} />;
+        case 'RainCloud':
+            return <RainCloud {...props} />;
+        case 'Rain':
+            return <Rain {...props} />;
+        case 'SunFog':
+            return <SunFog {...props} />;
+        case 'MoonFog':
+            return <MoonFog {...props} />;
+        case 'Cloudy':
+            return <Cloudy {...props} />;
+        case 'Snowflake':
+            return <Snowflake {...props} />;
+        case 'Thunder':
+            return <Thunder {...props} />;
+        case 'Snow':
+            return <Snow {...props} />;
+        case 'SunCloud':
+            return <SunCloud {...props} />;
+        case 'Rainbow':
+            return <Rainbow {...props} />;
+        case 'Wind':
+            return <Wind {...props} />;
+        case 'Cloud':
+            return <Cloud {...props} />;
+        case 'Music':
+            return <Music {...props} />;
+        case 'Note':
+            return <Note {...props} />;
+        case 'Play':
+            return <Play {...props} />;
+        case 'PlayCircle':
+            return <PlayCircle {...props} />;
+        case 'Repeat':
+            return <Repeat {...props} />;
+        case 'RepeatOne':
+            return <RepeatOne {...props} />;
+        case 'Shuffle':
+            return <Shuffle {...props} />;
+        case 'VolumeFull':
+            return <VolumeFull {...props} />;
+        case 'VolumeUp':
+            return <VolumeUp {...props} />;
+        case 'MediaLibrary':
+            return <MediaLibrary {...props} />;
+        case 'Pause':
+            return <Pause {...props} />;
+        case 'Back':
+            return <Back {...props} />;
+        case 'VolumeHalf':
+            return <VolumeHalf {...props} />;
+        case 'Mute':
+            return <Mute {...props} />;
+        case 'Playlist':
+            return <Playlist {...props} />;
+        case 'Forward':
+            return <Forward {...props} />;
+        case 'Next':
+            return <Next {...props} />;
+        case 'Backward':
+            return <Backward {...props} />;
+        case 'Rec':
+            return <Rec {...props} />;
+        case 'Signin':
+            return <Signin {...props} />;
+        case 'Signout':
+            return <Signout {...props} />;
         default:
             return <Link {...props} />;
     }
