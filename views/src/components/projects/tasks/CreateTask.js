@@ -1,24 +1,49 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import Modal from '../../tools/global/Modal'
+import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
+import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../tools/global/Inputs'
+import { Button } from '../../tools/global/Button'
+import Icon from '../../tools/icons/Icon'
 import { addClass } from '../../Utils'
 import { createTask } from '../../../actions/project.action'
 import { isInResults, isSelected } from '../../tools/functions/member'
-import Modal from '../../tools/global/Modal'
-import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../tools/global/Inputs'
-import { Button } from '../../tools/global/Button'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../tools/functions/task'
-import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
-import Icon from '../../tools/icons/Icon'
 
-const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, description, setDescription, end, setEnd, status, setStatus, state, setState, array, setArray }) => {
-    const [displayStatus, setDisplayStatus] = useState(false)
-    const [displayState, setDisplayState] = useState(false)
+const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
     const [navbar, setNavbar] = useState(1)
     const dispatch = useDispatch()
 
+    const [end, setEnd] = useState("")
+    const [datas, setDatas] = useState({
+        title: "",
+        description: "",
+        end: end,
+        state: "todo",
+        status: "normal",
+        members: []
+    })
+
     const newTask = () => {
-        const task = { title: title, description: description, state: state, status: status, creatorId: user._id, creator: user.pseudo, creatorPicture: user.picture, end: end, members: array, date: new Date().toISOString(), comments: [] }
-        const activity = { type: "create-task", date: new Date().toISOString(), who: user.pseudo, task: title }
+        const task = {
+            title: datas.title,
+            description: datas.description,
+            state: datas.state,
+            status: datas.status,
+            creatorId: user._id,
+            creator: user.pseudo,
+            creatorPicture: user.picture,
+            end: datas.end,
+            members: datas.members,
+            date: new Date().toISOString(),
+            comments: []
+        }
+        const activity = {
+            type: "create-task",
+            date: new Date().toISOString(),
+            who: user.pseudo,
+            task: datas.title
+        }
         dispatch(createTask(project._id, task, activity))
         const members = project.members.filter(member => member.id !== user._id)
         members.map(member => {
@@ -29,90 +54,158 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
             })
         })
         setOpen(false)
-        setTitle("")
-        setDescription("")
-        setEnd("")
-        setArray([])
+        setEnd('')
+        setDatas(datas => ({
+            ...datas,
+            title: "",
+            description: "",
+            end: "",
+            members: []
+        }))
     }
 
-    const [search, setSearch] = useState(false)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [isMemberInResult, setMemberInResult] = useState([])
-    const isEmpty = !isMemberInResult || isMemberInResult.length === 0
-    const regexp = new RegExp(searchQuery, 'i')
+    const [search, setSearch] = useState({
+        state: false,
+        query: "",
+        results: []
+    })
+    const regexp = new RegExp(search.query, 'i')
+
     const searchMember = () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        if (searchQuery.length >= 2) {
+        if (!search.query || search.query.trim() === "") return
+        if (search.query.length >= 2) {
             const response = project.members.filter(member => regexp.test(member.pseudo))
-            setMemberInResult(response)
-            setSearch(true)
-            if (isEmpty) { setSearch(false) }
-        } else { setSearch(false) }
+            setSearch(data => ({ ...data, state: true, results: response }))
+            if (!search.results || search.results.length === 0)
+                setSearch(data => ({ ...data, state: false }))
+        } else setSearch(data => ({ ...data, state: false }))
     }
 
     return (
         <Modal open={open} setOpen={setOpen} className="create-task-modal">
             <h2>Créer une nouvelle tâche</h2>
-
             <div className="modal_nav">
-                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Description</div>
-                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Membres</div>
+                <div
+                    className={`modal_nav-item ${addClass(navbar === 1, "active")}`}
+                    onClick={() => setNavbar(1)}
+                >
+                    Description
+                </div>
+                <div
+                    className={`modal_nav-item ${addClass(navbar === 2, "active")}`}
+                    onClick={() => setNavbar(2)}
+                >
+                    Membres
+                </div>
             </div>
 
             {navbar === 1 ? (
                 <>
-                    <div className="mb-2">Titre de la tâche</div>
-                    <ClassicInput type="text" className="full" placeholder="Titre..." value={title} onChange={e => setTitle(e.target.value)} />
+                    <div className="mb-2 mt-4">Titre de la tâche</div>
+                    <ClassicInput
+                        type="text"
+                        className="full"
+                        placeholder="Titre..."
+                        value={datas.title}
+                        onChange={e => setDatas(data => ({ ...data, title: e.target.value }))}
+                    />
 
                     <div className="mb-2 mt-4">Description</div>
-                    <Textarea type="text" className="w-full" placeholder="Description... " value={description} onChange={e => setDescription(e.target.value)} />
+                    <Textarea
+                        type="text"
+                        className="w-full"
+                        placeholder="Description... "
+                        value={datas.description}
+                        onChange={e => setDatas(data => ({ ...data, description: e.target.value }))}
+                    />
 
                     <div className="flex items-center mt-4">
                         <div className="mb-2 mt-4 mr-4">Date de fin</div>
-                        <DatePicker className="top mt-2" placeholder="JJ/MM/AAAA" value={end} selected={end} onSelect={setEnd} />
+                        <DatePicker
+                            className="top mt-2 full"
+                            placeholder="JJ/MM/AAAA"
+                            value={end}
+                            selected={end}
+                            onSelect={setEnd}
+                        />
                     </div>
 
                     <div className="flex w-full">
                         <div className="w-1/2">
                             <div className="mb-2 mt-4">État</div>
-                            <DropdownInput className="w-full" readOnly open={displayStatus} value={statusToString(status)} onClick={() => setDisplayStatus(!displayStatus)}>
-                                <div onClick={() => { setStatus("normal"); setDisplayStatus(false) }}>Normal</div>
-                                <div onClick={() => { setStatus("important"); setDisplayStatus(false) }}>Important</div>
-                                <div onClick={() => { setStatus("priority"); setDisplayStatus(false) }}>Prioritaire</div>
+                            <DropdownInput
+                                className="w-full"
+                                readOnly
+                                value={statusToString(datas.status)}
+                            >
+                                <div onClick={() => setDatas(data => ({ ...data, status: "normal" }))}>
+                                    Normal
+                                </div>
+                                <div onClick={() => setDatas(data => ({ ...data, status: "important" }))}>
+                                    Important
+                                </div>
+                                <div onClick={() => setDatas(data => ({ ...data, status: "priority" }))}>
+                                    Prioritaire
+                                </div>
                             </DropdownInput>
                         </div>
                         <div className="w-1/2 ml-2">
                             <div className="mb-2 mt-4">Status</div>
-                            <DropdownInput className="w-full" readOnly open={displayState} value={stateToString(state)} onClick={() => setDisplayState(!displayState)}>
-                                <div onClick={() => { setState("todo"); setDisplayState(!displayState) }}>À traiter</div>
-                                <div onClick={() => { setState("in progress"); setDisplayState(!displayState) }}>En cours</div>
-                                <div onClick={() => { setState("done"); setDisplayState(!displayState) }}>Terminée</div>
+                            <DropdownInput
+                                className="w-full"
+                                readOnly
+                                value={stateToString(datas.state)}
+                            >
+                                <div onClick={() => setDatas(data => ({ ...data, state: "todo" }))}>
+                                    À traiter
+                                </div>
+                                <div onClick={() => setDatas(data => ({ ...data, state: "in progress" }))}>
+                                    En cours
+                                </div>
+                                <div onClick={() => setDatas(data => ({ ...data, state: "done" }))}>
+                                    Terminée
+                                </div>
                             </DropdownInput>
                         </div>
                     </div>
                 </>
             ) : (
                 <>
-                    {array.length > 0 && (
+                    {datas.members.length > 0 && (
                         <div className="user_in_array-container">
-                            {array.map((element, key) => {
+                            {datas.members.map((element, key) => {
                                 return (
                                     <div className="user_in_array" key={key}>
                                         <TinyAvatar pic={element.picture} />
                                         <p>{element.pseudo}</p>
-                                        <Icon name="Cross" onClick={() => removeMemberFromArray(element, array, setArray)} />
+                                        <Icon name="Cross" onClick={() => setDatas(data => ({ ...data, members: removeMemberFromArray(element, datas.members) }))} />
                                     </div>
                                 )
                             })}
                         </div>
                     )}
-                    <ClassicInput placeholder="Rechercher un membre..." className="full" value={searchQuery} onInput={e => setSearchQuery(e.target.value)} onChange={searchMember} type="search" />
+                    <ClassicInput
+                        placeholder="Rechercher un membre..."
+                        className="full"
+                        value={search.query}
+                        onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
+                        onChange={searchMember}
+                        type="search"
+                    />
                     <div className="user_selecter">
                         {project.members && (
                             <div className="user_displayer">
                                 {project.members.map((element, key) => {
                                     return (
-                                        <div className={`user_display_choice ${isInResults(element, isMemberInResult, search, "flex")} ${isSelected(array, element)}`} key={key} onClick={() => addMemberToArray(element, array, setArray)}>
+                                        <div
+                                            key={key}
+                                            className={`
+                                                user_display_choice
+                                                ${isInResults(element, search.results, search.state, "flex")}
+                                                ${isSelected(datas.members, element)}
+                                            `}
+                                            onClick={() => setDatas(data => ({ ...data, members: addMemberToArray(element, datas.members) }))}
+                                        >
                                             <MediumAvatar pic={element.picture} />
                                             <p>{element.pseudo}</p>
                                         </div>
@@ -123,7 +216,13 @@ const CreateTask = ({ open, setOpen, project, user, websocket, title, setTitle, 
                     </div>
                 </>
             )}
-            <Button className="mt-5 w-full" disabled={title === "" || title === undefined} onClick={newTask}>Ajouter</Button>
+            <Button
+                className="mt-5 w-full"
+                disabled={datas.title === "" || datas.title === undefined}
+                onClick={newTask}
+            >
+                Ajouter
+            </Button>
         </Modal>
     )
 }

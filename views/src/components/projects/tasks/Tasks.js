@@ -18,12 +18,15 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [navbar, setNavbar] = useState(1)
     const [layout, setLayout] = useState("kanban")
     const localStore = localStorage.getItem("taskLayout")
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
-    const [end, setEnd] = useState("")
-    const [state, setState] = useState("todo")
-    const [status, setStatus] = useState("normal")
-    const [array, setArray] = useState([])
+    const [datas, setDatas] = useState({
+        title: "",
+        description: "",
+        end: "",
+        state: "todo",
+        status: "normal",
+        members: [],
+        comments: [],
+    })
     const dispatch = useDispatch()
 
     const handleLayout = () => {
@@ -111,18 +114,6 @@ const Tasks = ({ project, isAdmin, isManager, user, websocket }) => {
                 project={project}
                 user={user}
                 websocket={websocket}
-                title={title}
-                setTitle={setTitle}
-                description={description}
-                setDescription={setDescription}
-                end={end}
-                setEnd={setEnd}
-                state={state}
-                setState={setState}
-                status={status}
-                setStatus={setStatus}
-                array={array}
-                setArray={setArray}
             />
             {updateTask &&
                 <UpdateTask
