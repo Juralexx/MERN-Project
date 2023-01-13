@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios';
 import { ClassicInput, Textarea } from '../tools/global/Inputs';
-import { Button } from '../tools/global/Button';
+import { Button, TextButton } from '../tools/global/Button';
 import Oval from '../tools/loaders/Oval'
 import { ErrorCard } from '../tools/global/Error';
 import Icon from '../tools/icons/Icon';
@@ -81,11 +81,11 @@ const Works = ({ datas, setDatas, error, setError }) => {
                         <div className="mb-4" key={key}>
                             <div className="header flex items-center mb-5">
                                 <h4 className="mr-4 !mb-0">Métier n°{key + 1}</h4>
-                                <Button
+                                <TextButton
                                     onClick={() => setDatas(data => ({ ...data, workArray: deleteItemFromArray(datas.workArray, key) }))}
                                 >
                                     Supprimer
-                                </Button>
+                                </TextButton>
                                 {key + 1 === datas.workArray.length &&
                                     <Button
                                         className="ml-2"

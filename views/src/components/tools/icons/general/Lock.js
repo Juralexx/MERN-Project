@@ -3,7 +3,7 @@ import React from 'react'
 const Lock = (props) => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <mask fill="white">
                     <use />
                 </mask>

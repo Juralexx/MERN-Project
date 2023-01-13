@@ -576,13 +576,13 @@
     stroke          : var(--text);
     stroke-linecap  : round;
     stroke-linejoin : round;
-    stroke-width    : 2;
+    strokeWidth    : 2;
 }
 .ql-snow .ql-stroke-miter {
     fill              : none;
     stroke            : var(--text);
     stroke-miterlimit : 10;
-    stroke-width      : 2;
+    strokeWidth      : 2;
 }
 .ql-snow .ql-fill,
 .ql-snow .ql-stroke.ql-fill {
@@ -592,11 +592,11 @@
     fill : none;
 }
 .ql-snow .ql-even {
-    fill-rule : evenodd;
+    fillRule : evenodd;
 }
 .ql-snow .ql-thin,
 .ql-snow .ql-stroke.ql-thin {
-    stroke-width : 1;
+    strokeWidth : 1;
 }
 .ql-snow .ql-transparent {
     opacity : 0.4;

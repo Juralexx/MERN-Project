@@ -160,6 +160,28 @@ import File from './files/File';
 import FilesMultiples from './files/FilesMultiples';
 import Tasks from './files/Tasks';
 import Folder from './files/Folder';
+import DeleteFolder from './files/DeleteFolder';
+import UserFolder from './files/UserFolder';
+import MediaFolder from './files/MediaFolder';
+import DownloadCloud from './files/DownloadCloud';
+import DownloadFolder from './files/DownloadFolder';
+import LockedFolder from './files/LockedFolder';
+import LockedFile from './files/LockedFile';
+import CheckedFolder from './files/CheckedFolder';
+import DownloadFile from './files/DownloadFile';
+import Media from './files/Media';
+import MusicFile from './files/MusicFile';
+import CloudFolder from './files/CloudFolder';
+import FolderPlus from './files/FolderPlus';
+import PictureFolder from './files/PictureFolder';
+import UploadFile from './files/UploadFile';
+import UploadFolder from './files/UploadFolder';
+import Import from './files/Import';
+import Export from './files/Export';
+import DeleteFile from './files/DeleteFile';
+import FileMinus from './files/FileMinus';
+import FilePlus from './files/FilePlus';
+import GroupFolder from './files/GroupFolder';
 
 import Article from './text/Article'
 import List from './text/List';
@@ -733,6 +755,50 @@ const Icon = (props) => {
             return <Spam {...props} />;
         case 'Phone':
             return <Phone {...props} />;
+        case 'DeleteFolder':
+            return <DeleteFolder {...props} />;
+        case 'UserFolder':
+            return <UserFolder {...props} />;
+        case 'MediaFolder':
+            return <MediaFolder {...props} />;
+        case 'DownloadCloud':
+            return <DownloadCloud {...props} />;
+        case 'DownloadFolder':
+            return <DownloadFolder {...props} />;
+        case 'LockedFolder':
+            return <LockedFolder {...props} />;
+        case 'LockedFile':
+            return <LockedFile {...props} />;
+        case 'CheckedFolder':
+            return <CheckedFolder {...props} />;
+        case 'DownloadFile':
+            return <DownloadFile {...props} />;
+        case 'Media':
+            return <Media {...props} />;
+        case 'MusicFile':
+            return <MusicFile {...props} />;
+        case 'CloudFolder':
+            return <CloudFolder {...props} />;
+        case 'FolderPlus':
+            return <FolderPlus {...props} />;
+        case 'PictureFolder':
+            return <PictureFolder {...props} />;
+        case 'UploadFile':
+            return <UploadFile {...props} />;
+        case 'UploadFolder':
+            return <UploadFolder {...props} />;
+        case 'Import':
+            return <Import {...props} />;
+        case 'Export':
+            return <Export {...props} />;
+        case 'DeleteFile':
+            return <DeleteFile {...props} />;
+        case 'FileMinus':
+            return <FileMinus {...props} />;
+        case 'FilePlus':
+            return <FilePlus {...props} />;
+        case 'GroupFolder':
+            return <GroupFolder {...props} />;
         default:
             return <Link {...props} />;
     }

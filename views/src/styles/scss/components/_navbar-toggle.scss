@@ -10,9 +10,9 @@
         height    : auto;
 
         path {
-            stroke-width   : 30;
+            strokeWidth   : 30;
             stroke-linecap : round;
-            stroke         : var(--navbar-txt);
+            stroke         : var(--svg-x-light);
             fill           : none;
             transition     : all .5s ease-in-out;
         }

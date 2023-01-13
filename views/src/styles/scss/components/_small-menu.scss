@@ -28,26 +28,28 @@
 }
 
 .tools_btn {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    padding         : 6px;
-    color           : var(--text);
-    transform       : scale(1);
-    border-radius   : 50%;
-    cursor          : pointer;
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    height           : 32px;
+    width            : 32px;
+    background-color : var(--light);
+    border-radius    : var(--rounded-md);
+    transform        : scale(1);
+    cursor           : pointer;
+    transition       : .2s;
 
+    &:hover,
     &.active {
-        background-color : var(--x-light);
+        background-color : rgba(var(--primary-rgb), 0.4);
+        svg {
+            color            : white;
+        }
     }
 
     svg {
-        height : 18px;
-        width  : 18px;
-    }
-
-    &:hover {
-        background : var(--x-light);
+        height : 20px;
+        width  : 20px;
     }
 
     &:disabled {

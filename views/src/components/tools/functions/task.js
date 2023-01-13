@@ -30,7 +30,7 @@ export const removeTask = (task, project, user, websocket, dispatch) => {
 /***************************************************************************************************************************************************/
 /*************************************************** PUSH AND REMOVE USER FROM TASK ARRAY **********************************************************/
 
-export const addMemberToArray = (element, array, setArray) => {
+export const addMemberToArray = (element, array) => {
     let userProperties = {
         id: element.id,
         pseudo: element.pseudo,
@@ -38,16 +38,16 @@ export const addMemberToArray = (element, array, setArray) => {
         since: new Date().toISOString()
     }
     if (!array.some(member => member.id === element.id)) {
-        setArray(array => [...array, userProperties])
+        return [...array, userProperties]
     } else {
         let arr = array.filter(member => member.id !== element.id && member.pseudo !== element.pseudo)
-        setArray(arr)
+        return arr
     }
 }
 
-export const removeMemberFromArray = (element, array, setArray) => {
+export const removeMemberFromArray = (element, array) => {
     let arr = array.filter(member => member.id !== element.id)
-    setArray(arr)
+    return arr
 }
 
 /***************************************************************************************************************************************************/

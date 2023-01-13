@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../tools/functions/task'
@@ -13,7 +13,7 @@ import Checkbox from '../../tools/global/Checkbox'
 import Icon from '../../tools/icons/Icon'
 
 const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
-    const [tasks, setTasks] = useState(project.tasks)
+    const [tasks, setTasks] = useState(reverseArray(project.tasks))
     const [openTask, setOpenTask] = useState(false)
     const [createTask, setCreateTask] = useState(false)
     const [updateTask, setUpdateTask] = useState(false)
@@ -21,18 +21,6 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [navbar, setNavbar] = useState(1)
     const [filter, setFilter] = useState("")
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (navbar === 1) {
-            setTasks(reverseArray(project.tasks))
-        } else if (navbar === 2) {
-            setTasks(reverseArray(project.tasks.filter(element => element.state === "todo")))
-        } else if (navbar === 3) {
-            setTasks(reverseArray(project.tasks.filter(element => element.state === "in progress")))
-        } else if (navbar === 4) {
-            setTasks(reverseArray(project.tasks.filter(element => element.state === "done")))
-        }
-    }, [navbar, project.tasks])
 
     return (
         <>
@@ -46,17 +34,39 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             </StringButton>
                             {(isAdmin || isManager) &&
                                 <ToolsMenu>
-                                    <div className="tools_choice" onClick={() => setCreateTask(true)}>Créer une nouvelle tâche</div>
+                                    <div className="tools_choice" onClick={() => setCreateTask(true)}>
+                                        Créer une nouvelle tâche
+                                    </div>
                                 </ToolsMenu>
                             }
                         </div>
                     </div>
                     <div className="home-tasks-nav-header-bottom">
                         <div className="tasks_nav">
-                            <div className={`${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Tous</div>
-                            <div className={`${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>À traiter</div>
-                            <div className={`${addClass(navbar === 3, "active")}`} onClick={() => setNavbar(3)}>En cours</div>
-                            <div className={`${addClass(navbar === 4, "active")}`} onClick={() => setNavbar(4)}>Terminée</div>
+                            <div className={`${addClass(navbar === 1, "active")}`} onClick={() => {
+                                setNavbar(1)
+                                setTasks(reverseArray(project.tasks))
+                            }}>
+                                Tous
+                            </div>
+                            <div className={`${addClass(navbar === 2, "active")}`} onClick={() => {
+                                setNavbar(2)
+                                setTasks(reverseArray(project.tasks.filter(element => element.state === "todo")))
+                            }}>
+                                À traiter
+                            </div>
+                            <div className={`${addClass(navbar === 3, "active")}`} onClick={() => {
+                                setNavbar(3)
+                                setTasks(reverseArray(project.tasks.filter(element => element.state === "in progress")))
+                            }}>
+                                En cours
+                            </div>
+                            <div className={`${addClass(navbar === 4, "active")}`} onClick={() => {
+                                setNavbar(4)
+                                setTasks(reverseArray(project.tasks.filter(element => element.state === "done")))
+                            }}>
+                                Terminée
+                            </div>
                         </div>
                         <DropdownInput
                             className="small md:ml-3"
@@ -66,10 +76,30 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             cross
                             onClean={() => { setFilter(""); setTasks(reverseArray(project.tasks)) }}
                         >
-                            <div onClick={() => { setTasks(sortByEndDate(tasks)); setFilter("Par date de fin") }}>Par date de fin</div>
-                            <div onClick={() => { setTasks(sortByCreationDate(tasks)); setFilter("Par date de création") }}>Par date de création</div>
-                            <div onClick={() => { setTasks(sortByState(tasks)); setFilter("Par état") }}>Par état</div>
-                            <div onClick={() => { setTasks(sortByStatus(tasks)); setFilter("Par status") }}>Par status</div>
+                            <div onClick={() => {
+                                setTasks(sortByEndDate(tasks))
+                                setFilter("Par date de fin")
+                            }}>
+                                Par date de fin
+                            </div>
+                            <div onClick={() => {
+                                setTasks(sortByCreationDate(tasks))
+                                setFilter("Par date de création")
+                            }}>
+                                Par date de création
+                            </div>
+                            <div onClick={() => {
+                                setTasks(sortByState(tasks))
+                                setFilter("Par état")
+                            }}>
+                                Par état
+                            </div>
+                            <div onClick={() => {
+                                setTasks(sortByStatus(tasks))
+                                setFilter("Par status")
+                            }}>
+                                Par status
+                            </div>
                         </DropdownInput>
                     </div>
                 </div>
@@ -94,19 +124,37 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                                     </div>
                                                 }
                                                 <ToolsMenu>
-                                                    <div className="tools_choice" onClick={() => { setTask(element); setOpenTask(true) }}>Voir</div>
-                                                    <div className="tools_choice" onClick={() => { setTask(element); setUpdateTask(true) }}>Modifier</div>
+                                                    <div className="tools_choice" onClick={() => {
+                                                        setTask(element)
+                                                        setOpenTask(true)
+                                                    }}>
+                                                        Voir
+                                                    </div>
+                                                    <div className="tools_choice" onClick={() => {
+                                                        setTask(element)
+                                                        setUpdateTask(true)
+                                                    }}>
+                                                        Modifier
+                                                    </div>
                                                     {(isAdmin || isManager) &&
-                                                        <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>Supprimer</div>
+                                                        <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>
+                                                            Supprimer
+                                                        </div>
                                                     }
                                                 </ToolsMenu>
                                             </div>
                                         </div>
                                         <div className="home-tasks-task-content-bottom">
                                             <div className="flex">
-                                                <div className={`details ${stateToBackground(element.state)}`}>{stateToString(element.state)}</div>
-                                                <div className={`details mx-2 ${statusToBackground(element.status)}`}>{statusToString(element.status)}</div>
-                                                <div className={`details ${isDatePassed(element.end)}`}>{dateParserWithoutYear(element.end)}</div>
+                                                <div className={`details ${stateToBackground(element.state)}`}>
+                                                    {stateToString(element.state)}
+                                                </div>
+                                                <div className={`details mx-2 ${statusToBackground(element.status)}`}>
+                                                    {statusToString(element.status)}
+                                                </div>
+                                                <div className={`details ${isDatePassed(element.end)}`}>
+                                                    {dateParserWithoutYear(element.end)}
+                                                </div>
                                             </div>
                                             <div className="home-tasks-task-members">
                                                 {element.members.length <= 5 && (
@@ -124,13 +172,17 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                                     element.members.slice(0, 5).map((member, uniquekey) => {
                                                         return (
                                                             <div className="home-tasks-task-member" key={uniquekey}>
-                                                                <div className="pseudo">{member.pseudo.substring(0, 3)}</div>
+                                                                <div className="pseudo">
+                                                                    {member.pseudo.substring(0, 3)}
+                                                                </div>
                                                             </div>
                                                         )
                                                     })
                                                 )}
                                                 {element.members.length > 5 && (
-                                                    <div className="get_difference">{getDifference(5, element.members.length)}</div>
+                                                    <div className="get_difference">
+                                                        {getDifference(5, element.members.length)}
+                                                    </div>
                                                 )}
                                             </div>
                                         </div>
