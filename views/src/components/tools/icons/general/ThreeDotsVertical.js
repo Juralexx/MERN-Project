@@ -1,15 +1,16 @@
 import React from 'react'
 
-const Checkbox = (props) => {
+const ThreeDotsVertical = (props) => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <rect x="0" y="0" width="24" height="24" />
-                <rect fill="currentColor" opacity="0.3" x="2" y="6" width="21" height="12" rx="6" />
-                <circle fill="currentColor" cx="17" cy="12" r="4" />
+                <circle fill="currentColor" cx="12" cy="5" r="2" />
+                <circle fill="currentColor" cx="12" cy="12" r="2" />
+                <circle fill="currentColor" cx="12" cy="19" r="2" />
             </g>
         </svg>
     )
 }
 
-export default Checkbox
+export default ThreeDotsVertical

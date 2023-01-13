@@ -26,10 +26,31 @@ import Unlock from './general/Unlock';
 import Visible from './general/Visible';
 import Hidden from './general/Hidden';
 import Notification from './general/Notification';
-import Checkbox from './general/Checkbox';
+import DoubleCheckbox from './general/DoubleCheckbox';
 import Calendar from './general/Calendar';
 import EditUnderline from './general/EditUnderline';
 import Edit from './general/Edit';
+import Sort from './general/Sort';
+import Clipboard from './general/Clipboard';
+import LockShield from './general/LockShield';
+import CheckShield from './general/CheckShield';
+import Duplicate from './general/Duplicate';
+import Fire from './general/Fire';
+import WarningCircle from './general/WarningCircle';
+import WarningTriangle from './general/WarningTriangle';
+import QuestionCircle from './general/QuestionCircle';
+import InfoCircle from './general/InfoCircle';
+import Stop from './general/Stop';
+import Checkbox from './general/Checkbox';
+import Attachment from './general/Attachment';
+import Update from './general/Update';
+import Cursor from './general/Cursor';
+import ThreeDotsVertical from './general/ThreeDotsVertical';
+import Save from './general/Save';
+import AddUser from './general/AddUser';
+import ClipboardCheck from './general/ClipboardCheck';
+import ClipboardList from './general/ClipboardList';
+import DeleteUser from './general/DeleteUser';
 
 import ArrowLeft from './navigation/ArrowLeft';
 import ArrowRight from './navigation/ArrowRight';
@@ -59,8 +80,43 @@ import Message from './communication/Message';
 import Quotes from './communication/Quotes';
 import Write from './communication/Write';
 import Share from './communication/Share';
+import Contact from './communication/Contact';
+import Reply from './communication/Reply';
+import Mail from './communication/Mail';
+import Flag from './communication/Flag';
+import MailBox from './communication/MailBox';
+import AdressBook from './communication/AdressBook';
+import MailOpen from './communication/MailOpen';
+import Archive from './communication/Archive';
+import Thumbstack from './communication/Thumbstack';
+import Send from './communication/Send';
+import At from './communication/At';
+import Sending from './communication/Sending';
+import Spam from './communication/Spam';
+import Phone from './communication/Phone';
 
 import Computer from './device/Computer';
+import Camera from './device/Camera';
+import Tablet from './device/Tablet';
+import Laptop from './device/Laptop';
+import Bluetooth from './device/Bluetooth';
+import Iphone from './device/Iphone';
+import Android from './device/Android';
+import Wifi from './device/Wifi';
+import HardDrive from './device/HardDrive';
+import Microphone from './device/Microphone';
+import TV from './device/TV';
+import Speaker from './device/Speaker';
+import IMac from './device/IMac';
+import BatteryEmpty from './device/BatteryEmpty';
+import BatteryFull from './device/BatteryFull';
+import BatteryHalf from './device/BatteryHalf';
+import Servers from './device/Servers';
+import Headphones from './device/Headphones';
+import Mouse from './device/Mouse';
+import Watch from './device/Watch';
+import SDCard from './device/SDCard';
+import Router from './device/Router';
 
 import Home from './home/Home';
 import Book from './home/Book';
@@ -77,7 +133,6 @@ import France from './map/France';
 import LocationArrow from './map/LocationArrow';
 import LocationArrowHalf from './map/LocationArrowHalf';
 
-import Camera from './device/Camera';
 import Layers from './design/Layers';
 import PositionSquare from './design/PositionSquare';
 import ZoomMinus from './design/ZoomMinus';
@@ -97,17 +152,52 @@ import SunCloud from './weather/SunCloud';
 import Rainbow from './weather/Rainbow';
 import Wind from './weather/Wind';
 import Cloud from './weather/Cloud';
+import Thunderbolt from './weather/Thunderbolt';
 
 import UploadCloud from './files/UploadCloud';
 import Download from './files/Download';
 import File from './files/File';
 import FilesMultiples from './files/FilesMultiples';
 import Tasks from './files/Tasks';
+import Folder from './files/Folder';
 
 import Article from './text/Article'
 import List from './text/List';
+import TextWidth from './text/TextWidth';
+import AlignJustify from './text/AlignJustify';
+import AlignLeft from './text/AlignLeft';
+import Bold from './text/Bold';
+import EditText from './text/EditText';
+import StrikeThrough from './text/StrikeThrough';
+import Text from './text/Text';
+import Redo from './text/Redo';
+import Underline from './text/Underline';
+import ToggleRight from './text/ToggleRight';
+import ToggleLeft from './text/ToggleLeft';
+import Paragraph from './text/Paragraph';
+import Undo from './text/Undo';
+import Font from './text/Font';
+import Toggle from './text/Toggle';
+import Filter from './text/Filter';
+import AlignAuto from './text/AlignAuto';
+import AlignCenter from './text/AlignCenter';
+import Italic from './text/Italic';
+import TextHeight from './text/TextHeight';
+import Dots from './text/Dots';
+import Menu from './text/Menu';
+import Code from './text/Code';
+import AlignRight from './text/AlignRight';
 
-import Dashboard from './layers/Dashboard';
+import Dashboard from './layout/Dashboard';
+import LayoutRightPanelOne from './layout/LayoutRightPanelOne';
+import LayoutRightPanelTwo from './layout/LayoutRightPanelTwo';
+import LayoutLeftPanelOne from './layout/LayoutLeftPanelOne';
+import LayoutLeftPanelTwo from './layout/LayoutLeftPanelTwo';
+import LayoutTopPanelOne from './layout/LayoutTopPanelOne';
+import LayoutTopPanelTwo from './layout/LayoutTopPanelTwo';
+import LayoutHorizontal from './layout/LayoutHorizontal';
+import LayoutVertical from './layout/LayoutVertical';
+import LayoutGrid from './layout/LayoutGrid';
 
 import Facebook from './networks/Facebook';
 import FacebookCircle from './networks/FacebookCircle';
@@ -160,6 +250,7 @@ import Mute from './media/Mute';
 import Playlist from './media/Playlist';
 import Forward from './media/Forward';
 import Next from './media/Next';
+import Shutdown from './media/Shutdown';
 import Backward from './media/Backward';
 
 const Icon = (props) => {
@@ -188,6 +279,26 @@ const Icon = (props) => {
             return <UserOutline {...props} />;
         case 'Checkbox':
             return <Checkbox {...props} />;
+        case 'DoubleCheckbox':
+            return <DoubleCheckbox {...props} />;
+        case 'Attachment':
+            return <Attachment {...props} />;
+        case 'Update':
+            return <Update {...props} />;
+        case 'Clipboard':
+            return <Clipboard {...props} />;
+        case 'ClipboardCheck':
+            return <ClipboardCheck {...props} />;
+        case 'ClipboardList':
+            return <ClipboardList {...props} />;
+        case 'Cursor':
+            return <Cursor {...props} />;
+        case 'ThreeDotsVertical':
+            return <ThreeDotsVertical {...props} />;
+        case 'Save':
+            return <Save {...props} />;
+        case 'Folder':
+            return <Folder {...props} />;
         case 'Register':
             return <Register {...props} />;
         case 'Notification':
@@ -234,8 +345,14 @@ const Icon = (props) => {
             return <CrossCircle {...props} />;
         case 'Check':
             return <Check {...props} />;
+        case 'CheckShield':
+            return <CheckShield {...props} />;
         case 'CheckCircle':
             return <CheckCircle {...props} />;
+        case 'Duplicate':
+            return <Duplicate {...props} />;
+        case 'Fire':
+            return <Fire {...props} />;
         case 'Group':
             return <Group {...props} />;
         case 'External':
@@ -264,6 +381,8 @@ const Icon = (props) => {
             return <Lock {...props} />;
         case 'LockCircle':
             return <LockCircle {...props} />;
+        case 'LockShield':
+            return <LockShield {...props} />;
         case 'Unlock':
             return <Unlock {...props} />;
         case 'Bookmark':
@@ -408,6 +527,8 @@ const Icon = (props) => {
             return <Snowflake {...props} />;
         case 'Thunder':
             return <Thunder {...props} />;
+        case 'Thunderbolt':
+            return <Thunderbolt {...props} />;
         case 'Snow':
             return <Snow {...props} />;
         case 'SunCloud':
@@ -440,6 +561,8 @@ const Icon = (props) => {
             return <MediaLibrary {...props} />;
         case 'Pause':
             return <Pause {...props} />;
+        case 'Shutdown':
+            return <Shutdown {...props} />;
         case 'Back':
             return <Back {...props} />;
         case 'VolumeHalf':
@@ -460,6 +583,156 @@ const Icon = (props) => {
             return <Signin {...props} />;
         case 'Signout':
             return <Signout {...props} />;
+        case 'LayoutRightPanelOne':
+            return <LayoutRightPanelOne {...props} />;
+        case 'LayoutRightPanelTwo':
+            return <LayoutRightPanelTwo {...props} />;
+        case 'LayoutLeftPanelOne':
+            return <LayoutLeftPanelOne {...props} />;
+        case 'LayoutLeftPanelTwo':
+            return <LayoutLeftPanelTwo {...props} />;
+        case 'LayoutTopPanelOne':
+            return <LayoutTopPanelOne {...props} />;
+        case 'LayoutTopPanelTwo':
+            return <LayoutTopPanelTwo {...props} />;
+        case 'LayoutHorizontal':
+            return <LayoutHorizontal {...props} />;
+        case 'LayoutVertical':
+            return <LayoutVertical {...props} />;
+        case 'LayoutGrid':
+            return <LayoutGrid {...props} />;
+        case 'WarningCircle':
+            return <WarningCircle {...props} />;
+        case 'WarningTriangle':
+            return <WarningTriangle {...props} />;
+        case 'QuestionCircle':
+            return <QuestionCircle {...props} />;
+        case 'InfoCircle':
+            return <InfoCircle {...props} />;
+        case 'Stop':
+            return <Stop {...props} />;
+        case 'Tablet':
+            return <Tablet {...props} />;
+        case 'Laptop':
+            return <Laptop {...props} />;
+        case 'Bluetooth':
+            return <Bluetooth {...props} />;
+        case 'Iphone':
+            return <Iphone {...props} />;
+        case 'Android':
+            return <Android {...props} />;
+        case 'Wifi':
+            return <Wifi {...props} />;
+        case 'HardDrive':
+            return <HardDrive {...props} />;
+        case 'Microphone':
+            return <Microphone {...props} />;
+        case 'TV':
+            return <TV {...props} />;
+        case 'Speaker':
+            return <Speaker {...props} />;
+        case 'BatteryEmpty':
+            return <BatteryEmpty {...props} />;
+        case 'BatteryFull':
+            return <BatteryFull {...props} />;
+        case 'BatteryHalf':
+            return <BatteryHalf {...props} />;
+        case 'Servers':
+            return <Servers {...props} />;
+        case 'Headphones':
+            return <Headphones {...props} />;
+        case 'Mouse':
+            return <Mouse {...props} />;
+        case 'Watch':
+            return <Watch {...props} />;
+        case 'IMac':
+            return <IMac {...props} />;
+        case 'SDCard':
+            return <SDCard {...props} />;
+        case 'Router':
+            return <Router {...props} />;
+        case 'TextWidth':
+            return <TextWidth {...props} />;
+        case 'Bold':
+            return <Bold {...props} />;
+        case 'EditText':
+            return <EditText {...props} />;
+        case 'StrikeThrough':
+            return <StrikeThrough {...props} />;
+        case 'Text':
+            return <Text {...props} />;
+        case 'Redo':
+            return <Redo {...props} />;
+        case 'Underline':
+            return <Underline {...props} />;
+        case 'ToggleRight':
+            return <ToggleRight {...props} />;
+        case 'ToggleLeft':
+            return <ToggleLeft {...props} />;
+        case 'Paragraph':
+            return <Paragraph {...props} />;
+        case 'Undo':
+            return <Undo {...props} />;
+        case 'Font':
+            return <Font {...props} />;
+        case 'Toggle':
+            return <Toggle {...props} />;
+        case 'Filter':
+            return <Filter {...props} />;
+        case 'AlignAuto':
+            return <AlignAuto {...props} />;
+        case 'AlignJustify':
+            return <AlignJustify {...props} />;
+        case 'AlignCenter':
+            return <AlignCenter {...props} />;
+        case 'AlignRight':
+            return <AlignRight {...props} />;
+        case 'AlignLeft':
+            return <AlignLeft {...props} />;
+        case 'Italic':
+            return <Italic {...props} />;
+        case 'TextHeight':
+            return <TextHeight {...props} />;
+        case 'Dots':
+            return <Dots {...props} />;
+        case 'Menu':
+            return <Menu {...props} />;
+        case 'Code':
+            return <Code {...props} />;
+        case 'Sort':
+            return <Sort {...props} />;
+        case 'Contact':
+            return <Contact {...props} />;
+        case 'Reply':
+            return <Reply {...props} />;
+        case 'Mail':
+            return <Mail {...props} />;
+        case 'Flag':
+            return <Flag {...props} />;
+        case 'MailBox':
+            return <MailBox {...props} />;
+        case 'AdressBook':
+            return <AdressBook {...props} />;
+        case 'MailOpen':
+            return <MailOpen {...props} />;
+        case 'AddUser':
+            return <AddUser {...props} />;
+        case 'Archive':
+            return <Archive {...props} />;
+        case 'Thumbstack':
+            return <Thumbstack {...props} />;
+        case 'DeleteUser':
+            return <DeleteUser {...props} />;
+        case 'Send':
+            return <Send {...props} />;
+        case 'At':
+            return <At {...props} />;
+        case 'Sending':
+            return <Sending {...props} />;
+        case 'Spam':
+            return <Spam {...props} />;
+        case 'Phone':
+            return <Phone {...props} />;
         default:
             return <Link {...props} />;
     }
