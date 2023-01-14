@@ -24,8 +24,12 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                         </TextButton>
                         {(isAdmin || isManager) &&
                             <ToolsMenu>
-                                <div className="tools_choice" onClick={() => setAddMembers(true)}>Ajouter des membres</div>
-                                {project.member_requests.length > 0 && <div className="tools_choice" onClick={() => setOpenRequests(true)}>Voir les demandes en cours</div>}
+                                <div className="tools_choice" onClick={() => setAddMembers(true)}>
+                                    Ajouter des membres
+                                </div>
+                                {project.member_requests.length > 0 && <div className="tools_choice" onClick={() => setOpenRequests(true)}>
+                                    Voir les demandes en cours
+                                </div>}
                             </ToolsMenu>
                         }
                     </div>
@@ -39,7 +43,9 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                     <MediumAvatar pic={element.picture} />
                                     <div className="home-members-infos-name">
                                         <div>{element.pseudo}</div>
-                                        <div className="role">{getRole(element)}</div>
+                                        <div className="role">
+                                            {getRole(element)}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="home-members-infos justify-end">
@@ -69,8 +75,22 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                     })}
                 </div>
             </div>
-            {<AddMember open={addMembers} setOpen={setAddMembers} project={project} user={user} websocket={websocket} isAdmin={isAdmin} isManager={isManager} />}
-            {<MembersRequests open={openRequests} setOpen={setOpenRequests} project={project} user={user} websocket={websocket} />}
+            <AddMember
+                open={addMembers}
+                setOpen={setAddMembers}
+                project={project}
+                user={user}
+                websocket={websocket}
+                isAdmin={isAdmin}
+                isManager={isManager}
+            />
+            <MembersRequests
+                open={openRequests}
+                setOpen={setOpenRequests}
+                project={project}
+                user={user}
+                websocket={websocket}
+            />
         </>
     )
 }

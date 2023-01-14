@@ -49,7 +49,7 @@ const HomeActivityFeed = ({ project }) => {
                 {activities.length > 0 ? (
                     activities.map((element, key) => {
                         return (
-                            <>
+                            <div className='activity-feed-block' key={key}>
                                 {dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key) &&
                                     <div className="activity-date">
                                         <Icon name="Calendar" className={randomColor()} /> {dateParser(element.date)}
@@ -66,7 +66,7 @@ const HomeActivityFeed = ({ project }) => {
                                         {activityFeedContent(element)}
                                     </div>
                                 </div>
-                            </>
+                            </div>
                         )
                     })
                 ) : (

@@ -269,12 +269,22 @@ export const keepNewDateOnly = (arrayToMap) => {
 }
 
 /**
+ * Converte date to locale date
+ */
+
+export const convertToLocalDate = (date) => {
+    let localDate = date.toLocaleDateString('fr-FR').split('/').reverse().join('-');
+    return localDate
+}
+
+/**
  * Return all elements matching the selected date
  */
 
-export const bySelectedDate = (array, selectedDate) => {
-    console.log(array.filter(element => element.date.substring(0, 10) === selectedDate.toISOString().substring(0, 10)))
-    return array.filter(element => element.date.substring(0, 10) === selectedDate.toISOString().substring(0, 10))
+export const bySelectedDate = (array, date) => {
+    let localDate = date.toLocaleDateString('fr-FR').split('/').reverse().join('-');
+
+    return array.filter(element => element.date.substring(0, 10) === localDate)
 }
 
 /**
@@ -333,6 +343,23 @@ export const randomItem = (array) => {
 }
 
 /**
+ * Return random item from an array with no repetitions
+ */
+
+export const randomizedArrayNoRepeats = (array) => {
+    let copy = array.slice(0)
+    return function () {
+        if (copy.length < 1) {
+            copy = array.slice(0)
+        }
+        let index = Math.floor(Math.random() * copy.length)
+        let item = copy[index]
+        copy.splice(index, 1)
+        return item
+    }
+}
+
+/**
  * Reverse array order.
  */
 
@@ -367,8 +394,8 @@ export const removeHTMLMarkers = (html) => {
  */
 
 export const stringToCharSet = (str) => {
-    var buf = [];
-    for (var i = str.length - 1; i >= 0; i--) {
+    let buf = [];
+    for (let i = str.length - 1; i >= 0; i--) {
         buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
     }
     return buf.join('')
@@ -379,7 +406,7 @@ export const stringToCharSet = (str) => {
  */
 
 export const charSetToChar = (str) => {
-    var txt = document.createElement("textarea")
+    let txt = document.createElement("textarea")
     txt.innerHTML = str
     return txt.value
 }

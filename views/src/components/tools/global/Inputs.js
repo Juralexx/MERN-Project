@@ -135,7 +135,7 @@ export const DatePicker = (props) => {
     const { dayPickerProps } = useInput({
         fromYear: 2010,
         toYear: 2030,
-        format: 'dd/MM/yyyy',
+        format: 'dd/MM/yyyy ',
         required: true
     })
 

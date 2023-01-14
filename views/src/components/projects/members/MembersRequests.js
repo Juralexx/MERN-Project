@@ -2,10 +2,10 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { BigAvatar } from '../../tools/global/Avatars'
 import { TextButton } from '../../tools/global/Button'
+import Icon from '../../tools/icons/Icon'
 import Modal from '../../tools/global/Modal'
 import { cancelProjectMemberRequest } from '../../tools/functions/member'
 import { dateParser } from '../../Utils'
-import Icon from '../../tools/icons/Icon'
 
 const MembersRequests = ({ open, setOpen, project, websocket }) => {
     const dispatch = useDispatch()
@@ -21,11 +21,17 @@ const MembersRequests = ({ open, setOpen, project, websocket }) => {
                                 <div className="member-requests-left">
                                     <BigAvatar pic={element.picture} />
                                     <div>
-                                        <div className="member-requests-pseudo">{element.pseudo}</div>
-                                        <div className="member-requests-details">le {dateParser(element.date)} par {element.requester}</div>
+                                        <div className="member-requests-pseudo">
+                                            {element.pseudo}
+                                        </div>
+                                        <div className="member-requests-details">
+                                            le {dateParser(element.date)} par {element.requester}
+                                        </div>
                                     </div>
                                 </div>
-                                <TextButton onClick={() => cancelProjectMemberRequest(element, project, websocket, dispatch)} className="ml-5">Annuler</TextButton>
+                                <TextButton onClick={() => cancelProjectMemberRequest(element, project, websocket, dispatch)} className="ml-5">
+                                    Annuler
+                                </TextButton>
                             </div>
                         )
                     })

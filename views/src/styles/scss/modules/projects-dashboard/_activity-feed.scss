@@ -75,8 +75,6 @@
         }
 
         .activity-hour {
-            display     : flex;
-            align-items : center;
             font-size   : 13px;
             min-width   : 46px;
             white-space : nowrap;
@@ -126,6 +124,24 @@
             }
             .activity-content {
                 padding-left : 15px;
+            }
+        }
+    }
+}
+
+@media(max-width: 576px) {
+    .activity-feed-container {
+        &.activity-page {
+            .home-activity-feed-item {
+                &:before {
+                    left :59px;
+                }
+                .activity-hour {
+                    min-width : 46px;
+                }
+                .activity-content {
+                    padding-left : 4px;
+                }
             }
         }
     }

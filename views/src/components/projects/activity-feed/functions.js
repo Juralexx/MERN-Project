@@ -1,3 +1,5 @@
+import { randomizedArrayNoRepeats } from "../../Utils"
+
 export const activityFeedContent = (element) => {
     switch (element.type) {
         case "create-task":
@@ -34,7 +36,5 @@ export const activityFeedContent = (element) => {
     }
 }
 
-export const randomColor = () => {
-    const color = ['blue', 'light-blue', 'turquoise', 'green', 'purple-light', 'red-light', 'yellow', 'orange']
-    return color[Math.floor(Math.random() * color.length)]
-}
+
+export const randomColor = randomizedArrayNoRepeats(['blue', 'light-blue', 'turquoise', 'green', 'purple-light', 'red-light', 'yellow', 'orange'])

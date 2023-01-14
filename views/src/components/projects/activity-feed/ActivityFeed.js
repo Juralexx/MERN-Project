@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import { addClass, bySelectedDate, dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../Utils'
+import { addClass, bySelectedDate, convertToLocalDate, dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../Utils'
 import Icon from '../../tools/icons/Icon'
 import { activityFeedContent, randomColor } from './functions'
 import { DatePicker, DropdownInput } from '../../tools/global/Inputs'
@@ -7,9 +7,12 @@ import { TextButton } from '../../tools/global/Button'
 
 const ActivityFeed = ({ project }) => {
     const today = useMemo(() => new Date().toISOString(), [])
-    const dates = keepNewDateOnly(reverseArray(project.activity_feed || []))
-    const [activities, setActivities] = useState(reverseArray(project.activity_feed || []))
-    const reversed = reverseArray(project.activity_feed)
+    const allDates = keepNewDateOnly(reverseArray(project.activity_feed) || [])
+    const reversed = reverseArray(project.activity_feed) || []
+    const [activityFeed, setActivityFeed] = useState({
+        activities: reversed,
+        dates: allDates
+    })
 
     const [filter, setFilter] = useState("")
     const [byDate, setByDate] = useState({ state: false, date: today })
@@ -21,8 +24,11 @@ const ActivityFeed = ({ project }) => {
                     <h2>Fil d'activité <span>{project.activity_feed.length}</span></h2>
                     <div className="flex items-center">
                         {byDate.date !== today &&
-                            <TextButton className="!h-[42px] mr-2 red bg-red" onClick={() => {
-                                setActivities(reverseArray(project.activity_feed || []))
+                            <TextButton className="mr-2 red bg-red" onClick={() => {
+                                setActivityFeed({
+                                    activities: reverseArray(project.activity_feed || []),
+                                    dates: allDates
+                                })
                                 setByDate(prevState => ({ ...prevState, date: today }))
                             }}>
                                 Annuler
@@ -38,36 +44,39 @@ const ActivityFeed = ({ project }) => {
                             onChange={(e) => setFilter(e.target.value)}
                             cross
                             onClean={() => {
-                                setActivities(reversed)
+                                setActivityFeed({
+                                    activities: reversed,
+                                    dates: allDates
+                                })
                                 setFilter("")
                             }}
                         >
                             <div onClick={() => {
-                                setActivities(thisDay(reversed))
+                                setActivityFeed(prevState => ({ ...prevState, activities: thisDay(reversed) }))
                                 setFilter("Aujourd'hui")
                             }}>
                                 Aujourd'hui
                             </div>
                             <div onClick={() => {
-                                setActivities(lastDay(reversed))
+                                setActivityFeed(prevState => ({ ...prevState, activities: lastDay(reversed) }))
                                 setFilter("Hier")
                             }}>
                                 Hier
                             </div>
                             <div onClick={() => {
-                                setActivities(timeBetween(reversed, 7))
+                                setActivityFeed(prevState => ({ ...prevState, activities: timeBetween(reversed, 7) }))
                                 setFilter("Cette semaine")
                             }}>
                                 Cette semaine
                             </div>
                             <div onClick={() => {
-                                setActivities(timeBetween(reversed, 30))
+                                setActivityFeed(prevState => ({ ...prevState, activities: timeBetween(reversed, 30) }))
                                 setFilter("Ce mois-ci")
                             }}>
                                 Ce mois-ci
                             </div>
                             <div onClick={() => {
-                                setActivities(timeBetween(reversed, 365))
+                                setActivityFeed(prevState => ({ ...prevState, activities: timeBetween(reversed, 365) }))
                                 setFilter("Cette année")
                             }}>
                                 Cette année
@@ -76,18 +85,18 @@ const ActivityFeed = ({ project }) => {
                     </div>
                 </div>
                 <div className="dashboard-card-container activity-feed-container activity-page custom-scrollbar">
-                    {activities.length > 0 ? (
-                        activities.map((element, key) => {
+                    {activityFeed.activities.length > 0 ? (
+                        activityFeed.activities.map((element, key) => {
                             return (
                                 <div className='activity-feed-block' key={key}>
-                                    {dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key) &&
+                                    {activityFeed.dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key) &&
                                         <div className="activity-date">
                                             <Icon name="Calendar" className={randomColor()} /> {dateParser(element.date)}
                                         </div>
                                     }
                                     <div className={`
                                             home-activity-feed-item
-                                            ${addClass((dates.some(activity => activity.date !== element.date.substring(0, 10) && activity.index === key + 1)), 'no-before')
+                                            ${addClass((activityFeed.dates.some(activity => activity.date !== element.date.substring(0, 10) && activity.index === key + 1)), 'no-before')
                                         }`}
                                     >
                                         <div className="activity-hour">
@@ -117,7 +126,10 @@ const ActivityFeed = ({ project }) => {
                 selected={byDate.date}
                 onDayClick={date => {
                     setByDate({ state: false, date: date })
-                    setActivities(bySelectedDate(project.activity_feed, date))
+                    setActivityFeed({
+                        activities: bySelectedDate(reverseArray(project.activity_feed), date),
+                        dates: [{ index: 0, date: convertToLocalDate(date) }]
+                    })
                 }}
             />
         </div>
