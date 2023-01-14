@@ -192,6 +192,17 @@ export const onlyNumbers = (string) => {
 }
 
 /**
+ * Remove choosen characters from string
+ * @param {*} char Character to remove
+ * @param {*} str String to remove from
+ */
+
+export const replaceStr = (char, str) => {
+    const string = str.replace(char, '')
+    return string
+}
+
+/**
  * Check email validity.
  * @param {*} email Email to check
  */
@@ -216,6 +227,8 @@ export const isPhoneValid = (phone) => {
 
 /**
  * Check theme and return choosen values.
+ * @param {*} light Light class to return
+ * @param {*} dark Dark class to return
  */
 
 export const checkTheme = (light, dark) => {
@@ -226,7 +239,8 @@ export const checkTheme = (light, dark) => {
 }
 
 /**
- * Return date formated : dd mon. YYY.
+ * Return date formated : dd mon. YYYY (ex: 12 janv. 2020)
+ * @param {*} num Date to convert
  */
 
 export const dateParser = (num) => {
@@ -237,7 +251,8 @@ export const dateParser = (num) => {
 }
 
 /**
- * Return date formated without year.
+ * Return date formated : dd mon. YYYY (ex: 12 janv.) without year.
+ * @param {*} num Date to convert
  */
 
 export const dateParserWithoutYear = (num) => {
@@ -248,15 +263,17 @@ export const dateParserWithoutYear = (num) => {
 }
 
 /**
- * ISO date to navigator date input format.
+ * Convert ISO date to navigator date input format.
+ * @param {*} date Date to convert
  */
 
-export const ISOtoNavFormat = (date) => {
+export const ISOtoNavigatorFormat = (date) => {
     return date.substring(0, 10)
 }
 
 /**
  * Return hours only : hh:mm.
+ * @param {*} date Date to convert
  */
 
 export const getHourOnly = (date) => {
@@ -266,7 +283,8 @@ export const getHourOnly = (date) => {
 }
 
 /**
- * Map elements in array and return new dates only.
+ * Map an array and return an array containing new dates only and index of it.
+ * @param {*} arrayToMap Array to map
  */
 
 export const keepNewDateOnly = (arrayToMap) => {
@@ -289,6 +307,7 @@ export const keepNewDateOnly = (arrayToMap) => {
 
 /**
  * Converte date to locale date
+ * @param {*} date Date to convert
  */
 
 export const convertToLocalDate = (date) => {
@@ -297,7 +316,9 @@ export const convertToLocalDate = (date) => {
 }
 
 /**
- * Return all elements matching the selected date
+ * Return all elements in array matching the selected date
+ * @param {*} array Array to check in
+ * @param {*} date Date to find
  */
 
 export const bySelectedDate = (array, date) => {
@@ -308,6 +329,7 @@ export const bySelectedDate = (array, date) => {
 
 /**
  * Return array elements if element.date is less than 24 hours ago.
+ * @param {*} array Array to check in
  */
 
 export const thisDay = (array) => {
@@ -316,6 +338,7 @@ export const thisDay = (array) => {
 
 /**
  * Return array elements if element.date is between 24 and 48 hours ago.
+ * @param {*} array Array to check in
  */
 
 export const lastDay = (array) => {
@@ -324,6 +347,8 @@ export const lastDay = (array) => {
 
 /**
  * Return array elements between today and choosen date.
+ * @param {*} array Array to check in
+ * @param {*} date Max date
  */
 
 export const timeBetween = (array, days) => {
@@ -345,6 +370,8 @@ export const timeBetween = (array, days) => {
 
 /**
  * Remove choosen item from specified array
+ * @param {*} array Array to remove from
+ * @param {*} key Key of the element to remove
  */
 
 export const deleteItemFromArray = (array, key) => {
@@ -355,6 +382,7 @@ export const deleteItemFromArray = (array, key) => {
 
 /**
  * Return a random item from array
+ * @param {*} array Array to choose in
  */
 
 export const randomItem = (array) => {
@@ -363,6 +391,7 @@ export const randomItem = (array) => {
 
 /**
  * Return random item from an array with no repetitions
+ * @param {*} array Array to choose in
  */
 
 export const randomizedArrayNoRepeats = (array) => {
@@ -380,6 +409,7 @@ export const randomizedArrayNoRepeats = (array) => {
 
 /**
  * Reverse array order.
+ * @param {*} array Array to reverse
  */
 
 export const reverseArray = (array) => {
@@ -388,6 +418,8 @@ export const reverseArray = (array) => {
 
 /**
  * Group array values by parameter value. Return an array with nested arrays.
+ * @param {*} array Original array
+ * @param {*} parameter Parameter to group by
  */
 
 export const groupBy = (array, parameter) => {
@@ -400,7 +432,8 @@ export const groupBy = (array, parameter) => {
 }
 
 /**
- * Remove HTML markers
+ * Remove HTML markers (</>)
+ * @param {*} html HTML to remove markers from
  */
 
 export const removeHTMLMarkers = (html) => {
@@ -422,6 +455,7 @@ export const stringToCharSet = (str) => {
 
 /**
  * Converts an html characterSet into its original character.
+ * @param {*} str 
  */
 
 export const charSetToChar = (str) => {
@@ -431,7 +465,8 @@ export const charSetToChar = (str) => {
 }
 
 /**
- * Check if array or object are empty.
+ * Check if array, object or string is empty.
+ * @param {*} value Array, object or string to check
  */
 
 export const isEmpty = (value) => {
@@ -440,16 +475,18 @@ export const isEmpty = (value) => {
         || value === null
         || (typeof value === "object" && Object.keys(value).length === 0)
         || (typeof value === "string" && value.trim().length === 0)
+        || (typeof value === "array" && value.length === 0)
     )
 }
 
 /**
- * 
+ * Add full size background image
+ * @param {*} img Image to add
  */
 
-export const fullImage = (props) => {
+export const fullImage = (img) => {
     return ({
-        backgroundImage: `url(${props})`,
+        backgroundImage: `url(${img})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover"
@@ -458,6 +495,7 @@ export const fullImage = (props) => {
 
 /**
  * Check file extension
+ * @param {*} file File to check
  */
 
 export const isImage = (file) => {
@@ -465,10 +503,20 @@ export const isImage = (file) => {
     return types.some(el => file.type === el);
 }
 
+/**
+ * Check if file is a video
+ * @param {*} file File to check
+ */
+
 export const isVideo = (file) => {
     const types = ['video/mp4', 'video/webm', 'video/x-m4v', 'video/quicktime'];
     return types.some(el => file.type === el);
 }
+
+/**
+ * Check file validity
+ * @param {*} file File to check
+ */
 
 export const isFile = (file) => {
     const types = [
@@ -525,6 +573,11 @@ export const isFile = (file) => {
     return !types.some(el => file.name.endsWith(el))
 }
 
+/**
+ * Check if string is an URL
+ * @param {*} str String to check
+ */
+
 export const isURL = (str) => {
     // eslint-disable-next-line
     const regexp = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi)
@@ -533,12 +586,22 @@ export const isURL = (str) => {
     } else return false
 }
 
+/**
+ * Check if string contains an URL
+ * @param {*} text String to check in
+ */
+
 export const isURLInText = (text) => {
     const regexp = new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+")
     if (regexp.test(text)) {
         return true
     } else return false
 }
+
+/**
+ * Return all URLs present in given text
+ * @param {*} text Text to check in
+ */
 
 export const returnURLsInText = (text) => {
     const regexp = new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?([^ ])+")
@@ -554,7 +617,9 @@ export const returnURLsInText = (text) => {
 }
 
 /**
- * Check if array or object are empty.
+ * Add choosen class in condition matches
+ * @param {*} state Condition required
+ * @param {*} classe Class to add
  */
 
 export const addClass = (state, classe) => {
@@ -564,6 +629,8 @@ export const addClass = (state, classe) => {
 
 /**
  * Reduce string between 0 and choosen length.
+ * @param {*} string String to reduce
+ * @param {*} maxLength Max length
  */
 
 export const reduceString = (string, maxLength) => {
@@ -578,6 +645,8 @@ export const reduceString = (string, maxLength) => {
 
 /**
  * Get différence between two number and add "+" before
+ * @param {*} one First number
+ * @param {*} two Second number
  */
 
 export const getDifference = (one, two) => {
@@ -585,34 +654,30 @@ export const getDifference = (one, two) => {
 }
 
 /**
- * Convert string  in URL.
+ * Convert string in URL (remove accents, spaces and special chars)
+ * @param {*} str String to convert
  */
 
-export const cleanTitleMakeURL = (title, setTitle, setUrl) => {
-    let newTitle = title.toLowerCase();
-    newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
-    newTitle = newTitle.replace(/[&#,+()$~%^.'":*?!;<>{}/\\\\]/g, " ")
-    newTitle = newTitle.replace(/ +/g, " ")
-    newTitle = newTitle.trim()
-    setTitle(newTitle)
-
-    function getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    let URL = newTitle.toLowerCase();
+export const convertStringToURL = (str) => {
+    let URL = str.toLowerCase();
+    URL = URL.charAt(0).toUpperCase() + URL.slice(1);
+    URL = URL.replace(/[&#,+()$~%^.'":*?!;<>{}/\\\\]/g, " ")
+    URL = URL.replace(/ +/g, " ")
+    URL = URL.trim()
     URL = removeAccents(URL)
     URL = URL.replace(/ /g, "-")
-    setUrl(getRndInteger(1000000000, 9999999999) + "/" + URL)
+    return URL
 }
 
 /**
  * Detect Enter key press.
+ * @param {*} event 
+ * @param {*} func Function to execute on ENTER key press
  */
 
-export const handleEnterKey = (event, func) => {
+export const handleEnterKey = (event, handler) => {
     if (event.key === 'Enter') {
-        return func()
+        return handler()
     } else return
 }
 
@@ -636,6 +701,11 @@ export const geoJSONStructure = (props) => {
     }
 }
 
+/**
+ * Split full geolocation ('43.2516, 5.23652') in latitude and longitude ['43.2516', '5.23652']
+ * @param {*} string Geolocation to split
+ */
+
 export const geolocToFloat = (string) => {
     let lat = string.substr(0, string.indexOf(','))
     let lon = string.substr(string.indexOf(',') + 1, string.length)
@@ -645,16 +715,8 @@ export const geolocToFloat = (string) => {
 }
 
 /**
- * Remove choosen characters from string
- */
-
-export const replaceStr = (char, str) => {
-    const string = str.replace(char, '')
-    return string
-}
-
-/**
- * Download file
+ * Download file function
+ * @param {*} file File to download
  */
 
 export const download = async (file) => {
@@ -673,9 +735,7 @@ export const download = async (file) => {
         })
 }
 
-/**
- * Remove all accents.
- */
+
 
 let characterMap = {
     "À": "A",
@@ -1081,6 +1141,11 @@ let characterMap = {
 
 let chars = Object.keys(characterMap).join('|')
 let allAccents = new RegExp(chars, 'g')
+
+/**
+ * Remove all accents from string
+ * @param {*} string String to remove accents from
+ */
 
 export const removeAccents = (string) => {
     return string.replace(allAccents, (match) => {

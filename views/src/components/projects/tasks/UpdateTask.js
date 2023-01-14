@@ -7,7 +7,7 @@ import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
 import { ClassicInput, DatePickerInput, DropdownInput, Textarea } from '../../tools/global/Inputs'
 import { Button } from '../../tools/global/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../tools/functions/task'
-import { addClass, ISOtoNavFormat, removeAccents } from '../../Utils'
+import { addClass, ISOtoNavigatorFormat, removeAccents } from '../../Utils'
 import { isUserInSearchResults, isSelected } from '../../tools/functions/member'
 
 const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
@@ -20,7 +20,7 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
         members: task.members,
         comments: task.comments
     })
-    const [end, setEnd] = useState(ISOtoNavFormat(task.end))
+    const [end, setEnd] = useState(ISOtoNavigatorFormat(task.end))
     const [navbar, setNavbar] = useState(1)
     const dispatch = useDispatch()
 

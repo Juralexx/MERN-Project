@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateProject } from '../../../actions/project.action'
-import { addClass, ISOtoNavFormat, removeAccents } from '../../Utils'
+import { addClass, ISOtoNavigatorFormat, removeAccents } from '../../Utils'
 import { Button, TextButton } from '../../tools/global/Button'
 import Title from './Title'
 import State from './State'
@@ -277,7 +277,7 @@ const Edit = ({ project }) => {
                             && datas.description === project.description
                             && datas.state === project.state
                             && datas.location === project.location
-                            && datas.end === ISOtoNavFormat(project.end)
+                            && datas.end === ISOtoNavigatorFormat(project.end)
                             && JSON.stringify(datas.workArray) === JSON.stringify(project.works)
                             && !contentChanged
                         }
