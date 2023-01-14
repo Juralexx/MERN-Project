@@ -6,99 +6,105 @@
         align-items     : center;
         padding-bottom  : 6px;
         margin-bottom   : 8px;
-
-        h3 {
-            font-weight : 400;
-            span {
-                font-size   : 14px;
-                margin-left : 4px;
-                color       : var(--text-secondary);
-                font-weight : 400;
-            }
-        }
     }
 
     .home-activity-feed-container {
-        .home-activity-feed-item {
-            position : relative;
-            padding  : 10px 0;
-    
-            .activity-date {
-                display       : flex;
-                align-items   : center;
-                margin-bottom : 15px;
-                margin-top    : 5px;
-                padding-left  : 15px;
-                font-weight   : 600;
+        position : relative;
 
+        .activity-date {
+            display       : flex;
+            align-items   : center;
+            margin-bottom : 15px;
+            margin-top    : 5px;
+            padding-left  : 15px;
+            font-weight   : 600;
+
+            &:before {
+                content          : '';
+                position         : absolute;
+                left             : 0;
+                width            : 8px;
+                height           : 8px;
+                border-radius    : 10px;
+                background-color : var(--primary);
+            }
+        }
+
+        .home-activity-feed-item {
+            position       : relative;
+            display        : flex;
+            padding-bottom : 20px;
+
+            &:before {
+                content          : "";
+                position         : absolute;
+                left             : 59px;
+                width            : 2px;
+                top              : 0;
+                bottom           : 0;
+                background-color : #EBEDF3;
+                z-index          : 1;
+            }
+
+            &:last-child {
                 &:before {
-                    content          : '';
-                    position         : absolute;
-                    left             : 0;
-                    width            : 8px;
-                    height           : 8px;
-                    border-radius    : 10px;
-                    background-color : var(--primary);
+                    content : none;
                 }
             }
-    
-            .home-activity-feed-item-inner {
-                position      : relative;
-                display       : flex;
 
-                &.no-before {
-                    &:before {
-                        content : none;
+            .timeline-badge {
+                position         : relative;
+                display          : flex;
+                justify-content  : center;
+                align-items      : center;
+                height           : 22px;
+                background-color : var(--content-light);
+                border           : 3px solid var(--content-light);
+                margin-top       : -2px;
+                z-index          : 2;
+
+                svg {
+                    width  : 22px;
+                    height : 22px;
+                }
+            }
+
+            .activity-hour {
+                font-size   : 13px;
+                min-width   : 46px;
+                white-space : nowrap;
+                font-weight : 600;
+            }
+
+            .activity-content {
+                display      : flex;
+                padding-left : 4px;
+
+                p {
+                    color              : var(--text-secondary);
+                    width              : 100%;
+                    text-overflow      : ellipsis;
+                    overflow           : hidden;
+                    display            : -webkit-box;
+                    line-height        : 22px;
+                    max-height         : 44px;
+                    -webkit-line-clamp : 2;
+                    -webkit-box-orient : vertical;
+
+                    span {
+                        font-weight : 500;
+                        color       : var(--text);
                     }
                 }
-    
-                .activity-hour {
-                    position     : relative;
-                    display      : flex;
-                    font-size    : 12px;
-                    margin-right : 15px;
-                    white-space  : nowrap;
-                    &:before {
-                        content          : '';
-                        position         : absolute;
-                        right            : -9px;
-                        top              : 8px;
-                        width            : 3px;
-                        height           : 3px;
-                        border-radius    : 50%;
-                        background-color : var(--text-secondary);
-                    }
-                }
-    
-                .activity-content {
-                    display     : flex;
-    
-                    p {
-                        color              : var(--text-secondary);
-                        width              : 100%;
-                        text-overflow      : ellipsis;
-                        overflow           : hidden;
-                        display            : -webkit-box;
-                        line-height        : 22px;
-                        max-height         : 44px;
-                        -webkit-line-clamp : 2;
-                        -webkit-box-orient : vertical;
 
-                        span {
-                            font-weight : 500;
-                            color       : var(--text);
-                        }
-                    }
-
-                    svg {
-                        min-width     : 38px;
-                        min-height    : 38px;
-                        margin        : 0 15px;
-                        padding       : 7px;
-                        border-radius : 20px;
-                        color         : var(--blue);
-                        background    : rgba(var(--blue-rgb), 0.3);
-                    }
+                svg {
+                    min-width     : 38px;
+                    min-height    : 38px;
+                    margin        : 0 15px;
+                    padding       : 7px;
+                    border-radius : 20px;
+                    color         : var(--blue);
+                    background    : rgba(var(--blue-rgb), 0.3);
                 }
             }
         }

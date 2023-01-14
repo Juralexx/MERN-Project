@@ -68,8 +68,50 @@
     background-color: rgba(var(--primary-rgb), 0.2);
 }
 
+.blue {
+    color : var(--blue);
+}
+.light-blue {
+    color : var(--light-blue);
+}
+.turquoise {
+    color : var(--turquoise);
+}
+.turquoise-light {
+    color : var(--xturquoise);
+}
+.green {
+    color : var(--green);
+}
+.green-light {
+    color : var(--xgreen);
+}
+.green-dark {
+    color : var(--dark-green);
+}
+.purple {
+    color : var(--purple);
+}
+.purple-light {
+    color : var(--xpurple);
+}
 .red {
-    color : var(--red) !important;
+    color : var(--red);
+}
+.red-light {
+    color : var(--xred);
+}
+.yellow {
+    color : var(--yellow);
+}
+.yellow-light {
+    color : var(--xyellow);
+}
+.orange {
+    color : var(--orange);
+}
+.orange-light {
+    color : var(--xorange);
 }
 
 .bg-light-red {

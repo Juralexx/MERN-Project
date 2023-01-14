@@ -314,6 +314,14 @@ export const deleteItemFromArray = (array, key) => {
 }
 
 /**
+ * Return a random item from array
+ */
+
+export const randomItem = (array) => {
+    return array[Math.floor(Math.random() * array.length)]
+}
+
+/**
  * Reverse array order.
  */
 

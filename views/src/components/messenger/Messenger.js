@@ -3,7 +3,6 @@ import axios from 'axios';
 import { MediaContext, MessengerContext } from '../AppContext';
 import { useDispatch } from 'react-redux';
 import { useLocationchange } from './functions/useLocationchange';
-import { useFetchFriends } from '../tools/hooks/useFetchFriends';
 import { useGetMembers } from './functions/useGetMembers'
 import { useTyping } from './functions/useTyping';
 import { useCheckLocation } from './functions/useCheckLocation';
@@ -18,6 +17,7 @@ import { ChatLoader } from './tools/Loaders';
 import { receiveCreateConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
 import { convertDeltaToStringNoHTML, isURLInText, otherMembersIDs, returnURLsInText } from './functions/function';
 import { randomNbID } from '../Utils';
+import { useFetchFriends } from '../tools/custom-hooks/useFetchFriends';
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [allConversations, setAllConversations] = useState([])

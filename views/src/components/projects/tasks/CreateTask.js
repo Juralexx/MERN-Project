@@ -5,7 +5,7 @@ import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
 import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../tools/global/Inputs'
 import { Button } from '../../tools/global/Button'
 import Icon from '../../tools/icons/Icon'
-import { addClass } from '../../Utils'
+import { addClass, removeAccents } from '../../Utils'
 import { createTask } from '../../../actions/project.action'
 import { isInResults, isSelected } from '../../tools/functions/member'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../tools/functions/task'
@@ -74,7 +74,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
     const searchMember = () => {
         if (!search.query || search.query.trim() === "") return
         if (search.query.length >= 2) {
-            const response = project.members.filter(member => regexp.test(member.pseudo))
+            const response = project.members.filter(member => regexp.test(removeAccents(member.pseudo)))
             setSearch(data => ({ ...data, state: true, results: response }))
             if (!search.results || search.results.length === 0)
                 setSearch(data => ({ ...data, state: false }))
@@ -185,12 +185,12 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
                         </div>
                     )}
                     <ClassicInput
+                        type="search"
                         placeholder="Rechercher un membre..."
                         className="full"
                         value={search.query}
                         onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                         onChange={searchMember}
-                        type="search"
                     />
                     <div className="user_selecter">
                         {project.members && (

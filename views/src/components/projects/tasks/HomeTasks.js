@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { changeState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../tools/functions/task'
+import { updateState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../tools/functions/task'
 import { addClass, dateParserWithoutYear, getDifference, reverseArray } from '../../Utils'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
@@ -14,10 +14,12 @@ import Icon from '../../tools/icons/Icon'
 
 const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
     const [tasks, setTasks] = useState(reverseArray(project.tasks))
+
     const [openTask, setOpenTask] = useState(false)
     const [createTask, setCreateTask] = useState(false)
     const [updateTask, setUpdateTask] = useState(false)
-    const [getTask, setTask] = useState(null)
+
+    const [task, setTask] = useState(null)
     const [navbar, setNavbar] = useState(1)
     const [filter, setFilter] = useState("")
     const dispatch = useDispatch()
@@ -74,7 +76,10 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                             value={filter}
                             onChange={(e) => setFilter(e.target.value)}
                             cross
-                            onClean={() => { setFilter(""); setTasks(reverseArray(project.tasks)) }}
+                            onClean={() => {
+                                setFilter("")
+                                setTasks(reverseArray(project.tasks))
+                            }}
                         >
                             <div onClick={() => {
                                 setTasks(sortByEndDate(tasks))
@@ -112,7 +117,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                         uniqueKey={key}
                                         className="mr-2 mt-1"
                                         checked={element.state === "done"}
-                                        onChange={() => changeState(element, "done", project, user, websocket, dispatch)}
+                                        onChange={() => updateState(element, "done", project, user, websocket, dispatch)}
                                     />
                                     <div className="home-tasks-task-content">
                                         <div className="home-tasks-task-content-inner">
@@ -143,6 +148,9 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                                     }
                                                 </ToolsMenu>
                                             </div>
+                                        </div>
+                                        <div className='home-tasks-task-description two_lines'>
+                                            {element.description ? element.description : <em>Aucune description</em>}
                                         </div>
                                         <div className="home-tasks-task-content-bottom">
                                             <div className="flex">
@@ -201,7 +209,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
 
             {openTask &&
                 <TaskModal
-                    task={getTask}
+                    task={task}
                     open={openTask}
                     setOpen={setOpenTask}
                     setUpdateTask={setUpdateTask}
@@ -218,7 +226,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
             }
             {updateTask &&
                 <UpdateTask
-                    element={getTask}
+                    element={task}
                     open={updateTask}
                     setOpen={setUpdateTask}
                     project={project}

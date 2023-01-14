@@ -7,8 +7,8 @@ import ToolsMenu from '../tools/global/ToolsMenu'
 import Warning from '../tools/global/Warning'
 import { removeFriend } from '../tools/functions/friend'
 import { dateParser, fullImage } from '../Utils'
-import { useFetchFriends } from '../tools/hooks/useFetchFriends'
 import Icon from '../tools/icons/Icon'
+import { useFetchFriends } from '../tools/custom-hooks/useFetchFriends'
 
 const Friends = ({ user, websocket }) => {
     const { friendsArr, fetchedFriends } = useFetchFriends(user)

@@ -6,7 +6,7 @@ import Header from './Header'
 import HomeMembers from './members/HomeMembers';
 import Members from './members/Members';
 import HomeTasks from './tasks/HomeTasks';
-import ActivityFeed from './activity-feed/ActivityFeed';
+import HomeActivityFeed from './activity-feed/HomeActivityFeed';
 import Tasks from './tasks/Tasks';
 import About from './About';
 import Edit from './edit/Edit';
@@ -86,10 +86,8 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                         />
                                     </div>
                                     <div className='col-12 col-xl-6 !px-0 sm:!px-3'>
-                                        <ActivityFeed
+                                        <HomeActivityFeed
                                             project={project}
-                                            user={user}
-                                            websocket={websocket}
                                         />
                                         <HomeGallery
                                             project={project}
@@ -115,8 +113,6 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             user={user}
                             websocket={websocket}
                             project={project}
-                            isAdmin={isAdmin}
-                            isManager={isManager}
                         />
                     } />
                     <Route path="members" element={

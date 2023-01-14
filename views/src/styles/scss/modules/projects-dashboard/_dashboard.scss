@@ -36,6 +36,16 @@
     background    : var(--content-light);
     border-radius : var(--rounded-sm);
     margin-bottom : 20px;
+    box-shadow    : var(--shadow-tiny);
+
+    h3 {
+        span {
+            font-size   : 14px;
+            margin-left : 4px;
+            color       : var(--text-secondary);
+            font-weight : 400;
+        }
+    }
 
     .dashboard-card-container {
         height     : auto;
@@ -48,4 +58,14 @@
     .dashboard-card {
         padding : 20px 12px;
     }
+}
+
+.dashboard-big-card {
+    position      : relative;
+    min-height    : 150px;
+    padding       : 20px;
+    background    : var(--content-light);
+    border-radius : var(--rounded-sm);
+    margin-bottom : 20px;
+    box-shadow    : var(--shadow-tiny);
 }

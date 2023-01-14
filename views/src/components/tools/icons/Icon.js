@@ -51,6 +51,7 @@ import AddUser from './general/AddUser';
 import ClipboardCheck from './general/ClipboardCheck';
 import ClipboardList from './general/ClipboardList';
 import DeleteUser from './general/DeleteUser';
+import OutlineCircle from './general/OutlineCircle';
 
 import ArrowLeft from './navigation/ArrowLeft';
 import ArrowRight from './navigation/ArrowRight';
@@ -799,6 +800,8 @@ const Icon = (props) => {
             return <FilePlus {...props} />;
         case 'GroupFolder':
             return <GroupFolder {...props} />;
+        case 'OutlineCircle':
+            return <OutlineCircle {...props} />;
         default:
             return <Link {...props} />;
     }

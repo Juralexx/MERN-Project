@@ -41,9 +41,9 @@
 
     &:hover,
     &.active {
-        background-color : rgba(var(--primary-rgb), 0.4);
+        background-color : rgba(var(--primary-rgb), 0.2);
         svg {
-            color            : white;
+            color : var(--primary);
         }
     }
 
