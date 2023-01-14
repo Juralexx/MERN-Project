@@ -263,7 +263,7 @@ export const keepNewDateOnly = (arrayToMap, setState) => {
         if (i <= -1) { filteredArray.push(item) }
         return null;
     });
-    setState(filteredArray)
+   return filteredArray
 }
 
 /**

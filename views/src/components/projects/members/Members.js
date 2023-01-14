@@ -54,10 +54,10 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
         <>
             <div className="container-lg py-8 !px-0 sm:!px-3">
                 <div className='dashboard-big-card'>
-                    <div className="dashboard-members-title">
+                    <div className="dashboard-big-card-title">
                         <h2>Membres <span>{project.members.length}</span></h2>
                         {(isAdmin || isManager) &&
-                            <div className="dashboard-members-btn_container">
+                            <div className="dashboard-big-card-btn_container">
                                 {project.member_requests.length > 0 &&
                                     <TextButton className="btn_icon_start" onClick={() => setOpenRequests(true)}>
                                         Demandes en cours

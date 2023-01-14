@@ -7,105 +7,115 @@
         padding-bottom  : 6px;
         margin-bottom   : 8px;
     }
+}
 
-    .home-activity-feed-container {
-        position : relative;
+.activity-feed-container {
+    position : relative;
 
-        .activity-date {
-            display       : flex;
-            align-items   : center;
-            margin-bottom : 15px;
-            margin-top    : 5px;
-            padding-left  : 15px;
-            font-weight   : 600;
+    .activity-date {
+        display     : flex;
+        align-items : center;
+        padding     : 8px 0 15px;
+        font-size   : 16px;
+        font-weight : 600;
+        svg {
+            width        : 18px;
+            height       : 18px;
+            margin-right : 10px;
+        }
+    }
 
+    .home-activity-feed-item {
+        position       : relative;
+        display        : flex;
+        padding-bottom : 20px;
+
+        &:before {
+            content          : "";
+            position         : absolute;
+            left             : 59px;
+            width            : 2px;
+            top              : 0;
+            bottom           : 0;
+            background-color : #EBEDF3;
+            z-index          : 1;
+        }
+
+        &:last-child {
             &:before {
-                content          : '';
-                position         : absolute;
-                left             : 0;
-                width            : 8px;
-                height           : 8px;
-                border-radius    : 10px;
-                background-color : var(--primary);
+                content : none;
             }
         }
 
+        .timeline-badge {
+            position         : relative;
+            display          : flex;
+            justify-content  : center;
+            align-items      : center;
+            height           : 22px;
+            background-color : var(--content-light);
+            border           : 3px solid var(--content-light);
+            margin-top       : -1px;
+            z-index          : 2;
+
+            svg {
+                width  : 22px;
+                height : 22px;
+            }
+        }
+
+        .activity-hour {
+            display     : flex;
+            align-items : center;
+            font-size   : 13px;
+            min-width   : 46px;
+            white-space : nowrap;
+            font-weight : 600;
+        }
+
+        .activity-content {
+            display      : flex;
+            padding-left : 4px;
+
+            p {
+                color              : var(--text-secondary);
+                width              : 100%;
+                text-overflow      : ellipsis;
+                overflow           : hidden;
+                display            : -webkit-box;
+                line-height        : 22px;
+                max-height         : 44px;
+                -webkit-line-clamp : 2;
+                -webkit-box-orient : vertical;
+
+                span {
+                    font-weight : 500;
+                    color       : var(--text);
+                }
+            }
+
+            svg {
+                min-width     : 38px;
+                min-height    : 38px;
+                margin        : 0 15px;
+                padding       : 7px;
+                border-radius : 20px;
+                color         : var(--blue);
+                background    : rgba(var(--blue-rgb), 0.3);
+            }
+        }
+    }
+
+    &.activity-page {
         .home-activity-feed-item {
-            position       : relative;
-            display        : flex;
-            padding-bottom : 20px;
-
             &:before {
-                content          : "";
-                position         : absolute;
-                left             : 59px;
-                width            : 2px;
-                top              : 0;
-                bottom           : 0;
-                background-color : #EBEDF3;
-                z-index          : 1;
+                left : 73px;
             }
-
-            &:last-child {
-                &:before {
-                    content : none;
-                }
-            }
-
-            .timeline-badge {
-                position         : relative;
-                display          : flex;
-                justify-content  : center;
-                align-items      : center;
-                height           : 22px;
-                background-color : var(--content-light);
-                border           : 3px solid var(--content-light);
-                margin-top       : -2px;
-                z-index          : 2;
-
-                svg {
-                    width  : 22px;
-                    height : 22px;
-                }
-            }
-
             .activity-hour {
-                font-size   : 13px;
-                min-width   : 46px;
-                white-space : nowrap;
-                font-weight : 600;
+                min-width : 60px;
             }
-
             .activity-content {
-                display      : flex;
-                padding-left : 4px;
-
-                p {
-                    color              : var(--text-secondary);
-                    width              : 100%;
-                    text-overflow      : ellipsis;
-                    overflow           : hidden;
-                    display            : -webkit-box;
-                    line-height        : 22px;
-                    max-height         : 44px;
-                    -webkit-line-clamp : 2;
-                    -webkit-box-orient : vertical;
-
-                    span {
-                        font-weight : 500;
-                        color       : var(--text);
-                    }
-                }
-
-                svg {
-                    min-width     : 38px;
-                    min-height    : 38px;
-                    margin        : 0 15px;
-                    padding       : 7px;
-                    border-radius : 20px;
-                    color         : var(--blue);
-                    background    : rgba(var(--blue-rgb), 0.3);
-                }
+                padding-left : 15px;
             }
         }
     }

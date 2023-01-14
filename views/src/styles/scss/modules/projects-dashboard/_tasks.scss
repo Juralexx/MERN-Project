@@ -56,19 +56,19 @@
     border-radius : var(--rounded-sm);
 
     &.blue {
-        background : rgba(var(--xblue-rgb), 0.2);
+        background : rgba(var(--xblue-rgb), 0.15);
         color      : var(--xblue);
     }
     &.red {
-        background : rgba(var(--xred-rgb), 0.2);
+        background : rgba(var(--xred-rgb), 0.15);
         color      : var(--xred);
     }
     &.orange {
-        background : rgba(var(--orange-rgb), 0.2);
+        background : rgba(var(--orange-rgb), 0.15);
         color      : var(--orange);
     }
     &.green {
-        background : rgba(var(--green-rgb), 0.2);
+        background : rgba(var(--green-rgb), 0.15);
         color      : var(--green);
     }
 }

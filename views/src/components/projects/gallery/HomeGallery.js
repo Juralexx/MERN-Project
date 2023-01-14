@@ -1,17 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { StringButton } from '../../tools/global/Button'
+import { TextButton } from '../../tools/global/Button'
 import Icon from '../../tools/icons/Icon'
 
-const HomeGallery = ({ project, user, websocket }) => {
+const HomeGallery = ({ project }) => {
     return (
         <div className="dashboard-card home-gallery">
             <div className="home-gallery-header">
                 <h3>Galerie</h3>
                 <div className="flex items-center">
-                    <StringButton className="mr-4">
+                    <TextButton className="mr-4">
                         <Link to="gallery">Voir tous</Link>
-                    </StringButton>
+                    </TextButton>
                 </div>
             </div>
             <div className="dashboard-card-container home-gallery-container custom-scrollbar">

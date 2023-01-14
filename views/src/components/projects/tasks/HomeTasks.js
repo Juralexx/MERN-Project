@@ -7,7 +7,7 @@ import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'
 import TaskModal from './TaskModal'
 import ToolsMenu from '../../tools/global/ToolsMenu'
-import { StringButton } from '../../tools/global/Button'
+import { TextButton } from '../../tools/global/Button'
 import { DropdownInput } from '../../tools/global/Inputs'
 import Checkbox from '../../tools/global/Checkbox'
 import Icon from '../../tools/icons/Icon'
@@ -31,9 +31,9 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     <div className="home-tasks-nav-header-top">
                         <h3>Tâches <span>{tasks.length}</span></h3>
                         <div className="flex items-center">
-                            <StringButton className="mr-4">
+                            <TextButton className="mr-4">
                                 <Link to="tasks">Voir tous</Link>
-                            </StringButton>
+                            </TextButton>
                             {(isAdmin || isManager) &&
                                 <ToolsMenu>
                                     <div className="tools_choice" onClick={() => setCreateTask(true)}>

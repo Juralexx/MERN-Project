@@ -6,6 +6,7 @@ import Header from './Header'
 import HomeMembers from './members/HomeMembers';
 import Members from './members/Members';
 import HomeTasks from './tasks/HomeTasks';
+import HomeGallery from './gallery/HomeGallery';
 import HomeActivityFeed from './activity-feed/HomeActivityFeed';
 import Tasks from './tasks/Tasks';
 import About from './About';
@@ -15,7 +16,7 @@ import Actualities from './actualities/Actualities';
 import AddActuality from './actualities/AddActuality';
 import Qna from './QNA/Qna';
 import AddQna from './QNA/AddQna';
-import HomeGallery from './gallery/HomeGallery';
+import ActivityFeed from './activity-feed/ActivityFeed';
 
 const Project = ({ user, websocket, projects, setProjects }) => {
     const reducer = useSelector(state => state.projectReducer)
@@ -91,8 +92,6 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                         />
                                         <HomeGallery
                                             project={project}
-                                            user={user}
-                                            websocket={websocket}
                                         />
                                     </div>
                                 </div>
@@ -122,6 +121,11 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             project={project}
                             isAdmin={isAdmin}
                             isManager={isManager}
+                        />
+                    } />
+                    <Route path="activity-feed" element={
+                        <ActivityFeed
+                            project={project}
                         />
                     } />
                     <Route path="edit" element={
