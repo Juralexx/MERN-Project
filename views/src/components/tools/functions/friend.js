@@ -2,7 +2,11 @@ import { acceptFriendRequest, cancelFriendRequest, deleteFriend, refuseFriendReq
 import { randomID } from "../../Utils"
 
 /**
- * Send a friend request
+ * Send a contact request
+ * @param {*} friend User to send request to
+ * @param {*} user User that sends request
+ * @param {*} websocket Websocket
+ * @param {*} dispatch Redux dispatch function
  */
 
 export const sendRequest = (friend, user, websocket, dispatch) => {
@@ -23,7 +27,11 @@ export const sendRequest = (friend, user, websocket, dispatch) => {
 }
 
 /**
- * Cancel a friend request
+ * Cancel a contact request
+ * @param {*} friend User to remove sent request from
+ * @param {*} user User that cancel sent request
+ * @param {*} websocket Websocket
+ * @param {*} dispatch Redux dispatch function
  */
 
 export const cancelRequest = (friend, user, websocket, dispatch) => {
@@ -36,7 +44,11 @@ export const cancelRequest = (friend, user, websocket, dispatch) => {
 }
 
 /**
- * Accept a friend request
+ * Accept a contact request
+ * @param {*} request Request object
+ * @param {*} user User that accepts request
+ * @param {*} websocket Websocket
+ * @param {*} dispatch Redux dispatch function
  */
 
 export const acceptRequest = (request, user, websocket, dispatch) => {
@@ -52,7 +64,11 @@ export const acceptRequest = (request, user, websocket, dispatch) => {
 }
 
 /**
- * Refuse a friend request
+ * Refuse a contact request
+ * @param {*} request Request object
+ * @param {*} user User that refuses request
+ * @param {*} websocket Websocket
+ * @param {*} dispatch Redux dispatch function
  */
 
 export const refuseRequest = (request, user, websocket, dispatch) => {
@@ -65,7 +81,11 @@ export const refuseRequest = (request, user, websocket, dispatch) => {
 }
 
 /**
- * Remove a friend
+ * Remove a contact
+ * @param {*} userId User ID of the user that removes contact
+ * @param {*} friendId Contact ID of the removed contact
+ * @param {*} websocket Websocket
+ * @param {*} dispatch Redux dispatch function
  */
 
 export const removeFriend = (userId, friendId, websocket, dispatch) => {

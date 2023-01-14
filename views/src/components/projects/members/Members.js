@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { dateParser, removeAccents } from '../../Utils'
-import { getRole, isInResults, sortByAlpha, sortByOld, sortByRecent, sortByRole } from '../../tools/functions/member'
+import { returnMemberRole, isUserInSearchResults, sortByAlpha, sortByOld, sortByRecent, sortByRole } from '../../tools/functions/member'
 import AddMember from './AddMember'
 import MemberMenu from './MemberMenu'
 import MembersRequests from './MembersRequests'
@@ -19,7 +19,7 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
         if (usersArr.length > 0) {
             let arr = []
             usersArr.map((user, key) => {
-                let el = project.members.find(e => e.id === user._id)
+                let el = project.members.find(member => member._id === user._id)
                 if (el)
                     arr.push({ ...user, ...el })
                 if (key === project.members.length - 1)
@@ -32,6 +32,10 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
     const [openRequests, setOpenRequests] = useState(false)
     const [filter, setFilter] = useState("")
     const [isByRecent, setIsByRecent] = useState(false)
+
+    /**
+     * Search function
+     */
 
     const [search, setSearch] = useState({
         state: false,
@@ -49,6 +53,10 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                 setSearch(data => ({ ...data, state: false }))
         } else setSearch(data => ({ ...data, state: false }))
     }
+
+    /**
+     * 
+     */
 
     return (
         <>
@@ -73,11 +81,16 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                         <ClassicInput
                             className="w-[400px]"
                             inputClassName="full"
-                            type="search"
+                            type="text"
                             placeholder="Rechercher un membre..."
                             value={search.query}
                             onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                             onChange={searchMember}
+                            cross
+                            onClean={() => {
+                                setSearch(data => ({ ...data, state: false, query: "" }))
+                                setMembers(project.members)
+                            }}
                         />
                         <DropdownInput
                             className="ml-3"
@@ -153,7 +166,7 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                         <div className='dashboard-members-table-body custom-scrollbar'>
                             {members.map((element, key) => {
                                 return (
-                                    <div className={`dashboard-members-member ${isInResults(element, search.results, search.state, "flex")}`} key={key}>
+                                    <div className={`dashboard-members-member ${isUserInSearchResults(element, search.results, search.state, 'flex')}`} key={key}>
                                         <div className="dashboard-members-infos">
                                             <MediumAvatar pic={element.picture} />
                                             <div>
@@ -162,7 +175,7 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                                             </div>
                                         </div>
                                         <div className="dashboard-members-infos">
-                                            {getRole(element)}
+                                            {returnMemberRole(element)}
                                         </div>
                                         <div className="dashboard-members-infos">
                                             <div className='flex flex-col'>
@@ -210,8 +223,6 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                 project={project}
                 user={user}
                 websocket={websocket}
-                isAdmin={isAdmin}
-                isManager={isManager}
             />
             <MembersRequests
                 open={openRequests}

@@ -34,12 +34,12 @@ export function useTwoLevelSearch(array, property, param) {
      * @param {*} classe Classe to add if element is in results
      */
 
-    const isInResults = (element, classe) => {
+    const isUserInSearchResults = (element, classe) => {
         if (search) {
             if (results.includes(element)) return classe
             else return '!hidden'
         } else return classe
     }
 
-    return { twoLevelSearch, isInResults, query, setQuery }
+    return { twoLevelSearch, isUserInSearchResults, query, setQuery }
 }

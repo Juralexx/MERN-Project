@@ -8,10 +8,10 @@ import Warning from '../tools/global/Warning'
 import { removeFriend } from '../tools/functions/friend'
 import { dateParser, fullImage } from '../Utils'
 import Icon from '../tools/icons/Icon'
-import { useFetchFriends } from '../tools/custom-hooks/useFetchFriends'
+import { useFetchContacts } from '../tools/custom-hooks/useFetchContacts'
 
 const Friends = ({ user, websocket }) => {
-    const { friendsArr, fetchedFriends } = useFetchFriends(user)
+    const { friendsArr, fetchedFriends } = useFetchContacts(user)
     const [warning, setWarning] = useState(-1)
     const dispatch = useDispatch()
 
@@ -29,7 +29,7 @@ const Friends = ({ user, websocket }) => {
     }
 
     const since = (element) => {
-        let friend = user.friends.find(e => e.friend === element._id)
+        let friend = user.friends.find(e => e._id === element._id)
         return friend?.requestedAt
     }
 

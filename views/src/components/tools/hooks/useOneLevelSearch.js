@@ -34,12 +34,12 @@ export function useOneLevelSearch(array, param) {
      * @param {*} classe Classe to add if element is in results
      */
 
-    const isInResults = (element, classe) => {
+    const isUserInSearchResults = (element, classe) => {
         if (search) {
             if (results.includes(element)) return classe
             else return '!hidden'
         } else return classe
     }
 
-    return { oneLevelSearch, isInResults, query, setQuery }
+    return { oneLevelSearch, isUserInSearchResults, query, setQuery }
 }

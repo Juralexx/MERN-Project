@@ -1,9 +1,9 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-export function useFetchFriends(user) {
-    const [friendsArr, setFriendsArr] = useState([])
-    const [fetchedFriends, setFetchedFriends] = useState(true)
+export function useFetchContacts(user) {
+    const [contactsArr, setContactsArr] = useState([])
+    const [fetchedContacts, setFetchedContacts] = useState(true)
 
     useEffect(() => {
         if (user.friends) {
@@ -11,13 +11,13 @@ export function useFetchFriends(user) {
                 try {
                     const allFriends = user.friends.map(async friend => {
                         return await axios
-                            .get(`${process.env.REACT_APP_API_URL}api/user/${friend.friend}`)
+                            .get(`${process.env.REACT_APP_API_URL}api/user/${friend._id}`)
                             .then(res => res.data)
                             .catch(err => console.error(err))
                     })
                     Promise.all(allFriends).then(res => {
-                        setFriendsArr(res)
-                        setFetchedFriends(false)
+                        setContactsArr(res)
+                        setFetchedContacts(false)
                     })
                 } catch (err) {
                     console.log(err)
@@ -27,5 +27,5 @@ export function useFetchFriends(user) {
         }
     }, [user.friends])
 
-    return { friendsArr, fetchedFriends }
+    return { contactsArr, fetchedContacts }
 }

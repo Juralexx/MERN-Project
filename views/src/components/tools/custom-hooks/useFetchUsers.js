@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 
 export function useFetchUsers(users) {
     const [usersArr, setUsersArr] = useState([])
@@ -11,7 +11,7 @@ export function useFetchUsers(users) {
                 try {
                     const allUsers = users.map(async user => {
                         return await axios
-                            .get(`${process.env.REACT_APP_API_URL}api/user/${user.id}`)
+                            .get(`${process.env.REACT_APP_API_URL}api/user/${user._id}`)
                             .then(res => res.data)
                             .catch(err => console.error(err))
                     })

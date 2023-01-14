@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getRole } from '../../tools/functions/member'
+import { returnMemberRole } from '../../tools/functions/member'
 import AddMember from './AddMember'
 import MembersRequests from './MembersRequests'
 import MemberMenu from './MemberMenu'
@@ -44,7 +44,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                     <div className="home-members-infos-name">
                                         <div>{element.pseudo}</div>
                                         <div className="role">
-                                            {getRole(element)}
+                                            {returnMemberRole(element)}
                                         </div>
                                     </div>
                                 </div>
@@ -81,8 +81,6 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                 project={project}
                 user={user}
                 websocket={websocket}
-                isAdmin={isAdmin}
-                isManager={isManager}
             />
             <MembersRequests
                 open={openRequests}

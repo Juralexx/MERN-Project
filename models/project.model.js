@@ -128,7 +128,7 @@ const ProjectModel = new mongoose.Schema(
         members: {
             type: [],
             member: {
-                id: String,
+                _id: String,
                 pseudo: String,
                 picture: String,
                 role: String,

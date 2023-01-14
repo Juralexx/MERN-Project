@@ -16,7 +16,7 @@ const Projects = ({ user, websocket }) => {
     const [projectsToDisplay, setProjectsToDisplay] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [filter, setFilter] = useState("")
-    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(projects.array, 'title')
+    const { oneLevelSearch, isUserInSearchResults, query, setQuery } = useOneLevelSearch(projects.array, 'title')
 
     useEffect(() => {
         if (user.projects) {
@@ -114,7 +114,7 @@ const Projects = ({ user, websocket }) => {
                         <div className="profil-page_projects !justify-start">
                             {projectsToDisplay.map((element, key) => {
                                 return (
-                                    <div className={query.length > 0 ? isInResults(element, 'block') : 'block'} key={key}>
+                                    <div className={query.length > 0 ? isUserInSearchResults(element, 'block') : 'block'} key={key}>
                                         <Card
                                             element={element}
                                             user={user}

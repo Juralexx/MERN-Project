@@ -18,7 +18,7 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
                 res.data.members.map(member => {
                     return websocket.current.emit("acceptMemberRequest", {
                         member: member,
-                        receiverId: member.id
+                        receiverId: member._id
                     })
                 })
             })

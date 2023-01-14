@@ -10703,6 +10703,7 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  padding: 10px 15px;
 }
 .sidebar.reduced .sidebar-inner .sidebar-container .sidebar-submenu a svg {
   margin: 0;

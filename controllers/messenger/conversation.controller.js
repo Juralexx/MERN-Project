@@ -125,7 +125,7 @@ export const deleteConversation = async (req, res) => {
         if (convToDelete) {
             convToDelete.members.map(async member => {
                 await UserModel.findByIdAndUpdate(
-                    { _id: member.id },
+                    { _id: member._id },
                     {
                         $pull: {
                             conversations: {

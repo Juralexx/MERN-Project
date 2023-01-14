@@ -7,7 +7,7 @@ import { Button } from '../../tools/global/Button'
 import Icon from '../../tools/icons/Icon'
 import { addClass, removeAccents } from '../../Utils'
 import { createTask } from '../../../actions/project.action'
-import { isInResults, isSelected } from '../../tools/functions/member'
+import { isUserInSearchResults, isSelected } from '../../tools/functions/member'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../tools/functions/task'
 
 const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
@@ -45,10 +45,10 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
             task: datas.title
         }
         dispatch(createTask(project._id, task, activity))
-        const members = project.members.filter(member => member.id !== user._id)
+        const members = project.members.filter(member => member._id !== user._id)
         members.map(member => {
             return websocket.current.emit("createTask", {
-                receiverId: member.id,
+                receiverId: member._id,
                 task: task,
                 activity: activity
             })
@@ -199,11 +199,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
                                     return (
                                         <div
                                             key={key}
-                                            className={`
-                                                user_display_choice
-                                                ${isInResults(element, search.results, search.state, "flex")}
-                                                ${isSelected(datas.members, element)}
-                                            `}
+                                            className={`user_display_choice ${isUserInSearchResults(element, search.results, search.state, "flex")} ${isSelected(datas.members, element)}`}
                                             onClick={() => setDatas(data => ({ ...data, members: addMemberToArray(element, datas.members) }))}
                                         >
                                             <MediumAvatar pic={element.picture} />

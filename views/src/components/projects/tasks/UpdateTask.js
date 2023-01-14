@@ -8,7 +8,7 @@ import { ClassicInput, DatePickerInput, DropdownInput, Textarea } from '../../to
 import { Button } from '../../tools/global/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../tools/functions/task'
 import { addClass, ISOtoNavFormat, removeAccents } from '../../Utils'
-import { isInResults, isSelected } from '../../tools/functions/member'
+import { isUserInSearchResults, isSelected } from '../../tools/functions/member'
 
 const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
     const [updatedTask, setUpdatedTask] = useState({
@@ -46,10 +46,10 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
             date: new Date().toISOString()
         }
         dispatch(changeTask(project._id, taskUpdated, activity))
-        const members = project.members.filter(member => member.id !== user._id)
+        const members = project.members.filter(member => member._id !== user._id)
         project.members.map(member => {
             return websocket.current.emit("updateTask", {
-                receiverId: member.id,
+                receiverId: member._id,
                 task: taskUpdated
             })
         })
@@ -192,11 +192,7 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
                             <div className="user_displayer">
                                 {project.members.map((element, key) => {
                                     return (
-                                        <div className={`
-                                            user_display_choice
-                                            ${isInResults(element, search.results, search.state, "flex")}
-                                            ${isSelected(updatedTask.members, element)}
-                                        `}
+                                        <div className={`user_display_choice ${isUserInSearchResults(element, search.results, search.state, "flex")} ${isSelected(updatedTask.members, element)}`}
                                             key={key}
                                             onClick={() =>
                                                 setUpdatedTask(prevState => ({ ...prevState, members: addMemberToArray(element, updatedTask.members) }))

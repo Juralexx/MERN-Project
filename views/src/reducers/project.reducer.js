@@ -145,7 +145,7 @@ export default function projectReducer(state = initialState, action) {
         case REMOVE_MEMBER:
             return {
                 ...state,
-                members: state.members.filter(member => member.id !== action.payload.memberId),
+                members: state.members.filter(member => member._id !== action.payload.memberId),
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
 
@@ -178,7 +178,7 @@ export default function projectReducer(state = initialState, action) {
         /******************************************************* SET ADMIN *************************************************************/
 
         case NAME_ADMIN:
-            let a = state.members.findIndex(member => member.id === action.payload.userId)
+            let a = state.members.findIndex(member => member._id === action.payload.userId)
             state.members[a].role = "admin"
             return {
                 ...state,
@@ -187,7 +187,7 @@ export default function projectReducer(state = initialState, action) {
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
         case RECEIVE_NAME_ADMIN:
-            let b = state.members.findIndex(member => member.id === action.payload.userId)
+            let b = state.members.findIndex(member => member._id === action.payload.userId)
             state.members[b].role = "admin"
             return {
                 ...state,
@@ -196,7 +196,7 @@ export default function projectReducer(state = initialState, action) {
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
         case UNNAME_ADMIN:
-            let c = state.members.findIndex(member => member.id === action.payload.userId)
+            let c = state.members.findIndex(member => member._id === action.payload.userId)
             state.members[c].role = "user"
             return {
                 ...state,
@@ -204,7 +204,7 @@ export default function projectReducer(state = initialState, action) {
                 members: state.members
             }
         case RECEIVE_UNNAME_ADMIN:
-            let d = state.members.findIndex(member => member.id === action.payload.userId)
+            let d = state.members.findIndex(member => member._id === action.payload.userId)
             state.members[d].role = "user"
             return {
                 ...state,

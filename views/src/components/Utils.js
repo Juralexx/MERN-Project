@@ -8,6 +8,7 @@ export const isHome = window.location.pathname === '/'
 
 /**
  * Add a body class
+ * @param {*} className Class to add to body
  */
 
 export const addBodyClass = (className) => {
@@ -16,6 +17,7 @@ export const addBodyClass = (className) => {
 
 /**
  * Remove a body class
+ * @param {*} className Class to remove from body
  */
 
 export const removeBodyClass = (className) => {
@@ -24,6 +26,8 @@ export const removeBodyClass = (className) => {
 
 /**
  * Replace first body class by the second
+ * @param {*} classToAdd Class to add
+ * @param {*} classToRemove Class to remove
  */
 
 export const replaceBodyClass = (classToAdd, classToRemove) => {
@@ -33,6 +37,7 @@ export const replaceBodyClass = (classToAdd, classToRemove) => {
 
 /**
  * Return the value of the required local storage key
+ * @param {*} item Name of the storage item to get
  */
 
 export const getStorage = (item) => {
@@ -41,6 +46,8 @@ export const getStorage = (item) => {
 
 /**
  * Sets the value of the pair identified by key to value
+ * @param {*} item Name of the item
+ * @param {*} value Value of the item
  */
 
 export const setStorage = (item, value) => {
@@ -48,7 +55,8 @@ export const setStorage = (item, value) => {
 }
 
 /**
- * Return a randam ID.
+ * Return a randam ID containing uppercases, lowercases, numbers and special chars.
+ * @param {*} max Length of the required ID
  */
 
 export const randomID = (max) => {
@@ -69,7 +77,8 @@ export const randomID = (max) => {
 }
 
 /**
- * Return a randam 24 numbers and letters ID.
+ * Return a randam ID containing lowercases, and numbers.
+ * @param {*} max Length of the required ID
  */
 
 export const randomNbLtID = (max) => {
@@ -88,7 +97,8 @@ export const randomNbLtID = (max) => {
 }
 
 /**
- * Return a randam 24 numbers ID.
+ * Return a randam ID containing numbers.
+ * @param {*} max Length of the required ID
  */
 
 export const randomNbID = (max) => {
@@ -105,7 +115,8 @@ export const randomNbID = (max) => {
 }
 
 /**
- * Remove all special characters
+ * remove all special chars from string
+ * @param {*} string String to remove special chars from
  */
 
 export const removeSpecialChars = (string) => {
@@ -114,7 +125,8 @@ export const removeSpecialChars = (string) => {
 }
 
 /**
- * Check pseudo validity.
+ * Check if string contains only letters, spaces and dashes (-)
+ * @param {*} string String to check
  */
 
 export const onlyLettersSpacesAndDashes = (string) => {
@@ -125,7 +137,8 @@ export const onlyLettersSpacesAndDashes = (string) => {
 }
 
 /**
- * Check if a string contains only letters, numbers and dashes validity.
+ * Check if string contains only letters, numbers and dashes (-)
+ * @param {*} string String to check
  */
 
 export const onlyLettersNumbersAndDashes = (string) => {
@@ -135,7 +148,8 @@ export const onlyLettersNumbersAndDashes = (string) => {
 }
 
 /**
- * Check if string contains any letter.
+ * Check if string contains letter.
+ * @param {*} string String to check
  */
 
 export const containsAnyLetters = (string) => {
@@ -146,6 +160,7 @@ export const containsAnyLetters = (string) => {
 
 /**
  * Check if string contains only letter.
+ * @param {*} string String to check
  */
 
 export const onlyLetters = (string) => {
@@ -155,7 +170,8 @@ export const onlyLetters = (string) => {
 }
 
 /**
- * Check if string contains any numbers.
+ * Check if string contains numbers.
+ * @param {*} string String to check
  */
 
 export const containsAnyNumbers = (string) => {
@@ -166,6 +182,7 @@ export const containsAnyNumbers = (string) => {
 
 /**
  * Check if string contains only numbers.
+ * @param {*} string String to check
  */
 
 export const onlyNumbers = (string) => {
@@ -176,6 +193,7 @@ export const onlyNumbers = (string) => {
 
 /**
  * Check email validity.
+ * @param {*} email Email to check
  */
 
 export const isEmailValid = (email) => {
@@ -186,7 +204,8 @@ export const isEmailValid = (email) => {
 }
 
 /**
- * Check french phone number validity.
+ * Check french phone validity.
+ * @param {*} phone Phone number to check
  */
 
 export const isPhoneValid = (phone) => {

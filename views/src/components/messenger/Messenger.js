@@ -17,7 +17,7 @@ import { ChatLoader } from './tools/Loaders';
 import { receiveCreateConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
 import { convertDeltaToStringNoHTML, isURLInText, otherMembersIDs, returnURLsInText } from './functions/function';
 import { randomNbID } from '../Utils';
-import { useFetchFriends } from '../tools/custom-hooks/useFetchFriends';
+import { useFetchContacts } from '../tools/custom-hooks/useFetchContacts';
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const [allConversations, setAllConversations] = useState([])
@@ -36,7 +36,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
     const { xs, sm, md, lg } = useContext(MediaContext)
     const [rightbar, setRightbar] = useState({ state: !lg ? 'open' : 'closed', displayed: 'contacts' })
 
-    const { friendsArr, fetchedFriends } = useFetchFriends(user)
+    const { friendsArr, fetchedFriends } = useFetchContacts(user)
     const { isTyping, setTyping, typingContext, setTypingContext } = useTyping(currentChat)
     const { members } = useGetMembers(uid, currentChat)
 
