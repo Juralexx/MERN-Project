@@ -5,7 +5,6 @@
 
 /* Tools */
 
-@import 'tools/classes';
 @import 'tools/containers';
 @import 'tools/map';
 @import 'tools/scrollbar';
@@ -134,3 +133,5 @@
 
 @import 'modules/messenger/tools/typing';
 @import 'modules/messenger/tools/search-container';
+
+@import 'tools/classes';

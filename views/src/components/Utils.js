@@ -250,7 +250,7 @@ export const getHourOnly = (date) => {
  * Map elements in array and return new dates only.
  */
 
-export const keepNewDateOnly = (arrayToMap, setState) => {
+export const keepNewDateOnly = (arrayToMap) => {
     let array = []
     arrayToMap.map((element, key) => {
         return (
@@ -260,10 +260,21 @@ export const keepNewDateOnly = (arrayToMap, setState) => {
     let filteredArray = []
     array.filter(item => {
         let i = filteredArray.findIndex(element => (element.date === item.date));
-        if (i <= -1) { filteredArray.push(item) }
+        if (i <= -1) {
+            filteredArray.push(item)
+        }
         return null;
     });
-   return filteredArray
+    return filteredArray
+}
+
+/**
+ * Return all elements matching the selected date
+ */
+
+export const bySelectedDate = (array, selectedDate) => {
+    console.log(array.filter(element => element.date.substring(0, 10) === selectedDate.toISOString().substring(0, 10)))
+    return array.filter(element => element.date.substring(0, 10) === selectedDate.toISOString().substring(0, 10))
 }
 
 /**

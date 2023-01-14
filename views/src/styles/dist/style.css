@@ -567,284 +567,6 @@ select:-webkit-autofill:focus {
 }
 
 /* Tools */
-.one_line {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-  line-height: 19px;
-  max-height: 22px;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-
-.two_lines {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 90%;
-  line-height: 19px;
-  max-height: 44px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.three_lines {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 90%;
-  line-height: 19px;
-  max-height: 66px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-.primary {
-  color: var(--primary);
-}
-
-.txt-prim {
-  color: var(--text);
-}
-
-.txt-sec {
-  color: var(--text-secondary);
-}
-
-.txt-ter {
-  color: var(--text-tertiary);
-}
-
-.border-b {
-  border-bottom: 1px solid var(--light-border);
-}
-
-.border-t {
-  border-top: 1px solid var(--light-border);
-}
-
-.border-l {
-  border-left: 1px solid var(--light-border);
-}
-
-.border-r {
-  border-right: 1px solid var(--light-border);
-}
-
-.bg-default {
-  background-color: var(--content-x-light);
-}
-
-.bg-prim-light {
-  background-color: rgba(var(--primary-rgb), 0.2);
-}
-
-.blue {
-  color: var(--blue);
-}
-
-.light-blue {
-  color: var(--light-blue);
-}
-
-.turquoise {
-  color: var(--turquoise);
-}
-
-.turquoise-light {
-  color: var(--xturquoise);
-}
-
-.green {
-  color: var(--green);
-}
-
-.green-light {
-  color: var(--xgreen);
-}
-
-.green-dark {
-  color: var(--dark-green);
-}
-
-.purple {
-  color: var(--purple);
-}
-
-.purple-light {
-  color: var(--xpurple);
-}
-
-.red {
-  color: var(--red);
-}
-
-.red-light {
-  color: var(--xred);
-}
-
-.yellow {
-  color: var(--yellow);
-}
-
-.yellow-light {
-  color: var(--xyellow);
-}
-
-.orange {
-  color: var(--orange);
-}
-
-.orange-light {
-  color: var(--xorange);
-}
-
-.bg-light-red {
-  background-color: rgba(var(--red-rgb), 0.4);
-}
-
-.bold {
-  font-weight: 600;
-}
-
-.f-12 {
-  font-size: 12px;
-}
-
-.f-18 {
-  font-size: 18px;
-}
-
-.f-24 {
-  font-size: 24px;
-}
-
-.anim:before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  bottom: -6px;
-  width: 0;
-  height: 10px;
-  border-radius: 20px;
-  background-color: transparent;
-  -webkit-transition: 0.4s ease;
-  transition: 0.4s ease;
-}
-.anim:hover:before {
-  width: 30%;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
-  background-color: var(--primary);
-}
-.anim.active {
-  color: var(--primary);
-}
-.anim.active:before {
-  width: 80%;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
-  background-color: var(--primary);
-}
-
-.opacity-trans {
-  opacity: 0;
-  -webkit-transition: 0.2s ease;
-  transition: 0.2s ease;
-}
-.opacity-trans.plain {
-  opacity: 1;
-  -webkit-transition: 0.4s ease;
-  transition: 0.4s ease;
-}
-
-.no-scroll-y {
-  overflow-y: hidden;
-}
-
-.bg-facebook {
-  background-color: var(--facebook);
-}
-
-.bg-instagram {
-  background-color: var(--instagram);
-}
-
-.bg-twitter {
-  background-color: var(--twitter);
-}
-
-.bg-snapchat {
-  background-color: var(--snapchat);
-}
-
-.bg-youtube {
-  background-color: var(--youtube);
-}
-
-.bg-twitch {
-  background-color: var(--twitch);
-}
-
-.bg-pinterest {
-  background-color: var(--pinterest);
-}
-
-.bg-linkedin {
-  background-color: var(--linkedin);
-}
-
-.bg-whatsapp {
-  background-color: var(--whatsapp);
-}
-
-.bg-website {
-  background-color: var(--website);
-}
-
-.color-facebook {
-  color: var(--facebook);
-}
-
-.color-instagram {
-  color: var(--instagram);
-}
-
-.color-twitter {
-  color: var(--twitter);
-}
-
-.color-snapchat {
-  color: var(--snapchat);
-}
-
-.color-youtube {
-  color: var(--youtube);
-}
-
-.color-twitch {
-  color: var(--twitch);
-}
-
-.color-pinterest {
-  color: var(--pinterest);
-}
-
-.color-linkedin {
-  color: var(--linkedin);
-}
-
-.color-whatsapp {
-  color: var(--whatsapp);
-}
-
-.color-website {
-  color: var(--website);
-}
-
 .content_container {
   position: relative;
   width: 100%;
@@ -5039,43 +4761,50 @@ select:-webkit-autofill:focus {
   right: 12px;
 }
 .date-picker-container .datepicker {
-  position: absolute;
   top: 50px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
+}
+.date-picker-container.top .datepicker {
+  top: unset;
+  bottom: 50px;
+}
+
+.datepicker {
+  position: absolute;
   background: var(--input);
   border-radius: var(--rounded-sm);
   z-index: 700;
   -webkit-box-shadow: var(--shadow-lg);
           box-shadow: var(--shadow-lg);
 }
-.date-picker-container .datepicker .rdp .selected {
+.datepicker .rdp .selected {
   background-color: var(--primary);
   border-radius: 5px;
   border: none;
   outline: none;
 }
-.date-picker-container .datepicker .rdp .today {
+.datepicker .rdp .today {
   background-color: var(--x-light);
   border-radius: 10px;
 }
-.date-picker-container .datepicker .rdp .rdp-button:hover, .date-picker-container .datepicker .rdp .rdp-button:focus {
+.datepicker .rdp .rdp-button:hover, .datepicker .rdp .rdp-button:focus {
   background-color: var(--primary);
   border: none;
   border-radius: var(--rounded-md);
   color: var(--white);
 }
-.date-picker-container .datepicker .rdp .rdp-caption_label {
+.datepicker .rdp .rdp-caption_label {
   margin: 0;
   padding: 5px;
 }
-.date-picker-container .datepicker .rdp .rdp-nav {
+.datepicker .rdp .rdp-nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_previous, .date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_next {
+.datepicker .rdp .rdp-nav .rdp-nav_button_previous, .datepicker .rdp .rdp-nav .rdp-nav_button_next {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5088,29 +4817,25 @@ select:-webkit-autofill:focus {
   -webkit-transform: scale(1);
           transform: scale(1);
 }
-.date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_previous svg, .date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_next svg {
+.datepicker .rdp .rdp-nav .rdp-nav_button_previous svg, .datepicker .rdp .rdp-nav .rdp-nav_button_next svg {
   bottom: unset;
   right: unset;
 }
-.date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_previous:hover, .date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_next:hover {
+.datepicker .rdp .rdp-nav .rdp-nav_button_previous:hover, .datepicker .rdp .rdp-nav .rdp-nav_button_next:hover {
   background-color: rgba(var(--primary-rgb), 0.8);
 }
-.date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_previous:hover svg, .date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_next:hover svg {
+.datepicker .rdp .rdp-nav .rdp-nav_button_previous:hover svg, .datepicker .rdp .rdp-nav .rdp-nav_button_next:hover svg {
   color: var(--white);
 }
-.date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_previous:active, .date-picker-container .datepicker .rdp .rdp-nav .rdp-nav_button_next:active {
+.datepicker .rdp .rdp-nav .rdp-nav_button_previous:active, .datepicker .rdp .rdp-nav .rdp-nav_button_next:active {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
   -webkit-box-shadow: none;
           box-shadow: none;
 }
-.date-picker-container .datepicker .rdp h2:before, .date-picker-container .datepicker .rdp h2:after {
+.datepicker .rdp h2:before, .datepicker .rdp h2:after {
   content: none;
   display: none;
-}
-.date-picker-container.top .datepicker {
-  top: unset;
-  bottom: 50px;
 }
 
 @media (max-width: 768px) {
@@ -5122,6 +4847,31 @@ select:-webkit-autofill:focus {
             transform: translate(-50%, -50%);
   }
 }
+.datepicker-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  visibility: visible;
+  z-index: 100000000000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.datepicker-wrapper .datepicker {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  z-index: 1000000000000;
+}
+
 .double-icon-input {
   position: relative;
   display: -webkit-box;
@@ -7508,6 +7258,9 @@ select:-webkit-autofill:focus {
 .activity-feed-container {
   position: relative;
 }
+.activity-feed-container .activity-feed-block:last-child .home-activity-feed-item:before {
+  content: none;
+}
 .activity-feed-container .activity-date {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -7541,7 +7294,7 @@ select:-webkit-autofill:focus {
   background-color: #EBEDF3;
   z-index: 1;
 }
-.activity-feed-container .home-activity-feed-item:last-child:before {
+.activity-feed-container .home-activity-feed-item.no-before:before {
   content: none;
 }
 .activity-feed-container .home-activity-feed-item .timeline-badge {
@@ -7812,7 +7565,7 @@ select:-webkit-autofill:focus {
 .dashboard-big-card {
   position: relative;
   min-height: 150px;
-  padding: 20px;
+  padding: 25px;
   background: var(--content-light);
   border-radius: var(--rounded-sm);
   margin-bottom: 20px;
@@ -13564,4 +13317,330 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   color: var(--primary);
   background: rgba(var(--primary-rgb), 0.1);
   border-radius: var(--rounded-sm);
+}
+
+.one_line {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  line-height: 19px;
+  max-height: 22px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.two_lines {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 90%;
+  line-height: 19px;
+  max-height: 44px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.three_lines {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 90%;
+  line-height: 19px;
+  max-height: 66px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.primary {
+  color: var(--primary);
+}
+
+.txt-prim {
+  color: var(--text);
+}
+
+.txt-sec {
+  color: var(--text-secondary);
+}
+
+.txt-ter {
+  color: var(--text-tertiary);
+}
+
+.border-b {
+  border-bottom: 1px solid var(--light-border);
+}
+
+.border-t {
+  border-top: 1px solid var(--light-border);
+}
+
+.border-l {
+  border-left: 1px solid var(--light-border);
+}
+
+.border-r {
+  border-right: 1px solid var(--light-border);
+}
+
+.bg-default {
+  background-color: var(--content-x-light);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.light-blue {
+  color: var(--light-blue);
+}
+
+.turquoise {
+  color: var(--turquoise);
+}
+
+.turquoise-light {
+  color: var(--xturquoise);
+}
+
+.green {
+  color: var(--green);
+}
+
+.green-light {
+  color: var(--xgreen);
+}
+
+.green-dark {
+  color: var(--dark-green);
+}
+
+.purple {
+  color: var(--purple);
+}
+
+.purple-light {
+  color: var(--xpurple);
+}
+
+.red {
+  color: var(--red);
+}
+
+.red-light {
+  color: var(--xred);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.yellow-light {
+  color: var(--xyellow);
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.orange-light {
+  color: var(--xorange);
+}
+
+.bg-blue {
+  background-color: rgba(var(--blue-rgb), 0.2);
+}
+
+.bg-light-blue {
+  background-color: rgba(var(--light-blue-rgb), 0.2);
+}
+
+.bg-turquoise {
+  background-color: rgba(var(--turquoise-rgb), 0.2);
+}
+
+.bg-turquoise-light {
+  background-color: rgba(var(--xturquoise-rgb), 0.2);
+}
+
+.bg-green {
+  background-color: rgba(var(--green-rgb), 0.2);
+}
+
+.bg-green-light {
+  background-color: rgba(var(--xgreen-rgb), 0.2);
+}
+
+.bg-green-dark {
+  background-color: rgba(var(--dark-green-rgb), 0.2);
+}
+
+.bg-purple {
+  background-color: rgba(var(--purple-rgb), 0.2);
+}
+
+.bg-purple-light {
+  background-color: rgba(var(--xpurple-rgb), 0.2);
+}
+
+.bg-red {
+  background-color: rgba(var(--red-rgb), 0.2);
+}
+
+.bg-red-light {
+  background-color: rgba(var(--xred-rgb), 0.2);
+}
+
+.bg-yellow {
+  background-color: rgba(var(--yellow-rgb), 0.2);
+}
+
+.bg-yellow-light {
+  background-color: rgba(var(--xyellow-rgb), 0.2);
+}
+
+.bg-orange {
+  background-color: rgba(var(--orange-rgb), 0.2);
+}
+
+.bg-orange-light {
+  background-color: rgba(var(--xorange-rgb), 0.2);
+}
+
+.f-12 {
+  font-size: 12px;
+}
+
+.f-18 {
+  font-size: 18px;
+}
+
+.f-24 {
+  font-size: 24px;
+}
+
+.anim:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  bottom: -6px;
+  width: 0;
+  height: 10px;
+  border-radius: 20px;
+  background-color: transparent;
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease;
+}
+.anim:hover:before {
+  width: 30%;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  background-color: var(--primary);
+}
+.anim.active {
+  color: var(--primary);
+}
+.anim.active:before {
+  width: 80%;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  background-color: var(--primary);
+}
+
+.opacity-trans {
+  opacity: 0;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+.opacity-trans.plain {
+  opacity: 1;
+  -webkit-transition: 0.4s ease;
+  transition: 0.4s ease;
+}
+
+.no-scroll-y {
+  overflow-y: hidden;
+}
+
+.bg-facebook {
+  background-color: var(--facebook);
+}
+
+.bg-instagram {
+  background-color: var(--instagram);
+}
+
+.bg-twitter {
+  background-color: var(--twitter);
+}
+
+.bg-snapchat {
+  background-color: var(--snapchat);
+}
+
+.bg-youtube {
+  background-color: var(--youtube);
+}
+
+.bg-twitch {
+  background-color: var(--twitch);
+}
+
+.bg-pinterest {
+  background-color: var(--pinterest);
+}
+
+.bg-linkedin {
+  background-color: var(--linkedin);
+}
+
+.bg-whatsapp {
+  background-color: var(--whatsapp);
+}
+
+.bg-website {
+  background-color: var(--website);
+}
+
+.color-facebook {
+  color: var(--facebook);
+}
+
+.color-instagram {
+  color: var(--instagram);
+}
+
+.color-twitter {
+  color: var(--twitter);
+}
+
+.color-snapchat {
+  color: var(--snapchat);
+}
+
+.color-youtube {
+  color: var(--youtube);
+}
+
+.color-twitch {
+  color: var(--twitch);
+}
+
+.color-pinterest {
+  color: var(--pinterest);
+}
+
+.color-linkedin {
+  color: var(--linkedin);
+}
+
+.color-whatsapp {
+  color: var(--whatsapp);
+}
+
+.color-website {
+  color: var(--website);
 }

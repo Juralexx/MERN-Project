@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker } from "../../tools/global/Inputs";
+import { DatePickerInput } from "../../tools/global/Inputs";
 
 const End = ({ end, setDatas }) => {
     const [date, setDate] = useState(end)
@@ -17,7 +17,7 @@ const End = ({ end, setDatas }) => {
             </div>
             <div className="col-12 col-lg-6">
                 <div className="title full">Date de fin potentielle</div>
-                <DatePicker
+                <DatePickerInput
                     className="mt-2 full"
                     placeholder="JJ/MM/AAAA"
                     value={end}

@@ -75,7 +75,7 @@ export const DropdownInput = (props) => {
     )
 }
 
-export const DatePicker = (props) => {
+export const DatePickerInput = (props) => {
     const { value, defaultValue, onKeyPress, onChange, onInput, disabled, className, inputClassName, placeholder, selected, onSelect } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
@@ -124,6 +124,39 @@ export const DatePicker = (props) => {
                 </div>
             }
         </div>
+    )
+}
+
+export const DatePicker = (props) => {
+    const { open, setOpen, className, selected, onDayClick } = props
+    const ref = useRef()
+    useClickOutside(ref, () => setOpen(prevSate => ({ ...prevSate, state: false })))
+
+    const { dayPickerProps } = useInput({
+        fromYear: 2010,
+        toYear: 2030,
+        format: 'dd/MM/yyyy',
+        required: true
+    })
+
+    return (
+        open && (
+            <div className='datepicker-wrapper'>
+                <div className="datepicker" ref={ref}>
+                    <DayPicker
+                        {...dayPickerProps}
+                        mode="single"
+                        selected={selected}
+                        onDayClick={onDayClick}
+                        locale={fr}
+                        modifiersClassNames={{
+                            selected: 'selected',
+                            today: 'today'
+                        }}
+                    />
+                </div>
+            </div>
+        )
     )
 }
 

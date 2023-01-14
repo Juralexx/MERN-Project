@@ -4,7 +4,7 @@ import { changeTask } from '../../../actions/project.action'
 import Icon from '../../tools/icons/Icon'
 import Modal from '../../tools/global/Modal'
 import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
-import { ClassicInput, DatePicker, DropdownInput, Textarea } from '../../tools/global/Inputs'
+import { ClassicInput, DatePickerInput, DropdownInput, Textarea } from '../../tools/global/Inputs'
 import { Button } from '../../tools/global/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../tools/functions/task'
 import { addClass, ISOtoNavFormat, removeAccents } from '../../Utils'
@@ -114,7 +114,7 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
 
                     <div className="flex items-center mt-4">
                         <div className="mb-2 mt-4 mr-4">Date de fin</div>
-                        <DatePicker
+                        <DatePickerInput
                             className="top mt-2 full"
                             placeholder="JJ/MM/AAAA"
                             value={end}

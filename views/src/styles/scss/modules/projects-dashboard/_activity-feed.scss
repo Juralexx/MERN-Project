@@ -12,6 +12,16 @@
 .activity-feed-container {
     position : relative;
 
+    .activity-feed-block {
+        &:last-child {
+            .home-activity-feed-item { 
+                &:before {
+                    content : none;
+                }
+            }
+        }
+    }
+
     .activity-date {
         display     : flex;
         align-items : center;
@@ -41,7 +51,7 @@
             z-index          : 1;
         }
 
-        &:last-child {
+        &.no-before {
             &:before {
                 content : none;
             }

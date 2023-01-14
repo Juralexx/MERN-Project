@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
-import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../Utils'
+import React, { useMemo, useState } from 'react'
+import { addClass, bySelectedDate, dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../Utils'
 import Icon from '../../tools/icons/Icon'
 import { activityFeedContent, randomColor } from './functions'
-import { DropdownInput } from '../../tools/global/Inputs'
+import { DatePicker, DropdownInput } from '../../tools/global/Inputs'
+import { TextButton } from '../../tools/global/Button'
 
 const ActivityFeed = ({ project }) => {
+    const today = useMemo(() => new Date().toISOString(), [])
     const dates = keepNewDateOnly(reverseArray(project.activity_feed || []))
     const [activities, setActivities] = useState(reverseArray(project.activity_feed || []))
     const reversed = reverseArray(project.activity_feed)
 
     const [filter, setFilter] = useState("")
+    const [byDate, setByDate] = useState({ state: false, date: today })
 
     return (
         <div className="container-lg py-8 !px-0 sm:!px-3">
@@ -17,6 +20,17 @@ const ActivityFeed = ({ project }) => {
                 <div className="dashboard-big-card-title">
                     <h2>Fil d'activité <span>{project.activity_feed.length}</span></h2>
                     <div className="flex items-center">
+                        {byDate.date !== today &&
+                            <TextButton className="!h-[42px] mr-2 red bg-red" onClick={() => {
+                                setActivities(reverseArray(project.activity_feed || []))
+                                setByDate(prevState => ({ ...prevState, date: today }))
+                            }}>
+                                Annuler
+                            </TextButton>
+                        }
+                        <TextButton className="!h-[42px]" onClick={() => setByDate(prevState => ({ ...prevState, state: true }))}>
+                            {byDate.date !== today ? dateParser(byDate.date) : 'Par date'}
+                        </TextButton>
                         <DropdownInput
                             className="ml-3"
                             placeholder="Par date"
@@ -65,13 +79,17 @@ const ActivityFeed = ({ project }) => {
                     {activities.length > 0 ? (
                         activities.map((element, key) => {
                             return (
-                                <>
+                                <div className='activity-feed-block' key={key}>
                                     {dates.some(activity => activity.date === element.date.substring(0, 10) && activity.index === key) &&
                                         <div className="activity-date">
                                             <Icon name="Calendar" className={randomColor()} /> {dateParser(element.date)}
                                         </div>
                                     }
-                                    <div className="home-activity-feed-item" key={key}>
+                                    <div className={`
+                                            home-activity-feed-item
+                                            ${addClass((dates.some(activity => activity.date !== element.date.substring(0, 10) && activity.index === key + 1)), 'no-before')
+                                        }`}
+                                    >
                                         <div className="activity-hour">
                                             {getHourOnly(new Date(element.date))}
                                         </div>
@@ -82,7 +100,7 @@ const ActivityFeed = ({ project }) => {
                                             {activityFeedContent(element)}
                                         </div>
                                     </div>
-                                </>
+                                </div>
                             )
                         })
                     ) : (
@@ -93,6 +111,15 @@ const ActivityFeed = ({ project }) => {
                     )}
                 </div>
             </div>
+            <DatePicker
+                open={byDate.state}
+                setOpen={setByDate}
+                selected={byDate.date}
+                onDayClick={date => {
+                    setByDate({ state: false, date: date })
+                    setActivities(bySelectedDate(project.activity_feed, date))
+                }}
+            />
         </div>
     )
 }

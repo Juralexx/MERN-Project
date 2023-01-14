@@ -64,10 +64,6 @@
     background-color : var(--content-x-light);
 }
 
-.bg-prim-light {
-    background-color: rgba(var(--primary-rgb), 0.2);
-}
-
 .blue {
     color : var(--blue);
 }
@@ -114,12 +110,50 @@
     color : var(--xorange);
 }
 
-.bg-light-red {
-    background-color: rgba(var(--red-rgb), 0.4);
+.bg-blue {
+    background-color : rgba(var(--blue-rgb), 0.2);
 }
-
-.bold {
-    font-weight : 600;
+.bg-light-blue {
+    background-color : rgba(var(--light-blue-rgb), 0.2);
+}
+.bg-turquoise {
+    background-color : rgba(var(--turquoise-rgb), 0.2);
+}
+.bg-turquoise-light {
+    background-color : rgba(var(--xturquoise-rgb), 0.2);
+}
+.bg-green {
+    background-color : rgba(var(--green-rgb), 0.2);
+}
+.bg-green-light {
+    background-color : rgba(var(--xgreen-rgb), 0.2);
+}
+.bg-green-dark {
+    background-color : rgba(var(--dark-green-rgb), 0.2);
+}
+.bg-purple {
+    background-color : rgba(var(--purple-rgb), 0.2);
+}
+.bg-purple-light {
+    background-color : rgba(var(--xpurple-rgb), 0.2);
+}
+.bg-red {
+    background-color : rgba(var(--red-rgb), 0.2);
+}
+.bg-red-light {
+    background-color : rgba(var(--xred-rgb), 0.2);
+}
+.bg-yellow {
+    background-color : rgba(var(--yellow-rgb), 0.2);
+}
+.bg-yellow-light {
+    background-color : rgba(var(--xyellow-rgb), 0.2);
+}
+.bg-orange {
+    background-color : rgba(var(--orange-rgb), 0.2);
+}
+.bg-orange-light {
+    background-color : rgba(var(--xorange-rgb), 0.2);
 }
 
 .f-12 {
