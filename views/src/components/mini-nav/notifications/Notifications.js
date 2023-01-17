@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import FriendRequest from "./FriendRequest";
+import ContactRequest from "./ContactRequest";
 import MemberRequest from "./MemberRequest";
 import { setNotifSeen } from "../../tools/functions/notifications";
 import { addClass } from '../../Utils'
@@ -35,8 +35,8 @@ const NotificationsMenu = ({ open, user, websocket }) => {
                     (navbar === 1 ? user.notifications : unread).map((element, key) => {
                         return (
                             <div key={key}>
-                                {element.type === "friend-request" &&
-                                    <FriendRequest
+                                {element.type === "contact-request" &&
+                                    <ContactRequest
                                         notification={element}
                                         key={key} user={user}
                                         websocket={websocket}

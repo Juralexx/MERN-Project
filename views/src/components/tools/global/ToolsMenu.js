@@ -16,25 +16,9 @@ const ToolsMenu = (props) => {
     const popperElRef = useRef(null);
     const [targetElement, setTargetElement] = useState(null);
     const [popperElement, setPopperElement] = useState(popperElRef.current);
-    // const [arrowElement, setArrowElement] = useState(null);
 
     const { styles, attributes } = usePopper(targetElement, popperElement, {
         placement: placement || "left-start",
-        modifiers: [
-            // {
-            //     name: "offset",
-            //     options: {
-            //         offset: [0, 0]
-            //     }
-            // },
-            // {
-            //     name: 'arrow',
-            //     options: {
-            //         element: arrowElement,
-            //         padding: 10,
-            //     },
-            // }
-        ]
     })
 
     useEffect(() => {
@@ -56,21 +40,26 @@ const ToolsMenu = (props) => {
     return (
         !mobile ? (
             <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
-                <div className={`tools_menu ${addClass(open, 'active')}`} onClick={() => setOpen(false)}
+                <div
+                    className={`tools_menu ${addClass(open, 'active')}`}
+                    onClick={() => setOpen(false)}
                     ref={popperElRef}
                     style={styles.popper}
                     {...attributes.popper}
                 >
                     {props.children}
-
-                    {/* <div className="menu-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div> */}
                 </div>
                 {props.target ? (
                     <div ref={setTargetElement} onClick={() => setOpen(!open)}>
                         {props.target}
                     </div>
                 ) : (
-                    <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`} ref={setTargetElement} disabled={disabled} onClick={() => setOpen(!open)}>
+                    <button
+                        className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`}
+                        ref={setTargetElement}
+                        disabled={disabled}
+                        onClick={() => setOpen(!open)}
+                    >
                         <Icon name="ThreeDots" />
                     </button>
                 )}
@@ -78,27 +67,36 @@ const ToolsMenu = (props) => {
         ) : (
             !xs ? (
                 <div ref={ref} className={`${className ? "tools_box " + className : "tools_box"}`} onClick={onClick}>
-                    <div className={`tools_menu ${addClass(open, 'active')}`} onClick={() => setOpen(false)}
+                    <div
+                        className={`tools_menu ${addClass(open, 'active')}`}
+                        onClick={() => setOpen(false)}
                         ref={popperElRef}
                         style={styles.popper}
                         {...attributes.popper}
                     >
                         {props.children}
-
-                        {/* <div className="menu-arrow" ref={setArrowElement} style={styles.arrow} data-popper-arrow></div> */}
                     </div>
                     {props.target ? (
                         <div ref={setTargetElement} onClick={() => setOpen(!open)}>
                             {props.target}
                         </div>
                     ) : (
-                        <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`} ref={setTargetElement} disabled={disabled} onClick={() => setOpen(!open)}>
+                        <button
+                            className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`}
+                            ref={setTargetElement}
+                            disabled={disabled}
+                            onClick={() => setOpen(!open)}
+                        >
                             <Icon name="ThreeDots" />
                         </button>
                     )}
                 </div>
             ) : (
-                <div ref={ref} className={`${className ? (mobileFull ? "tools_box mobile-full" + className : "tools_box " + className) : (mobileFull ? "tools_box mobile-full" : "tools_box")}`} onClick={onClick}>
+                <div
+                    ref={ref}
+                    className={`${className ? (mobileFull ? "tools_box mobile-full" + className : "tools_box " + className) : (mobileFull ? "tools_box mobile-full" : "tools_box")}`}
+                    onClick={onClick}
+                >
                     <div className={`mobile-menu ${addClass(open, 'active')}`}>
                         <div className="mobile-menu-tools" onClick={() => setOpen(false)}>
                             {props.children}
@@ -110,11 +108,19 @@ const ToolsMenu = (props) => {
                         </div>
                     ) : (
                         !mobileFull ? (
-                            <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`} disabled={disabled} onClick={() => setOpen(!open)}>
+                            <button
+                                className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"} ${addClass(open, 'active')}`}
+                                disabled={disabled}
+                                onClick={() => setOpen(!open)}
+                            >
                                 <Icon name="ThreeDots" />
                             </button>
                         ) : (
-                            <button className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`} disabled={disabled} {...longPressProps}></button>
+                            <button
+                                className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`}
+                                disabled={disabled}
+                                {...longPressProps}>
+                            </button>
                         )
                     )}
                 </div>

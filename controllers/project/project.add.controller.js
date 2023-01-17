@@ -75,12 +75,14 @@ export const createProject = async (req, res) => {
                     created_projects: projectId
                 }
             },
-            { news: true },
+            {
+                new: true
+            },
         )
             .then(docs => {
                 res.status(201).json({ project: project._id })
             })
-            .catch((err) => {
+            .catch(err => {
                 return res.status(400).send({ message: err })
             })
     } catch (err) {

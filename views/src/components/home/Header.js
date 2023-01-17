@@ -20,7 +20,7 @@ const Header = ({ user, search, datas, setDatas }) => {
     useEffect(() => {
         if (locationsStored && JSON.parse(locationsStored).length > 0)
             setDatas(data => ({ ...data, recentLocations: JSON.parse(locationsStored) }))
-    }, [locationsStored])
+    }, [locationsStored, setDatas])
 
     return (
         <div id="header">

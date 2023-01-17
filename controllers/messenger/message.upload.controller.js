@@ -23,7 +23,7 @@ export const uploadFiles = async (req, res) => {
 
         let filesArr = req.files.map(file => {
             return {
-                name: file.originalName, 
+                name: file.originalName,
                 type: file.detectedMimeType || file.clientReportedMimeType
             }
         })
@@ -129,10 +129,14 @@ export const uploadFiles = async (req, res) => {
                     }
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
             .then(docs => { res.status(200).json({ files }) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -167,10 +171,14 @@ export const deleteFiles = async (req, res) => {
                     },
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         res.status(400).json(err)
     }

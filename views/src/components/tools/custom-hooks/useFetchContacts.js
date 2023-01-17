@@ -6,16 +6,16 @@ export function useFetchContacts(user) {
     const [fetchedContacts, setFetchedContacts] = useState(true)
 
     useEffect(() => {
-        if (user.friends) {
-            const fetchFriends = () => {
+        if (user.contacts) {
+            const fetchContacts = () => {
                 try {
-                    const allFriends = user.friends.map(async friend => {
+                    const allContacts = user.contacts.map(async contact => {
                         return await axios
-                            .get(`${process.env.REACT_APP_API_URL}api/user/${friend._id}`)
+                            .get(`${process.env.REACT_APP_API_URL}api/user/${contact._id}`)
                             .then(res => res.data)
                             .catch(err => console.error(err))
                     })
-                    Promise.all(allFriends).then(res => {
+                    Promise.all(allContacts).then(res => {
                         setContactsArr(res)
                         setFetchedContacts(false)
                     })
@@ -23,9 +23,9 @@ export function useFetchContacts(user) {
                     console.log(err)
                 }
             }
-            fetchFriends()
+            fetchContacts()
         }
-    }, [user.friends])
+    }, [user.contacts])
 
     return { contactsArr, fetchedContacts }
 }

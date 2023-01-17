@@ -20,7 +20,9 @@ const SignUpForm = () => {
     const [error, setError] = useState({ element: "", error: "" })
     const [submitted, setSubmitted] = useState(false)
 
-    const handleRegister = async () => {
+    const handleRegister = async e => {
+        e.preventDefault();
+
         if (!onlyLettersNumbersAndDashes(datas.pseudo) || datas.pseudo.length < 4 || datas.pseudo.length > 20) {
             setError({
                 element: "pseudo",
@@ -77,7 +79,7 @@ const SignUpForm = () => {
                                             }
                                         }
                                     } else setSubmitted(true)
-                                }).catch((err) => console.log(err));
+                                }).catch(err => console.log(err));
                         }
                     }
                 }
@@ -202,7 +204,7 @@ const SignUpForm = () => {
 
     return (
         !submitted ? (
-            <>
+            <form onSubmit={handleRegister}>
                 <div className="relative mb-4">
                     <DynamicInput
                         type="text"
@@ -336,8 +338,8 @@ const SignUpForm = () => {
                 }
 
                 <Button
+                    type="submit"
                     className="w-full"
-                    onClick={handleRegister}
                     disabled={
                         !onlyLettersNumbersAndDashes(datas.pseudo)
                         || datas.pseudo.length <= 3
@@ -349,7 +351,7 @@ const SignUpForm = () => {
                     }>
                     S'inscrire
                 </Button>
-            </>
+            </form>
         ) : (
             <>
                 <p className="successfully-registered">Votre compte a bien été créé ! <br /> Veuillez vous connecter</p>

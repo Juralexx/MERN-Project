@@ -128,7 +128,7 @@ export const DatePickerInput = (props) => {
 }
 
 export const DatePicker = (props) => {
-    const { open, setOpen, className, selected, onDayClick } = props
+    const { open, setOpen, selected, onDayClick } = props
     const ref = useRef()
     useClickOutside(ref, () => setOpen(prevSate => ({ ...prevSate, state: false })))
 

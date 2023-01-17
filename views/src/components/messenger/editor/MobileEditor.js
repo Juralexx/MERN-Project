@@ -11,15 +11,11 @@ import Mention from './Mention';
 import Emoji from './Emoji';
 import Link from './Link';
 import Typing from '../tools/Typing';
-import ScrollButton from '../tools/ScrollButton';
-import { isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, pickEmoji } from '../functions/function';
-import { addClass } from '../../Utils';
-import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
-import { IoClose, IoSend, IoText } from 'react-icons/io5'
-import { BsEmojiSmile } from 'react-icons/bs'
-import { FaPhotoVideo } from 'react-icons/fa'
+import { returnEditorFiles, removeFile, otherMembersIDs, returnMembersPseudos, pickEmoji } from '../functions';
+import { addClass, isFile, isImage, isVideo } from '../../Utils';
+import Icon from '../../tools/icons/Icon';
 
-const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef, convWrapperRef }) => {
+const MobileEditor = ({ handleSubmit, members, isTyping }) => {
     const { user, websocket, currentChat } = useContext(MessengerContext)
     const { quill, quillRef } = useQuill()
 
@@ -46,7 +42,7 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
 
         if (length > 1) {
             setDisabled(false)
-            if (!isTyping) {
+            if (!isTyping.state) {
                 otherMembersIDs(currentChat, user._id).map(memberId => {
                     return websocket.current.emit('typing', {
                         sender: user.pseudo,
@@ -130,7 +126,10 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
         files.forEach(file => {
             if (isImage(file) || isVideo(file) || isFile(file)) {
                 if (file.size > 10000000) {
-                    setUploadErr(err => [...err, { name: file.name, error: 'Fichier trop volumineux. Poid maximum accepté : 10Mo' }])
+                    setUploadErr(err => [...err, {
+                        name: file.name,
+                        error: 'Fichier trop volumineux. Poid maximum accepté : 10Mo'
+                    }])
                 } else {
                     setFiles(f => [...f, file])
                     if (disabled) {
@@ -138,22 +137,20 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
                     }
                 }
             } else {
-                setUploadErr(err => [...err, { name: file.name, error: 'Ce type de fichier n\'est pas accepté' }])
+                setUploadErr(err => [...err, {
+                    name: file.name,
+                    error: 'Ce type de fichier n\'est pas accepté'
+                }])
             }
         })
         quillRef.current.focus()
     }
 
     return (
-        <div className="conversation-bottom">
+        <>
             <Typing
                 isTyping={isTyping}
-                typingContext={typingContext}
                 currentChat={currentChat}
-            />
-            <ScrollButton
-                convWrapperRef={convWrapperRef}
-                scrollTo={lastmessageRef}
             />
             <div className="conversation-toolsbox">
                 <div className="message-text-editor mobile">
@@ -185,7 +182,7 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
                         />
                         <ReactQuill
                             ref={quillRef}
-                            placeholder={`Envoyer un message à ${returnMembers(members)}`}
+                            placeholder={`Envoyer un message à ${returnMembersPseudos(members)}`}
                             modules={modules}
                             formats={formats}
                             defaultValue=""
@@ -198,7 +195,7 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
                                     return (
                                         <div className="files-block" key={key}>
                                             {returnEditorFiles(file)}
-                                            <div className="delete-btn" onClick={() => setFiles(removeFile(files, key))}><MdClear /></div>
+                                            <div className="delete-btn" onClick={() => setFiles(removeFile(files, key))}><Icon name="Cross" /></div>
                                         </div>
                                     )
                                 })
@@ -208,26 +205,46 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
                 </div>
 
                 <div className={`toolbar-mobile-container ${addClass(!isToolbar, '!hidden')}`}>
-                    <IoClose className="toolbar-close" onClick={() => setToolbar(false)} />
+                    <Icon name="Cross" className="toolbar-close" onClick={() => setToolbar(false)} />
                     <EditorToolbar style={{ display: isToolbar ? "block" : "none" }} />
                 </div>
 
                 <div className={`message-text-tools ${addClass(isToolbar, '!hidden')}`}>
                     <div className="text-tools-left">
-                        <button className={`menu-tools-btn ${addClass(isTools, "active")}`} onClick={() => setTools(!isTools)}><MdOutlineAdd /></button>
+                        <button className={`menu-tools-btn ${addClass(isTools, "active")}`} onClick={() => setTools(!isTools)}>
+                            <Icon name="Plus" />
+                        </button>
                         <div className="tools-group">
-                            <button className="text-tools" onClick={() => setOpenMobPicker(true)}><BsEmojiSmile /></button>
-                            <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
-                            <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
+                            <button className="text-tools" onClick={() => setOpenMobPicker(true)}>
+                                <Icon name="Emoji" />
+                            </button>
+                            <button className="text-tools" onClick={() => openMention(quill)}>
+                                <Icon name="At" />
+                            </button>
+                            <button className="text-tools" onClick={() => setToolbar(!isToolbar)}>
+                                <Icon name="Font" />
+                            </button>
                         </div>
                         <div className="tools-group">
-                            <button className="text-tools files-upload"><input type="file" name="files" onChange={e => uploadFiles(e.target.files)} /><FaPhotoVideo /></button>
-                            <button className="text-tools" onClick={() => { quillRef.current.focus(); setLink(!isLink) }}><MdOutlineLink /></button>
+                            <button className="text-tools files-upload">
+                                <input type="file" name="files" onChange={e => uploadFiles(e.target.files)} />
+                                <Icon name="Picture" />
+                            </button>
+                            <button className="text-tools" onClick={() => {
+                                quillRef.current.focus()
+                                setLink(!isLink)
+                            }}>
+                                <Icon name="Link" />
+                            </button>
                         </div>
                     </div>
-                    {isTools && <div className="message-text-tools-menu"></div>}
+                    {isTools &&
+                        <div className="message-text-tools-menu"></div>
+                    }
                     <div className="text-tools-right">
-                        <button className="send-tool" disabled={disabled} onClick={() => handleSubmit(quill, currentChat, files)}><IoSend /></button>
+                        <button className="send-tool" disabled={disabled} onClick={() => handleSubmit(quill, currentChat, files)}>
+                            <Icon name="Send" />
+                        </button>
                     </div>
                 </div>
 
@@ -236,7 +253,10 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
                         open={openMobPicker}
                         setOpen={setOpenMobPicker}
                         onSelect={emoji => pickEmoji(emoji, quill)}
-                        onClick={() => { setOpenMobPicker(false); quillRef?.current?.focus() }}
+                        onClick={() => {
+                            setOpenMobPicker(false)
+                            quillRef?.current?.focus()
+                        }}
                     />
                 }
 
@@ -249,7 +269,7 @@ const MobileEditor = ({ handleSubmit, members, isTyping, typingContext, lastmess
                     />
                 }
             </div>
-        </div>
+        </>
     )
 }
 

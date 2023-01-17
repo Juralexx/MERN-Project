@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { MediaContext } from '../../AppContext'
 import { TinyAvatar } from '../../tools/global/Avatars'
 import { checkTheme } from '../../Utils'
-import { placeUponCursor } from '../functions/function'
+import { placeUponCursor } from '../functions'
 
 const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMentionResults, position, setPosition }) => {
     const { sm } = useContext(MediaContext)
@@ -32,7 +32,11 @@ const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMe
     return (
         isMention && (
             mentionsResults.length > 0 && (
-                <div tabIndex="0" className="auto-complete-container custom-scrollbar mention" style={{ left: !sm && styles.left, right: !sm && styles.right, bottom: !sm && styles.bottom }}>
+                <div
+                    tabIndex="0"
+                    className="auto-complete-container custom-scrollbar mention"
+                    style={{ left: !sm && styles.left, right: !sm && styles.right, bottom: !sm && styles.bottom }}
+                >
                     {mentionsResults.map((element, key) => {
                         return (
                             <div
@@ -42,7 +46,7 @@ const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMe
                             >
                                 <div className="flex items-center">
                                     <TinyAvatar pic={element.picture} />
-                                    <p>{element.pseudo}</p>
+                                    <p className='ml-1'>{element.pseudo}</p>
                                 </div>
                             </div>
                         )
@@ -54,5 +58,3 @@ const Mention = ({ quill, members, isMention, setMention, mentionsResults, setMe
 }
 
 export default Mention
-
-// {`${mentionsResults.some(e => e.pseudo) ? "auto-complete-item" : "auto-complete-item hidden"`}

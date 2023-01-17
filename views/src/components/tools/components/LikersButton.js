@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
-import { likeProject, unlikeProject } from '../../../actions/project.action';
+import { likeProject, unlikeProject } from '../../../reducers/project.action';
 import Icon from "../icons/Icon";
 
 const LikersButton = ({ project, onClick }) => {

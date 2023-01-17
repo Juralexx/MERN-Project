@@ -16,7 +16,7 @@ const AddMember = ({ open, setOpen, project, user, websocket }) => {
     const [selectedContacts, setSelectedContacts] = useState([])
     const [isLoading, setLoading] = useState(true)
 
-    const { usersArr, fetchedUsers } = useFetchUsers(user.friends)
+    const { usersArr, fetchedUsers } = useFetchUsers(user.contacts)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const AddMember = ({ open, setOpen, project, user, websocket }) => {
             setContacts(removeAlreadyMembers)
         }
         if (fetchedUsers) setLoading(false)
-    }, [usersArr, fetchedUsers])
+    }, [usersArr, fetchedUsers, project.members])
 
     /**
      * Search function

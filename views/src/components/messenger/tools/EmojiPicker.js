@@ -3,7 +3,7 @@ import { usePopper } from "react-popper";
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import { useClickOutside } from '../../tools/hooks/useClickOutside'
-import { MdAddReaction } from 'react-icons/md';
+import Icon from '../../tools/icons/Icon';
 
 const EmojiPicker = (props) => {
     const { className, btnClassName, disabled, onClick, onSelect, icon } = props
@@ -68,14 +68,14 @@ const EmojiPicker = (props) => {
 
             <button
                 ref={setTargetElement}
-                className={`${btnClassName ? "tools_btn " + btnClassName : "tools_btn"}`}
+                className={`${btnClassName ? "text-tools " + btnClassName : "text-tools"}`}
                 disabled={disabled}
                 onClick={() => {
                     onClick && onClick()
                     setOpen(!open)
                 }}
             >
-                {icon ? (icon) : <MdAddReaction />}
+                {icon ? (icon) : <Icon name="Reaction" />}
             </button>
         </div>
     )

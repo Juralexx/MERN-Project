@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useOneLevelSearch } from '../tools/hooks/useOneLevelSearch'
+import { useOneLevelSearch } from '../tools/custom-hooks/useOneLevelSearch'
 import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from '../projects/functions'
 import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import Oval from '../../components/tools/loaders/Oval'
@@ -16,7 +16,7 @@ const Projects = ({ user, websocket }) => {
     const [projectsToDisplay, setProjectsToDisplay] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [filter, setFilter] = useState("")
-    const { oneLevelSearch, isUserInSearchResults, query, setQuery } = useOneLevelSearch(projects.array, 'title')
+    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(projects.array, 'title')
 
     useEffect(() => {
         if (user.projects) {
@@ -62,11 +62,14 @@ const Projects = ({ user, websocket }) => {
                         className="is_start_icon ml-auto mr-2 mb-2 sm:mb-0 md:max-w-[300px]"
                         icon={<Icon name="Search" />}
                         placeholder="Rechercher un projet..."
-                        value={query}
-                        onInput={e => setQuery(e.target.value)}
+                        value={search.query}
+                        onInput={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
                         onChange={oneLevelSearch}
                         cross
-                        onClean={() => { setProjectsToDisplay(projects.array); setQuery("") }}
+                        onClean={() => {
+                            setProjectsToDisplay(projects.array)
+                            setSearch(prevState => ({ ...prevState, query: '' }))
+                        }}
                     />
                     <DropdownInput
                         placeholder="Filtrer"
@@ -114,7 +117,7 @@ const Projects = ({ user, websocket }) => {
                         <div className="profil-page_projects !justify-start">
                             {projectsToDisplay.map((element, key) => {
                                 return (
-                                    <div className={query.length > 0 ? isUserInSearchResults(element, 'block') : 'block'} key={key}>
+                                    <div className={search.query.length > 0 ? isUserInSearchResults(element, 'block') : 'block'} key={key}>
                                         <Card
                                             element={element}
                                             user={user}

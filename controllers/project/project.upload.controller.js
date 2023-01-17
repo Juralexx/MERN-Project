@@ -57,10 +57,14 @@ export const uploadPictures = async (req, res) => {
             await ProjectModel.findOneAndUpdate(
                 { _id: req.params.id },
                 { $set: { pictures: pics } },
-                { new: true }
+                {
+                new: true
+            }
             )
                 .then(docs => res.send(docs))
-                .catch(err => { return res.status(500).send({ message: err }) })
+                .catch(err => {
+                    return res.status(500).send({ message: err })
+                })
         } catch (err) {
             return res.status(500).send({ message: err });
         }
@@ -115,7 +119,10 @@ export const updatePictures = async (req, res) => {
                     ProjectModel.findOneAndUpdate(
                         { _id: req.params.id },
                         { $set: { pictures: pics } },
-                        { new: true, upsert: true }
+                        {
+                            new: true,
+                            upsert: true
+                        }
                     )
                         .then(docs => res.send(docs))
                         .catch(err => { return res.status(400).send({ message: err }) })
@@ -160,10 +167,15 @@ export const deletePictures = async (req, res) => {
             await ProjectModel.findByIdAndUpdate(
                 { _id: req.params.id },
                 { $set: { pictures: pics } },
-                { new: true, upsert: true }
+                {
+                    new: true,
+                    upsert: true
+                }
             )
                 .then(docs => res.send(docs))
-                .catch(err => { return res.status(500).send({ message: err }) })
+                .catch(err => {
+                    return res.status(500).send({ message: err })
+                })
         } catch (err) {
             return res.status(500).send({ message: err });
         }

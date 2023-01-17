@@ -1,7 +1,7 @@
 .conversation-bottom {
     position     : relative;
     padding      : 10px;
-    background   : var(--content-x-light);
+    background   : var(--content-light);
 
     .auto-complete-container {
         bottom    : 100%;
@@ -10,7 +10,6 @@
 
         &.mention, &.emojis {
             max-width  : 320px;
-            background : var(--content-x-light);
         }
     }
 }
@@ -20,14 +19,14 @@
     display         : flex;
     flex-direction  : column;
     justify-content : space-between;
-    border          : 2px solid var(--light-border);
-    background      : var(--content-x-light);
-    box-shadow      : rgb(35 34 33 / 17%) 0px 0 2px 0px;
+    border          : 1px solid var(--light-border);
+    background      : var(--content);
+    box-shadow      : var(--shadow-tiny);
     border-radius   : var(--rounded-sm);
 
     &:focus-within,
     &.active {
-        border : 2px solid var(--primary);
+        border : 1px solid var(--primary);
     }
 
     .message-text-tools {
@@ -37,7 +36,7 @@
         justify-content : space-between;
         width           : 100%;
         padding         : 3px 5px;
-        background      : var(--content-x-light);
+        background      : var(--content);
     
         .text-tools-left {
             display     : flex;
@@ -68,17 +67,20 @@
                 justify-content : center;
                 width           : unset;
                 height          : unset;
-                padding         : 3px;
+                padding         : 2px;
                 margin          : 0 2px;
-                border-radius   : var(--rounded-sm);
-    
-                &:hover {
-                    background : var(--x-light);
-                }
+                border-radius   : var(--rounded-md);
     
                 svg {
-                    width  : 14px;
-                    height : 14px;
+                    width  : 18px;
+                    height : 18px;
+                    color  : var(--text);
+                }
+    
+                &:hover {
+                    svg {
+                        color : var(--primary);
+                    }
                 }
 
                 &.files-upload {
@@ -95,18 +97,21 @@
         }
 
         .menu-tools-btn {
-            padding       : 1px;
+            padding       : 2px;
             margin-right  : 6px;
             border-radius : 50%;
 
             svg {
                 width      : 18px;
                 height     : 18px;
+                color      : var(--text);
                 transition : .1s ease;
             }
 
             &:hover {
-                background : var(--xx-light);
+                svg {
+                    color : var(--primary);
+                }
             }
 
             &.active {
@@ -125,7 +130,7 @@
             width         : 250px;
             height        : 250px;
             padding       : 10px;
-            background    : var(--xx-light);
+            background    : var(--content);
             border        : 2px solid var(--light-border);
             border-radius : var(--rounded-sm);
             box-shadow    : rgb(35 34 33 / 17%) 0px 0 2px 0px;
@@ -136,10 +141,14 @@
             align-items : center;
     
             .send-tool {
-                padding          : 4px 8px;
+                padding          : 2px 8px;
                 border-radius    : 5px;
                 background-color : var(--primary);
-                color            : white;
+                svg {
+                    width  : 22px;
+                    height : 22px;
+                    color  : white;
+                }
                 &:disabled {
                     opacity: 0.5;
                 }
@@ -184,7 +193,7 @@
             border        : none;
 
             .message-text-tools {
-                background : var(--content-x-light);
+                background : var(--content);
                 padding: 5px 5px;
 
                 .text-tools-left {
@@ -201,7 +210,6 @@
                 }
 
                 .menu-tools-btn {
-
                     svg {
                         width  : 20px;
                         height : 20px;

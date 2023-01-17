@@ -4,8 +4,7 @@ import Icon from '../icons/Icon'
 
 const Modal = (props) => {
     const { open, setOpen, className } = props
-    const mapRef = useRef()
-    useClickOutside(mapRef, () => setOpen(false))
+    const modalRef = useRef()
 
     const removeScrollY = () => {
         if (document.body.classList.contains('no-scroll-y')) {
@@ -18,14 +17,20 @@ const Modal = (props) => {
     useEffect(() => { if (open) removeScrollY() }, [open])
 
     const close = () => {
-        setOpen(false)
+        if (open !== typeof Object) {
+            setOpen(false)
+        } else {
+            setOpen(prevState => ({ ...prevState, open: false }))
+        }
         removeScrollY()
     }
+
+    useClickOutside(modalRef, () => close())
 
     return (
         <>
             <div className={open ? "modal_wrapper" : "modal_wrapper hide_wrapper"}>
-                <div className={open ? className ? "modal_container show_modal " + className : "modal_container show_modal " : 'modal_container hide_modal'} ref={mapRef}>
+                <div className={open ? className ? "modal_container show_modal " + className : "modal_container show_modal " : 'modal_container hide_modal'} ref={modalRef}>
                     <div className="close_modal" onClick={close}>
                         <Icon name="Cross" />
                     </div>

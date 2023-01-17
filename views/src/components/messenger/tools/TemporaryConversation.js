@@ -1,39 +1,54 @@
 import React, { useContext } from 'react';
-import { IconToggle } from '../../tools/global/Button';
-import { returnMembers } from '../functions/function';
-import { addClass, fullImage } from '../../Utils';
-import { IoClose } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import Icon from '../../tools/icons/Icon';
 import { MessengerContext } from '../../AppContext';
+import { returnMembersPseudos } from '../functions';
+import { addClass, fullImage } from '../../Utils';
 
-const TemporaryConversation = ({ temporaryConv, setTemporaryConv, conversations }) => {
-    const { currentChat, setCurrentChat } = useContext(MessengerContext)
+const TemporaryConversation = () => {
+    const { conversations, setConversations } = useContext(MessengerContext)
+    const temporary = conversations.temporaryConversation
+
+    const onDeleteTemporaryConversation = () => {
+        if (window.location.pathname === '/messenger/new') {
+            setConversations(convs => ({ ...convs, temporaryConversation: {}, currentChat: {} }))
+        } else {
+            setConversations(convs => ({ ...convs, temporaryConversation: {} }))
+        }
+    }
 
     return (
         <Link to="/messenger/new">
-            <div className={`conversation temporary ${addClass(temporaryConv._id === currentChat._id, "active")}`}>
-                <div className="conversation_inner" onClick={() => setCurrentChat(temporaryConv)}>
+            <div className={`conversation temporary ${addClass(temporary._id === conversations.currentChat._id, "active")}`}>
+                <div className="conversation_inner" onClick={() => setConversations(convs => ({ ...convs, currentChat: temporary }))}>
                     <div className="conversation-img-container">
-                        {temporaryConv.members.slice(0, 3).map((element, key) => {
-                            return (
-                                <div className="conversation-img" key={key} style={fullImage(element.picture)}></div>
-                            )
-                        })}
+                        {temporary.type === 'group' ? (
+                            temporary.members.slice(0, 2).map((element, key) => {
+                                return <div className="conversation-group-img" key={key} style={fullImage(element.picture)}></div>
+                            })
+                        ) : (
+                            <div className="conversation-img" style={fullImage(temporary.members[0].picture)}></div>
+                        )}
                     </div>
                     <div className="conversation-infos">
                         <div className="conversation-infos-top">
-                            <div className="conversation-name">{returnMembers(temporaryConv.members)}</div>
+                            <div className="conversation-name">
+                                {returnMembersPseudos(temporary.members)}
+                            </div>
                             <div className="conversation-date"></div>
                         </div>
                         <div className="last-message-wrapper">
-                            <div className="last-message"><p>Nouvelle conversation</p></div>
+                            <div className="last-message">
+                                <p>Nouvelle conversation</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <IconToggle className="close-item" icon={<IoClose />} onClick={() => {
-                    setTemporaryConv({})
-                    setCurrentChat(conversations.length > 0 ? conversations[0] : [])
-                }} />
+                <Icon
+                    name="Cross"
+                    className="close-item"
+                    onClick={onDeleteTemporaryConversation}
+                />
             </div>
         </Link>
     );

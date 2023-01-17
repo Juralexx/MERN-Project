@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useClickOutside } from "../tools/hooks/useClickOutside";
 import { useDispatch } from "react-redux";
-import { removeNotifications } from "../../actions/user.action";
+import { removeNotifications } from "../../reducers/user.action";
 import SettingsMenu from "./SettingsMenu";
 import NotificationsMenu from "./notifications/Notifications";
 import MessengerMenu from "./Messenger";

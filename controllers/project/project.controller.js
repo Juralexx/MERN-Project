@@ -91,10 +91,16 @@ export const updateProject = async (req, res) => {
                     networks
                 }
             },
-            { new: true, upsert: true, setDefaultsOnInsert: true },
+            {
+                new: true,
+                upsert: true,
+                setDefaultsOnInsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         return res.status(500).json({ message: err })
     }

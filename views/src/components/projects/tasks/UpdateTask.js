@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { changeTask } from '../../../actions/project.action'
+import { changeTask } from '../../../reducers/project.action'
 import Icon from '../../tools/icons/Icon'
 import Modal from '../../tools/global/Modal'
 import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
@@ -46,7 +46,7 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
             date: new Date().toISOString()
         }
         dispatch(changeTask(project._id, taskUpdated, activity))
-        const members = project.members.filter(member => member._id !== user._id)
+        //const members = project.members.filter(member => member._id !== user._id)
         project.members.map(member => {
             return websocket.current.emit("updateTask", {
                 receiverId: member._id,

@@ -7,26 +7,27 @@
         display          : flex;
         align-items      : center;
         justify-content  : center;
-        padding          : 3px 7px 1px;
+        height           : 23px;
+        padding          : 3px 7px 0;
         margin-right     : 5px;
-        border-radius    : 20px;
-        background-color : var(--mini_nav-btn);
+        border-radius    : var(--rounded-md);
+        background-color : var(--xx-light);
 
         .tooltip-target {
             height : 16px;
         }
 
         &.own {
-            background : rgba(var(--blue-rgb), 0.55);
-            border     : 1px solid var(--blue);
+            background : rgba(var(--primary-rgb), 0.45);
+            border     : 1px solid var(--primary);
             color      : white;
         }
 
         p {
-            line-height   : 12px;
-            font-size     : 12px;
-            margin-left   : 5px;
-            margin-bottom : 1px;
+            line-height : 12px;
+            font-size   : 12px;
+            margin-top  : 1px;
+            margin-left : 5px;
         }
     }
 

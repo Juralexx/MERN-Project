@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react'
 import { MediaContext } from '../../AppContext'
 import { useClickOutside } from '../../tools/hooks/useClickOutside'
 import { checkTheme } from '../../Utils'
-import { placeUponCursor } from '../functions/function'
+import { placeUponCursor } from '../functions'
 
 const Emoji = ({ quill, isEmoji, setEmoji, emojisResults, setEmojisResults, position, setPosition }) => {
     const emojiRef = useRef()

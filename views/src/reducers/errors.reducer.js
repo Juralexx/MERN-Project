@@ -1,4 +1,4 @@
-import { GET_UPLOAD_PROFIL_ERRORS } from "../actions/user.action.upload"
+import { GET_UPLOAD_PROFIL_ERRORS } from "../reducers/user.action.upload"
 
 const initialState = { uploadProfilPictureErrors: [] }
 

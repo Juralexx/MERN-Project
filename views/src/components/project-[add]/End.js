@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { DatePickerInput } from '../tools/global/Inputs'
 
 const End = ({ datas, setDatas }) => {
-    const [day, setDay] = useState(datas.start)
     const [start, setStart] = useState(datas.start)
     const [end, setEnd] = useState(datas.end)
 

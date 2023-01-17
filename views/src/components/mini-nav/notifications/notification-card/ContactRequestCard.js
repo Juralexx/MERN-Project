@@ -1,14 +1,14 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { acceptRequest, refuseRequest } from '../../../tools/functions/friend';
+import { acceptRequest, refuseRequest } from '../../../tools/functions/contact';
 import { addClass, fullImage } from '../../../Utils';
 import Icon from '../../../tools/icons/Icon';
 
-const FriendRequestCard = ({ notification, websocket, user, setSend }) => {
+const ContactRequestCard = ({ notification, websocket, user, setSend }) => {
     const dispatch = useDispatch()
 
     return (
-        <div className={`notification-message ${addClass(notification.type === "friend-request", "active")}`}>
+        <div className={`notification-message ${addClass(notification.type === "contact-request", "active")}`}>
             <div className="top">
                 <div className="flex items-center">
                     <Icon name="Group" className="icon" />
@@ -53,4 +53,4 @@ const FriendRequestCard = ({ notification, websocket, user, setSend }) => {
     )
 }
 
-export default FriendRequestCard
+export default ContactRequestCard

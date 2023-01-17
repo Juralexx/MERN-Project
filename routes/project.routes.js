@@ -2,7 +2,7 @@ import express from 'express'
 const projectRoutes = express.Router()
 import { createProject } from '../controllers/project/project.add.controller.js'
 import { allProjects, findProjectByURL, updateProject, deleteProject, findProjectById } from '../controllers/project/project.controller.js'
-import { likeProject, unlikeProject, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
+import { like, unlike, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
 import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
 import { commentTask, createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
 import { deletePictures, updatePictures, uploadPictures } from '../controllers/project/project.upload.controller.js'
@@ -50,8 +50,8 @@ projectRoutes.put('/delete-qna/:id', deleteQNA)
 
 projectRoutes.patch('/follow/:id', follow)
 projectRoutes.patch('/unfollow/:id', unfollow)
-projectRoutes.patch('/like/:id', likeProject)
-projectRoutes.patch('/unlike/:id', unlikeProject)
+projectRoutes.patch('/like/:id', like)
+projectRoutes.patch('/unlike/:id', unlike)
 projectRoutes.patch('/favorite/:id', favorite)
 projectRoutes.patch('/unfavorite/:id', unfavorite)
 

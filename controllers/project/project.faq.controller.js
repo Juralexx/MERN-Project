@@ -10,10 +10,14 @@ export const createQNA = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -30,10 +34,14 @@ export const updateQNA = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -52,10 +60,14 @@ export const deleteQNA = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });

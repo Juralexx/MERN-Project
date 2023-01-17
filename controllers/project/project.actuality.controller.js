@@ -24,10 +24,14 @@ export const createActuality = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -55,10 +59,14 @@ export const updateActuality = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -86,10 +94,14 @@ export const deleteActuality = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -152,10 +164,14 @@ export const uploadActualityPictures = async (req, res) => {
                         "actualities.$.pictures": pics
                     }
                 },
-                { new: true },
+                {
+                new: true
+            },
             )
                 .then(docs => res.send(docs))
-                .catch(err => { return res.status(500).send({ message: err }) })
+                .catch(err => {
+                    return res.status(500).send({ message: err })
+                })
         } catch (err) {
             return res.status(500).send({ message: err });
         }
@@ -220,10 +236,15 @@ export const updateActualityPictures = async (req, res) => {
                                 activity_feed: req.body.activity
                             }
                         },
-                        { new: true, upsert: true },
+                        {
+                            new: true,
+                            upsert: true
+                        },
                     )
                         .then(docs => res.send(docs))
-                        .catch(err => { return res.status(400).send({ message: err }) })
+                        .catch(err => {
+                return res.status(500).send({ message: err })
+            })
                 } catch (err) {
                     return res.status(400).send({ message: err })
                 }
@@ -279,10 +300,15 @@ export const deleteActualityPictures = async (req, res) => {
                         activity_feed: req.body.activity
                     }
                 },
-                { new: true, upsert: true },
+                {
+                    new: true,
+                    upsert: true
+                },
             )
                 .then(docs => res.send(docs))
-                .catch(err => { return res.status(500).send({ message: err }) })
+                .catch(err => {
+                    return res.status(500).send({ message: err })
+                })
         } catch (err) {
             return res.status(500).send({ message: err });
         }

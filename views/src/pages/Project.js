@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { NavLink, useParams, Routes, Route, Navigate } from 'react-router-dom'
-import { getProject } from '../actions/project.action';
+import { getProject } from '../reducers/project.action';
 import { convertDeltaToHTML } from '../components/tools/editor/functions';
 import Header from '../components/project-[page]/Header';
 import Actualities from '../components/project-[page]/Actualities';
@@ -47,7 +47,7 @@ const ProjectPage = ({ user, projects }) => {
                 setDisplayBtn("block")
             } else setDisplayBtn("none")
         })
-    }, [navRef.current])
+    }, [navRef])
 
     return (
         <div className="content_container project-page">

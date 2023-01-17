@@ -172,15 +172,15 @@
 }
 
 .icon_toggle {
-    display         : flex;
-    align-items     : center;
-    justify-content : center;
-    width           : 34px;
-    height          : 34px;
-    border-radius   : 40px;
-    cursor          : pointer;
-    transform       : scale(1);
-    background-color: var(--x-light);
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    width            : 34px;
+    height           : 34px;
+    border-radius    : var(--rounded-md);
+    cursor           : pointer;
+    transform        : scale(1);
+    background-color : var(--x-light);
 
     svg {
         width  : 20px;
@@ -219,31 +219,5 @@
 
     &:active {
         transform  : scale(0.95);
-    }
-}
-
-.add-more-users {
-    display       : flex;
-    align-items   : center;
-    padding       : 5px 0;
-    font-weight   : 600;
-    border-radius : var(--rounded-sm);
-    cursor        : pointer;
-
-    svg {
-        height           : 34px;
-        width            : 34px;
-        padding          : 6px;
-        margin-right     : 10px;
-        color            : var(--primary);
-        background-color : rgba(var(--primary-rgb), 0.15);
-        border-radius    : 50%;
-    }
-
-    &:hover {
-        background-color : rgba(var(--primary-rgb), 0.15);
-        svg {
-            background: none;
-        }
     }
 }

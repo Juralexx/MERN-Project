@@ -26,7 +26,7 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
     useEffect(() => {
         if (locationsStored && JSON.parse(locationsStored).length > 0)
             setDatas(data => ({ ...data, recentLocations: JSON.parse(locationsStored) }))
-    }, [locationsStored])
+    }, [locationsStored, setDatas])
 
     return (
         <>

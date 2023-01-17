@@ -2,50 +2,63 @@ import UserModel from '../../models/user.model.js'
 import mongoose from 'mongoose'
 const ObjectID = mongoose.Types.ObjectId
 
-/****************************************************************************/
-/******************* DEMANDE D'AMI / ANNULER DEMANDE D'AMI ******************/
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 
-export const sendFriendRequest = async (req, res) => {
+export const sendContactRequest = async (req, res) => {
     try {
         await UserModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
                 $addToSet: {
-                    friend_request_sent: {
-                        friend: req.body.friendId,
+                    contact_request_sent: {
+                        contact: req.body.contactId,
                         requestedAt: new Date().toISOString(),
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.friendId },
+            { _id: req.body.contactId },
             {
                 $addToSet: {
                     notifications: req.body.notification
                 },
                 $inc: { unseen_notifications: 1 }
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
     }
 }
 
-export const cancelFriendRequest = async (req, res) => {
+export const cancelContactRequest = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
 
     try {
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.friendId },
+            { _id: req.body.contactId },
             {
                 $pull: {
                     notifications: {
@@ -57,21 +70,28 @@ export const cancelFriendRequest = async (req, res) => {
             },
             { new: true, upsert: true, runValidators: true },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
                 $pull: {
-                    friend_request_sent: {
-                        friend: req.body.friendId,
+                    contact_request_sent: {
+                        contact: req.body.contactId,
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
@@ -81,7 +101,7 @@ export const cancelFriendRequest = async (req, res) => {
 /****************************************************************************/
 /************************ ACCEPTER AMI / REFUSER AMI ************************/
 
-export const acceptFriend = async (req, res) => {
+export const acceptContact = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
 
@@ -90,8 +110,8 @@ export const acceptFriend = async (req, res) => {
             { _id: req.params.id },
             {
                 $addToSet: {
-                    friends: {
-                        friend: req.body.requesterId,
+                    contacts: {
+                        _id: req.body.requesterId,
                         requestedAt: new Date().toISOString(),
                     }
                 },
@@ -105,34 +125,41 @@ export const acceptFriend = async (req, res) => {
             },
             { new: true, upsert: true, runValidators: true },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.requesterId },
             {
                 $addToSet: {
-                    friends: {
-                        friend: req.params.id,
+                    contacts: {
+                        _id: req.params.id,
                         requestedAt: new Date().toISOString(),
                     }
                 },
                 $pull: {
-                    friend_request_sent: {
-                        friend: req.params.id,
+                    contact_request_sent: {
+                        contact: req.params.id,
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
     }
 }
 
-export const refuseFriend = async (req, res) => {
+export const refuseContact = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
 
@@ -150,21 +177,28 @@ export const refuseFriend = async (req, res) => {
             },
             { new: true, upsert: true, runValidators: true },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.requesterId },
             {
                 $pull: {
-                    friend_request_sent: {
-                        friend: req.params.id
+                    contact_request_sent: {
+                        contact: req.params.id
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
@@ -174,7 +208,7 @@ export const refuseFriend = async (req, res) => {
 /****************************************************************************/
 /****************************** SUPPRIMER AMI *******************************/
 
-export const deleteFriend = async (req, res) => {
+export const deleteContact = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send("ID unknown : " + req.params.id);
 
@@ -183,28 +217,38 @@ export const deleteFriend = async (req, res) => {
             { _id: req.params.id },
             {
                 $pull: {
-                    friends: {
-                        friend: req.body.friendId
+                    contacts: {
+                        _id: req.body.contactId
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.friendId },
+            { _id: req.body.contactId },
             {
                 $pull: {
-                    friends: {
-                        friend: req.params.id
+                    contacts: {
+                        _id: req.params.id
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })

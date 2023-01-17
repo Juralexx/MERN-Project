@@ -1,32 +1,26 @@
 .conversation-menu {
-    position     : relative;
-    width        : 25%;
-    padding      : 10px 0;
-    background   : var(--content-light);
-    border-right : 1px solid var(--light-border);
+    position   : relative;
+    width      : 25%;
+    padding    : 10px 0;
+    background : var(--content);
+    box-shadow : var(--shadow-tiny-left);
+    z-index    : 700;
 
     .conversation-menu-header {
         display         : flex;
         align-items     : center;
         justify-content : space-between;
         padding         : 4px 10px;
-        margin-bottom   : 10px;
+        margin-bottom   : 6px;
     }
 
     .conversation-menu-tools {
         display     : flex;
         align-items : center;
-        
-        .icon_toggle {
-            min-width        : 34px;
-            min-height       : 34px;
-            background-color : var(--x-light);
-            color            : var(--primary);
-            margin           : 0 3px;
 
-            &:hover {
-                color            : white;
-                background-color : var(--primary);
+        .tools {
+            button {
+                margin : 0 2px;
             }
         }
 
@@ -52,6 +46,7 @@
 
 
     .close-item {
+        border-radius: 50%;
         background-color : var(--x-light);
         &:hover {
             background-color : var(--light);
@@ -69,17 +64,13 @@
 
 @media(max-width: 1024px) {
     .conversation-menu {
-       width       : 35%;
+       width       : 40%;
        min-width   : unset;
        flex-shrink : 1;
        transition  : .2s ease;
-
-       .conversation-menu-header {
-            h2 {
-                display : none;
-            }
+        h2 {
+            display : none;
         }
-
        .conversation-menu-tools {
            width           : 100%;
            justify-content : space-between;
@@ -87,26 +78,21 @@
                display : flex;
            }
        }
-
        &.closed {
-           width      : 80px;
+           width      : 100px;
            transition : .2s ease;
-
             .conversation-menu-tools {
                 width           : 100%;
                 justify-content : center;
-                
                 .tools {
                     display : none;
                 }
             }
-
             .search {
                 display : none;
             }
-
             .conversation-menu-tool {
-                font-size       : 14px;
+                font-size       : 12px;
                 justify-content : center;
                 padding-left    : 0;
                 padding-right   : 0;
@@ -114,30 +100,25 @@
                     display : none;
                 }
             }
-   
            .conversation {
                .conversation_inner {
                    justify-content : center;
                    .conversation-img-container {
                         margin : 0;
-                        .conversation-img {
-                            min-width  : 42px;
-                            min-height : 42px;
-                        }
                    }
                    .conversation-infos {
-                       display : none;
+                       display    : none;
                    }
                }
-               .conversation-toolbox {
-                   display : none;
-               }
            }
-       }
+           .close-item {
+                display : none;
+            }
+        }
     }
 }
 
-@media(max-width: 768px) {
+@media(max-width: 992px) {
     .conversation-menu {
         position    : absolute;
         left        : 0;
@@ -145,15 +126,12 @@
         bottom      : 0;
         width       : 400px;
         flex-shrink : 1;
-        box-shadow  : var(--shadow-left);
         z-index     : 700;
         transition  : .2s ease;
         &.closed {
             position   : relative;
             top        : unset;
-            width      : 80px;
             transition : none;
-            box-shadow : none;
         }
     }
 }

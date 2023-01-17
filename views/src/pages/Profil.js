@@ -6,7 +6,7 @@ import UploadImg from "../components/profil/uploads/UploadImg";
 import FooterLight from '../components/FooterLight'
 import About from "../components/profil/About";
 import Edit from "../components/profil/Edit";
-import Friends from "../components/profil/Friends";
+import Contacts from "../components/profil/Contacts";
 import Projects from "../components/profil/Projects";
 import ProfilCard from "../components/profil/ProfilCard";
 
@@ -51,7 +51,7 @@ const Profil = ({ user, websocket }) => {
                                     <About user={user} />
                                 } />
                                 <Route path="contacts" element={
-                                    <Friends user={user} websocket={websocket} />
+                                    <Contacts user={user} websocket={websocket} />
                                 } />
                                 <Route path="edit/*" element={
                                     <Edit user={user} />

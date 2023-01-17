@@ -1,66 +1,74 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { MediaContext, MessengerContext } from '../AppContext';
 import { useDispatch } from 'react-redux';
-import { useLocationchange } from './functions/useLocationchange';
-import { useGetMembers } from './functions/useGetMembers'
-import { useTyping } from './functions/useTyping';
-import { useCheckLocation } from './functions/useCheckLocation';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useLocationchange } from './hooks/useLocationchange';
+import { useGetMembers } from './hooks/useGetMembers'
+import { useTyping } from './hooks/useTyping';
+import { useCheckLocation } from './hooks/useCheckLocation';
+import { useFetchContacts } from '../tools/custom-hooks/useFetchContacts';
 import ConversationsMenu from './ConversationsMenu';
-import MobileMenu from './MobileMenu';
+import MobileConversationMenu from './MobileConversationMenu';
 import ConversationTools from './ConversationTools';
 import ReactPlayer from 'react-player'
 import ConversationBox from './ConversationBox';
 import New from './New';
 import { ChatLoader } from './tools/Loaders';
-import { receiveCreateConversation, sendMessage, setLastMessageSeen } from '../../actions/messenger.action';
-import { convertDeltaToStringNoHTML, isURLInText, otherMembersIDs, returnURLsInText } from './functions/function';
-import { randomNbID } from '../Utils';
-import { useFetchContacts } from '../tools/custom-hooks/useFetchContacts';
+import { receiveCreateConversation, sendMessage, setLastConversationSeen, setLastMessageSeen } from '../../reducers/messenger.action';
+import { convertDeltaToStringNoHTML, otherMembersIDs } from './functions';
+import { isURLInText, returnURLsInText, randomNbID } from '../Utils';
 
 const Messenger = ({ uid, user, websocket, onlineUsers }) => {
-    const [allConversations, setAllConversations] = useState([])
-    const [conversations, setConversations] = useState([])
-    const [favorites, setFavorites] = useState([])
+    const [conversations, setConversations] = useState({
+        allConversations: [],
+        notFavorites: [],
+        favorites: [],
+        currentChat: {},
+        temporaryConversation: {},
+        messagesDates: []
+    })
 
-    const [currentChat, setCurrentChat] = useState({})
     const [fetched, setFetched] = useState(false)
 
-    const [temporaryConv, setTemporaryConv] = useState({})
-
-    const [messagesDates, setMessagesDates] = useState([])
     const [newMessage, setNewMessage] = useState({})
     const [notification, setNotification] = useState({})
 
     const { xs, sm, md, lg } = useContext(MediaContext)
     const [rightbar, setRightbar] = useState({ state: !lg ? 'open' : 'closed', displayed: 'contacts' })
 
-    const { friendsArr, fetchedFriends } = useFetchContacts(user)
-    const { isTyping, setTyping, typingContext, setTypingContext } = useTyping(currentChat)
-    const { members } = useGetMembers(uid, currentChat)
+    const { contactsArr, fetchedContacts } = useFetchContacts(user)
+    const { isTyping, setTyping } = useTyping(conversations.currentChat)
+    const { members } = useGetMembers(uid, conversations.currentChat)
 
-    useLocationchange(user, websocket, currentChat)
-    const { isParam } = useCheckLocation()
+    useLocationchange(user, websocket, conversations.currentChat)
+    const { doesLocationIncludesParam } = useCheckLocation()
     const location = useLocation()
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     /**
-     * is on messenger
+     * If user has a current conversation, emit the 'onMessenger' function
+     * to be online for his contacts and set the current conversation ID to the websocket.
+     * Timeout is added 'cause whithout it socket user returns undefined.
      */
 
     useEffect(() => {
-        if (currentChat) {
-            websocket.current.emit("onMessenger", {
-                userId: uid,
-                conversationId: currentChat._id
-            })
+        if (conversations.currentChat) {
+            let timeout = setTimeout(() => {
+                websocket.current.emit("onMessenger", {
+                    userId: uid,
+                    conversationId: conversations.currentChat._id
+                })
+            }, 1000)
+            return () => clearTimeout(timeout)
         }
-    }, [uid, websocket, currentChat, currentChat._id])
+    }, [uid, websocket, conversations.currentChat])
 
     /**
-     * Redirection
+     * If URL = '/messenger' redirect to the last conversation user has participated to.
+     * If user doesn't have a last conversation or no conversation at all, redirect to
+     * the create conversation page ('/messenger/new')
      */
 
     useEffect(() => {
@@ -68,58 +76,86 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             if (location.pathname === '/messenger' || location.pathname === '/messenger/') {
                 if (fetched) {
                     if (user.conversations.length > 0) {
-                        navigate('/messenger/' + allConversations[0]._id)
+                        if (user.last_conversation && conversations.allConversations.some(conv => conv._id === user.last_conversation)) {
+                            navigate('/messenger/' + user.last_conversation)
+                        } else {
+                            if (conversations.allConversations[0]._id !== user.last_conversation) {
+                                navigate('/messenger/' + conversations.allConversations[0]._id)
+                            } else {
+                                navigate('/messenger/' + conversations.allConversations[1]._id)
+                            }
+                        }
                     } else {
                         navigate('/messenger/new')
                     }
                 }
             }
         }
-    }, [xs, fetched, location.pathname, allConversations, user.conversations, navigate])
+    }, [xs, fetched, location.pathname, conversations.allConversations, user.conversations, navigate])
 
     /**
-     * Get conversations
+     * Get all user conversations and store them in the 'conversations' variable :
+     * - allConversations : all user conversations sorted by dates
+     * - favorites : all favorites user conversations
+     * - notFavorites : all others the conversations that are not favorites
      */
 
     useEffect(() => {
-        if (user && allConversations.length === 0) {
-            if (user?.conversations?.length > 0) {
-                try {
-                    const promises = user.conversations.map(async conv => {
-                        return await axios
-                            .get(`${process.env.REACT_APP_API_URL}api/conversation/${conv.id}`)
-                            .then(res => res.data)
-                            .catch(err => console.error(err))
-                    })
-                    Promise.all(promises).then(res => {
-                        if (res.length > 0) {
-                            const sort = res.sort((a, b) => { return b.updatedAt.localeCompare(a.updatedAt) })
-                            const favs = user.conversations.filter(conv => conv.favorite)
-                            setAllConversations(sort)
-                            if (favs.length > 0) {
-                                setFavorites(sort.filter(conv => favs.some(fav => fav.id === conv._id)))
-                                setConversations(sort.filter(conv => !favs.some(fav => fav.id === conv._id)))
-                            } else {
-                                setConversations(sort)
+        if (Object.keys(user).length > 0) {
+            if (conversations.allConversations.length === 0) {
+                if (user?.conversations?.length > 0) {
+                    try {
+                        const promises = user.conversations.map(async conv => {
+                            return await axios
+                                .get(`${process.env.REACT_APP_API_URL}api/conversation/${conv.id}`)
+                                .then(res => res.data)
+                                .catch(err => console.error(err))
+                        })
+                        Promise.all(promises).then(res => {
+                            if (res.length > 0) {
+                                const sortedConvs = res.sort((a, b) => {
+                                    return b.updatedAt.localeCompare(a.updatedAt)
+                                })
+                                const favorites = user.conversations.filter(conv => conv.favorite)
+                                if (favorites.length > 0) {
+                                    setConversations(convs => ({
+                                        ...convs,
+                                        allConversations: sortedConvs,
+                                        notFavorites: sortedConvs.filter(conv => !favorites.some(fav => fav.id === conv._id)),
+                                        favorites: sortedConvs.filter(conv => favorites.some(fav => fav.id === conv._id)),
+                                    }))
+                                } else {
+                                    setConversations(convs => ({
+                                        ...convs,
+                                        allConversations: sortedConvs,
+                                        notFavorites: sortedConvs
+                                    }))
+                                }
+                                let timeout = setInterval(() => setFetched(true), 3000)
+                                return () => clearInterval(timeout)
                             }
-                            setTimeout(() => setFetched(true), 2000)
-                        }
-                    })
-                } catch (err) {
-                    console.error(err)
+                        })
+                    } catch (err) {
+                        console.error(err)
+                    }
+                } else {
+                    setTimeout(() => setFetched(true), 2000)
                 }
-            } else {
-                setTimeout(() => setFetched(true), 2000)
             }
         }
-    }, [user, conversations, favorites, dispatch])
+    }, [user, conversations, conversations.allConversations, dispatch])
 
     /**
-     * FONCTIONS
+     * Post message function
+     * @param {*} quill Quill editor ref
+     * @param {*} conversation Conversation to post the message to
+     * @param {*} files Files to upload if message contains any files
+     * @param {*} shared Variable to check if the message is a shared one (response of an already posted message)
      */
 
     const postMessage = (quill, conversation, files, shared) => {
         let messageContent = quill.getLength() > 1 ? quill.getContents() : []
+
         const message = {
             _id: randomNbID(24),
             sender: uid,
@@ -136,6 +172,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
         }
 
         let text = convertDeltaToStringNoHTML(message)
+
         if (isURLInText(text)) {
             let embeds = []
             returnURLsInText(text).forEach(url => {
@@ -206,14 +243,27 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
             })
     }
 
+    /**
+     * Handle editor function to post the message
+     * @param {*} quill Quill editor ref
+     * @param {*} conversation Conversation to handle submission to
+     * @param {*} files Files to upload if message contains any files
+     * @param {*} shared Variable to check if the message is a shared one (response of an already posted message)
+     */
+
     const handleSubmit = async (quill, conversation, files, shared) => {
         if (quill.getLength() > 1 || files.length > 0) {
             if (!conversation.temporary) {
-                await isParam(conversation._id, '/messenger/' + conversation._id)
+                await doesLocationIncludesParam(conversation._id, '/messenger/' + conversation._id)
                 postMessage(quill, conversation, files, shared)
             } else {
                 let newConversation = {}
-                let members = [{ _id: user._id, pseudo: user.pseudo, picture: user.picture, date: new Date().toISOString() }]
+                let members = [{
+                    _id: user._id,
+                    pseudo: user.pseudo,
+                    picture: user.picture,
+                    date: new Date().toISOString()
+                }]
                 conversation.members.map(member => {
                     return (
                         members.push({
@@ -238,7 +288,16 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                 }).then(async res => {
                     dispatch(receiveCreateConversation(res.data._id))
                     newConversation = res.data
-                    await isParam(res.data._id, '/messenger/' + res.data._id)
+
+                    setConversations(convs => ({
+                        ...convs,
+                        allConversations: [res.data, ...conversations.allConversations],
+                        notFavorites: [res.data, ...conversations.notFavorites],
+                        currentChat: res.data,
+                        temporaryConversation: {}
+                    }))
+
+                    navigate('/messenger/' + res.data._id)
 
                     otherMembersIDs(res.data, uid).map(memberId => {
                         return websocket.current.emit("addConversation", {
@@ -246,10 +305,6 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                             conversationId: res.data._id
                         })
                     })
-                    setTemporaryConv({})
-                    setAllConversations(convs => [res.data, ...convs])
-                    setConversations(convs => [res.data, ...convs])
-                    changeCurrentChat(res.data)
                 }).then(async () => {
                     postMessage(quill, newConversation, files, shared)
                 })
@@ -257,55 +312,70 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
         } else return
     }
 
+    /**
+     * Change the current chat to move to the required conversation
+     * @param {*} conversation Conversation to move to
+     */
+
     const changeCurrentChat = (conversation) => {
-        if (currentChat?._id !== conversation._id && currentChat?.messages?.length > 0) {
-            dispatch(setLastMessageSeen(uid, currentChat._id, currentChat.messages[currentChat.messages.length - 1]._id))
-        }
+        let current = conversations?.currentChat
+        if (current._id !== conversation._id && current?.messages?.length > 0)
+            dispatch(setLastMessageSeen(
+                uid,
+                current._id,
+                current.messages[current.messages.length - 1]._id
+            ))
         if (!conversation.temporary) {
             websocket.current.emit("changeCurrentConversation", {
                 userId: uid,
                 conversationId: conversation._id
             })
-        } else {
-            setCurrentChat(conversation)
+            dispatch(setLastConversationSeen(uid, conversation._id))
         }
+        else setConversations(convs => ({ ...convs, currentChat: conversation }))
     }
 
     /**
-    * Websocket
+    * Websocket to handle to the websocket functions
     */
 
     useEffect(() => {
         websocket.current.on("getMessage", data => {
-            console.log(data.message)
             setNewMessage(data.message)
-            setTyping(false)
-            setTypingContext({})
+            setTyping({ state: false, context: {} })
         })
         websocket.current.on("getNotification", data => {
             setNotification(data.message)
-            setTyping(false)
-            setTypingContext({})
+            setTyping({ state: false, context: {} })
         })
         websocket.current.on('typing', data => {
-            setTyping(true)
-            setTypingContext({
-                sender: data.sender,
-                conversationId: data.conversationId
+            setTyping({
+                state: true,
+                context: {
+                    sender: data.sender,
+                    conversationId: data.conversationId
+                }
             })
         })
-    }, [websocket.current, websocket, setTyping, setTypingContext])
+    }, [websocket.current, websocket, setTyping])
 
     return (
-        <MessengerContext.Provider value={{ uid, user, websocket, friendsArr, currentChat, setCurrentChat, changeCurrentChat, dispatch, navigate, xs, sm, md, lg }}>
+        <MessengerContext.Provider value={{
+            uid,
+            user,
+            websocket,
+            contactsArr,
+            conversations,
+            setConversations,
+            members,
+            changeCurrentChat,
+            dispatch,
+            navigate,
+            xs, sm, md, lg
+        }}>
             <div className="messenger">
                 {!xs &&
                     <ConversationsMenu
-                        favorites={favorites}
-                        conversations={conversations}
-                        setConversations={setConversations}
-                        temporaryConv={temporaryConv}
-                        setTemporaryConv={setTemporaryConv}
                         fetched={fetched}
                         newMessage={newMessage}
                         notification={notification}
@@ -313,68 +383,50 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                     />
                 }
                 <div className="conversation-box">
-                    <div className="conversation-box-wrapper">
-                        {!fetched && !xs &&
-                            (location.pathname === '/messenger' || location.pathname === '/messenger/') && (
-                                <ChatLoader />
-                            )
-                        }
+                    {fetched &&
+                        !xs &&
+                        (location.pathname === '/messenger' || location.pathname === '/messenger/') && (
+                            <ChatLoader />
+                        )
+                    }
 
-                        <Routes>
-                            {xs &&
-                                <Route index element={
-                                    <MobileMenu
-                                        favorites={favorites}
-                                        conversations={conversations}
-                                        setConversations={setConversations}
-                                        temporaryConv={temporaryConv}
-                                        setTemporaryConv={setTemporaryConv}
-                                        fetched={fetched}
-                                        onlineUsers={onlineUsers}
-                                        fetchedFriends={fetchedFriends}
-                                        newMessage={newMessage}
-                                        notification={notification}
-                                        setRightbar={setRightbar}
-                                    />
-                                } />
-                            }
-
-                            <Route path=":id" element={
-                                <ConversationBox
-                                    conversations={allConversations}
+                    <Routes>
+                        {xs &&
+                            <Route index element={
+                                <MobileConversationMenu
+                                    fetched={fetched}
                                     onlineUsers={onlineUsers}
-                                    messagesDates={messagesDates}
-                                    setMessagesDates={setMessagesDates}
-                                    handleSubmit={handleSubmit}
-                                    isTyping={isTyping}
-                                    typingContext={typingContext}
+                                    fetchedContacts={fetchedContacts}
+                                    newMessage={newMessage}
+                                    notification={notification}
                                     setRightbar={setRightbar}
                                 />
                             } />
+                        }
 
-                            <Route path="new" element={
-                                <New
-                                    conversations={conversations}
-                                    temporaryConv={temporaryConv}
-                                    setTemporaryConv={setTemporaryConv}
-                                    isTyping={isTyping}
-                                    typingContext={typingContext}
-                                    handleSubmit={handleSubmit}
-                                    messagesDates={messagesDates}
-                                    setMessagesDates={setMessagesDates}
-                                />
-                            } />
-                        </Routes>
-                    </div>
+                        <Route path=":id" element={
+                            <ConversationBox
+                                onlineUsers={onlineUsers}
+                                handleSubmit={handleSubmit}
+                                isTyping={isTyping}
+                                setRightbar={setRightbar}
+                            />
+                        } />
+
+                        <Route path="new" element={
+                            <New
+                                isTyping={isTyping}
+                                handleSubmit={handleSubmit}
+                            />
+                        } />
+                    </Routes>
                 </div>
 
                 <ConversationTools
                     onlineUsers={onlineUsers}
-                    fetchedFriends={fetchedFriends}
+                    fetchedContacts={fetchedContacts}
                     rightbar={rightbar}
                     setRightbar={setRightbar}
-                    conversations={allConversations}
-                    setTemporaryConv={setTemporaryConv}
                     members={members}
                 />
             </div>

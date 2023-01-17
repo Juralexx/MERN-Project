@@ -4,8 +4,8 @@
     right           : 0;
     bottom          : 0;
     left            : 0;
-    overflow-x      : hidden;
-    overflow-y      : auto;
+    //overflow-x      : hidden;
+    //overflow-y      : auto;
     visibility      : visible;
     z-index         : 100000000000;
     display         : flex;
@@ -19,6 +19,7 @@
     .modal_container {
         margin           : auto;
         width            : 500px;
+        min-height       : 300px;
         padding          : 15px;
         color            : var(--text);
         background-color : var(--content-light);
@@ -88,6 +89,18 @@
                 }
             }
         }
+
+        .btn-container {
+            position        : relative;
+            margin-top      : auto;
+            display         : flex;
+            justify-content : flex-end;
+            margin-top      : 15px;
+    
+            button {
+                width : 100%;
+            }
+        }
     }
 }
 
@@ -117,9 +130,25 @@
 @media(max-width: 576px) {
     .modal_wrapper {
         .modal_container {
-            width      : 100vw;
-            min-height : 100vh;
-            padding    : 30px 15px
+            width         : 100vw;
+            min-height    : 100vh;
+            padding       : 30px 15px 100px;
+            border-radius : 0;
+            border        : none;
+            .btn-container {
+                position       : absolute;
+                bottom         : 0;
+                left           : 0;
+                width          : 100%;
+                flex-direction : column;
+                padding        : 24px 15px;
+                button {
+                    width : 100%;
+                    &:nth-child(1) {
+                        margin-bottom : 10px;
+                    }
+                }
+            }
         }
     }
 }

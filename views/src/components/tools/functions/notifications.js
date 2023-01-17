@@ -1,4 +1,4 @@
-import { deleteNotification, setNotificationToSeen } from "../../../actions/user.action"
+import { deleteNotification, setNotificationToSeen } from "../../../reducers/user.action"
 
 export const setNotifSeen = (userId, notificationId, dispatch) => {
     dispatch(setNotificationToSeen(userId, notificationId))

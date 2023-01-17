@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom';
 import { Button } from '../tools/global/Button'
 import { DynamicInput } from '../tools/global/Inputs';
 import { ErrorCard } from '../tools/global/Error';
-import { handleEnterKey } from '../Utils'
 import Icon from '../tools/icons/Icon';
+import { addClass } from '../Utils';
 
 const SignInForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [passwordShown, setPasswordShown] = useState(false)
     const [error, setError] = useState({ element: "", error: "" })
-    const addErrorClass = (name) => { if (error.element === name) { return "err" } else { return "" } }
 
-    const handleLogin = async () => {
+    const handleLogin = async e => {
+        e.preventDefault();
+
         await axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/user/login`,
@@ -33,17 +34,17 @@ const SignInForm = () => {
                 localStorage.setItem("auth", true)
                 window.location = '/'
             }
-        }).catch((err) => console.log(err))
+        }).catch(err => console.log(err))
     }
 
     return (
-        <>
-            <div className="mb-4" onKeyPress={e => handleEnterKey(e, handleLogin)}>
+        <form onSubmit={handleLogin}>
+            <div className="mb-4">
                 <DynamicInput
                     type="email"
                     text="Email"
                     placeholder=" "
-                    className={`${addErrorClass("email")}`}
+                    className={`${addClass(error.element === "email", "err")}`}
                     onChange={e => setEmail(e.target.value)}
                     defaultValue={email}
                 />
@@ -60,7 +61,7 @@ const SignInForm = () => {
                     type={passwordShown ? "text" : "password"}
                     text="Mot de passe"
                     placeholder=" "
-                    className={`${addErrorClass("password")}`}
+                    className={`${addClass(error.element === "password", "err")}`}
                     onChange={e => setPassword(e.target.value)}
                     defaultValue={password}
                     endIcon={passwordShown ? <Icon name="Hidden" /> : <Icon name="Visible" />}
@@ -77,8 +78,10 @@ const SignInForm = () => {
                     />
                 }
             </div>
-            <Button className="mt-6 w-full" onClick={handleLogin}>Connexion</Button>
-        </>
+            <Button className="mt-6 w-full" type="submit">
+                Connexion
+            </Button>
+        </form>
     );
 }
 

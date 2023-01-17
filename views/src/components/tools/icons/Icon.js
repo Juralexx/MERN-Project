@@ -275,6 +275,8 @@ import Forward from './media/Forward';
 import Next from './media/Next';
 import Shutdown from './media/Shutdown';
 import Backward from './media/Backward';
+import Emoji from './general/Emoji';
+import Reaction from './general/Reaction';
 
 const Icon = (props) => {
     switch (props.name) {
@@ -468,9 +470,9 @@ const Icon = (props) => {
             return <Pinterest {...props} />;
         case 'PinterestCircle':
             return <PinterestCircle {...props} />;
-        case 'Pinterest':
+        case 'PinterestSquare':
             return <PinterestSquare {...props} />;
-        case 'Pinterest':
+        case 'PinterestOutline':
             return <PinterestOutline {...props} />;
         case 'Youtube':
             return <Youtube {...props} />;
@@ -802,6 +804,10 @@ const Icon = (props) => {
             return <GroupFolder {...props} />;
         case 'OutlineCircle':
             return <OutlineCircle {...props} />;
+        case 'Emoji':
+            return <Emoji {...props} />;
+        case 'Reaction':
+            return <Reaction {...props} />;
         default:
             return <Link {...props} />;
     }

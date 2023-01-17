@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
-import { deleteActuality } from '../../../actions/project.action'
+import { deleteActuality } from '../../../reducers/project.action'
 import { dateParser } from '../../Utils'
 import { convertDeltaToHTML } from '../../tools/editor/functions'
 import { Button, TextButton } from '../../tools/global/Button'

@@ -38,7 +38,7 @@ export function useEmoji(quill) {
 
         if (event.keyCode === 32 || event.keyCode === 13) {
             if (shortcuts.length > 0) {
-                shortcuts.some(shortcut => {
+                shortcuts.forEach(shortcut => { //some()
                     let word = quill.getText(index - 4, 3)
                     if (word.includes(shortcut)) {
                         let emoji = hasShortcuts.find(e => e.emoticons.includes(shortcut))
@@ -56,7 +56,7 @@ export function useEmoji(quill) {
                 })
             }
             if (emojiArr.length > 0) {
-                emojiArr.some(emoji => {
+                emojiArr.forEach(emoji => { //some()
                     if (txt.includes(`:${emoji.id}:`)) {
                         let emoticon = emojiArr.find(e => e.id === emoji.id)
                         if (event.keyCode === 13) {

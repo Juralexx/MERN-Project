@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { setLastMessageSeen } from "../../../actions/messenger.action"
+import { setLastMessageSeen } from "../../../reducers/messenger.action"
 
 export function useLocationchange(user, websocket, currentChat) {
     const dispatch = useDispatch()

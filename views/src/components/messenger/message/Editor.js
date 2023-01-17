@@ -3,18 +3,16 @@ import { MessengerContext } from '../../AppContext';
 import { useQuill } from '../editor/useQuill';
 import { useEmoji } from '../editor/useEmoji';
 import { useMention } from '../editor/useMention';
-import { useCheckLocation } from '../functions/useCheckLocation';
+import { useCheckLocation } from '../hooks/useCheckLocation';
 import ReactQuill from "react-quill";
 import EditorToolbar, { formats, modules } from "../editor/EditorToolbar";
 import EmojiPicker from '../tools/EmojiPicker';
 import Mention from '../editor/Mention';
 import Emoji from '../editor/Emoji';
 import Link from '../editor/Link';
-import { pickEmoji, convertDeltaToString, otherMembersIDs } from '../functions/function';
-import { updateMessage } from '../../../actions/messenger.action';
-import { IoText } from 'react-icons/io5'
-import { BsEmojiSmile } from 'react-icons/bs'
-import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
+import { pickEmoji, convertDeltaToString, otherMembersIDs } from '../functions';
+import { updateMessage } from '../../../reducers/messenger.action';
+import Icon from '../../tools/icons/Icon';
 
 const Editor = ({ message, setModify, setOpened, members }) => {
     const { uid, websocket, currentChat, dispatch } = useContext(MessengerContext)
@@ -22,7 +20,7 @@ const Editor = ({ message, setModify, setOpened, members }) => {
     const [isToolbar, setToolbar] = useState(false)
     const [position, setPosition] = useState(0)
     const [disabled, setDisabled] = useState(true)
-    const { isParam } = useCheckLocation()
+    const { doesLocationIncludesParam } = useCheckLocation()
 
     const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
     const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis } = useEmoji(quill)
@@ -118,7 +116,7 @@ const Editor = ({ message, setModify, setOpened, members }) => {
      */
 
     const onSubmit = async () => {
-        await isParam(currentChat._id, '/messenger/' + currentChat._id)
+        await doesLocationIncludesParam(currentChat._id, '/messenger/' + currentChat._id)
         if (quill.getLength() > 1) {
             let messageContent = quill.getLength() > 1 ? quill.getContents() : []
             otherMembersIDs(currentChat, uid).map(memberId => {
@@ -180,10 +178,10 @@ const Editor = ({ message, setModify, setOpened, members }) => {
             </div>
             <div className="message-text-tools">
                 <div className="text-tools-left">
-                    <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
-                    <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
-                    <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
-                    <button className="text-tools" onClick={() => setLink(!isLink)}><MdOutlineLink /></button>
+                    <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<Icon name="Emoji" />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
+                    <button className="text-tools" onClick={() => openMention(quill)}><Icon name="At" /></button>
+                    <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><Icon name="Font" /></button>
+                    <button className="text-tools" onClick={() => setLink(!isLink)}><Icon name="Link" /></button>
                 </div>
                 <div className="text-tools-right">
                     <button className="cancel-tool" onClick={() => { setModify(-1); setOpened(false) }}>Annuler</button>

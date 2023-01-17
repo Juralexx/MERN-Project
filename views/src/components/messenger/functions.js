@@ -1,16 +1,13 @@
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { fr } from 'date-fns/locale';
-import { charSetToChar, dateParserWithoutYear, fullImage, removeHTMLMarkers } from '../../Utils'
-import VideoJS from '../message/Video';
-import { IoDocumentTextOutline } from 'react-icons/io5';
-import { MdPlayCircleOutline } from 'react-icons/md';
-
-/*****************************************************************************************************************************************************************/
-/************************************************************************ EDITOR *********************************************************************************/
+import { charSetToChar, dateParserWithoutYear, fullImage, isImage, isVideo, removeHTMLMarkers } from '../Utils'
+import VideoJS from './message/Video';
+import Icon from '../tools/icons/Icon';
 
 /**
- * Delta convertion
+ * 
+ * @param {*} message 
  */
 
 export function convertEditorToHTML(message) {
@@ -20,12 +17,22 @@ export function convertEditorToHTML(message) {
     return ({ __html: html })
 }
 
+/**
+ * 
+ * @param {*} message 
+ */
+
 export function convertEditorToString(message) {
     let callback = {}
     let converter = new QuillDeltaToHtmlConverter(message.text[0].ops, callback)
     let html = converter.convert(message.text[0].ops)
     return html
 }
+
+/**
+ * 
+ * @param {*} message 
+ */
 
 export function convertEditorToStringNoHTML(message) {
     let callback = {}
@@ -34,12 +41,22 @@ export function convertEditorToStringNoHTML(message) {
     return charSetToChar(removeHTMLMarkers(html))
 }
 
+/**
+ * 
+ * @param {*} message 
+ */
+
 export function convertDeltaToHTML(message) {
     let callback = {}
     let converter = new QuillDeltaToHtmlConverter(message.text.ops, callback)
     let html = converter.convert(message.text.ops)
     return ({ __html: html })
 }
+
+/**
+ * 
+ * @param {*} message 
+ */
 
 export function convertDeltaToString(message) {
     let callback = {}
@@ -48,6 +65,11 @@ export function convertDeltaToString(message) {
     return html
 }
 
+/**
+ * 
+ * @param {*} message 
+ */
+
 export function convertDeltaToStringNoHTML(message) {
     let callback = {}
     let converter = new QuillDeltaToHtmlConverter(message.text.ops, callback)
@@ -55,109 +77,33 @@ export function convertDeltaToStringNoHTML(message) {
     return charSetToChar(removeHTMLMarkers(html))
 }
 
+/**
+ * 
+ * @param {*} message 
+ */
+
 export const handleEditor = (text, delta, source, editor) => {
     return editor.getContents()
 }
 
 /**
- * Like object
+ * Like emoji object
  */
 
-export const like = { id: "+1", name: "Thumbs Up Sign", short_names: ["+1", "thumbsup"], colons: ":+1:", emoticons: [], unified: "1f44d", skin: 1, native: "👍" }
+export const like = {
+    id: "+1",
+    name: "Thumbs Up Sign",
+    short_names: ["+1", "thumbsup"],
+    colons: ":+1:",
+    emoticons: [],
+    unified: "1f44d",
+    skin: 1,
+    native: "👍"
+}
 
 /**
- * Check file extension
- */
-
-export const isImage = (file) => {
-    const types = ['image/jpg', 'image/jpeg', 'image/bmp', 'image/gif', 'image/png', 'image/svg+xml'];
-    return types.some(el => file.type === el);
-}
-
-export const isVideo = (file) => {
-    const types = ['video/mp4', 'video/webm', 'video/x-m4v', 'video/quicktime'];
-    return types.some(el => file.type === el);
-}
-
-export const isFile = (file) => {
-    const types = [
-        '.7z',
-        '.ade',
-        '.mde',
-        '.adp',
-        '.apk',
-        '.appx',
-        '.appxbundle',
-        '.aspx',
-        '.bat',
-        '.com',
-        '.dll',
-        '.exe',
-        '.msi',
-        '.cab',
-        '.cmd',
-        '.cpl',
-        '.dmg',
-        '.gz',
-        '.hta',
-        '.ins',
-        '.ipa',
-        '.iso',
-        '.isp',
-        '.jar',
-        '.js',
-        '.jse',
-        '.jsp',
-        '.lib',
-        '.lnk',
-        '.msc',
-        '.msix',
-        '.msixbundle',
-        '.msp',
-        '.mst',
-        '.nsh',
-        '.pif',
-        '.ps1',
-        '.scr',
-        '.sct',
-        '.wsc',
-        '.shb',
-        '.sys',
-        '.vb',
-        '.vbe',
-        '.vbs',
-        '.vxd',
-        '.wsf',
-        '.wsh',
-        '.tar'
-    ]
-    return !types.some(el => file.name.endsWith(el))
-}
-
-export const isEmbeddable = (file) => {
-    const types = ['text/html']
-    return !types.some(el => file.type === el)
-}
-
-export const isURLInText = (text) => {
-    const regexp = new RegExp(/(https?:\/\/|www\.)[\w-.]+\.[\w-.]+[\S]+/i)
-    if (regexp.test(text)) {
-        return true
-    } else return false
-}
-
-export const returnURLsInText = (text) => {
-    const regexp = new RegExp(/(https?:\/\/|www\.)[\w-.]+\.[\w-.]+[\S]+/i)
-    let arr = []
-    if (regexp.test(text)) {
-        arr = text.match(/(https?:\/\/|www\.)[\w-.]+\.[\w-.]+[\S]+/i);
-    }
-    return arr
-}
-// Coucou, voici une premiere url https://www.youtube.com/watch?v=cuQNkSuQ4jg et en voici une deuxieme https://www.cliken-web.com/ et pourquoi pas une troisieme www.google.com
-
-/**
- * Return the file preview in editor
+ * Return the file preview (image, video or file) in editor
+ * @param {*} file File to convert
  */
 
 export const returnEditorFiles = (file) => {
@@ -168,7 +114,7 @@ export const returnEditorFiles = (file) => {
     } else if (file.type.includes('video')) {
         return (
             <div className="file-doc">
-                <MdPlayCircleOutline className="file-doc-img" />
+                <Icon name="Play" className="file-doc-img" />
                 <div className="file-doc-content">
                     <p>{file.name}</p>
                     <p>{file.type}</p>
@@ -178,7 +124,7 @@ export const returnEditorFiles = (file) => {
     } else {
         return (
             <div className="file-doc">
-                <IoDocumentTextOutline className="file-doc-img" />
+                <Icon name="File" className="file-doc-img" />
                 <div className="file-doc-content">
                     <p>{file.name}</p>
                     <p>Document</p>
@@ -190,6 +136,7 @@ export const returnEditorFiles = (file) => {
 
 /**
  * Place autocomplete container upon cursor
+ * @param {*} quill Quill editor ref
  */
 
 export const placeUponCursor = (quill) => {
@@ -207,6 +154,9 @@ export const placeUponCursor = (quill) => {
 
 /**
  * If no files are uploaded, file dropzone get height of editor, else it gets the height of files container.
+ * @param {*} quill Quill editor ref
+ * @param {*} files Files array
+ * @param {*} filesRef Files container ref
  */
 
 export const getEditorHeight = (quill, files, filesRef) => {
@@ -230,7 +180,9 @@ export const getEditorHeight = (quill, files, filesRef) => {
 }
 
 /**
- * On emoji picker selection
+ * Add emoji to current cursor place in editor
+ * @param {*} emoji Emoji object to add
+ * @param {*} quill Quill editor ref
  */
 
 export const pickEmoji = (emoji, quill) => {
@@ -238,14 +190,17 @@ export const pickEmoji = (emoji, quill) => {
     quill.insertText(position, emoji.native)
 }
 
-/*****************************************************************************************************************************************************************/
-/********************************************************************** CONVERSATIONS ****************************************************************************/
+/*****************************************************/
+/************** CONVERSATIONS FUNCTIONS **************/
+/*****************************************************/
 
 /**
- * Find if a conversation if selected members already exists
+ * Find if a conversation already exists with those members
+ * @param {*} conversations Conversations array to search in
+ * @param {*} members Members array
  */
 
-export const isConversation = (conversations, members) => {
+export const isAlreadyConversationExisting = (conversations, members) => {
     if (conversations.length > 0) {
         const convs = conversations.filter(conv => conv.members.length === members.length)
         if (convs.length > 0) {
@@ -278,23 +233,30 @@ export const isConversation = (conversations, members) => {
 }
 
 
-/*****************************************************************************************************************************************************************/
-/************************************************************************ MESSAGES *******************************************************************************/
+/******************************************************/
+/***************** MESSAGES FUNCTIONS *****************/
+/******************************************************/
 
 /**
- * Get all messages differents dates
+ * Map an messages array and return an array containing new dates only and index of it.
+ * @param {*} messages Messages array
  */
 
 export const getMessagesDates = (messages) => {
     if (messages.length > 0) {
         let array = []
         messages.map((message, key) => {
-            return array = [...array, { index: key, date: message.createdAt.substring(0, 10) }]
+            return array = [...array, {
+                index: key,
+                date: message.createdAt.substring(0, 10)
+            }]
         })
         let filteredArray = []
         array.filter(item => {
             let i = filteredArray.findIndex(e => e.date === item.date);
-            if (i <= -1) { filteredArray.push(item) }
+            if (i <= -1) { 
+                filteredArray.push(item)
+            }
             return null
         })
         return filteredArray
@@ -302,25 +264,26 @@ export const getMessagesDates = (messages) => {
 }
 
 /**
- * Check if user as a custom pseudo, if yes dispatch it, else dispatch user pseudo
+ * Check if user has a custom pseudo, if yes dispatch it, else dispatch default pseudo
+ * @param {*} members Array of members
+ * @param {*} userId User ID
+ * @param {*} pseudo Pseudo to return if user doesn't have a custom pseudo
  */
 
 export const getUserPseudo = (members, userId, pseudo) => {
     let user = members.find(member => member._id === userId)
 
     if (user) {
-        if (user.custom_pseudo) {
+        if (user.custom_pseudo)
             return user.custom_pseudo
-        } else {
-            return pseudo
-        }
-    } else {
-        return pseudo
-    }
+        else return pseudo
+    } else return pseudo
 }
 
 /**
- * Minimize message height and remove pseudo and hours if previous and this message is under certain time
+ * Minimize message height and remove pseudo and hours if the previous message is sent from the same user less than 20 minutes ago
+ * @param {*} prev Previous message
+ * @param {*} current Current message
  */
 
 export const getHoursDiff = (prev, current) => {
@@ -337,6 +300,7 @@ export const getHoursDiff = (prev, current) => {
 
 /**
  * Return the file in message
+ * @param {*} file File to return
  */
 
 export const returnMessageFiles = (file) => {
@@ -369,26 +333,28 @@ export const returnMessageFiles = (file) => {
         //         </iframe>
         //     )
         // } else {
-        return (
-            <div className="file-doc">
-                <IoDocumentTextOutline className="file-doc-img" />
-                <div className="file-doc-content">
-                    <p className="bold">
-                        <a href={file.url}>{file.name}</a>
-                    </p>
-                    <p>{file.type}</p>
+            return (
+                <div className="file-doc">
+                    <Icon name="File" className="file-doc-img" />
+                    <div className="file-doc-content">
+                        <p className="bold">
+                            <a href={file.url}>{file.name}</a>
+                        </p>
+                        <p>{file.type}</p>
+                    </div>
                 </div>
-            </div>
-        )
+            )
         // }
     }
 }
 
-/*****************************************************************************************************************************************************************/
-/************************************************************************* TOOLS *********************************************************************************/
+/****************************************************************/
+/***************** CONVERSATION TOOLS FUNCTIONS *****************/
+/****************************************************************/
 
 /**
  * Convert date. If date > 1 year, return date with year, else no.
+ * @param {*} date Date to convert
  */
 
 export function getDate(date) {
@@ -407,17 +373,21 @@ export function getDate(date) {
 
 /**
  * Check if user is online
+ * @param {*} contact User to check if is online
+ * @param {*} onlineUsers All online users
  */
 
-export const isOnline = (friend, onlineUsers) => {
-    if (friend) {
-        let online = onlineUsers.some(u => u.friend === friend._id)
+export const isOnline = (contact, onlineUsers) => {
+    if (contact) {
+        let online = onlineUsers.some(user => user._id === contact._id)
         return online
     }
 }
 
 /**
- * Return all members except user
+ * Return all conversation members except user
+ * @param {*} conversation Conversation to take members in
+ * @param {*} uid User ID
  */
 
 export const getMembers = (conversation, uid) => {
@@ -426,19 +396,26 @@ export const getMembers = (conversation, uid) => {
 }
 
 /**
- * Keep only id, pseudo and picture from users and return array
+ * Keep only id, pseudo and picture from users and return members array
+ * @param {*} members Members to convert
  */
 
-export const userToMember = (members) => {
+export const usersToMember = (members) => {
     let arr = []
     members.forEach(member => {
-        arr.push({ _id: member._id, pseudo: member.pseudo, picture: member.picture })
+        arr.push({
+            _id: member._id,
+            pseudo: member.pseudo,
+            picture: member.picture
+        })
     })
     return arr
 }
 
 /**
- * Return all IDs except userID
+ * Return all conversation members IDs except userID
+ * @param {*} conversation Conversation to take members in
+ * @param {*} uid User ID
  */
 
 export const otherMembersIDs = (conversation, uid) => {
@@ -452,14 +429,21 @@ export const otherMembersIDs = (conversation, uid) => {
 
 /**
  * If user is not selected, push it in array, else remove it from array
+ * @param {*} member Member to push or remove from array
+ * @param {*} array Array to push or remove from
  */
 
 export const pushUserInArray = (member, array) => {
-    if (!array.some(e => e._id === member._id)) {
-        return [...array, { _id: member._id, pseudo: member.pseudo, picture: member.picture, date: new Date().toISOString() }]
+    if (!array.some(el => el._id === member._id)) {
+        return [...array, {
+            _id: member._id,
+            pseudo: member.pseudo,
+            picture: member.picture,
+            date: new Date().toISOString()
+        }]
     } else {
         let arr = [...array]
-        let index = arr.findIndex(e => e._id === member._id)
+        let index = arr.findIndex(el => el._id === member._id)
         arr.splice(index, 1)
         return arr
     }
@@ -467,31 +451,36 @@ export const pushUserInArray = (member, array) => {
 
 /**
  * Remove user from array
+ * @param {*} member Member to remove from array
+ * @param {*} array Array to remove from
  */
 
 export const removeUserFromArray = (member, array) => {
     let arr = [...array]
-    let index = arr.findIndex(e => e._id === member._id)
+    let index = arr.findIndex(el => el._id === member._id)
     arr.splice(index, 1)
     return arr
 }
 
 /**
  * Remove user already selected from array
+ * @param {*} array Array to remove from
+ * @param {*} userId ID of user to remove
  */
 
 export const removeSelected = (array, userId) => {
     let arr = [...array]
-    let i = arr.findIndex(e => e._id === userId)
-    arr.splice(i, 1)
+    let index = arr.findIndex(el => el._id === userId)
+    arr.splice(index, 1)
     return arr
 }
 
 /**
- * Return users pseudo
+ * Return users pseudo for conversation title (ex: Pseudo 1, Pseudo 2 et Pseudo 3)
+ * @param {*} members Members array
  */
 
-export const returnMembers = (members) => {
+export const returnMembersPseudos = (members) => {
     if (members.length === 1)
         return members[0].pseudo
     else if (members.length === 2)
@@ -503,7 +492,10 @@ export const returnMembers = (members) => {
 }
 
 /**
- * Return users pseudo
+ * Return pseudo from last message sender, or not if last message is from current user, in conversation preview
+ * @param {*} conversation Current conversation
+ * @param {*} message Last message
+ * @param {*} uid Current user ID
  */
 
 export const returnConversationPseudo = (conversation, message, uid) => {
@@ -526,6 +518,8 @@ export const returnConversationPseudo = (conversation, message, uid) => {
 
 /**
  * Remove uploaded file
+ * @param {*} files Files array
+ * @param {*} index Index of file to remove
  */
 
 export const removeFile = (files, index) => {

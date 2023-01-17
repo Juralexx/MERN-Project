@@ -276,7 +276,7 @@ export const RECEIVE_POST_MESSAGE = "RECEIVE_POST_MESSAGE"
 
 export const receiveNewMessage = (message) => {
     return async (dispatch) => {
-        dispatch({ type: POST_MESSAGE, payload: { message } })
+        dispatch({ type: RECEIVE_POST_MESSAGE, payload: { message } })
     }
 }
 
@@ -347,6 +347,26 @@ export const setLastMessageSeen = (userId, conversationId, messageId) => {
         })
             .then(() => {
                 dispatch({ type: SET_LAST_MESSAGE_SEEN, payload: { conversationId, messageId } })
+            })
+            .catch(err => console.error(err))
+    }
+}
+
+/**
+ * Set the last conversation user seen
+ */
+
+export const SET_LAST_CONVERSATION_SEEN = "SET_LAST_CONVERSATION_SEEN"
+
+export const setLastConversationSeen = (userId, conversationId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/conversation/last-conversation-seen/` + userId,
+            data: { conversationId }
+        })
+            .then(() => {
+                dispatch({ type: SET_LAST_CONVERSATION_SEEN, payload: { conversationId } })
             })
             .catch(err => console.error(err))
     }

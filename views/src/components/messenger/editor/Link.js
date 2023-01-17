@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef } from 'react'
 import isURL from 'validator/lib/isURL'
 import { TextButton, Button } from '../../tools/global/Button'
 import { IconInput } from '../../tools/global/Inputs'
-import { placeUponCursor } from '../functions/function'
+import { placeUponCursor } from '../functions'
 import normalizeUrl from 'normalize-url';
 import { MediaContext } from '../../AppContext'
-import { MdLink, MdOutlineTextFormat } from 'react-icons/md'
+import Icon from '../../tools/icons/Icon'
 
 const Link = ({ quill, isLink, setLink, position }) => {
     const { sm } = useContext(MediaContext)
@@ -84,11 +84,11 @@ const Link = ({ quill, isLink, setLink, position }) => {
             <div className="quill-link-displayer" style={{ left: !sm && styles.left, right: !sm && styles.right, bottom: !sm && styles.bottom }}>
                 <div>
                     <p className="mb-2">Texte</p>
-                    <IconInput className="full is_start_icon" icon={<MdOutlineTextFormat />} placeholder="Saisissez le texte à afficher" defaultValue='' useRef={textRef} />
+                    <IconInput className="full is_start_icon" icon={<Icon name="Font" />} placeholder="Saisissez le texte à afficher" defaultValue='' useRef={textRef} />
                 </div>
                 <div className="mt-4">
                     <p className="mb-2">Lien</p>
-                    <IconInput className="full is_start_icon" icon={<MdLink />} placeholder="Saisissez le lien" defaultValue='' useRef={linkRef} />
+                    <IconInput className="full is_start_icon" icon={<Icon name="Link" />} placeholder="Saisissez le lien" defaultValue='' useRef={linkRef} />
                 </div>
                 <div className="btn_container mt-2">
                     <TextButton onClick={() => setLink(false)}>Annuler</TextButton>

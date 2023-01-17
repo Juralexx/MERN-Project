@@ -72,7 +72,7 @@ const io = new Server(server, {
     }
 });
 
-const users = new Array()
+let users = new Array()
 
 const addUser = (userId, socketId) => {
     !users.some(user => user.userId === userId)
@@ -90,7 +90,10 @@ io.on("connect", (socket) => {
 
     socket.on("onMessenger", ({ userId, conversationId }) => {
         const user = users.find(member => member.userId === userId)
-        if (user) Object.assign(user, { conversationId: conversationId })
+        if (user)
+            Object.assign(user, { conversationId: conversationId })
+
+        console.log(users.length)
     })
 
     socket.on("leaveMessenger", ({ userId }) => {
@@ -278,49 +281,49 @@ io.on("connect", (socket) => {
     })
 
     /***********************************************************************************/
-    /************************************* FRIEND **************************************/
+    /************************************* CONTACTS **************************************/
 
-    socket.on('friendRequest', ({ notification, receiverId }) => {
+    socket.on('contactRequest', ({ notification, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('friendRequest', {
+            return io.to(user.socketId).emit('contactRequest', {
                 notification
             })
         }
     })
 
-    socket.on('cancelFriendRequest', ({ type, requesterId, receiverId }) => {
+    socket.on('cancelContactRequest', ({ type, requesterId, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('cancelFriendRequest', {
+            return io.to(user.socketId).emit('cancelContactRequest', {
                 type,
                 requesterId
             })
         }
     })
 
-    socket.on('acceptFriendRequest', ({ receiverId, friend }) => {
+    socket.on('acceptContactRequest', ({ receiverId, contact }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('acceptFriendRequest', {
-                friend
+            return io.to(user.socketId).emit('acceptContactRequest', {
+                contact
             })
         }
     })
 
-    socket.on('refuseFriendRequest', ({ userId, receiverId }) => {
+    socket.on('refuseContactRequest', ({ userId, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('refuseFriendRequest', {
+            return io.to(user.socketId).emit('refuseContactRequest', {
                 userId
             })
         }
     })
 
-    socket.on('deleteFriend', ({ userId, receiverId }) => {
+    socket.on('deleteContact', ({ userId, receiverId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('deleteFriend', {
+            return io.to(user.socketId).emit('deleteContact', {
                 userId
             })
         }

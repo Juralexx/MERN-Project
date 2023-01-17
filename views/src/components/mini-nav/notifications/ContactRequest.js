@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux'
 import formatDistance from 'date-fns/formatDistance'
 import fr from 'date-fns/locale/fr'
 import { Button } from '../../tools/global/Button';
-import { acceptRequest, refuseRequest } from '../../tools/functions/friend';
+import { acceptRequest, refuseRequest } from '../../tools/functions/contact';
 import { fullImage } from '../../Utils'
 
-const FriendRequest = ({ notification, user, websocket, onClick }) => {
+const ContactRequest = ({ notification, user, websocket, onClick }) => {
     const dispatch = useDispatch()
 
     return (
@@ -41,4 +41,4 @@ const FriendRequest = ({ notification, user, websocket, onClick }) => {
     )
 }
 
-export default FriendRequest
+export default ContactRequest

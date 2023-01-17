@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { io } from 'socket.io-client'
 import Paths from './components/routes/routes';
 import { MediaContext, UidContext, UserContext } from "./components/AppContext"
-import { getUser, receiveAcceptFriendRequest, receiveCancelFriendRequest, receiveDeleteFriend, receiveFriendRequest, receiveRefuseFriendRequest } from './actions/user.action';
-import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './actions/project.action';
-import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo, receiveUpdateConversationInfos, receiveUploadConversationPicture, receiveRemoveConversationPicture } from './actions/messenger.action';
+import { getUser, receiveAcceptContactRequest, receiveCancelContactRequest, receiveDeleteContact, receiveContactRequest, receiveRefuseContactRequest } from './reducers/user.action';
+import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './reducers/project.action';
+import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo, receiveUpdateConversationInfos, receiveUploadConversationPicture, receiveRemoveConversationPicture } from './reducers/messenger.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 import useMediaQuery from './components/tools/hooks/useMediaQuery';
 
@@ -45,7 +45,7 @@ function App() {
         if (Object.keys(user).length > 0) {
             websocket.current.emit("addUser", { userId: user._id })
             websocket.current.on("getUsers", users => {
-                setOnlineUsers(user.friends.filter(f => users.some(u => u.userId === f.friend)))
+                setOnlineUsers(user.contacts.filter(contact => users.some(user => user.userId === contact._id)))
             })
         }
         return () =>  websocket.current.off("getUsers")
@@ -53,7 +53,7 @@ function App() {
 
     useEffect(() => {
         websocket.current.on("logout", data => {
-            let online = onlineUsers.filter(u => u.friend !== data.userId)
+            let online = onlineUsers.filter(user => user._id !== data.userId)
             setOnlineUsers(online)
         })
         websocket.current.on("sendMessageNotification", data => {
@@ -109,22 +109,22 @@ function App() {
             dispatch(receiveCustomizeUserPseudo(data.userId, data.pseudo))
         })
 
-        websocket.current.on("friendRequest", data => {
-            dispatch(receiveFriendRequest(data.notification))
+        websocket.current.on("contactRequest", data => {
+            dispatch(receiveContactRequest(data.notification))
             setNotification(data.notification)
             setSend(true)
         })
-        websocket.current.on("cancelFriendRequest", data => {
-            dispatch(receiveCancelFriendRequest(data.type, data.requesterId))
+        websocket.current.on("cancelContactRequest", data => {
+            dispatch(receiveCancelContactRequest(data.type, data.requesterId))
         })
-        websocket.current.on("acceptFriendRequest", data => {
-            dispatch(receiveAcceptFriendRequest(data.friend))
+        websocket.current.on("acceptContactRequest", data => {
+            dispatch(receiveAcceptContactRequest(data.contact))
         })
-        websocket.current.on("refuseFriendRequest", data => {
-            dispatch(receiveRefuseFriendRequest(data.userId))
+        websocket.current.on("refuseContactRequest", data => {
+            dispatch(receiveRefuseContactRequest(data.userId))
         })
-        websocket.current.on("deleteFriend", data => {
-            dispatch(receiveDeleteFriend(data.userId))
+        websocket.current.on("deleteContact", data => {
+            dispatch(receiveDeleteContact(data.userId))
         })
 
         websocket.current.on("memberRequest", data => {
@@ -171,6 +171,7 @@ function App() {
         })
         return () => {
              websocket.current.off("sendMessageNotification")
+             websocket.current.off("getMessage")
              websocket.current.off("updateMessage")
              websocket.current.off("deleteMessage")
              websocket.current.off("deleteFile")
@@ -186,11 +187,11 @@ function App() {
              websocket.current.off("removeConversationMember")
              websocket.current.off("leaveConversation")
              websocket.current.off("customizeConversationPseudo")
-             websocket.current.off("friendRequest")
-             websocket.current.off("cancelFriendRequest")
-             websocket.current.off("acceptFriendRequest")
-             websocket.current.off("refuseFriendRequest")
-             websocket.current.off("deleteFriend")
+             websocket.current.off("contactRequest")
+             websocket.current.off("cancelContactRequest")
+             websocket.current.off("acceptContactRequest")
+             websocket.current.off("refuseContactRequest")
+             websocket.current.off("deleteContact")
              websocket.current.off("memberRequest")
              websocket.current.off("cancelMemberRequest")
              websocket.current.off("acceptMemberRequest")

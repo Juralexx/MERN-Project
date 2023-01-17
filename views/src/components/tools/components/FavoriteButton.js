@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { UidContext } from '../../AppContext';
-import { favoriteProject, unfavoriteProject } from '../../../actions/project.action';
+import { favoriteProject, unfavoriteProject } from '../../../reducers/project.action';
 import Icon from '../icons/Icon';
 
 const FavoriteButton = ({ project }) => {

@@ -3,13 +3,14 @@
     position      : absolute;
     width         : auto;
     padding       : 7px 10px;
-    border-radius : var(--rounded-sm);
+    border-radius : var(--rounded-md);
     background    : var(--tooltip);
     border        : 1px solid var(--light-border);
     z-index       : 700;
     visibility    : hidden;
     opacity       : 0;
     transition    : visibility 5s, opacity .2s;
+    box-shadow    : var(--shadow-light);
 
     &.open {
         visibility : visible;

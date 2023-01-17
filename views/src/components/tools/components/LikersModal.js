@@ -6,7 +6,7 @@ import HoverModal from "./HoverModal";
 import { Link } from "react-router-dom";
 import { MediumAvatar } from "../global/Avatars"
 import { TextButton } from "../global/Button";
-import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/friend";
+import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/contact";
 import Icon from "../icons/Icon";
 
 const LikersModal = ({ project, open, setOpen, user, websocket }) => {
@@ -32,19 +32,19 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
 
     const findState = (element, user) => {
         if (
-            (user.friend_request_sent &&
-                !user.friend_request_sent.some(object => object.friend === element._id) &&
-                !user.friends.some(object => object.friend === element._id) &&
-                !user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id) &&
+            (user.contact_request_sent &&
+                !user.contact_request_sent.some(object => object.contact === element._id) &&
+                !user.contacts.some(object => object._id === element._id) &&
+                !user.notifications.some(notif => notif.type === "contact-request" && notif.requesterId === element._id) &&
                 element._id !== user._id
             ) || (
-                !user.friend_request_sent &&
-                !user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id) &&
+                !user.contact_request_sent &&
+                !user.notifications.some(notif => notif.type === "contact-request" && notif.requesterId === element._id) &&
                 element._id !== user._id
             ) || (
-                user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id && notif.state === "refused") &&
-                !user.friend_request_sent.some(object => object.friend === element._id) &&
-                !user.friends.some(object => object.friend === element._id)
+                user.notifications.some(notif => notif.type === "contact-request" && notif.requesterId === element._id && notif.state === "refused") &&
+                !user.contact_request_sent.some(object => object.contact === element._id) &&
+                !user.contacts.some(object => object._id === element._id)
             )
         ) {
             return (
@@ -54,8 +54,8 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
             )
         }
         else if (
-            user.friend_request_sent &&
-            user.friend_request_sent.some(object => object.friend === element._id) &&
+            user.contact_request_sent &&
+            user.contact_request_sent.some(object => object.contact === element._id) &&
             element._id !== user._id
         ) {
             return (
@@ -65,29 +65,29 @@ const LikersModal = ({ project, open, setOpen, user, websocket }) => {
             )
         }
         else if (
-            (user.friends &&
-                user.friends.some(object => object.friend === element._id)
+            (user.contacts &&
+                user.contacts.some(object => object._id === element._id)
             ) || (
-                user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id && notif.state === "accepted")
+                user.notifications.some(notif => notif.type === "contact-request" && notif.requesterId === element._id && notif.state === "accepted")
             )
         ) {
             return <TextButton>Ami</TextButton>
         }
         else if (
             user.notifications &&
-            user.notifications.some(notif => notif.type === "friend-request" && notif.requesterId === element._id && !notif.state) &&
-            !user.friend_request_sent.some(object => object.friend === element._id) &&
-            !user.friends.some(object => object.friend === element._id)
+            user.notifications.some(notif => notif.type === "contact-request" && notif.requesterId === element._id && !notif.state) &&
+            !user.contact_request_sent.some(object => object.contact === element._id) &&
+            !user.contacts.some(object => object._id === element._id)
         ) {
             return (
                 <div className="flex">
                     <TextButton onClick={() => {
-                        acceptRequest(user.notifications.find(notif => notif.type === "friend-request" && notif.requesterId === element._id), user, websocket, dispatch)
+                        acceptRequest(user.notifications.find(notif => notif.type === "contact-request" && notif.requesterId === element._id), user, websocket, dispatch)
                     }}>
                         Accepter
                     </TextButton>
                     <TextButton onClick={() => {
-                        refuseRequest(user.notifications.find(notif => notif.type === "friend-request" && notif.requesterId === element._id), user, websocket, dispatch)
+                        refuseRequest(user.notifications.find(notif => notif.type === "contact-request" && notif.requesterId === element._id), user, websocket, dispatch)
                     }}>
                         Refuser
                     </TextButton>

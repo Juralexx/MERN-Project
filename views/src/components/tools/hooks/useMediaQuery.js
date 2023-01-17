@@ -9,12 +9,12 @@ function useMediaQuery(query) {
     };
 
     const [matches, setMatches] = useState(getMatches(query));
-
-    function handleChange() {
-        setMatches(getMatches(query));
-    }
     
     useEffect(() => {
+        function handleChange() {
+            setMatches(getMatches(query));
+        }
+        
         const matchMedia = window.matchMedia(query);
         handleChange();
         if (matchMedia.addListener) {

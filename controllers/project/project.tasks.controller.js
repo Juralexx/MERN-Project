@@ -13,10 +13,14 @@ export const createTask = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
             .then(docs => res.send(docs))
-            .catch(err => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -44,10 +48,14 @@ export const updateTask = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
             .then(docs => res.send(docs))
-            .catch(err => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -66,10 +74,14 @@ export const deleteTask = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
             .then(docs => res.send(docs))
-            .catch(err => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -88,10 +100,14 @@ export const commentTask = async (req, res) => {
                     "tasks.$.comments": req.body.comment,
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
             .then(docs => res.send(docs))
-            .catch(err => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });

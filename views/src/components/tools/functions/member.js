@@ -1,5 +1,5 @@
 import axios from "axios"
-import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, removeMember, sendMemberRequest, setAdmin, unsetAdmin } from "../../../actions/project.action"
+import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, removeMember, sendMemberRequest, setAdmin, unsetAdmin } from "../../../reducers/project.action"
 import { randomID } from "../../Utils"
 
 /**
@@ -222,7 +222,9 @@ export const isUserInSearchResults = (element, results, search, classe) => {
         for (let i = 0; i < results.length; i++) {
             if (results[i].pseudo === element.pseudo) {
                 return classe
-            } else return '!hidden'
+            } else {
+                return '!hidden'
+            }
         }
     }
 }

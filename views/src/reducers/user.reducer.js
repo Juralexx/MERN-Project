@@ -1,8 +1,8 @@
-import { ACCEPT_FRIEND_REQUEST, DELETE_FRIEND, DELETE_NOTIFICATION, GET_USER, RECEIVE_ACCEPT_FRIEND_REQUEST, RECEIVE_CANCEL_FRIEND_REQUEST, RECEIVE_DELETE_FRIEND, RECEIVE_FRIEND_REQUEST, RECEIVE_REFUSE_FRIEND_REQUEST, REFUSE_FRIEND_REQUEST, RESET_NOTIFICATIONS, SET_NOTIFICATION_SEEN, UPDATE_EMAIL, UPDATE_THEME, UPDATE_USER } from "../actions/user.action";
-import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "../actions/user.action.upload";
-import { CANCEL_SENT_FRIEND_REQUEST, SEND_FRIEND_REQUEST } from "../actions/user.action";
-import { ACCEPT_MEMBER_REQUEST, RECEIVE_CANCEL_MEMBER_REQUEST, RECEIVE_MEMBER_REQUEST, REFUSE_MEMBER_REQUEST, REMOVE_PROJECT_FROM_MEMBER } from "../actions/project.action";
-import { ADD_FAVORITE_CONVERSATION, DELETE_CONVERSATION, RECEIVE_ADD_MEMBER_CONVERSATION, RECEIVE_CREATE_CONVERSATION, RECEIVE_REMOVE_MEMBER_CONVERSATION, REMOVE_FAVORITE_CONVERSATION, SET_LAST_MESSAGE_SEEN } from "../actions/messenger.action";
+import { ACCEPT_CONTACT_REQUEST, DELETE_CONTACT, DELETE_NOTIFICATION, GET_USER, RECEIVE_ACCEPT_CONTACT_REQUEST, RECEIVE_CANCEL_CONTACT_REQUEST, RECEIVE_CONTACT_REQUEST, RECEIVE_REFUSE_CONTACT_REQUEST, REFUSE_CONTACT_REQUEST, RESET_NOTIFICATIONS, SET_NOTIFICATION_SEEN, UPDATE_EMAIL, UPDATE_THEME, UPDATE_USER } from "./user.action";
+import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "./user.action.upload";
+import { CANCEL_SENT_CONTACT_REQUEST, SEND_CONTACT_REQUEST } from "./user.action";
+import { ACCEPT_MEMBER_REQUEST, RECEIVE_CANCEL_MEMBER_REQUEST, RECEIVE_MEMBER_REQUEST, REFUSE_MEMBER_REQUEST, REMOVE_PROJECT_FROM_MEMBER } from "./project.action";
+import { ADD_FAVORITE_CONVERSATION, DELETE_CONVERSATION, RECEIVE_ADD_MEMBER_CONVERSATION, RECEIVE_CREATE_CONVERSATION, RECEIVE_REMOVE_MEMBER_CONVERSATION, REMOVE_FAVORITE_CONVERSATION, SET_LAST_CONVERSATION_SEEN, SET_LAST_MESSAGE_SEEN } from "./messenger.action";
 
 const initialState = {}
 
@@ -79,57 +79,57 @@ export default function userReducer(state = initialState, action) {
             }
 
         /**
-         * FRIEND ACTIONS
+         * CONTACTS ACTIONS
          */
 
-        case SEND_FRIEND_REQUEST:
+        case SEND_CONTACT_REQUEST:
             return {
                 ...state,
-                friend_request_sent: [{ friend: action.payload.friendId }, ...state.friend_request_sent]
+                contact_request_sent: [{ contact: action.payload.contactId }, ...state.contact_request_sent]
             }
-        case RECEIVE_FRIEND_REQUEST:
+        case RECEIVE_CONTACT_REQUEST:
             return {
                 ...state,
                 notifications: [...state.notifications, action.payload.notification],
                 unseen_notifications: state.unseen_notifications + 1
             }
-        case CANCEL_SENT_FRIEND_REQUEST:
+        case CANCEL_SENT_CONTACT_REQUEST:
             return {
                 ...state,
-                friend_request_sent: state.friend_request_sent.filter(request => request.friend !== action.payload.friendId)
+                contact_request_sent: state.contact_request_sent.filter(request => request.contact !== action.payload.contactId)
             }
-        case RECEIVE_CANCEL_FRIEND_REQUEST:
+        case RECEIVE_CANCEL_CONTACT_REQUEST:
             return {
                 ...state,
                 notifications: state.notifications.filter(element => element.type !== action.payload.type && element.requesterId !== action.payload.requesterId),
                 unseen_notifications: decrementNotifIfUpperZero()
             }
-        case ACCEPT_FRIEND_REQUEST:
+        case ACCEPT_CONTACT_REQUEST:
             return {
                 ...state,
-                friends: [...state.friends, action.payload.friend],
+                contacts: [...state.contacts, action.payload.contact],
                 unseen_notifications: decrementNotifIfUpperZero()
             }
-        case RECEIVE_ACCEPT_FRIEND_REQUEST:
+        case RECEIVE_ACCEPT_CONTACT_REQUEST:
             return {
                 ...state,
-                friends: [...state.friends, action.payload.friend]
+                contacts: [...state.contacts, action.payload.contact]
             }
-        case REFUSE_FRIEND_REQUEST:
+        case REFUSE_CONTACT_REQUEST:
             return {
                 ...state,
                 notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
                 unseen_notifications: decrementNotifIfUpperZero()
             }
-        case RECEIVE_REFUSE_FRIEND_REQUEST:
+        case RECEIVE_REFUSE_CONTACT_REQUEST:
             return {
                 ...state,
-                friend_request_sent: state.friend_request_sent.filter(request => request.friend !== action.payload.friendId)
+                contact_request_sent: state.contact_request_sent.filter(request => request.contact !== action.payload.contactId)
             }
-        case DELETE_FRIEND:
+        case DELETE_CONTACT:
             return {
                 ...state,
-                friends: state.friends.filter(f => f.friend !== action.payload.friendId)
+                contacts: state.contacts.filter(f => f.contact !== action.payload.contactId)
             }
 
         /**
@@ -170,6 +170,7 @@ export default function userReducer(state = initialState, action) {
         /**
          * MESSENGER
          */
+
         case RECEIVE_CREATE_CONVERSATION:
             return {
                 ...state,
@@ -178,7 +179,7 @@ export default function userReducer(state = initialState, action) {
         case DELETE_CONVERSATION:
             return {
                 ...state,
-                conversations: state.conversations.filter(conversation => conversation.id !== action.payload.conversationId)
+                conversations: state.conversations.filter(conversation => conversation.id !== action.payload.conversationId),
             }
         case SET_LAST_MESSAGE_SEEN:
             let i = state.conversations.find(conversation => conversation.id === action.payload.conversationId)
@@ -186,6 +187,11 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 conversations: state.conversations
+            }
+        case SET_LAST_CONVERSATION_SEEN:
+            return {
+                ...state,
+                last_conversation: action.payload.conversationId
             }
         case RECEIVE_ADD_MEMBER_CONVERSATION:
             return {
@@ -199,19 +205,17 @@ export default function userReducer(state = initialState, action) {
             }
         case ADD_FAVORITE_CONVERSATION:
             let favorite = state.conversations.findIndex(conversation => conversation.id === action.payload.conversationId)
-            state.conversations[favorite] = true
+            state.conversations[favorite].favorite = true
             return {
                 ...state,
                 conversations: state.conversations,
-                favorite_conversations: state.favorite_conversations.push(action.payload.conversationId)
             }
         case REMOVE_FAVORITE_CONVERSATION:
             let unfavorite = state.conversations.findIndex(conversation => conversation.id === action.payload.conversationId)
-            state.conversations[unfavorite] = false
+            state.conversations[unfavorite].favorite = false
             return {
                 ...state,
                 conversations: state.conversations,
-                favorite_conversations: state.favorite_conversations.filter(item => item !== action.payload.conversationId)
             }
 
         default:

@@ -23,7 +23,7 @@ export const uploadProfilPicture = (data, userId) => {
                         })
                 }
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
@@ -41,7 +41,7 @@ export const deleteProfilPicture = (userId, picture) => {
                         dispatch({ type: DELETE_UPLOADED_PICTURE, payload: `${process.env.REACT_APP_API_URL}api/files/img/random-user.jpg` })
                     })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
@@ -60,7 +60,7 @@ export const uploadCoverPicture = (data, userId) => {
                         })
                 }
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
@@ -74,6 +74,6 @@ export const deleteCoverPicture = (userId, cover_picture) => {
             .then(() => {
                 dispatch({ type: DELETE_COVER_PICTURE, payload: `${process.env.REACT_APP_API_URL}api/files/img/random-cover.jpg` })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { dateParser, fullImage } from '../Utils'
 import { MediumAvatar } from '../tools/global/Avatars'
 import Share from './Share'
-import { followProject, likeProject, unfollowProject, unlikeProject } from '../../actions/project.action'
+import { followProject, likeProject, unfollowProject, unlikeProject } from '../../reducers/project.action'
 import Icon from '../tools/icons/Icon'
 
 const Header = ({ user, project }) => {

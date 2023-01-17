@@ -8,7 +8,7 @@ import { ErrorCard } from '../../tools/global/Error'
 import { ClassicInput } from '../../tools/global/Inputs'
 import EditorToolbar, { formats, modules } from '../../tools/editor/EditorToolbar'
 import { fullImage, randomNbLtID, removeAccents } from '../../Utils'
-import { createActuality } from '../../../actions/project.action'
+import { createActuality } from '../../../reducers/project.action'
 import Icon from '../../tools/icons/Icon'
 
 const AddActuality = ({ project, user }) => {

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 
 export function useTyping(conversation) {
-    const [isTyping, setTyping] = useState(false)
-    const [typingContext, setTypingContext] = useState({})
+    const [isTyping, setTyping] = useState({
+        state: false,
+        context: {}
+    })
 
     useEffect(() => {
         if (conversation._id) {
             let interval
-            if (isTyping && typingContext.conversationId === conversation._id) {
+            if (isTyping.state && isTyping.context.conversationId === conversation._id) {
                 interval = setInterval(() => {
-                    setTyping(false)
+                    setTyping(prevState => ({ ...prevState, state: true }))
                 }, 1000)
             } else {
                 clearInterval(interval)
@@ -17,7 +19,7 @@ export function useTyping(conversation) {
 
             return () => clearInterval(interval)
         }
-    }, [isTyping, typingContext, conversation._id])
+    }, [isTyping, conversation._id])
 
-    return { isTyping, setTyping, typingContext, setTypingContext }
+    return { isTyping, setTyping }
 }

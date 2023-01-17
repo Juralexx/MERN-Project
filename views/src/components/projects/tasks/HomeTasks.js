@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { updateState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus, randomizeCheckboxID } from '../../tools/functions/task'
+import { updateState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus } from '../../tools/functions/task'
 import { addClass, dateParserWithoutYear, getDifference, reverseArray } from '../../Utils'
 import CreateTask from './CreateTask'
 import UpdateTask from './UpdateTask'

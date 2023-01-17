@@ -25,7 +25,7 @@
             .online-user-pseudo {
                 line-height : 16px;
                 color       : var(--text);
-                font-weight : 600;
+                font-weight : 500;
             }
 
             .online-user-status {
@@ -34,30 +34,26 @@
                 color      : var(--text-secondary)
             }
         }
-    }
 
-    &.online {
-        .online-user {
+        &.online {
             .online-user-img {
-                &.connected {
-                    border : 3px solid var(--green);
-                }
+                border : 2px solid var(--green);
             }
         }
-    }
 
-    &.offline {
-        .online-user-img {
-            opacity : 0.3;
-        }
-        .online-user-name {
-            .online-user-pseudo,
-            .online-user-status {
+        &.offline {
+            .online-user-img {
                 opacity : 0.3;
             }
-        }
-        .tools_btn {
-            opacity : 0.3;
+            .online-user-name {
+                .online-user-pseudo,
+                .online-user-status {
+                    opacity : 0.3;
+                }
+            }
+            .tools_btn {
+                opacity : 0.3;
+            }
         }
     }
 
@@ -94,26 +90,9 @@
 
 .online-title {
     position       : relative;
-    display        : inline-block;
     color          : var(--text-secondary);
     margin-bottom  : 4px;
     padding        : 0 10px;
     text-transform : uppercase;
     letter-spacing : .7px;
-    font-weight    : bolder;
-
-    &:before {
-        content          : '';
-        position         : absolute;
-        width            : 16px;
-        height           : 1px;
-        background-color : var(--text-secondary);
-        top              : 50%;
-        transform        : translateY(-50%);
-        right            : 25px;
-    }
-
-    span {
-        margin-left : 26px;
-    }
 }

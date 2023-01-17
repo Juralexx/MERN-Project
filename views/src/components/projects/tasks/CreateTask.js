@@ -6,7 +6,7 @@ import { ClassicInput, DatePickerInput, DropdownInput, Textarea } from '../../to
 import { Button } from '../../tools/global/Button'
 import Icon from '../../tools/icons/Icon'
 import { addClass, removeAccents } from '../../Utils'
-import { createTask } from '../../../actions/project.action'
+import { createTask } from '../../../reducers/project.action'
 import { isUserInSearchResults, isSelected } from '../../tools/functions/member'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../tools/functions/task'
 

@@ -1,4 +1,4 @@
-import { changeTaskState, deleteTask } from "../../../actions/project.action"
+import { changeTaskState, deleteTask } from "../../../reducers/project.action"
 
 /**
  * Update selected task state
@@ -19,7 +19,7 @@ export const updateState = async (element, newState, project, user, websocket, d
         newState: stateToString(newState),
         date: new Date().toISOString()
     }
-    const members = project.members.filter(member => member._id !== user._id)
+    //const members = project.members.filter(member => member._id !== user._id)
     project.members.map(member => {
         return websocket.current.emit('updateTaskState', {
             receiverId: member._id,

@@ -1,5 +1,4 @@
 .conversation-files {
-    overflow-y : auto;
     height     : 100%;
 
     .conversation-file {
@@ -7,18 +6,9 @@
         display         : flex;
         justify-content : space-between;
         align-items     : center;
-        cursor          : pointer;
         margin          : 3px 0;
-        padding         : 8px 10px;
-        border-radius   : var(--rounded-sm);
-
-        &:hover, &:active {
-            background-color : var(--light);
-
-            .file-tools {
-                display : flex;
-            }
-        }
+        padding         : 8px 0;
+        cursor          : pointer;
 
         .file-doc {
             display       : flex;
@@ -29,7 +19,7 @@
             .file-doc-img {
                 width  : 34px;
                 height : 34px;
-                color  : var(--light-blue);
+                color  : var(--primary);
             }
 
             .file-img-preview {
@@ -39,7 +29,7 @@
             }
     
             .file-doc-content {
-                margin-left : 14px;
+                margin-left : 8px;
                 p {
                     &:nth-child(1) {
                         text-overflow      : ellipsis;
@@ -57,27 +47,6 @@
                 }
             }
         }
-
-        .file-tools {
-            display : none;
-
-            button {
-                display         : flex;
-                align-items     : center;
-                justify-content : center;
-                height          : 26px;
-                width           : 26px;
-                background      : var(--xx-light);
-                margin          : 0 4px;
-                border-radius   : 50%;
-                box-shadow      : var(--shadow-tiny);
-
-                svg {
-                    height : 18px;
-                    width  : 18px;
-                }
-            }
-        }
     }
 }
 
@@ -88,7 +57,7 @@
     grid-gap              : 0.5rem;
     width                 : 100%;
     height                : auto;
-    padding               : 10px;
+    padding               : 10px 0;
 
     .conversation-medias-item {
         position : relative;

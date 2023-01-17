@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
-import { useCheckLocation } from '../functions/useCheckLocation'
 import { Link } from 'react-router-dom'
+import Icon from '../../tools/icons/Icon'
 import Modal from '../../tools/global/Modal'
 import ToolsMenu from '../../tools/global/ToolsMenu'
 import Warning from '../../tools/global/Warning'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import { addClass, dateParser } from '../../Utils'
-import { leaveConversation } from '../functions/actions'
-import { IoArrowRedo, IoTrashBin } from 'react-icons/io5'
-import { MdOutlineMessage } from 'react-icons/md'
+import { leaveConversation } from '../actions'
 
 const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch }) => {
-    const { isParam } = useCheckLocation()
     const [navbar, setNavbar] = useState(1)
     const [warning, setWarning] = useState({})
 
@@ -19,8 +16,12 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
         <>
             <Modal open={open} setOpen={setOpen} className="members-modal">
                 <div className="modal_nav pb-3 border-b">
-                    <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>Membres</div>
-                    <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>Administrateurs</div>
+                    <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>
+                        Membres
+                    </div>
+                    <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>
+                        Administrateurs
+                    </div>
                 </div>
                 <div className="conversation-members custom-scrollbar">
                     {navbar === 1 &&
@@ -42,11 +43,20 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
                                     </div>
                                     <ToolsMenu mobile mobileFull>
                                         {member._id !== uid &&
-                                            <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
+                                            <div className="tools_choice">
+                                                <Icon name="Message" />Envoyer un message
+                                            </div>
                                         }
-                                        <div className="tools_choice"><IoArrowRedo /><Link to={"/" + member.pseudo}>Voir le profil</Link></div>
+                                        <div className="tools_choice"><Icon name="Redo" />
+                                            <Link to={"/" + member.pseudo}>Voir le profil</Link>
+                                        </div>
                                         {conversation.owner._id === uid && member._id !== uid &&
-                                            <div className="tools_choice red" onClick={() => { setWarning({ type: 'exclude', member: member }); setOpen(false) }}><IoTrashBin />Supprimer</div>
+                                            <div className="tools_choice red" onClick={() => {
+                                                setWarning({ type: 'exclude', member: member })
+                                                setOpen(false)
+                                            }}>
+                                                <Icon name="Trash" />Supprimer
+                                            </div>
                                         }
                                     </ToolsMenu>
                                 </div>
@@ -54,7 +64,7 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
                         })
                     }
                     {navbar === 2 &&
-                        <div className="conversation-member">
+                        <div className="conversation-member px-[15px]">
                             <div className="flex items-center">
                                 <MediumAvatar pic={conversation.creator.picture} />
                                 <div>
@@ -64,9 +74,15 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
                             </div>
                             <ToolsMenu mobile mobileFull>
                                 {conversation.owner._id !== uid &&
-                                    <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
+                                    <div className="tools_choice">
+                                        <Icon name="Message" />Envoyer un message
+                                    </div>
                                 }
-                                <div className="tools_choice"><IoArrowRedo /><Link to={"/" + conversation.creator.pseudo}>Voir le profil</Link></div>
+                                <div className="tools_choice">
+                                    <Link to={"/" + conversation.creator.pseudo}>
+                                        <Icon name="Redo" />Voir le profil
+                                    </Link>
+                                </div>
                             </ToolsMenu>
                         </div>
                     }
@@ -80,8 +96,11 @@ const MembersModal = ({ uid, websocket, open, setOpen, conversation, dispatch })
                 className="delete"
                 open={warning?.type === 'exclude'}
                 setOpen={setWarning}
-                onValidate={() => leaveConversation(conversation, warning.member._id, uid, websocket, dispatch, isParam)}
-                onClose={() => { setWarning(null); setOpen(true) }}
+                onValidate={() => leaveConversation(conversation, warning.member._id, uid, websocket, dispatch)}
+                onClose={() => {
+                    setWarning(null)
+                    setOpen(true)
+                }}
             >
             </Warning>
         </>

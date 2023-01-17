@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImArrowDown2 } from 'react-icons/im'
+import Icon from '../../tools/icons/Icon';
 
 const ScrollButton = ({ convWrapperRef, scrollTo }) => {
     const [visible, setVisible] = useState(false)
@@ -7,11 +7,10 @@ const ScrollButton = ({ convWrapperRef, scrollTo }) => {
     useEffect(() => {
         let ref = convWrapperRef?.current
         const updatePosition = () => {
-            if (ref?.scrollTop < (ref.scrollHeight - 1000)) {
+            if (ref?.scrollTop < (ref.scrollHeight - 1000))
                 setVisible(true)
-            } else {
+            else
                 setVisible(false)
-            }
         }
         ref?.addEventListener('scroll', updatePosition)
         return () => ref?.removeEventListener('scroll', updatePosition)
@@ -23,7 +22,7 @@ const ScrollButton = ({ convWrapperRef, scrollTo }) => {
                 className="conversation-scroll-btn"
                 onClick={() => scrollTo?.current?.scrollIntoView({ behavior: "smooth" })}
             >
-                <span>Derniers messages</span> <ImArrowDown2 />
+                Derniers messages <Icon name="DoubleArrowRight" />
             </button>
         )
     )

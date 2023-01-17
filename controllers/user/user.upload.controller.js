@@ -11,6 +11,8 @@ import sharp from 'sharp'
 
 /**
  * Upload profil picture
+ * @param {*} req 
+ * @param {*} res 
  */
 
 export const uploadProfilPicture = async (req, res) => {
@@ -57,8 +59,17 @@ export const uploadProfilPicture = async (req, res) => {
     try {
         await UserModel.findByIdAndUpdate(
             req.params.id,
-            { $set: { picture: fileName } },
-            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+            {
+                $set: {
+                    picture: fileName
+                }
+            },
+            {
+                new: true,
+                upsert: true,
+                runValidators: true,
+                setDefaultsOnInsert: true
+            },
             (err, docs) => {
                 if (!err) {
                     return res.send(docs);
@@ -72,8 +83,11 @@ export const uploadProfilPicture = async (req, res) => {
     }
 }
 
-/**********************************************************************************************************************/
-/****************************************************** DELETE ********************************************************/
+/**
+ * Delete profil picture
+ * @param {*} req 
+ * @param {*} res 
+ */
 
 export const deleteProfilPicture = async (req, res) => {
     const __directory = `${__dirname}/../../uploads/users/${req.params.id}`
@@ -90,7 +104,11 @@ export const deleteProfilPicture = async (req, res) => {
     //     UserModel.findByIdAndUpdate(
     //         req.params.id,
     //         { $set: { picture: "/img/random-user.png" } },
-    //         { new: true, upsert: true, setDefaultsOnInsert: true },
+    //         {
+    //            new: true,
+    //            upsert: true,
+    //            setDefaultsOnInsert: true
+    //        },
     //         (err, docs) => {
     //             if (!err) {
     //                 return res.send(docs);
@@ -106,6 +124,8 @@ export const deleteProfilPicture = async (req, res) => {
 
 /**
  * Upload cover picture
+ * @param {*} req 
+ * @param {*} res 
  */
 
 export const uploadCoverPicture = async (req, res) => {
@@ -150,8 +170,17 @@ export const uploadCoverPicture = async (req, res) => {
     try {
         UserModel.findByIdAndUpdate(
             req.body.userId,
-            { $set: { cover_picture: fileName } },
-            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+            {
+                $set: {
+                    cover_picture: fileName
+                }
+            },
+            {
+                new: true,
+                upsert: true,
+                runValidators: true,
+                setDefaultsOnInsert: true
+            },
             (err, docs) => {
                 if (!err) {
                     return res.send(docs);
@@ -167,6 +196,8 @@ export const uploadCoverPicture = async (req, res) => {
 
 /**
  * Delete cover picture
+ * @param {*} req 
+ * @param {*} res 
  */
 
 export const deleteCoverPicture = async (req, res) => {
@@ -180,7 +211,11 @@ export const deleteCoverPicture = async (req, res) => {
                     cover_picture: `${process.env.SERVER_URL}api/files/img/random-cover.jpg`
                 }
             },
-            { new: true, upsert: true, setDefaultsOnInsert: true },
+            {
+                new: true,
+                upsert: true,
+                setDefaultsOnInsert: true
+            },
             (err, docs) => {
                 if (!err) {
                     return res.send(docs);

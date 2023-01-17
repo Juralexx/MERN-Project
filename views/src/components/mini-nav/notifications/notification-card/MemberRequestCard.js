@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { acceptMemberRequest, refuseMemberRequest } from '../../../../actions/project.action'
+import { acceptMemberRequest, refuseMemberRequest } from '../../../../reducers/project.action'
 import { useDispatch } from 'react-redux'
 import { Button } from '../../../tools/global/Button'
 import { fullImage } from '../../../Utils'

@@ -9,19 +9,17 @@ import Actions from './Actions';
 import { MessengerContext } from '../../AppContext';
 import { useEmojis } from './useEmojis';
 import { useClickOutside } from '../../tools/hooks/useClickOutside';
-import { useCheckLocation } from '../functions/useCheckLocation';
 import { useLongPress } from '../../tools/hooks/useLongPress';
 import { SmallAvatar } from '../../tools/global/Avatars';
-import { removeMessage } from '../functions/actions';
-import { convertDeltaToHTML, convertDeltaToStringNoHTML, getUserPseudo, returnMessageFiles } from '../functions/function';
+import { removeMessage } from '../actions';
+import { convertDeltaToHTML, convertDeltaToStringNoHTML, getUserPseudo, returnMessageFiles } from '../functions';
 import { dateParserWithoutYear, fullImage, getHourOnly } from '../../Utils';
 ;
 
 const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
-    const { uid, websocket, currentChat, dispatch, xs } = useContext(MessengerContext)
+    const { uid, websocket, conversations, dispatch, xs } = useContext(MessengerContext)
     const [modify, setModify] = useState(-1)
     const [warning, setWarning] = useState(false)
-    const { isParam } = useCheckLocation()
 
     const [share, setShare] = useState(false)
 
@@ -32,7 +30,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
         onLongPress: () => xs ? setOpened(true) : {},
     })
 
-    const { emojis, handleEmoji } = useEmojis(message, currentChat)
+    const { emojis, handleEmoji } = useEmojis(message, conversations.currentChat)
 
     return (
         <div ref={messageRef}
@@ -46,7 +44,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
                 </div>
                 <div className="message-right">
                     <div className="message-right-top">
-                        {getUserPseudo(currentChat.members, message.sender, message.sender_pseudo)}
+                        {getUserPseudo(conversations.currentChat.members, message.sender, message.sender_pseudo)}
                         <span>{getHourOnly(new Date(message.createdAt))} {message.modified && "- modifié"}</span>
                     </div>
 
@@ -90,7 +88,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
                                     <div className="message-top">
                                         <div className="message-img" style={fullImage(message.shared.sender_picture)}></div>
                                         <div className="message-infos">
-                                            {getUserPseudo(currentChat.members, message.shared.sender, message.shared.sender_pseudo)}
+                                            {getUserPseudo(conversations.currentChat.members, message.shared.sender, message.shared.sender_pseudo)}
                                             <span>{getHourOnly(new Date(message.shared.createdAt))} {message.shared.modified && "(modifié)"}</span>
                                         </div>
                                     </div>
@@ -120,11 +118,13 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
                             members={members}
                         />
                     )}
-                    <Emojis
-                        uid={uid}
-                        emojis={emojis}
-                        handleEmoji={handleEmoji}
-                    />
+                    {emojis.length > 0 &&
+                        <Emojis
+                            uid={uid}
+                            emojis={emojis}
+                            handleEmoji={handleEmoji}
+                        />
+                    }
                 </div>
                 <Actions
                     message={message}
@@ -145,7 +145,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
                         className="delete"
                         open={warning}
                         setOpen={setWarning}
-                        onValidate={() => removeMessage(message, currentChat, uid, websocket, dispatch, isParam)}
+                        onValidate={() => removeMessage(message, conversations.currentChat, uid, websocket, dispatch)}
                         onClose={() => setOpened(false)}
                     >
                         <div className="message-preview">
@@ -173,7 +173,7 @@ const Message = ({ message, uniqueKey, className, handleSubmit, members }) => {
                         setOpen={setShare}
                         message={message}
                         handleSubmit={handleSubmit}
-                        currentChat={currentChat}
+                        currentChat={conversations.currentChat}
                         members={members}
                     />
                 }

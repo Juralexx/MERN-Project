@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { commentTask } from '../../../actions/project.action'
+import { commentTask } from '../../../reducers/project.action'
 import { isDatePassed, stateToBackground, stateToString, statusToBackground, statusToString } from '../../tools/functions/task'
 import { dateParser, getHourOnly, randomNbLtID } from '../../Utils'
 import Modal from '../../tools/global/Modal'

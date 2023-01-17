@@ -1,40 +1,30 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { MessengerContext } from '../AppContext';
-import { useClickOutside } from '../tools/hooks/useClickOutside';
-import { useLongPress } from '../tools/hooks/useLongPress';
+import Icon from '../tools/icons/Icon';
 import ToolsMenu from '../tools/global/ToolsMenu';
 import MobileMenu from '../tools/global/MobileMenu';
+import { useClickOutside } from '../tools/hooks/useClickOutside';
+import { useLongPress } from '../tools/hooks/useLongPress';
 import { addClass, fullImage } from '../Utils';
-import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembers } from './functions/function';
-import { HiLogout, HiOutlineCheck } from 'react-icons/hi';
-import { IoArrowRedo, IoTrashBin } from 'react-icons/io5';
+import { convertDeltaToStringNoHTML, getDate, getMembers, returnConversationPseudo, returnMembersPseudos } from './functions';
+import { deleteConv } from './actions';
 
 const Conversation = ({ conversation, newMessage, notification }) => {
-    const { uid, user, currentChat, changeCurrentChat, xs, navigate } = useContext(MessengerContext)
+    const { uid, user, websocket, conversations, changeCurrentChat, xs, navigate, dispatch } = useContext(MessengerContext)
     const members = useMemo(() => getMembers(conversation, uid), [conversation, uid])
 
-    const [lastMessage, setLastMessageFound] = useState(conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : {})
-    const [date, setDate] = useState()
-    const [unseen, setUnseen] = useState(false)
+    const lastMessageFound = conversation.messages.length > 0 ? conversation.messages[conversation.messages.length - 1] : {}
 
-    const [opened, setOpened] = useState(false)
-    const menuRef = useRef()
-    useClickOutside(menuRef, () => setOpened(false))
-
-    const longPressProps = useLongPress({
-        onClick: () => {
-            changeCurrentChat(conversation)
-            setUnseen(null)
-            navigate(`/messenger/` + conversation._id)
-        },
-        onLongPress: () => xs ? setOpened(true) : {},
+    const [lastMessage, setLastMessage] = useState({
+        message: lastMessageFound,
+        date: Object.keys(lastMessageFound).length > 0 ? getDate(lastMessageFound.createdAt) : getDate(conversation.createdAt),
+        unseen: false,
     })
 
-    useEffect(() => {
-        if (Object.keys(lastMessage).length > 0)
-            setDate(getDate(lastMessage.createdAt))
-        else setDate(getDate(conversation.createdAt))
-    }, [lastMessage, conversation.createdAt])
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (conversation.messages.length > 0) {
@@ -42,26 +32,56 @@ const Conversation = ({ conversation, newMessage, notification }) => {
             if (conv?.last_message_seen !== (null || "")) {
                 const index = conversation.messages.findIndex(e => e._id === conv.last_message_seen)
                 if (Math.abs((conversation.messages.length - 1) - index) > 0) {
-                    setUnseen(true)
+                    setLastMessage(prevState => ({ ...prevState, unseen: true }))
                 }
             }
         }
     }, [user.conversations, conversation.messages, conversation._id])
 
+    /**
+     * 
+     */
+
     useEffect(() => {
         if (newMessage && newMessage.conversationId === conversation._id) {
-            setLastMessageFound(newMessage)
-            setDate('À l\'instant')
+            setLastMessage(prevState => ({
+                ...prevState,
+                message: newMessage,
+                date: 'À l\'instant'
+            }))
         }
         if (notification && notification.conversationId === conversation._id) {
-            setLastMessageFound(notification)
-            setDate('À l\'instant')
-            setUnseen(true)
+            setLastMessage({
+                message: notification,
+                date: 'À l\'instant',
+                unseen: true
+            })
         }
     }, [newMessage, notification, conversation._id])
 
+    /**
+     * 
+     */
+
+    const menuRef = useRef()
+    const [opened, setOpened] = useState(false)
+    useClickOutside(menuRef, () => setOpened(false))
+
+    const longPressProps = useLongPress({
+        onClick: () => {
+            changeCurrentChat(conversation)
+            setLastMessage(prevState => ({ ...prevState, unseen: false }))
+            navigate(`/messenger/` + conversation._id)
+        },
+        onLongPress: () => xs ? setOpened(true) : {},
+    })
+
+    /**
+     * 
+     */
+
     return (
-        <div className={`conversation ${addClass(conversation._id === currentChat._id || opened, "active")}`}>
+        <div className={`conversation ${addClass(conversation._id === conversations.currentChat._id || opened, "active")}`}>
             <div className="conversation_inner" {...longPressProps}>
                 <div className="conversation-img-container">
                     {conversation.type === 'group' ? (
@@ -79,49 +99,76 @@ const Conversation = ({ conversation, newMessage, notification }) => {
                 <div className="conversation-infos">
                     <div className="conversation-infos-top">
                         <div className="conversation-name">
-                            {conversation.name ? conversation.name : returnMembers(members)}
+                            {conversation.name ? conversation.name : returnMembersPseudos(members)}
                         </div>
-                        <div className="conversation-date">{date}</div>
+                        <div className="conversation-date">
+                            {lastMessage.date}
+                        </div>
                     </div>
                     <div className="last-message-wrapper">
-                        {Object.keys(lastMessage)?.length > 0 ? (
-                            <div className={`${unseen ? "last-message notification" : "last-message"}`}>
-                                {returnConversationPseudo(conversation, lastMessage, uid)}
+                        {Object.keys(lastMessage.message)?.length > 0 ? (
+                            <div className={`last-message ${lastMessage.unseen ? "notification" : "clear"}`}>
+                                {returnConversationPseudo(conversation, lastMessage.message, uid)}
                                 <p>
-                                    {Object.keys(lastMessage?.text).length > 0 ? (
-                                        convertDeltaToStringNoHTML(lastMessage)
+                                    {Object.keys(lastMessage?.message.text).length > 0 ? (
+                                        convertDeltaToStringNoHTML(lastMessage.message)
                                     ) : (
-                                        lastMessage?.files?.length > 0 && lastMessage.files[0].name
+                                        lastMessage?.message?.files?.length > 0 && lastMessage.message.files[0].name
                                     )}
                                 </p>
                             </div>
                         ) : (
-                            <div className="last-message"><p>Nouvelle conversation - <em>Envoyer un message</em></p></div>
+                            <div className="last-message">
+                                <p>Nouvelle conversation - <em>Envoyer un message</em></p>
+                            </div>
                         )}
                     </div>
                 </div>
-                {unseen && <div className="unseen-badge"></div>}
+                {lastMessage.unseen &&
+                    <div className="unseen-badge"></div>
+                }
             </div>
             <div className={`conversation-toolbox ${addClass(opened, 'active')}`} ref={menuRef}>
-                {!xs ? (
-                    <ToolsMenu placement="bottom" onClick={() => setOpened(!opened)}>
-                        <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
-                        {conversation.type === 'dialog' &&
-                            <div className="tools_choice"><IoArrowRedo />Voir le profil</div>
-                        }
-                        <div className="tools_choice"><HiLogout />Quitter la conversation</div>
-                        <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
-                    </ToolsMenu>
-                ) : (
-                    <MobileMenu open={opened} setOpen={setOpened}>
-                        <div className="tools_choice"><HiOutlineCheck />Marquer comme lu</div>
-                        {conversation.type === 'dialog' &&
-                            <div className="tools_choice"><IoArrowRedo />Voir le profil</div>
-                        }
-                        <div className="tools_choice"><HiLogout />Quitter la conversation</div>
-                        <div className="tools_choice red"><IoTrashBin />Supprimer la conversation</div>
-                    </MobileMenu>
-                )}
+                <ToolsMenu mobile mobileFull onClick={() => setOpened(!opened)}>
+                    <div className="tools_choice">
+                        <Icon name="Check" /> Marquer comme lu
+                    </div>
+                    {conversation.type === 'dialog' &&
+                        <div className="tools_choice">
+                            <Link to={`/user/${members[0].pseudo}`}>
+                                <Icon name="Reply" /> Voir le profil
+                            </Link>
+                        </div>
+                    }
+                    <div className="tools_choice">
+                        <Icon name="Signout" /> Quitter la conversation
+                    </div>
+                    {conversation.creator._id === uid &&
+                        <div className="tools_choice red" onClick={() => deleteConv(conversation, conversations, user, websocket, dispatch)}>
+                            <Icon name="Trash" /> Supprimer
+                        </div>
+                    }
+                </ToolsMenu>
+                <MobileMenu open={opened} setOpen={setOpened} onClick={() => setOpened(!opened)}>
+                    <div className="tools_choice">
+                        <Icon name="Check" /> Marquer comme lu
+                    </div>
+                    {conversation.type === 'dialog' &&
+                        <div className="tools_choice">
+                            <Link to={`/user/${members[0].pseudo}`}>
+                                <Icon name="Reply" /> Voir le profil
+                            </Link>
+                        </div>
+                    }
+                    <div className="tools_choice">
+                        <Icon name="Signout" /> Quitter la conversation
+                    </div>
+                    {conversation.creator._id === uid &&
+                        <div className="tools_choice red" onClick={() => deleteConv(conversation, conversations, user, websocket, dispatch)}>
+                            <Icon name="Trash" /> Supprimer
+                        </div>
+                    }
+                </MobileMenu>
             </div>
         </div>
     );

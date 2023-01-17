@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AvatarEditor from 'react-avatar-editor'
-import { deleteProfilPicture, uploadProfilPicture } from "../../../actions/user.action.upload";
+import { deleteProfilPicture, uploadProfilPicture } from "../../../reducers/user.action.upload";
 import Modal from '../../tools/global/Modal'
 import { Button, IconToggle, TextButton } from "../../tools/global/Button";
 import { fullImage } from "../../Utils";

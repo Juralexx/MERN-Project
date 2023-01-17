@@ -2,7 +2,7 @@ import {
     CREATE_TASK,
     CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE,
     RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES, RECEIVE_DELETE_PICTURES, UPDATE_PROJECT, CREATE_QNA, RECEIVE_CREATE_QNA, RECEIVE_UPDATE_QNA, DELETE_QNA, RECEIVE_DELETE_QNA, UPDATE_QNA, CREATE_ACTUALITY, RECEIVE_CREATE_ACTUALITY, UPDATE_ACTUALITY, RECEIVE_UPDATE_ACTUALITY, DELETE_ACTUALITY, RECEIVE_DELETE_ACTUALITY, COMMENT_TASK, RECEIVE_COMMENT_TASK
-} from "../actions/project.action";
+} from "../reducers/project.action";
 
 const initialState = {}
 
@@ -67,77 +67,50 @@ export default function projectReducer(state = initialState, action) {
                 works: action.payload.works,
             }
 
-        /*******************************************************************************************************************************/
-        /************************************************************ LIKE *************************************************************/
+        /**
+         * Like / Unlike cases
+         */
 
         case LIKE:
-            return Object.keys(state).map((project) => {
-                if (project._id === action.payload.projectId) {
-                    return {
-                        ...project,
-                        likers: [action.payload.userId, ...project.likers]
-                    }
-                }
-                return project
-            })
+            return {
+                ...state,
+                likers: [...state.likers, action.payload.userId]
+            }
         case UNLIKE:
-            return Object.keys(state).map((project) => {
-                if (project._id === action.payload.projectId) {
-                    return {
-                        ...project,
-                        likers: project.likers.filter((UnlikerId) => UnlikerId !== action.payload.userId)
-                    }
-                }
-                return project
-            })
+            return {
+                ...state,
+                likers: state.likers.filter(liker => liker !== action.payload.userId)
+            }
 
-        /*******************************************************************************************************************************/
-        /********************************************************** FOLLOW *************************************************************/
+        /**
+         * Follow / Unfollow cases
+         */
 
         case FOLLOW:
-            return Object.keys(state).map((project) => {
-                if (project._id === action.payload.projectId) {
-                    return {
-                        ...project,
-                        followers: [action.payload.userId, ...project.followers]
-                    }
-                }
-                return project
-            })
+            return {
+                ...state,
+                followers: [...state.followers, action.payload.userId]
+            }
         case UNFOLLOW:
-            return Object.keys(state).map((project) => {
-                if (project._id === action.payload.projectId) {
-                    return {
-                        ...project,
-                        followers: project.followers.filter((unfollowerId) => unfollowerId !== action.payload.followerId)
-                    }
-                }
-                return project
-            })
+            return {
+                ...state,
+                followers: state.followers.filter(follower => follower !== action.payload.userId)
+            }
 
-        /*******************************************************************************************************************************/
-        /********************************************************** FAVORITES **********************************************************/
+        /**
+         * Add to favorites / Remove from favorites cases
+         */
 
         case FAVORITE:
-            return Object.keys(state).map((project) => {
-                if (project._id === action.payload.projectId) {
-                    return {
-                        ...project,
-                        favorites: [action.payload.userId, ...project.favorites]
-                    }
-                }
-                return project
-            })
+            return {
+                ...state,
+                favorites: [...state.favorites, action.payload.userId]
+            }
         case UNFAVORITE:
-            return Object.keys(state).map((project) => {
-                if (project._id === action.payload.projectId) {
-                    return {
-                        ...project,
-                        favorites: project.favorites.filter((userId) => userId !== action.payload.userId)
-                    }
-                }
-                return project
-            })
+            return {
+                ...state,
+                favorites: state.favorites.filter(favorite => favorite !== action.payload.userId)
+            }
 
         /*******************************************************************************************************************************/
         /****************************************************** LEAVE PROJECT **********************************************************/

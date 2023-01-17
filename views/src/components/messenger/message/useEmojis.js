@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react"
-import { addEmoji, removeEmoji } from "../../../actions/messenger.action"
+import { addEmoji, removeEmoji } from "../../../reducers/messenger.action"
 import { MessengerContext } from "../../AppContext"
 import { randomNbID } from "../../Utils"
-import { otherMembersIDs } from "../functions/function"
-import { useCheckLocation } from "../functions/useCheckLocation"
+import { otherMembersIDs } from "../functions"
+import { useCheckLocation } from "../hooks/useCheckLocation"
 
 export function useEmojis(message, conversation) {
     const { user, websocket, dispatch } = useContext(MessengerContext)
     const [emojis, setEmojis] = useState([])
-    const { isParam } = useCheckLocation()
+    const { doesLocationIncludesParam } = useCheckLocation()
 
     /**
      * Concat same emojis
@@ -33,7 +33,7 @@ export function useEmojis(message, conversation) {
      */
 
     const handleEmoji = async (emoji) => {
-        await isParam(conversation._id, '/messenger/' + conversation._id)
+        await doesLocationIncludesParam(conversation._id, '/messenger/' + conversation._id)
         
         let isEmoji = {}
         if (emojis.length > 0) {

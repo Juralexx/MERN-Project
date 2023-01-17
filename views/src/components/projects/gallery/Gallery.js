@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone';
 import { ErrorCard } from '../../tools/global/Error';
-import { deleteProjectPictures, updateProjectPictures } from '../../../actions/project.action'
+import { deleteProjectPictures, updateProjectPictures } from '../../../reducers/project.action'
 import { download } from '../../Utils';
 import FsLightbox from 'fslightbox-react';
 import Oval from '../../tools/loaders/Oval'

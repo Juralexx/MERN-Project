@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import FriendRequestCard from './FriendRequestCard'
+import ContactRequestCard from './ContactRequestCard'
 import MemberRequestCard from './MemberRequestCard'
 import MessageCard from './MessageCard'
 
@@ -25,8 +25,8 @@ const NotificationCard = ({ notification, setSend, send, user, websocket }) => {
                         setSend={setSend}
                     />
                 }
-                {notification.type === "friend-request" &&
-                    <FriendRequestCard
+                {notification.type === "contact-request" &&
+                    <ContactRequestCard
                         user={user}
                         websocket={websocket}
                         notification={notification}

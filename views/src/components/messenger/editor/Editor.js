@@ -12,19 +12,17 @@ import Mention from './Mention';
 import Emoji from './Emoji';
 import Link from './Link';
 import Typing from '../tools/Typing';
-import ScrollButton from '../tools/ScrollButton';
-import { isFile, isImage, isVideo, returnEditorFiles, removeFile, otherMembersIDs, returnMembers, getEditorHeight, pickEmoji } from '../functions/function';
-import { addClass } from '../../Utils';
-import { MdClear, MdOutlineLink, MdOutlineAlternateEmail, MdOutlineAdd } from 'react-icons/md';
-import { IoSend, IoText } from 'react-icons/io5'
-import { BsEmojiSmile } from 'react-icons/bs'
-import { FaPhotoVideo } from 'react-icons/fa'
+import Icon from '../../tools/icons/Icon';
+import { returnEditorFiles, removeFile, otherMembersIDs, returnMembersPseudos, getEditorHeight, pickEmoji } from '../functions';
+import { addClass, isFile, isImage, isVideo } from '../../Utils';
 
-const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef, convWrapperRef }) => {
-    const { user, websocket, currentChat } = useContext(MessengerContext)
+const Editor = ({ handleSubmit, members, isTyping }) => {
+    const { user, websocket, conversations } = useContext(MessengerContext)
 
     const [isToolbar, setToolbar] = useState(false)
     const [isTools, setTools] = useState(false)
+    const [isLink, setLink] = useState(false)
+
     const [disabled, setDisabled] = useState(true)
     const [focused, setFocused] = useState(false)
     const [position, setPosition] = useState(0)
@@ -37,8 +35,6 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
 
     const { isMention, setMention, mentionsResults, setMentionResults, openMention } = useMention(quill, members)
     const { isEmoji, setEmoji, emojisResults, setEmojisResults, emojiArr, detectEmojis } = useEmoji(quill)
-
-    const [isLink, setLink] = useState(false)
 
     /**
      * Handle message 
@@ -53,12 +49,12 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
 
         if (length > 1) {
             setDisabled(false)
-            if (!isTyping) {
-                otherMembersIDs(currentChat, user._id).map(memberId => {
+            if (!isTyping.state) {
+                otherMembersIDs(conversations.currentChat, user._id).map(memberId => {
                     return websocket.current.emit('typing', {
                         sender: user.pseudo,
                         receiverId: memberId,
-                        conversationId: currentChat._id
+                        conversationId: conversations.currentChat._id
                     })
                 })
             }
@@ -144,7 +140,10 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
             files.forEach(file => {
                 if (isImage(file) || isVideo(file) || isFile(file)) {
                     if (file.size > 10000000) {
-                        setUploadErr(err => [...err, { name: file.name, error: 'Fichier trop volumineux. Poid maximum accepté : 10Mo' }])
+                        setUploadErr(err => [...err, {
+                            name: file.name,
+                            error: 'Fichier trop volumineux. Poid maximum accepté : 10Mo'
+                        }])
                     } else {
                         setFiles(f => [...f, file])
                         if (disabled) {
@@ -152,7 +151,10 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
                         }
                     }
                 } else {
-                    setUploadErr(err => [...err, { name: file.name, error: 'Ce type de fichier n\'est pas accepté' }])
+                    setUploadErr(err => [...err, {
+                        name: file.name,
+                        error: 'Ce type de fichier n\'est pas accepté'
+                    }])
                 }
             })
             quillRef.current.focus()
@@ -160,15 +162,10 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
     })
 
     return (
-        <div className="conversation-bottom">
+        <>
             <Typing
                 isTyping={isTyping}
-                typingContext={typingContext}
-                currentChat={currentChat}
-            />
-            <ScrollButton
-                convWrapperRef={convWrapperRef}
-                scrollTo={lastmessageRef}
+                currentChat={conversations.currentChat}
             />
             <div className={`conversation-toolsbox ${addClass(isDragActive, "active")}`}>
                 <div className="message-text-editor">
@@ -201,7 +198,7 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
                         />
                         <ReactQuill
                             ref={quillRef}
-                            placeholder={`Envoyer un message à ${returnMembers(members)}`}
+                            placeholder={`Envoyer un message à ${returnMembersPseudos(members)}`}
                             modules={modules}
                             formats={formats}
                             defaultValue=""
@@ -209,10 +206,14 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
                             onChange={handleNewMessage}
                             onKeyUp={event => {
                                 detectEmojis(event)
-                                event.keyCode === 13 && handleSubmit(quill, currentChat, files)
+                                event.keyCode === 13 && handleSubmit(quill, conversations.currentChat, files)
                             }}
                         />
-                        <div {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })} style={getEditorHeight(quill, files, filesRef)} onClick={() => { setFocused(true); quillRef?.current?.focus() }}>
+                        <div
+                            {...getRootProps({ className: `message-dropzone ${focused && files.length === 0 ? "hidden" : "block"}` })}
+                            style={getEditorHeight(quill, files, filesRef)}
+                            onClick={() => { setFocused(true); quillRef?.current?.focus() }}
+                        >
                             <input {...getInputProps()} name="files" />
                         </div>
                         <div className={`editor-files-container ${files.length === 0 ? "!hidden" : "flex"}`} ref={filesRef}>
@@ -221,7 +222,9 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
                                     return (
                                         <div className="files-block" key={key}>
                                             {returnEditorFiles(file)}
-                                            <div className="delete-btn" onClick={() => setFiles(removeFile(files, key))}><MdClear /></div>
+                                            <div className="delete-btn" onClick={() => setFiles(removeFile(files, key))}>
+                                                <Icon name="Cross" />
+                                            </div>
                                         </div>
                                     )
                                 })
@@ -231,20 +234,41 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
                 </div>
                 <div className="message-text-tools">
                     <div className="text-tools-left">
-                        <button className={`menu-tools-btn ${addClass(isTools, "active")}`} onClick={() => setTools(!isTools)}><MdOutlineAdd /></button>
+                        <button className={`menu-tools-btn ${addClass(isTools, "active")}`} onClick={() => setTools(!isTools)}>
+                            <Icon name="Plus" />
+                        </button>
                         <div className="tools-group">
-                            <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
-                            <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
-                            <button className="text-tools" onClick={() => setToolbar(!isToolbar)}><IoText /></button>
+                            <EmojiPicker
+                                placement="top-start"
+                                btnClassName="text-tools"
+                                icon={<Icon name="Emoji" />}
+                                onSelect={emoji => pickEmoji(emoji, quill)}
+                                onClick={() => quillRef?.current?.focus()}
+                            />
+                            <button className="text-tools" onClick={() => openMention(quill)}>
+                                <Icon name="At" />
+                            </button>
+                            <button className="text-tools" onClick={() => setToolbar(!isToolbar)}>
+                                <Icon name="Font" />
+                            </button>
                         </div>
                         <div className="tools-group">
-                            <button className="text-tools files-upload" {...getRootProps()}><input {...getInputProps()} name="files" /><FaPhotoVideo /></button>
-                            <button className="text-tools" onClick={() => setLink(!isLink)}><MdOutlineLink /></button>
+                            <button className="text-tools files-upload" {...getRootProps()}>
+                                <input {...getInputProps()} name="files" />
+                                <Icon name="Picture" />
+                            </button>
+                            <button className="text-tools" onClick={() => setLink(!isLink)}>
+                                <Icon name="Link" />
+                            </button>
                         </div>
                     </div>
-                    {isTools && <div className="message-text-tools-menu"></div>}
+                    {isTools &&
+                        <div className="message-text-tools-menu"></div>
+                    }
                     <div className="text-tools-right">
-                        <button className="send-tool" disabled={disabled} onClick={() => handleSubmit(quill, currentChat, files)}><IoSend /></button>
+                        <button className="send-tool" disabled={disabled} onClick={() => handleSubmit(quill, conversations.currentChat, files)}>
+                            <Icon name="Send" />
+                        </button>
                     </div>
                 </div>
                 {uploadErr.length > 0 &&
@@ -256,7 +280,7 @@ const Editor = ({ handleSubmit, members, isTyping, typingContext, lastmessageRef
                     />
                 }
             </div>
-        </div>
+        </>
     )
 }
 

@@ -44,7 +44,7 @@ const Location = ({ datas, setDatas, setError, error }) => {
         else {
             const response = await axios
                 .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${search.query}`))
-                .catch((err) => { console.log("Error: ", err) })
+                .catch(err => { console.log("Error: ", err) })
             if (response) {
                 setSearch(data => ({ ...data, results: response.data }))
                 setLoading(true)

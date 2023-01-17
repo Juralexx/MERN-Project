@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useParams, Navigate } from 'react-router-dom';
-import { getProject } from '../../actions/project.action';
+import { getProject } from '../../reducers/project.action';
 import Header from './Header'
 import HomeMembers from './members/HomeMembers';
 import Members from './members/Members';

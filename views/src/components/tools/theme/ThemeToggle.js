@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeContext, themes } from './Theme';
-import { updateTheme } from '../../../actions/user.action';
+import { updateTheme } from '../../../reducers/user.action';
 import Icon from '../icons/Icon';
 
 const ThemeToggle = () => {

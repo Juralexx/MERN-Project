@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { createQNA } from '../../../actions/project.action'
+import { createQNA } from '../../../reducers/project.action'
 import { Button, TextButton } from '../../tools/global/Button'
 import { ErrorCard } from '../../tools/global/Error'
 import { ClassicInput, Textarea } from '../../tools/global/Inputs'

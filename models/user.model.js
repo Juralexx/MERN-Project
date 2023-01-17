@@ -96,17 +96,25 @@ const UserModel = new mongoose.Schema(
             type: [],
         },
 
-        friends: {
+        contacts: {
             type: [],
-            friend: {
+            contact: {
                 type: String,
                 requestedAt: Date,
             }
         },
 
-        friend_request_sent: {
+        contact_request_sent: {
             type: [],
-            friend: {
+            contact: {
+                type: String,
+                requestedAt: Date,
+            }
+        },
+
+        contact_request: {
+            type: [],
+            contact: {
                 type: String,
                 requestedAt: Date,
             }
@@ -122,8 +130,8 @@ const UserModel = new mongoose.Schema(
             }
         },
 
-        favorite_conversations: {
-            type: [String]
+        last_conversation: {
+            type: String,
         },
 
         notifications: {

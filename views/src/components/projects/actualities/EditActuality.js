@@ -8,7 +8,7 @@ import { Button, TextButton } from '../../tools/global/Button'
 import { ErrorCard } from '../../tools/global/Error'
 import { ClassicInput } from '../../tools/global/Inputs'
 import { fullImage, removeAccents } from '../../Utils'
-import { updateActuality } from '../../../actions/project.action'
+import { updateActuality } from '../../../reducers/project.action'
 import Icon from '../../tools/icons/Icon'
 
 const EditActuality = ({ project }) => {

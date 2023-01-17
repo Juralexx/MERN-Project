@@ -16,7 +16,7 @@ const SettingsMenu = ({ open, user, websocket, onlineUsers }) => {
     const logout = async () => {
         onlineUsers.forEach(u => {
             websocket.current.emit("logout", {
-                receiverId: u.friend,
+                receiverId: u._id,
                 userId: user._id,
             })
         })

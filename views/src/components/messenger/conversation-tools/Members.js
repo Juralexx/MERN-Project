@@ -1,63 +1,66 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MessengerContext } from '../../AppContext'
-import { useOneLevelSearch } from '../../tools/hooks/useOneLevelSearch'
-import { useCheckLocation } from '../functions/useCheckLocation'
-import { MediumAvatar } from '../../tools/global/Avatars'
-import { dateParser } from '../../Utils'
-import { IconInput } from '../../tools/global/Inputs'
-import ToolsMenu from '../../tools/global/ToolsMenu'
+import Icon from '../../tools/icons/Icon'
 import Warning from '../../tools/global/Warning'
-import { leaveConversation } from '../functions/actions'
-import { MdOutlineMessage } from 'react-icons/md'
-import { IoArrowRedo, IoTrashBin } from 'react-icons/io5'
-import { BiSearchAlt, BiUserPlus } from 'react-icons/bi'
+import ToolsMenu from '../../tools/global/ToolsMenu'
+import { MediumAvatar } from '../../tools/global/Avatars'
+import { IconInput } from '../../tools/global/Inputs'
+import { dateParser } from '../../Utils'
+import { leaveConversation } from '../actions'
+import { useOneLevelSearch } from '../../tools/custom-hooks/useOneLevelSearch'
 
 const Members = ({ setAddMembers, conversation }) => {
     const { uid, websocket, dispatch } = useContext(MessengerContext)
-    const { oneLevelSearch, isInResults, query, setQuery } = useOneLevelSearch(conversation.files, 'name')
-    const { isParam } = useCheckLocation()
+    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(conversation.files, 'name')
     const [warning, setWarning] = useState(-1)
 
     return (
-        <div className="tools-displayer-content">
-            <div className="px-3">
-                <IconInput
-                    className="full is_start_icon small mb-2"
-                    placeholder="Rechercher un membre..."
-                    icon={<BiSearchAlt />}
-                    value={query}
-                    onInput={e => setQuery(e.target.value)}
-                    onChange={oneLevelSearch}
-                />
-            </div>
-            <div className="add-more-users !px-4" onClick={() => setAddMembers(true)}>
-                <BiUserPlus />
-                <p>Ajouter des personnes</p>
+        <div className="tools-displayer-content custom-scrollbar">
+            <IconInput
+                className="is_start_icon mb-2"
+                placeholder="Rechercher un membre..."
+                icon={<Icon name="Search" />}
+                value={search.query}
+                onInput={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
+                onChange={oneLevelSearch}
+            />
+            <div className="add-more-users" onClick={() => setAddMembers(true)}>
+                <Icon name="AddUser" /> Ajouter des personnes
             </div>
             <div className="conversation-members custom-scrollbar">
                 {conversation.members.map((member, key) => {
                     return (
-                        <div key={key}>
-                            <div className={`${isInResults(member, "flex")} conversation-member !px-4`}>
-                                <div className="flex items-center">
-                                    <MediumAvatar pic={member.picture} />
-                                    <div>
-                                        <div className="bold">{member.pseudo}</div>
-                                        <div className="f-12 txt-sec">Membre depuis le {dateParser(member.date)}</div>
+                        <div className={`${isUserInSearchResults(member, "flex")} conversation-member`} key={key}>
+                            <div className="flex items-center">
+                                <MediumAvatar pic={member.picture} />
+                                <div>
+                                    <div className="bold">
+                                        {member.pseudo}
                                     </div>
-
+                                    <div className="f-12 txt-sec">
+                                        Membre depuis le {dateParser(member.date)}
+                                    </div>
                                 </div>
-                                <ToolsMenu mobile mobileFull>
-                                    {member._id !== uid &&
-                                        <div className="tools_choice"><MdOutlineMessage />Envoyer un message</div>
-                                    }
-                                    <div className="tools_choice"><IoArrowRedo /><Link to={"/" + member.pseudo}>Voir le profil</Link></div>
-                                    {conversation.owner._id === uid && member._id !== uid &&
-                                        <div className="tools_choice red" onClick={() => setWarning(key)}><IoTrashBin />Supprimer</div>
-                                    }
-                                </ToolsMenu>
                             </div>
+
+                            <ToolsMenu mobile mobileFull>
+                                {member._id !== uid &&
+                                    <div className="tools_choice">
+                                        <Icon name="Message" /> Envoyer un message
+                                    </div>
+                                }
+                                <div className="tools_choice">
+                                    <Link to={"/" + member.pseudo}>
+                                        <Icon name="Redo" /> Voir le profil
+                                    </Link>
+                                </div>
+                                {conversation.owner._id === uid && member._id !== uid &&
+                                    <div className="tools_choice red" onClick={() => setWarning(key)}>
+                                        <Icon name="Trash" /> Supprimer
+                                    </div>
+                                }
+                            </ToolsMenu>
 
                             <Warning
                                 title={`Exclusion de ${member.pseudo}`}
@@ -66,10 +69,9 @@ const Members = ({ setAddMembers, conversation }) => {
                                 className="delete"
                                 open={warning === key}
                                 setOpen={setWarning}
-                                onValidate={() => leaveConversation(conversation, member._id, uid, websocket, dispatch, isParam)}
+                                onValidate={() => leaveConversation(conversation, member._id, uid, websocket, dispatch)}
                                 onClose={() => setWarning(false)}
-                            >
-                            </Warning>
+                            />
                         </div>
                     )
                 })}

@@ -14,7 +14,9 @@ export const sendMemberRequest = async (req, res) => {
                     member_requests: req.body.request
                 }
             },
-            { news: true },
+            {
+                new: true
+            },
         )
 
         await UserModel.findByIdAndUpdate(
@@ -25,10 +27,14 @@ export const sendMemberRequest = async (req, res) => {
                 },
                 $inc: { unseen_notifications: 1 }
             },
-            { news: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
@@ -46,7 +52,10 @@ export const cancelMemberRequest = async (req, res) => {
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
 
         await UserModel.findByIdAndUpdate(
@@ -61,8 +70,10 @@ export const cancelMemberRequest = async (req, res) => {
             },
             { new: true, upsert: true, runValidators: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
@@ -87,7 +98,10 @@ export const acceptMemberRequest = async (req, res) => {
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
 
         await UserModel.findByIdAndUpdate(
@@ -105,8 +119,10 @@ export const acceptMemberRequest = async (req, res) => {
             },
             { new: true, upsert: true, runValidators: true },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
@@ -124,9 +140,14 @@ export const refuseMemberRequest = async (req, res) => {
                     }
                 },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.updateOne(
             { _id: req.body.userId },
@@ -138,10 +159,17 @@ export const refuseMemberRequest = async (req, res) => {
                 },
                 $inc: { unseen_notifications: -1 }
             },
-            { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+            {
+                new: true,
+                upsert: true,
+                runValidators: true,
+                setDefaultsOnInsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
@@ -166,10 +194,14 @@ export const nameAdmin = async (req, res) => {
                     "members.$.role": "admin",
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
@@ -191,10 +223,15 @@ export const removeAdmin = async (req, res) => {
                     "members.$.role": "user",
                 }
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
@@ -217,7 +254,9 @@ export const leaveProject = async (req, res) => {
                     activity_feed: req.body.activity
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
 
         await UserModel.findByIdAndUpdate(
@@ -225,10 +264,14 @@ export const leaveProject = async (req, res) => {
             {
                 $pull: { projects: req.params.id }
             },
-            { news: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });

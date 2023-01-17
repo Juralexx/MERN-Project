@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 import { returnNetworkSVG } from '../tools/functions/networks';
 import { deleteItemFromArray, onlyLettersSpacesAndDashes } from '../Utils';
-import { updateUser } from '../../actions/user.action';
+import { updateUser } from '../../reducers/user.action';
 import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 import { TextButton, Button } from '../tools/global/Button';
@@ -59,7 +59,7 @@ const Edit = ({ user }) => {
         else {
             const response = await axios
                 .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${searchQuery}`))
-                .catch((err) => { console.log("Error: ", err) })
+                .catch(err => { console.log("Error: ", err) })
             if (response) {
                 setLocationsFound(response.data)
                 if (searchQuery.length > 2) {

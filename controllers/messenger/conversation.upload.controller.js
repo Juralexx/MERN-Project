@@ -46,10 +46,15 @@ export const uploadConversationPicture = async (req, res) => {
         await ConversationModel.findByIdAndUpdate(
             { _id: req.params.id },
             { $set: { picture: fileName } },
-            { new: true, upsert: true }
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         return res.status(400).send({ message: err });
     }
@@ -72,10 +77,16 @@ export const deleteConversationPicture = (req, res) => {
                     picture: ""
                 }
             },
-            { new: true, upsert: true, setDefaultsOnInsert: true }
+            {
+                new: true,
+                upsert: true,
+                setDefaultsOnInsert: true
+            }
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
     } catch (err) {
         return res.status(400).send({ message: err });

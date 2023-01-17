@@ -10,18 +10,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 import { signUpErrors, signInErrors } from './../utils/error.utils.js'
 
 /**
- * Create unique token
+ * Create unique token to validate user authenticity
  */
 
 const maxAge = 3000 * 24 * 60 * 60 * 1000
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.TOKEN_SECRET, {
-        expiresIn: maxAge
-    })
+    return jwt.sign({ id }, process.env.TOKEN_SECRET, { expiresIn: maxAge })
 }
 
 /**
- * Signup
+ * Register function
  */
 
 export const signUp = async (req, res) => {
@@ -57,7 +55,12 @@ export const signUp = async (req, res) => {
                         cover_picture: CoverPicName,
                     }
                 },
-                { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true },
+                {
+                    new: true,
+                    upsert: true,
+                    runValidators: true,
+                    setDefaultsOnInsert: true
+                },
                 (err, docs) => {
                     if (!err) {
                         return res.status(201).json({ user: user._id })
@@ -77,7 +80,9 @@ export const signUp = async (req, res) => {
 }
 
 /**
- * Signin
+ * Create user account
+ * @param {*} email User email used to sign in
+ * @param {*} password User password
  */
 
 export const signIn = async (req, res) => {
@@ -96,7 +101,9 @@ export const signIn = async (req, res) => {
 }
 
 /**
- * Logout
+ * Logout function, remove the unique jwt token and redirect to the root page
+ * @param {*} req 
+ * @param {*} res 
  */
 
 export const logout = async (req, res) => {

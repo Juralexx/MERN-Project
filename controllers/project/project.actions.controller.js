@@ -3,7 +3,13 @@ import UserModel from '../../models/user.model.js'
 import mongoose from 'mongoose'
 const ObjectID = mongoose.Types.ObjectId
 
-export const likeProject = async (req, res) => {
+/**
+ * Like projet function
+ * @param {*} id (params) ID for the project to like
+ * @param {*} userId ID of the user that likes
+ */
+
+export const like = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -12,28 +18,46 @@ export const likeProject = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $addToSet: { likers: req.body.id }
+                $addToSet: {
+                    likers: req.body.userId
+                }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.id },
+            { _id: req.body.userId },
             {
-                $addToSet: { liked: req.params.id }
+                $addToSet: {
+                    liked: req.params.id
+                }
             },
-            { news: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
     }
 }
 
-export const unlikeProject = async (req, res) => {
+/**
+ * Unlike projet function
+ * @param {*} id (params) ID for the project to unlike
+ * @param {*} userId ID of the user that unlikes
+ */
+
+export const unlike = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
@@ -42,29 +66,47 @@ export const unlikeProject = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { likers: req.body.id }
+                $pull: {
+                    likers: req.body.userId
+                }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.id },
+            { _id: req.body.userId },
             {
-                $pull: { liked: req.params.id }
+                $pull: {
+                    liked: req.params.id
+                }
             },
-            { news: true },
+            {
+                new: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(400).json({ message: err });
     }
 }
+
+/**
+ * Follow projet function
+ * @param {*} id (params) ID for the project to follow
+ * @param {*} userId ID of the user that follows
+ */
 
 export const follow = async (req, res) => {
-    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.followerId)) {
+    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.userId)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
 
@@ -72,29 +114,49 @@ export const follow = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $addToSet: { followers: req.body.followerId }
+                $addToSet: {
+                    followers: req.body.userId
+                }
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.followerId },
+            { _id: req.body.userId },
             {
-                $addToSet: { followed: req.params.id }
+                $addToSet: {
+                    followed: req.params.id
+                }
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
     }
 }
+
+/**
+ * Unfollow projet function
+ * @param {*} id (params) ID for the project to unfollow
+ * @param {*} userId ID of the user that unfollows
+ */
 
 export const unfollow = async (req, res) => {
-    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.followerId)) {
+    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.userId)) {
         return res.status(400).send('Unknown ID : ' + req.params.id)
     }
 
@@ -102,26 +164,46 @@ export const unfollow = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { followers: req.body.followerId }
+                $pull: {
+                    followers: req.body.userId
+                }
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.followerId },
+            { _id: req.body.userId },
             {
-                $pull: { followed: req.params.id }
+                $pull: {
+                    followed: req.params.id
+                }
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
     }
 }
+
+/**
+ * Add to favorites projet function
+ * @param {*} id (params) ID for the project to add to favorite
+ * @param {*} userId ID of the user that adds projet to favorites
+ */
 
 export const favorite = async (req, res) => {
     if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.userId)) {
@@ -132,26 +214,46 @@ export const favorite = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $addToSet: { favorites: req.body.userId },
+                $addToSet: {
+                    favorites: req.body.userId
+                },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.userId },
             {
-                $addToSet: { favorites: req.params.id },
+                $addToSet: {
+                    favorites: req.params.id
+                },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })
     }
 }
+
+/**
+ * Remove from favorites projet function
+ * @param {*} id (params) ID for the project to remove from favorite
+ * @param {*} userId ID of the user that removes projet from favorites
+ */
 
 export const unfavorite = async (req, res) => {
     if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.userId)) {
@@ -162,21 +264,35 @@ export const unfavorite = async (req, res) => {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
-                $pull: { favorites: req.body.userId },
+                $pull: {
+                    favorites: req.body.userId
+                },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
 
         await UserModel.findByIdAndUpdate(
             { _id: req.body.userId },
             {
-                $pull: { favorites: req.params.id },
+                $pull: {
+                    favorites: req.params.id
+                },
             },
-            { new: true, upsert: true },
+            {
+                new: true,
+                upsert: true
+            },
         )
-            .then((docs) => { res.send(docs) })
-            .catch((err) => { return res.status(400).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     }
     catch (err) {
         return res.status(500).json({ message: err })

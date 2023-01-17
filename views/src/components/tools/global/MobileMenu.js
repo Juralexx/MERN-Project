@@ -7,13 +7,11 @@ const MobileMenu = (props) => {
     useClickOutside(ref, () => setOpen(false))
 
     return (
-        open && (
-            <div ref={ref} className={`${className ? "mobile-menu " + className : "mobile-menu"}`} onClick={onClick}>
-                <div className="mobile-menu-tools" onClick={() => setOpen(false)}>
-                    {props.children}
-                </div>
+        <div ref={ref} className={`${className ? "mobile-menu " + className : "mobile-menu"} ${open ? 'active' : 'unactive'}`} onClick={onClick}>
+            <div className="mobile-menu-tools" onClick={() => setOpen(false)}>
+                {props.children}
             </div>
-        )
+        </div>
     )
 }
 

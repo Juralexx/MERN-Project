@@ -1,28 +1,10 @@
 import axios from "axios";
 
-export const GET_USER = "GET_USER"
-export const UPDATE_USER = "UPDATE_USER"
-export const UPDATE_EMAIL = "UPDATE_EMAIL"
-export const UPDATE_THEME = "UPDATE_THEME"
-
-export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS"
-export const SET_NOTIFICATION_SEEN = "SET_NOTIFICATION_SEEN"
-export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION"
-
-export const SEND_FRIEND_REQUEST = "SEND_FRIEND_REQUEST"
-export const RECEIVE_FRIEND_REQUEST = "RECEIVE_FRIEND_REQUEST"
-export const CANCEL_SENT_FRIEND_REQUEST = "CANCEL_SENT_FRIEND_REQUEST"
-export const RECEIVE_CANCEL_FRIEND_REQUEST = "RECEIVE_CANCEL_FRIEND_REQUEST"
-export const ACCEPT_FRIEND_REQUEST = "ACCEPT_FRIEND_REQUEST"
-export const RECEIVE_ACCEPT_FRIEND_REQUEST = "RECEIVE_ACCEPT_FRIEND_REQUEST"
-export const REFUSE_FRIEND_REQUEST = "REFUSE_FRIEND_REQUEST"
-export const RECEIVE_REFUSE_FRIEND_REQUEST = "RECEIVE_REFUSE_FRIEND_REQUEST"
-export const DELETE_FRIEND = "DELETE_FRIEND"
-export const RECEIVE_DELETE_FRIEND = "RECEIVE_DELETE_FRIEND"
-
 /**
  * Get user
  */
+
+export const GET_USER = "GET_USER"
 
 export const getUser = (uid) => {
     return async (dispatch) => {
@@ -38,6 +20,8 @@ export const getUser = (uid) => {
 /**
  * Update user informations
  */
+
+export const UPDATE_USER = "UPDATE_USER"
 
 export const updateUser = (userId, name, lastname, work, bio, location, phone, networks) => {
     return async (dispatch) => {
@@ -57,13 +41,15 @@ export const updateUser = (userId, name, lastname, work, bio, location, phone, n
             .then(() => {
                 dispatch({ type: UPDATE_USER, payload: { name, lastname, work, bio, location, phone, networks } })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
 /**
  * Update email
  */
+
+export const UPDATE_EMAIL = "UPDATE_EMAIL"
 
 export const updateEmail = (userId, email) => {
     return async (dispatch) => {
@@ -75,13 +61,15 @@ export const updateEmail = (userId, email) => {
             .then(() => {
                 dispatch({ type: UPDATE_EMAIL, payload: email })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
 /**
  * Update theme
  */
+
+export const UPDATE_THEME = "UPDATE_THEME"
 
 export const updateTheme = (userId, theme) => {
     return async (dispatch) => {
@@ -93,7 +81,7 @@ export const updateTheme = (userId, theme) => {
             .then(() => {
                 dispatch({ type: UPDATE_THEME, payload: theme })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
@@ -104,6 +92,8 @@ export const updateTheme = (userId, theme) => {
  * Set notifications to 0
  */
 
+export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS"
+
 export const removeNotifications = (userId) => {
     return async (dispatch) => {
         await axios({
@@ -113,13 +103,15 @@ export const removeNotifications = (userId) => {
             .then(() => {
                 dispatch({ type: RESET_NOTIFICATIONS, payload: { notifications: "0" } })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
 /**
  * Set seen state to a notification
  */
+
+export const SET_NOTIFICATION_SEEN = "SET_NOTIFICATION_SEEN"
 
 export const setNotificationToSeen = (userId, notificationId) => {
     return async (dispatch) => {
@@ -131,13 +123,15 @@ export const setNotificationToSeen = (userId, notificationId) => {
             .then(() => {
                 dispatch({ type: SET_NOTIFICATION_SEEN, payload: { notificationId } })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
 /**
  * Delete a notification
  */
+
+export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION"
 
 export const deleteNotification = (userId, notificationId) => {
     return async (dispatch) => {
@@ -149,149 +143,169 @@ export const deleteNotification = (userId, notificationId) => {
             .then(() => {
                 dispatch({ type: DELETE_NOTIFICATION, payload: { notificationId } })
             })
-            .catch((err) => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 
 /*******************************************************************************************************************************/
-/***************************************************** FRIEND REQUEST **********************************************************/
+/***************************************************** CONTACT REQUEST **********************************************************/
 
 /**
- * Send a friend request
+ * Send a contact request
  */
 
-export const sendFriendRequest = (friendId, userId, notification) => {
+export const SEND_CONTACT_REQUEST = "SEND_CONTACT_REQUEST"
+
+export const sendContactRequest = (contactId, userId, notification) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/send-friend-request/` + userId,
-            data: { friendId, notification }
+            url: `${process.env.REACT_APP_API_URL}api/user/send-contact-request/` + userId,
+            data: { contactId, notification }
         })
             .then(() => {
-                dispatch({ type: SEND_FRIEND_REQUEST, payload: { friendId, userId } })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-/**
- * Receive the friend request
- */
-
-export const receiveFriendRequest = (notification) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_FRIEND_REQUEST, payload: { notification } })
-    }
-}
-
-/**
- * Cancel a friend request
- */
-
-export const cancelFriendRequest = (friendId, userId, type) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/cancel-friend-request/` + userId,
-            data: { friendId, type }
-        })
-            .then(() => {
-                dispatch({ type: CANCEL_SENT_FRIEND_REQUEST, payload: { friendId, userId } })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-/**
- * Receive the canceled friend request
- */
-
-export const receiveCancelFriendRequest = (type, requesterId) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_CANCEL_FRIEND_REQUEST, payload: { type, requesterId } })
-    }
-}
-
-/**
- * Accept friend request
- */
-
-export const acceptFriendRequest = (request, userId) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/accept-friend-request/` + userId,
-            data: { requesterId: request.requesterId, type: request.type }
-        })
-            .then(() => {
-                dispatch({ type: ACCEPT_FRIEND_REQUEST, payload: { friend: { friend: request.requesterId, requestedAt: request.date } } })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-/**
- * Receive friend request acceptation
- */
-
-export const receiveAcceptFriendRequest = (friend) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_ACCEPT_FRIEND_REQUEST, payload: { friend } })
-    }
-}
-
-/**
- * Refuse the friend request
- */
-
-export const refuseFriendRequest = (request, userId) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/refuse-friend-request/` + userId,
-            data: { requesterId: request.requesterId, type: request.type }
-        })
-            .then(() => {
-                dispatch({ type: REFUSE_FRIEND_REQUEST, payload: {notificationId: request._id } })
-            })
-            .catch((err) => console.log(err))
-    }
-}
-
-/**
- * Receive friend request refus
- */
-
-export const receiveRefuseFriendRequest = (friendId) => {
-    return async (dispatch) => {
-        dispatch({ type: RECEIVE_REFUSE_FRIEND_REQUEST, payload: { friendId } })
-    }
-}
-
-/**
- * Delete friend
- */
-
-export const deleteFriend = (userId, friendId) => {
-    return async (dispatch) => {
-        await axios({
-            method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/delete-friend/` + userId,
-            data: { friendId }
-        })
-            .then(() => {
-                dispatch({ type: DELETE_FRIEND, payload: { friendId } })
+                dispatch({ type: SEND_CONTACT_REQUEST, payload: { contactId, userId } })
             })
             .catch(err => console.log(err))
     }
 }
 
 /**
- * Receive delete friend
+ * Receive the contact request
  */
 
-export const receiveDeleteFriend = (friendId) => {
+export const RECEIVE_CONTACT_REQUEST = "RECEIVE_CONTACT_REQUEST"
+
+export const receiveContactRequest = (notification) => {
     return async (dispatch) => {
-        dispatch({ type: DELETE_FRIEND, payload: { friendId } })
+        dispatch({ type: RECEIVE_CONTACT_REQUEST, payload: { notification } })
+    }
+}
+
+/**
+ * Cancel a contact request
+ */
+
+export const CANCEL_SENT_CONTACT_REQUEST = "CANCEL_SENT_CONTACT_REQUEST"
+
+export const cancelContactRequest = (contactId, userId, type) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/cancel-contact-request/` + userId,
+            data: { contactId, type }
+        })
+            .then(() => {
+                dispatch({ type: CANCEL_SENT_CONTACT_REQUEST, payload: { contactId, userId } })
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+/**
+ * Receive the canceled contact request
+ */
+
+export const RECEIVE_CANCEL_CONTACT_REQUEST = "RECEIVE_CANCEL_CONTACT_REQUEST"
+
+export const receiveCancelContactRequest = (type, requesterId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_CANCEL_CONTACT_REQUEST, payload: { type, requesterId } })
+    }
+}
+
+/**
+ * Accept contact request
+ */
+
+export const ACCEPT_CONTACT_REQUEST = "ACCEPT_CONTACT_REQUEST"
+
+export const acceptContactRequest = (request, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/accept-contact-request/` + userId,
+            data: { requesterId: request.requesterId, type: request.type }
+        })
+            .then(() => {
+                dispatch({ type: ACCEPT_CONTACT_REQUEST, payload: { contact: { contact: request.requesterId, requestedAt: request.date } } })
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+/**
+ * Receive contact request acceptation
+ */
+
+export const RECEIVE_ACCEPT_CONTACT_REQUEST = "RECEIVE_ACCEPT_CONTACT_REQUEST"
+
+export const receiveAcceptContactRequest = (contact) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_ACCEPT_CONTACT_REQUEST, payload: { contact } })
+    }
+}
+
+/**
+ * Refuse the contact request
+ */
+
+export const REFUSE_CONTACT_REQUEST = "REFUSE_CONTACT_REQUEST"
+
+export const refuseContactRequest = (request, userId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/refuse-contact-request/` + userId,
+            data: { requesterId: request.requesterId, type: request.type }
+        })
+            .then(() => {
+                dispatch({ type: REFUSE_CONTACT_REQUEST, payload: {notificationId: request._id } })
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+/**
+ * Receive contact request refus
+ */
+
+export const RECEIVE_REFUSE_CONTACT_REQUEST = "RECEIVE_REFUSE_CONTACT_REQUEST"
+
+export const receiveRefuseContactRequest = (contactId) => {
+    return async (dispatch) => {
+        dispatch({ type: RECEIVE_REFUSE_CONTACT_REQUEST, payload: { contactId } })
+    }
+}
+
+/**
+ * Delete contact
+ */
+
+export const DELETE_CONTACT = "DELETE_CONTACT"
+
+export const deleteContact = (userId, contactId) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/delete-contact/` + userId,
+            data: { contactId }
+        })
+            .then(() => {
+                dispatch({ type: DELETE_CONTACT, payload: { contactId } })
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+/**
+ * Receive delete contact
+ */
+
+export const RECEIVE_DELETE_CONTACT = "RECEIVE_DELETE_CONTACT"
+
+export const receiveDeleteContact = (contactId) => {
+    return async (dispatch) => {
+        dispatch({ type: DELETE_CONTACT, payload: { contactId } })
     }
 }

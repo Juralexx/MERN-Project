@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { followProject, unfollowProject } from "../../../actions/project.action";
+import { followProject, unfollowProject } from "../../../reducers/project.action";
 import { UidContext } from "../../AppContext";
 import Icon from "../icons/Icon";
 

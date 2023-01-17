@@ -18,7 +18,7 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
     useEffect(() => {
         if (usersArr.length > 0) {
             let arr = []
-            usersArr.map((user, key) => {
+            usersArr.forEach((user, key) => {
                 let el = project.members.find(member => member._id === user._id)
                 if (el)
                     arr.push({ ...user, ...el })
@@ -26,7 +26,7 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                     setMembers(arr)
             })
         }
-    }, [usersArr])
+    }, [usersArr, project.members])
 
     const [addMembers, setAddMembers] = useState(false)
     const [openRequests, setOpenRequests] = useState(false)
@@ -187,7 +187,7 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                                             {dateParser(element.since)}
                                         </div>
                                         <div className="dashboard-members-infos justify-end">
-                                            {element.id !== user._id &&
+                                            {element._id !== user._id &&
                                                 <>
                                                     <ToolsBtn>
                                                         <Icon name="Message" />

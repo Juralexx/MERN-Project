@@ -8,6 +8,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 /**
  * Get message
+ * @param {*} id ID of the conversation to get the message from
+ * @param {*} messageId ID of the message to get
  */
 
 export const getMessage = async (req, res) => {
@@ -21,11 +23,20 @@ export const getMessage = async (req, res) => {
             } else {
                 console.log('Unknown URL : ' + err)
             }
-        }).select({ messages: { $elemMatch: { _id: req.params.messageId } } })
+        })
+        .select({
+            messages: {
+                $elemMatch: {
+                    _id: req.params.messageId
+                }
+            }
+        })
 }
 
 /**
  * Post new message
+ * @param {*} id ID of the conversation to update
+ * @param {*} message Message object to post
  */
 
 export const addMessage = async (req, res) => {
@@ -40,17 +51,24 @@ export const addMessage = async (req, res) => {
                     last_message: req.body.message._id
                 },
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         res.status(400).json(err)
     }
 }
 
 /**
- * Update message
+ * Post new message
+ * @param {*} id ID of the conversation to update
+ * @param {*} messageId ID of the Message to update
+ * @param {*} text Text to update
  */
 
 export const updateMessage = async (req, res) => {
@@ -58,7 +76,11 @@ export const updateMessage = async (req, res) => {
         await ConversationModel.updateOne(
             {
                 _id: req.params.id,
-                messages: { $elemMatch: { _id: req.body.messageId } }
+                messages: {
+                    $elemMatch: {
+                        _id: req.body.messageId
+                    }
+                }
             },
             {
                 $set: {
@@ -66,10 +88,14 @@ export const updateMessage = async (req, res) => {
                     "messages.$.modified": true
                 },
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -77,6 +103,8 @@ export const updateMessage = async (req, res) => {
 
 /**
  * Delete message
+ * @param {*} id ID of the conversation to update
+ * @param {*} messageId ID of the message to remove
  */
 
 export const deleteMessage = async (req, res) => {
@@ -99,10 +127,14 @@ export const deleteMessage = async (req, res) => {
                     },
                 },
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -110,6 +142,9 @@ export const deleteMessage = async (req, res) => {
 
 /**
  * Add emoji to message
+ * @param {*} id ID of the conversation to update
+ * @param {*} messageId ID of the message to add the emoji to
+ * @param {*} emoji Emoji object to add to the emojis array
  */
 
 export const addEmoji = async (req, res) => {
@@ -117,17 +152,25 @@ export const addEmoji = async (req, res) => {
         await ConversationModel.updateOne(
             {
                 _id: req.params.id,
-                messages: { $elemMatch: { _id: req.body.messageId } }
+                messages: {
+                    $elemMatch: {
+                        _id: req.body.messageId
+                    }
+                }
             },
             {
                 $addToSet: {
                     "messages.$.emojis": req.body.emoji
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         res.status(400).json(err)
     }
@@ -135,6 +178,9 @@ export const addEmoji = async (req, res) => {
 
 /**
  * Remove emoji from message
+ * @param {*} id ID of the conversation to update
+ * @param {*} messageId ID of the message to remove the emoji from
+ * @param {*} emojiId ID of the emoji to remove
  */
 
 export const removeEmoji = async (req, res) => {
@@ -142,7 +188,11 @@ export const removeEmoji = async (req, res) => {
         await ConversationModel.updateOne(
             {
                 _id: req.params.id,
-                messages: { $elemMatch: { _id: req.body.messageId } }
+                messages: {
+                    $elemMatch: {
+                        _id: req.body.messageId
+                    }
+                }
             },
             {
                 $pull: {
@@ -151,10 +201,14 @@ export const removeEmoji = async (req, res) => {
                     }
                 }
             },
-            { new: true },
+            {
+                new: true
+            },
         )
-            .then(docs => { res.send(docs) })
-            .catch(err => { return res.status(500).send({ message: err }) })
+            .then(docs => res.send(docs))
+            .catch(err => {
+                return res.status(500).send({ message: err })
+            })
     } catch (err) {
         res.status(400).json(err)
     }

@@ -9,11 +9,10 @@ import Link from '../editor/Link';
 import { useQuill } from '../editor/useQuill';
 import { useEmoji } from '../editor/useEmoji';
 import { useMention } from '../editor/useMention';
-import { pickEmoji, convertDeltaToStringNoHTML } from '../functions/function';
+import { pickEmoji, convertDeltaToStringNoHTML } from '../functions';
 import { SmallAvatar } from '../../tools/global/Avatars';
 import { dateParserWithoutYear, getHourOnly } from '../../Utils';
-import { BsEmojiSmile } from 'react-icons/bs'
-import { MdOutlineLink, MdOutlineAlternateEmail } from 'react-icons/md';
+import Icon from '../../tools/icons/Icon';
 
 const ShareModal = ({ open, setOpen, message, handleSubmit, currentChat, members }) => {
     const { quillRef, quill } = useQuill()
@@ -161,9 +160,9 @@ const ShareModal = ({ open, setOpen, message, handleSubmit, currentChat, members
                 </div>
                 <div className="message-text-tools">
                     <div className="text-tools-left">
-                        <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<BsEmojiSmile />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
-                        <button className="text-tools" onClick={() => openMention(quill)}><MdOutlineAlternateEmail /></button>
-                        <button className="text-tools" onClick={() => setLink(!isLink)}><MdOutlineLink /></button>
+                        <EmojiPicker placement="top-start" btnClassName="text-tools" icon={<Icon name="Emoji" />} onSelect={emoji => pickEmoji(emoji, quill)} onClick={() => quillRef?.current?.focus()} />
+                        <button className="text-tools" onClick={() => openMention(quill)}><Icon name="At" /></button>
+                        <button className="text-tools" onClick={() => setLink(!isLink)}><Icon name="Link" /></button>
                     </div>
                 </div>
             </div>

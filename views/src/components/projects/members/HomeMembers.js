@@ -49,7 +49,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                     </div>
                                 </div>
                                 <div className="home-members-infos justify-end">
-                                    {element.id !== user._id &&
+                                    {element._id !== user._id &&
                                         <>
                                             <ToolsBtn>
                                                 <Icon name="Message" />

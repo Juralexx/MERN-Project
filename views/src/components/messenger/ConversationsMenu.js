@@ -1,114 +1,129 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { useTwoLevelSearch } from '../tools/hooks/useTwoLevelSearch';
-import { MessengerContext } from '../AppContext';
+import Icon from '../tools/icons/Icon';
+import { ToolsBtn } from '../tools/global/Button';
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import TemporaryConversation from './tools/TemporaryConversation';
 import Tooltip from '../tools/global/Tooltip';
-import { IconInput } from '../tools/global/Inputs';
-import { IconToggle } from '../tools/global/Button';
 import { ConversationLoader } from './tools/Loaders';
+import { MessengerContext } from '../AppContext';
+import { IconInput } from '../tools/global/Inputs';
 import { addClass } from '../Utils';
-import { AiOutlineEdit, AiOutlineUsergroupAdd } from 'react-icons/ai';
-import { FaCaretDown } from 'react-icons/fa';
-import { BiSearchAlt } from 'react-icons/bi';
-import { HiMenuAlt3, HiOutlineMenu } from 'react-icons/hi';
-import { IoClose } from 'react-icons/io5';
+import { useSearchConversation } from './hooks/useSearchConversation';
 
-const ConversationsMenu = ({ fetched, favorites, conversations, setConversations, temporaryConv, setTemporaryConv, newMessage, notification, setRightbar }) => {
-    const { md } = useContext(MessengerContext)
+const ConversationsMenu = ({ fetched, newMessage, notification, setRightbar }) => {
+    const { md, conversations } = useContext(MessengerContext)
     const [open, setOpen] = useState(false)
-    const [search, setSearch] = useState(false)
     const [leftbar, setLeftbar] = useState(!md ? true : false)
-    const { twoLevelSearch, isInResults, query, setQuery } = useTwoLevelSearch([...favorites, ...conversations], 'members', 'pseudo')
+    const { findConversation, search, setSearch } = useSearchConversation(Object.keys(conversations.temporaryConversation).length > 0 ? [conversations.temporaryConversation, ...conversations.allConversations] : conversations.allConversations)
 
     return (
         <div className={`conversation-menu ${addClass(!leftbar, 'closed')}`}>
             <div className="conversation-menu-header">
                 <h2 className="bold">Conversations</h2>
                 <div className="conversation-menu-tools">
-                        <IconToggle className="toggle" icon={leftbar ? <IoClose /> : <HiOutlineMenu />} onClick={() => setLeftbar(!leftbar)} />
+                    <ToolsBtn className="toggle" onClick={() => setLeftbar(!leftbar)}>
+                        {leftbar ? <Icon name="Cross" /> : <Icon name="Menu" />}
+                    </ToolsBtn>
 
                     <div className="tools flex items-center">
-                        <Tooltip content={<p>Rechercher</p>} placement="bottom">
-                            <IconToggle icon={<BiSearchAlt />} onClick={() => setSearch(!search)} />
-                        </Tooltip>
                         <Tooltip content={<p>Nouvelle&nbsp;conversation de groupe</p>} placement="bottom">
-                            <IconToggle icon={<AiOutlineUsergroupAdd />} onClick={() => setOpen(true)} />
+                            <ToolsBtn onClick={() => setOpen(true)}>
+                                <Icon name="Chat" />
+                            </ToolsBtn>
                         </Tooltip>
                         <Tooltip content={<p>Nouvelle&nbsp;conversation</p>} placement="bottom">
-                            <Link to="/messenger/new"><IconToggle icon={<AiOutlineEdit />} /></Link>
+                            <ToolsBtn>
+                                <Link to="/messenger/new">
+                                    <Icon name="Edit" />
+                                </Link>
+                            </ToolsBtn>
                         </Tooltip>
                         <Tooltip content={<p>Contacts&nbsp;en&nbsp;ligne</p>} placement="bottom">
-                            <IconToggle icon={<HiMenuAlt3 />} onClick={() => setRightbar(prev => ({ ...prev, state: prev.state === 'open' ? 'closed' : 'open' }))} />
+                            <ToolsBtn onClick={() => setRightbar(prev => ({ ...prev, state: prev.state === 'open' ? 'closed' : 'open' }))}>
+                                <Icon name="Menu" />
+                            </ToolsBtn>
                         </Tooltip>
                     </div>
                 </div>
             </div>
-            {search &&
-                <div className="search py-2 px-[10px] mb-2">
-                    <IconInput
-                        className="full is_start_icon small"
-                        icon={<BiSearchAlt />}
-                        placeholder="Rechercher une conversation..."
-                        value={query}
-                        onInput={e => setQuery(e.target.value)}
-                        onChange={twoLevelSearch}
-                    />
-                </div>
-            }
+            <div className="search pb-2 px-2 mb-2">
+                <IconInput
+                    className="is_start_icon"
+                    icon={<Icon name="Search" />}
+                    placeholder="Rechercher une conversation..."
+                    value={search.query}
+                    onInput={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
+                    onChange={findConversation}
+                />
+            </div>
 
             <NewConversationModal
                 open={open}
                 setOpen={setOpen}
-                conversations={conversations.concat(favorites)}
-                setConversations={setConversations}
             />
 
             {fetched ? (
-                conversations.length > 0 || favorites.length > 0 || Object.keys(temporaryConv).length > 0 ? (
-                    <>
-                        {favorites.length > 0 &&
-                            <div className="conversations_container">
-                                <div className="conversation-menu-tool">Favoris <FaCaretDown /></div>
-                                {favorites.map((element, key) => {
-                                    return (
-                                        <div className={`${isInResults(element, "block")}`} key={key}>
+                conversations.notFavorites.length > 0 || conversations.favorites.length > 0 || Object.keys(conversations.temporaryConversation).length > 0 ? (
+
+                    !search.state ? (
+                        <>
+                            {Object.keys(conversations.temporaryConversation).length > 0 &&
+                                <TemporaryConversation />
+                            }
+                            {conversations.favorites.length > 0 && (
+                                <div className="conversations_container">
+                                    <div className="conversation-menu-tool">
+                                        Favoris <Icon name="CaretDown" />
+                                    </div>
+                                    {conversations.favorites.map((element, key) => {
+                                        return (
                                             <Conversation
                                                 conversation={element}
                                                 newMessage={newMessage}
                                                 notification={notification}
+                                                key={key}
                                             />
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        }
-                        <div className="conversations_container">
-                            <div className="conversation-menu-tool">Messages <FaCaretDown /></div>
-                            {Object.keys(temporaryConv).length > 0 &&
-                                <div className={`${isInResults(temporaryConv, "block")}`}>
-                                    <TemporaryConversation
-                                        temporaryConv={temporaryConv}
-                                        setTemporaryConv={setTemporaryConv}
-                                        conversations={conversations}
-                                    />
+                                        )
+                                    })}
                                 </div>
-                            }
-                            {conversations.map((element, key) => {
-                                return (
-                                    <div className={`${isInResults(element, "block")}`} key={key}>
-                                        <Conversation
-                                            conversation={element}
-                                            newMessage={newMessage}
-                                            notification={notification}
-                                        />
+                            )}
+                            {conversations.notFavorites.length > 0 && (
+                                <div className="conversations_container">
+                                    <div className="conversation-menu-tool">
+                                        Messages <Icon name="CaretDown" />
                                     </div>
+                                    {conversations.notFavorites.map((element, key) => {
+                                        return (
+                                            <Conversation
+                                                conversation={element}
+                                                newMessage={newMessage}
+                                                notification={notification}
+                                                key={key}
+                                            />
+                                        )
+                                    })}
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className="conversations_container">
+                            <div className="conversation-menu-tool">
+                                Messages <Icon name="CaretDown" />
+                            </div>
+                            {search.results.map((element, key) => {
+                                return (
+                                    <Conversation
+                                        conversation={element}
+                                        newMessage={newMessage}
+                                        notification={notification}
+                                        key={key}
+                                    />
                                 )
                             })}
                         </div>
-                    </>
+                    )
                 ) : (
                     <div className="no-conversation-yet !mt-10">
                         <p>Aucune conversation à afficher...</p>

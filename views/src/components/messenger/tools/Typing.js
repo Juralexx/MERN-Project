@@ -1,12 +1,13 @@
 import React from 'react'
 import ThreeDots from '../../tools/loaders/ThreeDots'
 
-const Typing = ({ isTyping, typingContext, currentChat }) => {
+const Typing = ({ isTyping, currentChat }) => {
 
     return (
-        isTyping && typingContext.conversationId === currentChat._id && (
+        isTyping.state &&
+        isTyping.context.conversationId === currentChat._id && (
             <div className="is-typing">
-                {typingContext.sender + " est en train d'écrire..."}
+                {isTyping.context.sender + " est en train d'écrire..."}
                 <ThreeDots />
             </div>
         )

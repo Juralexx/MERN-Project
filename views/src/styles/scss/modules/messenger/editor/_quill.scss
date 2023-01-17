@@ -1,7 +1,7 @@
 .message-text-editor {
     position   : relative;
     width      : 100%;
-    background : var(--content-x-light);
+    background : var(--content);
 
     .message-editor-container {
         position   : relative;
@@ -18,25 +18,29 @@
             }
             &::-webkit-scrollbar-thumb {
                 background-color : var(--light-border);
-                border           : 3px solid var(--content-light);
+                border           : 3px solid var(--content);
                 border-radius    : 10px;
             }
         
             &::-webkit-scrollbar-corner {
                 background : transparent;
             }
+            &.ql-snow {
+                background : transparent;
+            }
         }
 
         .ql-editor {
-            background : var(--content-x-light);
+            background : var(--content);
             padding    : 10px 10px;
             border     : 1px solid transparent;
 
             &.ql-blank {
                 &:before {
-                    left  : 11px;
-                    top   : 11px;
-                    color : var(--text-secondary);
+                    left      : 11px;
+                    top       : 11px;
+                    font-size : 14px;
+                    color     : var(--text-secondary);
                 }
             }
         }
@@ -80,14 +84,16 @@
             margin        : 0 2px;
             border-radius : var(--rounded-sm);
 
-            &:hover {
-                background : var(--x-light);
+            svg {
+                width  : 18px;
+                height : 18px;
             }
-        }
 
-        svg {
-            width  : 15px;
-            height : 15px;
+            &:hover {
+                svg {
+                    color : var(--primary);
+                }
+            }
         }
     }
 
@@ -100,15 +106,6 @@
 @media (max-width:768px) {
     .message-text-editor {
         border-radius : 10px 10px 0 0;
-        background    : var(--content-x-light);
-
-        .message-editor-container {
-            background : var(--content-x-light);
-
-            .ql-editor {
-                background : var(--content-x-light);
-            }
-        }
     }
 
     .conversation-toolsbox {

@@ -283,6 +283,18 @@ export const getHourOnly = (date) => {
 }
 
 /**
+ * Return the difference between to hours
+ * @param {*} prev Passed hour
+ * @param {*} current Current hour
+ */
+
+export const getHoursDiff = (prev, current) => {
+    let hourDiff = new Date(current.createdAt) - new Date(prev.createdAt)
+    let prevTimeDiff = (hourDiff % 86400000) / 3600000
+    return prevTimeDiff
+}
+
+/**
  * Map an array and return an array containing new dates only and index of it.
  * @param {*} arrayToMap Array to map
  */
@@ -291,7 +303,10 @@ export const keepNewDateOnly = (arrayToMap) => {
     let array = []
     arrayToMap.map((element, key) => {
         return (
-            array = [...array, { index: key, date: element.date.substring(0, 10) }]
+            array = [...array, {
+                index: key,
+                date: element.date.substring(0, 10)
+            }]
         )
     })
     let filteredArray = []
@@ -475,7 +490,8 @@ export const isEmpty = (value) => {
         || value === null
         || (typeof value === "object" && Object.keys(value).length === 0)
         || (typeof value === "string" && value.trim().length === 0)
-        || (typeof value === "array" && value.length === 0)
+        || (typeof value === "number")
+        || (value instanceof Array && value.length === 0)
     )
 }
 
@@ -614,6 +630,16 @@ export const returnURLsInText = (text) => {
         txt = txt.replace(matched, '')
     }
     return arr
+}
+
+/**
+ * Check if selected file is embeddable
+ * @param {*} file File to check
+ */
+
+export const isEmbeddable = (file) => {
+    const types = ['text/html']
+    return !types.some(el => file.type === el)
 }
 
 /**

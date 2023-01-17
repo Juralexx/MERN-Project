@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteCoverPicture, uploadCoverPicture } from "../../../actions/user.action.upload";
+import { deleteCoverPicture, uploadCoverPicture } from "../../../reducers/user.action.upload";
 import ToolsMenu from "../../tools/global/ToolsMenu";
 
 const UploadCoverImg = ({ user }) => {

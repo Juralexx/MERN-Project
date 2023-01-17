@@ -2,26 +2,26 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IconInput } from '../tools/global/Inputs'
-import Oval from '../../components/tools/loaders/Oval'
+import Oval from '../tools/loaders/Oval'
 import ToolsMenu from '../tools/global/ToolsMenu'
 import Warning from '../tools/global/Warning'
-import { removeFriend } from '../tools/functions/friend'
+import { removeContact } from '../tools/functions/contact'
 import { dateParser, fullImage } from '../Utils'
 import Icon from '../tools/icons/Icon'
 import { useFetchContacts } from '../tools/custom-hooks/useFetchContacts'
 
-const Friends = ({ user, websocket }) => {
-    const { friendsArr, fetchedFriends } = useFetchContacts(user)
+const Contacts = ({ user, websocket }) => {
+    const { contactsArr, fetchedContacts } = useFetchContacts(user)
     const [warning, setWarning] = useState(-1)
     const dispatch = useDispatch()
 
     const [search, setSearch] = useState({ state: false, query: "", results: [] })
     const regexp = new RegExp(search.query, 'i')
 
-    const searchFriends = () => {
+    const searchContacts = () => {
         if (!search.query || search.query.trim() === "") { return }
         if (search.query.length > 2) {
-            const response = friendsArr.filter(f => regexp.test(f.pseudo))
+            const response = contactsArr.filter(f => regexp.test(f.pseudo))
             setSearch(content => ({ ...content, state: true, results: response }))
             if (!search.results || search.results.length === 0)
                 setSearch(content => ({ ...content, state: false }))
@@ -29,30 +29,30 @@ const Friends = ({ user, websocket }) => {
     }
 
     const since = (element) => {
-        let friend = user.friends.find(e => e._id === element._id)
-        return friend?.requestedAt
+        let contact = user.contacts.find(e => e._id === element._id)
+        return contact?.requestedAt
     }
 
     return (
         <div className="profil-page col-12 col-lg-9 relative lg:!pl-7">
             <div className='search-header'>
-                <h2>Contacts <span>{user?.friends?.length}</span></h2>
+                <h2>Contacts <span>{user?.contacts?.length}</span></h2>
                 <IconInput
                     className="is_start_icon md:max-w-[350px] mt-2 md:mt-0"
                     icon={<Icon name="Search" />}
                     placeholder="Rechercher un contact..."
                     value={search.query}
                     onInput={e => setSearch(content => ({ ...content, query: e.target.value }))}
-                    onChange={searchFriends}
+                    onChange={searchContacts}
                     cross
                     onClean={() => setSearch(content => ({ ...content, query: "" }))}
                 />
             </div>
             <div className="profil-page_body">
-                {!fetchedFriends ? (
-                    friendsArr.length > 0 ? (
+                {!fetchedContacts ? (
+                    contactsArr.length > 0 ? (
                         <div className="profil-page_contacts">
-                            {friendsArr.map((element, key) => {
+                            {contactsArr.map((element, key) => {
                                 return (
                                     <div
                                         className="contact_card"
@@ -86,7 +86,7 @@ const Friends = ({ user, websocket }) => {
                                                 title={`Etes-vous sur de vouloir supprimer ${element.pseudo} de vos contacts ?`}
                                                 text={`${element.pseudo} sera définitivement supprimé de vos contacts ?`}
                                                 onValidate={() => {
-                                                    removeFriend(user._id, element._id, websocket, dispatch)
+                                                    removeContact(user._id, element._id, websocket, dispatch)
                                                     setWarning(false)
                                                 }}
                                             />
@@ -111,4 +111,4 @@ const Friends = ({ user, websocket }) => {
     )
 }
 
-export default Friends
+export default Contacts
