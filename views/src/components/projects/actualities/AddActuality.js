@@ -91,7 +91,7 @@ const AddActuality = ({ project, user }) => {
                             formData.append('files', datas.files[i])
                         }
                         await axios
-                            .put(`${process.env.REACT_APP_API_URL}api/project/add-actuality-pictures/${project._id}/${actuality._id}`, formData)
+                            .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/add/`, formData)
                             .catch(err => console.log(err))
 
                     }

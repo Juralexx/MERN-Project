@@ -66,8 +66,8 @@ export default function userReducer(state = initialState, action) {
                 unseen_notifications: action.payload.notifications
             }
         case SET_NOTIFICATION_SEEN:
-            let a = state.notifications.findIndex(notif => notif._id === action.payload.notificationId)
-            state.notifications[a].seen = true
+            let notificationIndex = state.notifications.findIndex(notification => notification._id === action.payload.notificationId)
+            state.notifications[notificationIndex].seen = true
             return {
                 ...state,
                 notifications: state.notifications
@@ -75,7 +75,7 @@ export default function userReducer(state = initialState, action) {
         case DELETE_NOTIFICATION:
             return {
                 ...state,
-                notifications: state.notifications.filter(notif => notif._id !== action.payload.notificationId)
+                notifications: state.notifications.filter(notification => notification._id !== action.payload.notificationId)
             }
 
         /**
@@ -90,7 +90,7 @@ export default function userReducer(state = initialState, action) {
         case RECEIVE_CONTACT_REQUEST:
             return {
                 ...state,
-                notifications: [...state.notifications, action.payload.notification],
+                notifications: [action.payload.notification, ...state.notifications],
                 unseen_notifications: state.unseen_notifications + 1
             }
         case CANCEL_SENT_CONTACT_REQUEST:
@@ -102,13 +102,13 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 notifications: state.notifications.filter(element => element.type !== action.payload.type && element.requesterId !== action.payload.requesterId),
-                unseen_notifications: decrementNotifIfUpperZero()
+                unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0
             }
         case ACCEPT_CONTACT_REQUEST:
             return {
                 ...state,
                 contacts: [...state.contacts, action.payload.contact],
-                unseen_notifications: decrementNotifIfUpperZero()
+                unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0
             }
         case RECEIVE_ACCEPT_CONTACT_REQUEST:
             return {
@@ -119,7 +119,7 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
-                unseen_notifications: decrementNotifIfUpperZero()
+                unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0
             }
         case RECEIVE_REFUSE_CONTACT_REQUEST:
             return {
@@ -146,20 +146,20 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
-                unseen_notifications: decrementNotifIfUpperZero()
+                unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0
             }
 
         case ACCEPT_MEMBER_REQUEST:
             return {
                 ...state,
-                unseen_notifications: decrementNotifIfUpperZero(),
+                unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0,
                 projects: [...state.projects, action.payload.projectId]
             }
         case REFUSE_MEMBER_REQUEST:
             return {
                 ...state,
                 notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
-                unseen_notifications: decrementNotifIfUpperZero()
+                unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0
             }
         case REMOVE_PROJECT_FROM_MEMBER:
             return {

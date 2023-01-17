@@ -14,22 +14,22 @@ conversationRoutes.post('/', createConversation)
 conversationRoutes.put('/:id', updateConversation)
 conversationRoutes.delete('/:id', deleteConversation)
 
-conversationRoutes.put('/:id/upload', upload.single('file'), uploadConversationPicture)
-conversationRoutes.put('/:id/upload/delete', deleteConversationPicture)
+conversationRoutes.put('/:id/upload/', upload.single('file'), uploadConversationPicture)
+conversationRoutes.put('/:id/upload/delete/', deleteConversationPicture)
 
-conversationRoutes.put('/:id/add-member', addMember)
-conversationRoutes.put('/:id/remove-member', removeMember)
+conversationRoutes.put('/:id/members/add/', addMember)
+conversationRoutes.put('/:id/members/remove/', removeMember)
 
-conversationRoutes.put('/:id/customize-pseudo/:userId', customizeUserPseudo)
+conversationRoutes.put('/:id/pseudo/update/:userId/', customizeUserPseudo)
 
-conversationRoutes.put('/:id/add-message', addMessage)
-conversationRoutes.put('/:id/update-message', updateMessage)
-conversationRoutes.put('/:id/remove-message/:messageId', deleteMessage)
+conversationRoutes.put('/:id/messages/add/', addMessage)
+conversationRoutes.put('/:id/messages/update/', updateMessage)
+conversationRoutes.put('/:id/messages/remove/:messageId/', deleteMessage)
 
-conversationRoutes.put('/:id/upload-files/:messageId/:userId/:userPseudo', upload.array('files', 10), uploadFiles)
-conversationRoutes.put('/:id/delete-files/:messageId', deleteFiles)
+conversationRoutes.put('/:id/messages/upload/:messageId/:userId/:userPseudo/', upload.array('files', 10), uploadFiles)
+conversationRoutes.put('/:id/messages/upload/delete/:messageId/', deleteFiles)
 
-conversationRoutes.put('/:id/add-emoji', addEmoji)
-conversationRoutes.put('/:id/remove-emoji', removeEmoji)
+conversationRoutes.put('/:id/emojis/add/', addEmoji)
+conversationRoutes.put('/:id/emojis/remove/', removeEmoji)
 
 export default conversationRoutes;

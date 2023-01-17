@@ -93,7 +93,7 @@ const EditActuality = ({ project }) => {
                     if (deletedFiles.length > 0) {
                         await axios({
                             method: "put",
-                            url: `${process.env.REACT_APP_API_URL}api/project/delete-actuality-pictures/${project._id}/${actuality._id}`,
+                            url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/delete/`,
                             data: {
                                 deletedFiles: deletedFiles
                             }
@@ -104,7 +104,7 @@ const EditActuality = ({ project }) => {
                                     formData.append('files', pictures[i])
                                 }
                                 await axios
-                                    .put(`${process.env.REACT_APP_API_URL}api/project/update-actuality-pictures/${project._id}/${actuality._id}`, formData)
+                                    .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/update/`, formData)
                                     .catch(err => console.log(err))
                             }
                         })
@@ -115,7 +115,7 @@ const EditActuality = ({ project }) => {
                                 formData.append('files', pictures[i])
                             }
                             await axios
-                                .put(`${process.env.REACT_APP_API_URL}api/project/update-actuality-pictures/${project._id}/${actuality._id}`, formData)
+                                .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/update/`, formData)
                                 .catch(err => console.log(err))
                         }
                     }

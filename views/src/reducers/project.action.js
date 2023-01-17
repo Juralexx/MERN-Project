@@ -18,7 +18,7 @@ export const UPDATE_PICTURES = "UPDATE_PICTURES"
 export const updateProjectPictures = (projectId, formData, pictures) => {
      return async (dispatch) => {
           await axios
-               .put(`${process.env.REACT_APP_API_URL}api/project/update-pictures/${projectId}`, formData)
+               .put(`${process.env.REACT_APP_API_URL}api/project/${projectId}/uploads/pictures/update/`, formData)
                .then(() => dispatch({ type: UPDATE_PICTURES, payload: { pictures } }))
                .catch(err => console.error(err))
      }
@@ -38,7 +38,7 @@ export const deleteProjectPictures = (projectId, picture) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/delete-pictures/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/uploads/pictures/delete/`,
                data: { picture }
           })
                .then(() => dispatch({ type: DELETE_PICTURES, payload: { projectId, picture } }))
@@ -143,7 +143,7 @@ export const likeProject = (projectId, userId) => {
      return async (dispatch) => {
           await axios({
                method: "patch",
-               url: `${process.env.REACT_APP_API_URL}api/project/like/${projectId}`,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/like/`,
                data: {
                     userId: userId
                }
@@ -165,7 +165,7 @@ export const unlikeProject = (projectId, userId) => {
      return async (dispatch) => {
           await axios({
                method: "patch",
-               url: `${process.env.REACT_APP_API_URL}api/project/unlike/${projectId}`,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/unlike/`,
                data: {
                     userId: userId
                }
@@ -187,7 +187,7 @@ export const followProject = (projectId, userId) => {
      return async (dispatch) => {
           await axios({
                method: "patch",
-               url: `${process.env.REACT_APP_API_URL}api/project/follow/${projectId}`,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/follow/`,
                data: {
                     userId: userId
                }
@@ -209,7 +209,7 @@ export const unfollowProject = (projectId, userId) => {
      return async (dispatch) => {
           await axios({
                method: "patch",
-               url: `${process.env.REACT_APP_API_URL}api/project/unfollow/${projectId}`,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/unfollow/`,
                data: {
                     userId: userId
                }
@@ -231,7 +231,7 @@ export const favoriteProject = (projectId, userId) => {
      return async (dispatch) => {
           await axios({
                method: "patch",
-               url: `${process.env.REACT_APP_API_URL}api/project/favorite/${projectId}`,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/favorite/`,
                data: {
                     userId: userId
                }
@@ -253,7 +253,7 @@ export const unfavoriteProject = (projectId, userId) => {
      return async (dispatch) => {
           await axios({
                method: "patch",
-               url: `${process.env.REACT_APP_API_URL}api/project/unfavorite/${projectId}`,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/unfavorite/`,
                data: {
                     userId: userId
                }
@@ -272,7 +272,7 @@ export const sendMemberRequest = (userId, projectId, notification, request) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/send-member-request/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/members/request/send/`,
                data: { userId, request, notification }
           })
                .then(() => dispatch({ type: SEND_MEMBER_REQUEST, payload: { userId, request } }))
@@ -294,7 +294,7 @@ export const cancelMemberRequest = (userId, projectId, notificationId) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/cancel-member-request/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/members/request/cancel/`,
                data: { userId, notificationId }
           })
                .then(() => dispatch({ type: CANCEL_MEMBER_REQUEST, payload: { userId } }))
@@ -316,7 +316,7 @@ export const acceptMemberRequest = (userId, member, projectId, notificationId, a
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/accept-member-request/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/members/request/accept/`,
                data: { userId, member, notificationId, activity }
           })
                .then(() => dispatch({ type: ACCEPT_MEMBER_REQUEST, payload: { userId, projectId, activity } }))
@@ -338,7 +338,7 @@ export const refuseMemberRequest = (userId, projectId, notificationId) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/refuse-member-request/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/members/request/refuse/`,
                data: { userId, notificationId }
           })
                .then(() => dispatch({ type: REFUSE_MEMBER_REQUEST, payload: { userId, notificationId } }))
@@ -363,7 +363,7 @@ export const setAdmin = (userId, projectId, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/name-admin/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/members/admins/add/`,
                data: { userId, activity }
           })
                .then(() => dispatch({ type: NAME_ADMIN, payload: { userId, activity } }))
@@ -385,7 +385,7 @@ export const unsetAdmin = (userId, projectId) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/remove-admin/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/members/admins/remove/`,
                data: { userId }
           })
                .then(() => dispatch({ type: UNNAME_ADMIN, payload: { userId } }))
@@ -410,7 +410,7 @@ export const removeMember = (projectId, memberId, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/remove-user/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/members/remove/`,
                data: { memberId, activity }
           })
                .then(() => dispatch({ type: REMOVE_MEMBER, payload: { projectId, memberId, activity } }))
@@ -434,7 +434,7 @@ export const createTask = (projectId, task, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/add-task/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/add/`,
                data: { task, activity }
           })
                .then(() => dispatch({ type: CREATE_TASK, payload: { task, activity } }))
@@ -456,7 +456,7 @@ export const changeTask = (projectId, task, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/update/`,
                data: { taskId: task._id, task, activity }
           })
                .then(() => dispatch({ type: UPDATE_TASK, payload: { task, activity } }))
@@ -478,7 +478,7 @@ export const changeTaskState = (projectId, taskId, state, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/update/`,
                data: { taskId, state, activity }
           })
                .then(() => dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state, activity } }))
@@ -500,7 +500,7 @@ export const changeTaskStatus = (projectId, taskId, status, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/update-task/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/update/`,
                data: { taskId, status, activity }
           })
                .then(() => dispatch({ type: UPDATE_TASK_STATUS, payload: { taskId, status, activity } }))
@@ -522,7 +522,7 @@ export const commentTask = (projectId, taskId, comment) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/comment-task/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/comment/`,
                data: { taskId, comment }
           })
                .then(() => dispatch({ type: COMMENT_TASK, payload: { taskId, comment } }))
@@ -544,7 +544,7 @@ export const deleteTask = (projectId, taskId, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/delete-task/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/delete/`,
                data: { taskId, activity }
           })
                .then(() => dispatch({ type: DELETE_TASK, payload: { taskId, activity } }))
@@ -569,7 +569,7 @@ export const createQNA = (projectId, qna, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/add-qna/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/qna/add/`,
                data: { qna, activity }
           })
                .then(() => dispatch({ type: CREATE_QNA, payload: { qna, activity } }))
@@ -591,7 +591,7 @@ export const updateQNA = (projectId, qna, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/update-qna/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/qna/update/`,
                data: { qna, activity }
           })
                .then(() => dispatch({ type: UPDATE_QNA, payload: { qna, activity } }))
@@ -613,7 +613,7 @@ export const deleteQNA = (projectId, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/delete-qna/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/qna/delete/`,
                data: { activity }
           })
                .then(() => dispatch({ type: DELETE_QNA, payload: { activity } }))
@@ -638,7 +638,7 @@ export const createActuality = (projectId, actuality, activity) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/add-actuality/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/actualities/add/`,
                data: { actuality, activity }
           })
                .then(() => dispatch({ type: CREATE_ACTUALITY, payload: { actuality, activity } }))
@@ -660,7 +660,7 @@ export const updateActuality = (projectId, actualityId, title, url, description)
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/update-actuality/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/actualities/update/`,
                data: { actualityId, title, url, description }
           })
                .then(() => dispatch({ type: UPDATE_ACTUALITY, payload: { actualityId, title, url, description } }))
@@ -682,7 +682,7 @@ export const deleteActuality = (projectId, actualityId) => {
      return async (dispatch) => {
           await axios({
                method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/delete-actuality/` + projectId,
+               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/actualities/delete/`,
                data: { actualityId }
           })
                .then(() => dispatch({ type: DELETE_ACTUALITY, payload: { actualityId } }))

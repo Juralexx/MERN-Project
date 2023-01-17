@@ -210,7 +210,7 @@ const Messenger = ({ uid, user, websocket, onlineUsers }) => {
                         formData.append('files', files[i])
                     }
                     await axios
-                        .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/upload-files/${message._id}/${user._id}/${user.pseudo}`, formData)
+                        .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversation._id}/messages/upload/${message._id}/${user._id}/${user.pseudo}`, formData)
                         .then(res => {
                             uploads = res.data.files
                             files.splice(0, files.length)

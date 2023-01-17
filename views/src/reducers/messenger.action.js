@@ -67,7 +67,7 @@ export const REMOVE_CONVERSATION_PICTURE = "REMOVE_CONVERSATION_PICTURE"
 export const removeConversationPicture = (conversationId) => {
     return async (dispatch) => {
         return await axios
-            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload/delete`)
+            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/upload/delete/`)
             .then(() => {
                 dispatch({ type: REMOVE_CONVERSATION_PICTURE, payload: '' })
             })
@@ -147,7 +147,7 @@ export const customizeUserPseudo = (conversationId, userId, pseudo) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/customize-pseudo/${userId}`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/pseudo/update/${userId}`,
             data: { pseudo }
         })
             .then(() => {
@@ -198,7 +198,7 @@ export const addMember = (conversationId, newMember) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-member`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/members/add/`,
             data: { newMember }
         })
             .then(() => {
@@ -231,7 +231,7 @@ export const removeMember = (conversationId, memberId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-member`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/members/remove/`,
             data: { memberId }
         })
             .then(() => {
@@ -264,7 +264,7 @@ export const POST_MESSAGE = "POST_MESSAGE"
 export const sendMessage = (conversationId, message) => {
     return async (dispatch) => {
         await axios
-            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-message`, { message: message })
+            .put(`${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/messages/add/`, { message: message })
             .then(res => {
                 dispatch({ type: POST_MESSAGE, payload: { message } })
             })
@@ -290,7 +290,7 @@ export const updateMessage = (conversationId, messageId, text) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/update-message/`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/messages/update/`,
             data: { messageId, text }
         })
             .then(() => {
@@ -316,7 +316,7 @@ export const deleteMessage = (conversationId, messageId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-message/${messageId}`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/messages/remove/${messageId}`,
             data: { messageId }
         })
             .then(() => {
@@ -342,7 +342,7 @@ export const setLastMessageSeen = (userId, conversationId, messageId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/conversation/last-message-seen/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/conversations/last-message-seen/`,
             data: { conversationId, messageId }
         })
             .then(() => {
@@ -362,7 +362,7 @@ export const setLastConversationSeen = (userId, conversationId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/conversation/last-conversation-seen/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/conversations/last-conversation-seen/`,
             data: { conversationId }
         })
             .then(() => {
@@ -382,7 +382,7 @@ export const addEmoji = (conversationId, messageId, emoji) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/add-emoji/`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/emojis/add/`,
             data: { messageId, emoji }
         })
             .then(() => {
@@ -408,7 +408,7 @@ export const deleteFile = (conversationId, messageId, file) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/delete-files/${messageId}`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/messages/upload/delete/${messageId}`,
             data: { file }
         })
             .then(() => {
@@ -434,7 +434,7 @@ export const removeEmoji = (conversationId, messageId, emojiId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/remove-emoji`,
+            url: `${process.env.REACT_APP_API_URL}api/conversation/${conversationId}/emojis/remove/`,
             data: { messageId, emojiId }
         })
             .then(() => {
@@ -460,7 +460,7 @@ export const addFavorite = (userId, conversationId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/conversation/add-favorite/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/conversations/favorites/add/`,
             data: { conversationId }
         })
             .then(() => {
@@ -480,7 +480,7 @@ export const removeFavorite = (userId, conversationId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/conversation/remove-favorite/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/conversations/favorites/remove/`,
             data: { conversationId }
         })
             .then(() => {

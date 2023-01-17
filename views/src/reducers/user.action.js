@@ -6,6 +6,11 @@ import axios from "axios";
 
 export const GET_USER = "GET_USER"
 
+/**
+ * Get user profil
+ * @param {*} uid User ID
+ */
+
 export const getUser = (uid) => {
     return async (dispatch) => {
         await axios
@@ -17,11 +22,19 @@ export const getUser = (uid) => {
     }
 }
 
+export const UPDATE_USER = "UPDATE_USER"
+
 /**
  * Update user informations
+ * @param {*} userId New user ID
+ * @param {*} name New user name
+ * @param {*} lastname New user lastname
+ * @param {*} work New user work
+ * @param {*} bio New user bio
+ * @param {*} location New user location
+ * @param {*} phone New user phone
+ * @param {*} networks New user networks
  */
-
-export const UPDATE_USER = "UPDATE_USER"
 
 export const updateUser = (userId, name, lastname, work, bio, location, phone, networks) => {
     return async (dispatch) => {
@@ -45,11 +58,13 @@ export const updateUser = (userId, name, lastname, work, bio, location, phone, n
     }
 }
 
-/**
- * Update email
- */
-
 export const UPDATE_EMAIL = "UPDATE_EMAIL"
+
+/**
+ * Update user email
+ * @param {*} userId User ID
+ * @param {*} email New user email
+ */
 
 export const updateEmail = (userId, email) => {
     return async (dispatch) => {
@@ -65,11 +80,13 @@ export const updateEmail = (userId, email) => {
     }
 }
 
-/**
- * Update theme
- */
-
 export const UPDATE_THEME = "UPDATE_THEME"
+
+/**
+ * Update user theme
+ * @param {*} userId User ID
+ * @param {*} theme New user theme
+ */
 
 export const updateTheme = (userId, theme) => {
     return async (dispatch) => {
@@ -85,20 +102,18 @@ export const updateTheme = (userId, theme) => {
     }
 }
 
-/*******************************************************************************************************************************/
-/******************************************************* NOTIFICATIONS *********************************************************/
+export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS"
 
 /**
  * Set notifications to 0
+ * @param {*} userId User ID
  */
-
-export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS"
 
 export const removeNotifications = (userId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/reset-notifications/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/notifications/reset/`,
         })
             .then(() => {
                 dispatch({ type: RESET_NOTIFICATIONS, payload: { notifications: "0" } })
@@ -107,17 +122,19 @@ export const removeNotifications = (userId) => {
     }
 }
 
+export const SET_NOTIFICATION_SEEN = "SET_NOTIFICATION_SEEN"
+
 /**
  * Set seen state to a notification
+ * @param {*} userId User ID
+ * @param {*} notificationId Notification ID to remove
  */
-
-export const SET_NOTIFICATION_SEEN = "SET_NOTIFICATION_SEEN"
 
 export const setNotificationToSeen = (userId, notificationId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/notification-seen/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/notifications/seen/`,
             data: { userId, notificationId }
         })
             .then(() => {
@@ -127,17 +144,19 @@ export const setNotificationToSeen = (userId, notificationId) => {
     }
 }
 
+export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION"
+
 /**
  * Delete a notification
+ * @param {*} userId User ID
+ * @param {*} notificationId Notification ID to delete
  */
-
-export const DELETE_NOTIFICATION = "DELETE_NOTIFICATION"
 
 export const deleteNotification = (userId, notificationId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/delete-notification/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/notifications/delete/`,
             data: { userId, notificationId }
         })
             .then(() => {
@@ -147,20 +166,20 @@ export const deleteNotification = (userId, notificationId) => {
     }
 }
 
-/*******************************************************************************************************************************/
-/***************************************************** CONTACT REQUEST **********************************************************/
+export const SEND_CONTACT_REQUEST = "SEND_CONTACT_REQUEST"
 
 /**
  * Send a contact request
+ * @param {*} contactId ID of the contact to send a notification to
+ * @param {*} userId User ID
+ * @param {*} notification Notification object
  */
-
-export const SEND_CONTACT_REQUEST = "SEND_CONTACT_REQUEST"
 
 export const sendContactRequest = (contactId, userId, notification) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/send-contact-request/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/contacts/request/send/`,
             data: { contactId, notification }
         })
             .then(() => {
@@ -170,11 +189,12 @@ export const sendContactRequest = (contactId, userId, notification) => {
     }
 }
 
+export const RECEIVE_CONTACT_REQUEST = "RECEIVE_CONTACT_REQUEST"
+
 /**
  * Receive the contact request
+ * @param {*} notification Notification object
  */
-
-export const RECEIVE_CONTACT_REQUEST = "RECEIVE_CONTACT_REQUEST"
 
 export const receiveContactRequest = (notification) => {
     return async (dispatch) => {
@@ -182,17 +202,20 @@ export const receiveContactRequest = (notification) => {
     }
 }
 
+export const CANCEL_SENT_CONTACT_REQUEST = "CANCEL_SENT_CONTACT_REQUEST"
+
 /**
  * Cancel a contact request
+ * @param {*} contactId Contact ID 
+ * @param {*} userId User ID
+ * @param {*} type Type of the notification
  */
-
-export const CANCEL_SENT_CONTACT_REQUEST = "CANCEL_SENT_CONTACT_REQUEST"
 
 export const cancelContactRequest = (contactId, userId, type) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/cancel-contact-request/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/contacts/request/cancel/`,
             data: { contactId, type }
         })
             .then(() => {
@@ -202,11 +225,13 @@ export const cancelContactRequest = (contactId, userId, type) => {
     }
 }
 
+export const RECEIVE_CANCEL_CONTACT_REQUEST = "RECEIVE_CANCEL_CONTACT_REQUEST"
+
 /**
  * Receive the canceled contact request
+ * @param {*} type Type of the notification
+ * @param {*} requesterId ID of the requester
  */
-
-export const RECEIVE_CANCEL_CONTACT_REQUEST = "RECEIVE_CANCEL_CONTACT_REQUEST"
 
 export const receiveCancelContactRequest = (type, requesterId) => {
     return async (dispatch) => {
@@ -214,17 +239,19 @@ export const receiveCancelContactRequest = (type, requesterId) => {
     }
 }
 
+export const ACCEPT_CONTACT_REQUEST = "ACCEPT_CONTACT_REQUEST"
+
 /**
  * Accept contact request
+ * @param {*} request Request object
+ * @param {*} userId User ID
  */
-
-export const ACCEPT_CONTACT_REQUEST = "ACCEPT_CONTACT_REQUEST"
 
 export const acceptContactRequest = (request, userId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/accept-contact-request/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/contacts/request/accept/`,
             data: { requesterId: request.requesterId, type: request.type }
         })
             .then(() => {
@@ -234,11 +261,12 @@ export const acceptContactRequest = (request, userId) => {
     }
 }
 
+export const RECEIVE_ACCEPT_CONTACT_REQUEST = "RECEIVE_ACCEPT_CONTACT_REQUEST"
+
 /**
  * Receive contact request acceptation
+ * @param {*} contact Contact added to user contacts
  */
-
-export const RECEIVE_ACCEPT_CONTACT_REQUEST = "RECEIVE_ACCEPT_CONTACT_REQUEST"
 
 export const receiveAcceptContactRequest = (contact) => {
     return async (dispatch) => {
@@ -246,17 +274,19 @@ export const receiveAcceptContactRequest = (contact) => {
     }
 }
 
+export const REFUSE_CONTACT_REQUEST = "REFUSE_CONTACT_REQUEST"
+
 /**
  * Refuse the contact request
+ * @param {*} request Request object
+ * @param {*} userId User ID
  */
-
-export const REFUSE_CONTACT_REQUEST = "REFUSE_CONTACT_REQUEST"
 
 export const refuseContactRequest = (request, userId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/refuse-contact-request/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/contacts/request/refuse/`,
             data: { requesterId: request.requesterId, type: request.type }
         })
             .then(() => {
@@ -266,11 +296,12 @@ export const refuseContactRequest = (request, userId) => {
     }
 }
 
+export const RECEIVE_REFUSE_CONTACT_REQUEST = "RECEIVE_REFUSE_CONTACT_REQUEST"
+
 /**
  * Receive contact request refus
+ * @param {*} contactId Contact ID that refuses contact request
  */
-
-export const RECEIVE_REFUSE_CONTACT_REQUEST = "RECEIVE_REFUSE_CONTACT_REQUEST"
 
 export const receiveRefuseContactRequest = (contactId) => {
     return async (dispatch) => {
@@ -278,17 +309,19 @@ export const receiveRefuseContactRequest = (contactId) => {
     }
 }
 
+export const DELETE_CONTACT = "DELETE_CONTACT"
+
 /**
  * Delete contact
+ * @param {*} userId User ID
+ * @param {*} contactId ID of the contact to delete
  */
-
-export const DELETE_CONTACT = "DELETE_CONTACT"
 
 export const deleteContact = (userId, contactId) => {
     return async (dispatch) => {
         await axios({
             method: "put",
-            url: `${process.env.REACT_APP_API_URL}api/user/delete-contact/` + userId,
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/delete-contact/`,
             data: { contactId }
         })
             .then(() => {
@@ -298,11 +331,12 @@ export const deleteContact = (userId, contactId) => {
     }
 }
 
+export const RECEIVE_DELETE_CONTACT = "RECEIVE_DELETE_CONTACT"
+
 /**
  * Receive delete contact
+ * @param {*} contactId ID of the contact that delete user from contact
  */
-
-export const RECEIVE_DELETE_CONTACT = "RECEIVE_DELETE_CONTACT"
 
 export const receiveDeleteContact = (contactId) => {
     return async (dispatch) => {

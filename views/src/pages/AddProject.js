@@ -188,7 +188,7 @@ const AddProject = ({ user }) => {
                                     formData.append('files', pictures[i])
                                 }
                                 await axios
-                                    .put(`${process.env.REACT_APP_API_URL}api/project/add-pictures/${response.data._id}`, formData)
+                                    .put(`${process.env.REACT_APP_API_URL}api/project/${response.data._id}/uploads/pictures/add/`, formData)
                                     .then(res => res.data)
                                     .catch(err => console.log(err))
                             }).catch(err => console.log(err))
