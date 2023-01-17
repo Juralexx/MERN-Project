@@ -59,14 +59,16 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                                     <Icon name="User" />
                                                 </Link>
                                             </ToolsBtn>
-                                            <MemberMenu
-                                                element={element}
-                                                project={project}
-                                                websocket={websocket}
-                                                isAdmin={isAdmin}
-                                                isManager={isManager}
-                                                user={user}
-                                            />
+                                            {(isManager || isAdmin) && element.role !== 'manager' &&
+                                                <MemberMenu
+                                                    element={element}
+                                                    project={project}
+                                                    websocket={websocket}
+                                                    isAdmin={isAdmin}
+                                                    isManager={isManager}
+                                                    user={user}
+                                                />
+                                            }
                                         </>
                                     }
                                 </div>

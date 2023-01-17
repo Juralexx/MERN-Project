@@ -15,10 +15,10 @@ const Location = ({ datas, setDatas, setError, error }) => {
     const [geoJSON, setGeoJSON] = useState([])
 
     useEffect(() => {
-        if (datas.location) {
+        if (datas.location.city) {
             const fetchGeolocalisation = async () => {
                 setLeafletLoading(true)
-                await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${datas.location}`)
+                await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${datas.location.city}`)
                     .then(res => {
                         if (res.data)
                             setGeoJSON(res.data.geometry.coordinates)
@@ -27,7 +27,7 @@ const Location = ({ datas, setDatas, setError, error }) => {
             }
             fetchGeolocalisation()
         }
-    }, [datas.location])
+    }, [datas.location.city])
 
     const [search, setSearch] = useState({ query: "", results: [] })
     const [isLoading, setLoading] = useState(false)
@@ -44,7 +44,7 @@ const Location = ({ datas, setDatas, setError, error }) => {
         else {
             const response = await axios
                 .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${search.query}`))
-                .catch(err => { console.log("Error: ", err) })
+                .catch(err => console.log("Error: ", err))
             if (response) {
                 setSearch(data => ({ ...data, results: response.data }))
                 setLoading(true)
@@ -92,14 +92,16 @@ const Location = ({ datas, setDatas, setError, error }) => {
                                 setSearch(data => ({ ...data, query: '' }))
                                 setDatas(data => ({
                                     ...data,
-                                    location: "",
-                                    geolocalisation: "",
-                                    department: "",
-                                    codeDepartment: "",
-                                    region: "",
-                                    codeRegion: "",
-                                    newRegion: "",
-                                    codeNewRegion: "",
+                                    location: {
+                                        city: "",
+                                        department: "",
+                                        codeDepartment: "",
+                                        region: "",
+                                        codeRegion: "",
+                                        newRegion: "",
+                                        codeNewRegion: "",
+                                        geolocalisation: "",
+                                    }
                                 }))
                             }}
                         />
@@ -126,14 +128,16 @@ const Location = ({ datas, setDatas, setError, error }) => {
                                                 onClick={() => {
                                                     setDatas(data => ({
                                                         ...data,
-                                                        location: element.COM_NOM,
-                                                        geolocalisation: element.geolocalisation,
-                                                        department: element.DEP_NOM,
-                                                        codeDepartment: element.DEP_CODE,
-                                                        region: element.REG_NOM_OLD,
-                                                        codeRegion: element.REG_CODE_OLD,
-                                                        newRegion: element.REG_NOM,
-                                                        codeNewRegion: element.REG_CODE,
+                                                        location: {
+                                                            city: element.COM_NOM,
+                                                            department: element.DEP_NOM,
+                                                            codeDepartment: element.DEP_CODE,
+                                                            region: element.REG_NOM_OLD,
+                                                            codeRegion: element.REG_CODE_OLD,
+                                                            newRegion: element.REG_NOM,
+                                                            codeNewRegion: element.REG_CODE,
+                                                            geolocalisation: element.geolocalisation,
+                                                        }
                                                     }))
                                                     setSearch(data => ({ ...data, query: `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}` }))
                                                     setDisplay(false)
@@ -164,21 +168,21 @@ const Location = ({ datas, setDatas, setError, error }) => {
                 </div>
             </div>
             <MapContainer
-                key={!leafletLoading ? datas.location : null}
-                center={!leafletLoading && datas.geolocalisation.length > 0 ? geolocToFloat(datas.geolocalisation) : [46.873467013745916, 2.5836305570248217]}
-                zoom={datas.location ? 12 : 5}
+                key={!leafletLoading ? datas.location.city : null}
+                center={!leafletLoading && datas.location?.geolocalisation.length > 0 ? geolocToFloat(datas.location?.geolocalisation) : [46.873467013745916, 2.5836305570248217]}
+                zoom={datas.location.city ? 12 : 5}
                 minZoom={5}
-                maxZoom={datas.location && 12}
-                dragging={!datas.location ? false : true}
+                maxZoom={datas.location.city && 12}
+                dragging={!datas.location.city ? false : true}
                 style={{ width: '100%', height: 300, marginTop: "20px" }}
             >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     url='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
                 />
-                {datas.location.length > 0 && geoJSON.length > 0 && !leafletLoading &&
+                {datas.location.city.length > 0 && geoJSON.length > 0 && !leafletLoading &&
                     <GeoJSON
-                        data-location={datas.location}
+                        data-location={datas.location.city}
                         data={geoJSONStructure(geoJSON)}
                     />
                 }

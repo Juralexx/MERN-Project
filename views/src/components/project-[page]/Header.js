@@ -56,9 +56,9 @@ const Header = ({ user, project }) => {
                     <div className="col-12 col-lg-7 z-10">
                         <div className="project-picture" style={fullImage(project.pictures[0])}></div>
                         <div className="project-infos">
-                            <Link to={"/" + project.posterPseudo} className="flex items-center bold ml-2">
-                                <MediumAvatar pic={project.posterAvatar} className="mr-2" />
-                                {project.posterPseudo}
+                            <Link to={"/" + project.poster.pseudo} className="flex items-center bold ml-2">
+                                <MediumAvatar pic={project.poster.picture} className="mr-2" />
+                                {project.poster.pseudo}
                             </Link>
                             <div>le {dateParser(project.createdAt)}</div>
                         </div>
@@ -68,7 +68,7 @@ const Header = ({ user, project }) => {
                         <div className="py-2">
                             <div className="flex items-center py-1">
                                 <Icon name="Position" className="mr-2 w-5 h-5" />
-                                <p><Link to="/" className="bold">{project.location} ({project.code_department})</Link></p>
+                                <p><Link to="/" className="bold">{project.location.city} ({project.location.code_department})</Link></p>
                             </div>
                             {project.start && !project.end &&
                                 <div className="flex items-center py-1">
@@ -90,9 +90,9 @@ const Header = ({ user, project }) => {
                             }
 
                             <div className="project-infos_mobile">
-                                <Link to={"/" + project.posterPseudo}>
-                                    <MediumAvatar pic={project.posterAvatar} className="mr-2" />
-                                    {project.posterPseudo}
+                                <Link to={"/" + project.poster.pseudo}>
+                                    <MediumAvatar pic={project.poster.picture} className="mr-2" />
+                                    {project.poster.pseudo}
                                 </Link>
                                 <div className='flex items-center'>le {dateParser(project.createdAt)}</div>
                             </div>

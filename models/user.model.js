@@ -8,12 +8,12 @@ const UserModel = new mongoose.Schema(
         pseudo: {
             type: String,
             required: true,
-            minlength: 3,
+            minlength: 4,
             maxlength: 20,
             unique: true,
             validate: {
                 validator: (val) => validator.isAlphanumeric(val, ['fr-FR'], { ignore: " -" }),
-                message: 'Veuillez saisir un nom valide'
+                message: 'Votre pseudo ne peut contenir que des lettres, chiffre, tirets (-) et underscore (_) et faire entre 4 et 20 caractères'
             },
             trim: true
         },
@@ -162,10 +162,6 @@ const UserModel = new mongoose.Schema(
         },
 
         created_projects: {
-            type: [String]
-        },
-
-        completed_projects: {
             type: [String]
         },
 

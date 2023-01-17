@@ -415,8 +415,76 @@ io.on("connect", (socket) => {
         }
     })
 
-    /***********************************************************************************/
-    /************************************** TASKS **************************************/
+    /**
+     * ACTUALITY
+     */
+
+    socket.on('createActuality', ({ receiverId, actuality, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('createActuality', {
+                actuality,
+                activity
+            })
+        }
+    })
+
+    socket.on('updateActuality', ({ receiverId, actuality, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateActuality', {
+                actuality,
+                activity
+            })
+        }
+    })
+
+    socket.on('deleteActuality', ({ receiverId, actuality, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('deleteActuality', {
+                actuality,
+                activity
+            })
+        }
+    })
+
+    /**
+     * QNA
+     */
+
+    socket.on('createQna', ({ receiverId, qna, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('createQna', {
+                qna,
+                activity
+            })
+        }
+    })
+
+    socket.on('updateQna', ({ receiverId, qna, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('updateQna', {
+                qna,
+                activity
+            })
+        }
+    })
+
+    socket.on('deleteQna', ({ receiverId, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('deleteQna', {
+                activity
+            })
+        }
+    })
+
+    /**
+     * TASKS
+     */
 
     socket.on('createTask', ({ receiverId, task, activity }) => {
         const user = users.find(member => member.userId === receiverId)

@@ -25,7 +25,7 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, 
                         </h4>
                         <p>
                             <Icon name="Position" />
-                            <span>{element.location + ", " + element.department}</span>
+                            <span>{element.location.city + ", " + element.location.department}</span>
                         </p>
                         <p>
                             <Icon name="List" />
@@ -50,8 +50,8 @@ const Card = ({ element, setProject, setOpenLikersModal, setOpenFollowersModal, 
                     <div className="footer-right col-4 flex pt-2">
                         <div className="footer-name">
                             <p className="name">
-                                <Link to={`/user/${element.posterPseudo}`}>
-                                    {element.posterPseudo}
+                                <Link to={`/user/${element.poster.pseudo}`}>
+                                    {element.poster.pseudo}
                                 </Link>
                             </p>
                             <p className="date">{dateParser(element.createdAt)}</p>

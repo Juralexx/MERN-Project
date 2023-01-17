@@ -1,20 +1,42 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import axios from 'axios'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
-import { deleteActuality } from '../../../reducers/project.action'
-import { dateParser } from '../../Utils'
-import { convertDeltaToHTML } from '../../tools/editor/functions'
+import Icon from '../../tools/icons/Icon'
 import { Button, TextButton } from '../../tools/global/Button'
 import Warning from '../../tools/global/Warning'
 import EditActuality from './EditActuality'
 import { MediumAvatar } from '../../tools/global/Avatars'
-import Icon from '../../tools/icons/Icon'
+import { convertDeltaToHTML } from '../../tools/editor/functions'
+import { dateParser, reverseArray } from '../../Utils'
 
-const Actualities = ({ project, isManager }) => {
-    const [warning, setWarning] = useState(false)
-    const dispatch = useDispatch()
+const Actualities = ({ project, user, isManager, websocket }) => {
+    const [warning, setWarning] = useState(-1)
 
-    const deleteActu = element => dispatch(deleteActuality(project._id, element._id))
+    const deleteActu = async (element) => {
+        const activity = {
+            type: "delete-actuality",
+            who: user.pseudo,
+            actuality: element.title,
+            date: new Date().toISOString()
+        }
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${element._id}/delete/`,
+            data: {
+                activity: activity
+            }
+        })
+            .then(() => {
+                project.members.map(member => {
+                    return websocket.current.emit("deleteActuality", {
+                        receiverId: member._id,
+                        actuality: element,
+                        activity: activity
+                    })
+                })
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <Routes>
@@ -25,17 +47,21 @@ const Actualities = ({ project, isManager }) => {
                     </div>
                     {project.actualities.length > 0 ? (
                         <div className="actuality-container">
-                            {project.actualities.map((element, key) => {
+                            {reverseArray(project.actualities).map((element, key) => {
                                 return (
                                     <div key={key}>
                                         <div className="actuality-content">
                                             <div className="actuality-header">
-                                                <div className="actuality-nb">Actu #{project.actualities.length - key}</div>
+                                                <div className="actuality-nb">
+                                                    Actu #{project.actualities.length - key}
+                                                </div>
                                                 <h3>{element.title}</h3>
                                                 <div className="actuality-infos">
-                                                    <MediumAvatar pic={element.posterPicture} />
+                                                    <MediumAvatar pic={element.poster.picture} />
                                                     <div className="actuality-infos-right">
-                                                        <div className="actuality-poster">{element.posterPseudo} <span>{project.posterId === element.posterId ? "Createur" : "Collaborateur"}</span></div>
+                                                        <div className="actuality-poster">
+                                                            {element.poster.pseudo} <span>{project.poster._id === element.poster._id ? "Createur" : "Collaborateur"}</span>
+                                                        </div>
                                                         <div className="date">{dateParser(element.date)}</div>
                                                     </div>
                                                 </div>
@@ -44,7 +70,7 @@ const Actualities = ({ project, isManager }) => {
                                             <div className="actuality-btn">
                                                 {isManager &&
                                                     <>
-                                                        <TextButton onClick={() => setWarning(true)}>
+                                                        <TextButton onClick={() => setWarning(key)}>
                                                             Supprimer
                                                         </TextButton>
                                                         <TextButton>
@@ -60,11 +86,16 @@ const Actualities = ({ project, isManager }) => {
                                             </div>
                                         </div>
                                         <Warning
-                                            open={warning}
+                                            open={warning === key}
                                             setOpen={setWarning}
                                             title="Etes-vous sur de vouloir supprimer cette actualité ?"
-                                            text="Votre actualité sera définitivement supprimée"
-                                            onValidate={() => { deleteActu(element); setWarning(false) }}
+                                            text="Votre actualité sera définitivement supprimée."
+                                            validateBtn="Supprimer"
+                                            className="delete"
+                                            onValidate={() => {
+                                                deleteActu(element)
+                                                setWarning(-1)
+                                            }}
                                         />
                                     </div>
                                 )
@@ -93,6 +124,8 @@ const Actualities = ({ project, isManager }) => {
                 isManager ? (
                     <EditActuality
                         project={project}
+                        user={user}
+                        websocket={websocket}
                     />
                 ) : (
                     <Navigate

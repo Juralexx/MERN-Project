@@ -5671,6 +5671,7 @@ select:-webkit-autofill:focus {
 
 .warning_modal {
   max-width: 480px;
+  min-height: unset !important;
 }
 .warning_modal .warning_title {
   font-size: 18px;
@@ -6676,8 +6677,8 @@ select:-webkit-autofill:focus {
 }
 .add-img-container .img-preview-container .delete-btn {
   position: absolute;
-  right: -5px;
-  top: -5px;
+  right: -7px;
+  top: -7px;
   padding: 4px;
   border-radius: 50px;
   cursor: pointer;
@@ -6687,6 +6688,8 @@ select:-webkit-autofill:focus {
   width: 20px;
   height: 20px;
   color: white;
+  background: transparent;
+  padding: 0;
 }
 
 @media (max-width: 992px) {

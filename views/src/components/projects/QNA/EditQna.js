@@ -1,17 +1,15 @@
+import axios from 'axios'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { updateQNA } from '../../../reducers/project.action'
 import { Button, TextButton } from '../../tools/global/Button'
 import { ErrorCard } from '../../tools/global/Error'
 import { ClassicInput, Textarea } from '../../tools/global/Inputs'
 
-const EditQna = ({ project, user }) => {
+const EditQna = ({ project, user, websocket }) => {
     const [qna, setQna] = useState(project.QNA)
     const [error, setError] = useState({ element: "", error: "" })
     const checkErr = name => { if (error.element === name) return "err" }
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     const handleQuestion = (e, key) => {
         let arr = [...qna]
@@ -31,7 +29,7 @@ const EditQna = ({ project, user }) => {
         setQna(arr)
     }
 
-    const handleQna = () => {
+    const handleQna = async () => {
         let i = 0
         qna.forEach((element, key) => {
             i++
@@ -45,17 +43,50 @@ const EditQna = ({ project, user }) => {
                     element: `answer-${key}`,
                     error: "Veuillez ajouter une reponse valide à votre question"
                 })
-            } else {
-                if (i === qna.length) {
-                    const activity = { type: "update-qna", who: user.pseudo, date: new Date().toISOString() }
-                    dispatch(updateQNA(project._id, qna, activity))
-                        .then(() => {
-                            const redirection = navigate(`/projects/${project.URLID}/${project.URL}/qna`)
-                            setTimeout(redirection, 2000)
-                        }).catch(err => console.log(err))
-                }
             }
         })
+        if (i === qna.length) {
+            const activity = {
+                type: "update-qna",
+                who: user.pseudo,
+                date: new Date().toISOString()
+            }
+            await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/qna/update/`,
+                data: {
+                    qna: qna,
+                    activity: activity
+                }
+            })
+                .then(res => {
+                    if (res.data.errors) {
+                        if (res.data.errors.question) {
+                            setError({
+                                element: 'question',
+                                error: res.data.errors.question
+                            })
+                        } else if (res.data.errors.answer) {
+                            setError({
+                                element: 'answer',
+                                error: res.data.errors.answer
+                            })
+                        }
+                    }
+                })
+                .then(() => {
+                    project.members.map(member => {
+                        return websocket.current.emit("updateQna", {
+                            receiverId: member._id,
+                            qna: qna,
+                            activity: activity
+                        })
+                    })
+                    const redirection = navigate(`/projects/${project.URLID}/${project.URL}/qna`)
+                    setTimeout(redirection, 2000)
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     return (

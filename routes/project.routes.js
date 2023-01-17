@@ -1,7 +1,7 @@
 import express from 'express'
 const projectRoutes = express.Router()
 import { createProject } from '../controllers/project/project.add.controller.js'
-import { allProjects, findProjectByURL, updateProject, deleteProject, findProjectById } from '../controllers/project/project.controller.js'
+import { getAllProjects, findProjectByURL, updateProject, deleteProject, findProjectById } from '../controllers/project/project.controller.js'
 import { like, unlike, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
 import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
 import { commentTask, createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
@@ -13,7 +13,7 @@ const upload = multer()
 
 projectRoutes.post('/add', createProject)
 
-projectRoutes.get('/', allProjects)
+projectRoutes.get('/', getAllProjects)
 projectRoutes.get('/:URLID/:URL', findProjectByURL)
 projectRoutes.get('/:id', findProjectById)
 projectRoutes.put('/:id', updateProject)
@@ -38,8 +38,9 @@ projectRoutes.put('/:id/tasks/delete/', deleteTask)
 projectRoutes.put('/:id/tasks/comment/', commentTask)
 
 projectRoutes.put('/:id/actualities/add/', createActuality)
-projectRoutes.put('/:id/actualities/update/', upload.array('files'), updateActuality)
-projectRoutes.put('/:id/actualities/delete/', deleteActuality)
+projectRoutes.put('/:id/actualities/:actualityId/update/', upload.array('files'), updateActuality)
+
+projectRoutes.put('/:id/actualities/:actualityId/delete/', deleteActuality)
 projectRoutes.put('/:id/actualities/:actualityId/pictures/add/', upload.array('files', 3), uploadActualityPictures)
 projectRoutes.put('/:id/actualities/:actualityId/pictures/update/', upload.array('files', 3), updateActualityPictures)
 projectRoutes.put('/:id/actualities/:actualityId/pictures/delete/', deleteActualityPictures)

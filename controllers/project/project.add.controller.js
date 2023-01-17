@@ -6,54 +6,35 @@ const projectId = mongoose.Types.ObjectId()
 
 export const createProject = async (req, res) => {
     const {
-        posterId,
-        posterPseudo,
-        posterAvatar,
+        poster,
         title,
         URL,
         URLID,
         category,
         tags,
-        geolocalisation,
         location,
-        department,
-        code_department,
-        region,
-        code_region,
-        new_region,
-        code_new_region,
         description,
         day,
         start,
         end,
+        state,
         content,
         works,
         members,
         manager,
         networks
     } = req.body
-    const _id = projectId
-    const state = "En préparation"
 
     try {
         const project = ProjectModel.create({
-            _id,
-            posterId,
-            posterPseudo,
-            posterAvatar,
+            _id: projectId,
+            poster,
             title,
             URL,
             URLID,
             category,
             tags,
-            geolocalisation,
             location,
-            department,
-            code_department,
-            region,
-            code_region,
-            new_region,
-            code_new_region,
             description,
             day,
             start,
@@ -68,7 +49,7 @@ export const createProject = async (req, res) => {
         })
 
         await UserModel.findByIdAndUpdate(
-            { _id: req.body.posterId },
+            { _id: req.body.poster._id },
             {
                 $addToSet: {
                     projects: projectId,
@@ -79,7 +60,7 @@ export const createProject = async (req, res) => {
                 new: true
             },
         )
-            .then(docs => {
+            .then(() => {
                 res.status(201).json({ project: project._id })
             })
             .catch(err => {

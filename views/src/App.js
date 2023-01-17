@@ -5,7 +5,7 @@ import { io } from 'socket.io-client'
 import Paths from './components/routes/routes';
 import { MediaContext, UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptContactRequest, receiveCancelContactRequest, receiveDeleteContact, receiveContactRequest, receiveRefuseContactRequest } from './reducers/user.action';
-import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus } from './reducers/project.action';
+import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus, receiveCreateQNA, receiveUpdateQNA, receiveDeleteQNA, receiveCreateActuality, receiveUpdateActuality, receiveDeleteActuality } from './reducers/project.action';
 import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo, receiveUpdateConversationInfos, receiveUploadConversationPicture, receiveRemoveConversationPicture } from './reducers/messenger.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 import useMediaQuery from './components/tools/hooks/useMediaQuery';
@@ -37,7 +37,9 @@ function App() {
         }
         fetchToken()
 
-        if (uid) dispatch(getUser(uid))
+        if (uid) {
+            dispatch(getUser(uid))
+        }
 
     }, [uid, dispatch])
 
@@ -48,7 +50,7 @@ function App() {
                 setOnlineUsers(user.contacts.filter(contact => users.some(user => user.userId === contact._id)))
             })
         }
-        return () =>  websocket.current.off("getUsers")
+        return () => websocket.current.off("getUsers")
     }, [user])
 
     useEffect(() => {
@@ -154,6 +156,27 @@ function App() {
         websocket.current.on("leaveProject", data => {
             dispatch(removeProjectFromMember(data.projectId))
         })
+
+        websocket.current.on("createQna", data => {
+            dispatch(receiveCreateQNA(data.qna, data.activity))
+        })
+        websocket.current.on("updateQna", data => {
+            dispatch(receiveUpdateQNA(data.qna, data.activity))
+        })
+        websocket.current.on("deleteQna", data => {
+            dispatch(receiveDeleteQNA(data.activity))
+        })
+
+        websocket.current.on("createActuality", data => {
+            dispatch(receiveCreateActuality(data.actuality, data.activity))
+        })
+        websocket.current.on("updateActuality", data => {
+            dispatch(receiveUpdateActuality(data.actuality, data.activity))
+        })
+        websocket.current.on("deleteActuality", data => {
+            dispatch(receiveDeleteActuality(data.actuality, data.activity))
+        })
+
         websocket.current.on("createTask", data => {
             dispatch(receiveCreateTask(data.task, data.activity))
         })
@@ -170,41 +193,55 @@ function App() {
             dispatch(receiveDeleteTask(data.taskId, data.activity))
         })
         return () => {
-             websocket.current.off("sendMessageNotification")
-             websocket.current.off("getMessage")
-             websocket.current.off("updateMessage")
-             websocket.current.off("deleteMessage")
-             websocket.current.off("deleteFile")
-             websocket.current.off("addEmoji")
-             websocket.current.off("removeEmoji")
-             websocket.current.off("addConversation")
-             websocket.current.off("updateConversation")
-             websocket.current.off("updateConversationPicture")
-             websocket.current.off("deleteConversationPicture")
-             websocket.current.off("deleteConversation")
-             websocket.current.off("addConversationMember")
-             websocket.current.off("joinConversation")
-             websocket.current.off("removeConversationMember")
-             websocket.current.off("leaveConversation")
-             websocket.current.off("customizeConversationPseudo")
-             websocket.current.off("contactRequest")
-             websocket.current.off("cancelContactRequest")
-             websocket.current.off("acceptContactRequest")
-             websocket.current.off("refuseContactRequest")
-             websocket.current.off("deleteContact")
-             websocket.current.off("memberRequest")
-             websocket.current.off("cancelMemberRequest")
-             websocket.current.off("acceptMemberRequest")
-             websocket.current.off("refuseMemberRequest")
-             websocket.current.off("nameAdmin")
-             websocket.current.off("removeAdmin")
-             websocket.current.off("removeMember")
-             websocket.current.off("leaveProject")
-             websocket.current.off("createTask")
-             websocket.current.off("updateTask")
-             websocket.current.off("updateTaskState")
-             websocket.current.off("updateTaskStatus")
-             websocket.current.off("deleteTask")
+            websocket.current.off("contactRequest")
+            websocket.current.off("cancelContactRequest")
+            websocket.current.off("acceptContactRequest")
+            websocket.current.off("refuseContactRequest")
+
+            websocket.current.off("deleteContact")
+
+            websocket.current.off("memberRequest")
+            websocket.current.off("cancelMemberRequest")
+            websocket.current.off("acceptMemberRequest")
+            websocket.current.off("refuseMemberRequest")
+
+            websocket.current.off("nameAdmin")
+            websocket.current.off("removeAdmin")
+
+            websocket.current.off("removeMember")
+            websocket.current.off("leaveProject")
+
+            websocket.current.off("createQna")
+            websocket.current.off("updateQna")
+            websocket.current.off("deleteQna")
+
+            websocket.current.off("createActuality")
+            websocket.current.off("updateActuality")
+            websocket.current.off("deleteActuality")
+
+            websocket.current.off("createTask")
+            websocket.current.off("updateTask")
+            websocket.current.off("updateTaskState")
+            websocket.current.off("updateTaskStatus")
+            websocket.current.off("deleteTask")
+
+            websocket.current.off("sendMessageNotification")
+            websocket.current.off("getMessage")
+            websocket.current.off("updateMessage")
+            websocket.current.off("deleteMessage")
+            websocket.current.off("deleteFile")
+            websocket.current.off("addEmoji")
+            websocket.current.off("removeEmoji")
+            websocket.current.off("addConversation")
+            websocket.current.off("updateConversation")
+            websocket.current.off("updateConversationPicture")
+            websocket.current.off("deleteConversationPicture")
+            websocket.current.off("deleteConversation")
+            websocket.current.off("addConversationMember")
+            websocket.current.off("joinConversation")
+            websocket.current.off("removeConversationMember")
+            websocket.current.off("leaveConversation")
+            websocket.current.off("customizeConversationPseudo")
         }
     }, [websocket.current, websocket, onlineUsers, dispatch])
 

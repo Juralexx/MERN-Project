@@ -17,53 +17,48 @@ import AddActuality from './actualities/AddActuality';
 import Qna from './QNA/Qna';
 import AddQna from './QNA/AddQna';
 import ActivityFeed from './activity-feed/ActivityFeed';
+import Oval from '../tools/loaders/Oval';
 
 const Project = ({ user, websocket, projects, setProjects }) => {
-    const reducer = useSelector(state => state.projectReducer)
-    const [project, setProject] = useState({})
-    const [isAdmin, setAdmin] = useState()
-    const [isManager, setManager] = useState()
-    const [isLoading, setLoading] = useState(false)
     const { URLID, URL } = useParams()
+    const project = useSelector(state => state.projectReducer)
+    const [role, setRole] = useState({ manager: false, admin: false })
+    const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const projet = projects.find(element => element.URLID === URLID && element.URL === URL)
-        setProject(projet)
-        dispatch(getProject(projet._id))
-        setManager(projet.manager === user._id)
-        setAdmin(projet.admins.includes(user._id))
-        setLoading(false)
-    }, [URL, URLID, projects, setProject, dispatch, user._id])
-
-    useEffect(() => {
-        if (Object.keys(reducer).length > 0) {
-            setProject(reducer)
-            setManager(reducer.manager === user._id)
-            setAdmin(reducer.admins.includes(user._id))
+        if (Object.keys(project).length === 0) {
+            const current = projects.find(element => element.URLID === URLID && element.URL === URL)
+            dispatch(getProject(current._id))
         }
-    }, [reducer, user._id])
+
+        if (Object.keys(project).length > 0 && isLoading) {
+            setRole({
+                manager: project.manager === user._id,
+                admin: project.admins.includes(user._id)
+            })
+            setLoading(false)
+        }
+    }, [project, user._id, isLoading])
 
     useEffect(() => {
         let socket = websocket.current
         socket.on("leaveProject", data => {
             let index = projects.filter(element => element._id !== data.projectId)
             setProjects(index)
-            if (index.length > 0)
-                setProject(index[0])
-            else setProject(null)
+            window.location.pathname = '/projects'
         })
         return () => socket.off("leaveProject")
     }, [websocket.current, websocket, projects, setProjects])
 
     return (
-        Object.keys(project).length > 0 && !isLoading && (
+        Object.keys(project).length > 0 && !isLoading ? (
             <>
                 <Header
                     project={project}
                     websocket={websocket}
                     user={user}
-                    isManager={isManager}
+                    isManager={role.manager}
                 />
                 <Routes>
                     <Route index element={
@@ -73,15 +68,15 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                     <div className='col-12 col-xl-6 !px-0 sm:!px-3'>
                                         <HomeMembers
                                             project={project}
-                                            isAdmin={isAdmin}
-                                            isManager={isManager}
+                                            isAdmin={role.admin}
+                                            isManager={role.manager}
                                             user={user}
                                             websocket={websocket}
                                         />
                                         <HomeTasks
                                             project={project}
-                                            isAdmin={isAdmin}
-                                            isManager={isManager}
+                                            isAdmin={role.admin}
+                                            isManager={role.manager}
                                             user={user}
                                             websocket={websocket}
                                         />
@@ -103,8 +98,8 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             user={user}
                             websocket={websocket}
                             project={project}
-                            isAdmin={isAdmin}
-                            isManager={isManager}
+                            isAdmin={role.admin}
+                            isManager={role.manager}
                         />
                     } />
                     <Route path="tasks" element={
@@ -119,8 +114,8 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             user={user}
                             websocket={websocket}
                             project={project}
-                            isAdmin={isAdmin}
-                            isManager={isManager}
+                            isAdmin={role.admin}
+                            isManager={role.manager}
                         />
                     } />
                     <Route path="activity-feed" element={
@@ -129,7 +124,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                         />
                     } />
                     <Route path="edit" element={
-                        isManager ? (
+                        role.manager ? (
                             <Edit
                                 project={project}
                             />
@@ -142,25 +137,27 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                     <Route path="gallery" element={
                         <Gallery
                             project={project}
-                            isManager={isManager}
+                            isManager={role.manager}
                         />
                     } />
                     <Route path="actuality/*" element={
                         <Actualities
                             project={project}
-                            isManager={isManager}
+                            user={user}
+                            isManager={role.manager}
+                            websocket={websocket}
                         />
                     } />
 
 
                     <Route path="add-actuality" element={
-                        isManager ? (
+                        role.manager ? (
                             <AddActuality
                                 user={user}
                                 websocket={websocket}
                                 project={project}
-                                isAdmin={isAdmin}
-                                isManager={isManager}
+                                isAdmin={role.admin}
+                                isManager={role.manager}
                             />
                         ) : (
                             <Navigate
@@ -172,15 +169,18 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                     <Route path="qna/*" element={
                         <Qna
                             project={project}
-                            isManager={isManager}
+                            user={user}
+                            websocket={websocket}
+                            isManager={role.manager}
                         />
                     } />
 
                     <Route path="add-qna" element={
-                        isManager ? (
+                        role.manager ? (
                             <AddQna
                                 user={user}
                                 project={project}
+                                websocket={websocket}
                             />
                         ) : (
                             <Navigate
@@ -190,6 +190,8 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                     } />
                 </Routes>
             </>
+        ) : (
+            <Oval />
         )
     )
 }

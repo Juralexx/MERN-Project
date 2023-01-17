@@ -1,17 +1,15 @@
+import axios from 'axios'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { createQNA } from '../../../reducers/project.action'
 import { Button, TextButton } from '../../tools/global/Button'
 import { ErrorCard } from '../../tools/global/Error'
 import { ClassicInput, Textarea } from '../../tools/global/Inputs'
 
-const AddQna = ({ project, user }) => {
+const AddQna = ({ project, user, websocket }) => {
     const [qna, setQna] = useState([{ question: "", answer: "" }])
     const [error, setError] = useState({ element: "", error: "" })
     const checkErr = name => { if (error.element === name) return "err" }
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     const handleQuestion = (e, key) => {
         let arr = [...qna]
@@ -31,32 +29,66 @@ const AddQna = ({ project, user }) => {
         setQna(arr)
     }
 
-    const handleQna = () => {
+    const handleQna = async () => {
         let i = 0
-        qna.forEach(async (element, key) => {
+        qna.forEach((element, key) => {
             i++
             if (element.question === "" || element.question.length < 10 || element.question.length > 100) {
                 setError({
                     element: `question-${key}`,
-                    error: "Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères"
+                    error: "Veuillez saisir une question valide, votre question doit faire entre 10 et 100 caractères."
                 })
             } else if (element.answer === "" || element.answer.length < 10 || element.answer.length > 4000) {
                 setError({
                     element: `answer-${key}`,
-                    error: "Veuillez ajouter une reponse valide à votre question"
+                    error: "Veuillez ajouter une reponse valide à votre question, votre question doit faire entre 10 et 4000 caractères."
                 })
-            } else {
-                if (i === qna.length) {
-                    const activity = { type: "create-qna", who: user.pseudo, date: new Date().toISOString() }
-                    dispatch(createQNA(project._id, qna, activity))
-                        .then(() => {
-                            const redirection = navigate(`/projects/${project.URLID}/${project.URL}/qna`)
-                            setTimeout(() => redirection, 2000)
-                        })
-                        .catch(err => console.log(err))
-                }
             }
         })
+        if (i === qna.length) {
+            const activity = {
+                type: "create-qna",
+                who: user.pseudo,
+                date: new Date().toISOString()
+            }
+            await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/qna/add/`,
+                data: {
+                    qna: qna,
+                    activity: activity
+                }
+            })
+                .then(res => {
+                    console.log(res)
+                    if (res.data.errors) {
+                        if (res.data.errors.question) {
+                            setError({
+                                element: 'question',
+                                error: res.data.errors.question
+                            })
+                        } else if (res.data.errors.answer) {
+                            setError({
+                                element: 'answer',
+                                error: res.data.errors.answer
+                            })
+                        }
+                    } else {
+                        project.members.map(member => {
+                            return websocket.current.emit("createQna", {
+                                receiverId: member._id,
+                                qna: qna,
+                                activity: activity
+                            })
+                        })
+                    }
+                })
+                .then(() => {
+                    const redirection = navigate(`/projects/${project.URLID}/${project.URL}/qna`)
+                    setTimeout(() => redirection, 2000)
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     return (

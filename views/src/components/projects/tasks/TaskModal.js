@@ -17,8 +17,11 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
     const handleComment = () => {
         const com = {
             _id: randomNbLtID(24),
-            poster: user.pseudo,
-            posterId: user._id,
+            poster: {
+                _id: user._id,
+                pseudo: user.pseudo,
+                picture: user.picture,
+            },
             text: comment.text,
             date: new Date().toISOString()
         }
@@ -30,7 +33,7 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
         <Modal open={open} setOpen={setOpen} className="task-modal">
             <div className="task-modal_header">
                 <h4>{task.title}</h4>
-                <p>Créée par {task.creator} le {dateParser(task.date)} à {getHourOnly(new Date(task.date))}</p>
+                <p>Créée par {task.poster.pseudo} le {dateParser(task.date)} à {getHourOnly(new Date(task.date))}</p>
                 <div className="flex mt-2">
                     <div className={`details mr-1 ${stateToBackground(task.state)}`}>
                         {stateToString(task.state)}
@@ -88,7 +91,7 @@ const TaskModal = ({ project, task, user, open, setOpen, setUpdateTask }) => {
                         return (
                             <div className="comment" key={key}>
                                 <div className="comment-header">
-                                    <p>{element.poster}</p>
+                                    <p>{element.poster.pseudo}</p>
                                     <p>Le {dateParser(element.date)} à {getHourOnly(new Date(task.date))}</p>
                                 </div>
                                 <div className="comment-body">{element.text}</div>

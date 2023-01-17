@@ -113,7 +113,7 @@ const Projects = ({ projects }) => {
                                                 <Icon name="Calendar" /> {dateParser(element.createdAt)}
                                             </div>
                                             <div className="infos_field">
-                                                <Icon name="Position" /> {element.location} - {element.department} ({element.code_department})
+                                                <Icon name="Position" /> {element.location.city} - {element.location.department} ({element.location.code_department})
                                             </div>
                                             <div className="infos_field">
                                                 <Icon name="List" /> {element.category}

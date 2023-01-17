@@ -250,7 +250,7 @@ export const isSelected = (array, element) => {
  */
 
 export const nameAdmin = (member, project, user, websocket, dispatch) => {
-    const activity = { type: "name-admin", who: user.pseudo, newAdmin: member.pseudo, date: new Date().toISOString() }
+    const activity = { type: "name-admin", who: user.pseudo, new_admin: member.pseudo, date: new Date().toISOString() }
     const members = project.members.filter(member => member._id !== user._id)
     members.map(async member => {
         return await websocket.current.emit("nameAdmin", {

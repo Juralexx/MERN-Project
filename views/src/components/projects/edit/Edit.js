@@ -22,14 +22,16 @@ const Edit = ({ project }) => {
         url: project.URL,
         category: project.category,
         tags: project.tags,
-        geolocalisation: project.geolocalisation,
-        location: project.location,
-        department: project.department,
-        codeDepartment: project.code_department,
-        region: project.region,
-        codeRegion: project.code_region,
-        newRegion: project.new_region,
-        codeNewRegion: project.code_new_region,
+        location: {
+            city: project.location.city,
+            department: project.location.department,
+            codeDepartment: project.location.code_department,
+            region: project.location.region,
+            codeRegion: project.location.code_region,
+            newRegion: project.location.new_region,
+            codeNewRegion: project.location.code_new_region,
+            geolocalisation: project.location.geolocalisation,
+        },
         description: project.description,
         workArray: project.works,
         end: project.end,
@@ -95,14 +97,16 @@ const Edit = ({ project }) => {
                     description: datas.description,
                     tags: datas.tags,
                     state: datas.state,
-                    geolocalisation: datas.geolocalisation,
-                    location: datas.location,
-                    department: datas.department,
-                    code_department: datas.codeDepartment,
-                    region: datas.region,
-                    code_region: datas.codeRegion,
-                    new_region: datas.newRegion,
-                    code_new_region: datas.codeNewRegion,
+                    location: {
+                        city: datas.location.city,
+                        department: datas.location.department,
+                        code_department: datas.location.codeDepartment,
+                        region: datas.location.region,
+                        code_region: datas.location.codeRegion,
+                        new_region: datas.location.newRegion,
+                        code_new_region: datas.location.codeNewRegion,
+                        geolocalisation: datas.location.geolocalisation,
+                    },
                     end: datas.end,
                     content: datas.content,
                     works: datas.workArray,
@@ -110,12 +114,32 @@ const Edit = ({ project }) => {
                 }
             }).then(async res => {
                 if (res.data.errors) {
-                    if (res.data.errors.title)
-                        setError({ element: "title", error: res.data.errors.title })
-                    else if (res.data.errors.category)
-                        setError({ element: "category", error: res.data.errors.category })
-                    else if (res.data.errors.content)
-                        setError({ element: "content", error: res.data.errors.content })
+                    if (res.data.errors.title) {
+                        setError({
+                            element: 'title',
+                            error: res.data.errors.title
+                        })
+                    } else if (res.data.errors.subtitle) {
+                        setError({
+                            element: 'subtitle',
+                            error: res.data.errors.subtitle
+                        })
+                    } else if (res.data.errors.category) {
+                        setError({
+                            element: 'category',
+                            error: res.data.errors.category
+                        })
+                    } else if (res.data.errors.description) {
+                        setError({
+                            element: 'description',
+                            error: res.data.errors.description
+                        })
+                    } else if (res.data.errors.content) {
+                        setError({
+                            element: 'content',
+                            error: res.data.errors.content
+                        })
+                    }
                 } else {
                     dispatch(updateProject(
                         project._id,
@@ -126,14 +150,7 @@ const Edit = ({ project }) => {
                         datas.description,
                         datas.tags,
                         datas.state,
-                        datas.geolocalisation,
                         datas.location,
-                        datas.department,
-                        datas.codeDepartment,
-                        datas.region,
-                        datas.codeRegion,
-                        datas.newRegion,
-                        datas.codeNewRegion,
                         datas.end,
                         datas.content,
                         datas.workArray,
@@ -210,10 +227,10 @@ const Edit = ({ project }) => {
                     <div className="edit-container">
                         <Location
                             project={project}
-                            location={datas.location}
-                            department={datas.department}
-                            region={datas.region}
-                            geolocalisation={datas.geolocalisation}
+                            location={datas.location.city}
+                            department={datas.location.department}
+                            region={datas.location.region}
+                            geolocalisation={datas.location.geolocalisation}
                             setDatas={setDatas}
                             error={error}
                             setError={setError}
@@ -276,7 +293,7 @@ const Edit = ({ project }) => {
                             && datas.category === project.category
                             && datas.description === project.description
                             && datas.state === project.state
-                            && datas.location === project.location
+                            && datas.location.city === project.location.city
                             && datas.end === ISOtoNavigatorFormat(project.end)
                             && JSON.stringify(datas.workArray) === JSON.stringify(project.works)
                             && !contentChanged

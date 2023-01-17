@@ -1,10 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios';
 import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
-import { Button } from '../../tools/global/Button'
+import { Button, TextButton } from '../../tools/global/Button'
 import EditQna from './EditQna'
 import Icon from '../../tools/icons/Icon';
+import Warning from '../../tools/global/Warning';
 
-const Qna = ({ project, isManager }) => {
+const Qna = ({ project, user, isManager, websocket }) => {
+    const [warning, setWarning] = useState(false)
+
+    const deleteQna = async () => {
+        const activity = {
+            type: "delete-qna",
+            who: user.pseudo,
+            date: new Date().toISOString()
+        }
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/qna/delete/`,
+            data: {
+                activity: activity
+            }
+        }).then(() => {
+            project.members.map(member => {
+                return websocket.current.emit("deleteQna", {
+                    receiverId: member._id,
+                    activity: activity
+                })
+            })
+        }).catch(err => console.log(err))
+    }
+
     return (
         <Routes>
             <Route index element={
@@ -14,9 +40,14 @@ const Qna = ({ project, isManager }) => {
                             <div className="header flex flex-col sm:flex-row sm:items-center mb-9">
                                 <h2 className='mb-3 sm:mb-0'>Foire aux questions</h2>
                                 {isManager &&
-                                    <Button className="sm:ml-5">
-                                        <Link to="edit">Modifier</Link>
-                                    </Button>
+                                    <>
+                                        <Button className="sm:ml-5">
+                                            <Link to="edit">Modifier</Link>
+                                        </Button>
+                                        <TextButton className="mt-2 sm:mt-0 sm:ml-2" onClick={() => setWarning(true)}>
+                                            Supprimer la FAQ
+                                        </TextButton>
+                                    </>
                                 }
                             </div>
                             {project.QNA.map((element, key) => {
@@ -31,6 +62,15 @@ const Qna = ({ project, isManager }) => {
                                     </div>
                                 )
                             })}
+                            <Warning
+                                title="Supprimer la FAQ"
+                                text="Voulez-vous vraiment supprimer cette FAQ ?"
+                                validateBtn="Supprimer la FAQ"
+                                className="delete"
+                                open={warning}
+                                setOpen={setWarning}
+                                onValidate={() => deleteQna()}
+                            />
                         </>
                     ) : (
                         <>
@@ -45,7 +85,9 @@ const Qna = ({ project, isManager }) => {
                                 <span>Ajoutez une FAQ pour répondre aux questions que vos visiteur pourraient se poser !</span>
                                 {isManager &&
                                     <Button>
-                                        <NavLink to={`/projects/${project.URLID}/${project.URL}/add-qna`}>Ajouter une FAQ</NavLink>
+                                        <NavLink to={`/projects/${project.URLID}/${project.URL}/add-qna`}>
+                                            Ajouter une FAQ
+                                        </NavLink>
                                     </Button>
                                 }
                             </div>
@@ -55,9 +97,11 @@ const Qna = ({ project, isManager }) => {
             } />
 
             <Route path="edit" element={
-                project.QNA.length === 0 ? (
+                project.QNA.length > 0 ? (
                     <EditQna
                         project={project}
+                        user={user}
+                        websocket={websocket}
                     />
                 ) : (
                     <Navigate

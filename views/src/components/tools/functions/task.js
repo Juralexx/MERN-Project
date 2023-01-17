@@ -15,8 +15,8 @@ export const updateState = async (element, newState, project, user, websocket, d
         type: "update-task-state",
         who: user.pseudo,
         task: element.title,
-        prevState: stateToString(element.state),
-        newState: stateToString(newState),
+        prev_state: element.state,
+        new_state: newState,
         date: new Date().toISOString()
     }
     //const members = project.members.filter(member => member._id !== user._id)

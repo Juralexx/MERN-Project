@@ -27,9 +27,9 @@ const Actuality = ({ project }) => {
                         <div className="actuality-nb">Actu #{index + 1}</div>
                         <h3>{actuality.title}</h3>
                         <div className="actuality-infos">
-                            <MediumAvatar pic={actuality.posterPicture} />
+                            <MediumAvatar pic={actuality.poster.picture} />
                             <div className="actuality-infos-right">
-                                <div className="actuality-poster">{actuality.posterPseudo} <span>{project.posterId === actuality.posterId ? "Createur" : "Collaborateur"}</span></div>
+                                <div className="actuality-poster">{actuality.poster.pseudo} <span>{project.poster._id === actuality.poster._id ? "Createur" : "Collaborateur"}</span></div>
                                 <div className="date">{dateParser(actuality.date)}</div>
                             </div>
                         </div>

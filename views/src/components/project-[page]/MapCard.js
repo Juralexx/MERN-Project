@@ -10,10 +10,10 @@ const MapCard = ({ project }) => {
     const [geoJSON, setGeoJSON] = useState([])
 
     useEffect(() => {
-        if (project.location) {
+        if (project.location.city) {
             const fetchGeolocalisation = async () => {
                 setLeafletLoading(true)
-                await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${project.location}`)
+                await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${project.location.city}`)
                     .then(res => {
                         if (res.data)
                             setGeoJSON(res.data.geometry.coordinates)
@@ -22,30 +22,30 @@ const MapCard = ({ project }) => {
             }
             fetchGeolocalisation()
         }
-    }, [project.location])
+    }, [project.location.city])
 
     return (
         <div className="content-card map_card">
             <div className="card-title">
-                <h3>{project.location} ({project.code_department})</h3>
+                <h3>{project.location.city} ({project.code_department})</h3>
             </div>
             <div className="card-body">
                 <MapContainer
-                    key={!leafletLoading ? project.location : null}
-                    center={!leafletLoading && project?.geolocalisation?.length > 0 ? geolocToFloat(project.geolocalisation) : [46.873467013745916, 2.5836305570248217]}
-                    zoom={project.location ? 12 : 5}
+                    key={!leafletLoading ? project.location.city : null}
+                    center={!leafletLoading && project?.location?.geolocalisation?.length > 0 ? geolocToFloat(project.location.geolocalisation) : [46.873467013745916, 2.5836305570248217]}
+                    zoom={project.location.city ? 12 : 5}
                     minZoom={5}
-                    maxZoom={project.location && 12}
-                    dragging={!project.location ? false : true}
+                    maxZoom={project.location.city && 12}
+                    dragging={!project.location.city ? false : true}
                     style={{ width: '100%', height: 300 }}
                 >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         url='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
                     />
-                    {project.location.length > 0 && geoJSON.length > 0 && !leafletLoading &&
+                    {project.location.city.length > 0 && geoJSON.length > 0 && !leafletLoading &&
                         <GeoJSON
-                            data-location={project.location}
+                            data-location={project.location.city}
                             data={geoJSONStructure(geoJSON)}
                         />
                     }

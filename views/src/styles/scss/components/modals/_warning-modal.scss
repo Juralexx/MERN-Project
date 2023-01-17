@@ -1,5 +1,6 @@
 .warning_modal {
-    max-width : 480px;
+    max-width  : 480px;
+    min-height : unset !important;
 
     .warning_title {
         font-size : 18px;

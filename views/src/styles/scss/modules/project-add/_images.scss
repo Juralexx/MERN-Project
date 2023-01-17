@@ -127,17 +127,19 @@
 
         .delete-btn {
             position         : absolute;
-            right            : -5px;
-            top              : -5px;
+            right            : -7px;
+            top              : -7px;
             padding          : 4px;
             border-radius    : 50px;
             cursor           : pointer;
             background-color : black;
 
             svg {
-                width  : 20px;
-                height : 20px;
-                color  : white;
+                width      : 20px;
+                height     : 20px;
+                color      : white;
+                background : transparent;
+                padding    : 0;
             }
         }
     }

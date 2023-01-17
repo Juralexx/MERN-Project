@@ -1,17 +1,15 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import Icon from '../../tools/icons/Icon'
 import ReactQuill from 'react-quill'
 import EditorToolbar, { formats, modules } from '../../tools/editor/EditorToolbar'
 import { Button, TextButton } from '../../tools/global/Button'
 import { ErrorCard } from '../../tools/global/Error'
 import { ClassicInput } from '../../tools/global/Inputs'
-import { fullImage, removeAccents } from '../../Utils'
-import { updateActuality } from '../../../reducers/project.action'
-import Icon from '../../tools/icons/Icon'
+import { addClass, fullImage, removeAccents } from '../../Utils'
 
-const EditActuality = ({ project }) => {
+const EditActuality = ({ project, user, websocket }) => {
     const { urlid, url } = useParams()
     const actuality = project.actualities.find(actu => actu.url === url && actu.urlid === urlid)
     const [datas, setDatas] = useState({
@@ -25,8 +23,6 @@ const EditActuality = ({ project }) => {
     const [deletedFiles, setDeletedFiles] = useState([])
     const [pictures, setPictures] = useState([])
     const [error, setError] = useState({ element: "", error: "" })
-    const checkErr = name => { if (error.element === name) return "err" }
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleChange = (text, delta, source, editor) => {
@@ -63,12 +59,12 @@ const EditActuality = ({ project }) => {
     }
 
     const handleActuality = async () => {
-        if (datas.title === "" || datas.title.length < 10 || datas.title.length > 100) {
+        if (datas.title.length < 10 || datas.title.length > 100) {
             setError({
                 element: "title",
                 error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 100 caractères"
             })
-        } else if (datas.description === "" || datas.description.length < 10 || datas.description.length > 4000) {
+        } else if (datas.description.length < 10 || datas.description.length > 4000) {
             setError({
                 element: "description",
                 error: "Veuillez ajouter une description à votre actualité"
@@ -88,7 +84,26 @@ const EditActuality = ({ project }) => {
                 setDatas(data => ({ ...data, uri: URL }))
             }
 
-            dispatch(updateActuality(project._id, actuality._id, datas.title, datas.uri, datas.description))
+            const activity = {
+                type: "update-actuality",
+                who: user.pseudo,
+                actuality: datas.title,
+                date: new Date().toISOString()
+            }
+
+            await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/update/`,
+                data: {
+                    actuality: {
+                        ...actuality,
+                        title: datas.title,
+                        url: datas.uri,
+                        description: datas.description
+                    },
+                    activity: activity
+                }
+            })
                 .then(async () => {
                     if (deletedFiles.length > 0) {
                         await axios({
@@ -97,17 +112,18 @@ const EditActuality = ({ project }) => {
                             data: {
                                 deletedFiles: deletedFiles
                             }
-                        }).then(async () => {
-                            if (pictures.length > 0) {
-                                let formData = new FormData()
-                                for (let i = 0; i < pictures.length; i++) {
-                                    formData.append('files', pictures[i])
-                                }
-                                await axios
-                                    .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/update/`, formData)
-                                    .catch(err => console.log(err))
-                            }
                         })
+                            .then(async () => {
+                                if (pictures.length > 0) {
+                                    let formData = new FormData()
+                                    for (let i = 0; i < pictures.length; i++) {
+                                        formData.append('files', pictures[i])
+                                    }
+                                    await axios
+                                        .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/update/`, formData)
+                                        .catch(err => console.log(err))
+                                }
+                            })
                     } else {
                         if (pictures.length > 0) {
                             let formData = new FormData()
@@ -119,9 +135,27 @@ const EditActuality = ({ project }) => {
                                 .catch(err => console.log(err))
                         }
                     }
-                }).then(() => {
-                    setTimeout(() => navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.url}`), 2000)
-                }).catch(err => console.log(err))
+                })
+                .then(() => {
+                    project.members.map(member => {
+                        return websocket.current.emit("updateActuality", {
+                            receiverId: member._id,
+                            actuality: {
+                                ...actuality,
+                                title: datas.title,
+                                url: datas.uri,
+                                description: datas.description
+                            },
+                            activity: activity
+                        })
+                    })
+                })
+                .then(() => {
+                    setTimeout(() => {
+                        navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.url}`)
+                    }, 2000)
+                })
+                .catch(err => console.log(err))
         }
     }
 
@@ -133,7 +167,7 @@ const EditActuality = ({ project }) => {
             <div className="content-form">
                 <p className="title full">Titre <span>Champ requis</span></p>
                 <ClassicInput
-                    className={`full ${checkErr("title")}`}
+                    className={`full ${addClass(error.element === "title", "err")}`}
                     type="text"
                     placeholder="Titre de l'actualité"
                     onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 100) }))}

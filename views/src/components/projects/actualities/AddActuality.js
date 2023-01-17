@@ -1,17 +1,15 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import { Button, TextButton } from '../../tools/global/Button'
 import { ErrorCard } from '../../tools/global/Error'
 import { ClassicInput } from '../../tools/global/Inputs'
 import EditorToolbar, { formats, modules } from '../../tools/editor/EditorToolbar'
-import { fullImage, randomNbLtID, removeAccents } from '../../Utils'
-import { createActuality } from '../../../reducers/project.action'
+import { addClass, fullImage, randomNbLtID, removeAccents } from '../../Utils'
 import Icon from '../../tools/icons/Icon'
 
-const AddActuality = ({ project, user }) => {
+const AddActuality = ({ project, user, websocket }) => {
     const [datas, setDatas] = useState({
         title: '',
         description: '',
@@ -20,8 +18,6 @@ const AddActuality = ({ project, user }) => {
     const [count, setCount] = useState(0)
     const quillRef = useRef()
     const [error, setError] = useState({ element: "", error: "" })
-    const checkErr = name => { if (error.element === name) return "err" }
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleChange = (text, delta, source, editor) => {
@@ -46,15 +42,15 @@ const AddActuality = ({ project, user }) => {
     }
 
     const handleActuality = async () => {
-        if (datas.title === "" || datas.title.length < 10 || datas.title.length > 200) {
+        if (datas.title === "" || datas.title.length < 10 || datas.title.length > 60) {
             setError({
                 element: "title",
-                error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 200 caractères"
+                error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères."
             })
         } else if (datas.description === "" || datas.description.length < 10 || datas.description.length > 10000) {
             setError({
                 element: "description",
-                error: "Veuillez ajouter une description à votre actualité"
+                error: "Veuillez ajouter une description à votre actualité, votre titre doit faire entre 10 et 10 000 caractères."
             })
         } else {
             let cleanTitle = datas.title.toLowerCase();
@@ -72,18 +68,32 @@ const AddActuality = ({ project, user }) => {
 
             const actuality = {
                 _id: randomNbLtID(24),
-                posterId: user._id,
-                posterPseudo: user.pseudo,
-                posterPicture: user.picture,
+                poster: {
+                    _id: user._id,
+                    pseudo: user.pseudo,
+                    picture: user.picture,
+                },
                 title: cleanTitle,
                 url: URL,
                 urlid: URLID,
                 description: datas.description,
                 date: new Date().toISOString()
             }
+            const activity = {
+                type: "add-actuality",
+                who: user.pseudo,
+                actuality: actuality.title,
+                date: new Date().toISOString()
+            }
 
-            const activity = { type: "add-actuality", who: user.pseudo, actuality: actuality.title, date: new Date().toISOString() }
-            dispatch(createActuality(project._id, actuality, activity))
+            await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/add/`,
+                data: {
+                    actuality: actuality,
+                    activity: activity
+                }
+            })
                 .then(async () => {
                     if (datas.files.length > 0) {
                         let formData = new FormData()
@@ -93,11 +103,21 @@ const AddActuality = ({ project, user }) => {
                         await axios
                             .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/add/`, formData)
                             .catch(err => console.log(err))
-
                     }
-                }).then(() => {
-                    setTimeout(() => navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.urlid}/${actuality.url}`), 2000)
-                }).catch(err => console.log(err))
+                })
+                .then(() => {
+                    project.members.map(member => {
+                        return websocket.current.emit("createActuality", {
+                            receiverId: member._id,
+                            actuality: actuality,
+                            activity: activity
+                        })
+                    })
+                    setTimeout(() => {
+                        navigate(`/projects/${project.URLID}/${project.URL}/actuality/${actuality.urlid}/${actuality.url}`)
+                    }, 2000)
+                })
+                .catch(err => console.log(err))
         }
     }
 
@@ -109,13 +129,13 @@ const AddActuality = ({ project, user }) => {
             <div className="content-form">
                 <p className="title full">Titre <span>Champ requis</span></p>
                 <ClassicInput
-                    className={`full ${checkErr("title")}`}
+                    className={`full ${addClass(error.element === "title", "err")}`}
                     type="text"
                     placeholder="Titre de l'actualité"
-                    onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 200) }))}
+                    onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 60) }))}
                     value={datas.title}
                 />
-                <div className="field_infos full">{datas.title.length} / 200 caractères</div>
+                <div className="field_infos full">{datas.title.length} / 60 caractères</div>
                 {error.element === "title" &&
                     <ErrorCard
                         display={error.element === "title"}
@@ -138,6 +158,13 @@ const AddActuality = ({ project, user }) => {
                         formats={formats}
                     />
                     <div className="field_infos ml-auto">{count} / 10 000 caractères</div>
+                    {error.element === "description" &&
+                        <ErrorCard
+                            display={error.element === "description"}
+                            text={error.error}
+                            clean={() => setError({ element: "", error: "" })}
+                        />
+                    }
                 </div>
             </div>
 

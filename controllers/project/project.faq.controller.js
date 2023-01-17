@@ -7,6 +7,8 @@ export const createQNA = async (req, res) => {
             {
                 $set: {
                     QNA: req.body.qna,
+                },
+                $addToSet: {
                     activity_feed: req.body.activity
                 }
             },
@@ -31,6 +33,8 @@ export const updateQNA = async (req, res) => {
             {
                 $set: {
                     QNA: req.body.qna,
+                },
+                $addToSet: {
                     activity_feed: req.body.activity
                 }
             },

@@ -1,24 +1,26 @@
 import mongoose from 'mongoose'
 const ProjectModel = new mongoose.Schema(
     {
-        posterId: {
-            type: String,
-            required: true
-        },
-
-        posterPseudo: {
-            type: String,
-            required: true
-        },
-
-        posterAvatar: {
-            type: String,
-            required: true
+        poster: {
+            type: Object,
+            required: true,
+            _id: {
+                type: String,
+                required: true
+            },
+            pseudo: {
+                type: String,
+                required: true
+            },
+            picture: {
+                type: String,
+                required: true
+            },
         },
 
         state: {
             type: String,
-            default: "En préparation"
+            default: "in progress"
         },
 
         title: {
@@ -26,12 +28,16 @@ const ProjectModel = new mongoose.Schema(
             required: true,
             unique: false,
             trim: true,
+            minlength: 10,
+            maxlength: 60,
         },
 
         subtitle: {
             type: String,
             unique: false,
             trim: true,
+            minlength: 10,
+            maxlength: 100,
         },
 
         URL: {
@@ -50,45 +56,37 @@ const ProjectModel = new mongoose.Schema(
 
         category: {
             type: String,
-            required: true
+            required: true,
+            unique: false,
+            minlength: 3,
         },
 
         tags: {
             type: [String],
+            required: false,
+            maxlength: 12,
         },
 
-        geolocalisation: {
-            type: String,
-            default: null,
-        },
         location: {
-            type: String,
-            default: null,
-        },
-        department: {
-            type: String,
-            default: null,
-        },
-        code_department: {
-            type: Number,
-        },
-        region: {
-            type: String,
-            default: null,
-        },
-        code_region: {
-            type: Number,
-        },
-        new_region: {
-            type: String,
-            default: null,
-        },
-        code_new_region: {
-            type: Number,
+            type: Object,
+            required: true,
+            unique: false,
+            city: String,
+            department: String,
+            code_department: Number,
+            region: String,
+            code_region: Number,
+            new_region: String,
+            code_new_region: Number,
+            geolocalisation: String,
         },
 
         description: {
             type: String,
+            required: true,
+            unique: false,
+            minlength: 10,
+            maxlength: 300,
         },
 
         content: {
@@ -97,37 +95,29 @@ const ProjectModel = new mongoose.Schema(
             unique: false,
         },
 
-        works: {
-            type: [],
-            name: String,
-            number: Number,
-            numberFound: Number,
-            description: String
-        },
-
         pictures: {
             type: [String]
         },
 
-        day: {
-            type: Date
-        },
-
-        start: {
-            type: Date
-        },
-
-        end: {
-            type: Date
-        },
-
         networks: {
+            type: [String],
+            required: false,
+        },
+
+        works: {
             type: [],
+            work: {
+                type: Object,
+                unique: true,
+                name: String,
+                description: String
+            }
         },
 
         members: {
             type: [],
             member: {
+                type: Object,
                 _id: String,
                 pseudo: String,
                 picture: String,
@@ -137,7 +127,8 @@ const ProjectModel = new mongoose.Schema(
         },
 
         manager: {
-            type: String
+            type: String,
+            required: true,
         },
 
         admins: {
@@ -164,27 +155,63 @@ const ProjectModel = new mongoose.Schema(
                 description: String,
                 state: String,
                 status: String,
-                creatorId: String,
-                creator: String,
-                creatorPicture: String,
                 end: Date,
                 date: Date,
+                poster: {
+                    type: Object,
+                    required: true,
+                    _id: {
+                        type: String,
+                        required: true
+                    },
+                    pseudo: {
+                        type: String,
+                        required: true
+                    },
+                    picture: {
+                        type: String,
+                        required: true
+                    },
+                },
                 members: {
                     type: [],
                     member: {
-                        id: String,
-                        pseudo: String,
-                        picture: String,
+                        _id: {
+                            type: String,
+                            required: true
+                        },
+                        pseudo: {
+                            type: String,
+                            required: true
+                        },
+                        picture: {
+                            type: String,
+                            required: true
+                        },
                     }
                 },
                 comments: {
                     type: [],
                     comment: {
                         _id: String,
-                        poster: String,
-                        posterId: String,
                         text: String,
                         date: String,
+                        poster: {
+                            type: Object,
+                            required: true,
+                            _id: {
+                                type: String,
+                                required: true
+                            },
+                            pseudo: {
+                                type: String,
+                                required: true
+                            },
+                            picture: {
+                                type: String,
+                                required: true
+                            },
+                        },
                     }
                 }
             }
@@ -194,22 +221,60 @@ const ProjectModel = new mongoose.Schema(
             type: [],
             actuality: {
                 _id: String,
-                url: String,
-                title: String,
-                description: String,
-                posterId: String,
-                poster: String,
-                posterPicture: String,
-                date: Date,
-                pictures: [String]
+                url: {
+                    type: String,
+                    required: true
+                },
+                title: {
+                    type: String,
+                    required: true,
+                    minlength: 10,
+                    maxlength: 60,
+                },
+                description: {
+                    type: String,
+                    required: true,
+                    minlength: 10,
+                },
+                date: {
+                    type: Date,
+                    required: true
+                },
+                pictures: [String],
+                poster: {
+                    type: Object,
+                    required: true,
+                    _id: {
+                        type: String,
+                        required: true
+                    },
+                    pseudo: {
+                        type: String,
+                        required: true
+                    },
+                    picture: {
+                        type: String,
+                        required: true
+                    },
+                }
             }
         },
 
         QNA: {
             type: [],
             question: {
-                question: String,
-                response: String
+                _id: String,
+                question: {
+                    type: String,
+                    required: true,
+                    minlength: 10,
+                    maxlength: 100,
+                },
+                response: {
+                    type: String,
+                    minlength: 10,
+                    maxlength: 4000,
+                }
             }
         },
 
@@ -223,29 +288,41 @@ const ProjectModel = new mongoose.Schema(
                 member: String,
                 /************* task **************/
                 task: String,
-                prevState: String,
-                newState: String,
+                prev_state: String,
+                new_state: String,
                 /************ actuality **********/
                 actuality: String,
                 /************* admin *************/
-                newAdmin: String,
+                new_admin: String,
                 /********* exclude member ********/
                 excluded: String,
                 /********** leave project ********/
                 leaver: String,
             }
         },
-        
+
         followers: {
-            type: [String]
+            type: [],
+            follower: {
+                type: String,
+                unique: true
+            }
         },
-        
+
         likers: {
-            type: [String]
+            type: [],
+            liker: {
+                type: String,
+                unique: true
+            }
         },
 
         favorites: {
-            type: [String]
+            type: [],
+            favorite: {
+                type: String,
+                unique: true
+            }
         },
 
         views: {

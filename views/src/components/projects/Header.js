@@ -24,7 +24,7 @@ const Header = ({ project, websocket, user, isManager }) => {
                             <h1>{project.title}</h1>
                             <div className="dashboard-header-content-infos">
                                 <div className="infos">
-                                    <Icon name="Position" />{project.location + ", " + project.department}
+                                    <Icon name="Position" />{project.location.city + ", " + project.location.department}
                                 </div>
                                 <div className="infos">
                                     <Icon name="Calendar" />{dateParser(project.createdAt)}
@@ -47,7 +47,7 @@ const Header = ({ project, websocket, user, isManager }) => {
                                     </Link>
                                 </>
                             }
-                            {project.posterId !== user._id &&
+                            {project.poster._id !== user._id &&
                                 <div className="tools_choice" onClick={() => setWarning(true)}>
                                     Quitter le projet
                                 </div>

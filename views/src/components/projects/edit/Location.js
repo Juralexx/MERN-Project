@@ -52,7 +52,7 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
     const [leafletLoading, setLeafletLoading] = useState(true)
 
     useEffect(() => {
-        if (project.location || locationChanged) {
+        if (project.location.city || locationChanged) {
             const fetchGeolocalisation = async () => {
                 setLeafletLoading(true)
                 await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${location}`)
@@ -65,7 +65,7 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
             }
             fetchGeolocalisation()
         }
-    }, [project.location, location, locationChanged])
+    }, [project.location.city, location, locationChanged])
 
     return (
         <>
@@ -88,14 +88,16 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                             setSearchQuery("")
                             setDatas(data => ({
                                 ...data,
-                                location: project.location,
-                                department: project.department,
-                                codeDepartment: project.code_department,
-                                region: project.region,
-                                codeRegion: project.code_region,
-                                newRegion: project.new_region,
-                                codeNewRegion: project.code_new_region,
-                                geolocalisation: project.geolocalisation,
+                                location: {
+                                    city: project.location.city,
+                                    department: project.location.department,
+                                    codeDepartment: project.location.code_department,
+                                    region: project.location.region,
+                                    codeRegion: project.location.code_region,
+                                    newRegion: project.location.new_region,
+                                    codeNewRegion: project.location.code_new_region,
+                                    geolocalisation: project.location.geolocalisation,
+                                }
                             }))
                         }}
                     />
@@ -123,14 +125,16 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                                             setSearchQuery(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
                                             setDatas(data => ({
                                                 ...data,
-                                                location: element.COM_NOM,
-                                                department: element.DEP_NOM,
-                                                codeDepartment: element.DEP_CODE,
-                                                region: element.REG_NOM_OLD,
-                                                codeRegion: element.REG_CODE_OLD,
-                                                newRegion: element.REG_NOM,
-                                                codeNewRegion: element.REG_CODE,
-                                                geolocalisation: element.geolocalisation,
+                                                location: {
+                                                    city: element.COM_NOM,
+                                                    department: element.DEP_NOM,
+                                                    codeDepartment: element.DEP_CODE,
+                                                    region: element.REG_NOM_OLD,
+                                                    codeRegion: element.REG_CODE_OLD,
+                                                    newRegion: element.REG_NOM,
+                                                    codeNewRegion: element.REG_CODE,
+                                                    geolocalisation: element.geolocalisation,
+                                                }
                                             }))
                                             setDisplay(false)
                                             setLoading(false)

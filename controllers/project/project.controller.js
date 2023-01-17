@@ -1,8 +1,15 @@
 import ProjectModel from '../../models/project.model.js'
 import mongoose from 'mongoose'
+import { projectErrors } from '../../utils/error.utils.js'
 const ObjectID = mongoose.Types.ObjectId
 
-export const allProjects = (req, res) => {
+/**
+ * Get all the created projects
+ * @param {*} req Request 
+ * @param {*} res Response
+ */
+
+export const getAllProjects = (req, res) => {
     ProjectModel.find((err, docs) => {
         if (!err) {
             res.send(docs)
@@ -12,8 +19,17 @@ export const allProjects = (req, res) => {
     })
 }
 
+/**
+ * Get project by URL
+ * @param {*} URLID Project URL ID
+ * @param {*} URL Project URL
+ */
+
 export const findProjectByURL = (req, res) => {
-    ProjectModel.findOne({ URLID: req.params.URLID, URL: req.params.URL },
+    ProjectModel.findOne({
+        URLID: req.params.URLID,
+        URL: req.params.URL
+    },
         (err, docs) => {
             if (!err) {
                 res.send(docs)
@@ -22,6 +38,11 @@ export const findProjectByURL = (req, res) => {
             }
         }).select()
 }
+
+/**
+ * Get project by ID
+ * @param {*} id Project ID to get
+ */
 
 export const findProjectById = (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
@@ -37,20 +58,29 @@ export const findProjectById = (req, res) => {
         }).select()
 }
 
+/**
+ * Update user profil
+ * @param {*} title Project title
+ * @param {*} URL Project URL
+ * @param {*} category Project category
+ * @param {*} state Project state
+ * @param {*} location Project location
+ * @param {*} description Project description
+ * @param {*} day Project day
+ * @param {*} start Project start
+ * @param {*} end Project end
+ * @param {*} works Project works
+ * @param {*} tags Project tags
+ * @param {*} networks Project networks
+ */
+
 export const updateProject = async (req, res) => {
     const {
         title,
         URL,
         category,
         state,
-        geolocalisation,
         location,
-        department,
-        code_department,
-        region,
-        code_region,
-        new_region,
-        code_new_region,
         description,
         content,
         day,
@@ -73,14 +103,7 @@ export const updateProject = async (req, res) => {
                     URL,
                     category,
                     state,
-                    geolocalisation,
                     location,
-                    department,
-                    code_department,
-                    region,
-                    code_region,
-                    new_region,
-                    code_new_region,
                     description,
                     content,
                     day,
@@ -102,9 +125,15 @@ export const updateProject = async (req, res) => {
                 return res.status(500).send({ message: err })
             })
     } catch (err) {
-        return res.status(500).json({ message: err })
+        const errors = projectErrors(err)
+        res.status(200).json({ errors })
     }
 }
+
+/**
+ * Delete project
+ * @param {*} id ID of the project to delete
+ */
 
 export const deleteProject = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {

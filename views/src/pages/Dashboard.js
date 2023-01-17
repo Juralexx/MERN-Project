@@ -35,7 +35,7 @@ const Dashboard = ({ websocket, user }) => {
                 isLoading={isLoading}
             />
             <div className="dashboard-content custom-scrollbar">
-                {!isLoading &&
+                {!isLoading ? (
                     <Routes>
                         <Route index element={
                             <Projects
@@ -53,10 +53,9 @@ const Dashboard = ({ websocket, user }) => {
                             } />
                         )}
                     </Routes>
-                }
-                {isLoading &&
+                ) : (
                     <Oval />
-                }
+                )}
             </div>
         </div>
     )

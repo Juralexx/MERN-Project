@@ -21,14 +21,16 @@ const AddProject = ({ user }) => {
         subtitle: "",
         category: "",
         tags: [],
-        location: "",
-        geolocalisation: "",
-        department: "",
-        codeDepartment: "",
-        region: "",
-        codeRegion: "",
-        newRegion: "",
-        codeNewRegion: "",
+        location: {
+            city: "",
+            department: "",
+            codeDepartment: "",
+            region: "",
+            codeRegion: "",
+            newRegion: "",
+            codeNewRegion: "",
+            geolocalisation: "",
+        },
         description: "",
         workArray: [],
         start: "",
@@ -49,31 +51,31 @@ const AddProject = ({ user }) => {
             setNavbar(0)
             setError({
                 element: "title",
-                error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères"
+                error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères."
             })
         } else if (datas.subtitle === "" || datas.subtitle.length < 10 || datas.subtitle.length > 100) {
             setNavbar(0)
             setError({
                 element: "subtitle",
-                error: "Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères"
+                error: "Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères."
             })
         } else if (datas.category === "") {
             setNavbar(0)
             setError({
                 element: "category",
-                error: "Veuillez saisir une catégorie"
+                error: "Veuillez saisir une catégorie."
             })
         } else if (datas.description === "" || datas.description.length < 10 || datas.description.length > 300) {
             setNavbar(0)
             setError({
                 element: "description",
-                error: "Veuillez ajouter une courte description à votre projet"
+                error: "Veuillez ajouter une courte description à votre projet, votre courte-description doit faire entre 10 et 300 caractères."
             })
         } else if (datas.content === "" || datas.content.length < 10 || datas.content.length > 100000) {
             setNavbar(1)
             setError({
                 element: "content",
-                error: "Veuillez saisir une description valide, votre description doit faire entre 10 et 10 000 caractères"
+                error: "Veuillez saisir une description valide, votre description doit faire entre 10 et 100 000 caractères."
             })
         } else if (datas.workArray.length > 0) {
             for (let i = 0; i < datas.workArray.length; i++) {
@@ -126,24 +128,27 @@ const AddProject = ({ user }) => {
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}api/project/add`,
                 data: {
-                    posterId: user._id,
-                    posterPseudo: user.pseudo,
-                    posterAvatar: user.picture,
+                    poster: {
+                        _id: user._id,
+                        pseudo: user.pseudo,
+                        picture: user.picture,
+                    },
                     title: cleanTitle,
                     URL: URL,
                     URLID: URLID,
                     subtitle: datas.subtitle,
                     category: datas.category,
                     tags: datas.tags,
-                    state: "worked on",
-                    geolocalisation: datas.geolocalisation,
-                    location: datas.location,
-                    department: datas.department,
-                    code_department: datas.codeDepartment,
-                    region: datas.region,
-                    code_region: datas.codeRegion,
-                    new_region: datas.newRegion,
-                    code_new_region: datas.codeNewRegion,
+                    location: {
+                        city: datas.location.city,
+                        department: datas.location.department,
+                        code_department: datas.location.codeDepartment,
+                        region: datas.location.region,
+                        code_region: datas.location.codeRegion,
+                        new_region: datas.location.newRegion,
+                        code_new_region: datas.location.codeNewRegion,
+                        geolocalisation: datas.location.geolocalisation,
+                    },
                     description: datas.description,
                     content: datas.content,
                     start: datas.start,
@@ -153,7 +158,7 @@ const AddProject = ({ user }) => {
                     networks: datas.networks,
                     manager: user._id,
                     members: {
-                        id: user._id,
+                        _id: user._id,
                         pseudo: user.pseudo,
                         picture: user.picture,
                         role: "manager",
@@ -167,10 +172,20 @@ const AddProject = ({ user }) => {
                             element: 'title',
                             error: res.data.errors.title
                         })
+                    } else if (res.data.errors.subtitle) {
+                        setError({
+                            element: 'subtitle',
+                            error: res.data.errors.subtitle
+                        })
                     } else if (res.data.errors.category) {
                         setError({
                             element: 'category',
                             error: res.data.errors.category
+                        })
+                    } else if (res.data.errors.description) {
+                        setError({
+                            element: 'description',
+                            error: res.data.errors.description
                         })
                     } else if (res.data.errors.content) {
                         setError({

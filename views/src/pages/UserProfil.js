@@ -49,12 +49,12 @@ const UserProfil = () => {
                 })
                 Promise.all(promises).then(res => {
                     setProjects({
-                        created: res.filter(pros => pros.posterId === user._id),
-                        participation: res.filter(pros => pros.posterId !== user._id)
+                        created: res.filter(pros => pros.poster._id === user._id),
+                        participation: res.filter(pros => pros.poster._id !== user._id)
                     })
                     setProjectsToDisplay({
                         type: "created",
-                        array: res.filter(pros => pros.posterId === user._id)
+                        array: res.filter(pros => pros.poster._id === user._id)
                     })
                     setLoading(false)
                 })

@@ -7,7 +7,7 @@ const UserCard = ({ project }) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            await axios.get(`${process.env.REACT_APP_API_URL}api/user/${project.posterId}`)
+            await axios.get(`${process.env.REACT_APP_API_URL}api/user/${project.poster._id}`)
                 .then(res => {
                     setUser(res.data)
                 }).catch(err => console.log(err))

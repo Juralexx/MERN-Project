@@ -20,9 +20,9 @@ const Actualities = ({ project, user }) => {
                                     <div className="actuality-nb">Actu #{project.actualities.length - key}</div>
                                     <h3>{element.title}</h3>
                                     <div className="actuality-infos">
-                                        <MediumAvatar pic={element.posterPicture} />
+                                        <MediumAvatar pic={element.poster.picture} />
                                         <div className="actuality-infos-right">
-                                            <div className="actuality-poster">{element.posterPseudo} <span>{project.posterId === element.posterId ? "Createur" : "Collaborateur"}</span></div>
+                                            <div className="actuality-poster">{element.poster.pseudo} <span>{project.poster._id === element.poster._id ? "Createur" : "Collaborateur"}</span></div>
                                             <div className="date">{dateParser(element.date)}</div>
                                         </div>
                                     </div>

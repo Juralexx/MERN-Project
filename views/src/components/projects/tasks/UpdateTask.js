@@ -33,9 +33,11 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
             status: updatedTask.status,
             end: new Date(end).toISOString(),
             members: updatedTask.members,
-            creatorId: task.creatorId,
-            creator: task.creator,
-            creatorPicture: task.creatorPicture,
+            poster: {
+                _id: task.poster._id,
+                pseudo: task.poster.pseudo,
+                picture: task.poster.picture,
+            },
             date: task.date,
             comments: task.comments
         }

@@ -22,7 +22,6 @@ const Modal = (props) => {
         } else {
             setOpen(prevState => ({ ...prevState, open: false }))
         }
-        removeScrollY()
     }
 
     useClickOutside(modalRef, () => close())
@@ -31,13 +30,19 @@ const Modal = (props) => {
         <>
             <div className={open ? "modal_wrapper" : "modal_wrapper hide_wrapper"}>
                 <div className={open ? className ? "modal_container show_modal " + className : "modal_container show_modal " : 'modal_container hide_modal'} ref={modalRef}>
-                    <div className="close_modal" onClick={close}>
+                    <div className="close_modal" onClick={() => {
+                        close()
+                        removeScrollY()
+                    }}>
                         <Icon name="Cross" />
                     </div>
                     {props.children}
                 </div>
             </div>
-            <div className={open ? 'modal_cover modal_cover-active' : 'modal_cover'} onClick={close}></div>
+            <div className={open ? 'modal_cover modal_cover-active' : 'modal_cover'} onClick={() => {
+                close()
+                removeScrollY()
+            }}></div>
         </>
     )
 }

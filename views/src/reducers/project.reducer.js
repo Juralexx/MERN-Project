@@ -1,7 +1,11 @@
 import {
     CREATE_TASK,
-    CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST, REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE,
-    RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK, DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN, RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES, RECEIVE_DELETE_PICTURES, UPDATE_PROJECT, CREATE_QNA, RECEIVE_CREATE_QNA, RECEIVE_UPDATE_QNA, DELETE_QNA, RECEIVE_DELETE_QNA, UPDATE_QNA, CREATE_ACTUALITY, RECEIVE_CREATE_ACTUALITY, UPDATE_ACTUALITY, RECEIVE_UPDATE_ACTUALITY, DELETE_ACTUALITY, RECEIVE_DELETE_ACTUALITY, COMMENT_TASK, RECEIVE_COMMENT_TASK
+    CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST,
+    REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK,
+    DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN,
+    RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES,
+    RECEIVE_DELETE_PICTURES, UPDATE_PROJECT, RECEIVE_CREATE_QNA, RECEIVE_UPDATE_QNA, RECEIVE_DELETE_QNA, RECEIVE_CREATE_ACTUALITY,
+    RECEIVE_UPDATE_ACTUALITY, RECEIVE_DELETE_ACTUALITY, COMMENT_TASK, RECEIVE_COMMENT_TASK
 } from "../reducers/project.action";
 
 const initialState = {}
@@ -53,14 +57,7 @@ export default function projectReducer(state = initialState, action) {
                 category: action.payload.category,
                 tags: action.payload.tags,
                 state: action.payload.state,
-                geolocalisation: action.payload.geolocalisation,
                 location: action.payload.location,
-                department: action.payload.department,
-                code_department: action.payload.code_department,
-                region: action.payload.region,
-                code_region: action.payload.code_region,
-                new_region: action.payload.new_region,
-                code_new_region: action.payload.code_new_region,
                 description: action.payload.description,
                 end: action.payload.end,
                 content: action.payload.content,
@@ -275,22 +272,11 @@ export default function projectReducer(state = initialState, action) {
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
 
-        /*******************************************************************************************************************************/
-        /************************************************************ QNA ***************************************************************/
+        /**
+         * QNA
+         */
 
-        case CREATE_QNA:
-            return {
-                ...state,
-                QNA: action.payload.qna,
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
         case RECEIVE_CREATE_QNA:
-            return {
-                ...state,
-                QNA: action.payload.qna,
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-        case UPDATE_QNA:
             return {
                 ...state,
                 QNA: action.payload.qna,
@@ -302,12 +288,6 @@ export default function projectReducer(state = initialState, action) {
                 QNA: action.payload.qna,
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
-        case DELETE_QNA:
-            return {
-                ...state,
-                QNA: [],
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
         case RECEIVE_DELETE_QNA:
             return {
                 ...state,
@@ -315,51 +295,28 @@ export default function projectReducer(state = initialState, action) {
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
 
-        /*******************************************************************************************************************************/
-        /******************************************************** ACTUALITY ************************************************************/
+        /**
+         * ACTUALITY
+         */
 
-        case CREATE_ACTUALITY:
-            return {
-                ...state,
-                actualities: [...state.actualities, action.payload.actuality],
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
         case RECEIVE_CREATE_ACTUALITY:
             return {
                 ...state,
                 actualities: [...state.actualities, action.payload.actuality],
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
-        case UPDATE_ACTUALITY:
-            let actu = state.actualities.findIndex(e => e._id === action.payload.actualityId)
-            state.actualities[actu].title = action.payload.title
-            state.actualities[actu].url = action.payload.url
-            state.actualities[actu].description = action.payload.description
-            return {
-                ...state,
-                actualities: state.actualities,
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
         case RECEIVE_UPDATE_ACTUALITY:
-            let act = state.actualities.findIndex(e => e._id === action.payload.actualityId)
-            state.actualities[act].title = action.payload.title
-            state.actualities[act].url = action.payload.url
-            state.actualities[act].description = action.payload.description
+            let actuIndex = state.actualities.findIndex(actu => actu._id === action.payload.actuality._id)
+            state.actualities[actuIndex] = action.payload.actuality
             return {
                 ...state,
                 actualities: state.actualities,
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-        case DELETE_ACTUALITY:
-            return {
-                ...state,
-                actualities: state.actualities.filter(e => e._id !== action.payload.actualityId),
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
         case RECEIVE_DELETE_ACTUALITY:
             return {
                 ...state,
-                actualities: state.actualities.filter(e => e._id !== action.payload.actualityId),
+                actualities: state.actualities.filter(actu => actu._id !== action.payload.actuality._id),
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
 
