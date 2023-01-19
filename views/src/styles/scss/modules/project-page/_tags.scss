@@ -5,13 +5,12 @@
     padding   : 10px 0;
 
     > div {
-        display          : flex;
-        align-items      : center;
-        margin           : 2px;
-        padding          : 3px 5px;
-        color            : var(--text);
-        background-color : var(--light);
-        border-radius    : var(--rounded-sm);
+        display       : flex;
+        align-items   : center;
+        margin        : 2px;
+        padding       : 3px 5px;
+        color         : var(--text);
+        border-radius : var(--rounded-sm);
 
         span {
             color : var(--primary);
@@ -19,6 +18,9 @@
 
         svg {
             margin-left : 5px;
+            width       : 18px;
+            height      : 18px;
+            cursor      : pointer;
         }
     }
 }

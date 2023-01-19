@@ -21,7 +21,7 @@
         display            : -webkit-box;
         -webkit-line-clamp : 1;
         -webkit-box-orient : vertical;
-        caret-color: transparent;
+        caret-color        : transparent;
 
         &::placeholder {
             color : var(--placeholder);
@@ -55,7 +55,6 @@
             color   : var(--text-secondary);
 
             &:hover {
-                color            : var(--primary);
                 background-color : var(--light);
             }
         }

@@ -8,7 +8,10 @@ import Members from './members/Members';
 import HomeTasks from './tasks/HomeTasks';
 import HomeGallery from './gallery/HomeGallery';
 import HomeActivityFeed from './activity-feed/HomeActivityFeed';
+import ActivityFeed from './activity-feed/ActivityFeed';
 import Tasks from './tasks/Tasks';
+import TaskModal from './tasks/TaskModal';
+import CreateTask from './tasks/CreateTask';
 import About from './About';
 import Edit from './edit/Edit';
 import Gallery from './gallery/Gallery';
@@ -16,12 +19,12 @@ import Actualities from './actualities/Actualities';
 import AddActuality from './actualities/AddActuality';
 import Qna from './QNA/Qna';
 import AddQna from './QNA/AddQna';
-import ActivityFeed from './activity-feed/ActivityFeed';
 import Oval from '../tools/loaders/Oval';
 
 const Project = ({ user, websocket, projects, setProjects }) => {
     const { URLID, URL } = useParams()
     const project = useSelector(state => state.projectReducer)
+    
     const [role, setRole] = useState({ manager: false, admin: false })
     const [isLoading, setLoading] = useState(true)
     const dispatch = useDispatch()
@@ -41,6 +44,10 @@ const Project = ({ user, websocket, projects, setProjects }) => {
         }
     }, [project, user._id, isLoading])
 
+    /**
+     * 
+     */
+
     useEffect(() => {
         let socket = websocket.current
         socket.on("leaveProject", data => {
@@ -50,6 +57,10 @@ const Project = ({ user, websocket, projects, setProjects }) => {
         })
         return () => socket.off("leaveProject")
     }, [websocket.current, websocket, projects, setProjects])
+
+    /**
+     * 
+     */
 
     return (
         Object.keys(project).length > 0 && !isLoading ? (
@@ -61,7 +72,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                     isManager={role.manager}
                 />
                 <Routes>
-                    <Route index element={
+                    <Route path="/*" element={
                         <div className='dashboard-project'>
                             <div className="container-lg py-8">
                                 <div className='row'>
@@ -80,6 +91,22 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                             user={user}
                                             websocket={websocket}
                                         />
+                                        <Routes>
+                                            <Route path='task/:id/*' element={
+                                                <TaskModal
+                                                    user={user}
+                                                    project={project}
+                                                    websocket={websocket}
+                                                />
+                                            } />
+                                            <Route path='task/create' element={
+                                                <CreateTask
+                                                    project={project}
+                                                    user={user}
+                                                    websocket={websocket}
+                                                />
+                                            } />
+                                        </Routes>
                                     </div>
                                     <div className='col-12 col-xl-6 !px-0 sm:!px-3'>
                                         <HomeActivityFeed
@@ -129,9 +156,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                 project={project}
                             />
                         ) : (
-                            <Navigate
-                                to={`/projects/${project.URLID}/${project.URL}/`}
-                            />
+                            <Navigate to={`/projects/${project.URLID}/${project.URL}/`} />
                         )
                     } />
                     <Route path="gallery" element={
@@ -160,9 +185,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                 isManager={role.manager}
                             />
                         ) : (
-                            <Navigate
-                                to={`/projects/${project.URLID}/${project.URL}/actuality`}
-                            />
+                            <Navigate to={`/projects/${project.URLID}/${project.URL}/actuality`} />
                         )
                     } />
 
@@ -183,9 +206,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                                 websocket={websocket}
                             />
                         ) : (
-                            <Navigate
-                                to={`/projects/${project.URLID}/${project.URL}/qna`}
-                            />
+                            <Navigate to={`/projects/${project.URLID}/${project.URL}/qna`} />
                         )
                     } />
                 </Routes>

@@ -127,7 +127,7 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
                 <div className="search-results_container container-lg">
                     {results.length > 0 &&
                         <div className="search-results_top">
-                            Resultats de votre recherche <span>({results.length} projets)</span>
+                            Résultats de votre recherche <span>({results.length} projets)</span>
                         </div>
                     }
                     <div className="search-results_content">

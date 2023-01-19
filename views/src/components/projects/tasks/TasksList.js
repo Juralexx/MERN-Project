@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
+import { Link, Outlet } from 'react-router-dom'
 import Icon from '../../tools/icons/Icon'
 import Checkbox from '../../tools/global/Checkbox'
 import ToolsMenu from '../../tools/global/ToolsMenu'
+import Warning from '../../tools/global/Warning'
 import { updateTaskState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground } from '../../tools/functions/task'
 import { addClass, dateParser, getDifference, reduceString, reverseArray } from '../../Utils'
-import { Link, Outlet } from 'react-router-dom'
 
 const TasksList = ({ project, user, websocket, tasks, setTasks, sortedTasks, names }) => {
     const [navbar, setNavbar] = useState(1)
     const [display, setDisplay] = useState([0, 1, 2])
 
-    const [warning, setWarning] = useState(-1)
+    const [task, setTask] = useState({})
+
+    const [warning, setWarning] = useState(false)
 
     const actionOnClick = (key) => {
         if (display.includes(key))
@@ -59,7 +62,7 @@ const TasksList = ({ project, user, websocket, tasks, setTasks, sortedTasks, nam
                             {arr.length > 0 ? (
                                 arr.map((element, uniqueKey) => {
                                     return (
-                                        <div className="tasklist-table-item" key={uniqueKey}>
+                                        <div className="tasklist-table-item" key={uniqueKey} onClick={() => setTask(element)}>
                                             <Checkbox
                                                 uniqueKey={uniqueKey}
                                                 className="mr-2 mt-1"
@@ -68,7 +71,9 @@ const TasksList = ({ project, user, websocket, tasks, setTasks, sortedTasks, nam
                                             />
                                             <div className="tasklist-table-item-body">
                                                 <div className="tasklist-table-item-top">
-                                                    <div className="flex items-center font-medium">{reduceString(element.title, 60)}</div>
+                                                    <div className="flex items-center font-medium">
+                                                        {reduceString(element.title, 60)}
+                                                    </div>
                                                     <div className="tasklist-table-item-tools">
                                                         {element.comments.length > 0 &&
                                                             <div className="flex items-center mr-2">
@@ -83,9 +88,7 @@ const TasksList = ({ project, user, websocket, tasks, setTasks, sortedTasks, nam
                                                             <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/list/${element._id}/update`}>
                                                                 Modifier
                                                             </Link>
-                                                            <div className="tools_choice"
-                                                                onClick={() => setWarning(true)}
-                                                            >
+                                                            <div className="tools_choice" onClick={() => setWarning(true)}>
                                                                 Supprimer
                                                             </div>
                                                         </ToolsMenu>
@@ -106,37 +109,24 @@ const TasksList = ({ project, user, websocket, tasks, setTasks, sortedTasks, nam
                                                             {dateParser(element.end)}
                                                         </div>
                                                     </div>
-                                                    <div className="tasklist-table-item-members">
-                                                        {element.members.length <= 5 && (
-                                                            <div className="flex">
-                                                                {element.members.map((member, i) => {
-                                                                    return (
-                                                                        <div className="tasklist-table-item-member" key={i}>
-                                                                            <div className="pseudo">
-                                                                                {member.pseudo.substring(0, 3)}
-                                                                            </div>
-                                                                        </div>
-                                                                    )
-                                                                })}
-                                                            </div>
-                                                        )}
-                                                        {element.members.length > 5 && (
-                                                            element.members.slice(0, 5).map((member, i) => {
+                                                    {element.members.length > 0 && (
+                                                        <div className="tasklist-table-item-members">
+                                                            {element.members.slice(0, 3).map((member, uniquekey) => {
                                                                 return (
-                                                                    <div className="tasklist-table-item-member" key={i}>
+                                                                    <div className="tasklist-table-item-member" key={uniquekey}>
                                                                         <div className="pseudo">
                                                                             {member.pseudo.substring(0, 3)}
                                                                         </div>
                                                                     </div>
                                                                 )
-                                                            })
-                                                        )}
-                                                        {element.members.length > 5 && (
-                                                            <div className="get_difference">
-                                                                {getDifference(5, element.members.length)}
-                                                            </div>
-                                                        )}
-                                                    </div>
+                                                            })}
+                                                            {element.members.length > 3 &&
+                                                                <div className="get_difference">
+                                                                    {getDifference(3, element.members.length)}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -152,97 +142,99 @@ const TasksList = ({ project, user, websocket, tasks, setTasks, sortedTasks, nam
                     )
                 })
             ) : (
-                tasks.map((element, key) => {
-                    return (
-                        <div className="tasklist-table" key={key}>
-                            <div className="tasklist-table-item" key={key}>
-                                <Checkbox
-                                    uniqueKey={key}
-                                    className="mr-2 mt-1"
-                                    checked={element.state === "done"}
-                                    onChange={() => updateTaskState(element, "done", project, user, websocket)}
-                                />
-                                <div className="tasklist-table-item-body">
-                                    <div className="tasklist-table-item-top">
-                                        <div className="flex items-center">
-                                            {reduceString(element.title, 60)}
+                tasks.length > 0 ? (
+                    tasks.map((element, key) => {
+                        return (
+                            <div className="tasklist-table" key={key} onClick={() => setTask(element)}>
+                                <div className="tasklist-table-item" key={key}>
+                                    <Checkbox
+                                        uniqueKey={key}
+                                        className="mr-2 mt-1"
+                                        checked={element.state === "done"}
+                                        onChange={() => updateTaskState(element, "done", project, user, websocket)}
+                                    />
+                                    <div className="tasklist-table-item-body">
+                                        <div className="tasklist-table-item-top">
+                                            <div className="flex items-center">
+                                                {reduceString(element.title, 60)}
+                                            </div>
+                                            <div className="tasklist-table-item-tools">
+                                                {element.comments.length > 0 &&
+                                                    <div className="flex items-center mr-2">
+                                                        <Icon name="Message" className="mr-1" />
+                                                        <span>{element.comments.length}</span>
+                                                    </div>
+                                                }
+                                                <ToolsMenu>
+                                                    <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/task/${element._id}`}>
+                                                        Voir
+                                                    </Link>
+                                                    <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/task/${element._id}/update`}>
+                                                        Modifier
+                                                    </Link>
+                                                    <div className="tools_choice" onClick={() => setWarning(true)}>
+                                                        Supprimer
+                                                    </div>
+                                                </ToolsMenu>
+                                            </div>
                                         </div>
-                                        <div className="tasklist-table-item-tools">
-                                            {element.comments.length > 0 &&
-                                                <div className="flex items-center mr-2">
-                                                    <Icon name="Message" className="mr-1" />
-                                                    <span>{element.comments.length}</span>
+                                        <div className='tasklist-item-description two_lines'>
+                                            {element.description ? element.description : <span>Aucune description</span>}
+                                        </div>
+                                        <div className="tasklist-table-item-bottom">
+                                            <div className='flex'>
+                                                <div className={`details ${stateToBackground(element.state)}`}>
+                                                    {stateToString(element.state)}
                                                 </div>
-                                            }
-                                            <ToolsMenu>
-                                                <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}`}>
-                                                    Voir
-                                                </Link>
-                                                <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}/update`}>
-                                                    Modifier
-                                                </Link>
-                                                <div
-                                                    className="tools_choice"
-                                                    onClick={() => removeTask(element, project, user, websocket)}
-                                                >
-                                                    Supprimer
+                                                <div className={`details mx-2 ${statusToBackground(element.status)}`}>
+                                                    {statusToString(element.status)}
                                                 </div>
-                                            </ToolsMenu>
-                                        </div>
-                                    </div>
-                                    <div className='tasklist-item-description two_lines'>
-                                        {element.description ? element.description : <span>Aucune description</span>}
-                                    </div>
-                                    <div className="tasklist-table-item-bottom">
-                                        <div className='flex'>
-                                            <div className={`details ${stateToBackground(element.state)}`}>
-                                                {stateToString(element.state)}
+                                                <div className={`details ${isDatePassed(element.end)}`}>
+                                                    {dateParser(element.end)}
+                                                </div>
                                             </div>
-                                            <div className={`details mx-2 ${statusToBackground(element.status)}`}>
-                                                {statusToString(element.status)}
-                                            </div>
-                                            <div className={`details ${isDatePassed(element.end)}`}>
-                                                {dateParser(element.end)}
-                                            </div>
-                                        </div>
-                                        <div className="tasklist-table-item-members">
-                                            {element.members.length <= 5 && (
-                                                <div className="flex">
-                                                    {element.members.map((member, i) => {
+                                            {element.members.length > 0 && (
+                                                <div className="tasklist-table-item-members">
+                                                    {element.members.slice(0, 3).map((member, uniquekey) => {
                                                         return (
-                                                            <div className="tasklist-table-item-member" key={i}>
+                                                            <div className="tasklist-table-item-member" key={uniquekey}>
                                                                 <div className="pseudo">
                                                                     {member.pseudo.substring(0, 3)}
                                                                 </div>
                                                             </div>
                                                         )
                                                     })}
-                                                </div>
-                                            )}
-                                            {element.members.length > 5 && (
-                                                element.members.slice(0, 5).map((member, i) => {
-                                                    return (
-                                                        <div className="tasklist-table-item-member" key={i}>
-                                                            <div className="pseudo">
-                                                                {member.pseudo.substring(0, 3)}
-                                                            </div>
+                                                    {element.members.length > 3 &&
+                                                        <div className="get_difference">
+                                                            {getDifference(3, element.members.length)}
                                                         </div>
-                                                    )
-                                                })
-                                            )}
-                                            {element.members.length > 5 && (
-                                                <div className="get_difference">
-                                                    {getDifference(5, element.members.length)}
+                                                    }
                                                 </div>
                                             )}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )
-                })
+                        )
+                    })
+                ) : (
+                    <div className="empty-content">
+                        <Icon name="Clipboard" className="w-9 h-9 mb-2" />
+                        <div>Vous n'avez aucunes tâches à afficher.</div>
+                    </div>
+                )
             )}
+            {Object.keys(task).length > 0 &&
+                <Warning
+                    title={`Supprimer la tâche suivante : ${task.title} ?`}
+                    text="Cette action est irréversible."
+                    validateBtn="Supprimer"
+                    className="delete"
+                    open={warning}
+                    setOpen={setWarning}
+                    onValidate={() => removeTask(task, project, user, websocket)}
+                />
+            }
             <Outlet />
         </>
     )

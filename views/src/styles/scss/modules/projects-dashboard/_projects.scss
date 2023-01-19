@@ -3,6 +3,7 @@
     width      : 100%;
     padding    : 20px 0;
     background : var(--content-light);
+    box-shadow : var(--shadow-tiny);
     z-index    : 2;
 
     .dashboard-projects-header-top {
@@ -24,13 +25,19 @@
 
 .dashboard-projects-body {
     background : var(--light);
+    height     : 100%;
 }
 
 .project-card {
     padding       : 20px;
-    margin        : 0 0 10px;
+    margin-bottom : 15px;
     background    : var(--content-light);
     border-radius : var(--rounded-sm);
+    box-shadow    : var(--shadow-tiny);
+
+    .row {
+        margin : 0;
+    }
 
     &:last-child {
         border : none;
@@ -53,16 +60,15 @@
 
     .project-card-content {
         position : relative;
-        padding  : 0 20px;
+        padding  : 0 0 0 20px;
 
         .project-card-content-top {
             position : relative;
 
             h2 {
                 width         : 75%;
-                line-height   : 30px;
-                margin-bottom : 6px;
-                font-size     : 20px;
+                margin-bottom : 10px;
+                font-size     : 19px;
             }
 
             h3 {
@@ -99,11 +105,10 @@
                 display     : flex;
                 align-items : center;
                 font-size   : 13px;
-                line-height : 24px;
+                line-height : 19px;
                 color       : var(--text-secondary);
                 svg {
                     margin-right : 5px;
-                    color        : var(--text);
                     height       : 16px;
                     width        : 16px;
                 }
@@ -124,32 +129,12 @@
         }
 
         .project-tags {
-            padding : 0;
+            margin-top : 5px;
+            padding    : 0;
             .tag {
-                color : var(--text-secondary);
-            }
-        }
-    }
-}
-
-@media(max-width: 767px) {
-    .project-card {
-        .project-card-content {
-            padding : 10px 0;
-            .project-card-content-top {
-                h2, 
-                h3 {
-                    width : 100%;
-                }
-                .state {
-                    position   : relative;
-                    display    : inline-block;
-                    padding    : 0 0 10px;
-                    background : none !important;
-                }
-            }
-            .description {
-                width : 100%;
+                margin  : 0;
+                padding : 0 5px 0 0;
+                color   : var(--text-secondary);
             }
         }
     }
@@ -178,9 +163,41 @@
     }
 }
 
+@media(max-width: 767px) {
+    .project-card {
+        margin-bottom : 15px;
+        .project-card-content {
+            padding : 0;
+            .project-card-content-top {
+                h2, 
+                h3 {
+                    width : 100%;
+                }
+                .state {
+                    position   : relative;
+                    display    : inline-block;
+                    padding    : 0 0 10px;
+                    background : none !important;
+                }
+            }
+            .description {
+                width : 100%;
+            }
+        }
+    }
+}
+
 @media(max-width: 595px) {
     .project-card {
-        padding : 12px;
+        width   : 100%;
+        padding : 15px;
+        .project-card-content {
+            .project-card-content-top {
+                h2 {
+                    font-size : 16px;
+                }
+            }
+        }
     }
     .dashboard-projects-tools {
         flex-direction : column;

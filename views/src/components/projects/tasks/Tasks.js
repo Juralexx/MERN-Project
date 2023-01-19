@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-import { TextButton } from '../../tools/global/Button'
-import CreateTask from './CreateTask'
+import { Link, Route, Routes } from 'react-router-dom'
 import Kanban from './Kanban'
 import TasksList from './TasksList'
 import TaskModal from './TaskModal'
+import CreateTask from './CreateTask'
 import Icon from '../../tools/icons/Icon'
-import { Link, Route, Routes } from 'react-router-dom'
+import { TextButton } from '../../tools/global/Button'
 import { addClass } from '../../Utils'
 
 const Tasks = ({ project, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
-    const [createTask, setCreateTask] = useState(false)
 
     const names = ["todo", "in progress", "done"]
     const sortedTasks = [
@@ -34,12 +33,22 @@ const Tasks = ({ project, user, websocket }) => {
                             </Link>
                         </div>
                     </div>
-                    <TextButton className="btn_icon_start" onClick={() => setCreateTask(true)}>
-                        <Icon name="Plus" /> Ajouter une tâche
-                    </TextButton>
+                    {window.location.pathname.includes('list') ? (
+                        <TextButton className="btn_icon_start">
+                            <Link to={`/projects/${project.URLID}/${project.URL}/tasks/list/create`}>
+                                <Icon name="Plus" /> Ajouter une tâche
+                            </Link>
+                        </TextButton>
+                    ) : (
+                        <TextButton className="btn_icon_start">
+                            <Link to={`/projects/${project.URLID}/${project.URL}/tasks/create`}>
+                                <Icon name="Plus" /> Ajouter une tâche
+                            </Link>
+                        </TextButton>
+                    )}
                 </div>
                 <Routes>
-                    <Route path='*' element={
+                    <Route path='/*' element={
                         <>
                             <Kanban
                                 project={project}
@@ -53,6 +62,13 @@ const Tasks = ({ project, user, websocket }) => {
                                     <TaskModal
                                         user={user}
                                         project={project}
+                                        websocket={websocket}
+                                    />
+                                } />
+                                <Route path='create' element={
+                                    <CreateTask
+                                        project={project}
+                                        user={user}
                                         websocket={websocket}
                                     />
                                 } />
@@ -78,25 +94,18 @@ const Tasks = ({ project, user, websocket }) => {
                                         websocket={websocket}
                                     />
                                 } />
+                                <Route path='create' element={
+                                    <CreateTask
+                                        project={project}
+                                        user={user}
+                                        websocket={websocket}
+                                    />
+                                } />
                             </Routes>
                         </>
                     } />
-                    <Route path=':id/*' element={
-                        <TaskModal
-                            user={user}
-                            project={project}
-                            websocket={websocket}
-                        />
-                    } />
                 </Routes>
             </div>
-            <CreateTask
-                open={createTask}
-                setOpen={setCreateTask}
-                project={project}
-                user={user}
-                websocket={websocket}
-            />
         </>
     )
 }

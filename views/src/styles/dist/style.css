@@ -5143,7 +5143,6 @@ select:-webkit-autofill:focus {
   color: var(--text-secondary);
 }
 .dropdown-input .dropdown-input-choices div:hover {
-  color: var(--primary);
   background-color: var(--light);
 }
 .dropdown-input.small {
@@ -7373,7 +7372,6 @@ select:-webkit-autofill:focus {
   margin: 2px;
   padding: 3px 5px;
   color: var(--text);
-  background-color: var(--light);
   border-radius: var(--rounded-sm);
 }
 .project-tags > div span {
@@ -7381,6 +7379,9 @@ select:-webkit-autofill:focus {
 }
 .project-tags > div svg {
   margin-left: 5px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 }
 
 /* Dashboard */
@@ -8508,6 +8509,8 @@ select:-webkit-autofill:focus {
   width: 100%;
   padding: 20px 0;
   background: var(--content-light);
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
   z-index: 2;
 }
 .dashboard-projects-header .dashboard-projects-header-top {
@@ -8527,13 +8530,19 @@ select:-webkit-autofill:focus {
 
 .dashboard-projects-body {
   background: var(--light);
+  height: 100%;
 }
 
 .project-card {
   padding: 20px;
-  margin: 0 0 10px;
+  margin-bottom: 15px;
   background: var(--content-light);
   border-radius: var(--rounded-sm);
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
+}
+.project-card .row {
+  margin: 0;
 }
 .project-card:last-child {
   border: none;
@@ -8554,16 +8563,15 @@ select:-webkit-autofill:focus {
 }
 .project-card .project-card-content {
   position: relative;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
 }
 .project-card .project-card-content .project-card-content-top {
   position: relative;
 }
 .project-card .project-card-content .project-card-content-top h2 {
   width: 75%;
-  line-height: 30px;
-  margin-bottom: 6px;
-  font-size: 20px;
+  margin-bottom: 10px;
+  font-size: 19px;
 }
 .project-card .project-card-content .project-card-content-top h3 {
   width: 75%;
@@ -8600,12 +8608,11 @@ select:-webkit-autofill:focus {
       -ms-flex-align: center;
           align-items: center;
   font-size: 13px;
-  line-height: 24px;
+  line-height: 19px;
   color: var(--text-secondary);
 }
 .project-card .project-card-content .project-card-content-top .infos_field svg {
   margin-right: 5px;
-  color: var(--text);
   height: 16px;
   width: 16px;
 }
@@ -8622,30 +8629,15 @@ select:-webkit-autofill:focus {
   color: var(--text-secondary);
 }
 .project-card .project-card-content .project-tags {
+  margin-top: 5px;
   padding: 0;
 }
 .project-card .project-card-content .project-tags .tag {
+  margin: 0;
+  padding: 0 5px 0 0;
   color: var(--text-secondary);
 }
 
-@media (max-width: 767px) {
-  .project-card .project-card-content {
-    padding: 10px 0;
-  }
-  .project-card .project-card-content .project-card-content-top h2,
-.project-card .project-card-content .project-card-content-top h3 {
-    width: 100%;
-  }
-  .project-card .project-card-content .project-card-content-top .state {
-    position: relative;
-    display: inline-block;
-    padding: 0 0 10px;
-    background: none !important;
-  }
-  .project-card .project-card-content .description {
-    width: 100%;
-  }
-}
 .dashboard-projects-tools {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8675,9 +8667,34 @@ select:-webkit-autofill:focus {
   font-weight: 400;
 }
 
+@media (max-width: 767px) {
+  .project-card {
+    margin-bottom: 15px;
+  }
+  .project-card .project-card-content {
+    padding: 0;
+  }
+  .project-card .project-card-content .project-card-content-top h2,
+.project-card .project-card-content .project-card-content-top h3 {
+    width: 100%;
+  }
+  .project-card .project-card-content .project-card-content-top .state {
+    position: relative;
+    display: inline-block;
+    padding: 0 0 10px;
+    background: none !important;
+  }
+  .project-card .project-card-content .description {
+    width: 100%;
+  }
+}
 @media (max-width: 595px) {
   .project-card {
-    padding: 12px;
+    width: 100%;
+    padding: 15px;
+  }
+  .project-card .project-card-content .project-card-content-top h2 {
+    font-size: 16px;
   }
 
   .dashboard-projects-tools {

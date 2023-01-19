@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import Modal from '../../tools/global/Modal'
 import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
 import { ClassicInput, DatePickerInput, DropdownInput, Textarea } from '../../tools/global/Inputs'
@@ -9,7 +10,8 @@ import { addClass, removeAccents } from '../../Utils'
 import { isUserInSearchResults, isSelected } from '../../tools/functions/member'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../tools/functions/task'
 
-const CreateTask = ({ open, setOpen, project, user, websocket }) => {
+const CreateTask = ({ project, user, websocket }) => {
+    const navigate = useNavigate()
     const [navbar, setNavbar] = useState(1)
 
     const [datas, setDatas] = useState({
@@ -66,7 +68,6 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
                 })
             })
             .catch(err => console.log(err))
-        setOpen(false)
         setDatas({ title: "", description: "", end: "", state: "todo", status: "normal", members: [] })
     }
 
@@ -74,11 +75,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
      * 
      */
 
-    const [search, setSearch] = useState({
-        state: false,
-        query: "",
-        results: []
-    })
+    const [search, setSearch] = useState({ state: false, query: "", results: [] })
     const regexp = new RegExp(search.query, 'i')
 
     const searchMember = () => {
@@ -95,18 +92,28 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
      * 
      */
 
+    const onClose = () => {
+        let location = window.location.pathname
+        if (location.includes('/tasks/list'))
+            navigate(`/projects/${project.URLID}/${project.URL}/tasks/list`)
+        else if (location.includes('/tasks'))
+            navigate(`/projects/${project.URLID}/${project.URL}/tasks`)
+        else
+            navigate(`/projects/${project.URLID}/${project.URL}/`)
+    }
+
+    /**
+     * 
+     */
+
     return (
-        <Modal open={open} setOpen={setOpen} className="create-task-modal">
+        <Modal open={true} setOpen={() => onClose()} className="create-task-modal">
             <h2>Créer une nouvelle tâche</h2>
             <div className="modal_nav">
-                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`}
-                    onClick={() => setNavbar(1)}
-                >
+                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`} onClick={() => setNavbar(1)}>
                     Description
                 </div>
-                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`}
-                    onClick={() => setNavbar(2)}
-                >
+                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`} onClick={() => setNavbar(2)}>
                     Membres
                 </div>
             </div>
@@ -209,8 +216,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket }) => {
                             <div className="user_displayer">
                                 {project.members.map((element, key) => {
                                     return (
-                                        <div
-                                            key={key}
+                                        <div key={key}
                                             className={`user_display_choice ${isUserInSearchResults(element, search.results, search.state, "flex")} ${isSelected(datas.members, element)}`}
                                             onClick={() => setDatas(data => ({ ...data, members: addMemberToArray(element, datas.members) }))}
                                         >

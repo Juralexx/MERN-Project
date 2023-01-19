@@ -1,41 +1,71 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { stateToBackground, stateToString } from './functions'
-import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
+import Icon from '../tools/icons/Icon'
 import { ClassicInput, DropdownInput } from '../tools/global/Inputs'
-import { dateParser, removeAccents } from '../Utils'
 import { categories } from '../../api/categories'
 import { Button } from '../tools/global/Button'
 import FooterLight from '../FooterLight';
-import Icon from '../tools/icons/Icon'
+import { dateParser, removeAccents } from '../Utils'
+import { stateToBackground, stateToString } from './functions'
+import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from './functions'
 
 const Projects = ({ projects }) => {
     const [projectsToShow, setProjectsToShow] = useState(projects)
     const [category, setCategory] = useState("")
     const [filter, setFilter] = useState("")
 
-    const [search, setSearch] = useState(false)
-    const [searchQuery, setSearchQuery] = useState("")
-    const [isResults, setResults] = useState([])
-    const regexp = new RegExp(searchQuery, 'i')
+    /**
+     * 
+     */
 
-    useEffect(() => {
-        if (category.length > 0) {
-            let projectsArr = projectsToShow.filter(project => removeAccents(project.category) === removeAccents(category))
-            setProjectsToShow(projectsArr)
-        }
-    }, [category, projectsToShow])
+    const [search, setSearch] = useState({ state: false, query: "", results: [] })
+    const regexp = new RegExp(search.query, 'i')
 
     const searchProject = () => {
-        if (searchQuery.length > 2) {
+        if (!search.query || search.query.trim() === "") return
+        if (search.query.length >= 2) {
             const response = projectsToShow.filter(project => regexp.test(removeAccents(project.title)))
-            setResults(response)
-            setSearch(true)
-            if (!isResults || isResults.length === 0) {
+            setSearch(data => ({ ...data, state: true, results: response }))
+            setProjectsToShow(response)
+            if (!search.results || search.results.length === 0) {
                 setProjectsToShow(projects)
             }
-        } else setSearch(false)
+        } else {
+            setSearch(data => ({ ...data, state: false }))
+            setProjectsToShow(projects)
+        }
     }
+
+    /**
+     *  MELER LES DEUX FONCTIONS POUR QUE LE RECHERCHE SE FACE AVEC LA CATEGORY DANS ON CHERCHE AVEC SEARCH
+     */
+
+    const findWithCategory = (category) => {
+        if (category.length > 0) {
+            setCategory(category)
+            if (search.state) {
+                console.log('1')
+                let results = search.results.filter(project => project.category === category)
+                setProjectsToShow(results)
+            } else {
+                console.log('2')
+                setProjectsToShow(projects.filter(project => project.category === category))
+            }
+        } else {
+            setCategory('')
+            if (search.state) {
+                console.log('3')
+                setProjectsToShow(search.results)
+            } else {
+                console.log('4')
+                setProjectsToShow(projects)
+            }
+        }
+    }
+
+    /**
+     * 
+     */
 
     return (
         <>
@@ -45,27 +75,39 @@ const Projects = ({ projects }) => {
                         <h1>Mes projects <span>{projects.length}</span></h1>
                     </div>
                     <div className="row">
-                        <div className="col-8">
+                        <div className="col-12 col-sm-8">
                             <ClassicInput
                                 className="full"
                                 placeholder="Rechercher un projet..."
-                                value={searchQuery}
-                                onInput={e => setSearchQuery(e.target.value)}
+                                value={search.query}
+                                onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                                 onChange={() => searchProject()}
                                 cross
-                                onClean={() => { setSearchQuery(""); searchProject() }}
+                                onClean={() => {
+                                    setSearch({ state: false, query: '', results: [] })
+                                    findWithCategory(category)
+                                }}
                             />
+                            {search.state && search.results.length === 0 &&
+                                <div className="py-2 text-center">
+                                    Aucun resultat ne correspond à votre recherche
+                                </div>
+                            }
                         </div>
-                        <div className="col-4">
+                        <div className="col-12 col-sm-4 !mt-2 sm:!mt-0">
                             <DropdownInput
                                 placeholder="Catégorie"
-                                cross
                                 value={category}
                                 onChange={() => { }}
-                                onClean={() => { setCategory(""); searchProject() }}
+                                cross
+                                onClean={() => findWithCategory('')}
                             >
                                 {categories.map((category, key) => {
-                                    return <div key={key} onClick={() => { setCategory(category.name); searchProject() }}>{category.name}</div>
+                                    return (
+                                        <div key={key} onClick={() => findWithCategory(category.name)}>
+                                            {category.name}
+                                        </div>
+                                    )
                                 })}
                             </DropdownInput>
                         </div>
@@ -73,11 +115,15 @@ const Projects = ({ projects }) => {
                 </div>
             </div>
             <div className='dashboard-projects-body'>
-                <div className="container-lg py-5">
+                <div className="container-lg pt-5">
                     <div className="dashboard-projects-tools">
                         <div>
-                            <button className='mr-1'>En ligne <span>{(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length}</span></button>
-                            <button className='ml-1 '>Terminés <span>{(projects.filter(e => e.state === "done")).length}</span></button>
+                            <button className='mr-1'>
+                                En ligne <span>{(projects.filter(e => e.state === "worked on" || e.state === "in progress")).length}</span>
+                            </button>
+                            <button className='ml-1 '>
+                                Terminés <span>{(projects.filter(e => e.state === "done")).length}</span>
+                            </button>
                         </div>
                         <div>
                             <DropdownInput
@@ -95,40 +141,51 @@ const Projects = ({ projects }) => {
                             </DropdownInput>
                         </div>
                     </div>
+                </div>
+                <div className='container-lg pb-5 !px-0 sm:!px-3'>
                     {projects.length > 0 ? (
-                        projectsToShow.map((element, key) => {
-                            return (
-                                <div className="row project-card" key={key} style={{ display: search ? (isResults.includes(element) ? "flex" : "none") : "flex" }}>
-                                    <div className="col-0 col-md-3 project-picture">
-                                        <img src={element.pictures[0]} alt={element.title} />
-                                    </div>
-                                    <div className="col-12 col-md-9 project-card-content">
-                                        <div className="project-card-content-top">
-                                            <h2 className='one_line'>
-                                                <Link to={`${element.URLID}/${element.URL}`}>{element.title}</Link>
-                                            </h2>
-                                            <h3 className='one_line'>{element.subtitle}</h3>
-                                            <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
-                                            <div className="infos_field">
-                                                <Icon name="Calendar" /> {dateParser(element.createdAt)}
+                        projectsToShow.length > 0 ? (
+                            projectsToShow.map((element, key) => {
+                                return (
+                                    <div className="project-card" key={key}>
+                                        <div className='row'>
+                                            <div className="col-0 col-md-3 project-picture">
+                                                <img src={element.pictures[0]} alt={element.title} />
                                             </div>
-                                            <div className="infos_field">
-                                                <Icon name="Position" /> {element.location.city} - {element.location.department} ({element.location.code_department})
-                                            </div>
-                                            <div className="infos_field">
-                                                <Icon name="List" /> {element.category}
+                                            <div className="col-12 col-md-9 project-card-content">
+                                                <div className="project-card-content-top">
+                                                    <h2 className='one_line'>
+                                                        <Link to={`${element.URLID}/${element.URL}`}>{element.title}</Link>
+                                                    </h2>
+                                                    <h3 className='one_line'>{element.subtitle}</h3>
+                                                    <div className={`state ${stateToBackground(element)}`}>{stateToString(element.state)}</div>
+                                                    <div className="infos_field">
+                                                        <Icon name="Calendar" /> {dateParser(element.createdAt)}
+                                                    </div>
+                                                    <div className="infos_field">
+                                                        <Icon name="Position" /> {element.location.city} - {element.location.department} ({element.location.code_department})
+                                                    </div>
+                                                    <div className="infos_field">
+                                                        <Icon name="List" /> {element.category}
+                                                    </div>
+                                                </div>
+                                                <div className="project-tags">
+                                                    {element.tags.map((tag, i) => {
+                                                        return <div className="tag" key={i}><span>#</span>{tag}</div>
+                                                    })}
+                                                </div>
+                                                <div className="description">{element.description}</div>
                                             </div>
                                         </div>
-                                        <div className="project-tags">
-                                            {element.tags.map((tag, i) => {
-                                                return <div className="tag" key={i}><span>#</span>{tag}</div>
-                                            })}
-                                        </div>
-                                        <div className="description">{element.description}</div>
                                     </div>
-                                </div>
-                            )
-                        })
+                                )
+                            })
+                        ) : (
+                            <div className="empty-array">
+                                <Icon name="Search" />
+                                <div>Aucun résultat ne correspond a votre recherche</div>
+                            </div>
+                        )
                     ) : (
                         <div className="no_content">
                             <div className="svg_container">
@@ -140,12 +197,6 @@ const Projects = ({ projects }) => {
                             </Button>
                         </div>
                     )}
-                    {search && isResults.length === 0 &&
-                        <div className="empty-array">
-                            <Icon name="Search" />
-                            <div>Aucun resultat ne correspond à votre recherche</div>
-                        </div>
-                    }
                 </div>
             </div>
             <FooterLight />

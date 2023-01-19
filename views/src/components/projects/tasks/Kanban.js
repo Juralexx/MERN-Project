@@ -68,10 +68,10 @@ const Kanban = ({ project, user, websocket, names, sortedTasks }) => {
                                                                         </div>
                                                                     }
                                                                     <ToolsMenu>
-                                                                        <Link className="tools_choice" to={`${element._id}`}>
+                                                                        <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}`}>
                                                                             Voir
                                                                         </Link>
-                                                                        <Link className="tools_choice" to={`${element._id}/update`}>
+                                                                        <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}/update`}>
                                                                             Modifier
                                                                         </Link>
                                                                         <div className="tools_choice" onClick={() => setWarning('' + i + key)}>
