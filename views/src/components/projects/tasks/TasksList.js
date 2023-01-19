@@ -2,18 +2,15 @@ import React, { useState } from 'react'
 import Icon from '../../tools/icons/Icon'
 import Checkbox from '../../tools/global/Checkbox'
 import ToolsMenu from '../../tools/global/ToolsMenu'
-import { updateState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground } from '../../tools/functions/task'
+import { updateTaskState, stateToBackground, isDatePassed, removeTask, stateToString, statusToString, statusToBackground } from '../../tools/functions/task'
 import { addClass, dateParser, getDifference, reduceString, reverseArray } from '../../Utils'
+import { Link, Outlet } from 'react-router-dom'
 
-const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatch, setOpenTask, setUpdateTask }) => {
-    const names = ["todo", "in progress", "done"]
-    const sortedTasks = [
-        tasks.filter(element => element.state === "todo"),
-        tasks.filter(element => element.state === "in progress"),
-        tasks.filter(element => element.state === "done")
-    ]
+const TasksList = ({ project, user, websocket, tasks, setTasks, sortedTasks, names }) => {
     const [navbar, setNavbar] = useState(1)
     const [display, setDisplay] = useState([0, 1, 2])
+
+    const [warning, setWarning] = useState(-1)
 
     const actionOnClick = (key) => {
         if (display.includes(key))
@@ -24,36 +21,28 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
     return (
         <>
             <div className="tasks_nav !my-4">
-                <div
-                    className={`${addClass(navbar === 1, "active")}`}
-                    onClick={() => {
-                        setTasks(reverseArray(project.tasks))
-                        setNavbar(1)
-                    }}>
+                <div className={`${addClass(navbar === 1, "active")}`} onClick={() => {
+                    setTasks(reverseArray(project.tasks))
+                    setNavbar(1)
+                }}>
                     Tous
                 </div>
-                <div
-                    className={`${addClass(navbar === 2, "active")}`}
-                    onClick={() => {
-                        setTasks(reverseArray(project.tasks.filter(e => e.state === "todo")))
-                        setNavbar(2)
-                    }}>
+                <div className={`${addClass(navbar === 2, "active")}`} onClick={() => {
+                    setTasks(reverseArray(project.tasks.filter(e => e.state === "todo")))
+                    setNavbar(2)
+                }}>
                     À traiter
                 </div>
-                <div
-                    className={`${addClass(navbar === 3, "active")}`}
-                    onClick={() => {
-                        setTasks(reverseArray(project.tasks.filter(e => e.state === "in progress")))
-                        setNavbar(3)
-                    }}>
+                <div className={`${addClass(navbar === 3, "active")}`} onClick={() => {
+                    setTasks(reverseArray(project.tasks.filter(e => e.state === "in progress")))
+                    setNavbar(3)
+                }}>
                     En cours
                 </div>
-                <div
-                    className={`${addClass(navbar === 4, "active")}`}
-                    onClick={() => {
-                        setTasks(reverseArray(project.tasks.filter(e => e.state === "done")))
-                        setNavbar(4)
-                    }}>
+                <div className={`${addClass(navbar === 4, "active")}`} onClick={() => {
+                    setTasks(reverseArray(project.tasks.filter(e => e.state === "done")))
+                    setNavbar(4)
+                }}>
                     Terminées
                 </div>
             </div>
@@ -62,7 +51,7 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                     return (
                         <div className={`tasklist-table ${addClass(!display.includes(key), 'closed')}`} key={key}>
                             <div className="tasklist-table-header" onClick={() => actionOnClick(key)}>
-                                <div className="flex">
+                                <div className="flex font-medium">
                                     <p>{stateToString(names[key])} <span>{arr.length}</span></p>
                                 </div>
                                 <Icon name="CaretDown" />
@@ -75,40 +64,27 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                                                 uniqueKey={uniqueKey}
                                                 className="mr-2 mt-1"
                                                 checked={element.state === "done"}
-                                                onChange={() => updateState(element, "done", project, user, websocket, dispatch)}
+                                                onChange={() => updateTaskState(element, "done", project, user, websocket)}
                                             />
                                             <div className="tasklist-table-item-body">
                                                 <div className="tasklist-table-item-top">
-                                                    <div className="flex items-center">{reduceString(element.title, 60)}</div>
+                                                    <div className="flex items-center font-medium">{reduceString(element.title, 60)}</div>
                                                     <div className="tasklist-table-item-tools">
                                                         {element.comments.length > 0 &&
-                                                            <div className="flex items-center mr-2" onClick={() => {
-                                                                setTask(element)
-                                                                setOpenTask(true)
-                                                            }}>
-                                                                <Icon name="Chat" className="mr-1" />
+                                                            <div className="flex items-center mr-2">
+                                                                <Icon name="Message" className="mr-1" />
                                                                 <span>{element.comments.length}</span>
                                                             </div>
                                                         }
                                                         <ToolsMenu>
-                                                            <div className="tools_choice" onClick={() => {
-                                                                setTask(element)
-                                                                setOpenTask(true)
-                                                            }}>
+                                                            <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/list/${element._id}`}>
                                                                 Voir
-                                                            </div>
-                                                            <div className="tools_choice">
-                                                                Commenter
-                                                            </div>
-                                                            <div className="tools_choice" onClick={() => {
-                                                                setTask(element)
-                                                                setUpdateTask(true)
-                                                            }}>
+                                                            </Link>
+                                                            <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/list/${element._id}/update`}>
                                                                 Modifier
-                                                            </div>
-                                                            <div
-                                                                className="tools_choice"
-                                                                onClick={() => removeTask(element, project, user, websocket, dispatch)}
+                                                            </Link>
+                                                            <div className="tools_choice"
+                                                                onClick={() => setWarning(true)}
                                                             >
                                                                 Supprimer
                                                             </div>
@@ -167,9 +143,9 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                                     )
                                 })
                             ) : (
-                                <div className="empty-array">
-                                    <Icon name="Calendar" />
-                                    <div>Vous n'avez aucunes tâches <span>{stateToString(names[key])}...</span></div>
+                                <div className="empty-content">
+                                    <Icon name="Clipboard" className="w-9 h-9 mb-2" />
+                                    <div>Vous n'avez aucunes tâches <span>{stateToString(names[key])}.</span></div>
                                 </div>
                             )}
                         </div>
@@ -184,7 +160,7 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                                     uniqueKey={key}
                                     className="mr-2 mt-1"
                                     checked={element.state === "done"}
-                                    onChange={() => updateState(element, "done", project, user, websocket, dispatch)}
+                                    onChange={() => updateTaskState(element, "done", project, user, websocket)}
                                 />
                                 <div className="tasklist-table-item-body">
                                     <div className="tasklist-table-item-top">
@@ -194,29 +170,20 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                                         <div className="tasklist-table-item-tools">
                                             {element.comments.length > 0 &&
                                                 <div className="flex items-center mr-2">
-                                                    <Icon name="Chat" className="mr-1" />
+                                                    <Icon name="Message" className="mr-1" />
                                                     <span>{element.comments.length}</span>
                                                 </div>
                                             }
                                             <ToolsMenu>
-                                                <div className="tools_choice" onClick={() => {
-                                                    setTask(element)
-                                                    setOpenTask(true)
-                                                }}>
+                                                <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}`}>
                                                     Voir
-                                                </div>
-                                                <div className="tools_choice">
-                                                    Commenter
-                                                </div>
-                                                <div className="tools_choice" onClick={() => {
-                                                    setTask(element)
-                                                    setUpdateTask(true)
-                                                }}>
+                                                </Link>
+                                                <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}/update`}>
                                                     Modifier
-                                                </div>
+                                                </Link>
                                                 <div
                                                     className="tools_choice"
-                                                    onClick={() => removeTask(element, project, user, websocket, dispatch)}
+                                                    onClick={() => removeTask(element, project, user, websocket)}
                                                 >
                                                     Supprimer
                                                 </div>
@@ -241,9 +208,9 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                                         <div className="tasklist-table-item-members">
                                             {element.members.length <= 5 && (
                                                 <div className="flex">
-                                                    {element.members.map((member, uniquekey) => {
+                                                    {element.members.map((member, i) => {
                                                         return (
-                                                            <div className="tasklist-table-item-member" key={uniquekey}>
+                                                            <div className="tasklist-table-item-member" key={i}>
                                                                 <div className="pseudo">
                                                                     {member.pseudo.substring(0, 3)}
                                                                 </div>
@@ -253,9 +220,9 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                                                 </div>
                                             )}
                                             {element.members.length > 5 && (
-                                                element.members.slice(0, 5).map((member, uniquekey) => {
+                                                element.members.slice(0, 5).map((member, i) => {
                                                     return (
-                                                        <div className="tasklist-table-item-member" key={uniquekey}>
+                                                        <div className="tasklist-table-item-member" key={i}>
                                                             <div className="pseudo">
                                                                 {member.pseudo.substring(0, 3)}
                                                             </div>
@@ -276,6 +243,7 @@ const TasksList = ({ project, user, tasks, setTasks, setTask, websocket, dispatc
                     )
                 })
             )}
+            <Outlet />
         </>
     )
 }
