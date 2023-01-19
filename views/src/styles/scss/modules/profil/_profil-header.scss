@@ -16,6 +16,9 @@
             svg {
                 color : white;
             }
+            .tools_btn {
+                background-color : transparent;
+            }
         }
     }
 
@@ -29,11 +32,12 @@
         border        : 7px solid var(--content);
 
         .btn_img_edit {
-            position   : absolute;
-            right      : 6px;
-            bottom     : 6px;
-            background : var(--primary);
-            box-shadow : var(--shadow-tiny);
+            position      : absolute;
+            right         : 6px;
+            bottom        : 6px;
+            border-radius : var(--rounded-full);
+            background    : var(--primary);
+            box-shadow    : var(--shadow-tiny);
             svg {
                 color : white;
             }

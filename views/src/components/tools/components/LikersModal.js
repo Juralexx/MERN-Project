@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import Icon from "../icons/Icon";
 import Modal from "../global/Modal";
 import HoverModal from "./HoverModal";
 import { Link } from "react-router-dom";
 import { MediumAvatar } from "../global/Avatars"
 import { TextButton } from "../global/Button";
 import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/contact";
-import Icon from "../icons/Icon";
 
-const LikersModal = ({ project, open, setOpen, user, websocket }) => {
+const LikersModal = ({ project, user, websocket, open, setOpen }) => {
     const [liker, setLiker] = useState([])
     const [hoveredCard, setHoveredCard] = useState(-1)
     const dispatch = useDispatch()

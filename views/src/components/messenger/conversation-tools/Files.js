@@ -11,7 +11,7 @@ import Icon from '../../tools/icons/Icon'
 
 const Files = ({ conversation, files, setFiles }) => {
     const { uid, user, websocket, dispatch } = useContext(MessengerContext)
-    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(conversation.files, 'name')
+    const { oneLevelSearch, isElementInSearchResults, search, setSearch } = useOneLevelSearch(conversation.files, 'name')
 
     const [isLoading, setLoading] = useState(true)
     const [warning, setWarning] = useState(-1)
@@ -59,7 +59,7 @@ const Files = ({ conversation, files, setFiles }) => {
                             <div className="conversation-medias custom-scrollbar">
                                 {medias.map((file, key) => {
                                     return (
-                                        <div className={`${isUserInSearchResults(file, "block")} conversation-medias-item`} style={fullImage(file.url)} key={key}>
+                                        <div className={`${isElementInSearchResults(file, "block")} conversation-medias-item`} style={fullImage(file.url)} key={key}>
 
                                             <ToolsMenu placement="bottom" btnClassName="bg-default" mobile mobileFull>
                                                 <div className="tools_choice"><Icon name="Redo" /><a href={file.url} rel="noreferrer" target="_blank">Ouvrir</a></div>
@@ -95,7 +95,7 @@ const Files = ({ conversation, files, setFiles }) => {
                             <div className="conversation-files custom-scrollbar">
                                 {docs.map((file, key) => {
                                     return (
-                                        <div className={`${isUserInSearchResults(file, "flex")} conversation-file`} key={key}>
+                                        <div className={`${isElementInSearchResults(file, "flex")} conversation-file`} key={key}>
                                             <div className="file-doc">
                                                 <Icon name="File" className="file-doc-img" />
                                                 <div className="file-doc-content">

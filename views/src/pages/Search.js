@@ -137,7 +137,7 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
                                     return (
                                         <div key={key}>
                                             <Card
-                                                element={element}
+                                                project={element}
                                                 setProject={setProject}
                                                 setOpenLikersModal={setOpenLikersModal}
                                                 setOpenFollowersModal={setOpenFollowersModal}
@@ -165,7 +165,7 @@ const Search = ({ websocket, user, search, results, datas, setDatas, sortedProje
                                         return (
                                             <div key={key}>
                                                 <Card
-                                                    element={element}
+                                                    project={element}
                                                     setProject={setProject}
                                                     setOpenLikersModal={setOpenLikersModal}
                                                     setOpenFollowersModal={setOpenFollowersModal}

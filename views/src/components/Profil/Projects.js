@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Icon from '../tools/icons/Icon'
-import { useOneLevelSearch } from '../tools/custom-hooks/useOneLevelSearch'
-import { sortByOld, sortByRecent, sortByState } from '../projects/functions'
-import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import Oval from '../../components/tools/loaders/Oval'
 import Card from '../tools/components/Card'
+import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import { addClass } from '../Utils'
+import { useOneLevelSearch } from '../tools/custom-hooks/useOneLevelSearch'
+import { sortByOld, sortByRecent, sortByState } from '../projects/functions'
 
 const Projects = ({ user, websocket }) => {
     const [projects, setProjects] = useState({
@@ -16,7 +16,11 @@ const Projects = ({ user, websocket }) => {
     const [projectsToDisplay, setProjectsToDisplay] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [filter, setFilter] = useState("")
-    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(projects.array, 'title')
+    const { oneLevelSearch, isElementInSearchResults, search, setSearch } = useOneLevelSearch(projects.array, 'title')
+
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (user.projects) {
@@ -38,20 +42,24 @@ const Projects = ({ user, websocket }) => {
         }
     }, [user, projects.type])
 
+    /**
+     * 
+     */
+
     return (
         <div className="profil-page col-12 col-lg-9">
             <div className="content_nav !mb-4 custom-scrollbar-x">
                 <div className={addClass(projects.type === "projects", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "projects" }))}>
-                    Projets<span>{user.projects?.length}</span>
+                    Projets <span>{user.projects?.length}</span>
                 </div>
                 <div className={addClass(projects.type === "favorites", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "favorites" }))}>
-                    Favoris<span>{user.favorites?.length}</span>
+                    Favoris <span>{user.favorites?.length}</span>
                 </div>
                 <div className={addClass(projects.type === "followed", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "followed" }))}>
-                    Suivis<span>{user.followed?.length}</span>
+                    Suivis <span>{user.followed?.length}</span>
                 </div>
                 <div className={addClass(projects.type === "liked", 'active')} onClick={() => setProjects(pros => ({ ...pros, type: "liked" }))}>
-                    Soutenus<span>{user.liked?.length}</span>
+                    Soutenus <span>{user.liked?.length}</span>
                 </div>
             </div>
             <div className="search-header">
@@ -117,11 +125,11 @@ const Projects = ({ user, websocket }) => {
                         <div className="profil-page_projects !justify-start">
                             {projectsToDisplay.map((element, key) => {
                                 return (
-                                    <div className={search.query.length > 0 ? isUserInSearchResults(element, 'block') : 'block'} key={key}>
+                                    <div className={search.query.length > 0 ? isElementInSearchResults(element, 'block') : 'block'} key={key}>
                                         <Card
-                                            element={element}
+                                            project={element}
                                             user={user}
-                                            websocket={websocket}
+                                            websocket={websocket} 
                                         />
                                     </div>
                                 )

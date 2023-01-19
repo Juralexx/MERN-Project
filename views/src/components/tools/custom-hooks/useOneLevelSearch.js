@@ -16,12 +16,11 @@ export function useOneLevelSearch(array, param) {
 
     const oneLevelSearch = () => {
         let isEmpty = !search.results || search.results.length === 0
-        let regexp = new RegExp(search.query, 'i')
+        let regexp = new RegExp(removeAccents(search.query), 'i')
 
         if (!search.query || search.query.trim() === "") return
         if (search.query.length >= 2) {
             const response = array.filter(element => regexp.test(removeAccents(element[param])))
-            console.log(response)
             setSearch(prevState => ({ ...prevState, state: true, results: response }))
             if (isEmpty)
                 return
@@ -36,10 +35,10 @@ export function useOneLevelSearch(array, param) {
      * @param {*} classe Class to add if user is in results
      */
 
-    const isUserInSearchResults = (element, classe) => {
+    const isElementInSearchResults = (element, classe) => {
         if (search.state) {
             for (let i = 0; i < search.results.length; i++) {
-                if (search.results[i].pseudo === element.pseudo) {
+                if (search.results[i][param] === element[param]) {
                     return classe
                 } else {
                     return '!hidden'
@@ -48,5 +47,5 @@ export function useOneLevelSearch(array, param) {
         } else return classe
     }
 
-    return { oneLevelSearch, isUserInSearchResults, search, setSearch }
+    return { oneLevelSearch, isElementInSearchResults, search, setSearch }
 }

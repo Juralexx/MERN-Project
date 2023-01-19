@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { followProject, unfollowProject } from "../../../reducers/project.action";
-import { UidContext } from "../../AppContext";
+import { Link } from "react-router-dom";
 import Icon from "../icons/Icon";
+import { UidContext } from "../../AppContext";
+import { followProject, unfollowProject } from "../../../reducers/project.action";
 
 const FollowersButton = ({ project, onClick }) => {
     const uid = useContext(UidContext)
@@ -10,20 +11,36 @@ const FollowersButton = ({ project, onClick }) => {
     const [text, setText] = useState("")
     const dispatch = useDispatch()
 
+    /**
+     * 
+     */
+
     const follow = () => {
-        dispatch(followProject(project._id, uid))
-        setFollowed(true)
+        if (project.poster._id !== uid) {
+            dispatch(followProject(project._id, uid))
+            setFollowed(true)
+        }
     }
     const unfollow = () => {
-        dispatch(unfollowProject(project._id, uid))
-        setFollowed(false)
+        if (project.poster._id !== uid) {
+            dispatch(unfollowProject(project._id, uid))
+            setFollowed(false)
+        }
     }
+
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (project.followers.includes(uid))
             setFollowed(true)
         else setFollowed(false)
     }, [project.followers, uid])
+
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (uid) {
@@ -57,14 +74,18 @@ const FollowersButton = ({ project, onClick }) => {
         }
     }, [followed, project.followers, uid])
 
+    /**
+     * 
+     */
+
     return (
         <>
             {uid === null &&
                 <div className="action-btn follow">
-                    <button>
+                    <Link to='/login'>
                         <Icon name="Bookmark" />
-                    </button>
-                    <p>{text}</p>
+                        <p>{text}</p>
+                    </Link>
                 </div>
             }
             {uid &&
@@ -72,8 +93,8 @@ const FollowersButton = ({ project, onClick }) => {
                 <div className="action-btn follow">
                     <button onClick={follow}>
                         <Icon name="Bookmark" />
+                        <p onClick={onClick}>{text}</p>
                     </button>
-                    <p onClick={onClick}>{text}</p>
                 </div>
             }
             {uid &&
@@ -81,8 +102,8 @@ const FollowersButton = ({ project, onClick }) => {
                 <div className="action-btn follow">
                     <button onClick={unfollow}>
                         <Icon name="Bookmark" />
+                        <p onClick={onClick}>{text}</p>
                     </button>
-                    <p onClick={onClick}>{text}</p>
                 </div>
             }
         </>

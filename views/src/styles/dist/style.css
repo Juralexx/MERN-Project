@@ -1301,8 +1301,8 @@ select:-webkit-autofill:focus {
   text-align: center;
 }
 .empty-content img {
-  width: 150px;
-  height: 150px;
+  width: 80px;
+  height: 80px;
 }
 .empty-content p {
   margin-top: 10px;
@@ -1781,6 +1781,14 @@ select:-webkit-autofill:focus {
           align-items: center;
   padding: 3px 0;
   background: transparent;
+}
+.card .card-body .card-footer .footer-left .action-btn a, .card .card-body .card-footer .footer-left .action-btn button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .card .card-body .card-footer .footer-left .action-btn p {
   font-size: 12px;
@@ -5607,6 +5615,7 @@ select:-webkit-autofill:focus {
 }
 .users_modal {
   min-height: 300px;
+  overflow: unset !important;
 }
 .users_modal .users_modal-header {
   display: -webkit-box;
@@ -5927,6 +5936,9 @@ select:-webkit-autofill:focus {
 .profil_header .profil_cover_img .cover_picture_tools svg {
   color: white;
 }
+.profil_header .profil_cover_img .cover_picture_tools .tools_btn {
+  background-color: transparent;
+}
 .profil_header .avatar {
   position: absolute;
   width: 148px;
@@ -5940,6 +5952,7 @@ select:-webkit-autofill:focus {
   position: absolute;
   right: 6px;
   bottom: 6px;
+  border-radius: var(--rounded-full);
   background: var(--primary);
   -webkit-box-shadow: var(--shadow-tiny);
           box-shadow: var(--shadow-tiny);

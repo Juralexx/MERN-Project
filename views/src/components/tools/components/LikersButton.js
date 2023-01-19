@@ -11,7 +11,11 @@ const LikersButton = ({ project, onClick }) => {
     const [liked, setLiked] = useState(false)
     const [text, setText] = useState("")
 
-    const like = () => { 
+    /**
+     * 
+     */
+
+    const like = () => {
         dispatch(likeProject(project._id, uid))
         setLiked(true)
     }
@@ -20,11 +24,19 @@ const LikersButton = ({ project, onClick }) => {
         setLiked(false)
     }
 
+    /**
+     * 
+     */
+
     useEffect(() => {
         if (project.likers.includes(uid))
             setLiked(true)
         else setLiked(false)
     }, [project.likers, uid])
+
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (uid) {
@@ -59,14 +71,18 @@ const LikersButton = ({ project, onClick }) => {
         }
     }, [liked, project.likers, uid])
 
+    /**
+     * 
+     */
+
     return (
         <>
             {uid === null &&
                 <div className="action-btn like">
                     <Link to='/login'>
                         <Icon name="Like" />
+                        <p>{text}</p>
                     </Link>
-                    <p>{text}</p>
                 </div>
             }
             {uid &&
@@ -74,8 +90,8 @@ const LikersButton = ({ project, onClick }) => {
                 <div className="action-btn like">
                     <button onClick={like}>
                         <Icon name="Like" />
+                        <p onClick={onClick}>{text}</p>
                     </button>
-                    <p onClick={onClick}>{text}</p>
                 </div>
             }
             {uid &&
@@ -83,8 +99,8 @@ const LikersButton = ({ project, onClick }) => {
                 <div className="action-btn like">
                     <button onClick={unlike}>
                         <Icon name="Like" />
+                        <p onClick={onClick}>{text}</p>
                     </button>
-                    <p onClick={onClick}>{text}</p>
                 </div>
             }
         </>

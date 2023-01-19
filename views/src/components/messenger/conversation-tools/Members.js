@@ -12,7 +12,7 @@ import { useOneLevelSearch } from '../../tools/custom-hooks/useOneLevelSearch'
 
 const Members = ({ setAddMembers, conversation }) => {
     const { uid, websocket, dispatch } = useContext(MessengerContext)
-    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(conversation.files, 'name')
+    const { oneLevelSearch, isElementInSearchResults, search, setSearch } = useOneLevelSearch(conversation.files, 'name')
     const [warning, setWarning] = useState(-1)
 
     return (
@@ -31,7 +31,7 @@ const Members = ({ setAddMembers, conversation }) => {
             <div className="conversation-members custom-scrollbar">
                 {conversation.members.map((member, key) => {
                     return (
-                        <div className={`${isUserInSearchResults(member, "flex")} conversation-member`} key={key}>
+                        <div className={`${isElementInSearchResults(member, "flex")} conversation-member`} key={key}>
                             <div className="flex items-center">
                                 <MediumAvatar pic={member.picture} />
                                 <div>

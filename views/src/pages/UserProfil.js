@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Route, Routes, useLocation, Link } from 'react-router-dom'
-import { addClass, dateParser, fullImage } from "../components/Utils";
-import { replaceHTTP, returnNetworkSVG } from "../components/tools/functions/networks";
 import Footer from "../components/Footer";
 import Oval from "../components/tools/loaders/Oval";
 import Card from "../components/tools/components/Card";
 import Icon from "../components/tools/icons/Icon";
+import { addClass, dateParser, fullImage } from "../components/Utils";
+import { replaceHTTP, returnNetworkSVG } from "../components/tools/functions/networks";
 
-const UserProfil = () => {
+const UserProfil = ({ user, websocket }) => {
     const { pseudo } = useParams()
-    const [user, setUser] = useState({})
+    const [userProfil, setUserProfil] = useState({})
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -18,7 +18,7 @@ const UserProfil = () => {
         const fetch = async () => {
             try {
                 const { data } = await axios.get(`${process.env.REACT_APP_API_URL}api/user/profil/${pseudo}`)
-                if (data.pseudo) setUser(data)
+                if (data.pseudo) setUserProfil(data)
                 else navigate('/')
             } catch (err) {
                 console.error(err)
@@ -29,7 +29,7 @@ const UserProfil = () => {
 
     const [projects, setProjects] = useState({
         created: [],
-        participation: []
+        participations: []
     })
     const [projectsToDisplay, setProjectsToDisplay] = useState({
         type: "created",
@@ -38,10 +38,10 @@ const UserProfil = () => {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (user.projects) {
+        if (userProfil.projects) {
             const fetch = () => {
                 setLoading(true)
-                const promises = user.projects.map(async id => {
+                const promises = userProfil.projects.map(async id => {
                     return await axios
                         .get(`${process.env.REACT_APP_API_URL}api/project/${id}`)
                         .then(res => res.data)
@@ -49,31 +49,31 @@ const UserProfil = () => {
                 })
                 Promise.all(promises).then(res => {
                     setProjects({
-                        created: res.filter(pros => pros.poster._id === user._id),
-                        participation: res.filter(pros => pros.poster._id !== user._id)
+                        created: res.filter(pros => pros.poster._id === userProfil._id),
+                        participations: res.filter(pros => pros.poster._id !== userProfil._id)
                     })
                     setProjectsToDisplay({
                         type: "created",
-                        array: res.filter(pros => pros.poster._id === user._id)
+                        array: res.filter(pros => pros.poster._id === userProfil._id)
                     })
                     setLoading(false)
                 })
             }
             fetch()
         }
-    }, [user, projects.type])
+    }, [userProfil, projects.type])
 
     return (
         <div className="profil_container">
             <div className="profil_header">
-                <div className="profil_cover_img" style={fullImage(user?.cover_picture)}></div>
+                <div className="profil_cover_img" style={fullImage(userProfil?.cover_picture)}></div>
                 <div className="container relative">
-                    <div className="avatar" style={fullImage(user?.picture)}></div>
+                    <div className="avatar" style={fullImage(userProfil?.picture)}></div>
                     <div className="content_nav">
-                        <Link to="/profil" className={addClass(location.pathname === '/user/' + user.pseudo, 'active')}>
+                        <Link to={`/user/${userProfil.pseudo}`} className={addClass(location.pathname === '/user/' + userProfil.pseudo, 'active')}>
                             Profil
                         </Link>
-                        <Link to="projects" className={addClass(location.pathname === '/user/' + user.pseudo + 'projects', 'active')}>
+                        <Link to={`/user/${userProfil.pseudo}/projects`} className={addClass(location.pathname === '/user/' + userProfil.pseudo + 'projects', 'active')}>
                             Projets
                         </Link>
                     </div>
@@ -84,25 +84,25 @@ const UserProfil = () => {
                     <div className="col-12 col-lg-3 md:pr-5 mb-8">
                         <div className='row'>
                             <div className='col-12 col-sm-6 col-lg-12'>
-                                <div className="f-24 bold txt-prim mb-2">{user?.pseudo}</div>
+                                <div className="f-24 bold txt-prim mb-2">{userProfil?.pseudo}</div>
                                 <p className="flex items-center mb-1">
-                                    <Icon name="Calendar" className="mr-2" />inscrit le {dateParser(user.createdAt)}
+                                    <Icon name="Calendar" className="mr-2" />inscrit le {dateParser(userProfil.createdAt)}
                                 </p>
-                                {user.location &&
+                                {userProfil.location &&
                                     <p className="flex items-center mb-1">
                                         <Icon name="Position" className="mr-2" />
-                                        {user?.location?.COM_NOM}, {user?.location?.DEP_NOM} ({user?.location?.DEP_CODE})
+                                        {userProfil?.location?.COM_NOM}, {userProfil?.location?.DEP_NOM} ({userProfil?.location?.DEP_CODE})
                                     </p>
                                 }
-                                {user.work &&
+                                {userProfil.work &&
                                     <p className="flex items-center">
-                                        <Icon name="User" className="mr-2" /> {user?.work}
+                                        <Icon name="User" className="mr-2" /> {userProfil?.work}
                                     </p>
                                 }
                             </div>
                             <div className='col-12 col-sm-6 col-lg-12'>
                                 <div className="networks pt-5">
-                                    {user?.networks?.map((e, i) => {
+                                    {userProfil?.networks?.map((e, i) => {
                                         return (
                                             <div className="networks-item" key={i}>
                                                 {returnNetworkSVG(e.type)}
@@ -126,21 +126,21 @@ const UserProfil = () => {
                                         <div className="row">
                                             <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
                                                 <p className="txt-ter mb-1">Pseudo</p>
-                                                <p className="txt-sec mb-1">{user?.pseudo ? user.pseudo : <em>Non renseigné</em>}</p>
+                                                <p className="txt-sec mb-1">{userProfil?.pseudo ? userProfil.pseudo : <em>Non renseigné</em>}</p>
                                             </div>
                                             <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
                                                 <p className="txt-ter mb-1">Métier</p>
-                                                <p className="txt-sec mb-1">{user?.work ? user.work : <em>Non renseigné</em>}</p>
+                                                <p className="txt-sec mb-1">{userProfil?.work ? userProfil.work : <em>Non renseigné</em>}</p>
                                             </div>
                                         </div>
                                         <div className="row">
                                             <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pr-2">
                                                 <p className="txt-ter mb-1">Prénom</p>
-                                                <p className="txt-sec mb-1">{user?.name ? user.name : <em>Non renseigné</em>}</p>
+                                                <p className="txt-sec mb-1">{userProfil?.name ? userProfil.name : <em>Non renseigné</em>}</p>
                                             </div>
                                             <div className="col-12 col-sm-6 mb-5 lg:px-2 sm:pl-2">
                                                 <p className="txt-ter mb-1">Nom</p>
-                                                <p className="txt-sec mb-1">{user?.lastname ? user.lastname : <em>Non renseigné</em>}</p>
+                                                <p className="txt-sec mb-1">{userProfil?.lastname ? userProfil.lastname : <em>Non renseigné</em>}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@ const UserProfil = () => {
                                         <h5 className="txt-prim">Biographie</h5>
                                     </div>
                                     <div className="col-12 col-lg-9">
-                                        <p className="txt-sec mb-1">{user?.bio ? user.bio : <em>Non renseigné</em>}</p>
+                                        <p className="txt-sec mb-1">{userProfil?.bio ? userProfil.bio : <em>Non renseigné</em>}</p>
                                     </div>
                                 </div>
                                 <div className="row py-6 border-b">
@@ -161,11 +161,11 @@ const UserProfil = () => {
                                         <div className="row">
                                             <div className="col col-lg-6 mb-5 lg:pr-2">
                                                 <p className="txt-ter mb-1">Ville</p>
-                                                <p className="txt-sec mb-1">{user?.location ? user.location.COM_NOM : <em>Non renseigné</em>}</p>
+                                                <p className="txt-sec mb-1">{userProfil?.location ? userProfil.location.COM_NOM : <em>Non renseigné</em>}</p>
                                             </div>
                                             <div className="col col-lg-6 mb-5 lg:pl-2">
                                                 <p className="txt-ter mb-1">Département</p>
-                                                <p className="txt-sec mb-1">{user?.location ? user.location.DEP_NOM + " (" + user.location.DEP_CODE + ")" : <em>Non renseigné</em>}</p>
+                                                <p className="txt-sec mb-1">{userProfil?.location ? userProfil.location.DEP_NOM + " (" + userProfil.location.DEP_CODE + ")" : <em>Non renseigné</em>}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -179,13 +179,13 @@ const UserProfil = () => {
                                             <div className="col col-lg-6 mb-5 lg:pr-2">
                                                 <p className="txt-ter mb-1">Email</p>
                                                 <p className="txt-sec mb-1">
-                                                    <a href={'mailto:' + user.email}>{user.email}</a>
+                                                    <a href={'mailto:' + userProfil.email}>{userProfil.email}</a>
                                                 </p>
                                             </div>
                                             <div className="col col-lg-6 mb-5 lg:pl-2">
                                                 <p className="txt-ter mb-1">Tél.</p>
                                                 <p className="txt-sec mb-1">
-                                                    {user?.phone ? <a href={'tel:' + user.phone}>{user.phone}</a> : <em>Non renseigné</em>}
+                                                    {userProfil?.phone ? <a href={'tel:' + userProfil.phone}>{userProfil.phone}</a> : <em>Non renseigné</em>}
                                                 </p>
                                             </div>
                                         </div>
@@ -198,8 +198,8 @@ const UserProfil = () => {
                                     <div className="col-12 col-lg-9">
                                         <div className="row">
                                             <div className="profil_info">
-                                                {user?.networks?.length > 0 ? (
-                                                    user?.networks?.map((element, key) => {
+                                                {userProfil?.networks?.length > 0 ? (
+                                                    userProfil?.networks?.map((element, key) => {
                                                         return (
                                                             <div className="networks-item" key={key}>
                                                                 {returnNetworkSVG(element.type)}
@@ -225,13 +225,13 @@ const UserProfil = () => {
                                         className={addClass(projectsToDisplay.type === "created", 'active')}
                                         onClick={() => setProjectsToDisplay({ type: 'created', array: projects.created })}
                                     >
-                                        Projets créés<span>{user.projects?.length}</span>
+                                        Projets créés <span>{userProfil.projects?.length}</span>
                                     </div>
                                     <div
-                                        className={addClass(projectsToDisplay.type === "participation", 'active')}
-                                        onClick={() => setProjectsToDisplay({ type: 'participation', array: projects.participation })}
+                                        className={addClass(projectsToDisplay.type === "participations", 'active')}
+                                        onClick={() => setProjectsToDisplay({ type: 'participations', array: projects.participations })}
                                     >
-                                        Participation<span>{user.favorites?.length}</span>
+                                        Participations <span>{userProfil.favorites?.length}</span>
                                     </div>
                                 </div>
                                 <div className="profil-page_body !justify-start">
@@ -240,9 +240,12 @@ const UserProfil = () => {
                                             <div className="profil-page_projects !justify-start">
                                                 {projectsToDisplay.array.map((element, key) => {
                                                     return (
-                                                        <div key={key}>
-                                                            <Card element={element} />
-                                                        </div>
+                                                        <Card
+                                                            key={key}
+                                                            project={element}
+                                                            user={user}
+                                                            websocket={websocket}
+                                                        />
                                                     )
                                                 })}
                                             </div>

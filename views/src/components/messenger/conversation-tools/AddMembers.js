@@ -13,7 +13,7 @@ const AddMembers = ({ conversation, setAddMembers }) => {
     const membersToAdd = contactsArr.filter(contact =>
         !otherMembersIDs(conversation, user._id).includes(contact._id)
     )
-    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(membersToAdd, 'pseudo')
+    const { oneLevelSearch, isElementInSearchResults, search, setSearch } = useOneLevelSearch(membersToAdd, 'pseudo')
 
     return (
         <>
@@ -33,7 +33,7 @@ const AddMembers = ({ conversation, setAddMembers }) => {
                 {membersToAdd.length > 0 ? (
                     membersToAdd.map((member, key) => {
                         return (
-                            <div className={`conversation-member ${isUserInSearchResults(member, 'flex')}`} key={key}>
+                            <div className={`conversation-member ${isElementInSearchResults(member, 'flex')}`} key={key}>
                                 <div className="flex items-center">
                                     <MediumAvatar pic={member.picture} />
                                     <div>{member.pseudo}</div>

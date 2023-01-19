@@ -96,6 +96,11 @@
                     align-items : center;
                     padding     : 3px 0;
                     background  : transparent;
+
+                    a, button {
+                        display     : flex;
+                        align-items : center;
+                    }
                     p {
                         font-size   : 12px;
                         font-weight : 400;

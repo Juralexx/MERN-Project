@@ -18,7 +18,7 @@ const New = ({ isTyping, handleSubmit }) => {
     const { user, contactsArr, sm, conversations, setConversations } = useContext(MessengerContext)
     const [contacts, setContacts] = useState([])
     const [members, setMembers] = useState([])
-    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(contacts, 'pseudo')
+    const { oneLevelSearch, isElementInSearchResults, search, setSearch } = useOneLevelSearch(contacts, 'pseudo')
 
     const wrapperRef = useRef()
     const [open, setOpen] = useState(contacts.length > 0 ? true : false)
@@ -175,7 +175,7 @@ const New = ({ isTyping, handleSubmit }) => {
                                     contacts.map((element, key) => {
                                         return (
                                             <div
-                                                className={`auto-complete-item ${isUserInSearchResults(element, "flex")}`}
+                                                className={`auto-complete-item ${isElementInSearchResults(element, "flex")}`}
                                                 onClick={() => onSelect(element)}
                                                 key={key}
                                             >

@@ -17,7 +17,7 @@ import { useOneLevelSearch } from '../tools/custom-hooks/useOneLevelSearch';
 const ConversationTools = ({ onlineUsers, fetchedContacts, members, rightbar, setRightbar }) => {
     const { user, contactsArr, conversations, setConversations, changeCurrentChat, navigate } = useContext(MessengerContext)
     const { online, offline } = useOnline(contactsArr, onlineUsers)
-    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(online.concat(offline), 'pseudo')
+    const { oneLevelSearch, isElementInSearchResults, search, setSearch } = useOneLevelSearch(online.concat(offline), 'pseudo')
 
     const handleClick = (receiver) => {
         let alreadyConversationExisting = isAlreadyConversationExisting(conversations.allConversations, [receiver, user])
@@ -91,7 +91,7 @@ const ConversationTools = ({ onlineUsers, fetchedContacts, members, rightbar, se
                                             </div>
                                             {online.map((element, key) => {
                                                 return (
-                                                    <div className={`online-users ${isUserInSearchResults(element, "block")}`} key={key}>
+                                                    <div className={`online-users ${isElementInSearchResults(element, "block")}`} key={key}>
                                                         <div className="online-user online">
                                                             <div className="online-user-img" style={fullImage(element.picture)}></div>
                                                             <div className="online-user-name">
@@ -124,7 +124,7 @@ const ConversationTools = ({ onlineUsers, fetchedContacts, members, rightbar, se
                                             </div>
                                             {offline.map((element, key) => {
                                                 return (
-                                                    <div className={`online-users ${isUserInSearchResults(element, "block")}`} key={key}>
+                                                    <div className={`online-users ${isElementInSearchResults(element, "block")}`} key={key}>
                                                         <div className="online-user offline">
                                                             <div className="online-user-img" style={fullImage(element.picture)}></div>
                                                             <div className="online-user-name">

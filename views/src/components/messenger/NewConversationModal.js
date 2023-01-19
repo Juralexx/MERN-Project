@@ -13,7 +13,7 @@ import { isAlreadyConversationExisting, otherMembersIDs, pushUserInArray, remove
 
 const NewConversationModal = ({ open, setOpen }) => {
     const { uid, user, websocket, contactsArr, changeCurrentChat, conversations, setConversations } = useContext(MessengerContext)
-    const { oneLevelSearch, isUserInSearchResults, search, setSearch } = useOneLevelSearch(contactsArr, 'pseudo')
+    const { oneLevelSearch, isElementInSearchResults, search, setSearch } = useOneLevelSearch(contactsArr, 'pseudo')
     const [navbar, setNavbar] = useState(1)
 
     const [newConversation, setNewConversation] = useState({
@@ -104,7 +104,7 @@ const NewConversationModal = ({ open, setOpen }) => {
                                 {contactsArr.map((element, key) => {
                                     return (
                                         <div
-                                            className={`user_display_choice !justify-between  ${isSelected(newConversation.members, element)} ${isUserInSearchResults(element, "flex")}`}
+                                            className={`user_display_choice !justify-between  ${isSelected(newConversation.members, element)} ${isElementInSearchResults(element, "flex")}`}
                                             onClick={() => setNewConversation(prevState => ({ ...prevState, members: pushUserInArray(element, newConversation.members) }))}
                                             key={key}
                                         >

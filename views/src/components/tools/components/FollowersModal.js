@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import Icon from "../icons/Icon";
 import Modal from "../global/Modal";
 import HoverModal from "./HoverModal";
 import { TextButton } from "../global/Button";
 import { MediumAvatar } from "../global/Avatars";
 import { acceptRequest, cancelRequest, refuseRequest, sendRequest } from "../functions/contact";
-import Icon from "../icons/Icon";
 
-const FollowersModal = ({ project, open, setOpen, user, websocket }) => {
+const FollowersModal = ({ project, user, websocket, open, setOpen }) => {
     const [followers, setFollowers] = useState([])
     const [hoveredCard, setHoveredCard] = useState(-1)
     const dispatch = useDispatch()

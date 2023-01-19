@@ -24,12 +24,15 @@ function Paths({ websocket, onlineUsers, user, uid }) {
             <Routes>
                 <Route path="/*" element={
                     <Home
-                        websocket={websocket}
                         user={user}
+                        websocket={websocket}
                     />
                 } />
                 <Route path="/user/:pseudo/*" element={
-                    <UserProfil />
+                    <UserProfil
+                        user={user}
+                        websocket={websocket}
+                    />
                 } />
                 <Route path="login" element={
                     <Login

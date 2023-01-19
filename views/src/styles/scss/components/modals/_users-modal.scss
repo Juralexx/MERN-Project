@@ -1,5 +1,6 @@
 .users_modal {
     min-height : 300px;
+    overflow   : unset !important;
     .users_modal-header {
         display        : flex;
         align-items    : center;

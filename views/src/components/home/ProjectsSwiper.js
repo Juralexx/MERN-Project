@@ -3,17 +3,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Keyboard, Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import Card from '../tools/components/Card';
+import Icon from '../tools/icons/Icon';
+import ProjectCard from './ProjectCard';
 import CardLoading from '../tools/components/CardLoading';
 import LikersModal from '../tools/components/LikersModal';
 import FollowersModal from '../tools/components/FollowersModal';
-import Icon from '../tools/icons/Icon';
 
 const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
     const [swiper, setSwiper] = useState()
     const [openFollowersModal, setOpenFollowersModal] = useState(false)
     const [openLikersModal, setOpenLikersModal] = useState(false)
-    const [project, setProject] = useState()
+    const [project, setProject] = useState({})
     const prevRef = useRef()
     const nextRef = useRef()
 
@@ -29,12 +29,12 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
     return (
         <>
             <div className="nav-buttons">
-                    <div className="swiper-button previous" ref={prevRef}>
-                        <Icon name="ArrowLeft" />
-                    </div>
-                    <div className="swiper-button next" ref={nextRef}>
-                        <Icon name="ArrowRight" />
-                    </div>
+                <div className="swiper-button previous" ref={prevRef}>
+                    <Icon name="ArrowLeft" />
+                </div>
+                <div className="swiper-button next" ref={nextRef}>
+                    <Icon name="ArrowRight" />
+                </div>
             </div>
             <Swiper
                 keyboard={{ enabled: true }}
@@ -48,10 +48,10 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
                 {!isLoading ? (
                     projects.map((element, key) => {
                         return (
-                            <SwiperSlide key={key} className="swiper-slide">
-                                <Card
-                                    element={element}
-                                    setProject={setProject}
+                            <SwiperSlide key={key} className="swiper-slide" onClick={() => setProject(element)}>
+                                <ProjectCard
+                                    project={element}
+                                    user={user}
                                     setOpenLikersModal={setOpenLikersModal}
                                     setOpenFollowersModal={setOpenFollowersModal}
                                 />
@@ -72,19 +72,19 @@ const ProjectsSwiper = ({ projects, isLoading, websocket, user }) => {
             {openFollowersModal &&
                 <FollowersModal
                     project={project}
+                    user={user}
+                    websocket={websocket}
                     open={openFollowersModal}
                     setOpen={setOpenFollowersModal}
-                    websocket={websocket}
-                    user={user}
                 />
             }
             {openLikersModal &&
                 <LikersModal
                     project={project}
+                    user={user}
+                    websocket={websocket}
                     open={openLikersModal}
                     setOpen={setOpenLikersModal}
-                    websocket={websocket}
-                    user={user}
                 />
             }
         </>
