@@ -8532,6 +8532,15 @@ select:-webkit-autofill:focus {
   background: var(--light);
   height: 100%;
 }
+.dashboard-projects-body .dashboard-project-title {
+  padding: 10px 15px 20px;
+  font-size: 22px;
+  font-weight: 500;
+}
+.dashboard-projects-body .dashboard-project-title span {
+  font-size: 18px;
+  color: var(--text-secondary);
+}
 
 .project-card {
   padding: 20px;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Icon from '../tools/icons/Icon'
 import { useOneLevelSearch } from '../tools/custom-hooks/useOneLevelSearch'
-import { sortByDone, sortByInProgress, sortByOld, sortByRecent, sortByWorkedOn } from '../projects/functions'
+import { sortByOld, sortByRecent, sortByState } from '../projects/functions'
 import { DropdownInput, IconInput } from '../tools/global/Inputs'
 import Oval from '../../components/tools/loaders/Oval'
 import Card from '../tools/components/Card'
 import { addClass } from '../Utils'
-import Icon from '../tools/icons/Icon'
 
 const Projects = ({ user, websocket }) => {
     const [projects, setProjects] = useState({
@@ -91,19 +91,19 @@ const Projects = ({ user, websocket }) => {
                             Plus ancien au plus récent
                         </div>
                         <div onClick={() => {
-                            setProjectsToDisplay(sortByWorkedOn(projects.array))
+                            setProjectsToDisplay(sortByState(projects.array, 'worked on'))
                             setFilter("En préparation")
                         }}>
                             En préparation
                         </div>
                         <div onClick={() => {
-                            setProjectsToDisplay(sortByInProgress(projects.array))
+                            setProjectsToDisplay(sortByState(projects.array, 'in progress'))
                             setFilter("En cours")
                         }}>
                             En cours
                         </div>
                         <div onClick={() => {
-                            setProjectsToDisplay(sortByDone(projects.array))
+                            setProjectsToDisplay(sortByState(projects.array, 'done'))
                             setFilter("Terminé")
                         }}>
                             Terminé

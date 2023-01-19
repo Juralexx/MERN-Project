@@ -40,6 +40,7 @@ const Dashboard = ({ websocket, user }) => {
                         <Route index element={
                             <Projects
                                 projects={projects}
+                                user={user}
                             />
                         } />
                         {(Object.keys(user).length > 0 && projects.length > 0) && (
