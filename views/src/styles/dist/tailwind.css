@@ -493,10 +493,6 @@ video {
   position: relative;
 }
 
-.top-full {
-  top: 100%;
-}
-
 .top-1 {
   top: 0.25rem;
 }
@@ -545,19 +541,14 @@ video {
   margin-bottom: 1rem !important;
 }
 
-.mx-3 {
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
-}
-
 .mx-2 {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
 
-.mx-\[10px\] {
-  margin-left: 10px;
-  margin-right: 10px;
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .mb-3 {
@@ -632,6 +623,10 @@ video {
   margin-top: 2.5rem !important;
 }
 
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
 .mb-\[10px\] {
   margin-bottom: 10px;
 }
@@ -646,10 +641,6 @@ video {
 
 .mt-2 {
   margin-top: 0.5rem;
-}
-
-.mr-1 {
-  margin-right: 0.25rem;
 }
 
 .ml-4 {
@@ -680,10 +671,6 @@ video {
   margin-left: 0.75rem;
 }
 
-.ml-\[10px\] {
-  margin-left: 10px;
-}
-
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -710,6 +697,10 @@ video {
 
 .mb-10 {
   margin-bottom: 2.5rem;
+}
+
+.ml-0 {
+  margin-left: 0px;
 }
 
 .block {
@@ -764,6 +755,10 @@ video {
   height: 42px !important;
 }
 
+.h-9 {
+  height: 2.25rem;
+}
+
 .h-\[46px\] {
   height: 46px;
 }
@@ -778,10 +773,6 @@ video {
 
 .h-2 {
   height: 0.5rem;
-}
-
-.max-h-\[500px\] {
-  max-height: 500px;
 }
 
 .min-h-\[300px\] {
@@ -802,10 +793,6 @@ video {
 
 .\!w-full {
   width: 100% !important;
-}
-
-.w-1\/2 {
-  width: 50%;
 }
 
 .w-4 {
@@ -830,6 +817,14 @@ video {
 
 .w-\[400px\] {
   width: 400px;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-9 {
+  width: 2.25rem;
 }
 
 .w-\[110px\] {
@@ -1040,19 +1035,9 @@ video {
   padding-right: 0px !important;
 }
 
-.px-\[10px\] {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.\!px-3 {
-  padding-left: 0.75rem !important;
-  padding-right: 0.75rem !important;
-}
-
-.\!px-5 {
-  padding-left: 1.25rem !important;
-  padding-right: 1.25rem !important;
+.px-\[15px\] {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .py-3 {
@@ -1063,21 +1048,6 @@ video {
 .py-9 {
   padding-top: 2.25rem;
   padding-bottom: 2.25rem;
-}
-
-.px-0 {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-.px-\[15px\] {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-.\!px-\[15px\] {
-  padding-left: 15px !important;
-  padding-right: 15px !important;
 }
 
 .pb-8 {
@@ -1136,6 +1106,10 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
+
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -1188,6 +1162,10 @@ video {
 
 .font-thin {
   font-weight: 100;
+}
+
+.font-normal {
+  font-weight: 400;
 }
 
 .uppercase {
@@ -1273,6 +1251,10 @@ video {
 
   .sm\:ml-5 {
     margin-left: 1.25rem;
+  }
+
+  .sm\:ml-0 {
+    margin-left: 0px;
   }
 
   .sm\:\!flex {

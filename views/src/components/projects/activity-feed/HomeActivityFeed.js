@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../Utils'
-import { TextButton } from '../../tools/global/Button'
+import { StringButton, TextButton } from '../../tools/global/Button'
 import ToolsMenu from '../../tools/global/ToolsMenu'
 import Icon from '../../tools/icons/Icon'
 import { Link } from 'react-router-dom'
@@ -23,10 +23,10 @@ const HomeActivityFeed = ({ project }) => {
             <div className="home-activity-feed-header">
                 <h3>Fil d'activités <span>{activities.length}</span></h3>
                 <div className="flex items-center">
-                    <TextButton className="mr-4">
+                    <StringButton>
                         <Link to="activity-feed">Voir tous</Link>
-                    </TextButton>
-                    <ToolsMenu>
+                    </StringButton>
+                    <ToolsMenu btnClassName="ml-4">
                         <div className="tools_choice" onClick={() => setActivities(thisDay(reversed))}>
                             Aujourd'hui
                         </div>

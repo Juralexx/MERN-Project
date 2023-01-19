@@ -1,44 +1,45 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import axios from 'axios'
 import Modal from '../../tools/global/Modal'
 import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
 import { ClassicInput, DatePickerInput, DropdownInput, Textarea } from '../../tools/global/Inputs'
 import { Button } from '../../tools/global/Button'
 import Icon from '../../tools/icons/Icon'
 import { addClass, removeAccents } from '../../Utils'
-import { createTask } from '../../../reducers/project.action'
 import { isUserInSearchResults, isSelected } from '../../tools/functions/member'
 import { addMemberToArray, removeMemberFromArray, stateToString, statusToString } from '../../tools/functions/task'
 
-const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
+const CreateTask = ({ open, setOpen, project, user, websocket }) => {
     const [navbar, setNavbar] = useState(1)
-    const dispatch = useDispatch()
 
-    const [end, setEnd] = useState("")
     const [datas, setDatas] = useState({
         title: "",
         description: "",
-        end: end,
+        end: new Date().toISOString(),
         state: "todo",
         status: "normal",
         members: []
     })
 
-    const newTask = () => {
+    /**
+     * 
+     */
+
+    const newTask = async () => {
         const task = {
             title: datas.title,
             description: datas.description,
+            end: datas.end,
             state: datas.state,
             status: datas.status,
+            members: datas.members,
+            date: new Date().toISOString(),
+            comments: [],
             poster: {
                 _id: user._id,
                 pseudo: user.pseudo,
                 picture: user.picture,
-            },
-            end: datas.end,
-            members: datas.members,
-            date: new Date().toISOString(),
-            comments: []
+            }
         }
         const activity = {
             type: "create-task",
@@ -46,25 +47,32 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
             who: user.pseudo,
             task: datas.title
         }
-        dispatch(createTask(project._id, task, activity))
-        const members = project.members.filter(member => member._id !== user._id)
-        members.map(member => {
-            return websocket.current.emit("createTask", {
-                receiverId: member._id,
+
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/tasks/add/`,
+            data: {
                 task: task,
                 activity: activity
-            })
+            }
         })
+            .then(() => {
+                project.members.map(member => {
+                    return websocket.current.emit("createTask", {
+                        receiverId: member._id,
+                        task: task,
+                        activity: activity
+                    })
+                })
+            })
+            .catch(err => console.log(err))
         setOpen(false)
-        setEnd('')
-        setDatas(datas => ({
-            ...datas,
-            title: "",
-            description: "",
-            end: "",
-            members: []
-        }))
+        setDatas({ title: "", description: "", end: "", state: "todo", status: "normal", members: [] })
     }
+
+    /**
+     * 
+     */
 
     const [search, setSearch] = useState({
         state: false,
@@ -83,18 +91,20 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
         } else setSearch(data => ({ ...data, state: false }))
     }
 
+    /**
+     * 
+     */
+
     return (
         <Modal open={open} setOpen={setOpen} className="create-task-modal">
             <h2>Créer une nouvelle tâche</h2>
             <div className="modal_nav">
-                <div
-                    className={`modal_nav-item ${addClass(navbar === 1, "active")}`}
+                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`}
                     onClick={() => setNavbar(1)}
                 >
                     Description
                 </div>
-                <div
-                    className={`modal_nav-item ${addClass(navbar === 2, "active")}`}
+                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`}
                     onClick={() => setNavbar(2)}
                 >
                     Membres
@@ -126,9 +136,9 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
                         <DatePickerInput
                             className="top mt-2 full"
                             placeholder="JJ/MM/AAAA"
-                            value={end}
-                            selected={end}
-                            onSelect={setEnd}
+                            value={datas.end}
+                            selected={datas.end}
+                            onSelect={date => setDatas(prevSate => ({ ...prevSate, end: date }))}
                         />
                     </div>
 
@@ -189,7 +199,7 @@ const CreateTask = ({ open, setOpen, project, user, websocket, }) => {
                     <ClassicInput
                         type="search"
                         placeholder="Rechercher un membre..."
-                        className="full"
+                        className="full mb-2"
                         value={search.query}
                         onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                         onChange={searchMember}

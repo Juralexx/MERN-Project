@@ -102,7 +102,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
                             isManager={role.manager}
                         />
                     } />
-                    <Route path="tasks" element={
+                    <Route path="tasks/*" element={
                         <Tasks
                             user={user}
                             websocket={websocket}

@@ -24,7 +24,7 @@
             margin-left : 28px;
             font-size   : 14px;
 
-            > div {
+            > a {
                 display         : flex;
                 justify-content : center;
                 align-items     : center;
@@ -104,18 +104,18 @@
 .tasklist-table {
     max-height : 1500px;
     width      : 100%;
-    margin     : 5px auto 0;
     transition : 0.5s ease;
 
     .tasklist-table-header {
-        display          : flex;
-        justify-content  : space-between;
-        align-items      : center;
-        width            : 100%;
-        padding          : 10px 17px;
-        background-color : var(--x-light);
-        border-radius    : var(--rounded-sm);
-        cursor           : pointer;
+        display         : flex;
+        justify-content : space-between;
+        align-items     : center;
+        width           : 100%;
+        padding         : 10px 15px;
+        margin-bottom   : 8px;
+        border-radius   : var(--rounded-sm);
+        box-shadow      : var(--shadow-tiny);
+        cursor          : pointer;
 
         p {
             text-transform : uppercase;
@@ -143,12 +143,8 @@
         position        : relative;
         display         : flex;
         justify-content : space-between;
-        padding         : 5px 10px;
+        padding         : 5px 0;
         cursor          : pointer;
-
-        &:hover {
-            background-color : var(--light);
-        }
         
         .tasklist-table-item-body {
             width : 100%;

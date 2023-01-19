@@ -4,7 +4,7 @@ import { createProject } from '../controllers/project/project.add.controller.js'
 import { getAllProjects, findProjectByURL, updateProject, deleteProject, findProjectById } from '../controllers/project/project.controller.js'
 import { like, unlike, follow, unfollow, favorite, unfavorite } from '../controllers/project/project.actions.controller.js'
 import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, leaveProject, sendMemberRequest, nameAdmin, removeAdmin } from '../controllers/project/project.members.controller.js'
-import { commentTask, createTask, deleteTask, updateTask } from '../controllers/project/project.tasks.controller.js'
+import { commentTask, createTask, deleteTask, getTaskById, updateTask } from '../controllers/project/project.tasks.controller.js'
 import { deletePictures, updatePictures, uploadPictures } from '../controllers/project/project.upload.controller.js'
 import { createActuality, deleteActuality, deleteActualityPictures, updateActuality, updateActualityPictures, uploadActualityPictures } from '../controllers/project/project.actuality.controller.js'
 import { createQNA, deleteQNA, updateQNA } from '../controllers/project/project.faq.controller.js'
@@ -32,14 +32,14 @@ projectRoutes.put('/:id/members/request/refuse/', refuseMemberRequest)
 projectRoutes.put('/:id/members/admins/add/', nameAdmin)
 projectRoutes.put('/:id/members/admins/remove/', removeAdmin)
 
+projectRoutes.get('/:id/tasks/task/:taskId/', getTaskById)
 projectRoutes.put('/:id/tasks/add/', createTask)
-projectRoutes.put('/:id/tasks/update/', updateTask)
-projectRoutes.put('/:id/tasks/delete/', deleteTask)
-projectRoutes.put('/:id/tasks/comment/', commentTask)
+projectRoutes.put('/:id/tasks/:taskId/update/', updateTask)
+projectRoutes.put('/:id/tasks/:taskId/delete/', deleteTask)
+projectRoutes.put('/:id/tasks/:taskId/comment/', commentTask)
 
 projectRoutes.put('/:id/actualities/add/', createActuality)
 projectRoutes.put('/:id/actualities/:actualityId/update/', upload.array('files'), updateActuality)
-
 projectRoutes.put('/:id/actualities/:actualityId/delete/', deleteActuality)
 projectRoutes.put('/:id/actualities/:actualityId/pictures/add/', upload.array('files', 3), uploadActualityPictures)
 projectRoutes.put('/:id/actualities/:actualityId/pictures/update/', upload.array('files', 3), updateActualityPictures)

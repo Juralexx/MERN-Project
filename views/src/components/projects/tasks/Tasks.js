@@ -1,45 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { addClass } from '../../Utils'
+import React, { useState } from 'react'
 import { TextButton } from '../../tools/global/Button'
 import CreateTask from './CreateTask'
-import UpdateTask from './UpdateTask'
 import Kanban from './Kanban'
 import TasksList from './TasksList'
 import TaskModal from './TaskModal'
 import Icon from '../../tools/icons/Icon'
+import { Link, Route, Routes } from 'react-router-dom'
+import { addClass } from '../../Utils'
 
 const Tasks = ({ project, user, websocket }) => {
     const [tasks, setTasks] = useState(project.tasks)
-    const [task, setTask] = useState(project.tasks[0])
-
-    const [openTask, setOpenTask] = useState(false)
     const [createTask, setCreateTask] = useState(false)
-    const [updateTask, setUpdateTask] = useState(false)
-    
-    const dispatch = useDispatch()
 
-    const [layout, setLayout] = useState("kanban")
-    const localStore = localStorage.getItem("taskLayout")
-
-    const handleLayout = () => {
-        if (layout === "list") {
-            localStorage.setItem("taskLayout", "kanban")
-            setLayout("kanban")
-        } else {
-            localStorage.setItem("taskLayout", "list")
-            setLayout("list")
-        }
-    }
-
-    useEffect(() => {
-        if (project)
-            if (localStore !== null && localStore === "kanban")
-                setLayout("kanban")
-            else if (localStore !== null && localStore === "list")
-                setLayout("list")
-            else localStorage.setItem("taskLayout", "kanban")
-    }, [project, localStore])
+    const names = ["todo", "in progress", "done"]
+    const sortedTasks = [
+        project.tasks.filter(element => element.state === "todo"),
+        project.tasks.filter(element => element.state === "in progress"),
+        project.tasks.filter(element => element.state === "done")
+    ]
 
     return (
         <>
@@ -48,48 +26,69 @@ const Tasks = ({ project, user, websocket }) => {
                     <div className="dashboard-tasks-header_left">
                         <h2>Tâches <span>({project.tasks.length})</span></h2>
                         <div className="dashboard-tasks-nav">
-                            <div
-                                className={`${addClass(layout === "kanban", "active")}`}
-                                onClick={handleLayout}
-                            >
+                            <Link to={`/projects/${project.URLID}/${project.URL}/tasks`} className={addClass(window.location.pathname === `/projects/${project.URLID}/${project.URL}/tasks`, 'active')}>
                                 Kanban
-                            </div>
-                            <div
-                                className={`${addClass(layout === "list", "active")}`}
-                                onClick={handleLayout}
-                            >
+                            </Link>
+                            <Link to={`/projects/${project.URLID}/${project.URL}/tasks/list`} className={addClass(window.location.pathname === `/projects/${project.URLID}/${project.URL}/tasks/list`, 'active')}>
                                 Liste
-                            </div>
+                            </Link>
                         </div>
                     </div>
                     <TextButton className="btn_icon_start" onClick={() => setCreateTask(true)}>
                         <Icon name="Plus" /> Ajouter une tâche
                     </TextButton>
                 </div>
-                {layout === "list" ? (
-                    <TasksList
-                        project={project}
-                        user={user}
-                        websocket={websocket}
-                        tasks={tasks}
-                        setTasks={setTasks}
-                        setTask={setTask}
-                        setOpenTask={setOpenTask}
-                        setUpdateTask={setUpdateTask}
-                        dispatch={dispatch}
-                    />
-                ) : (
-                    <Kanban
-                        project={project}
-                        user={user}
-                        websocket={websocket}
-                        tasks={tasks}
-                        setTask={setTask}
-                        setOpenTask={setOpenTask}
-                        setUpdateTask={setUpdateTask}
-                        dispatch={dispatch}
-                    />
-                )}
+                <Routes>
+                    <Route path='*' element={
+                        <>
+                            <Kanban
+                                project={project}
+                                user={user}
+                                websocket={websocket}
+                                names={names}
+                                sortedTasks={sortedTasks}
+                            />
+                            <Routes>
+                                <Route path=':id/*' element={
+                                    <TaskModal
+                                        user={user}
+                                        project={project}
+                                        websocket={websocket}
+                                    />
+                                } />
+                            </Routes>
+                        </>
+                    } />
+                    <Route path='list/*' element={
+                        <>
+                            <TasksList
+                                project={project}
+                                user={user}
+                                websocket={websocket}
+                                names={names}
+                                sortedTasks={sortedTasks}
+                                tasks={tasks}
+                                setTasks={setTasks}
+                            />
+                            <Routes>
+                                <Route path=':id/*' element={
+                                    <TaskModal
+                                        user={user}
+                                        project={project}
+                                        websocket={websocket}
+                                    />
+                                } />
+                            </Routes>
+                        </>
+                    } />
+                    <Route path=':id/*' element={
+                        <TaskModal
+                            user={user}
+                            project={project}
+                            websocket={websocket}
+                        />
+                    } />
+                </Routes>
             </div>
             <CreateTask
                 open={createTask}
@@ -97,22 +96,6 @@ const Tasks = ({ project, user, websocket }) => {
                 project={project}
                 user={user}
                 websocket={websocket}
-            />
-            <UpdateTask
-                project={project}
-                user={user}
-                websocket={websocket}
-                task={task}
-                open={updateTask}
-                setOpen={setUpdateTask}
-            />
-            <TaskModal
-                task={task}
-                project={project}
-                open={openTask}
-                setOpen={setOpenTask}
-                setUpdateTask={setUpdateTask}
-                user={user}
             />
         </>
     )

@@ -59,8 +59,7 @@ const AddQna = ({ project, user, websocket }) => {
                     activity: activity
                 }
             })
-                .then(res => {
-                    console.log(res)
+                .then(async res => {
                     if (res.data.errors) {
                         if (res.data.errors.question) {
                             setError({
@@ -74,7 +73,7 @@ const AddQna = ({ project, user, websocket }) => {
                             })
                         }
                     } else {
-                        project.members.map(member => {
+                        await project.members.map(member => {
                             return websocket.current.emit("createQna", {
                                 receiverId: member._id,
                                 qna: qna,

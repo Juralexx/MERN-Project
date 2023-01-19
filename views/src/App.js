@@ -5,7 +5,7 @@ import { io } from 'socket.io-client'
 import Paths from './components/routes/routes';
 import { MediaContext, UidContext, UserContext } from "./components/AppContext"
 import { getUser, receiveAcceptContactRequest, receiveCancelContactRequest, receiveDeleteContact, receiveContactRequest, receiveRefuseContactRequest } from './reducers/user.action';
-import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveChangeTaskStatus, receiveCreateQNA, receiveUpdateQNA, receiveDeleteQNA, receiveCreateActuality, receiveUpdateActuality, receiveDeleteActuality } from './reducers/project.action';
+import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveCreateQNA, receiveUpdateQNA, receiveDeleteQNA, receiveCreateActuality, receiveUpdateActuality, receiveDeleteActuality, receiveCommentTask } from './reducers/project.action';
 import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo, receiveUpdateConversationInfos, receiveUploadConversationPicture, receiveRemoveConversationPicture } from './reducers/messenger.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 import useMediaQuery from './components/tools/hooks/useMediaQuery';
@@ -186,12 +186,13 @@ function App() {
         websocket.current.on("updateTaskState", data => {
             dispatch(receiveChangeTaskState(data.taskId, data.state, data.activity))
         })
-        websocket.current.on("updateTaskStatus", data => {
-            dispatch(receiveChangeTaskStatus(data.taskId, data.status, data.activity))
+        websocket.current.on("commentTask", data => {
+            dispatch(receiveCommentTask(data.taskId, data.comment))
         })
         websocket.current.on("deleteTask", data => {
             dispatch(receiveDeleteTask(data.taskId, data.activity))
         })
+
         return () => {
             websocket.current.off("contactRequest")
             websocket.current.off("cancelContactRequest")
@@ -222,7 +223,6 @@ function App() {
             websocket.current.off("createTask")
             websocket.current.off("updateTask")
             websocket.current.off("updateTaskState")
-            websocket.current.off("updateTaskStatus")
             websocket.current.off("deleteTask")
 
             websocket.current.off("sendMessageNotification")

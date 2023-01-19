@@ -74,8 +74,8 @@ const EditQna = ({ project, user, websocket }) => {
                         }
                     }
                 })
-                .then(() => {
-                    project.members.map(member => {
+                .then(async () => {
+                    await project.members.map(member => {
                         return websocket.current.emit("updateQna", {
                             receiverId: member._id,
                             qna: qna,

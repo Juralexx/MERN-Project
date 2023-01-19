@@ -150,6 +150,7 @@ const ProjectModel = new mongoose.Schema(
         tasks: {
             type: [],
             task: {
+                type: Object,
                 _id: String,
                 title: String,
                 description: String,

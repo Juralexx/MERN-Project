@@ -7,6 +7,12 @@ import axios from "axios";
 export const isHome = window.location.pathname === '/'
 
 /**
+ * Redirect to the previous URL
+ */
+
+export const goBack = () => window.history.back()
+
+/**
  * Add a body class
  * @param {*} className Class to add to body
  */
@@ -263,6 +269,18 @@ export const dateParserWithoutYear = (num) => {
 }
 
 /**
+ * Return date formated : dd mon. YYYY (ex: 12 janv. 2020)
+ * @param {*} num Date to convert
+ */
+
+export const numericDateParser = (num) => {
+    let options = { year: "2-digit", month: "2-digit", day: "2-digit" }
+    let timestamp = Date.parse(num)
+    let date = new Date(timestamp).toLocaleDateString('fr-FR', options)
+    return date.toString()
+}
+
+/**
  * Convert ISO date to navigator date input format.
  * @param {*} date Date to convert
  */
@@ -421,6 +439,24 @@ export const randomizedArrayNoRepeats = (array) => {
         return item
     }
 }
+
+/**
+ * Return a random color class
+ */
+
+export const randomColor = randomizedArrayNoRepeats(['blue', 'light-blue', 'turquoise', 'green', 'purple-light', 'red-light', 'yellow', 'orange'])
+
+/**
+ * Return a random background-color class
+ */
+
+export const randomBgColor = randomizedArrayNoRepeats(['xbg-blue', 'xbg-light-blue', 'xbg-turquoise', 'xbg-green', 'xbg-purple-light', 'xbg-red-light', 'xbg-orange'])
+
+/**
+ * Return a random color class
+ */
+
+export const randomBgAndColor = randomizedArrayNoRepeats(['blue xbg-blue', 'light-blue xbg-light-blue', 'turquoise xbg-turquoise', 'green xbg-green', 'purple-light xbg-purple-light', 'red-light xbg-red-light', 'orange xbg-orange'])
 
 /**
  * Reverse array order.

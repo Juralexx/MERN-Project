@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { MediumAvatar } from '../tools/global/Avatars'
-import { dateParser } from '../Utils'
-import { convertDeltaToHTML } from '../tools/editor/functions'
+import { Link, useParams } from 'react-router-dom'
 import FsLightbox from 'fslightbox-react'
+import { Button } from '../../tools/global/Button'
+import { MediumAvatar } from '../../tools/global/Avatars'
+import { dateParser } from '../../Utils'
+import { convertDeltaToHTML } from '../../tools/editor/functions'
 
-const Actuality = ({ project }) => {
+const Actuality = ({ project, isManager }) => {
     const { urlid, url } = useParams()
     const index = project.actualities.findIndex(e => e.urlid === urlid && e.url === url)
     const actuality = project.actualities[index]
@@ -14,7 +15,7 @@ const Actuality = ({ project }) => {
 
     return (
         Object.keys(actuality).length > 0 && (
-            <div className="actuality-page-container">
+            <div className="container-lg py-8 actuality-page-container">
                 <div className="actuality">
                     <div className="actuality-header">
                         <div className="actuality-nb">
@@ -48,6 +49,15 @@ const Actuality = ({ project }) => {
                         </div>
                     }
                 </div>
+                {isManager &&
+                    <div id="back-actions">
+                        <div className='back-actions-inner'>
+                            <Button>
+                                <Link to="edit">Modifier</Link>
+                            </Button>
+                        </div>
+                    </div>
+                }
                 <FsLightbox
                     toggler={toggler.open}
                     sources={actuality.pictures}

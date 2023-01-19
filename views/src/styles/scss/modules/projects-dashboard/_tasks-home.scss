@@ -34,7 +34,6 @@
                     justify-content : space-between;
                     width           : 100%;
                     padding-bottom  : 3px;
-                    font-weight     : 500;
 
                     .title {
                         margin-top         : 3px;
@@ -108,41 +107,55 @@
     }
 
     .task-modal-description {
-        padding : 20px 0;
+        padding    : 20px 0;
+        max-height : 200px;
+        overflow-y : auto;
+    }
+}
+
+.add-comment-container {
+    padding    : 20px 0 0;
+    border-top : 1px solid var(--light-border);
+}
+
+.comments-container {
+    position   : relative;
+    border-top : 1px solid var(--light-border);
+    font-size  : 12px;
+    max-height : 300px;
+    overflow-y : auto;
+
+    p {
+        font-size : 12px;
     }
 
-    .add-comment-container {
-        padding    : 20px 0 0;
-        border-top : 1px solid var(--light-border);
-    }
+    .comment {
+        padding       : 10px 0;
+        border-bottom : 1px solid var(--light-border);
 
-    .comments-container {
-        border-top : 1px solid var(--light-border);
+        .comment-header {
+            display         : flex;
+            justify-content : space-between;
+            margin-bottom   : 3px;
 
-        .comment {
-            padding       : 20px 0;
-            border-bottom : 1px solid var(--light-border);
-
-            .comment-header {
-                display         : flex;
-                justify-content : space-between;
-                margin-bottom   : 6px;
-            }
-    
-            .comment-body {
-                padding       : 15px 20px;
-                background    : var(--content-x-light);
-                border-radius : var(--rounded-sm);
-            }
-
-            &:last-child {
-                border-bottom : none;
+            .date {
+                color : var(--text-secondary);
             }
         }
 
-        .is-empty {
-            padding : 20px 0 0;
+        .comment-body {
+            padding       : 10px 10px;
+            background    : var(--light);
+            border-radius : var(--rounded-sm);
         }
+
+        &:last-child {
+            border-bottom : none;
+        }
+    }
+
+    .is-empty {
+        padding : 20px 0 0;
     }
 }
 

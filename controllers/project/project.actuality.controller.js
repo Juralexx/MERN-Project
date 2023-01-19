@@ -368,7 +368,6 @@ export const deleteActualityPictures = async (req, res) => {
             })
         })
     }).then(async () => {
-        console.log('coucou')
         try {
             await ProjectModel.updateOne(
                 {

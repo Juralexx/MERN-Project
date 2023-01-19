@@ -7,6 +7,7 @@
     font-size       : 16px;
     text-transform  : uppercase;
     color           : var(--text);
+    border-bottom  : 1px solid var(--light-border);
 
     &:nth-child(2) {
         margin : 0 20px;
@@ -17,6 +18,7 @@
         align-items    : flex-end;
         padding-top    : 4px;
         letter-spacing : .5px;
+        font-weight    : 500;
         
         span {
             font-size   : 14px;
@@ -44,8 +46,9 @@
         position      : relative;
         padding       : 12px;
         margin        : 12px 0;
-        background    : var(--x-light);
+        background    : var(--content-light);
         border-radius : var(--rounded-sm);
+        box-shadow      : var(--shadow-tiny);
         cursor        : pointer;
 
         &.priority {
@@ -59,10 +62,19 @@
         }
 
         .kanban-ticket-title {
+            position        : relative;
             display         : flex;
             align-items     : center;
             justify-content : space-between;
             margin-bottom   : 3px;
+        }
+
+        .kanban-ticket-comments {
+            display     : flex;
+            align-items : center;
+            position    : absolute;
+            right       : 0;
+            top         : 35px;
         }
 
         .kanban-ticket-status {
@@ -99,7 +111,7 @@
                     .pseudo {
                         display          : flex;
                         align-items      : center;
-                        padding          : 3px 8px;
+                        padding          : 2px 8px;
                         font-size        : 12px;
                         background-color : rgba(var(--light-blue-rgb), 0.6);
                         border-radius    : var(--rounded-sm);
@@ -108,5 +120,10 @@
                 }
             }
         }
+    }
+
+    .highlighted {
+        background-color : rgba(var(--primary-rgb), 0.1);
+        border-radius    : var(--rounded-md);
     }
 }

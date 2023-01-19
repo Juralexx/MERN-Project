@@ -4,8 +4,6 @@
     right           : 0;
     bottom          : 0;
     left            : 0;
-    //overflow-x      : hidden;
-    //overflow-y      : auto;
     visibility      : visible;
     z-index         : 100000000000;
     display         : flex;
@@ -20,12 +18,14 @@
         margin           : auto;
         width            : 500px;
         min-height       : 300px;
+        max-height       : 70vh;
         padding          : 15px;
         color            : var(--text);
         background-color : var(--content-light);
         border-radius    : var(--rounded-sm);
         box-shadow       : var(--shadow-xl);
         z-index          : 100000000000;
+        overflow         : hidden;
     
         h2 {
             margin-bottom : 10px;

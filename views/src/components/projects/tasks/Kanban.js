@@ -1,37 +1,27 @@
 import React, { useState } from 'react'
+import { Link, Outlet } from 'react-router-dom';
 import { Draggable, Droppable, DragDropContext } from "react-beautiful-dnd";
 import Icon from '../../tools/icons/Icon';
 import ToolsMenu from '../../tools/global/ToolsMenu'
-import { dateParser, getDifference } from '../../Utils'
-import { stateToBackground, statusToBorder, isDatePassed, stateToString, statusToString, statusToBackground, removeTask, updateState } from '../../tools/functions/task'
+import Warning from '../../tools/global/Warning';
+import { getDifference, numericDateParser } from '../../Utils'
+import { stateToBackground, statusToBorder, isDatePassed, stateToString, statusToString, statusToBackground, updateTaskState, removeTask } from '../../tools/functions/task'
 
-const Kanban = ({ project, user, tasks, websocket, dispatch, setUpdateTask, setTask, setOpenTask }) => {
-    const names = ["todo", "in progress", "done"]
-    const sortedTasks = [
-        tasks.filter(element => element.state === "todo"),
-        tasks.filter(element => element.state === "in progress"),
-        tasks.filter(element => element.state === "done")
-    ]
-    const [dragged, setDragged] = useState(false)
-    const [selectedTask, setSelectedTask] = useState(null)
+const Kanban = ({ project, user, websocket, names, sortedTasks }) => {
+    const [selectedTask, setSelectedTask] = useState({})
     const [toState, setToState] = useState("")
 
-    const getState = index => {
-        if (dragged) setToState(names[index])
-    }
+    const [dragged, setDragged] = useState(false)
+    const [warning, setWarning] = useState(-1)
 
-    const onDragEnd = () => {
-        if (selectedTask.state !== toState) {
-            updateState(selectedTask, toState, project, user, websocket, dispatch)
-            setDragged(false)
-        }
-    }
+    const getState = index => { if (dragged) setToState(names[index]) }
 
     return (
         <div className="kanban row">
             <DragDropContext
                 onDragStart={() => setDragged(true)}
-                onDragEnd={onDragEnd}
+                onDragUpdate={() => updateTaskState(selectedTask, toState, project, user, websocket)}
+                onDragEnd={() => setDragged(false)}
             >
                 {sortedTasks.map((arr, i) => {
                     return (
@@ -41,8 +31,7 @@ const Kanban = ({ project, user, tasks, websocket, dispatch, setUpdateTask, setT
                             key={i}
                         >
                             {(provided) => (
-                                <div
-                                    className="col-12 col-md-4"
+                                <div className={`col-12 col-lg-4 ${dragged && toState === names[i] ? 'highlighted' : 'normal'}`}
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                     onMouseEnter={() => getState(i)}
@@ -52,76 +41,63 @@ const Kanban = ({ project, user, tasks, websocket, dispatch, setUpdateTask, setT
                                             {stateToString(names[i])} <span>{arr.length}</span>
                                         </div>
                                     </div>
-                                    {arr.map((element, key) => {
-                                        return (
-                                            <Draggable
-                                                draggableId={element._id}
-                                                index={key}
-                                                key={element._id}
-                                            >
-                                                {(provided, snapshot) => {
-                                                    return (
-                                                        <div
-                                                            className={`kanban-ticket ${statusToBorder(element.status)}`}
-                                                            onMouseDown={() => setSelectedTask(element)}
-                                                            ref={provided.innerRef}
-                                                            snapshot={snapshot}
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}
-                                                        >
-                                                            <div className="kanban-ticket-title">
-                                                                <div className="two_lines">
-                                                                    {element.title}
+                                    {arr.length > 0 ? (
+                                        arr.map((element, key) => {
+                                            return (
+                                                <Draggable
+                                                    draggableId={element._id}
+                                                    index={key}
+                                                    key={element._id}
+                                                >
+                                                    {(provided, snapshot) => {
+                                                        return (
+                                                            <div className={`kanban-ticket ${statusToBorder(element.status)}`}
+                                                                onMouseDown={() => setSelectedTask(element)}
+                                                                ref={provided.innerRef}
+                                                                snapshot={snapshot}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                            >
+                                                                <div className="kanban-ticket-title">
+                                                                    <Link className="two_lines" to={`${element._id}`}>
+                                                                        {element.title}
+                                                                    </Link>
+                                                                    {element.comments.length > 0 &&
+                                                                        <div className="kanban-ticket-comments">
+                                                                            <Icon name="Message" className="mr-1 w-4 h-4" />{element.comments.length}
+                                                                        </div>
+                                                                    }
+                                                                    <ToolsMenu>
+                                                                        <Link className="tools_choice" to={`${element._id}`}>
+                                                                            Voir
+                                                                        </Link>
+                                                                        <Link className="tools_choice" to={`${element._id}/update`}>
+                                                                            Modifier
+                                                                        </Link>
+                                                                        <div className="tools_choice" onClick={() => setWarning('' + i + key)}>
+                                                                            Supprimer
+                                                                        </div>
+                                                                    </ToolsMenu>
                                                                 </div>
-                                                                {element.comments.length > 0 &&
-                                                                    <div className="flex items-center mr-2">
-                                                                        <Icon name="Chat" className="mr-1" />{element.comments.length}
+                                                                <div className="kanban-ticket-status">
+                                                                    <div className={`details mr-2 ${stateToBackground(element.state)}`}>
+                                                                        {stateToString(element.state)}
                                                                     </div>
-                                                                }
-                                                                <ToolsMenu>
-                                                                    <div className="tools_choice" onClick={() => {
-                                                                        setTask(element)
-                                                                        setOpenTask(true)
-                                                                    }}>
-                                                                        Voir
+                                                                    <div className={`details ${statusToBackground(element.status)}`}>
+                                                                        {statusToString(element.status)}
                                                                     </div>
-                                                                    <div className="tools_choice">
-                                                                        Commenter
-                                                                    </div>
-                                                                    <div className="tools_choice" onClick={() => {
-                                                                        setTask(element)
-                                                                        setUpdateTask(true)
-                                                                    }}>
-                                                                        Modifier
-                                                                    </div>
-                                                                    <div
-                                                                        className="tools_choice"
-                                                                        onClick={() => removeTask(element, project, user, websocket, dispatch)}
-                                                                    >
-                                                                        Supprimer
-                                                                    </div>
-                                                                </ToolsMenu>
-                                                            </div>
-                                                            <div className="kanban-ticket-status">
-                                                                <div className={`details mr-2 ${stateToBackground(element.state)}`}>
-                                                                    {stateToString(element.state)}
                                                                 </div>
-                                                                <div className={`details ${statusToBackground(element.status)}`}>
-                                                                    {statusToString(element.status)}
+                                                                <div className="kanban-ticket-description">
+                                                                    {element.description ? element.description : <em>Aucune description</em>}
                                                                 </div>
-                                                            </div>
-                                                            <div className="kanban-ticket-description">
-                                                                {element.description ? element.description : <em>Aucune description</em>}
-                                                            </div>
-                                                            <div className="kanban-ticket-bottom">
-                                                                <div className={`details ${isDatePassed(element.end)}`}>
-                                                                    {dateParser(element.end)}
-                                                                </div>
-                                                                {element.members.length > 0 && (
-                                                                    <div className="kanban-ticket-members">
-                                                                        {element.members.length <= 5 && (
+                                                                <div className="kanban-ticket-bottom">
+                                                                    <div className={`details ${isDatePassed(element.end)}`}>
+                                                                        {numericDateParser(element.end)}
+                                                                    </div>
+                                                                    {element.members.length > 0 && (
+                                                                        <div className="kanban-ticket-members">
                                                                             <div className="flex">
-                                                                                {element.members.map((member, uniquekey) => {
+                                                                                {element.members.slice(0, 3).map((member, uniquekey) => {
                                                                                     return (
                                                                                         <div className="kanban-ticket-member" key={uniquekey}>
                                                                                             <div className="pseudo">
@@ -130,33 +106,38 @@ const Kanban = ({ project, user, tasks, websocket, dispatch, setUpdateTask, setT
                                                                                         </div>
                                                                                     )
                                                                                 })}
-                                                                            </div>
-                                                                        )}
-                                                                        {element.members.length > 5 && (
-                                                                            element.members.slice(0, 5).map((member, uniquekey) => {
-                                                                                return (
-                                                                                    <div className="kanban-ticket-member" key={uniquekey}>
-                                                                                        <div className="pseudo">
-                                                                                            {member.pseudo.substring(0, 3)}
-                                                                                        </div>
+                                                                                {element.members.length > 3 &&
+                                                                                    <div className="get_difference">
+                                                                                        {getDifference(3, element.members.length)}
                                                                                     </div>
-                                                                                )
-                                                                            })
-                                                                        )}
-                                                                        {element.members.length > 5 && (
-                                                                            <div className="get_difference">
-                                                                                {getDifference(5, element.members.length)}
+                                                                                }
                                                                             </div>
-                                                                        )}
-                                                                    </div>
-                                                                )}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                {Object.keys(selectedTask).length > 0 &&
+                                                                    <Warning
+                                                                        title={`Supprimer la tâche suivante : ${selectedTask.title} ?`}
+                                                                        text="Cette action est irréversible."
+                                                                        validateBtn="Supprimer"
+                                                                        className="delete"
+                                                                        open={warning === '' + i + key}
+                                                                        setOpen={setWarning}
+                                                                        onValidate={() => removeTask(selectedTask, project, user, websocket)}
+                                                                    />
+                                                                }
                                                             </div>
-                                                        </div>
-                                                    )
-                                                }}
-                                            </Draggable>
-                                        )
-                                    })}
+                                                        )
+                                                    }}
+                                                </Draggable>
+                                            )
+                                        })
+                                    ) : (
+                                        <div className="empty-content">
+                                            <Icon name="Clipboard" className="w-9 h-9 mb-2" />
+                                            <div>Vous n'avez aucunes tâches <span>{stateToString(names[i])}.</span></div>
+                                        </div>
+                                    )}
                                     {provided.placeholder}
                                 </div>
                             )}
@@ -164,6 +145,7 @@ const Kanban = ({ project, user, tasks, websocket, dispatch, setUpdateTask, setT
                     )
                 })}
             </DragDropContext>
+            <Outlet />
         </div>
     )
 }

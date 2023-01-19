@@ -1,5 +1,4 @@
 import React from 'react';
-import Oval from 'react-loading-icons/dist/components/oval';
 
 export const Loader = () => {
     return (

@@ -407,39 +407,11 @@ export const removeProjectFromMember = (projectId) => {
 /*******************************************************************************************************************************/
 /********************************************************* TASKS ***************************************************************/
 
-export const CREATE_TASK = "CREATE_TASK"
-
-export const createTask = (projectId, task, activity) => {
-     return async (dispatch) => {
-          await axios({
-               method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/add/`,
-               data: { task, activity }
-          })
-               .then(() => dispatch({ type: CREATE_TASK, payload: { task, activity } }))
-               .catch(err => console.error(err))
-     }
-}
-
 export const RECEIVE_CREATE_TASK = "RECEIVE_CREATE_TASK"
 
 export const receiveCreateTask = (task, activity) => {
      return async (dispatch) => {
           dispatch({ type: RECEIVE_CREATE_TASK, payload: { task, activity } })
-     }
-}
-
-export const UPDATE_TASK = "UPDATE_TASK"
-
-export const changeTask = (projectId, task, activity) => {
-     return async (dispatch) => {
-          await axios({
-               method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/update/`,
-               data: { taskId: task._id, task, activity }
-          })
-               .then(() => dispatch({ type: UPDATE_TASK, payload: { task, activity } }))
-               .catch(err => console.error(err))
      }
 }
 
@@ -451,20 +423,6 @@ export const receiveChangeTask = (task, activity) => {
      }
 }
 
-export const UPDATE_TASK_STATE = "UPDATE_TASK_STATE"
-
-export const changeTaskState = (projectId, taskId, state, activity) => {
-     return async (dispatch) => {
-          await axios({
-               method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/update/`,
-               data: { taskId, state, activity }
-          })
-               .then(() => dispatch({ type: UPDATE_TASK_STATE, payload: { taskId, state, activity } }))
-               .catch(err => console.error(err))
-     }
-}
-
 export const RECEIVE_UPDATE_TASK_STATE = "RECEIVE_UPDATE_TASK_STATE"
 
 export const receiveChangeTaskState = (taskId, state, activity) => {
@@ -473,61 +431,11 @@ export const receiveChangeTaskState = (taskId, state, activity) => {
      }
 }
 
-export const UPDATE_TASK_STATUS = "UPDATE_TASK_STATUS"
-
-export const changeTaskStatus = (projectId, taskId, status, activity) => {
-     return async (dispatch) => {
-          await axios({
-               method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/update/`,
-               data: { taskId, status, activity }
-          })
-               .then(() => dispatch({ type: UPDATE_TASK_STATUS, payload: { taskId, status, activity } }))
-               .catch(err => console.error(err))
-     }
-}
-
-export const RECEIVE_UPDATE_TASK_STATUS = "RECEIVE_UPDATE_TASK_STATUS"
-
-export const receiveChangeTaskStatus = (taskId, status, activity) => {
-     return async (dispatch) => {
-          dispatch({ type: RECEIVE_UPDATE_TASK_STATUS, payload: { taskId, status, activity } })
-     }
-}
-
-export const COMMENT_TASK = "COMMENT_TASK"
-
-export const commentTask = (projectId, taskId, comment) => {
-     return async (dispatch) => {
-          await axios({
-               method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/comment/`,
-               data: { taskId, comment }
-          })
-               .then(() => dispatch({ type: COMMENT_TASK, payload: { taskId, comment } }))
-               .catch(err => console.error(err))
-     }
-}
-
 export const RECEIVE_COMMENT_TASK = "RECEIVE_COMMENT_TASK"
 
 export const receiveCommentTask = (taskId, comment) => {
      return async (dispatch) => {
           dispatch({ type: RECEIVE_COMMENT_TASK, payload: { taskId, comment } })
-     }
-}
-
-export const DELETE_TASK = "DELETE_TASK"
-
-export const deleteTask = (projectId, taskId, activity) => {
-     return async (dispatch) => {
-          await axios({
-               method: "put",
-               url: `${process.env.REACT_APP_API_URL}api/project/${projectId}/tasks/delete/`,
-               data: { taskId, activity }
-          })
-               .then(() => dispatch({ type: DELETE_TASK, payload: { taskId, activity } }))
-               .catch(err => console.error(err))
      }
 }
 

@@ -37,6 +37,7 @@
     border-radius : var(--rounded-sm);
     margin-bottom : 20px;
     box-shadow    : var(--shadow-tiny);
+    overflow      : hidden;
 
     h3 {
         span {
@@ -48,7 +49,7 @@
     }
 
     .dashboard-card-container {
-        height     : auto;
+        position   : relative;
         max-height : 340px;
         overflow-y : auto;
     }

@@ -1,62 +1,71 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { changeTask } from '../../../reducers/project.action'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import Icon from '../../tools/icons/Icon'
 import Modal from '../../tools/global/Modal'
 import { MediumAvatar, TinyAvatar } from '../../tools/global/Avatars'
 import { ClassicInput, DatePickerInput, DropdownInput, Textarea } from '../../tools/global/Inputs'
-import { Button } from '../../tools/global/Button'
+import { Button, TextButton } from '../../tools/global/Button'
 import { addMemberToArray, removeMemberFromArray, statusToString, stateToString } from '../../tools/functions/task'
-import { addClass, ISOtoNavigatorFormat, removeAccents } from '../../Utils'
+import { addClass, goBack, removeAccents } from '../../Utils'
 import { isUserInSearchResults, isSelected } from '../../tools/functions/member'
 
-const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
+const UpdateTask = ({ task, project, user, websocket }) => {
+    const navigate = useNavigate()
+    const [navbar, setNavbar] = useState(1)
+
     const [updatedTask, setUpdatedTask] = useState({
+        _id: task._id,
         title: task.title,
         description: task.description,
-        end: task.end,
         status: task.status,
         state: task.state,
+        end: task.end,
         members: task.members,
-        comments: task.comments
-    })
-    const [end, setEnd] = useState(ISOtoNavigatorFormat(task.end))
-    const [navbar, setNavbar] = useState(1)
-    const dispatch = useDispatch()
-
-    const updateTask = () => {
-        const taskUpdated = {
-            _id: task._id,
-            title: updatedTask.title,
-            description: updatedTask.description,
-            state: updatedTask.state,
-            status: updatedTask.status,
-            end: new Date(end).toISOString(),
-            members: updatedTask.members,
-            poster: {
-                _id: task.poster._id,
-                pseudo: task.poster.pseudo,
-                picture: task.poster.picture,
-            },
-            date: task.date,
-            comments: task.comments
+        date: task.date,
+        comments: task.comments,
+        poster: {
+            _id: task.poster._id,
+            pseudo: task.poster.pseudo,
+            picture: task.poster.picture,
         }
+    })
+
+    /**
+     * 
+     */
+
+    const updateTask = async () => {
         const activity = {
             type: "update-task",
             who: user.pseudo,
             task: updatedTask.title,
             date: new Date().toISOString()
         }
-        dispatch(changeTask(project._id, taskUpdated, activity))
-        //const members = project.members.filter(member => member._id !== user._id)
-        project.members.map(member => {
-            return websocket.current.emit("updateTask", {
-                receiverId: member._id,
-                task: taskUpdated
-            })
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/tasks/${task._id}/update/`,
+            data: {
+                task: updatedTask,
+                activity: activity
+            }
         })
-        setOpen(false)
+            .then(async () => {
+                await project.members.map(member => {
+                    return websocket.current.emit("updateTask", {
+                        receiverId: member._id,
+                        task: updatedTask,
+                        activity: activity
+                    })
+                })
+                navigate(`/projects/${project.URLID}/${project.URL}/tasks`)
+            })
+            .catch(err => console.log(err))
     }
+
+    /**
+     * 
+     */
 
     const [search, setSearch] = useState({
         state: false,
@@ -75,18 +84,34 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
         } else setSearch(data => ({ ...data, state: false }))
     }
 
+    /**
+     * 
+     */
+
+    const onClose = () => {
+        let location = window.location.pathname
+        if (location.includes('/tasks/list'))
+            navigate(`/projects/${project.URLID}/${project.URL}/tasks/list`)
+        else if (location.includes('/tasks'))
+            navigate(`/projects/${project.URLID}/${project.URL}/tasks`)
+        else
+            navigate(`/projects/${project.URLID}/${project.URL}/`)
+    }
+
+    /**
+     * 
+     */
+
     return (
-        <Modal open={open} setOpen={setOpen} className="update-task-modal">
+        <Modal open={true} onClose={() => onClose()} className="update-task-modal">
             <h2>Modifier la tâche</h2>
             <div className="modal_nav">
-                <div
-                    className={`modal_nav-item ${addClass(navbar === 1, "active")}`}
+                <div className={`modal_nav-item ${addClass(navbar === 1, "active")}`}
                     onClick={() => setNavbar(1)}
                 >
                     Description
                 </div>
-                <div
-                    className={`modal_nav-item ${addClass(navbar === 2, "active")}`}
+                <div className={`modal_nav-item ${addClass(navbar === 2, "active")}`}
                     onClick={() => setNavbar(2)}
                 >
                     Membres
@@ -104,7 +129,6 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
                         value={updatedTask.title}
                         onChange={e => setUpdatedTask(prevState => ({ ...prevState, title: e.target.value }))}
                     />
-
                     <div className="mb-2 mt-4">Description</div>
                     <Textarea
                         type="text"
@@ -113,18 +137,16 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
                         value={updatedTask.description}
                         onChange={e => setUpdatedTask(prevState => ({ ...prevState, description: e.target.value }))}
                     />
-
                     <div className="flex items-center mt-4">
                         <div className="mb-2 mt-4 mr-4">Date de fin</div>
                         <DatePickerInput
                             className="top mt-2 full"
                             placeholder="JJ/MM/AAAA"
-                            value={end}
-                            selected={end}
-                            onSelect={setEnd}
+                            value={updatedTask.end}
+                            selected={updatedTask.end}
+                            onSelect={date => setUpdatedTask(prevState => ({ ...prevState, end: new Date(date).toISOString() }))}
                         />
                     </div>
-
                     <div className="flex w-full mb-10">
                         <div className="w-1/2">
                             <div className="mb-2 mt-4">État</div>
@@ -210,13 +232,17 @@ const UpdateTask = ({ task, open, setOpen, project, user, websocket }) => {
                     </div>
                 </>
             )}
-            <Button
-                className="mt-5 w-full"
-                disabled={updatedTask.title === "" || updatedTask.title === undefined}
-                onClick={updateTask}
-            >
-                Enregistrer
-            </Button>
+            <div className='btn-container'>
+                <TextButton onClick={() => goBack()}>
+                    Annuler
+                </TextButton>
+                <Button className="sm:ml-2"
+                    disabled={updatedTask.title === "" || updatedTask.title === undefined}
+                    onClick={updateTask}
+                >
+                    Enregistrer
+                </Button>
+            </div>
         </Modal>
     )
 }

@@ -1,26 +1,20 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useClickOutside } from '../hooks/useClickOutside'
 import Icon from '../icons/Icon'
 
 const Modal = (props) => {
-    const { open, setOpen, className } = props
+    const { open, setOpen, onClose, className } = props
     const modalRef = useRef()
 
-    const removeScrollY = () => {
-        if (document.body.classList.contains('no-scroll-y')) {
-            document.body.classList.remove('no-scroll-y');
-        } else {
-            document.body.classList.add('no-scroll-y');
-        }
-    }
-
-    useEffect(() => { if (open) removeScrollY() }, [open])
-
     const close = () => {
-        if (open !== typeof Object) {
-            setOpen(false)
+        if (onClose) {
+            onClose()
         } else {
-            setOpen(prevState => ({ ...prevState, open: false }))
+            if (open !== typeof Object) {
+                setOpen(false)
+            } else {
+                setOpen(prevState => ({ ...prevState, open: false }))
+            }
         }
     }
 
@@ -30,19 +24,13 @@ const Modal = (props) => {
         <>
             <div className={open ? "modal_wrapper" : "modal_wrapper hide_wrapper"}>
                 <div className={open ? className ? "modal_container show_modal " + className : "modal_container show_modal " : 'modal_container hide_modal'} ref={modalRef}>
-                    <div className="close_modal" onClick={() => {
-                        close()
-                        removeScrollY()
-                    }}>
+                    <div className="close_modal" onClick={() => close()}>
                         <Icon name="Cross" />
                     </div>
                     {props.children}
                 </div>
             </div>
-            <div className={open ? 'modal_cover modal_cover-active' : 'modal_cover'} onClick={() => {
-                close()
-                removeScrollY()
-            }}></div>
+            <div className={open ? 'modal_cover modal_cover-active' : 'modal_cover'} onClick={() => close()}></div>
         </>
     )
 }

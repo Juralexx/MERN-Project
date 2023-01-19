@@ -13,7 +13,7 @@ const UserModel = new mongoose.Schema(
             unique: true,
             validate: {
                 validator: (val) => validator.isAlphanumeric(val, ['fr-FR'], { ignore: " -" }),
-                message: 'Votre pseudo ne peut contenir que des lettres, chiffre, tirets (-) et underscore (_) et faire entre 4 et 20 caractères'
+                message: 'Votre pseudo ne peut contenir que des lettres, chiffre, tirets (-) et underscore (_) et faire entre 4 et 20 caractères.'
             },
             trim: true
         },
@@ -26,7 +26,7 @@ const UserModel = new mongoose.Schema(
             trim: true,
             validate: {
                 validator: isEmailValid,
-                message: "Veuillez saisir une adresse email valide"
+                message: "Veuillez saisir une adresse email valide."
             },
             match: [/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i, "Veuillez saisir une adresse email valide"],
         },
@@ -43,7 +43,7 @@ const UserModel = new mongoose.Schema(
             trim: true,
             validate: {
                 validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
-                message: 'Veuillez saisir un nom valide'
+                message: 'Veuillez saisir un nom valide.'
             },
         },
 
@@ -52,7 +52,7 @@ const UserModel = new mongoose.Schema(
             trim: true,
             validate: {
                 validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
-                message: 'Veuillez saisir un nom valide'
+                message: 'Veuillez saisir un nom valide.'
             },
         },
 

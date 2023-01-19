@@ -1,11 +1,10 @@
 import {
-    CREATE_TASK,
     CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST,
-    REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, RECEIVE_CREATE_TASK, UPDATE_TASK, RECEIVE_UPDATE_TASK,
-    DELETE_TASK, RECEIVE_DELETE_TASK, UPDATE_TASK_STATE, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN,
-    RECEIVE_UNNAME_ADMIN, UPDATE_TASK_STATUS, RECEIVE_UPDATE_TASK_STATUS, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES,
+    REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, RECEIVE_CREATE_TASK, RECEIVE_UPDATE_TASK,
+    RECEIVE_DELETE_TASK, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN,
+    RECEIVE_UNNAME_ADMIN, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES,
     RECEIVE_DELETE_PICTURES, UPDATE_PROJECT, RECEIVE_CREATE_QNA, RECEIVE_UPDATE_QNA, RECEIVE_DELETE_QNA, RECEIVE_CREATE_ACTUALITY,
-    RECEIVE_UPDATE_ACTUALITY, RECEIVE_DELETE_ACTUALITY, COMMENT_TASK, RECEIVE_COMMENT_TASK
+    RECEIVE_UPDATE_ACTUALITY, RECEIVE_DELETE_ACTUALITY, RECEIVE_COMMENT_TASK
 } from "../reducers/project.action";
 
 const initialState = {}
@@ -182,27 +181,14 @@ export default function projectReducer(state = initialState, action) {
                 members: state.members
             }
 
-        /*******************************************************************************************************************************/
-        /********************************************************** TASKS **************************************************************/
+        /**
+         * TASKS
+         */
 
-        case CREATE_TASK:
-            return {
-                ...state,
-                tasks: [...state.tasks, action.payload.task],
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
         case RECEIVE_CREATE_TASK:
             return {
                 ...state,
                 tasks: [...state.tasks, action.payload.task],
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-        case UPDATE_TASK:
-            let e = state.tasks.findIndex(task => task._id === action.payload.task._id)
-            state.tasks[e] = action.payload.task
-            return {
-                ...state,
-                tasks: state.tasks,
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
         case RECEIVE_UPDATE_TASK:
@@ -210,15 +196,7 @@ export default function projectReducer(state = initialState, action) {
             state.tasks[f] = action.payload.task
             return {
                 ...state,
-                tasks: state.tasks,
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-        case UPDATE_TASK_STATE:
-            let g = state.tasks.findIndex(task => task._id === action.payload.taskId)
-            state.tasks[g].state = action.payload.state
-            return {
-                ...state,
-                tasks: state.tasks,
+                tasks: [...state.tasks],
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
         case RECEIVE_UPDATE_TASK_STATE:
@@ -229,41 +207,12 @@ export default function projectReducer(state = initialState, action) {
                 tasks: state.tasks,
                 activity_feed: [...state.activity_feed, action.payload.activity]
             }
-        case UPDATE_TASK_STATUS:
-            let i = state.tasks.findIndex(task => task._id === action.payload.taskId)
-            state.tasks[i].status = action.payload.status
-            return {
-                ...state,
-                tasks: state.tasks,
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-        case RECEIVE_UPDATE_TASK_STATUS:
-            let j = state.tasks.findIndex(task => task._id === action.payload.taskId)
-            state.tasks[j].status = action.payload.status
-            return {
-                ...state,
-                tasks: state.tasks,
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-        case COMMENT_TASK:
-            let k = state.tasks.findIndex(task => task._id === action.payload.taskId)
-            state.tasks[k].comments.push(action.payload.comment)
-            return {
-                ...state,
-                tasks: state.tasks
-            }
         case RECEIVE_COMMENT_TASK:
             let l = state.tasks.findIndex(task => task._id === action.payload.taskId)
-            state.tasks[l].comments.push(action.payload.comment)
+            state.tasks[l].comments = [...state.tasks[l].comments, action.payload.comment]
             return {
                 ...state,
                 tasks: state.tasks
-            }
-        case DELETE_TASK:
-            return {
-                ...state,
-                tasks: state.tasks.filter(task => task._id !== action.payload.taskId),
-                activity_feed: [...state.activity_feed, action.payload.activity]
             }
         case RECEIVE_DELETE_TASK:
             return {

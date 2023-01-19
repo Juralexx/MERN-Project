@@ -76,7 +76,7 @@ function Paths({ websocket, onlineUsers, user, uid }) {
                         />
                     </ProtectedRoute>
                 } />
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     )

@@ -1,61 +1,85 @@
-import { changeTaskState, deleteTask } from "../../../reducers/project.action"
+import axios from "axios"
 
 /**
  * Update selected task state
- * @param {*} element Selected task
+ * @param {*} task Selected task
  * @param {*} newState New state of the selected task
  * @param {*} project Project of the task
  * @param {*} user User that update state
  * @param {*} websocket Websocket
- * @param {*} dispatch Redux dispatch function
  */
 
-export const updateState = async (element, newState, project, user, websocket, dispatch) => {
+export const updateTaskState = async (task, newState, project, user, websocket) => {
+    let state = newState
+    if (task.state !== 'done' && newState === 'done') {
+        state = 'done'
+    } else if (task.state === 'done' && newState === 'done') {
+        state = 'todo'
+    } else if (newState === '') {
+        state = task.state
+    } else state = newState
+
     const activity = {
         type: "update-task-state",
         who: user.pseudo,
-        task: element.title,
-        prev_state: element.state,
-        new_state: newState,
+        task: task.title,
+        prev_state: task.state,
+        new_state: state,
         date: new Date().toISOString()
     }
-    //const members = project.members.filter(member => member._id !== user._id)
-    project.members.map(member => {
-        return websocket.current.emit('updateTaskState', {
-            receiverId: member._id,
-            taskId: element._id,
-            state: newState,
+    await axios({
+        method: "put",
+        url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/tasks/${task._id}/update/`,
+        data: {
+            task: { ...task, state: state },
             activity: activity
-        })
+        }
     })
-    dispatch(changeTaskState(project._id, element._id, newState, activity))
+        .then(async () => {
+            await project.members.map(member => {
+                return websocket.current.emit('updateTaskState', {
+                    receiverId: member._id,
+                    taskId: task._id,
+                    state: state,
+                    activity: activity
+                })
+            })
+        })
+        .catch(err => console.log(err))
 }
 
 /**
  * Delected selected task
- * @param {*} element Selected task
+ * @param {*} task Selected task
  * @param {*} project Project of the task
  * @param {*} user User that remove task
  * @param {*} websocket Websocket
- * @param {*} dispatch Redux dispatch function
  */
 
-export const removeTask = (task, project, user, websocket, dispatch) => {
+export const removeTask = async (task, project, user, websocket) => {
     const activity = {
         type: "delete-task",
         who: user.pseudo,
         task: task.title,
         date: new Date().toISOString()
     }
-    const members = project.members.filter(member => member._id !== user._id)
-    members.map(member => {
-        return websocket.current.emit('deleteTask', {
-            receiverId: member._id,
-            taskId: task._id,
+    await axios({
+        method: "put",
+        url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/tasks/${task._id}/delete/`,
+        data: {
             activity: activity
-        })
+        }
     })
-    dispatch(deleteTask(project._id, task._id, activity))
+        .then(async () => {
+            await project.members.map(member => {
+                return websocket.current.emit('deleteTask', {
+                    receiverId: member._id,
+                    taskId: task._id,
+                    activity: activity
+                })
+            })
+        })
+        .catch(err => console.log(err))
 }
 
 /**

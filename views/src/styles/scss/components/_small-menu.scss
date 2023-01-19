@@ -34,15 +34,14 @@
     justify-content  : center;
     height           : 32px;
     width            : 32px;
-    background-color : var(--light);
+    background-color : var(--content-light);
     border-radius    : var(--rounded-md);
     transform        : scale(1);
     cursor           : pointer;
-    transition       : .2s;
 
     &:hover,
     &.active {
-        background-color : rgba(var(--primary-rgb), 0.2);
+        background-color : rgba(var(--primary-rgb), 0.06);
         svg {
             color : var(--primary);
         }
@@ -67,7 +66,6 @@
     right         : 0;
     padding       : 5px 0;
     background    : var(--menu);
-    border        : 1px solid var(--light-border);
     border-radius : var(--rounded-sm);
     box-shadow    : 0 0px 30px 10px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.07);
     visibility    : hidden;
@@ -105,7 +103,7 @@
         }
 
         &:hover {
-            background-color : var(--light);
+            background-color : var(--x-light);
             
             a, p {
                 color : var(--primary);

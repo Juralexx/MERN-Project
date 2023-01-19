@@ -1,28 +1,24 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { updateState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus } from '../../tools/functions/task'
-import { addClass, dateParserWithoutYear, getDifference, reverseArray } from '../../Utils'
-import CreateTask from './CreateTask'
-import UpdateTask from './UpdateTask'
-import TaskModal from './TaskModal'
-import ToolsMenu from '../../tools/global/ToolsMenu'
-import { TextButton } from '../../tools/global/Button'
-import { DropdownInput } from '../../tools/global/Inputs'
-import Checkbox from '../../tools/global/Checkbox'
 import Icon from '../../tools/icons/Icon'
+import Checkbox from '../../tools/global/Checkbox'
+import { DropdownInput } from '../../tools/global/Inputs'
+import { StringButton } from '../../tools/global/Button'
+import CreateTask from './CreateTask'
+import ToolsMenu from '../../tools/global/ToolsMenu'
+import { updateTaskState, stateToBackground, isDatePassed, removeTask, stateToString, statusToBackground, statusToString, sortByCreationDate, sortByEndDate, sortByState, sortByStatus } from '../../tools/functions/task'
+import { addClass, dateParserWithoutYear, getDifference, reverseArray } from '../../Utils'
+import Warning from '../../tools/global/Warning'
 
 const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
-    const [tasks, setTasks] = useState(reverseArray(project.tasks))
+    const [tasks, setTasks] = useState(project.tasks)
 
-    const [openTask, setOpenTask] = useState(false)
     const [createTask, setCreateTask] = useState(false)
-    const [updateTask, setUpdateTask] = useState(false)
 
-    const [task, setTask] = useState(null)
     const [navbar, setNavbar] = useState(1)
     const [filter, setFilter] = useState("")
-    const dispatch = useDispatch()
+
+    const [warning, setWarning] = useState(-1)
 
     return (
         <>
@@ -31,11 +27,11 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     <div className="home-tasks-nav-header-top">
                         <h3>Tâches <span>{tasks.length}</span></h3>
                         <div className="flex items-center">
-                            <TextButton className="mr-4">
+                            <StringButton>
                                 <Link to="tasks">Voir tous</Link>
-                            </TextButton>
+                            </StringButton>
                             {(isAdmin || isManager) &&
-                                <ToolsMenu>
+                                <ToolsMenu btnClassName="ml-4">
                                     <div className="tools_choice" onClick={() => setCreateTask(true)}>
                                         Créer une nouvelle tâche
                                     </div>
@@ -110,39 +106,34 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                 </div>
                 <div className="dashboard-card-container home-tasks-container custom-scrollbar">
                     {tasks.length > 0 ? (
-                        tasks.map((element, key) => {
+                        reverseArray(tasks).map((element, key) => {
                             return (
                                 <div className={`home-tasks-task`} key={key}>
                                     <Checkbox
                                         uniqueKey={key}
                                         className="mr-2 mt-1"
                                         checked={element.state === "done"}
-                                        onChange={() => updateState(element, "done", project, user, websocket, dispatch)}
+                                        onChange={() => updateTaskState(element, "done", project, user, websocket)}
                                     />
                                     <div className="home-tasks-task-content">
                                         <div className="home-tasks-task-content-inner">
-                                            <div className="flex items-center one_line">{element.title}</div>
-                                            <div className="home-tasks-task-tools">
+                                            <div className="flex items-center font-normal one_line">{element.title}</div>
+                                            <div className="flex items-center">
                                                 {element.comments.length > 0 &&
-                                                    <div className="flex items-center mr-2">
-                                                        <Icon name="Chat" className="mr-1" /><span>{element.comments.length}</span>
+                                                    <div className="flex items-center mx-3">
+                                                        <Icon name="Message" className="w-5 h-5 mr-1" />
+                                                        <span>{element.comments.length}</span>
                                                     </div>
                                                 }
                                                 <ToolsMenu>
-                                                    <div className="tools_choice" onClick={() => {
-                                                        setTask(element)
-                                                        setOpenTask(true)
-                                                    }}>
+                                                    <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}`}>
                                                         Voir
-                                                    </div>
-                                                    <div className="tools_choice" onClick={() => {
-                                                        setTask(element)
-                                                        setUpdateTask(true)
-                                                    }}>
+                                                    </Link>
+                                                    <Link className="tools_choice" to={`/projects/${project.URLID}/${project.URL}/tasks/${element._id}/update`}>
                                                         Modifier
-                                                    </div>
+                                                    </Link>
                                                     {(isAdmin || isManager) &&
-                                                        <div className="tools_choice" onClick={() => removeTask(element, project, user, websocket, dispatch)}>
+                                                        <div className="tools_choice" onClick={() => setWarning(key)}>
                                                             Supprimer
                                                         </div>
                                                     }
@@ -195,6 +186,15 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                                             </div>
                                         </div>
                                     </div>
+                                    <Warning
+                                        title={`Supprimer la tâche suivante : ${element.title} ?`}
+                                        text="Cette action est irréversible."
+                                        validateBtn="Supprimer"
+                                        className="delete"
+                                        open={warning === key}
+                                        setOpen={setWarning}
+                                        onValidate={() => removeTask(element, project, user, websocket)}
+                                    />
                                 </div>
                             )
                         })
@@ -207,7 +207,7 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                 </div>
             </div>
 
-            {openTask &&
+            {/*openTask &&
                 <TaskModal
                     task={task}
                     open={openTask}
@@ -215,25 +215,26 @@ const HomeTasks = ({ project, isAdmin, isManager, user, websocket }) => {
                     setUpdateTask={setUpdateTask}
                     project={project}
                     user={user}
-                />}
-            {<CreateTask
+                    websocket={websocket}
+                />
+            }*/}
+            <CreateTask
                 open={createTask}
                 setOpen={setCreateTask}
                 project={project}
                 user={user}
                 websocket={websocket}
             />
-            }
-            {updateTask &&
+            {/* {updateTask &&
                 <UpdateTask
-                    element={task}
+                    task={task}
                     open={updateTask}
                     setOpen={setUpdateTask}
                     project={project}
                     user={user}
                     websocket={websocket}
                 />
-            }
+            } */}
         </>
     )
 }

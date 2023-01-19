@@ -8,6 +8,7 @@ import EditActuality from './EditActuality'
 import { MediumAvatar } from '../../tools/global/Avatars'
 import { convertDeltaToHTML } from '../../tools/editor/functions'
 import { dateParser, reverseArray } from '../../Utils'
+import Actuality from './Actuality'
 
 const Actualities = ({ project, user, isManager, websocket }) => {
     const [warning, setWarning] = useState(-1)
@@ -79,7 +80,7 @@ const Actualities = ({ project, user, isManager, websocket }) => {
                                                     </>
                                                 }
                                                 <Button>
-                                                    <Link to={`/project/${project.URLID}/${project.URL}/actuality/${element.urlid}/${element.url}`}>
+                                                    <Link to={`/projects/${project.URLID}/${project.URL}/actuality/${element.urlid}/${element.url}`}>
                                                         Voir
                                                     </Link>
                                                 </Button>
@@ -120,6 +121,13 @@ const Actualities = ({ project, user, isManager, websocket }) => {
                 </div>
             } />
 
+            <Route path=":urlid/:url/" element={
+                <Actuality
+                    project={project}
+                    user={user}
+                    isManager={isManager}
+                />
+            } />
             <Route path=":urlid/:url/edit" element={
                 isManager ? (
                     <EditActuality
@@ -134,6 +142,14 @@ const Actualities = ({ project, user, isManager, websocket }) => {
                     />
                 )
             } />
+            <Route
+                path="*"
+                element={<Navigate
+                    replace
+                    to={`/projects/${project.URLID}/${project.URL}/actuality`}
+                />}
+            />
+
         </Routes>
     )
 }

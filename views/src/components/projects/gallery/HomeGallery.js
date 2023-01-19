@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TextButton } from '../../tools/global/Button'
+import { StringButton } from '../../tools/global/Button'
 import Icon from '../../tools/icons/Icon'
 
 const HomeGallery = ({ project }) => {
@@ -9,9 +9,9 @@ const HomeGallery = ({ project }) => {
             <div className="home-gallery-header">
                 <h3>Galerie</h3>
                 <div className="flex items-center">
-                    <TextButton className="mr-4">
+                    <StringButton>
                         <Link to="gallery">Voir tous</Link>
-                    </TextButton>
+                    </StringButton>
                 </div>
             </div>
             <div className="dashboard-card-container home-gallery-container custom-scrollbar">

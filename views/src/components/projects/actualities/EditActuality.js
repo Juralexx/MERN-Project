@@ -11,19 +11,22 @@ import { addClass, fullImage, removeAccents } from '../../Utils'
 
 const EditActuality = ({ project, user, websocket }) => {
     const { urlid, url } = useParams()
+    const navigate = useNavigate()
+
     const actuality = project.actualities.find(actu => actu.url === url && actu.urlid === urlid)
+
     const [datas, setDatas] = useState({
         title: actuality.title,
         uri: actuality.url,
         description: actuality.description.ops,
-        files: actuality.pictures
+        files: actuality.pictures,
+        newFiles: [],
+        deletedFiles: []
     })
-    const [count, setCount] = useState(0)
+
     const quillRef = useRef()
-    const [deletedFiles, setDeletedFiles] = useState([])
-    const [pictures, setPictures] = useState([])
+    const [count, setCount] = useState(0)
     const [error, setError] = useState({ element: "", error: "" })
-    const navigate = useNavigate()
 
     const handleChange = (text, delta, source, editor) => {
         setDatas(data => ({ ...data, description: editor.getContents() }))
@@ -43,19 +46,25 @@ const EditActuality = ({ project, user, websocket }) => {
         setDatas(data => ({ ...data, files: array }))
 
         if (typeof datas.files[index] === 'object') {
-            const arr = pictures.slice()
+            const arr = datas.newFiles.slice()
             arr.splice(index, 1)
-            setPictures(arr)
+            setDatas(prevState => ({ ...prevState, newFiles: arr }))
         }
 
         if (typeof datas.files[index] !== 'object') {
-            setDeletedFiles(arr => [...arr, datas.files[index].substring(datas.files[index].indexOf(`${actuality._id}`) + actuality._id.length + 1)])
+            setDatas(prevState => ({
+                ...prevState,
+                deletedFiles: [...datas.deletedFiles, datas.files[index].substring(datas.files[index].indexOf(`${actuality._id}`) + actuality._id.length + 1)]
+            }))
         }
     }
 
     const getFiles = (filesArray) => {
-        setDatas(data => ({ ...data, files: datas.files.concat(Array.from(filesArray)) }))
-        setPictures(pictures.concat(Array.from(filesArray)))
+        setDatas(data => ({ 
+            ...data,
+            files: datas.files.concat(Array.from(filesArray)),
+            newFiles: datas.newFiles.concat(Array.from(filesArray))
+        }))
     }
 
     const handleActuality = async () => {
@@ -105,19 +114,19 @@ const EditActuality = ({ project, user, websocket }) => {
                 }
             })
                 .then(async () => {
-                    if (deletedFiles.length > 0) {
+                    if (datas.deletedFiles.length > 0) {
                         await axios({
                             method: "put",
                             url: `${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/delete/`,
                             data: {
-                                deletedFiles: deletedFiles
+                                deletedFiles: datas.deletedFiles
                             }
                         })
                             .then(async () => {
-                                if (pictures.length > 0) {
+                                if (datas.newFiles.length > 0) {
                                     let formData = new FormData()
-                                    for (let i = 0; i < pictures.length; i++) {
-                                        formData.append('files', pictures[i])
+                                    for (let i = 0; i < datas.newFiles.length; i++) {
+                                        formData.append('files', datas.newFiles[i])
                                     }
                                     await axios
                                         .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/update/`, formData)
@@ -125,10 +134,10 @@ const EditActuality = ({ project, user, websocket }) => {
                                 }
                             })
                     } else {
-                        if (pictures.length > 0) {
+                        if (datas.newFiles.length > 0) {
                             let formData = new FormData()
-                            for (let i = 0; i < pictures.length; i++) {
-                                formData.append('files', pictures[i])
+                            for (let i = 0; i < datas.newFiles.length; i++) {
+                                formData.append('files', datas.newFiles[i])
                             }
                             await axios
                                 .put(`${process.env.REACT_APP_API_URL}api/project/${project._id}/actualities/${actuality._id}/pictures/update/`, formData)
@@ -161,43 +170,37 @@ const EditActuality = ({ project, user, websocket }) => {
 
     return (
         <div className="container-lg py-8 pb-[100px]">
-            <div className="header flex justify-between mb-5">
-                <h3>Modifier l'actualité : {datas.title}</h3>
-            </div>
-            <div className="content-form">
-                <p className="title full">Titre <span>Champ requis</span></p>
-                <ClassicInput
-                    className={`full ${addClass(error.element === "title", "err")}`}
-                    type="text"
-                    placeholder="Titre de l'actualité"
-                    onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 100) }))}
-                    value={datas.title}
+            <h3 className="mb-5">
+                Modifier l'actualité : {datas.title}
+            </h3>
+            <p className="title full">Titre <span>Champ requis</span></p>
+            <ClassicInput
+                className={`full ${addClass(error.element === "title", "err")}`}
+                type="text"
+                placeholder="Titre de l'actualité"
+                value={datas.title}
+                onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 100) }))}
+            />
+            <div className="field_infos full">{datas.title.length} / 100 caractères</div>
+            {error.element === "title" &&
+                <ErrorCard
+                    display={error.element === "title"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
                 />
-                <div className="field_infos full">{datas.title.length} / 100 caractères</div>
-                {error.element === "title" &&
-                    <ErrorCard
-                        display={error.element === "title"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
-            </div>
+            }
 
-            <div className="content-form">
-                <p className="title min-w-[100%]">Description de votre actualité <span>Champ requis</span></p>
-                <div className="text-editor">
-                    <EditorToolbar />
-                    <ReactQuill
-                        ref={quillRef}
-                        style={{ height: 300 }}
-                        value={datas.description}
-                        onChange={handleChange}
-                        modules={modules}
-                        formats={formats}
-                    />
-                    <div className="field_infos ml-auto">{count} / 4000 caractères</div>
-                </div>
-            </div>
+            <p className="title min-w-[100%]">Description de votre actualité <span>Champ requis</span></p>
+            <EditorToolbar />
+            <ReactQuill
+                ref={quillRef}
+                style={{ height: 300 }}
+                value={datas.description}
+                onChange={handleChange}
+                modules={modules}
+                formats={formats}
+            />
+            <div className="field_infos ml-auto">{count} / 4000 caractères</div>
 
             <div className="add-img-container py-6">
                 <div className="img-preview-container">
@@ -247,9 +250,13 @@ const EditActuality = ({ project, user, websocket }) => {
             <div id="back-actions">
                 <div className='back-actions-inner'>
                     <TextButton>
-                        <Link to={`/projects/${project.URLID}/${project.URL}/actuality`}>Annuler</Link>
+                        <Link to={`/projects/${project.URLID}/${project.URL}/actuality`}>
+                            Annuler
+                        </Link>
                     </TextButton>
-                    <Button className="ml-2" onClick={handleActuality}>Enregistrer</Button>
+                    <Button className="ml-2" onClick={handleActuality}>
+                        Enregistrer
+                    </Button>
                 </div>
             </div>
         </div>

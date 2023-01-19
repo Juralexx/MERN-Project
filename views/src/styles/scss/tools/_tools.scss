@@ -6,8 +6,7 @@
     height           : 29px;
     width            : 29px;
     padding          : 5px 4px 4px;
-    font-size        : 12px;
-    background-color : var(--content);
+    font-size        : 14px;
     border-radius    : var(--rounded-sm);
 }
 
@@ -197,6 +196,7 @@
     margin          : 40px auto 0;
     padding         : 20px 35px 10px;
     color           : var(--text);
+    text-align      : center;
 
     img {
         width  : 150px;

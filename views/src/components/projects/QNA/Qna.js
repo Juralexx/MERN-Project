@@ -21,8 +21,8 @@ const Qna = ({ project, user, isManager, websocket }) => {
             data: {
                 activity: activity
             }
-        }).then(() => {
-            project.members.map(member => {
+        }).then(async () => {
+            await project.members.map(member => {
                 return websocket.current.emit("deleteQna", {
                     receiverId: member._id,
                     activity: activity

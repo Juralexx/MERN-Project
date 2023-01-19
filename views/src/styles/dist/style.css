@@ -215,12 +215,12 @@
   --navbar: #1a1a27;
   --navbar-txt: #EDF8FC;
   --mini_nav-btn: #1a1a27;
-  --menu: #1e1e2d;
+  --menu: #2B2B3F;
   --modal-cover: rgba(255, 255, 255, 0.05);
   --tooltip: #161616;
   --color-skeleton: linear-gradient(-90deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.7) 100%);
   --shadow-light: 0 20px 25px -5px rgba(37, 37, 37, 0.17), 0 8px 10px -6px rgba(37, 37, 37, 0.17);
-  --shadow-tiny: rgb(35 34 33 / 17%) 0px 1px 3px 1px;
+  --shadow-tiny: rgba(84, 83, 83, 0.17) 0px 1px 3px 1px;
   --shadow-x-tiny: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
 }
 
@@ -1080,8 +1080,7 @@ select:-webkit-autofill:focus {
   height: 29px;
   width: 29px;
   padding: 5px 4px 4px;
-  font-size: 12px;
-  background-color: var(--content);
+  font-size: 14px;
   border-radius: var(--rounded-sm);
 }
 
@@ -1299,6 +1298,7 @@ select:-webkit-autofill:focus {
   margin: 40px auto 0;
   padding: 20px 35px 10px;
   color: var(--text);
+  text-align: center;
 }
 .empty-content img {
   width: 150px;
@@ -4006,6 +4006,7 @@ select:-webkit-autofill:focus {
   margin: auto;
   width: 500px;
   min-height: 300px;
+  max-height: 70vh;
   padding: 15px;
   color: var(--text);
   background-color: var(--content-light);
@@ -4013,6 +4014,7 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: var(--shadow-xl);
           box-shadow: var(--shadow-xl);
   z-index: 100000000000;
+  overflow: hidden;
 }
 .modal_wrapper .modal_container h2 {
   margin-bottom: 10px;
@@ -4407,16 +4409,14 @@ select:-webkit-autofill:focus {
           justify-content: center;
   height: 32px;
   width: 32px;
-  background-color: var(--light);
+  background-color: var(--content-light);
   border-radius: var(--rounded-md);
   -webkit-transform: scale(1);
           transform: scale(1);
   cursor: pointer;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
 }
 .tools_btn:hover, .tools_btn.active {
-  background-color: rgba(var(--primary-rgb), 0.2);
+  background-color: rgba(var(--primary-rgb), 0.06);
 }
 .tools_btn:hover svg, .tools_btn.active svg {
   color: var(--primary);
@@ -4438,7 +4438,6 @@ select:-webkit-autofill:focus {
   right: 0;
   padding: 5px 0;
   background: var(--menu);
-  border: 1px solid var(--light-border);
   border-radius: var(--rounded-sm);
   -webkit-box-shadow: 0 0px 30px 10px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.07);
           box-shadow: 0 0px 30px 10px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.07);
@@ -4484,7 +4483,7 @@ select:-webkit-autofill:focus {
   height: 100%;
 }
 .tools_menu .tools_choice:hover {
-  background-color: var(--light);
+  background-color: var(--x-light);
 }
 .tools_menu .tools_choice:hover a, .tools_menu .tools_choice:hover p {
   color: var(--primary);
@@ -7694,6 +7693,7 @@ select:-webkit-autofill:focus {
   margin-bottom: 20px;
   -webkit-box-shadow: var(--shadow-tiny);
           box-shadow: var(--shadow-tiny);
+  overflow: hidden;
 }
 .dashboard-card h3 span {
   font-size: 14px;
@@ -7702,7 +7702,7 @@ select:-webkit-autofill:focus {
   font-weight: 400;
 }
 .dashboard-card .dashboard-card-container {
-  height: auto;
+  position: relative;
   max-height: 340px;
   overflow-y: auto;
 }
@@ -8151,6 +8151,7 @@ select:-webkit-autofill:focus {
   font-size: 16px;
   text-transform: uppercase;
   color: var(--text);
+  border-bottom: 1px solid var(--light-border);
 }
 .kanban-header-title:nth-child(2) {
   margin: 0 20px;
@@ -8164,6 +8165,7 @@ select:-webkit-autofill:focus {
           align-items: flex-end;
   padding-top: 4px;
   letter-spacing: 0.5px;
+  font-weight: 500;
 }
 .kanban-header-title .col-title span {
   font-size: 14px;
@@ -8186,8 +8188,10 @@ select:-webkit-autofill:focus {
   position: relative;
   padding: 12px;
   margin: 12px 0;
-  background: var(--x-light);
+  background: var(--content-light);
   border-radius: var(--rounded-sm);
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
   cursor: pointer;
 }
 .kanban .kanban-ticket.priority {
@@ -8200,6 +8204,7 @@ select:-webkit-autofill:focus {
   border-left: 3px solid var(--light-blue);
 }
 .kanban .kanban-ticket .kanban-ticket-title {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8210,6 +8215,17 @@ select:-webkit-autofill:focus {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-bottom: 3px;
+}
+.kanban .kanban-ticket .kanban-ticket-comments {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  right: 0;
+  top: 35px;
 }
 .kanban .kanban-ticket .kanban-ticket-status {
   display: -webkit-box;
@@ -8261,11 +8277,15 @@ select:-webkit-autofill:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 3px 8px;
+  padding: 2px 8px;
   font-size: 12px;
   background-color: rgba(var(--light-blue-rgb), 0.6);
   border-radius: var(--rounded-sm);
   color: white;
+}
+.kanban .highlighted {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border-radius: var(--rounded-md);
 }
 
 .dashboard-members-tools {
@@ -8735,7 +8755,6 @@ select:-webkit-autofill:focus {
           justify-content: space-between;
   width: 100%;
   padding-bottom: 3px;
-  font-weight: 500;
 }
 .home-tasks .home-tasks-container .home-tasks-task .home-tasks-task-content .home-tasks-task-content-inner .title {
   margin-top: 3px;
@@ -8812,36 +8831,50 @@ select:-webkit-autofill:focus {
 }
 .task-modal .task-modal-description {
   padding: 20px 0;
+  max-height: 200px;
+  overflow-y: auto;
 }
-.task-modal .add-comment-container {
+
+.add-comment-container {
   padding: 20px 0 0;
   border-top: 1px solid var(--light-border);
 }
-.task-modal .comments-container {
+
+.comments-container {
+  position: relative;
   border-top: 1px solid var(--light-border);
+  font-size: 12px;
+  max-height: 300px;
+  overflow-y: auto;
 }
-.task-modal .comments-container .comment {
-  padding: 20px 0;
+.comments-container p {
+  font-size: 12px;
+}
+.comments-container .comment {
+  padding: 10px 0;
   border-bottom: 1px solid var(--light-border);
 }
-.task-modal .comments-container .comment .comment-header {
+.comments-container .comment .comment-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 }
-.task-modal .comments-container .comment .comment-body {
-  padding: 15px 20px;
-  background: var(--content-x-light);
+.comments-container .comment .comment-header .date {
+  color: var(--text-secondary);
+}
+.comments-container .comment .comment-body {
+  padding: 10px 10px;
+  background: var(--light);
   border-radius: var(--rounded-sm);
 }
-.task-modal .comments-container .comment:last-child {
+.comments-container .comment:last-child {
   border-bottom: none;
 }
-.task-modal .comments-container .is-empty {
+.comments-container .is-empty {
   padding: 20px 0 0;
 }
 
@@ -8910,7 +8943,7 @@ select:-webkit-autofill:focus {
   margin-left: 28px;
   font-size: 14px;
 }
-.dashboard-tasks-header .dashboard-tasks-header_left .dashboard-tasks-nav > div {
+.dashboard-tasks-header .dashboard-tasks-header_left .dashboard-tasks-nav > a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8924,10 +8957,10 @@ select:-webkit-autofill:focus {
   background: var(--content);
   cursor: pointer;
 }
-.dashboard-tasks-header .dashboard-tasks-header_left .dashboard-tasks-nav > div:nth-child(1) {
+.dashboard-tasks-header .dashboard-tasks-header_left .dashboard-tasks-nav > a:nth-child(1) {
   border-right: 1px solid var(--light-border);
 }
-.dashboard-tasks-header .dashboard-tasks-header_left .dashboard-tasks-nav > div.active {
+.dashboard-tasks-header .dashboard-tasks-header_left .dashboard-tasks-nav > a.active {
   color: var(--primary);
 }
 
@@ -8999,7 +9032,6 @@ select:-webkit-autofill:focus {
 .tasklist-table {
   max-height: 1500px;
   width: 100%;
-  margin: 5px auto 0;
   -webkit-transition: 0.5s ease;
   transition: 0.5s ease;
 }
@@ -9014,9 +9046,11 @@ select:-webkit-autofill:focus {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  padding: 10px 17px;
-  background-color: var(--x-light);
+  padding: 10px 15px;
+  margin-bottom: 8px;
   border-radius: var(--rounded-sm);
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
   cursor: pointer;
 }
 .tasklist-table .tasklist-table-header p {
@@ -9045,11 +9079,8 @@ select:-webkit-autofill:focus {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 5px 10px;
+  padding: 5px 0;
   cursor: pointer;
-}
-.tasklist-table .tasklist-table-item:hover {
-  background-color: var(--light);
 }
 .tasklist-table .tasklist-table-item .tasklist-table-item-body {
   width: 100%;
@@ -10667,8 +10698,8 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
   min-width: 280px;
   max-width: 280px;
   background: var(--content-light);
-  -webkit-box-shadow: var(--shadow-left);
-          box-shadow: var(--shadow-left);
+  -webkit-box-shadow: var(--shadow-tiny-left);
+          box-shadow: var(--shadow-tiny-left);
   z-index: 799;
   overflow-y: hidden;
 }
@@ -13409,63 +13440,123 @@ header .navbar .nav_container-right .nav_ul .nav_li .nav_link {
 }
 
 .bg-blue {
-  background-color: rgba(var(--blue-rgb), 0.2);
+  background-color: var(--blue);
 }
 
 .bg-light-blue {
-  background-color: rgba(var(--light-blue-rgb), 0.2);
+  background-color: var(--light-blue);
 }
 
 .bg-turquoise {
-  background-color: rgba(var(--turquoise-rgb), 0.2);
+  background-color: var(--turquoise);
 }
 
 .bg-turquoise-light {
-  background-color: rgba(var(--xturquoise-rgb), 0.2);
+  background-color: var(--xturquoise);
 }
 
 .bg-green {
-  background-color: rgba(var(--green-rgb), 0.2);
+  background-color: var(--green);
 }
 
 .bg-green-light {
-  background-color: rgba(var(--xgreen-rgb), 0.2);
+  background-color: var(--xgreen);
 }
 
 .bg-green-dark {
-  background-color: rgba(var(--dark-green-rgb), 0.2);
+  background-color: var(--dark-green);
 }
 
 .bg-purple {
-  background-color: rgba(var(--purple-rgb), 0.2);
+  background-color: var(--purple);
 }
 
 .bg-purple-light {
-  background-color: rgba(var(--xpurple-rgb), 0.2);
+  background-color: var(--xpurple);
 }
 
 .bg-red {
-  background-color: rgba(var(--red-rgb), 0.2);
+  background-color: var(--red);
 }
 
 .bg-red-light {
-  background-color: rgba(var(--xred-rgb), 0.2);
+  background-color: var(--xred);
 }
 
 .bg-yellow {
-  background-color: rgba(var(--yellow-rgb), 0.2);
+  background-color: var(--yellow);
 }
 
 .bg-yellow-light {
-  background-color: rgba(var(--xyellow-rgb), 0.2);
+  background-color: var(--xyellow);
 }
 
 .bg-orange {
-  background-color: rgba(var(--orange-rgb), 0.2);
+  background-color: var(--orange);
 }
 
 .bg-orange-light {
-  background-color: rgba(var(--xorange-rgb), 0.2);
+  background-color: var(--xorange);
+}
+
+.xbg-blue {
+  background-color: rgba(var(--blue-rgb), 0.3);
+}
+
+.xbg-light-blue {
+  background-color: rgba(var(--light-blue-rgb), 0.3);
+}
+
+.xbg-turquoise {
+  background-color: rgba(var(--turquoise-rgb), 0.3);
+}
+
+.xbg-turquoise-light {
+  background-color: rgba(var(--xturquoise-rgb), 0.3);
+}
+
+.xbg-green {
+  background-color: rgba(var(--green-rgb), 0.3);
+}
+
+.xbg-green-light {
+  background-color: rgba(var(--xgreen-rgb), 0.3);
+}
+
+.xbg-green-dark {
+  background-color: rgba(var(--dark-green-rgb), 0.3);
+}
+
+.xbg-purple {
+  background-color: rgba(var(--purple-rgb), 0.3);
+}
+
+.xbg-purple-light {
+  background-color: rgba(var(--xpurple-rgb), 0.3);
+}
+
+.xbg-red {
+  background-color: rgba(var(--red-rgb), 0.3);
+}
+
+.xbg-red-light {
+  background-color: rgba(var(--xred-rgb), 0.3);
+}
+
+.xbg-yellow {
+  background-color: rgba(var(--yellow-rgb), 0.3);
+}
+
+.xbg-yellow-light {
+  background-color: rgba(var(--xyellow-rgb), 0.3);
+}
+
+.xbg-orange {
+  background-color: rgba(var(--orange-rgb), 0.3);
+}
+
+.xbg-orange-light {
+  background-color: rgba(var(--xorange-rgb), 0.3);
 }
 
 .f-12 {
