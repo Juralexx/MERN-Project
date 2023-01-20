@@ -480,6 +480,21 @@ export const reverseArray = (array) => {
 }
 
 /**
+ * Divide an array into multiple others
+ * @param {*} array Array to devide
+ * @param {*} parts Number of news arrays (divided parts numbers)
+ */
+
+export function divideIntoParts(array, parts) {
+    let copy = [...array]
+    let result = [];
+    for (let i = parts; i > 0; i--) {
+        result.push(copy.splice(0, Math.ceil(copy.length / i)));
+    }
+    return result;
+}
+
+/**
  * Group array values by parameter value. Return an array with nested arrays.
  * @param {*} array Original array
  * @param {*} parameter Parameter to group by

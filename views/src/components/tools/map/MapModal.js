@@ -1,85 +1,64 @@
 import React, { useState } from "react";
+import Icon from "../icons/Icon";
+import { IconInput } from "../global/Inputs";
 import MapDepartments from "./MapDepartments";
 import MapRegions from "./MapRegions";
 import Modal from "../global/Modal";
-import { IconInput } from "../global/Inputs";
 import { departments, regions } from "./api";
 import { addClass } from "../../Utils";
-import Icon from "../icons/Icon";
 
 const MapModal = ({ open, setOpen, datas, setDatas }) => {
 
-    /* Region search */
-    const [ByDepartments, setDepartments] = useState(false)
-    const [openRegions, setOpenRegions] = useState(false)
-    const [searchRegion, setSearchRegion] = useState(false)
-    const [isRegionInResult, setRegionsInResult] = useState([])
-    const [regionQuery, setRegionQuery] = useState("")
-    const regexp = new RegExp(regionQuery, 'i')
+    const [search, setSearch] = useState({ type: 'region', open: '', state: false, query: '', results: [] })
+    const regexp = new RegExp(search.query, 'i')
 
-    const searchRegions = () => {
-        if (!regionQuery || regionQuery.trim() === "") {
-            setSearchRegion(false)
-        } else if (regionQuery.length >= 2) {
-            let response = regions.filter(element => regexp.test(element.nom_region))
-            setRegionsInResult(response)
-            setSearchRegion(true)
+    const searchLocation = () => {
+        if (!search.query || search.query.trim() === "") {
+            setSearch(prevState => ({ ...prevState, open: '' }))
+        } else if (search.query.length >= 2) {
+            if (search.type === 'region') {
+                const response = regions.filter(element => regexp.test(element.nom_region))
+                if (response.length > 0) {
+                    setSearch(data => ({ ...data, open: 'region', state: true, results: response }))
+                }
+            } else if (search.type === 'department') {
+                const response = departments.filter(element => regexp.test(element.nom_departement))
+                console.log(response)
+                if (response.length > 0) {
+                    setSearch(data => ({ ...data, open: 'department', state: true, results: response }))
+                }
+            }
         } else {
-            setSearchRegion(false)
+            setSearch(data => ({ ...data, open: '', state: false, results: [] }))
         }
     }
 
-    const addRegion = (value) => {
-        setDatas(data => ({
-            ...data,
-            location: [...datas.location, {
-                type: "region",
-                region: value.nom_region,
-                region_code: value.code_region,
-                new_region: value.nom_nouvelle_region,
-                new_region_code: value.code_nouvelle_region
-            }]
-        }))
-        setOpen(false)
-    }
-
-    /**
-     * 
-     */
-
-    /* Department search */
-    const [openDepartments, setOpenDepartments] = useState(false)
-    const [searchDepartment, setSearchDepartment] = useState(false)
-    const [isDepartmentInResult, setDepartmentInResult] = useState([])
-    const [departmentQuery, setDepartmentQuery] = useState("")
-    const depexp = new RegExp(departmentQuery, 'i')
-
-    const searchDepartments = () => {
-        if (!departmentQuery || departmentQuery.trim() === "") {
-            setSearchDepartment(false)
-        } else if (departmentQuery.length >= 2) {
-            let response = departments.filter(element => depexp.test(element.nom_departement))
-            setDepartmentInResult(response)
-            setSearchDepartment(true)
+    const addLocation = (value, type) => {
+        if (type === 'department') {
+            setDatas(data => ({
+                ...data,
+                location: [...datas.location, {
+                    type: "department",
+                    department: value.nom_departement,
+                    department_code: value.code_departement,
+                    region: value.nom_ancienne_region,
+                    region_code: value.code_ancienne_region,
+                    new_region: value.nom_nouvelle_region,
+                    new_region_code: value.code_nouvelle_region
+                }]
+            }))
         } else {
-            setSearchDepartment(false)
+            setDatas(data => ({
+                ...data,
+                location: [...datas.location, {
+                    type: "region",
+                    region: value.nom_region,
+                    region_code: value.code_region,
+                    new_region: value.nom_nouvelle_region,
+                    new_region_code: value.code_nouvelle_region
+                }]
+            }))
         }
-    }
-
-    const addDepartment = (value) => {
-        setDatas(data => ({
-            ...data,
-            location: [...datas.location, {
-                type: "department",
-                department: value.nom_departement,
-                department_code: value.code_departement,
-                region: value.nom_ancienne_region,
-                region_code: value.code_ancienne_region,
-                new_region: value.nom_nouvelle_region,
-                new_region_code: value.code_nouvelle_region
-            }]
-        }))
-        setOpen(false)
     }
 
     /**
@@ -89,44 +68,41 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
     return (
         <Modal open={open} setOpen={setOpen} className="map_modal">
             <div className="map_modal_nav">
-                <div
-                    data-choice="1"
-                    className={`map_modal_nav_item ${addClass(!ByDepartments, "active")}`}
-                    onClick={() => setDepartments(false)}
+                <div data-choice="1"
+                    className={`map_modal_nav_item ${addClass(search.type === 'region', "active")}`}
+                    onClick={() => setSearch(prevState => ({ ...prevState, type: 'region' }))}
                 >
                     Régions
                 </div>
-                <div
-                    data-choice="2"
-                    className={`map_modal_nav_item ${addClass(ByDepartments, "active")}`}
-                    onClick={() => setDepartments(true)}
+                <div data-choice="2"
+                    className={`map_modal_nav_item ${addClass(search.type === 'department', "active")}`}
+                    onClick={() => setSearch(prevState => ({ ...prevState, type: 'department' }))}
                 >
                     Départements
                 </div>
             </div>
-            {!ByDepartments ? (
+            {search.type === 'region' &&
                 <div className="relative">
                     <IconInput
                         type="text"
                         placeholder="Région"
                         endIcon={<Icon name="CaretDown" />}
-                        value={regionQuery}
-                        onChange={e => setRegionQuery(e.target.value)}
-                        onInput={searchRegions}
-                        onClick={() => setOpenRegions(!openRegions)}
+                        value={search.query}
+                        onChange={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
+                        onInput={searchLocation}
+                        onClick={() => setSearch(prevState => ({ ...prevState, open: prevState.open === 'region' ? '' : 'region' }))}
                     />
-                    {openRegions &&
+                    {search.open === 'region' &&
                         <div className="auto-complete-container custom-scrollbar full">
-                            {!searchRegion ? (
+                            {!search.state ? (
                                 regions.map((element, key) => {
                                     return (
                                         <div
                                             key={key}
                                             className="auto-complete-item"
                                             onClick={() => {
-                                                setRegionQuery(element.nom_region)
-                                                addRegion(element)
-                                                setOpenRegions(false)
+                                                setSearch(prevState => ({ ...prevState, query: element.nom_region, open: '' }))
+                                                addLocation(element, 'region')
                                             }}
                                         >
                                             {element.nom_region}
@@ -134,15 +110,14 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
                                     )
                                 })
                             ) : (
-                                isRegionInResult.map((element, key) => {
+                                search.results.map((element, key) => {
                                     return (
                                         <div
                                             key={key}
                                             className="auto-complete-item"
                                             onClick={() => {
-                                                setRegionQuery(element.nom_region)
-                                                addRegion(element)
-                                                setOpenRegions(false)
+                                                setSearch(prevState => ({ ...prevState, query: element.nom_region, open: '' }))
+                                                addLocation(element, 'region')
                                             }}
                                         >
                                             {element.nom_region}
@@ -157,38 +132,37 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
                         setDatas={setDatas}
                     />
                 </div>
-            ) : (
+            }
+            {search.type === 'department' &&
                 <div className="relative">
                     <IconInput
                         type="text"
                         placeholder="Département"
                         endIcon={<Icon name="CaretDown" />}
-                        value={departmentQuery}
-                        onChange={e => setDepartmentQuery(e.target.value)}
-                        onInput={searchDepartments}
-                        onClick={() => setOpenDepartments(!openDepartments)}
+                        value={search.query}
+                        onChange={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
+                        onInput={searchLocation}
+                        onClick={() => setSearch(prevState => ({ ...prevState, open: prevState.open === 'department' ? '' : 'department' }))}
                     />
-                    {openDepartments &&
+                    {search.open === 'department' &&
                         <div className="auto-complete-container custom-scrollbar full">
-                            {!searchDepartment ? (
+                            {!search.state ? (
                                 departments.map((element, key) => {
                                     return (
                                         <div key={key} className="auto-complete-item" onClick={() => {
-                                            setDepartmentQuery(element.nom_departement)
-                                            addDepartment(element)
-                                            setOpenDepartments(false)
+                                            setSearch(prevState => ({ ...prevState, query: element.nom_departement, open: '' }))
+                                            addLocation(element, 'department')
                                         }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
                                     )
                                 })
                             ) : (
-                                isDepartmentInResult.map((element, key) => {
+                                search.results.map((element, key) => {
                                     return (
                                         <div key={key} className="auto-complete-item" onClick={() => {
-                                            setDepartmentQuery(element.nom_departement)
-                                            addDepartment(element)
-                                            setOpenDepartments(false)
+                                            setSearch(prevState => ({ ...prevState, query: element.nom_departement, open: '' }))
+                                            addLocation(element, 'department')
                                         }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
@@ -202,7 +176,7 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
                         setDatas={setDatas}
                     />
                 </div>
-            )}
+            }
         </Modal>
     )
 }

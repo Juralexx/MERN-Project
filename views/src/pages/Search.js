@@ -109,11 +109,9 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                 state: searchParams.get('state') || '',
             }))
 
-            setResponse(res => ({ ...res, results: sortedProjects.randomized }))
+            setResponse(res => ({ ...res, results: sortedProjects.randomized, isLoading: false }))
         }
     }, [searchParams, departments, regions])
-
-    console.log(datas)
 
     /**
      * 
@@ -239,11 +237,20 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                     </div>
                 </div>
                 <div className="search-results_container container-lg">
-                    {response.results.length > 0 &&
+                    {!response.isLoading ? (
+                        response.results.length > 0 &&
                         <div className="search-results_top">
                             Résultats de votre recherche <span>({response.results.length} projets)</span>
                         </div>
-                    }
+                    ) : (
+                        <div className="search-results_top">
+                            <div className='flex'>
+                                <div className="animate-pulse bg-slate-400 h-7 w-[100px] rounded-full mr-3"></div>
+                                <div className="animate-pulse bg-slate-400 h-7 w-[70px] rounded-full mr-3"></div>
+                                <div className="animate-pulse bg-slate-400 h-7 w-[150px] rounded-full"></div>
+                            </div>
+                        </div>
+                    )}
                     <div className="search-results_content">
                         {!response.isLoading ? (
                             response.results.length > 0 ? (
@@ -279,7 +286,7 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                         )}
                         {response.results.length < 12 &&
                             <>
-                                <div className="search-results_top mt-5">
+                                <div className="search-results_top mt-10">
                                     <h3>Explorer plus de projets</h3>
                                 </div>
                                 <div className="search-results_projects">
