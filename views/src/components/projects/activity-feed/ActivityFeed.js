@@ -2,8 +2,9 @@ import React, { useMemo, useState } from 'react'
 import { addClass, bySelectedDate, convertToLocalDate, dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../Utils'
 import Icon from '../../tools/icons/Icon'
 import { activityFeedContent, randomColor } from './functions'
-import { DatePicker, DropdownInput } from '../../tools/global/Inputs'
+import { DropdownInput } from '../../tools/global/Inputs'
 import { TextButton } from '../../tools/global/Button'
+import { DatePicker } from '../../tools/global/DatePicker'
 
 const ActivityFeed = ({ project }) => {
     const today = useMemo(() => new Date().toISOString(), [])
@@ -24,7 +25,7 @@ const ActivityFeed = ({ project }) => {
                     <h2>Fil d'activité <span>{project.activity_feed.length}</span></h2>
                     <div className="flex items-center">
                         {byDate.date !== today &&
-                            <TextButton className="mr-2 red bg-red" onClick={() => {
+                            <TextButton className="mr-2 red xbg-red" onClick={() => {
                                 setActivityFeed({
                                     activities: reverseArray(project.activity_feed || []),
                                     dates: allDates

@@ -1,6 +1,11 @@
 .project-page {
-    min-height : 100vh;
-    background : var(--content);
+    position     : relative;
+    width        : 100%;
+    height       : auto;
+    min-height   : 100vh;
+    margin-right : auto;
+    margin-left  : auto;
+    background   : var(--content);
 }
 
 .project-page-body {

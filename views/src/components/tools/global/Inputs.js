@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { DayPicker, useInput } from 'react-day-picker';
-import fr from 'date-fns/locale/fr';
+import React, { useState, useRef } from 'react'
 import 'react-day-picker/dist/style.css';
 import { useClickOutside } from '../hooks/useClickOutside';
 import Icon from '../icons/Icon';
+import styled from 'styled-components';
 
 export const ClassicInput = (props) => {
     const { useRef, type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
     return (
-        <div className={`${className ? 'classic-input ' + className : 'classic-input'}`}>
+        <InputClassic className={`${className ? 'classic-input ' + className : 'classic-input'}`}>
             <input
                 ref={useRef}
                 className={inputClassName}
@@ -32,9 +31,77 @@ export const ClassicInput = (props) => {
                     <Icon name="Cross" className="cross" />
                 </div>
             }
-        </div>
+        </InputClassic>
     )
 }
+
+const InputClassic = styled.div`
+    position    : relative;
+    display     : flex;
+    align-items : center;
+    max-width   : 300px;
+    z-index     : 10;
+
+    input {
+        display       : block;
+        height        : 44px;
+        padding       : 8px 12px;
+        color         : var(--input-text);
+        background    : var(--input);
+        border-radius : var(--rounded-sm);
+        border        : 1px solid var(--light-border);
+        outline       : none;
+        z-index       : 10;
+
+        &::placeholder {
+            color : var(--placeholder);
+        }
+
+        &:focus {
+            border     : 1px solid var(--primary);
+            box-shadow : none;
+        }
+    }
+
+    .svg_container {
+        position      : absolute;
+        bottom        : 10px;
+        right         : 10px;
+        padding       : 5px;
+        border-radius : 20px;
+        cursor        : pointer;
+        z-index       : 700;
+
+        svg {
+            height   : 16px;
+            width    : 16px;
+            color    : var(--text-tertiary);
+        }
+
+        &:hover {
+            background : var(--content-light);
+        }
+    }
+
+    &.full {
+        flex-grow : 1;
+        max-width : unset;
+        input {
+            flex-grow : 1;
+        }
+    }
+
+    &.small {
+        height : 36px;
+        input {
+            height : 36px;
+        }
+    }
+`
+
+/**
+ * 
+ */
 
 export const DropdownInput = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, onClean, cross } = props
@@ -43,7 +110,7 @@ export const DropdownInput = (props) => {
     useClickOutside(ref, () => setOpen(false))
 
     return (
-        <div ref={ref} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`}>
+        <InputDropdown ref={ref} className={`${className ? 'dropdown-input ' + className : 'dropdown-input'}`}>
             <input
                 className={inputClassName}
                 type={type}
@@ -71,99 +138,91 @@ export const DropdownInput = (props) => {
                     {props.children}
                 </div>
             }
-        </div>
+        </InputDropdown>
     )
 }
 
-export const DatePickerInput = (props) => {
-    const { value, defaultValue, onKeyPress, onChange, onInput, disabled, className, inputClassName, placeholder, selected, onSelect } = props
-    const [open, setOpen] = useState(false)
-    const ref = useRef()
-    useClickOutside(ref, () => setOpen(false))
+const InputDropdown = styled.div`
+    position      : relative;
+    height        : 44px;
+    cursor        : pointer;
+    background    : var(--input);
+    border-radius : var(--rounded-sm);
+    z-index       : 1;
+    border        : 1px solid var(--light-border);
 
-    const { inputProps, dayPickerProps } = useInput({
-        fromYear: 2020,
-        toYear: 2022,
-        format: 'dd/MM/yyyy',
-        required: true
-    })
+    input {
+        padding            : 10px;
+        color              : var(--input-text);
+        background         : var(--input);
+        border-radius      : var(--rounded-sm);
+        outline            : none;
+        cursor             : pointer;
+        width              : 85%;
+        height             : 100%;
+        text-overflow      : ellipsis;
+        overflow           : hidden;
+        display            : -webkit-box;
+        -webkit-line-clamp : 1;
+        -webkit-box-orient : vertical;
+        caret-color        : transparent;
 
-    useEffect(() => {
-        if (selected) setOpen(false)
-    }, [selected])
+        &::placeholder {
+            color : var(--placeholder);
+        }
+    }
 
-    return (
-        <div className={`${className ? 'date-picker-container ' + className : 'date-picker-container'}`} ref={ref}>
-            <input
-                className={inputClassName}
-                placeholder={placeholder}
-                value={value}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                onInput={onInput}
-                onKeyPress={onKeyPress}
-                disabled={disabled}
-                onClick={() => setOpen(!open)}
-                {...inputProps}
-            />
-            <Icon name="Calendar" />
-            {open &&
-                <div className="datepicker">
-                    <DayPicker
-                        {...dayPickerProps}
-                        mode="single"
-                        selected={selected}
-                        onSelect={onSelect}
-                        onClick={() => setOpen(false)}
-                        locale={fr}
-                        modifiersClassNames={{
-                            selected: 'selected',
-                            today: 'today'
-                        }}
-                    />
-                </div>
+    svg {
+        position : absolute;
+        height   : 16px;
+        width    : 16px;
+        bottom   : 12px;
+        right    : 10px;
+        color    : var(--text-secondary);
+        z-index  : 100;
+    }
+
+    .dropdown-input-choices {
+        position      : absolute;
+        left          : 0;
+        width         : 100%;
+        max-height    : 300px;
+        overflow-y    : auto;
+        margin-top    : 5px;
+        background    : var(--input);
+        box-shadow    : var(--shadow-xl);
+        border-radius : var(--rounded-sm);
+
+        div {
+            padding : 8px 12px;
+            cursor  : pointer;
+            color   : var(--text-secondary);
+
+            &:hover {
+                background-color : var(--light);
             }
-        </div>
-    )
-}
+        }
+    }
 
-export const DatePicker = (props) => {
-    const { open, setOpen, selected, onDayClick } = props
-    const ref = useRef()
-    useClickOutside(ref, () => setOpen(prevSate => ({ ...prevSate, state: false })))
+    &.small {
+        height : 34px;
+        input {
+            padding   : 6px 10px 5px;
+        }
+        svg {
+            bottom : 7px;
+        }
+    }
+`
 
-    const { dayPickerProps } = useInput({
-        fromYear: 2010,
-        toYear: 2030,
-        format: 'dd/MM/yyyy ',
-        required: true
-    })
-
-    return (
-        open && (
-            <div className='datepicker-wrapper'>
-                <div className="datepicker" ref={ref}>
-                    <DayPicker
-                        {...dayPickerProps}
-                        mode="single"
-                        selected={selected}
-                        onDayClick={onDayClick}
-                        locale={fr}
-                        modifiersClassNames={{
-                            selected: 'selected',
-                            today: 'today'
-                        }}
-                    />
-                </div>
-            </div>
-        )
-    )
-}
+/**
+ * 
+ */
 
 export const NumberInput = (props) => {
     const { value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, max } = props
     return (
-        <input
+        <InputNumber
             className={`${className ? 'number-input ' + className : 'number-input'}`}
             type="number"
             name={name}
@@ -183,22 +242,40 @@ export const NumberInput = (props) => {
     )
 }
 
-export const CheckBox = (props) => {
-    const { onChange, name, htmlFor, checked, className, inputClassName, onClick, value } = props
-    return (
-        <div className={`${className ? 'check-input ' + className : 'check-input'}`}>
-            <input type="checkbox" name={name} checked={checked} onClick={onClick} onChange={onChange} value={value} className={inputClassName} />
-            <label htmlFor={htmlFor}>
-                <span><svg width="12px" height="9px" viewBox="0 0 12 9"><polyline points="1 5 4 8 11 1"></polyline></svg></span>
-            </label>
-        </div>
-    )
-}
+const InputNumber = styled.input`
+    display       : block;
+    height        : 44px;
+    max-width     : 100px;
+    padding       : 8px;
+    color         : var(--input-text);
+    background    : var(--input);
+    border-radius : var(--rounded-sm);
+    border        : 1px solid var(--light-border);
+    outline       : none;
+    z-index       : 10;
+
+    &:focus {
+        border : 1px solid var(--primary);
+    }
+
+    &:focus-visible {
+        outline : none;
+    }
+
+    &::placeholder {
+        color      : var(--placeholder);
+        box-shadow : none;
+    }
+`
+
+/**
+ * 
+ */
 
 export const IconInput = (props) => {
     const { useRef, type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, onClean, endIconClick } = props
     return (
-        <div className={`${className ? "icon-input " + className : "icon-input"}`}>
+        <InputIcon className={`${className ? "icon-input " + className : "icon-input"}`}>
             <input
                 className={inputClassName}
                 ref={useRef}
@@ -238,14 +315,156 @@ export const IconInput = (props) => {
                     </div>
                 )
             )}
-        </div>
+        </InputIcon>
     )
 }
+
+const InputIcon = styled.div`
+    position      : relative;
+    width         : 100%;
+    height        : 44px;
+    color         : var(--input-text);
+    background    : var(--input);
+    border-radius : var(--rounded-sm);
+
+    input {
+        display       : block;
+        position      : absolute;
+        width         : 100%;
+        height        : 100%;
+        padding       : 6px 12px 4px 20px;
+        border-radius : var(--rounded-sm);
+        outline       : none;
+        background    : transparent;
+        z-index       : 1;
+        border        : 1px solid var(--light-border);
+        color         : var(--input-text);
+
+        &:focus {
+            border : 1px solid var(--primary);
+            + label {
+                transform  : scale(0.75);
+                top        : 4px;
+                transition : 0.2s ease;
+                padding    : 0 0 0 64px;
+            }
+        }
+
+        &::placeholder {
+            color : var(--placeholder);
+        }
+        
+
+        &[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance : none;
+            display            : inline-block;
+            width              : 12px;
+            height             : 12px;
+            margin-left        : 10px;
+            background         : 
+            linear-gradient(45deg, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 43%, var(--primary) 45%, var(--primary) 55%,rgba(0,0,0,0) 57%,rgba(0,0,0,0) 100%),
+            linear-gradient(135deg, transparent 0%,transparent 43%, var(--primary) 45%, var(--primary) 55%,transparent 57%,transparent 100%);
+        }
+    }
+
+    label {
+        position         : absolute;
+        top              : 15px;
+        color            : var(--placeholder);
+        padding          : 0 0 0 50px;
+        transform        : scale(1);
+        transform-origin : 0;
+        transition       : 0.2s ease;
+        z-index          : 0;
+    }
+
+    &.is_start_icon {
+        input {
+            padding : 8px 12px 6px 40px;
+        }
+    }
+
+    .start_icon {
+        height           : 100%;
+        position         : absolute;
+        bottom           : 0;
+        display          : flex;
+        align-items      : center;
+        padding          : 0 0 0 13px;
+        transform        : scale(1);
+        transform-origin : 0;
+
+        svg {
+            height : 20px;
+            width  : 20px;
+            color  : var(--placeholder);
+        }
+    }
+
+    .end-icon {
+        position  : absolute;
+        right     : 15px;
+        top       : 55%;
+        transform : translateY(-50%);
+        z-index   : 2;
+        cursor    : pointer;
+
+        svg {
+            color  : var(--placeholder);
+            height : 16px;
+            width  : 16px;
+        }
+    }
+
+    .svg_container {
+        position      : absolute;
+        bottom        : 8px;
+        right         : 10px;
+        padding       : 5px;
+        border-radius : 20px;
+        cursor        : pointer;
+        z-index       : 700;
+
+        svg {
+            height   : 16px;
+            width    : 16px;
+            color    : var(--text-tertiary);
+        }
+
+        &:hover {
+            background : var(--content-light);
+        }
+    }
+
+    &.full {
+        flex-grow : 1;
+        max-width : unset;
+        input {
+            flex-grow : 1;
+        }
+    }
+
+    &.small {
+        height:36px;
+        &.is_start_icon {
+            input {
+                padding-left : 35px;
+            }
+            .start_icon {
+                padding-left:8px;
+            }
+        }
+    }
+`
+
+/**
+ * 
+ */
 
 export const Textarea = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max } = props
     return (
-        <textarea
+        <TextareaInput
             type={type}
             name={name}
             id={id}
@@ -261,14 +480,73 @@ export const Textarea = (props) => {
             min={min}
             max={max}
             className={`${className ? "textarea " + className : "textarea"}`}
-        ></textarea>
+        ></TextareaInput>
     )
 }
+
+const TextareaInput = styled.div`
+    display       : block;
+    min-height    : 50px;
+    height        : 100px;
+    max-height    : 300px;
+    overflow-y    : auto;
+    padding       : 8px;
+    color         : var(--input-text);
+    background    : var(--input);
+    border-radius : var(--rounded-sm);
+    border        : 1px solid var(--light-border);
+    outline       : none;
+
+    &:focus {
+        border     : 1px solid var(--primary);
+        box-shadow : none;
+    }
+
+    &:focus-visible {
+        outline : none;
+    }
+
+    &::placeholder {
+        color : var(--placeholder);
+    }
+
+    &.small {
+        height : 60px;
+    }
+
+    &.full {
+        flex-grow : 1;
+        max-width : unset;
+        input {
+            flex-grow : 1;
+        }
+    }
+
+    &::-webkit-scrollbar {
+        width : 10px;
+    }
+    &::-webkit-scrollbar-track {
+        background : transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color : var(--light-border);
+        border           : 3px solid var(--content-light);
+        border-radius    : 10px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background : transparent;
+    }
+`
+
+/**
+ * 
+ */
 
 export const DynamicInput = (props) => {
     const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, text, startIcon, endIcon, endIconClick } = props
     return (
-        <div className={`${className ? 'dynamic-input ' + className : 'dynamic-input'}`}>
+        <InputDynamic className={`${className ? 'dynamic-input ' + className : 'dynamic-input'}`}>
             <input
                 className={inputClassName}
                 type={type}
@@ -295,6 +573,100 @@ export const DynamicInput = (props) => {
                     {endIcon}
                 </div>
             }
-        </div>
+        </InputDynamic>
     )
 }
+
+const InputDynamic = styled.div`
+    position      : relative;
+    display       : flex;
+    align-items   : center;
+    border-radius : var(--rounded-sm);
+
+    input {
+        display       : block;
+        height        : 48px;
+        padding       : 18px 20px 2px;
+        color         : var(--input-text);
+        outline       : none;
+        background    : transparent;
+        z-index       : 1;
+        border-bottom : 1px solid var(--placeholder);
+
+        &:placeholder-shown {
+            + label {
+                font-size  : 14px;
+                transform  : translateY(-42%);
+                color      : var(--placeholder);
+                transition : .2s ease;
+            }
+        }
+
+        &:focus {
+            border-bottom : 2px solid var(--primary);
+            box-shadow    : none;
+
+            + label {
+                position   : absolute;
+                left       : 20px;
+                top        : 50%;
+                color      : var(--primary);
+                transform  : translateY(-125%);
+                font-size  : 11px;
+                z-index    : 0;
+                transition : .2s ease;
+            }
+        }
+    }
+
+    label {
+        position   : absolute;
+        left       : 20px;
+        top        : 50%;
+        color      : var(--placeholder);
+        transform  : translateY(-125%);
+        font-size  : 11px;
+        z-index    : 0;
+        transition : .2s ease;
+    }
+
+    .end-icon {
+        position  : absolute;
+        right     : 20px;
+        top       : 50%;
+        transform : translateY(-50%);
+        z-index   : 2;
+        cursor    : pointer;
+
+        svg {
+            color  : var(--placeholder);
+            height : 20px;
+            width  : 20px;
+        }
+    }
+
+    &.succes {
+        input {
+            border-bottom : 2px solid var(--green);
+            + label {
+                color : var(--green);
+            }
+        }
+
+        .end-icon {
+            display : none;
+        }
+    }
+    &.err {
+        input {
+            border-bottom : 2px solid var(--red);
+            + label {
+                color : var(--red);
+            }
+        }
+
+        .end-icon {
+            display : none;
+        }
+    }
+`

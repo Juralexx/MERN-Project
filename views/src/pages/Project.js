@@ -50,7 +50,7 @@ const ProjectPage = ({ user, projects }) => {
     }, [navRef])
 
     return (
-        <div className="content_container project-page">
+        <div className="project-page">
             {!isLoading ? (
                 <>
                     <Header

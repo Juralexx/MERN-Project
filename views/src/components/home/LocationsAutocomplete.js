@@ -83,7 +83,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                     value={search.query}
                     onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                     onChange={searchLocation}
-                    onClick={() => setLocationDisplayer(true)}
+                    onClick={() => setLocationDisplayer(!locationDisplayer)}
                 />
             ) : (
                 <div className="locations_displayer" onClick={() => setLocationDisplayer(!locationDisplayer)}>

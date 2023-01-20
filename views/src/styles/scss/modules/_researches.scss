@@ -15,11 +15,7 @@
     .research {
         display       : flex;
         width         : 100%;
-        padding       : 10px 0;
-        margin-bottom : 8px;
-        background    : var(--content-light);
-        border-radius : var(--rounded-sm);
-        //box-shadow    : var(--shadow-tiny);
+        padding       : 13px 0;
         cursor        : pointer;
         border-bottom : 1px solid var(--light-border);
 
@@ -37,12 +33,9 @@
         p {
             color : var(--text-secondary);
         }
-
-        .research-left {
-            width : 100%;
-        }
-        .research-left {
-            width : 100%;
+        
+        &:last-child {
+            border : none;
         }
     }
 }

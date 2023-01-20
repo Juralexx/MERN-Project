@@ -320,3 +320,11 @@
 .color-website {
     color : var(--website);
 }
+
+.err {
+    background : rgba(var(--red-rgb), 0.2) !important;
+}
+
+.succes {
+    background : rgba(var(--green-rgb), 0.1) !important;
+}

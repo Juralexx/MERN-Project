@@ -90,8 +90,8 @@ const LikersButton = ({ project, onClick }) => {
                 <div className="action-btn like">
                     <button onClick={like}>
                         <Icon name="Like" />
-                        <p onClick={onClick}>{text}</p>
                     </button>
+                    <p onClick={onClick}>{text}</p>
                 </div>
             }
             {uid &&
@@ -99,8 +99,8 @@ const LikersButton = ({ project, onClick }) => {
                 <div className="action-btn like">
                     <button onClick={unlike}>
                         <Icon name="Like" />
-                        <p onClick={onClick}>{text}</p>
                     </button>
+                    <p onClick={onClick}>{text}</p>
                 </div>
             }
         </>

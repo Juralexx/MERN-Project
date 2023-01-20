@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import SignInForm from "./SignInForm";
 import { Button } from '../tools/global/Button'
-import { DynamicInput, CheckBox } from '../tools/global/Inputs';
+import { DynamicInput } from '../tools/global/Inputs';
 import { ErrorCard } from "../tools/global/Error";
 import { isEmailValid, onlyLettersNumbersAndDashes } from "../Utils";
 import { useClickOutside } from "../tools/hooks/useClickOutside";
 import Icon from "../tools/icons/Icon";
+import Checkbox from "../tools/global/Checkbox";
 
 const SignUpForm = () => {
     const [datas, setDatas] = useState({
@@ -321,7 +322,7 @@ const SignUpForm = () => {
                 </div>
 
                 <div className="flex items-center mb-6 mt-6">
-                    <CheckBox
+                    <Checkbox
                         checked={datas.terms}
                         onChange={() => setDatas(data => ({ ...data, terms: !datas.terms }))}
                     />

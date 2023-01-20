@@ -243,12 +243,10 @@ const Home = ({ websocket, user }) => {
                                     sortedProjects={sortedProjects}
                                 />
                             } />
-                            <Route path="researches" element={
+                            <Route path="researches/*" element={
                                 <Researches
                                     user={user}
-                                    websocket={websocket}
                                     search={search}
-                                    datas={datas}
                                     setDatas={setDatas}
                                 />
                             } />

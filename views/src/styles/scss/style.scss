@@ -1,11 +1,9 @@
 @import 'variables';
-@import 'mixins';
 @import 'body';
 @import 'header';
 
 /* Tools */
 
-@import 'tools/containers';
 @import 'tools/map';
 @import 'tools/scrollbar';
 @import 'tools/skeleton';
@@ -14,37 +12,19 @@
 /* components */
 
 @import 'components/accordion';
-@import 'components/avatars';
 @import 'components/back-actions';
-@import 'components/btn';
 @import 'components/cards';
 @import 'components/categories';
 @import 'components/editor';
 @import 'components/emoji-picker';
 @import 'components/loader';
 @import 'components/mobile-menu';
-@import 'components/modal';
-@import 'components/navbar-toggle';
 @import 'components/no-content';
 @import 'components/notification-card';
 @import 'components/small-menu';
-@import 'components/tooltip';
-
-@import 'components/inputs/auto-complete.scss';
-@import 'components/inputs/classic-input.scss';
-@import 'components/inputs/checkbox.scss';
-@import 'components/inputs/date-picker.scss';
-@import 'components/inputs/double-icon-input.scss';
-@import 'components/inputs/dropdown-input.scss';
-@import 'components/inputs/dynamic-input.scss';
-@import 'components/inputs/icon-input.scss';
-@import 'components/inputs/number-input.scss';
-@import 'components/inputs/textarea.scss';
-
-@import 'components/modals/hovered-modal';
-@import 'components/modals/map-modal';
-@import 'components/modals/users-modal';
-@import 'components/modals/warning-modal';
+@import 'components/pagination';
+@import 'components/auto-complete.scss';
+@import 'components/users-modal';
 
 /* Log */
 

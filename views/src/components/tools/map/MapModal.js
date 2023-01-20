@@ -6,6 +6,7 @@ import MapRegions from "./MapRegions";
 import Modal from "../global/Modal";
 import { departments, regions } from "./api";
 import { addClass } from "../../Utils";
+import styled from "styled-components";
 
 const MapModal = ({ open, setOpen, datas, setDatas }) => {
 
@@ -67,118 +68,157 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
 
     return (
         <Modal open={open} setOpen={setOpen} className="map_modal">
-            <div className="map_modal_nav">
-                <div data-choice="1"
-                    className={`map_modal_nav_item ${addClass(search.type === 'region', "active")}`}
-                    onClick={() => setSearch(prevState => ({ ...prevState, type: 'region' }))}
-                >
-                    Régions
+            <MapMapComponent>
+                <div className="map_modal_nav">
+                    <div data-choice="1"
+                        className={`map_modal_nav_item ${addClass(search.type === 'region', "active")}`}
+                        onClick={() => setSearch(prevState => ({ ...prevState, type: 'region' }))}
+                    >
+                        Régions
+                    </div>
+                    <div data-choice="2"
+                        className={`map_modal_nav_item ${addClass(search.type === 'department', "active")}`}
+                        onClick={() => setSearch(prevState => ({ ...prevState, type: 'department' }))}
+                    >
+                        Départements
+                    </div>
                 </div>
-                <div data-choice="2"
-                    className={`map_modal_nav_item ${addClass(search.type === 'department', "active")}`}
-                    onClick={() => setSearch(prevState => ({ ...prevState, type: 'department' }))}
-                >
-                    Départements
-                </div>
-            </div>
-            {search.type === 'region' &&
-                <div className="relative">
-                    <IconInput
-                        type="text"
-                        placeholder="Région"
-                        endIcon={<Icon name="CaretDown" />}
-                        value={search.query}
-                        onChange={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
-                        onInput={searchLocation}
-                        onClick={() => setSearch(prevState => ({ ...prevState, open: prevState.open === 'region' ? '' : 'region' }))}
-                    />
-                    {search.open === 'region' &&
-                        <div className="auto-complete-container custom-scrollbar full">
-                            {!search.state ? (
-                                regions.map((element, key) => {
-                                    return (
-                                        <div
-                                            key={key}
-                                            className="auto-complete-item"
-                                            onClick={() => {
-                                                setSearch(prevState => ({ ...prevState, query: element.nom_region, open: '' }))
-                                                addLocation(element, 'region')
-                                            }}
-                                        >
-                                            {element.nom_region}
-                                        </div>
-                                    )
-                                })
-                            ) : (
-                                search.results.map((element, key) => {
-                                    return (
-                                        <div
-                                            key={key}
-                                            className="auto-complete-item"
-                                            onClick={() => {
-                                                setSearch(prevState => ({ ...prevState, query: element.nom_region, open: '' }))
-                                                addLocation(element, 'region')
-                                            }}
-                                        >
-                                            {element.nom_region}
-                                        </div>
-                                    )
-                                })
-                            )}
-                        </div>
-                    }
-                    <MapRegions
-                        datas={datas}
-                        setDatas={setDatas}
-                    />
-                </div>
-            }
-            {search.type === 'department' &&
-                <div className="relative">
-                    <IconInput
-                        type="text"
-                        placeholder="Département"
-                        endIcon={<Icon name="CaretDown" />}
-                        value={search.query}
-                        onChange={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
-                        onInput={searchLocation}
-                        onClick={() => setSearch(prevState => ({ ...prevState, open: prevState.open === 'department' ? '' : 'department' }))}
-                    />
-                    {search.open === 'department' &&
-                        <div className="auto-complete-container custom-scrollbar full">
-                            {!search.state ? (
-                                departments.map((element, key) => {
-                                    return (
-                                        <div key={key} className="auto-complete-item" onClick={() => {
-                                            setSearch(prevState => ({ ...prevState, query: element.nom_departement, open: '' }))
-                                            addLocation(element, 'department')
-                                        }}>
-                                            {element.nom_departement} ({element.code_departement})
-                                        </div>
-                                    )
-                                })
-                            ) : (
-                                search.results.map((element, key) => {
-                                    return (
-                                        <div key={key} className="auto-complete-item" onClick={() => {
-                                            setSearch(prevState => ({ ...prevState, query: element.nom_departement, open: '' }))
-                                            addLocation(element, 'department')
-                                        }}>
-                                            {element.nom_departement} ({element.code_departement})
-                                        </div>
-                                    )
-                                })
-                            )}
-                        </div>
-                    }
-                    <MapDepartments
-                        datas={datas}
-                        setDatas={setDatas}
-                    />
-                </div>
-            }
+                {search.type === 'region' &&
+                    <div className="relative">
+                        <IconInput
+                            type="text"
+                            placeholder="Région"
+                            endIcon={<Icon name="CaretDown" />}
+                            value={search.query}
+                            onChange={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
+                            onInput={searchLocation}
+                            onClick={() => setSearch(prevState => ({ ...prevState, open: prevState.open === 'region' ? '' : 'region' }))}
+                        />
+                        {search.open === 'region' &&
+                            <div className="auto-complete-container custom-scrollbar full">
+                                {!search.state ? (
+                                    regions.map((element, key) => {
+                                        return (
+                                            <div
+                                                key={key}
+                                                className="auto-complete-item"
+                                                onClick={() => {
+                                                    setSearch(prevState => ({ ...prevState, query: element.nom_region, open: '' }))
+                                                    addLocation(element, 'region')
+                                                }}
+                                            >
+                                                {element.nom_region}
+                                            </div>
+                                        )
+                                    })
+                                ) : (
+                                    search.results.map((element, key) => {
+                                        return (
+                                            <div
+                                                key={key}
+                                                className="auto-complete-item"
+                                                onClick={() => {
+                                                    setSearch(prevState => ({ ...prevState, query: element.nom_region, open: '' }))
+                                                    addLocation(element, 'region')
+                                                }}
+                                            >
+                                                {element.nom_region}
+                                            </div>
+                                        )
+                                    })
+                                )}
+                            </div>
+                        }
+                        <MapRegions
+                            datas={datas}
+                            setDatas={setDatas}
+                        />
+                    </div>
+                }
+                {search.type === 'department' &&
+                    <div className="relative">
+                        <IconInput
+                            type="text"
+                            placeholder="Département"
+                            endIcon={<Icon name="CaretDown" />}
+                            value={search.query}
+                            onChange={e => setSearch(prevState => ({ ...prevState, query: e.target.value }))}
+                            onInput={searchLocation}
+                            onClick={() => setSearch(prevState => ({ ...prevState, open: prevState.open === 'department' ? '' : 'department' }))}
+                        />
+                        {search.open === 'department' &&
+                            <div className="auto-complete-container custom-scrollbar full">
+                                {!search.state ? (
+                                    departments.map((element, key) => {
+                                        return (
+                                            <div key={key} className="auto-complete-item" onClick={() => {
+                                                setSearch(prevState => ({ ...prevState, query: element.nom_departement, open: '' }))
+                                                addLocation(element, 'department')
+                                            }}>
+                                                {element.nom_departement} ({element.code_departement})
+                                            </div>
+                                        )
+                                    })
+                                ) : (
+                                    search.results.map((element, key) => {
+                                        return (
+                                            <div key={key} className="auto-complete-item" onClick={() => {
+                                                setSearch(prevState => ({ ...prevState, query: element.nom_departement, open: '' }))
+                                                addLocation(element, 'department')
+                                            }}>
+                                                {element.nom_departement} ({element.code_departement})
+                                            </div>
+                                        )
+                                    })
+                                )}
+                            </div>
+                        }
+                        <MapDepartments
+                            datas={datas}
+                            setDatas={setDatas}
+                        />
+                    </div>
+                }
+            </MapMapComponent>
         </Modal>
     )
 }
 
 export default MapModal;
+
+const MapMapComponent = styled.div`
+    .map_modal_nav {
+        display       : flex;
+        position      : relative;
+        width         : 70%;
+        margin-bottom : 16px;
+
+        .map_modal_nav_item {
+            position      : relative;
+            height        : 100%;
+            width         : 50%;
+            text-align    : center;
+            color         : var(--text);
+            cursor        : pointer;
+            padding       : 5px;
+            margin        : 0 3px;
+            overflow      : hidden;
+            border-radius : var(--rounded-sm);
+
+            &.active {
+                color      : var(--primary);
+                background : rgba(var(--primary-rgb), 0.2);
+            }
+            &:hover {
+                color      : var(--primary);
+                background : var(--light);
+            }
+        }
+    }
+
+    @media(max-width: 576px) {
+        .map {
+            margin-top : 30px;
+        }
+    }
+`

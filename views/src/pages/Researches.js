@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Icon from '../components/tools/icons/Icon'
 import Oval from '../components/tools/loaders/Oval'
 import { Button } from '../components/tools/global/Button'
-import { getHourOnly, multiplyArray, numericDateParser, reverseArray } from '../components/Utils'
+import { addClass, divideArrayIntoSizedParts, getHourOnly, numericDateParser, reverseArray } from '../components/Utils'
 
-const Researches = ({ websocket, user, search, datas, setDatas }) => {
+const Researches = ({ user, search, setDatas }) => {
     const [researches, setResearches] = useState([])
     const [isLoading, setLoading] = useState(true)
 
@@ -15,7 +15,7 @@ const Researches = ({ websocket, user, search, datas, setDatas }) => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}api/user/${user._id}`)
                 .then(res => {
-                    setResearches(reverseArray(multiplyArray(res.data.research, 10)))
+                    setResearches(reverseArray(divideArrayIntoSizedParts(res.data.research, 20)))
                     setLoading(false)
                 })
                 .catch(err => console.log(err))
@@ -44,15 +44,29 @@ const Researches = ({ websocket, user, search, datas, setDatas }) => {
      * 
      */
 
+    const [searchParams] = useSearchParams()
+    let currentPage = Number(searchParams.get('p'))
+
+    useEffect(() => {
+        const path = window.location.pathname + window.location.search
+        if (path === '/researches/' || path === '/researches' || currentPage > researches.length + 1) {
+            window.location.href = `${window.location.origin}/researches/?p=1`
+        }
+    }, [currentPage, researches])
+
+    /**
+     * 
+     */
+
     return (
         <div className='researches-page container py-8'>
             {!isLoading ? (
                 researches.length > 0 ? (
                     <>
                         <div className="researches-top">
-                            Vous avez effectué <span>{researches.length}</span> recherches
+                            Vous avez effectué <span>{user.research.length}</span> recherches {`(page ${currentPage}/${researches.length})`}
                         </div>
-                        {researches.map((research, key) => {
+                        {researches[currentPage - 1].map((research, key) => {
                             return (
                                 <div className='research' key={key} onClick={() => launchResearch(research)}>
                                     <div className='w-full'>
@@ -95,6 +109,40 @@ const Researches = ({ websocket, user, search, datas, setDatas }) => {
                                 </div>
                             )
                         })}
+                        <div className='pagination-container'>
+                            <div className="pagination">
+                                {currentPage - 1 > 0 &&
+                                    <>
+                                        <Link to={`/researches/?p=1`} className='arrow'>
+                                            <Icon name="DoubleArrowLeft" />
+                                        </Link>
+                                        <Link to={`/researches/?p=${currentPage - 1}`} className='arrow'>
+                                            <Icon name="CaretLeft" />
+                                        </Link>
+                                    </>
+                                }
+                                {[...new Array(researches.length)].map((_, key) => {
+                                    return (
+                                        <Link to={`/researches/?p=${key + 1}`}
+                                            key={key}
+                                            className={`${addClass(currentPage > (key + 3) || currentPage < (key - 1), 'hidden')} ${addClass(currentPage === (key + 1), 'active')}`}
+                                        >
+                                            {key + 1}
+                                        </Link>
+                                    )
+                                })}
+                                {currentPage + 1 <= researches.length &&
+                                    <>
+                                        <Link to={`/researches/?p=${currentPage + 1}`} className='arrow'>
+                                            <Icon name="CaretRight" />
+                                        </Link>
+                                        <Link to={`/researches/?p=${researches.length}`} className='arrow'>
+                                            <Icon name="DoubleArrowRight" />
+                                        </Link>
+                                    </>
+                                }
+                            </div>
+                        </div>
                     </>
                 ) : (
                     <div className="no_content !my-[80px]">

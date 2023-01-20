@@ -93,8 +93,8 @@ const FollowersButton = ({ project, onClick }) => {
                 <div className="action-btn follow">
                     <button onClick={follow}>
                         <Icon name="Bookmark" />
-                        <p onClick={onClick}>{text}</p>
                     </button>
+                    <p onClick={onClick}>{text}</p>
                 </div>
             }
             {uid &&
@@ -102,8 +102,8 @@ const FollowersButton = ({ project, onClick }) => {
                 <div className="action-btn follow">
                     <button onClick={unfollow}>
                         <Icon name="Bookmark" />
-                        <p onClick={onClick}>{text}</p>
                     </button>
+                    <p onClick={onClick}>{text}</p>
                 </div>
             }
         </>

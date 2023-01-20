@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DatePickerInput } from "../../tools/global/Inputs";
+import { DatePickerInput } from "../../tools/global/DatePicker";
 
 const End = ({ end, setDatas }) => {
     const [date, setDate] = useState(end)
