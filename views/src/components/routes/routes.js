@@ -13,6 +13,12 @@ import UserProfil from '../../pages/UserProfil'
 import FooterLight from '../FooterLight'
 
 function Paths({ websocket, onlineUsers, user, uid }) {
+
+    //store last url onbeforeunload for each page
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('prevUrl', window.location.pathname)
+    })
+
     return (
         <BrowserRouter>
             <Navbar

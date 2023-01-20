@@ -29,6 +29,24 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
         }
     }
 
+    const addRegion = (value) => {
+        setDatas(data => ({
+            ...data,
+            location: [...datas.location, {
+                type: "region",
+                region: value.nom_region,
+                region_code: value.code_region,
+                new_region: value.nom_nouvelle_region,
+                new_region_code: value.code_nouvelle_region
+            }]
+        }))
+        setOpen(false)
+    }
+
+    /**
+     * 
+     */
+
     /* Department search */
     const [openDepartments, setOpenDepartments] = useState(false)
     const [searchDepartment, setSearchDepartment] = useState(false)
@@ -54,27 +72,19 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
             location: [...datas.location, {
                 type: "department",
                 department: value.nom_departement,
-                department_code: value.code_department,
+                department_code: value.code_departement,
                 region: value.nom_ancienne_region,
                 region_code: value.code_ancienne_region,
                 new_region: value.nom_nouvelle_region,
                 new_region_code: value.code_nouvelle_region
             }]
         }))
+        setOpen(false)
     }
 
-    const addRegion = (value) => {
-        setDatas(data => ({
-            ...data,
-            location: [...datas.location, {
-                type: "region",
-                region: value.nom_region,
-                region_code: value.code_region,
-                new_region: value.nom_nouvelle_region,
-                new_region_code: value.code_nouvelle_region
-            }]
-        }))
-    }
+    /**
+     * 
+     */
 
     return (
         <Modal open={open} setOpen={setOpen} className="map_modal">
@@ -163,7 +173,11 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
                             {!searchDepartment ? (
                                 departments.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); addDepartment(element); setOpenDepartments(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => {
+                                            setDepartmentQuery(element.nom_departement)
+                                            addDepartment(element)
+                                            setOpenDepartments(false)
+                                        }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
                                     )
@@ -171,7 +185,11 @@ const MapModal = ({ open, setOpen, datas, setDatas }) => {
                             ) : (
                                 isDepartmentInResult.map((element, key) => {
                                     return (
-                                        <div key={key} className="auto-complete-item" onClick={() => { setDepartmentQuery(element.nom_departement); addDepartment(element); setOpenDepartments(false) }}>
+                                        <div key={key} className="auto-complete-item" onClick={() => {
+                                            setDepartmentQuery(element.nom_departement)
+                                            addDepartment(element)
+                                            setOpenDepartments(false)
+                                        }}>
                                             {element.nom_departement} ({element.code_departement})
                                         </div>
                                     )

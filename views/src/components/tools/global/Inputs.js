@@ -219,15 +219,24 @@ export const IconInput = (props) => {
                     {icon}
                 </div>
             }
-            {endIcon &&
-                <div className="end-icon" onClick={endIconClick}>
-                    {endIcon}
-                </div>
-            }
-            {(cross && (cross && value && value.length > 0)) && (
-                <div onClick={onClean} className="svg_container">
-                    <Icon name="Cross" className="cross" />
-                </div>
+            {cross ? (
+                (value && value.length > 0) ? (
+                    <div onClick={onClean} className="svg_container">
+                        <Icon name="Cross" className="cross" />
+                    </div>
+                ) : (
+                    endIcon && (
+                        <div className="end-icon" onClick={endIconClick}>
+                            {endIcon}
+                        </div>
+                    )
+                )
+            ) : (
+                endIcon && (
+                    <div className="end-icon" onClick={endIconClick}>
+                        {endIcon}
+                    </div>
+                )
             )}
         </div>
     )

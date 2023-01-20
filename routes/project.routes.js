@@ -11,11 +11,11 @@ import { createQNA, deleteQNA, updateQNA } from '../controllers/project/project.
 import multer from 'multer'
 const upload = multer()
 
-projectRoutes.post('/add', createProject)
-
 projectRoutes.get('/', getAllProjects)
 projectRoutes.get('/:URLID/:URL', findProjectByURL)
 projectRoutes.get('/:id', findProjectById)
+
+projectRoutes.post('/add', createProject)
 projectRoutes.put('/:id', updateProject)
 projectRoutes.delete('/:id', deleteProject)
 

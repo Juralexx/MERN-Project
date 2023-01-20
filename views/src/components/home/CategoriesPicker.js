@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Icon from '../tools/icons/Icon'
 import { categories } from '../../api/categories'
 import { addBodyClass, removeBodyClass, addClass } from '../Utils'
-import Icon from '../tools/icons/Icon'
 
 const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
     const [active, setActive] = useState(0)

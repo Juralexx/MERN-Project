@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { dateParser, getHourOnly, keepNewDateOnly, lastDay, reverseArray, thisDay, timeBetween } from '../../Utils'
-import { StringButton, TextButton } from '../../tools/global/Button'
+import { StringButton } from '../../tools/global/Button'
 import ToolsMenu from '../../tools/global/ToolsMenu'
 import Icon from '../../tools/icons/Icon'
 import { Link } from 'react-router-dom'

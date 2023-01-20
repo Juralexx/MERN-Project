@@ -199,12 +199,24 @@ export const onlyNumbers = (string) => {
 
 /**
  * Remove choosen characters from string
- * @param {*} char Character to remove
  * @param {*} str String to remove from
+ * @param {*} char Character to remove
  */
 
-export const replaceStr = (char, str) => {
+export const replaceStr = (str, char) => {
     const string = str.replace(char, '')
+    return string
+}
+
+/**
+ * Replace choosen characters to another in string
+ * @param {*} str String to remove from
+ * @param {*} char Character to replace
+ * @param {*} newChar Character that replace
+ */
+
+export const replaceChar = (str, char, newChar) => {
+    const string = str.replace(char, newChar)
     return string
 }
 

@@ -71,10 +71,11 @@
     position      : relative;
     width         : 100%;
     max-width     : 100%;
-    min-height        : 46px;
-    padding       : 6px 12px 4px 50px;
+    height        : 44px;
+    padding       : 8px 12px 6px 40px;
     color         : var(--text);
     background    : var(--input);
+    border        : 1px solid var(--light-border);
     border-radius : var(--rounded-sm);
     overflow      : auto;
     overflow-y    : hidden;
@@ -99,9 +100,7 @@
         bottom           : 0;
         display          : flex;
         align-items      : center;
-        padding          : 0 0 0 16px;
-        transform        : scale(1);
-        transform-origin : 0;
+        padding          : 0 0 0 13px;
 
         svg {
             height : 20px;
@@ -112,10 +111,13 @@
 
     .locations_item {
         display       : inline-flex;
+        align-items   : center;
         max-width     : 100%;
-        padding       : 5px 5px 5px 15px;
-        margin        : 2px;
-        background    : var(--content);
+        height        : 30px;
+        padding       : 3px 2px 2px 8px;
+        margin-right  : 2px;
+        line-height   : 14px;
+        background    : var(--content-light);
         border        : 1px solid var(--light-border);
         border-radius : var(--rounded-sm);
         white-space   : nowrap;
@@ -123,9 +125,7 @@
         svg {
             width         : 20px;
             height        : 20px;
-            margin-left   : 10px;
             padding       : 3px;
-            border-radius : 50%;
             cursor        : pointer;
         }
     }
@@ -144,14 +144,14 @@
     height        : auto;
     padding       : 10px 20px;
     margin-top    : 3px;
-    background    : var(--content-x-light);
+    background    : var(--input);
     border-radius : var(--rounded-sm);
     box-shadow    : var(--shadow-xl);
     z-index       : 900;
 
     h4 {
-        margin-bottom : 10px;
-
+        font-size     : 16px;
+        margin-bottom : 5px;
         span {
             color : var(--text-secondary);
         }
@@ -163,7 +163,7 @@
 
     .locations_search_item {
         display : flex;
-        padding : 7px 0;
+        padding : 4px 0;
         color   : var(--text-secondary);
         cursor  : pointer;
 
@@ -200,8 +200,6 @@
     .locations_search_bottom {
         display         : flex;
         justify-content : flex-end;
-        padding-top     : 7px;
-        border-top      : 1px solid var(--light-border);
     }
 
     .locations_search_top {
@@ -209,26 +207,26 @@
         border-bottom : 1px solid var(--light-border);
 
         .locations_selected {
-            display   : flex;
-            padding   : 5px 0;
-            flex-wrap : wrap;
+            display       : flex;
+            flex-wrap     : wrap;
+            margin-bottom : 10px;
 
             .locations_selected_item {
                 display       : inline-flex;
-                border-radius : var(--rounded-sm);
+                align-items   : center;
                 max-width     : 100%;
-                padding       : 5px 5px 5px 15px;
+                padding       : 5px 5px 5px 10px;
                 margin        : 2px;
-                background    : var(--x-light);
+                background    : var(--content-light);
+                border        : 1px solid var(--light-border);
+                border-radius : var(--rounded-sm);
                 white-space   : nowrap;
 
                 svg {
-                    width         : 20px;
-                    height        : 20px;
-                    margin-left   : 10px;
-                    padding       : 3px;
-                    border-radius : 50%;
-                    cursor        : pointer;
+                    width   : 20px;
+                    height  : 20px;
+                    padding : 3px;
+                    cursor  : pointer;
                 }
             }
         }

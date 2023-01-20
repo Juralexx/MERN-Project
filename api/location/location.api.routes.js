@@ -1,8 +1,9 @@
 import express from 'express'
 const locationRoutes = express.Router()
-import { findLocation, getLocation } from './location.api.controller.js';
+import { findLocation, getLocation, getLocations } from './location.api.controller.js';
 
-locationRoutes.get('/', getLocation)
+locationRoutes.get('/', getLocations)
 locationRoutes.get('/:query', findLocation)
+locationRoutes.get('/city/:location', getLocation)
 
 export default locationRoutes;

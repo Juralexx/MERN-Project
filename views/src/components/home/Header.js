@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 import MapModal from '../tools/map/MapModal';
@@ -15,12 +15,10 @@ const Header = ({ user, search, datas, setDatas }) => {
 
     const [moreFilters, setMoreFilters] = useState(false)
     const [openMapModal, setOpenMapModal] = useState(false)
-    const locationsStored = localStorage.getItem("search:locations")
 
-    useEffect(() => {
-        if (locationsStored && JSON.parse(locationsStored).length > 0)
-            setDatas(data => ({ ...data, recentLocations: JSON.parse(locationsStored) }))
-    }, [locationsStored, setDatas])
+    /**
+     * 
+     */
 
     return (
         <div id="header">
@@ -56,6 +54,8 @@ const Header = ({ user, search, datas, setDatas }) => {
                                     onClick={() => setOpenCategories(!openCategories)}
                                     value={datas.category}
                                     onChange={() => setDatas(data => ({ ...data, category: datas.category }))}
+                                    cross
+                                    onClean={() => setDatas(data => ({ ...data, category: '' }))}
                                 />
                                 <CategoriesPicker
                                     open={openCategories}
@@ -88,10 +88,18 @@ const Header = ({ user, search, datas, setDatas }) => {
                                         cross
                                         onClean={() => setDatas(data => ({ ...data, date: "" }))}
                                     >
-                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un jour" }))}>Moins d'un jour</div>
-                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'une semaine" }))}>Moins d'une semaine</div>
-                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un mois" }))}>Moins d'un mois</div>
-                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un an" }))}>Moins d'un an</div>
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un jour" }))}>
+                                            Moins d'un jour
+                                        </div>
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'une semaine" }))}>
+                                            Moins d'une semaine
+                                        </div>
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un mois" }))}>
+                                            Moins d'un mois
+                                        </div>
+                                        <div onClick={() => setDatas(data => ({ ...data, date: "Moins d'un an" }))}>
+                                            Moins d'un an
+                                        </div>
                                     </DropdownInput>
                                 </div>
                                 <div className="col-6 !pl-1">
@@ -102,9 +110,15 @@ const Header = ({ user, search, datas, setDatas }) => {
                                         cross
                                         onClean={() => setDatas(data => ({ ...data, state: "" }))}
                                     >
-                                        <div onClick={() => setDatas(data => ({ ...data, state: "En préparation" }))}>En préparation</div>
-                                        <div onClick={() => setDatas(data => ({ ...data, state: "En cours" }))}>En cours</div>
-                                        <div onClick={() => setDatas(data => ({ ...data, state: "Terminé" }))}>Terminé</div>
+                                        <div onClick={() => setDatas(data => ({ ...data, state: "En préparation" }))}>
+                                            En préparation
+                                        </div>
+                                        <div onClick={() => setDatas(data => ({ ...data, state: "En cours" }))}>
+                                            En cours
+                                        </div>
+                                        <div onClick={() => setDatas(data => ({ ...data, state: "Terminé" }))}>
+                                            Terminé
+                                        </div>
                                     </DropdownInput>
                                 </div>
                             </div>
@@ -115,14 +129,23 @@ const Header = ({ user, search, datas, setDatas }) => {
                                     <Icon name="France" />Voir la carte
                                 </TextButton>
                                 <TextButton className="btn_icon_start" onClick={() => setMoreFilters(!moreFilters)}>
-                                    {!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />}{!moreFilters ? "Plus de filtres" : "Moins de filtres"}
+                                    {!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />}
+                                    {!moreFilters ? "Plus de filtres" : "Moins de filtres"}
                                 </TextButton>
                             </div>
                             <div className="flex sm:hidden">
-                                <IconToggle className="primary mr-2" icon={<Icon name="France" />} onClick={() => setOpenMapModal(true)} />
-                                <IconToggle className="primary mr-4" icon={!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />} onClick={() => setMoreFilters(!moreFilters)} />
+                                <IconToggle
+                                    className="primary mr-2"
+                                    icon={<Icon name="France" />}
+                                    onClick={() => setOpenMapModal(true)}
+                                />
+                                <IconToggle
+                                    className="primary mr-4"
+                                    icon={!moreFilters ? <Icon name="Plus" /> : <Icon name="Minus" />}
+                                    onClick={() => setMoreFilters(!moreFilters)}
+                                />
                             </div>
-                            <Button className="btn_icon_end" onClick={search}>
+                            <Button className="btn_icon_end" onClick={() => search()}>
                                 Rechercher<Icon name="DoubleArrowRight" />
                             </Button>
                         </div>

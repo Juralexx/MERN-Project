@@ -1,5 +1,9 @@
 import WorkApiModel from './work.api.model.js';
 
+/**
+ * Get all works
+ */
+
 export const getWorks = (req, res) => {
     WorkApiModel.find((err, docs) => {
         if (!err) {
@@ -9,6 +13,28 @@ export const getWorks = (req, res) => {
         }
     })
 }
+
+/**
+ * Get work by name
+ */
+
+export const getWork = (req, res) => {
+    WorkApiModel.findOne({
+        appelation_metier: req.params.work,
+    },
+        (err, docs) => {
+            if (!err) {
+                res.send(docs)
+            } else {
+                console.log('Unknown URL : ' + err)
+            }
+        }).select()
+}
+
+/**
+ * Find work from query
+ */
+
 
 export const findWork = (req, res) => {
     const query = req.params.query

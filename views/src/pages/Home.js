@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { createSearchParams, Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import Icon from '../components/tools/icons/Icon';
+import Header from '../components/home/Header';
+import CategoriesSwiper from '../components/home/CategoriesSwiper';
+import ProjectsSwiper from '../components/home/ProjectsSwiper';
+import TagsSwiper from '../components/home/TagsSwiper';
+import Footer from '../components/Footer';
 import Search from './Search';
 import ProjectPage from './Project';
-import Footer from '../components/Footer';
-import Header from '../components/home/Header';
-import ProjectsSwiper from '../components/home/ProjectsSwiper';
-import CategoriesSwiper from '../components/home/CategoriesSwiper';
-import TagsSwiper from '../components/home/TagsSwiper';
-import Icon from '../components/tools/icons/Icon';
 
 const Home = ({ websocket, user }) => {
     const [isLoading, setLoading] = useState(true)
     const [projects, setProjects] = useState([])
-    const [sortedProjects, setSortedProjects] = useState({
-        randomized: [],
-        byDates: [],
-        byLikes: [],
-        byFollows: []
-    })
+    const [sortedProjects, setSortedProjects] = useState({ randomized: [], byDates: [], byLikes: [], byFollows: [] })
 
     useEffect(() => {
         const fetch = async () => {
@@ -47,7 +42,9 @@ const Home = ({ websocket, user }) => {
         fetch()
     }, [])
 
-    /***** RECHERCHE *****/
+    /**
+     * 
+     */
 
     const [datas, setDatas] = useState({
         query: "",
@@ -59,18 +56,79 @@ const Home = ({ websocket, user }) => {
         date: "",
         state: "",
     })
-    const [results, setResults] = useState([])
     const navigate = useNavigate()
 
+    const locationsStored = localStorage.getItem("search:locations")
+
+    useEffect(() => {
+        if (locationsStored && JSON.parse(locationsStored).length > 0)
+            setDatas(data => ({ ...data, recentLocations: JSON.parse(locationsStored) }))
+    }, [locationsStored])
+
     const search = () => {
-        localStorage.setItem("search:locations", JSON.stringify(datas.location))
-        setDatas(data => ({ ...data, location: [] }))
-        setResults(projects)
-        navigate("/search/a")
+        let params = { origin: 'home' }
+        if (datas.query)
+            params = { ...params, q: datas.query }
+
+        if (datas.category)
+            params = { ...params, category: datas.category }
+
+        if (datas.location.length > 0) {
+            localStorage.setItem("search:locations", JSON.stringify(datas.location))
+
+            let concatLocations = { region: String(), department: String(), city: String() }
+
+            datas.location.forEach(loc => {
+                if (loc.type === 'city') {
+                    return concatLocations = {
+                        ...concatLocations,
+                        city: concatLocations.city.concat('/', loc.location)
+                    }
+                } else if (loc.type === 'department') {
+                    return concatLocations = {
+                        ...concatLocations,
+                        department: concatLocations.department.concat('/', loc.department)
+                    }
+                } else if (loc.type === 'region') {
+                    return concatLocations = {
+                        ...concatLocations,
+                        region: concatLocations.region.concat('/', loc.region)
+                    }
+                }
+            })
+            if (concatLocations.city.length > 0)
+                params = { ...params, location: concatLocations.city.slice(1) }
+
+            if (concatLocations.department.length > 0)
+                params = { ...params, department: concatLocations.department.slice(1) }
+
+            if (concatLocations.region.length > 0)
+                params = { ...params, region: concatLocations.region.slice(1) }
+
+        }
+        if (datas.date)
+            params = { ...params, date: datas.date }
+
+        if (datas.state)
+            params = { ...params, state: datas.state }
+
+        localStorage.setItem("prevUrl", window.location.pathname)
+
+        navigate({
+            pathname: '/search/',
+            search: `?${createSearchParams(params)}`,
+            state:{
+                url: window.location.pathname
+            }
+        })
     }
 
+    /**
+     * 
+     */
+
     return (
-        <>
+        <div className="home-body">
             <Routes>
                 <Route index element={
                     <>
@@ -80,75 +138,73 @@ const Home = ({ websocket, user }) => {
                             datas={datas}
                             setDatas={setDatas}
                         />
-                        <div className="home-body">
-                            <div className="container">
-                                <CategoriesSwiper />
-                                <div className="swiper-container">
-                                    <div className="swiper-header">
-                                        <h2>Les plus récent</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
-                                        </Link>
-                                    </div>
-                                    <div className="swiper-inner">
-                                        <ProjectsSwiper
-                                            projects={sortedProjects.byDates}
-                                            isLoading={isLoading}
-                                            websocket={websocket}
-                                            user={user}
-                                        />
-                                    </div>
+                        <div className="container">
+                            <CategoriesSwiper />
+                            <div className="swiper-container">
+                                <div className="swiper-header">
+                                    <h2>Les plus récent</h2>
+                                    <Link to="/">
+                                        Voir plus <Icon name="ArrowRight" />
+                                    </Link>
                                 </div>
-                                <div className="swiper-container">
-                                    <div className="swiper-header">
-                                        <h2>Tous les projets</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
-                                        </Link>
-                                    </div>
-                                    <div className="swiper-inner">
-                                        <ProjectsSwiper
-                                            projects={sortedProjects.randomized}
-                                            isLoading={isLoading}
-                                            websocket={websocket}
-                                            user={user}
-                                        />
-                                    </div>
+                                <div className="swiper-inner">
+                                    <ProjectsSwiper
+                                        projects={sortedProjects.byDates}
+                                        isLoading={isLoading}
+                                        websocket={websocket}
+                                        user={user}
+                                    />
                                 </div>
-                                <div className="swiper-container">
-                                    <div className="swiper-header">
-                                        <h2>Les plus aimés</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
-                                        </Link>
-                                    </div>
-                                    <div className="swiper-inner">
-                                        <ProjectsSwiper
-                                            projects={sortedProjects.byLikes}
-                                            isLoading={isLoading}
-                                            websocket={websocket}
-                                            user={user}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="swiper-container">
-                                    <div className="swiper-header">
-                                        <h2>Les plus suivis</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
-                                        </Link>
-                                    </div>
-                                    <div className="swiper-inner">
-                                        <ProjectsSwiper
-                                            projects={sortedProjects.byFollowings}
-                                            isLoading={isLoading}
-                                            websocket={websocket}
-                                            user={user}
-                                        />
-                                    </div>
-                                </div>
-                                <TagsSwiper />
                             </div>
+                            <div className="swiper-container">
+                                <div className="swiper-header">
+                                    <h2>Tous les projets</h2>
+                                    <Link to="/">
+                                        Voir plus <Icon name="ArrowRight" />
+                                    </Link>
+                                </div>
+                                <div className="swiper-inner">
+                                    <ProjectsSwiper
+                                        projects={sortedProjects.randomized}
+                                        isLoading={isLoading}
+                                        websocket={websocket}
+                                        user={user}
+                                    />
+                                </div>
+                            </div>
+                            <div className="swiper-container">
+                                <div className="swiper-header">
+                                    <h2>Les plus aimés</h2>
+                                    <Link to="/">
+                                        Voir plus <Icon name="ArrowRight" />
+                                    </Link>
+                                </div>
+                                <div className="swiper-inner">
+                                    <ProjectsSwiper
+                                        projects={sortedProjects.byLikes}
+                                        isLoading={isLoading}
+                                        websocket={websocket}
+                                        user={user}
+                                    />
+                                </div>
+                            </div>
+                            <div className="swiper-container">
+                                <div className="swiper-header">
+                                    <h2>Les plus suivis</h2>
+                                    <Link to="/">
+                                        Voir plus <Icon name="ArrowRight" />
+                                    </Link>
+                                </div>
+                                <div className="swiper-inner">
+                                    <ProjectsSwiper
+                                        projects={sortedProjects.byFollowings}
+                                        isLoading={isLoading}
+                                        websocket={websocket}
+                                        user={user}
+                                    />
+                                </div>
+                            </div>
+                            <TagsSwiper />
                         </div>
                     </>
                 } />
@@ -165,7 +221,6 @@ const Home = ({ websocket, user }) => {
                                 user={user}
                                 websocket={websocket}
                                 search={search}
-                                results={results}
                                 datas={datas}
                                 setDatas={setDatas}
                                 sortedProjects={sortedProjects}
@@ -176,7 +231,7 @@ const Home = ({ websocket, user }) => {
                 }
             </Routes>
             <Footer />
-        </>
+        </div>
     )
 }
 

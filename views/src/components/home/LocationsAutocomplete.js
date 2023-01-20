@@ -1,48 +1,45 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios'
-import LocationDisplayer from './LocationDisplayer'
-import { useClickOutside } from '../tools/hooks/useClickOutside'
-import { IconInput } from '../tools/global/Inputs'
-import Oval from '../../components/tools/loaders/Oval'
 import Icon from '../tools/icons/Icon'
+import Oval from '../../components/tools/loaders/Oval'
+import LocationDisplayer from './LocationDisplayer'
+import { IconInput } from '../tools/global/Inputs'
+import { useClickOutside } from '../tools/hooks/useClickOutside'
 
 const LocationsAutocomplete = ({ datas, setDatas }) => {
-    const [searchQuery, setSearchQuery] = useState("")
-    const [locationsFound, setLocationsFound] = useState([])
-    const [isLoading, setLoading] = useState(false)
-    const [display, setDisplay] = useState(false)
+    const [search, setSearch] = useState({ state: false, query: '', results: [], isLoading: false })
+
     const wrapperRef = useRef()
-    const [displayLocation, setDisplayLocation] = useState(false)
+    const [locationDisplayer, setLocationDisplayer] = useState(false)
     useClickOutside(wrapperRef, () => {
-        setDisplay(false)
-        setDisplayLocation(false)
-        setLoading(false)
+        setLocationDisplayer(false)
+        setSearch(data => ({ ...data, state: false, results: [], isLoading: false }))
     })
 
     const searchLocation = async () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        else {
+        if (!search.query || search.query.trim() === "") return
+        if (search.query.length > 2) {
+            setLocationDisplayer(false)
+            setSearch(data => ({ ...data, state: true, isLoading: true }))
+
             const response = await axios
-                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${searchQuery}`))
+                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${search.query}`))
                 .catch(err => console.log("Error: ", err))
-            if (response) {
-                let resDatas = new Set(datas.location.map(data => data.location))
-                let merged = [...response.data.filter(res => !resDatas.has(res.COM_NOM))]
-                setLocationsFound(merged)
-                setLoading(true)
-                if (searchQuery.length > 2) {
-                    setDisplay(true)
-                    setLoading(true)
-                    if (locationsFound.length === 0) {
-                        setLoading(false)
-                    }
-                } else {
-                    setDisplay(false)
-                    setLoading(false)
-                }
+
+            if (response.data.length > 0) {
+                setSearch(data => ({ ...data, results: response.data }))
+            } else {
+                setSearch(data => ({ ...data, results: [], isLoading: false }))
             }
+        } else {
+            setSearch(data => ({ ...data, state: false, isLoading: false }))
+            setLocationDisplayer(true)
         }
     }
+
+    /**
+     * 
+     */
 
     const addLocation = (value) => {
         setDatas(data => ({
@@ -58,36 +55,42 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                 new_region_code: value.REG_CODE
             }]
         }))
-        setSearchQuery("")
-        setDisplay(false)
-        setDisplayLocation(true)
-        setLoading(false)
+        setSearch(data => ({ ...data, state: false, query: '', isLoading: false }))
+        setLocationDisplayer(true)
     }
 
+    /**
+     * 
+     */
+
     const deleteItem = (key) => {
-        let newLocs = datas.location.filter((x, i) => i !== key)
+        let newLocs = datas.location.filter((_, i) => i !== key)
         setDatas(data => ({ ...data, location: newLocs }))
     }
 
+    /**
+     * 
+     */
+
     return (
         <div ref={wrapperRef} className="relative">
-            {displayLocation || datas.location.length === 0 ? (
+            {locationDisplayer || search.state || datas.location.length === 0 ? (
                 <IconInput
                     className="is_start_icon"
                     placeholder="Rechercher une localité"
                     type="text"
                     icon={<Icon name="Position" />}
-                    value={searchQuery}
-                    onInput={e => setSearchQuery(e.target.value)}
+                    value={search.query}
+                    onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                     onChange={searchLocation}
-                    onClick={() => setDisplayLocation(true)}
+                    onClick={() => setLocationDisplayer(true)}
                 />
             ) : (
-                <div className="locations_displayer" onClick={() => setDisplayLocation(!displayLocation)}>
+                <div className="locations_displayer" onClick={() => setLocationDisplayer(!locationDisplayer)}>
                     <div className="start_icon">
                         <Icon name="Position" />
                     </div>
-                    {datas.location.map((element, key) => {
+                    {datas?.location?.map((element, key) => {
                         return (
                             <div className="locations_item" key={key}>
                                 {element.type === "city" &&
@@ -109,28 +112,25 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                 </div>
             )}
 
-            <div
+            <div className="auto-complete-container custom-scrollbar"
                 tabIndex="0"
-                className="auto-complete-container custom-scrollbar"
-                style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }}
+                style={{ display: !search.state || locationDisplayer ? "none" : "block" }}
             >
-                {display && locationsFound.length > 0 &&
-                    locationsFound.map((element, key) => {
+                {search.results.length > 0 &&
+                    search.results.map((element, key) => {
                         return (
-                            <div
-                                className="auto-complete-item"
-                                onClick={() => { addLocation(element) }}
-                                key={key}
-                            >
+                            <div className="auto-complete-item" onClick={() => addLocation(element)} key={key}>
                                 {`${element.COM_NOM} (${element.DEP_CODE})`}
                             </div>
                         )
                     })
                 }
-                {isLoading && locationsFound.length === 0 &&
-                    <Oval />
+                {search.isLoading && search.results.length === 0 &&
+                    <div className='py-4'>
+                        <Oval />
+                    </div>
                 }
-                {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
+                {search.state && search.results.length === 0 && !search.isLoading &&
                     <div className="no-result">
                         <Icon name="BoxEmpty" />
                         <div>Aucun resultat ne correspond à votre recherche...</div>
@@ -138,11 +138,11 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                 }
             </div>
 
-            {displayLocation && !display &&
+            {locationDisplayer &&
                 <LocationDisplayer
                     datas={datas}
                     setDatas={setDatas}
-                    setDisplayLocation={setDisplayLocation}
+                    setLocationDisplayer={setLocationDisplayer}
                 />
             }
         </div>

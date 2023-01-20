@@ -2,22 +2,34 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { Button, TextButton } from '../tools/global/Button'
 import Icon from '../tools/icons/Icon';
+import { Button, TextButton } from '../tools/global/Button'
 
-const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
+const LocationDisplayer = ({ datas, setDatas, setLocationDisplayer }) => {
     const [sliderKey, setSliderKey] = useState(0)
+    
+    /**
+     * 
+     */
 
     const getDistance = (key) => {
         const distance = [0, 5, 10, 20, 50, 100, 200]
         setSliderKey(key)
         setDatas(data => ({ ...data, aroundLocation: distance[key] }))
     }
+    
+    /**
+     * 
+     */
 
     const deleteItem = (key) => {
         let newLocs = datas.location.filter((x, i) => i !== key)
         setDatas(data => ({ ...data, location: newLocs }))
     }
+    
+    /**
+     * 
+     */
 
     const getCurrentLocation = () => {
         const successCallback = async (position) => {
@@ -47,6 +59,10 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
         const errorCallback = () => { }
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
     }
+    
+    /**
+     * 
+     */
 
     return (
         <div className="location_search_displayer">
@@ -78,12 +94,12 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                             </div>
                         </>
                     }
-                    {datas.recentLocations.length > 0 && datas.location.length === 0 &&
+                    {datas.recentLocations.length > 0 &&
                         <>
                             <h4>Localisations récentes</h4>
                             {datas.recentLocations.map((element, key) => {
                                 return (
-                                    <div className="locations_search_item" key={key} onClick={() => setDatas(data => ({ ...data, location: [...datas.location, element] }))}>
+                                    <div className="locations_search_item" key={key} onClick={() => setDatas(data => ({ ...data, location:  [...new Set([...datas.location, element])] }))}>
                                         <Icon name="Position" />
                                         {element.type === "city" &&
                                             <div>{element.location} ({element.department_code})</div>
@@ -119,19 +135,13 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
             }
             <div className="locations_search_body">
                 {datas.location[0] !== 'Autour de moi' &&
-                    <div
-                        className="locations_search_item"
-                        onClick={() => { getCurrentLocation() }}
-                    >
+                    <div className="locations_search_item" onClick={() => getCurrentLocation()}>
                         <Icon name="Compass" />
                         <div>Autour de moi</div>
                     </div>
                 }
                 {datas.location[0] !== 'Toute la France' &&
-                    <div
-                        className="locations_search_item"
-                        onClick={() => setDatas(data => ({ ...data, location: ['Toute la France'] }))}
-                    >
+                    <div className="locations_search_item" onClick={() => setDatas(data => ({ ...data, location: ['Toute la France'] }))}>
                         <Icon name="France" />
                         <div>Toute la France</div>
                     </div>
@@ -147,7 +157,9 @@ const LocationDisplayer = ({ datas, setDatas, setDisplayLocation }) => {
                 >
                     Effacer
                 </TextButton>
-                <Button onClick={() => setDisplayLocation(false)}>Valider</Button>
+                <Button onClick={() => setLocationDisplayer(false)}>
+                    Valider
+                </Button>
             </div>
         </div>
     )
