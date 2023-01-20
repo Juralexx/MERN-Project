@@ -16,7 +16,10 @@ function Paths({ websocket, onlineUsers, user, uid }) {
 
     //store last url onbeforeunload for each page
     window.addEventListener('beforeunload', () => {
-        localStorage.setItem('prevUrl', window.location.pathname)
+        localStorage.setItem('prevUrl', window.location.pathname + window.location.search)
+    })
+    window.addEventListener('popstate', () => {
+        localStorage.setItem('prevUrl', window.location.pathname + window.location.search)
     })
 
     return (

@@ -120,6 +120,18 @@ const UserModel = new mongoose.Schema(
             }
         },
 
+        research: {
+            type: [],
+            search: {
+                query: String,
+                category: String,
+                location: Array,
+                Date: Date,
+                State: String,
+                createdAt: Date
+            }
+        },
+
         conversations: {
             type: [],
             conversation: {

@@ -481,17 +481,44 @@ export const reverseArray = (array) => {
 
 /**
  * Divide an array into multiple others
- * @param {*} array Array to devide
+ * @param {*} array Array to divide
  * @param {*} parts Number of news arrays (divided parts numbers)
  */
 
-export function divideIntoParts(array, parts) {
+export function divideArrayIntoParts(array, parts) {
     let copy = [...array]
     let result = [];
     for (let i = parts; i > 0; i--) {
         result.push(copy.splice(0, Math.ceil(copy.length / i)));
     }
     return result;
+}
+
+/**
+ * Divide an array into multiple others width a certain number of elements in each array
+ * @param {*} array Array to divide
+ * @param {*} size Size of each new arrays
+ */
+
+export function divideArrayIntoSizedParts(array, size) {
+    let copy = [...array]
+    let result = [];
+    for (let i = 0; i < copy.length; i += size) {
+        result.push(copy.slice(i, i + size));
+    }
+    return result;
+}
+
+/**
+ * Multiply the selected array. Ex: ([1, 2, 3], 3) = [1, 2, 3, 1, 2, 3, 1, 2, 3]
+ * @param {*} array Array to multiply
+ * @param {*} num Number of time to multiply
+ */
+
+export function multiplyArray(array, num) {
+    var newArr = [];
+    for (var i = 0; i < num; [i++].push.apply(newArr, array));
+    return newArr;
 }
 
 /**

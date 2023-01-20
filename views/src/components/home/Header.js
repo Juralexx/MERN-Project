@@ -39,7 +39,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                             placeholder="Rechercher un projet"
                             type="search"
                             icon={<Icon name="Search" />}
-                            defaultValue=""
+                            value={datas.query}
                             onChange={e => setDatas(data => ({ ...data, query: e.target.value }))}
                         />
                         <div className="relative row my-3">

@@ -39,6 +39,8 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
             }
 
             if (!origin) {
+                setDatas(prevState => ({ ...prevState, location: [] }))
+
                 let locationParam = searchParams.get('location')
                 let departmentParam = searchParams.get('department')
                 let regionParam = searchParams.get('region')
@@ -141,6 +143,8 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                                     onClick={() => setOpenCategories(!openCategories)}
                                     value={datas.category}
                                     onChange={() => setDatas(data => ({ ...data, category: datas.category }))}
+                                    cross
+                                    onClean={() => setDatas(data => ({ ...data, category: '' }))}
                                 />
                                 <CategoriesPicker
                                     open={openCategories}

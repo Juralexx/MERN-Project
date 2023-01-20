@@ -1,0 +1,48 @@
+.researches-page {
+    min-height      : 420px;
+    height          : 100%;
+    width           : 100%;
+    
+    .researches-top {
+        font-size : 18px;
+        padding   : 20px 0 30px;
+        
+        span {
+            font-weight : 500;
+        }
+    }
+
+    .research {
+        display       : flex;
+        width         : 100%;
+        padding       : 10px 0;
+        margin-bottom : 8px;
+        background    : var(--content-light);
+        border-radius : var(--rounded-sm);
+        //box-shadow    : var(--shadow-tiny);
+        cursor        : pointer;
+        border-bottom : 1px solid var(--light-border);
+
+        h4 {
+            font-size : 16px;
+        }
+
+        h5 {
+            font-size     : 14px;
+            font-weight   : 400;
+            color         : var(--text-secondary);
+            margin-bottom : 10px;
+        }
+
+        p {
+            color : var(--text-secondary);
+        }
+
+        .research-left {
+            width : 100%;
+        }
+        .research-left {
+            width : 100%;
+        }
+    }
+}

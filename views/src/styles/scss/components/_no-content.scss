@@ -3,7 +3,8 @@
     padding          : 60px 15px 30px;
     margin-top       : 50px;
     text-align       : center;
-    background-color : rgba(var(--orange-rgb), 0.2);
+    border-radius    : var(--rounded-md);
+    background-color : rgba(var(--xblue-rgb), 0.2);
 
     p {
         font-weight : 600;
@@ -38,7 +39,7 @@
             top              : 0;
             width            : 100%;
             height           : 100%;
-            background-color : rgba(var(--orange-rgb), 0.4);
+            background-color : rgba(var(--xblue-rgb), 0.4);
             z-index          : 1;
         }
 

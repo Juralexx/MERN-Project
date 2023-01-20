@@ -74,7 +74,8 @@ export const updateUser = async (req, res) => {
         networks,
         theme,
         contacts,
-        favorites
+        favorites,
+        research
     } = req.body
 
     if (!ObjectID.isValid(req.params.id))
@@ -97,6 +98,9 @@ export const updateUser = async (req, res) => {
                     contacts,
                     favorites
                 },
+                $addToSet: {
+                    research
+                }
             },
             {
                 new: true,

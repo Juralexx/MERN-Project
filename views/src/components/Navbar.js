@@ -52,7 +52,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
-                                                <NavLink to="/searches" className={isThisActive}>
+                                                <NavLink to="/researches" className={isThisActive}>
                                                     <Icon name="Computer" className="nav_icon" />
                                                     <p className="nav_p">Recherches</p>
                                                 </NavLink>
