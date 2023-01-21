@@ -4,7 +4,8 @@ import { Link, useSearchParams } from 'react-router-dom'
 import Icon from '../components/tools/icons/Icon'
 import Oval from '../components/tools/loaders/Oval'
 import { Button } from '../components/tools/global/Button'
-import { addClass, divideArrayIntoSizedParts, getHourOnly, numericDateParser, reverseArray } from '../components/Utils'
+import Pagination from '../components/tools/global/Pagination'
+import { addClass, divideArrayIntoSizedParts, getHourOnly, multiplyArray, numericDateParser, reverseArray, shuffleArray } from '../components/Utils'
 
 const Researches = ({ user, search, setDatas }) => {
     const [researches, setResearches] = useState([])
@@ -15,7 +16,7 @@ const Researches = ({ user, search, setDatas }) => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}api/user/${user._id}`)
                 .then(res => {
-                    setResearches(reverseArray(divideArrayIntoSizedParts(res.data.research, 20)))
+                    setResearches(reverseArray(divideArrayIntoSizedParts(shuffleArray(multiplyArray(res.data.research, 50)), 20)))
                     setLoading(false)
                 })
                 .catch(err => console.log(err))
@@ -45,12 +46,11 @@ const Researches = ({ user, search, setDatas }) => {
      */
 
     const [searchParams] = useSearchParams()
-    let currentPage = Number(searchParams.get('p'))
+    let currentPage = Number(searchParams.get('p')) || 1
 
     useEffect(() => {
-        const path = window.location.pathname + window.location.search
-        if (path === '/researches/' || path === '/researches' || currentPage > researches.length + 1) {
-            window.location.href = `${window.location.origin}/researches/?p=1`
+        if (currentPage > researches.length + 1) {
+            window.location.href = `${window.location.origin}/researches`
         }
     }, [currentPage, researches])
 
@@ -113,7 +113,7 @@ const Researches = ({ user, search, setDatas }) => {
                             <div className="pagination">
                                 {currentPage - 1 > 0 &&
                                     <>
-                                        <Link to={`/researches/?p=1`} className='arrow'>
+                                        <Link to={`/researches`} className='arrow'>
                                             <Icon name="DoubleArrowLeft" />
                                         </Link>
                                         <Link to={`/researches/?p=${currentPage - 1}`} className='arrow'>
