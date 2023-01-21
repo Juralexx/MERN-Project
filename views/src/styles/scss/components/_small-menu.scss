@@ -1,5 +1,4 @@
 .tools_box {
-
     .tools_menu {
         right : 30px;
     }
@@ -104,10 +103,6 @@
 
         &:hover {
             background-color : var(--x-light);
-            
-            a, p {
-                color : var(--primary);
-            }
             svg {
                 color : var(--primary);
             }

@@ -1,31 +1,27 @@
 import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import Icon from "../tools/icons/Icon";
+import SettingsMenu from "./SettingsMenu";
+import NotificationsMenu from "./Notifications";
+import MessengerMenu from "./Messenger";
+import { fullImage } from "../Utils";
 import { useClickOutside } from "../tools/hooks/useClickOutside";
 import { useDispatch } from "react-redux";
 import { removeNotifications } from "../../reducers/user.action";
-import SettingsMenu from "./SettingsMenu";
-import NotificationsMenu from "./notifications/Notifications";
-import MessengerMenu from "./Messenger";
-import { fullImage } from "../Utils";
-import Icon from "../tools/icons/Icon";
+import OnlineUsers from "./OnlineUsers";
 
 const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
-    const [openSettingsMenu, setOpenSettingsMenu] = useState(false)
-    const [openNotificationsMenu, setOpenNotificationsMenu] = useState(false)
-    const [openMessengerMenu, setOpenMessengerMenu] = useState(false)
+    const [open, setOpen] = useState('')
+
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, () => {
-        setOpenSettingsMenu(false)
-        setOpenNotificationsMenu(false)
-        setOpenMessengerMenu(false)
-    })
+    useClickOutside(wrapperRef, () => setOpen(''))
     const dispatch = useDispatch()
 
     const resetNotifications = () => {
-        setOpenNotificationsMenu(!openNotificationsMenu)
-        setOpenMessengerMenu(false)
-        setOpenSettingsMenu(false)
-        if (user.unseen_notifications > 0) { dispatch(removeNotifications(user._id)) }
+        if (user.unseen_notifications > 0) {
+            dispatch(removeNotifications(user._id))
+        }
+        setOpen(open === 'notifications' ? '' : 'notifications')
     }
 
     return (
@@ -39,16 +35,12 @@ const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
                 </li>
                 <div className="bordered"></div>
                 <li className="mini_nav-li">
-                    <div className="mini_nav-button" onClick={() => {
-                        setOpenMessengerMenu(!openMessengerMenu)
-                        setOpenNotificationsMenu(false)
-                        setOpenSettingsMenu(false)
-                    }}>
+                    <div className="mini_nav-button" onClick={() => setOpen(open === 'messenger' ? '' : 'messenger')}>
                         <Icon name="Message" />
                     </div>
                 </li>
                 <li className="mini_nav-li">
-                    <div className="mini_nav-button" onClick={resetNotifications}>
+                    <div className="mini_nav-button" onClick={() => resetNotifications()}>
                         {user.unseen_notifications > 0 && (
                             <div className="mini-badge">{user.unseen_notifications}</div>
                         )}
@@ -56,33 +48,38 @@ const MiniNav = ({ user, websocket, onlineUsers, onClick }) => {
                     </div>
                 </li>
                 <li className="mini_nav-li">
-                    <div className="mini_nav-button" onClick={() => {
-                        setOpenSettingsMenu(!openSettingsMenu)
-                        setOpenMessengerMenu(false)
-                        setOpenNotificationsMenu(false)
-                    }}>
+                    <div className="mini_nav-button" onClick={() => setOpen(open === 'users' ? '' : 'users')}>
+                        <Icon name="Group" />
+                    </div>
+                </li>
+                <li className="mini_nav-li">
+                    <div className="mini_nav-button" onClick={() => setOpen(open === 'settings' ? '' : 'settings')}>
                         <Icon name="DoubleCheckbox" />
                     </div>
                 </li>
             </ul>
-            <SettingsMenu
+            <MessengerMenu
                 user={user}
                 websocket={websocket}
-                onlineUsers={onlineUsers}
-                open={openSettingsMenu}
-                setOpen={setOpenSettingsMenu}
+                open={open === 'messenger'}
+                setOpen={setOpen}
             />
             <NotificationsMenu
                 user={user}
                 websocket={websocket}
-                open={openNotificationsMenu}
-                setOpen={setOpenNotificationsMenu}
+                open={open === 'notifications'}
             />
-            <MessengerMenu
+            <OnlineUsers
+                user={user}
+                onlineUsers={onlineUsers}
+                open={open === 'users'}
+                setOpen={setOpen}
+            />
+            <SettingsMenu
                 user={user}
                 websocket={websocket}
-                open={openMessengerMenu}
-                setOpen={setOpenMessengerMenu}
+                onlineUsers={onlineUsers}
+                open={open === 'settings'}
             />
         </div>
     )

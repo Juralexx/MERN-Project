@@ -7,7 +7,7 @@ import { Button, TextButton } from '../tools/global/Button'
 
 const LocationDisplayer = ({ datas, setDatas, setLocationDisplayer }) => {
     const [sliderKey, setSliderKey] = useState(0)
-    
+
     /**
      * 
      */
@@ -17,7 +17,7 @@ const LocationDisplayer = ({ datas, setDatas, setLocationDisplayer }) => {
         setSliderKey(key)
         setDatas(data => ({ ...data, aroundLocation: distance[key] }))
     }
-    
+
     /**
      * 
      */
@@ -26,7 +26,7 @@ const LocationDisplayer = ({ datas, setDatas, setLocationDisplayer }) => {
         let newLocs = datas.location.filter((x, i) => i !== key)
         setDatas(data => ({ ...data, location: newLocs }))
     }
-    
+
     /**
      * 
      */
@@ -59,7 +59,7 @@ const LocationDisplayer = ({ datas, setDatas, setLocationDisplayer }) => {
         const errorCallback = () => { }
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
     }
-    
+
     /**
      * 
      */
@@ -99,7 +99,14 @@ const LocationDisplayer = ({ datas, setDatas, setLocationDisplayer }) => {
                             <h4>Localisations récentes</h4>
                             {datas.recentLocations.map((element, key) => {
                                 return (
-                                    <div className="locations_search_item" key={key} onClick={() => setDatas(data => ({ ...data, location:  [...new Set([...datas.location, element])] }))}>
+                                    <div
+                                        className="locations_search_item"
+                                        key={key}
+                                        onClick={() => setDatas(data => ({
+                                            ...data,
+                                            location: [...new Set([...datas.location, element])].filter(e => e !== 'Toute la France')
+                                        }))}
+                                    >
                                         <Icon name="Position" />
                                         {element.type === "city" &&
                                             <div>{element.location} ({element.department_code})</div>

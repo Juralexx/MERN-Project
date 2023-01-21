@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { useOnline } from './hooks/useOnline';
 import ToolsMenu from '../tools/global/ToolsMenu';
 import { ToolsBtn } from '../tools/global/Button';
 import { fullImage } from '../Utils';
 import Icon from '../tools/icons/Icon';
+import { useOnline } from '../tools/custom-hooks/useOnline';
 
 const OnlineMembers = ({ onlineUsers, members, setRightbar, handleClick }) => {
     const { online, offline } = useOnline(members, onlineUsers)

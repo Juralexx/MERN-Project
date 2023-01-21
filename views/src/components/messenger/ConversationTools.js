@@ -11,8 +11,8 @@ import { IconInput } from '../tools/global/Inputs';
 import { ToolsBtn } from '../tools/global/Button';
 import { isAlreadyConversationExisting } from './functions';
 import { addClass, fullImage } from '../Utils';
-import { useOnline } from './hooks/useOnline';
 import { useOneLevelSearch } from '../tools/custom-hooks/useOneLevelSearch';
+import { useOnline } from '../tools/custom-hooks/useOnline';
 
 const ConversationTools = ({ onlineUsers, fetchedContacts, members, rightbar, setRightbar }) => {
     const { user, contactsArr, conversations, setConversations, changeCurrentChat, navigate } = useContext(MessengerContext)

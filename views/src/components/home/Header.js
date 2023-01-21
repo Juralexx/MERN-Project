@@ -20,6 +20,17 @@ const Header = ({ user, search, datas, setDatas }) => {
      * 
      */
 
+    const inputsWrapperRef = useRef()
+
+    if (inputsWrapperRef?.current) {
+        inputsWrapperRef?.current?.addEventListener("keydown", function (e) {
+            if (e.code === "Enter") {
+                search()
+            }
+        })
+    }
+
+
     return (
         <div id="header">
             <div className="container py-8">
@@ -33,7 +44,7 @@ const Header = ({ user, search, datas, setDatas }) => {
                             </Link>
                         </Button>
                     </div>
-                    <div className="col-12 col-lg-6 pt-5 lg:pt-0 lg:pl-5 relative flex flex-col justify-center">
+                    <div className="col-12 col-lg-6 pt-5 lg:pt-0 lg:pl-5 relative flex flex-col justify-center" ref={inputsWrapperRef}>
                         <IconInput
                             className="is_start_icon mb-3"
                             placeholder="Rechercher un projet"

@@ -136,12 +136,10 @@
 @media(max-width: 992px) {
     .mini_nav_container {
         right  : 10px;
-        height : 54px;
         .mini_nav {
-            height : 54px;
             .mini_nav-ul {
                 .mini_nav-li {
-                    min-width: 34px;
+                    min-width: 32px;
                     .mini_nav-a {
                         padding : 0;
                         .mini_nav-avatar {
@@ -154,8 +152,8 @@
                         }
                     }
                     .mini_nav-button {
-                        width  : 34px;
-                        height : 34px;
+                        width  : 32px;
+                        height : 32px;
                     }
                 }
             }

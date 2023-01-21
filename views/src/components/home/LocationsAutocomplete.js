@@ -54,6 +54,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                 new_region: value.REG_NOM,
                 new_region_code: value.REG_CODE
             }]
+            .filter(e => e !== 'Toute la France')
         }))
         setSearch(data => ({ ...data, state: false, query: '', isLoading: false }))
         setLocationDisplayer(true)
@@ -83,7 +84,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                     value={search.query}
                     onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                     onChange={searchLocation}
-                    onClick={() => setLocationDisplayer(!locationDisplayer)}
+                    onClick={() => setLocationDisplayer(true)}
                 />
             ) : (
                 <div className="locations_displayer" onClick={() => setLocationDisplayer(!locationDisplayer)}>

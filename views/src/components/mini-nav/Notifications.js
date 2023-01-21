@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import ContactRequest from "./ContactRequest";
-import MemberRequest from "./MemberRequest";
-import { setNotifSeen } from "../../tools/functions/notifications";
-import { addClass } from '../../Utils'
-import ToolsMenu from "../../tools/global/ToolsMenu";
-import Icon from "../../tools/icons/Icon";
+import ContactRequest from "./notifications/ContactRequest";
+import MemberRequest from "./notifications/MemberRequest";
+import { setNotifSeen } from "../tools/functions/notifications";
+import { addClass } from '../Utils'
+import ToolsMenu from "../tools/global/ToolsMenu";
+import Icon from "../tools/icons/Icon";
 
 const NotificationsMenu = ({ open, user, websocket }) => {
     const [navbar, setNavbar] = useState(1)

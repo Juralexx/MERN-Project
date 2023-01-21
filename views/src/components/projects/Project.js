@@ -42,7 +42,7 @@ const Project = ({ user, websocket, projects, setProjects }) => {
             })
             setLoading(false)
         }
-    }, [project, user._id, isLoading])
+    }, [project, URLID, URL, user._id, isLoading])
 
     /**
      * 

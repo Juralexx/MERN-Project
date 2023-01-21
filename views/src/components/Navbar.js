@@ -26,7 +26,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                         <img className="logo-main" src="/img/logo-top.png" alt="" />
                                     </Link>
                                 </div>
-                                <div className="hidden lg:flex ml-8">
+                                <div className="hidden lg:flex lg:ml-4 xl:ml-8">
                                     <TextButton className="btn_icon_start">
                                         <Link to="/add-project">
                                             <Icon name="Plus" className="nav_icon" />Déposer un projet
@@ -52,7 +52,7 @@ const Navbar = ({ websocket, user, uid, onlineUsers }) => {
                                                 </NavLink>
                                             </li>
                                             <li className="nav_li" onClick={closeOnClick}>
-                                                <NavLink to="/researches/?p=1" className={isThisActive}>
+                                                <NavLink to="/researches" className={isThisActive}>
                                                     <Icon name="Computer" className="nav_icon" />
                                                     <p className="nav_p">Recherches</p>
                                                 </NavLink>

@@ -7,7 +7,7 @@ import { ADD_FAVORITE_CONVERSATION, DELETE_CONVERSATION, RECEIVE_ADD_MEMBER_CONV
 const initialState = {}
 
 export default function userReducer(state = initialState, action) {
-    const decrementNotifIfUpperZero = () => { if (state.unseen_notifications > 0) { return state.unseen_notifications - 1 } }
+    //const decrementNotifIfUpperZero = () => { if (state.unseen_notifications > 0) { return state.unseen_notifications - 1 } }
 
     switch (action.type) {
         case GET_USER:

@@ -19,7 +19,7 @@ const MessengerMenu = ({ open, setOpen, user, websocket }) => {
                                 <Icon name="Write" />
                             </div>
                             <Link to={"/messenger"}>
-                                <div className="tools_btn" onClick={() => setOpen(false)}>
+                                <div className="tools_btn" onClick={() => setOpen('')}>
                                     <Icon name="Expand" />
                                 </div>
                             </Link>

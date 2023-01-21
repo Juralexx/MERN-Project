@@ -12,9 +12,9 @@ import { ConversationLoader, OnlineUserMobileLoader } from './tools/Loaders';
 import Conversation from './Conversation';
 import NewConversationModal from './NewConversationModal';
 import TemporaryConversation from './tools/TemporaryConversation';
-import { useOnline } from './hooks/useOnline';
 import { fullImage } from '../Utils';
 import { useSearchConversation } from './hooks/useSearchConversation';
+import { useOnline } from '../tools/custom-hooks/useOnline';
 
 const MobileConversationMenu = ({ fetched, fetchedContacts, onlineUsers, newMessage, notification, setRightbar }) => {
     const { contactsArr, conversations } = useContext(MessengerContext)

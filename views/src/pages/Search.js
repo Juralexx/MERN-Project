@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useClickOutside } from '../components/tools/hooks/useClickOutside'
 import { departments, regions } from '../api/regions'
 import Icon from '../components/tools/icons/Icon'
@@ -11,6 +11,7 @@ import Card from '../components/tools/components/Card'
 import CardLoading from '../components/tools/components/CardLoading'
 import { Button, IconToggle, TextButton } from '../components/tools/global/Button'
 import { DropdownInput, IconInput } from '../components/tools/global/Inputs'
+import { addClass, divideArrayIntoSizedParts } from '../components/Utils'
 
 const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) => {
     const categoriesRef = useRef()
@@ -24,8 +25,20 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
      * 
      */
 
+    const [results, setResults] = useState({ all: [], paginatedResults: [], isLoading: true })
+
     const [searchParams, setSearchParams] = useSearchParams()
-    const [response, setResponse] = useState({ results: [], isLoading: true })
+
+    let currentPage = Number(searchParams.get('p')) || 1
+
+    useEffect(() => {
+        if (currentPage > results.paginatedResults.length + 1)
+            window.location.href = `${window.location.origin}/`
+    }, [currentPage, results])
+
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (searchParams) {
@@ -111,7 +124,11 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                 state: searchParams.get('state') || '',
             }))
 
-            setResponse(res => ({ ...res, results: sortedProjects.randomized, isLoading: false }))
+            setResults({
+                all: sortedProjects.randomized,
+                paginatedResults: divideArrayIntoSizedParts(sortedProjects.randomized, 20),
+                isLoading: false
+            })
         }
     }, [searchParams, departments, regions])
 
@@ -123,7 +140,7 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
         <>
             <div className="search-page">
                 <div className="search-header py-8">
-                    <div className="container col-lg-8 mx-auto">
+                    <div className="search-header-container">
                         <IconInput
                             className="is_start_icon mb-3"
                             placeholder="Rechercher un projet"
@@ -241,10 +258,10 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                     </div>
                 </div>
                 <div className="search-results_container container-lg">
-                    {!response.isLoading ? (
-                        response.results.length > 0 &&
+                    {!results.isLoading ? (
+                        results.all.length > 0 &&
                         <div className="search-results_top">
-                            Résultats de votre recherche <span>({response.results.length} projets)</span>
+                            Résultats de votre recherche <span>({results.all.length} projets)</span>
                         </div>
                     ) : (
                         <div className="search-results_top">
@@ -256,20 +273,56 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                         </div>
                     )}
                     <div className="search-results_content">
-                        {!response.isLoading ? (
-                            response.results.length > 0 ? (
-                                <div className="search-results_projects">
-                                    {response.results.map((element, key) => {
-                                        return (
-                                            <Card
-                                                key={key}
-                                                project={element}
-                                                user={user}
-                                                websocket={websocket}
-                                            />
-                                        )
-                                    })}
-                                </div>
+                        {!results.isLoading ? (
+                            results.all.length > 0 ? (
+                                <>
+                                    <div className="search-results_projects">
+                                        {results.paginatedResults[currentPage - 1].map((element, key) => {
+                                            return (
+                                                <Card
+                                                    key={key}
+                                                    project={element}
+                                                    user={user}
+                                                    websocket={websocket}
+                                                />
+                                            )
+                                        })}
+                                    </div>
+                                    <div className='pagination-container !pt-[70px]'>
+                                        <div className="pagination">
+                                            {currentPage - 1 > 0 &&
+                                                <>
+                                                    <Link to={`/researches`} className='arrow'>
+                                                        <Icon name="DoubleArrowLeft" />
+                                                    </Link>
+                                                    <Link to={`/researches/?p=${currentPage - 1}`} className='arrow'>
+                                                        <Icon name="CaretLeft" />
+                                                    </Link>
+                                                </>
+                                            }
+                                            {[...new Array(results.paginatedResults.length)].map((_, key) => {
+                                                return (
+                                                    <Link to={`/researches/?p=${key + 1}`}
+                                                        key={key}
+                                                        className={`${addClass(currentPage > (key + 3) || currentPage < (key - 1), 'hidden')} ${addClass(currentPage === (key + 1), 'active')}`}
+                                                    >
+                                                        {key + 1}
+                                                    </Link>
+                                                )
+                                            })}
+                                            {currentPage + 1 <= results.paginatedResults.length &&
+                                                <>
+                                                    <Link to={`/researches/?p=${currentPage + 1}`} className='arrow'>
+                                                        <Icon name="CaretRight" />
+                                                    </Link>
+                                                    <Link to={`/researches/?p=${results.paginatedResults.length}`} className='arrow'>
+                                                        <Icon name="DoubleArrowRight" />
+                                                    </Link>
+                                                </>
+                                            }
+                                        </div>
+                                    </div>
+                                </>
                             ) : (
                                 <div className="search-no-results">
                                     <img src="/img/search.png" alt="Aucun resultat ne correspond à votre recherche" />
@@ -288,7 +341,7 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                                 })}
                             </div>
                         )}
-                        {response.results.length < 12 &&
+                        {results.all.length < 12 &&
                             <>
                                 <div className="search-results_top mt-10">
                                     <h3>Explorer plus de projets</h3>

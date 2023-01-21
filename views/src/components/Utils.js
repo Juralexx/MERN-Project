@@ -522,6 +522,22 @@ export function multiplyArray(array, num) {
 }
 
 /**
+ * rRturn the array randomized
+ * @param {*} array Array to suffle
+ */
+
+export const shuffleArray = (array) => {
+    let copy = [...array]
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = temp;
+    }
+    return copy
+}
+
+/**
  * Group array values by parameter value. Return an array with nested arrays.
  * @param {*} array Original array
  * @param {*} parameter Parameter to group by

@@ -97,12 +97,14 @@
                     padding     : 3px 0;
                     background  : transparent;
 
-                    a, button {
+                    a, p, button {
                         display     : flex;
                         align-items : center;
                     }
                     p {
                         font-size   : 12px;
+                        line-height : 18px;
+                        padding-top : 2px;
                         font-weight : 400;
                     }
 
