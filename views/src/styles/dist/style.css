@@ -1529,7 +1529,7 @@ select:-webkit-autofill:focus {
   position: absolute;
   top: 46px;
   width: 97%;
-  background: var(--content-light);
+  background: var(--input);
   height: auto;
   z-index: 700;
   border-radius: var(--rounded-sm);
@@ -1610,6 +1610,7 @@ select:-webkit-autofill:focus {
     right: 0;
     z-index: 900;
     overflow-y: scroll;
+    background-color: var(--content-light);
   }
   .categories_container .categories_header {
     position: fixed;
@@ -8038,7 +8039,7 @@ select:-webkit-autofill:focus {
   position: relative;
 }
 .home_small_swiper .small_swiper .small_slide {
-  width: 170px;
+  width: 140px;
   height: 90px;
 }
 .home_small_swiper .small_swiper .small_slide .small_slide_card {

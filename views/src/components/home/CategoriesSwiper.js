@@ -5,28 +5,12 @@ import "swiper/css/navigation";
 import 'swiper/css';
 import { fullImage } from '../Utils';
 import Icon from '../tools/icons/Icon';
+import { categories } from '../../api/categories';
 
 const CategoriesSwiper = () => {
     const [swiper, setSwiper] = useState()
     const prevRef = useRef()
     const nextRef = useRef()
-
-    const categories = [
-        { name: "Art", url: `${process.env.REACT_APP_API_URL}files/categories/art.jpg` },
-        { name: "Artisanat", url: `${process.env.REACT_APP_API_URL}files/categories/artisanat.jpg` },
-        { name: "Cuisine", url: `${process.env.REACT_APP_API_URL}files/categories/cuisine.jpg` },
-        { name: "Bien-être", url: `${process.env.REACT_APP_API_URL}files/categories/bien-etre.jpg` },
-        { name: "Edition", url: `${process.env.REACT_APP_API_URL}files/categories/edition-et-journal.jpg` },
-        { name: "Education", url: `${process.env.REACT_APP_API_URL}files/categories/education.jpg` },
-        { name: "Film et vidéo", url: `${process.env.REACT_APP_API_URL}files/categories/film-et-video.jpg` },
-        { name: "Jeux", url: `${process.env.REACT_APP_API_URL}files/categories/jeux.jpg` },
-        { name: "Mode et design", url: `${process.env.REACT_APP_API_URL}files/categories/mode-et-design.jpg` },
-        { name: "Musique", url: `${process.env.REACT_APP_API_URL}files/categories/musique.jpg` },
-        { name: "Spectacle", url: `${process.env.REACT_APP_API_URL}files/categories/spectacle.jpg` },
-        { name: "Patrimoine", url: `${process.env.REACT_APP_API_URL}files/categories/patrimoine.jpg` },
-        { name: "Sport", url: `${process.env.REACT_APP_API_URL}files/categories/sport.jpg` },
-        { name: "Technologie", url: `${process.env.REACT_APP_API_URL}files/categories/technologie.jpg` }
-    ]
 
     useEffect(() => {
         if (swiper) {
@@ -76,7 +60,7 @@ const CategoriesSwiper = () => {
                     {categories.map((element, key) => {
                         return (
                             <SwiperSlide key={key} className="small_slide">
-                                <div className="small_slide_card" style={fullImage(element.url)}>
+                                <div className="small_slide_card" style={fullImage(element.img)}>
                                     <p>{element.name}</p>
                                 </div>
                             </SwiperSlide>

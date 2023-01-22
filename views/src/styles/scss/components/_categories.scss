@@ -111,7 +111,7 @@
     position      : absolute;
     top           : 46px;
     width         : 97%;
-    background    : var(--content-light);
+    background    : var(--input);
     height        : auto;
     z-index       : 700;
     border-radius : var(--rounded-sm);
@@ -179,14 +179,15 @@
 
 @media(max-width:768px) {
     .categories_container {
-        position   : fixed;
-        width      : 100vw;
-        height     : 100vh;
-        top        : 0;
-        left       : 0;
-        right      : 0;
-        z-index    : 900;
-        overflow-y : scroll;
+        position         : fixed;
+        width            : 100vw;
+        height           : 100vh;
+        top              : 0;
+        left             : 0;
+        right            : 0;
+        z-index          : 900;
+        overflow-y       : scroll;
+        background-color : var(--content-light);
         .categories_header {
             position         : fixed;
             top              : 0;

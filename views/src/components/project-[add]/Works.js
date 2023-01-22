@@ -5,7 +5,7 @@ import { Button, TextButton } from '../tools/global/Button';
 import Oval from '../tools/loaders/Oval'
 import { ErrorCard } from '../tools/global/ErrorCard';
 import Icon from '../tools/icons/Icon';
-import { addClass, deleteItemFromArray, removeAccents, removeSpecialChars } from '../Utils';
+import { addClass, deleteItemFromArray } from '../Utils';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 
 const Works = ({ datas, setDatas, error, setError }) => {

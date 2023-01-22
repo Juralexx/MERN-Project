@@ -221,6 +221,40 @@ export const replaceChar = (str, char, newChar) => {
 }
 
 /**
+ * Check if a string includes one of the mentioned elements
+ * @param {*} string String to check
+ * @param {*} elements Elements to find
+ */
+
+export const doesStringIncludes = (string, elements) => {
+    let isElement = false
+    for (var i = 0; i < elements.length; i++) {
+        if (string.indexOf(elements[i]) !== -1) {
+            isElement = true;
+            break;
+        }
+    }
+    return isElement
+}
+
+/**
+ * Check if a string includes one of the mentioned elements, return the first element matching
+ * @param {*} string String to check
+ * @param {*} elements Elements to find
+ */
+
+export const findFirstWordContained = (string, elements) => {
+    let isElement
+    for (var i = 0; i < elements.length; i++) {
+        if (string.indexOf(elements[i]) !== -1) {
+            isElement = elements[i]
+            break;
+        }
+    }
+    return isElement
+}
+
+/**
  * Check email validity.
  * @param {*} email Email to check
  */
@@ -228,7 +262,8 @@ export const replaceChar = (str, char, newChar) => {
 export const isEmailValid = (email) => {
     // eslint-disable-next-line
     const regexp = new RegExp(/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i)
-    if (regexp.test(email)) return true
+    if (regexp.test(email))
+        return true
     else return false
 }
 
@@ -239,7 +274,8 @@ export const isEmailValid = (email) => {
 
 export const isPhoneValid = (phone) => {
     const regexp = new RegExp(/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/)
-    if (regexp.test(phone)) return true
+    if (regexp.test(phone))
+        return true
     else return false
 }
 
@@ -450,6 +486,16 @@ export const timeBetween = (array, days) => {
 }
 
 /**
+ * Add an item to an array
+ * @param {*} array Array to add item in
+ * @param {*} item Item to add
+ */
+
+export const addItemInArray = (array, item) => {
+    return [...array, item]
+}
+
+/**
  * Remove choosen item from specified array
  * @param {*} array Array to remove from
  * @param {*} key Key of the element to remove
@@ -459,6 +505,35 @@ export const deleteItemFromArray = (array, key) => {
     let arr = [...array]
     arr.splice(key, 1)
     return arr
+}
+
+/**
+ * Check if an array includes one of the mentioned elements
+ * @param {*} array Array to check
+ * @param {*} elements Elements to find
+ */
+
+export const doesArrayIncludes = (array, elements) => {
+    array.filter(el => elements.some(e => e === el))
+}
+
+/**
+ * Check if all arrays in an array contain at least one value
+ * @param {*} array Array of arrays
+ */
+
+export const doesAllArraysInArrayContainValues = (array) => {
+    let state = false
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].length === 0) {
+            state = false
+            break;
+        } else if (i === array.length - 1) {
+            state = true
+            break;
+        }
+    }
+    return state
 }
 
 /**

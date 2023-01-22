@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 import Search from './Search';
 import Researches from './Researches';
 import ProjectPage from './Project';
-import { StringButton, TextButton } from '../components/tools/global/Button';
+import { doesAllArraysInArrayContainValues } from '../components/Utils';
 
 const Home = ({ websocket, user }) => {
     const [isLoading, setLoading] = useState(true)
@@ -237,7 +237,7 @@ const Home = ({ websocket, user }) => {
                             } />
                             {['search/*', '/all', '/recents', '/liked', '/followed']
                                 .map(path => (
-                                    <Route key="Home" path={path} element={
+                                    <Route key={path} path={path} element={
                                         <Search
                                             user={user}
                                             websocket={websocket}
@@ -247,8 +247,7 @@ const Home = ({ websocket, user }) => {
                                             sortedProjects={sortedProjects}
                                         />
                                     } />
-                                ))
-                            }
+                                ))}
                             <Route path="researches/*" element={
                                 <Researches
                                     user={user}

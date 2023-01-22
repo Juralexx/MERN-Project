@@ -4,8 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import Icon from '../components/tools/icons/Icon'
 import Oval from '../components/tools/loaders/Oval'
 import { Button } from '../components/tools/global/Button'
-import Pagination from '../components/tools/global/Pagination'
-import { addClass, divideArrayIntoSizedParts, getHourOnly, multiplyArray, numericDateParser, reverseArray, shuffleArray } from '../components/Utils'
+import { addClass, divideArrayIntoSizedParts, getHourOnly, numericDateParser, reverseArray } from '../components/Utils'
 
 const Researches = ({ user, search, setDatas }) => {
     const [researches, setResearches] = useState([])
@@ -16,7 +15,9 @@ const Researches = ({ user, search, setDatas }) => {
             await axios
                 .get(`${process.env.REACT_APP_API_URL}api/user/${user._id}`)
                 .then(res => {
-                    setResearches(reverseArray(divideArrayIntoSizedParts(shuffleArray(multiplyArray(res.data.research, 50)), 20)))
+                    let reversed = reverseArray(res.data.research)
+                    let divided = divideArrayIntoSizedParts(reversed, 20)
+                    setResearches(divided)
                     setLoading(false)
                 })
                 .catch(err => console.log(err))

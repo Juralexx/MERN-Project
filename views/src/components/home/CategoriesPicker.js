@@ -21,7 +21,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
 
     return (
         open && (
-            <div className={`${className ? "categories_container " + className : "categories_container"}`}>
+            <div className={`${className ? "categories_container " + className : "categories_container"} custom-scrollbar`}>
                 <div className="categories_header">
                     <div className="move-back md:hidden" onClick={() => setOpen(false)}>
                         <Icon name="ArrowLeft" />
@@ -87,7 +87,7 @@ const CategoriesPicker = ({ open, setOpen, setDatas, className }) => {
                     </div>
                 </div>
                 <div className="categories_bottom_link">
-                    <Link to="/">
+                    <Link to="/all">
                         Voir tous les projets <Icon name="DoubleArrowRight" />
                     </Link>
                 </div>

@@ -11,7 +11,7 @@ import Card from '../components/tools/components/Card'
 import CardLoading from '../components/tools/components/CardLoading'
 import { Button, IconToggle, TextButton } from '../components/tools/global/Button'
 import { DropdownInput, IconInput } from '../components/tools/global/Inputs'
-import { addClass, divideArrayIntoSizedParts, reverseArray } from '../components/Utils'
+import { addClass, divideArrayIntoSizedParts, doesAllArraysInArrayContainValues, doesStringIncludes } from '../components/Utils'
 
 const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) => {
     const categoriesRef = useRef()
@@ -134,43 +134,30 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
             })
         }
 
-        if (pathname) {
-            switch (pathname) {
-                case '/all':
-                    console.log('all')
-                    setResults({
-                        all: sortedProjects.randomized,
-                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.randomized, 20),
-                        isLoading: false
-                    })
-                    break;
-                case '/recents':
-                    console.log('recents')
-                    setResults({
-                        all: sortedProjects.byDates,
-                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.byDates, 20),
-                        isLoading: false
-                    })
-                    break;
-                case '/liked':
-                    setResults({
-                        all: sortedProjects.byLikes,
-                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.byLikes, 20),
-                        isLoading: false
-                    })
-                    break;
-                case '/followed':
-                    setResults({
-                        all: sortedProjects.byFollowings,
-                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.byFollowings, 20),
-                        isLoading: false
-                    })
-                    break;
-                default:
-                    break;
+        console.log(doesAllArraysInArrayContainValues(sortedProjects))
+
+        if (doesAllArraysInArrayContainValues(sortedProjects)) {
+            if (pathname) {
+                switch (pathname) {
+                    case '/all':
+                        setResults({ all: sortedProjects.randomized, paginatedResults: divideArrayIntoSizedParts(sortedProjects.randomized, 20), isLoading: false })
+                        break;
+                    case '/recents':
+                        setResults({ all: sortedProjects.byDates, paginatedResults: divideArrayIntoSizedParts(sortedProjects.byDates, 20), isLoading: false })
+                        break;
+                    case '/liked':
+                        setResults({ all: sortedProjects.byLikes, paginatedResults: divideArrayIntoSizedParts(sortedProjects.byLikes, 20), isLoading: false })
+                        break;
+                    case '/followed':
+                        setResults({ all: sortedProjects.byFollowings, paginatedResults: divideArrayIntoSizedParts(sortedProjects.byFollowings, 20), isLoading: false })
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-    }, [searchParams, pathname, departments, regions])
+
+    }, [searchParams, pathname, departments, regions, sortedProjects])
 
     /**
      * 
@@ -300,9 +287,26 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                 <div className="search-results_container container-lg">
                     {!results.isLoading ? (
                         results.all.length > 0 &&
-                        <div className="search-results_top">
-                            Résultats de votre recherche <span>({results.all.length} projets)</span>
-                        </div>
+                            !doesStringIncludes(pathname, ['all', 'recents', 'liked', 'followed']) ? (
+                            <div className="search-results_top">
+                                Résultats de votre recherche : <span>{results.all.length} projets</span>
+                            </div>
+                        ) : (
+                            <div className="search-results_top">
+                                {pathname === '/all' &&
+                                    <>Tous les projets : <span>{results.all.length} projets</span></>
+                                }
+                                {pathname === '/recents' &&
+                                    <>Projets récents : <span>{results.all.length} projets</span></>
+                                }
+                                {pathname === '/liked' &&
+                                    <>Projets les plus soutenus : <span>{results.all.length} projets</span></>
+                                }
+                                {pathname === '/followed' &&
+                                    <>Projets les plus suivis : <span>{results.all.length} projets</span></>
+                                }
+                            </div>
+                        )
                     ) : (
                         <div className="search-results_top">
                             <div className='flex'>
