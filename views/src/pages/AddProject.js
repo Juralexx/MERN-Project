@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-import { addClass, removeAccents } from '../components/Utils'
+import { addClass, diffBetweenDatesNegativeIfLess, removeAccents } from '../components/Utils'
 import { Button, TextButton } from "../components/tools/global/Button";
 import Icon from "../components/tools/icons/Icon";
 import Title from "../components/project-[add]/Title";
@@ -32,7 +32,8 @@ const AddProject = ({ user }) => {
             geolocalisation: "",
         },
         description: "",
-        workArray: [],
+        works: [],
+        day: "",
         start: "",
         end: "",
         content: {},
@@ -46,6 +47,10 @@ const AddProject = ({ user }) => {
     const [navbar, setNavbar] = useState(0)
     // const navigate = useNavigate()
 
+    /**
+     * 
+     */
+
     const handleAddProject = async () => {
         if (datas.title === "" || datas.title.length < 10 || datas.title.length > 60) {
             setNavbar(0)
@@ -53,11 +58,11 @@ const AddProject = ({ user }) => {
                 element: "title",
                 error: "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères."
             })
-        } else if (datas.subtitle === "" || datas.subtitle.length < 10 || datas.subtitle.length > 100) {
+        } else if (datas.subtitle === "" || datas.subtitle.length < 10 || datas.subtitle.length > 150) {
             setNavbar(0)
             setError({
                 element: "subtitle",
-                error: "Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères."
+                error: "Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 150 caractères."
             })
         } else if (datas.category === "") {
             setNavbar(0)
@@ -71,22 +76,42 @@ const AddProject = ({ user }) => {
                 element: "description",
                 error: "Veuillez ajouter une courte description à votre projet, votre courte-description doit faire entre 10 et 300 caractères."
             })
+        } else if (datas.start !== '' || datas.end !== '') {
+            if (datas.start !== '' && datas.end === '') {
+                setNavbar(0)
+                setError({
+                    element: "end",
+                    error: "Veuillez sélectionner une date de fin."
+                })
+            } else if (datas.start === '' && datas.end !== '') {
+                setNavbar(0)
+                setError({
+                    element: "start",
+                    error: "Veuillez sélectionner une date de début."
+                })
+            } else if (diffBetweenDatesNegativeIfLess(datas.start, datas.end) <= 0) {
+                setNavbar(0)
+                setError({
+                    element: "start",
+                    error: "La date de fin sélectionnée ne peux pas être inférieure à celle de début."
+                })
+            }
         } else if (datas.content === "" || datas.content.length < 10 || datas.content.length > 100000) {
             setNavbar(1)
             setError({
                 element: "content",
                 error: "Veuillez saisir une description valide, votre description doit faire entre 10 et 100 000 caractères."
             })
-        } else if (datas.workArray.length > 0) {
-            for (let i = 0; i < datas.workArray.length; i++) {
-                if (datas.workArray[i].name === "") {
+        } else if (datas.works.length > 0) {
+            for (let i = 0; i < datas.works.length; i++) {
+                if (datas.works[i].name === "") {
                     setNavbar(3)
                     setError({
                         element: `work-${i}`,
                         error: "Veuillez saisir un métier ou un nombre valide..."
                     })
                 } else {
-                    if (JSON.stringify(datas.workArray).includes(JSON.stringify(datas.workArray[i].work))) {
+                    if (JSON.stringify(datas.works).includes(JSON.stringify(datas.works[i].name))) {
                         setNavbar(3)
                         setError({
                             element: `work-${i}`,
@@ -151,9 +176,10 @@ const AddProject = ({ user }) => {
                     },
                     description: datas.description,
                     content: datas.content,
+                    day: datas.day,
                     start: datas.start,
                     end: datas.end,
-                    works: datas.workArray,
+                    works: datas.works,
                     qna: datas.qna,
                     networks: datas.networks,
                     manager: user._id,
@@ -168,30 +194,15 @@ const AddProject = ({ user }) => {
             }).then(async res => {
                 if (res.data.errors) {
                     if (res.data.errors.title) {
-                        setError({
-                            element: 'title',
-                            error: res.data.errors.title
-                        })
+                        setError({ element: 'title', error: res.data.errors.title })
                     } else if (res.data.errors.subtitle) {
-                        setError({
-                            element: 'subtitle',
-                            error: res.data.errors.subtitle
-                        })
+                        setError({ element: 'subtitle', error: res.data.errors.subtitle })
                     } else if (res.data.errors.category) {
-                        setError({
-                            element: 'category',
-                            error: res.data.errors.category
-                        })
+                        setError({ element: 'category', error: res.data.errors.category })
                     } else if (res.data.errors.description) {
-                        setError({
-                            element: 'description',
-                            error: res.data.errors.description
-                        })
+                        setError({ element: 'description', error: res.data.errors.description })
                     } else if (res.data.errors.content) {
-                        setError({
-                            element: 'content',
-                            error: res.data.errors.content
-                        })
+                        setError({ element: 'content', error: res.data.errors.content })
                     }
                 } else {
                     let pictures = datas.mainPic.concat(datas.pictures)
@@ -213,6 +224,10 @@ const AddProject = ({ user }) => {
             }).catch(err => console.log(err))
         }
     }
+
+    /**
+     * 
+     */
 
     return (
         <div className="add-project">
@@ -285,6 +300,8 @@ const AddProject = ({ user }) => {
                         <End
                             datas={datas}
                             setDatas={setDatas}
+                            error={error}
+                            setError={setError}
                         />
                         <Networks
                             datas={datas}
@@ -344,10 +361,10 @@ const AddProject = ({ user }) => {
                         <div className="titles-container">
                             <h1>Compétences recherchées</h1>
                             <h2>Séléctionnez les compétences que vous recherchez et décrivez pourquoi.</h2>
-                            {datas.workArray.length === 0 &&
+                            {datas.works.length === 0 &&
                                 <TextButton
                                     className="mx-auto mt-8"
-                                    onClick={() => setDatas(data => ({ ...data, workArray: [{ name: "", description: "" }] }))}
+                                    onClick={() => setDatas(data => ({ ...data, works: [{ name: "", description: "" }] }))}
                                 >
                                     Rechercher des compétences
                                 </TextButton>

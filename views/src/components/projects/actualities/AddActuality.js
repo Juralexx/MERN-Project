@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import ReactQuill from 'react-quill'
 import { Button, TextButton } from '../../tools/global/Button'
-import { ErrorCard } from '../../tools/global/Error'
+import { ErrorCard } from '../../tools/global/ErrorCard'
 import { ClassicInput } from '../../tools/global/Inputs'
 import EditorToolbar, { formats, modules } from '../../tools/editor/EditorToolbar'
 import { addClass, fullImage, randomNbLtID, removeAccents } from '../../Utils'
@@ -136,13 +136,11 @@ const AddActuality = ({ project, user, websocket }) => {
                     value={datas.title}
                 />
                 <div className="field_infos full">{datas.title.length} / 60 caractères</div>
-                {error.element === "title" &&
-                    <ErrorCard
-                        display={error.element === "title"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
+                <ErrorCard
+                    display={error.element === "title"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
+                />
             </div>
 
             <div className="content-form">
@@ -158,13 +156,11 @@ const AddActuality = ({ project, user, websocket }) => {
                         formats={formats}
                     />
                     <div className="field_infos ml-auto">{count} / 10 000 caractères</div>
-                    {error.element === "description" &&
-                        <ErrorCard
-                            display={error.element === "description"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "description"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
             </div>
 

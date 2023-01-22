@@ -6,10 +6,9 @@
     top           : 55px;
     right         : 5px;
     background    : var(--content-light);
-    box-shadow    : var(--shadow-xl);
+    box-shadow    : var(--shadow-two);
     border-radius : var(--rounded-sm);
     z-index       : 800;
-    border        : 2px solid var(--x-light);
 
     .notifications-header {
         display         : flex;
@@ -18,11 +17,10 @@
         width           : 100%;
         margin-bottom   : 8px;
         color           : var(--text);
-        font-weight     : 500;
+    }
 
-        .title {
-            font-size : 18px;
-        }
+    .icon-input {
+        height : 40px;
     }
 
     .notifications-navbar {
@@ -31,17 +29,16 @@
         padding : 0 0 10px;
         color   : var(--text);
 
-        .navlink {
+        > div {
             padding          : 1px 12px;
-            cursor           : pointer;
             background-color : var(--content-light);
             border-radius    : var(--rounded-sm);
             border           : 1px solid var(--light-border);
+            cursor           : pointer;
 
             &.active {
                 background-color : var(--primary);
                 color            : white;
-                border           : 1px solid transparent;
             }
 
             &:nth-child(2) {
@@ -51,23 +48,20 @@
     }
 
     .empty-notifications {
-        display     : flex;
-        align-items : center;
-        color       : var(--text);
-        font-size   : 14px;
-        margin-top  : 10px;
+        padding-top     : 5px;
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        color           : var(--text);
+        margin-top      : 10px;
 
         svg {
-            width        : 22px;
-            height       : 22px;
+            width        : 26px;
+            height       : 26px;
             margin-right : 10px;
         }
     }
 }
-
-/**
-* QUERIES
-*/
 
 @media(max-width: 576px) {
     .notifications-menu {

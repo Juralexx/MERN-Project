@@ -34,7 +34,7 @@ const OnlineUsers = ({ user, onlineUsers, open, setOpen }) => {
                     onChange={oneLevelSearch}
                 />
                 {search.state && search.results.length === 0 &&
-                    <div className='pt-3 pb-1 text-center'>Aucun resultat</div>
+                    <div className='pt-3 pb-1 text-center'>Aucun résultat</div>
                 }
             </div>
             <div className="online-users-inner">
@@ -48,8 +48,8 @@ const OnlineUsers = ({ user, onlineUsers, open, setOpen }) => {
                                     </div>
                                     {online.map((element, key) => {
                                         return (
-                                            <div className={`online-users ${isElementInSearchResults(element, "block")}`} key={key}>
-                                                <div className="online-user online">
+                                            <div className={`online-users online ${isElementInSearchResults(element, "flex")}`} key={key}>
+                                                <div className="online-user">
                                                     <div className="online-user-img" style={fullImage(element.picture)}></div>
                                                     <div className="online-user-name">
                                                         <div className="online-user-pseudo">
@@ -78,10 +78,10 @@ const OnlineUsers = ({ user, onlineUsers, open, setOpen }) => {
                                     </div>
                                     {offline.map((element, key) => {
                                         return (
-                                            <div className={`online-users ${isElementInSearchResults(element, "block")}`} key={key}>
-                                                <div className="online-user offline">
+                                            <div className={`online-users offline ${isElementInSearchResults(element, "flex")}`} key={key}>
+                                                <div className="online-user">
                                                     <div className="online-user-img" style={fullImage(element.picture)}></div>
-                                                    <div className="online-user-name">
+                                                    <div>
                                                         <div className="online-user-pseudo">
                                                             {element.pseudo}
                                                         </div>

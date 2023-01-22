@@ -4,90 +4,72 @@ import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 import { returnNetworkSVG } from '../tools/functions/networks';
-import { deleteItemFromArray, onlyLettersSpacesAndDashes } from '../Utils';
+import { addClass, deleteItemFromArray, onlyLettersSpacesAndDashes } from '../Utils';
 import { updateUser } from '../../reducers/user.action';
 import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
-import { TextButton, Button } from '../tools/global/Button';
-import { ErrorCard } from '../tools/global/Error';
+import { TextButton, Button, StringButton } from '../tools/global/Button';
+import { ErrorCard } from '../tools/global/ErrorCard';
 import { ClassicInput, Textarea } from '../tools/global/Inputs';
 import Oval from '../../components/tools/loaders/Oval'
 import EditPassword from './EditPassword';
 import Icon from '../tools/icons/Icon'
 
 const Edit = ({ user }) => {
-    const [userDatas, setUserDatas] = useState({
-        name: user.name,
-        lastname: user.lastname,
-        work: user.work,
-        bio: user.bio,
-        phone: user.phone,
-        location: user.location?.COM_NOM,
-        networks: user.networks,
-        password: user.password,
-    })
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [error, setError] = useState({ element: "", error: "" })
+
+    const [userDatas, setUserDatas] = useState(user)
     const [password, setPassword] = useState({
         password: user.password,
         newPassword: "",
         confirmedNewPassword: "",
     })
-    const [error, setError] = useState({ element: "", error: "" })
-    const checkErr = name => { if (error.element === name) return "err" }
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     useEffect(() => {
-        if (user)
-            setUserDatas({
-                name: user.name,
-                lastname: user.lastname,
-                work: user.work,
-                bio: user.bio,
-                phone: user.phone,
-                networks: user.networks,
-                password: user.password,
-            })
+        if (user) setUserDatas(user)
     }, [user])
 
-    const [searchQuery, setSearchQuery] = useState(user.location?.COM_NOM || "")
-    const [locationsFound, setLocationsFound] = useState([])
-    const [isLoading, setLoading] = useState(false)
-    const [display, setDisplay] = useState(false)
+    /**
+     * 
+     */
+
+    const [search, setSearch] = useState({
+        isSearching: false,
+        query: user.location?.COM_NOM,
+        results: [],
+        isLoading: false
+    })
 
     const searchLocation = async () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        else {
-            const response = await axios
-                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${searchQuery}`))
-                .catch(err => { console.log("Error: ", err) })
-            if (response) {
-                setLocationsFound(response.data)
-                if (searchQuery.length > 2) {
-                    setDisplay(true)
-                    setLoading(true)
-                    if (!locationsFound || locationsFound.length === 0) {
-                        setLoading(false)
-                    }
-                } else {
-                    setDisplay(false)
-                    setLoading(false)
-                }
-            }
+        if (!search.query || search.query.trim() === "") return
+        if (search.query.length > 2) {
+            setSearch(data => ({ ...data, isSearching: true, isLoading: true }))
+
+            let timer
+            clearTimeout(timer)
+            timer = setTimeout(async () => {
+                const response = await axios
+                    .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${search.query}`))
+                    .catch(err => console.log("Error: ", err))
+
+                if (response.data.length > 0)
+                    setSearch(data => ({ ...data, results: response.data, isLoading: false }))
+                else
+                    setSearch(data => ({ ...data, results: [], isLoading: false }))
+            }, 1000)
+        } else {
+            setSearch(data => ({ ...data, isSearching: false, isLoading: false }))
         }
     }
 
     const wrapperRef = useRef()
-    useClickOutside(wrapperRef, () => {
-        setDisplay(false)
-        setLoading(false)
-    })
+    useClickOutside(wrapperRef, () => setSearch(data => ({ ...data, isSearching: false, results: [], isLoading: false })))
 
-    const onSelect = (object, value) => {
-        setSearchQuery(value)
-        setUserDatas(datas => ({ ...datas, location: object }))
-        setDisplay(false)
-        setLoading(false)
-    }
+    /**
+     * 
+     */
 
     const [network, setNetwork] = useState("")
 
@@ -119,6 +101,10 @@ const Edit = ({ user }) => {
             error: "Veuillez saisir une adresse URL valide"
         })
     }
+
+    /**
+     * 
+     */
 
     const handleUpdate = async () => {
         if (userDatas.name.length > 0 && !onlyLettersSpacesAndDashes(userDatas.name)) {
@@ -160,6 +146,10 @@ const Edit = ({ user }) => {
         }
     }
 
+    /**
+     * 
+     */
+
     return (
         <>
             <div className="content_nav !my-4">
@@ -169,7 +159,7 @@ const Edit = ({ user }) => {
             <Routes>
                 <Route index element={
                     <>
-                        <div className="row py-6 border-b">
+                        <div className="row py-8 border-b">
                             <div className="col-12 col-lg-3 mb-5">
                                 <h3 className="txt-ter">Informations générales</h3>
                             </div>
@@ -184,137 +174,128 @@ const Edit = ({ user }) => {
                                     <div className="col-12 col-md-6 mb-5 lg:px-2 sm:pl-2">
                                         <p className="txt-ter mb-1">Métier</p>
                                         <ClassicInput
-                                            className={`full ${checkErr("work")}`}
+                                            className={`full ${addClass(error.element === "work", 'err')}`}
                                             type="text"
                                             placeholder="Métier..."
-                                            onChange={e => setUserDatas(datas => ({ ...datas, work: e.target.value }))}
                                             value={userDatas.work}
+                                            onChange={e => setUserDatas(datas => ({ ...datas, work: e.target.value }))}
                                         />
-                                        {error.element === "work" &&
-                                            <ErrorCard
-                                                display={error.element === "work"}
-                                                text={error.error}
-                                                clean={() => setError({ element: "", error: "" })}
-                                            />
-                                        }
+                                        <ErrorCard
+                                            display={error.element === "work"}
+                                            text={error.error}
+                                            clean={() => setError({ element: "", error: "" })}
+                                        />
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-12 col-md-6 mb-5 lg:px-2 sm:pr-2">
+                                    <div className="col-12 col-md-6 mb-5 lg:mb-0 lg:px-2 sm:pr-2">
                                         <p className="txt-ter mb-1">Prénom</p>
                                         <ClassicInput
-                                            className={`full ${checkErr("name")}`}
+                                            className={`full ${addClass(error.element === "name", 'err')}`}
                                             type="text"
                                             placeholder="Prénom..."
-                                            onChange={e => setUserDatas(datas => ({ ...datas, name: e.target.value }))}
                                             value={userDatas.name}
+                                            onChange={e => setUserDatas(datas => ({ ...datas, name: e.target.value }))}
                                         />
-                                        {error.element === "name" &&
-                                            <ErrorCard
-                                                display={error.element === "name"}
-                                                text={error.error}
-                                                clean={() => setError({ element: "", error: "" })}
-                                            />
-                                        }
+                                        <ErrorCard
+                                            display={error.element === "name"}
+                                            text={error.error}
+                                            clean={() => setError({ element: "", error: "" })}
+                                        />
                                     </div>
-                                    <div className="col-12 col-md-6 mb-5 lg:px-2 sm:pl-2">
+                                    <div className="col-12 col-md-6 lg:px-2 sm:pl-2">
                                         <p className="txt-ter mb-1">Nom</p>
                                         <ClassicInput
-                                            className={`full ${checkErr("lastname")}`}
+                                            className={`full ${addClass(error.element === "lastname", 'err')}`}
                                             type="text"
                                             placeholder="Nom..."
-                                            onChange={e => setUserDatas(datas => ({ ...datas, lastname: e.target.value }))}
                                             value={userDatas.lastname}
+                                            onChange={e => setUserDatas(datas => ({ ...datas, lastname: e.target.value }))}
                                         />
-                                        {error.element === "lastname" &&
-                                            <ErrorCard
-                                                display={error.element === "lastname"}
-                                                text={error.error}
-                                                clean={() => setError({ element: "", error: "" })}
-                                            />
-                                        }
-
+                                        <ErrorCard
+                                            display={error.element === "lastname"}
+                                            text={error.error}
+                                            clean={() => setError({ element: "", error: "" })}
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row py-6 border-b">
+                        <div className="row py-8 border-b">
                             <div className="col-12 col-lg-3 mb-5">
                                 <h3 className="txt-ter">Biographie</h3>
                             </div>
                             <div className="col-12 col-lg-9 lg:px-2">
                                 <p className="txt-ter mb-1">Biographie</p>
                                 <Textarea
-                                    className={`w-full ${checkErr("bio")}`}
+                                    className={`w-full ${addClass(error.element === "bio", 'err')}`}
                                     type="text"
                                     placeholder="Biographie..."
-                                    onChange={e => setUserDatas(datas => ({ ...datas, bio: e.target.value }))}
                                     value={userDatas.bio}
+                                    onChange={e => setUserDatas(datas => ({ ...datas, bio: e.target.value }))}
                                 />
-                                {error.element === "bio" &&
-                                    <ErrorCard
-                                        display={error.element === "bio"}
-                                        text={error.error}
-                                        clean={() => setError({ element: "", error: "" })}
-                                    />
-                                }
+                                <ErrorCard
+                                    display={error.element === "bio"}
+                                    text={error.error}
+                                    clean={() => setError({ element: "", error: "" })}
+                                />
                             </div>
                         </div>
-                        <div className="row py-6 border-b">
+                        <div className="row py-8 border-b">
                             <div className="col-12 col-lg-3 mb-5">
                                 <h3 className="txt-ter">Localisation</h3>
                             </div>
                             <div className="col-12 col-lg-9">
                                 <div className="row">
-                                    <div className="col-12 col-lg-6 mb-5 lg:px-2 relative">
+                                    <div className="col-12 col-lg-6 lg:px-2 relative">
                                         <p className="txt-ter mb-1">Ville</p>
                                         <ClassicInput
-                                            className={`full ${checkErr("location")}`}
+                                            className={`full ${addClass(error.element === "location", 'err')}`}
                                             type="text"
                                             placeholder="Rechercher une localité..."
-                                            value={searchQuery}
-                                            onInput={e => setSearchQuery(e.target.value)}
+                                            value={search.query}
+                                            onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                                             onChange={searchLocation}
                                             cross
                                             onClean={() => {
-                                                setUserDatas(datas => ({ ...datas, location: {} }))
-                                                setSearchQuery("")
+                                                setSearch(data => ({ ...data, query: '' }))
+                                                setUserDatas(data => ({ ...data, location: {} }))
                                             }}
                                         />
-                                        {error.element === "location" &&
-                                            <ErrorCard
-                                                display={error.element === "location"}
-                                                text={error.error}
-                                                clean={() => setError({ element: "", error: "" })}
-                                            />
-                                        }
+                                        <ErrorCard
+                                            display={error.element === "location"}
+                                            text={error.error}
+                                            clean={() => setError({ element: "", error: "" })}
+                                        />
 
-                                        <div
-                                            ref={wrapperRef}
+                                        <div ref={wrapperRef}
                                             tabIndex="0"
-                                            className="auto-complete-container full custom-scrollbar"
-                                            style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }}
+                                            className="auto-complete-container full lg:max-w-[462px] custom-scrollbar"
+                                            style={{ display: !search.isSearching ? "none" : "block" }}
                                         >
-                                            {locationsFound.length > 0 && display &&
-                                                locationsFound.map((element, key) => {
+                                            {search.results.length > 0 &&
+                                                search.results.map((element, key) => {
                                                     return (
                                                         <div
                                                             className="auto-complete-item"
-                                                            onClick={() => onSelect(element, `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)}
                                                             key={key}
-                                                        >
+                                                            onClick={() => {
+                                                                setSearch(data => ({ ...data, isSearching: false, query: `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`, isLoading: false }))
+                                                                setUserDatas(datas => ({ ...datas, location: element }))
+                                                            }}>
                                                             {`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
                                                         </div>
                                                     )
                                                 })
                                             }
-                                            {isLoading && locationsFound.length === 0 &&
-                                                <Oval />
+                                            {search.isLoading && search.results.length === 0 &&
+                                                <div className="py-4">
+                                                    <Oval />
+                                                </div>
                                             }
-                                            {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
+                                            {search.isSearching && search.results.length === 0 && !search.isLoading &&
                                                 <div className="no-result">
-                                                    <Icon name="BoxEmpty" />
-                                                    <div>Aucun resultat ne correspond à votre recherche...</div>
+                                                    <div>Aucun résultat ne correspond à votre recherche...</div>
                                                 </div>
                                             }
                                         </div>
@@ -322,42 +303,40 @@ const Edit = ({ user }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row py-6 border-b">
+                        <div className="row py-8 border-b">
                             <div className="col-12 col-lg-3 mb-5">
                                 <h3 className="txt-ter">Coordonnées</h3>
                             </div>
                             <div className="col-12 col-lg-9">
                                 <div className="row">
-                                    <div className="col-12 col-md-6 mb-5 lg:px-2">
+                                    <div className="col-12 col-md-6 mb-5 lg:mb-0 lg:px-2">
                                         <p className="txt-ter mb-1">Email</p>
                                         <div className="secured-email">
                                             <div className="flex items-center">
                                                 <Icon name="Lock" className="w-4 h-4" />{user.email}
                                             </div>
-                                            <TextButton>Modifier</TextButton>
+                                            <StringButton>Modifier</StringButton>
                                         </div>
                                     </div>
-                                    <div className="col-12 col-md-6 mb-5 lg:px-2">
+                                    <div className="col-12 col-md-6 mb-5 lg:mb-0 lg:px-2">
                                         <p className="txt-ter mb-1">Tél.</p>
                                         <ClassicInput
-                                            className={`full ${checkErr("phone")}`}
+                                            className={`full ${addClass(error.element === "phone", 'err')}`}
                                             type="text"
                                             placeholder="Téléphone..."
-                                            onChange={e => setUserDatas(datas => ({ ...datas, phone: e.target.value }))}
                                             value={userDatas.phone}
+                                            onChange={e => setUserDatas(datas => ({ ...datas, phone: e.target.value }))}
                                         />
-                                        {error.element === "phone" &&
-                                            <ErrorCard
-                                                display={error.element === "phone"}
-                                                text={error.error}
-                                                clean={() => setError({ element: "", error: "" })}
-                                            />
-                                        }
+                                        <ErrorCard
+                                            display={error.element === "phone"}
+                                            text={error.error}
+                                            clean={() => setError({ element: "", error: "" })}
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="row py-6">
+                        <div className="row py-8">
                             <div className="col-12 col-lg-3 mb-5">
                                 <h3 className="txt-ter">Réseaux sociaux<br />et sites internet</h3>
                             </div>
@@ -367,7 +346,7 @@ const Edit = ({ user }) => {
                                         <p className="txt-ter mb-1">Réseaux sociaux et sites internet</p>
                                         <div className="flex">
                                             <ClassicInput
-                                                className={`w-full !max-w-full mb-4 ${checkErr("networks")}`}
+                                                className={`w-full !max-w-full mb-4 ${addClass(error.element === "networks", 'err')}`}
                                                 inputClassName="w-full"
                                                 type="text"
                                                 placeholder="https://"
@@ -376,13 +355,11 @@ const Edit = ({ user }) => {
                                             />
                                             <Button className="!h-[44px] ml-2" onClick={handleNetwork}>Ajouter</Button>
                                         </div>
-                                        {error.element === "networks" &&
-                                            <ErrorCard
-                                                display={error.element === "networks"}
-                                                text={error.error}
-                                                clean={() => setError({ element: "", error: "" })}
-                                            />
-                                        }
+                                        <ErrorCard
+                                            display={error.element === "networks"}
+                                            text={error.error}
+                                            clean={() => setError({ element: "", error: "" })}
+                                        />
                                         {userDatas.networks &&
                                             userDatas.networks.length > 0 &&
                                             userDatas.networks.map((element, key) => {
@@ -415,8 +392,6 @@ const Edit = ({ user }) => {
                         setPassword={setPassword}
                         error={error}
                         setError={setError}
-                        checkErr={checkErr}
-
                     />
                 } />
             </Routes>

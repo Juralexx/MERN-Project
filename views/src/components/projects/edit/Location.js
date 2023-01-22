@@ -3,69 +3,72 @@ import axios from "axios";
 import { useClickOutside } from "../../tools/hooks/useClickOutside";
 import { ClassicInput } from "../../tools/global/Inputs";
 import Oval from '../../tools/loaders/Oval'
-import { ErrorCard } from "../../tools/global/Error";
-import { MapContainer, TileLayer, Popup, GeoJSON, Marker } from 'react-leaflet'
-import { addClass, geoJSONStructure, geolocToFloat } from '../../Utils'
-import { Icon } from "leaflet";
+import { ErrorCard } from "../../tools/global/ErrorCard";
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
+import { addClass, geoJSONStructure, geolocToFloat } from '../../Utils'
 
-const Location = ({ project, location, department, region, setDatas, geolocalisation, error, setError }) => {
-    const [searchQuery, setSearchQuery] = useState(location)
-    const [locationsFound, setLocationsFound] = useState([])
-    const [isLoading, setLoading] = useState(false)
-    const [display, setDisplay] = useState(false)
-    const wrapperRef = useRef()
-    useClickOutside(wrapperRef, () => {
-        setDisplay(false)
-        setLoading(false)
+const Location = ({ project, location, setDatas, geolocalisation, error, setError }) => {
+    const [search, setSearch] = useState({
+        isSearching: false,
+        query: location,
+        results: [],
+        isLoading: false
     })
 
+    const wrapperRef = useRef()
+    useClickOutside(wrapperRef, () => setSearch(data => ({ ...data, isSearching: false, results: [], isLoading: false })))
+
     const searchLocation = async () => {
-        if (!searchQuery || searchQuery.trim() === "") { return }
-        else {
-            const response = await axios
-                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${searchQuery}`))
-                .catch(err => console.log("Error: ", err))
-            if (response) {
-                setLocationsFound(response.data)
-                if (searchQuery.length > 2) {
-                    setDisplay(true)
-                    setLoading(true)
-                    if (locationsFound.length > 0) {
-                        setLoading(false)
-                    }
-                } else {
-                    setDisplay(false)
-                    setLoading(false)
-                }
-            }
+        if (!search.query || search.query.trim() === "") return
+        if (search.query.length > 2) {
+            setSearch(data => ({ ...data, isSearching: true, isLoading: true }))
+
+            let timer
+            clearTimeout(timer)
+            timer = setTimeout(async () => {
+                const response = await axios
+                    .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${search.query}`))
+                    .catch(err => console.log("Error: ", err))
+
+                if (response.data.length > 0)
+                    setSearch(data => ({ ...data, results: response.data, isLoading: false }))
+                else
+                    setSearch(data => ({ ...data, results: [], isLoading: false }))
+            }, 1000)
+        } else {
+            setSearch(data => ({ ...data, isSearching: false, isLoading: false }))
         }
     }
 
-    const myIcon = new Icon({
-        iconUrl: `${process.env.REACT_APP_API_URL}files/img/map-marker.png`,
-        iconSize: [30, 40]
-    })
+    /**
+     * 
+     */
 
-    const [locationChanged, setLocationChanged] = useState(false)
     const [geoJSON, setGeoJSON] = useState([])
     const [leafletLoading, setLeafletLoading] = useState(true)
 
     useEffect(() => {
-        if (project.location.city || locationChanged) {
+        if (project.location.city || project.location.city !== location) {
             const fetchGeolocalisation = async () => {
                 setLeafletLoading(true)
                 await axios.get(`${process.env.REACT_APP_API_URL}api/geolocation/${location}`)
                     .then(res => {
                         if (res.data)
                             setGeoJSON(res.data.geometry.coordinates)
-                        setLocationChanged(false)
+                    })
+                    .then(() => {
                         setInterval(() => setLeafletLoading(false), 1000)
-                    }).catch(err => console.log(err))
+                    })
+                    .catch(err => console.log(err))
             }
             fetchGeolocalisation()
         }
-    }, [project.location.city, location, locationChanged])
+    }, [project.location.city, location])
+
+    /**
+     * 
+     */
 
     return (
         <>
@@ -80,49 +83,34 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                         className={`full ${addClass(error.element === "location", 'err')}`}
                         type="text"
                         placeholder="Rechercher une adresse..."
-                        value={searchQuery}
-                        onInput={e => setSearchQuery(e.target.value)}
-                        onChange={searchLocation}
+                        value={search.query}
+                        onInput={searchLocation}
+                        onChange={e => setSearch(data => ({ ...data, query: e.target.value }))}
                         cross
                         onClean={() => {
-                            setSearchQuery("")
-                            setDatas(data => ({
-                                ...data,
-                                location: {
-                                    city: project.location.city,
-                                    department: project.location.department,
-                                    codeDepartment: project.location.code_department,
-                                    region: project.location.region,
-                                    codeRegion: project.location.code_region,
-                                    newRegion: project.location.new_region,
-                                    codeNewRegion: project.location.code_new_region,
-                                    geolocalisation: project.location.geolocalisation,
-                                }
-                            }))
+                            setSearch(data => ({ ...data, query: '' }))
+                            setDatas(data => ({ ...data, location: project.location }))
                         }}
                     />
-                    {error.element === "location" &&
-                        <ErrorCard
-                            display={error.element === "location"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "location"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
 
                     <div
                         ref={wrapperRef}
                         tabIndex="0"
-                        className="auto-complete-container max-w-[660px] custom-scrollbar"
-                        style={{ display: searchQuery.length < 3 || !display ? "none" : "block" }}
+                        className="auto-complete-container max-w-[636px] custom-scrollbar"
+                        style={{ display: !search.isSearching ? "none" : "block" }}
                     >
-                        {display && locationsFound.length > 0 &&
-                            locationsFound.map((element, key) => {
+                        {search.results.length > 0 &&
+                            search.results.map((element, key) => {
                                 return (
-                                    <div
-                                        className="auto-complete-item"
+                                    <div className="auto-complete-item"
                                         key={key}
                                         onClick={() => {
-                                            setSearchQuery(`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`)
+                                            setSearch(data => ({ ...data, isSearching: false, query: `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`, isLoading: false }))
                                             setDatas(data => ({
                                                 ...data,
                                                 location: {
@@ -136,22 +124,20 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                                                     geolocalisation: element.geolocalisation,
                                                 }
                                             }))
-                                            setDisplay(false)
-                                            setLoading(false)
-                                            setLocationChanged(true)
-                                        }}
-                                    >
+                                        }}>
                                         {`${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`}
                                     </div>
                                 )
                             })
                         }
-                        {isLoading && locationsFound.length === 0 &&
-                            <Oval />
+                        {search.isLoading && search.results.length === 0 &&
+                            <div className="py-4">
+                                <Oval />
+                            </div>
                         }
-                        {searchQuery.length > 2 && locationsFound.length === 0 && !isLoading &&
+                        {search.isSearching && search.results.length === 0 && !search.isLoading &&
                             <div className="no-result">
-                                <div>Aucun resultat ne correspond à votre recherche...</div>
+                                <div>Aucun résultat ne correspond à votre recherche...</div>
                             </div>
                         }
                     </div>
@@ -171,20 +157,12 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         url='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
                     />
-                    {geoJSON.length > 0 && !leafletLoading ? (
+                    {geoJSON.length > 0 && !leafletLoading &&
                         <GeoJSON
                             data-location={location}
                             data={geoJSONStructure(geoJSON)}
                         />
-                    ) : (
-                        <Marker
-                            style={{ marginBottom: 20 }}
-                            position={!leafletLoading ? geolocToFloat(geolocalisation) : [46.873467013745916, 2.5836305570248217]}
-                            icon={myIcon}
-                        >
-                            <Popup>{location}<br />{department + ", " + region}</Popup>
-                        </Marker>
-                    )}
+                    }
                 </MapContainer>
             ) : (
                 <MapContainer
@@ -200,9 +178,28 @@ const Location = ({ project, location, department, region, setDatas, geolocalisa
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         url='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png'
                     />
-                    <div style={{ position: "absolute", top: 0, left: 0, width: '100%', height: '100%', minHeight: 300, backgroundColor: "rgba(255, 255, 255, 0.3)", backdropFilter: "blur(5px)", zIndex: 2000 }}></div>
-                    <Oval
-                        style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 60, height: 60, zIndex: 3000 }} strokeWidth="4" stroke="rgba(0, 0, 0, 0.5)"
+                    <div style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        minHeight: 300,
+                        backgroundColor: "rgba(255, 255, 255, 0.3)",
+                        backdropFilter: "blur(5px)",
+                        zIndex: 2000
+                    }}></div>
+                    <Oval style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 60,
+                        height: 60,
+                        zIndex: 3000
+                    }}
+                        strokeWidth="4"
+                        stroke="rgba(0, 0, 0, 1)"
                     />
                 </MapContainer>
             )}

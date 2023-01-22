@@ -23,6 +23,7 @@
     border-bottom   : 1px solid var(--light-border);
     overflow-x      : auto;
     overflow-y      : hidden;
+    width           : 100%;
 
     a, div {
         position    : relative;
@@ -66,12 +67,6 @@
             margin-right : 5px;
             margin-top   : 2px;
             color        : var(--text-tertiary);
-        }
-
-        &.no-decoration {
-            &:before {
-                content : none;
-            }
         }
     }
 }

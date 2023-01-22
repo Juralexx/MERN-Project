@@ -69,6 +69,22 @@ body {
     svg {
         color : var(--svg-x-light);
     }
+
+    input[type="date"] {
+        color : white;
+
+        &::placeholder {
+            color : white;
+        }
+
+        &::-webkit-datetime-edit-text,
+        &::-webkit-datetime-edit-month-field,
+        &::-webkit-datetime-edit-day-field,
+        &::-webkit-datetime-edit-year-field {
+            color : var(--placeholder);
+        }
+    }
+    
 }
 
 #main {

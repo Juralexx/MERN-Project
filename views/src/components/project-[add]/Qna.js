@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, TextButton } from '../tools/global/Button'
-import { ErrorCard } from '../tools/global/Error'
+import { ErrorCard } from '../tools/global/ErrorCard'
 import { ClassicInput, Textarea } from '../tools/global/Inputs'
 import { addClass, deleteItemFromArray } from '../Utils'
 
@@ -43,13 +43,11 @@ const Qna = ({ datas, setDatas, error, setError }) => {
                                 <div className="field_infos full">
                                     {element.question.length} / 200 caractères
                                 </div>
-                                {error.element === `question-${key}` &&
-                                    <ErrorCard
-                                        display={error.element === `question-${key}`}
-                                        text={error.error}
-                                        clean={() => setError({ element: "", error: "" })}
-                                    />
-                                }
+                                <ErrorCard
+                                    display={error.element === `question-${key}`}
+                                    text={error.error}
+                                    clean={() => setError({ element: "", error: "" })}
+                                />
                             </div>
 
                             <div className="content-form mt-4">
@@ -64,13 +62,11 @@ const Qna = ({ datas, setDatas, error, setError }) => {
                                 <div className="field_infos full">
                                     {element.answer.length} / 1000 caractères
                                 </div>
-                                {error.element === `answer-${key}` &&
-                                    <ErrorCard
-                                        display={error.element === `answer-${key}`}
-                                        text={error.error}
-                                        clean={() => setError({ element: "", error: "" })}
-                                    />
-                                }
+                                <ErrorCard
+                                    display={error.element === `answer-${key}`}
+                                    text={error.error}
+                                    clean={() => setError({ element: "", error: "" })}
+                                />
                             </div>
                             {key + 1 === datas.qna.length &&
                                 <Button

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button } from '../../tools/global/Button';
 import { ClassicInput } from '../../tools/global/Inputs';
 import isURL from 'validator/lib/isURL';
-import { ErrorCard } from '../../tools/global/Error';
+import { ErrorCard } from '../../tools/global/ErrorCard';
 import { addClass } from '../../Utils';
 import Icon from '../../tools/icons/Icon';
 
@@ -86,13 +86,11 @@ const Networks = ({ networks, setDatas, error, setError }) => {
                     />
                     <Button className="sm:!h-[46px] sm:ml-2" onClick={handleNetwork}>Ajouter</Button>
                 </div>
-                {error.element === "networks" &&
-                    <ErrorCard
-                        display={error.element === "networks"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
+                <ErrorCard
+                    display={error.element === "networks"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
+                />
                 {networks.length > 0 &&
                     networks.map((element, key) => {
                         return (

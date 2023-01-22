@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorCard } from '../../tools/global/Error'
+import { ErrorCard } from '../../tools/global/ErrorCard'
 import { Textarea } from '../../tools/global/Inputs'
 import { addClass } from '../../Utils'
 
@@ -23,13 +23,11 @@ const Description = ({ description, setDatas, error, setError }) => {
                     value={description}
                 />
                 <div className="field_infos full">{description.length} / 300</div>
-                {error.element === "description" &&
-                    <ErrorCard
-                        display={error.element === "description"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
+                <ErrorCard
+                    display={error.element === "description"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
+                />
             </div>
         </div>
     )

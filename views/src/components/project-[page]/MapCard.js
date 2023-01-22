@@ -24,10 +24,14 @@ const MapCard = ({ project }) => {
         }
     }, [project.location.city])
 
+    /**
+     * 
+     */
+
     return (
         <div className="content-card map_card">
             <div className="card-title">
-                <h3>{project.location.city} ({project.code_department})</h3>
+                <h3>{project.location.city} ({project.location.code_department})</h3>
             </div>
             <div className="card-body">
                 <MapContainer
@@ -51,8 +55,28 @@ const MapCard = ({ project }) => {
                     }
                     {leafletLoading &&
                         <>
-                            <div style={{ position: "absolute", top: 0, left: 0, width: '100%', height: 300, backgroundColor: "rgba(255, 255, 255, 0.3)", backdropFilter: "blur(5px)", zIndex: 2000 }}></div>
-                            <Oval style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 60, height: 60, zIndex: 3000 }} strokeWidth="4" stroke="rgba(0, 0, 0, 0.5)" />
+                            <div style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: 300,
+                                backgroundColor: "rgba(255, 255, 255, 0.3)",
+                                backdropFilter: "blur(5px)",
+                                zIndex: 2000
+                            }}></div>
+                            <Oval style={{
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                width: 60,
+                                height: 60,
+                                zIndex: 3000
+                            }}
+                                strokeWidth="4"
+                                stroke="rgba(0, 0, 0, 0.5)"
+                            />
                         </>
                     }
                 </MapContainer>

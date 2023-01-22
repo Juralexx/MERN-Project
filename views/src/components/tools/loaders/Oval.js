@@ -6,7 +6,7 @@ const Oval = (props) => {
     const strokeWidth = props.strokeWidth ?? 2
     const strokeOpacity = props.strokeOpacity
     return (
-        <div className='oval-loader'>
+        <div className='oval-loader' style={props.style}>
             <svg
                 {...{
                     ...props,

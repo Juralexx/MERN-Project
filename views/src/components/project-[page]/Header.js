@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { dateParser, fullImage } from '../Utils'
+import Icon from '../tools/icons/Icon'
+import { Button } from '../tools/global/Button'
 import { MediumAvatar } from '../tools/global/Avatars'
 import Share from './Share'
+import { dateParser, fullImage } from '../Utils'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../reducers/project.action'
-import Icon from '../tools/icons/Icon'
 
 const Header = ({ user, project }) => {
     const [liked, setLiked] = useState(false)
     const [followed, setFollowed] = useState(false)
     const [share, setShare] = useState(false)
     const dispatch = useDispatch()
+
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (project.likers.includes(user._id))
@@ -27,6 +32,10 @@ const Header = ({ user, project }) => {
         dispatch(unlikeProject(project._id, user._id))
         setLiked(false)
     }
+
+    /**
+     * 
+     */
 
     useEffect(() => {
         if (user._id)
@@ -44,6 +53,10 @@ const Header = ({ user, project }) => {
         setFollowed(false)
     }
 
+    /**
+     * 
+     */
+
     return (
         <div className="project-page_header">
             <img className='mobile-img' src={project.pictures[0]} alt={project.title} />
@@ -60,7 +73,7 @@ const Header = ({ user, project }) => {
                                 <MediumAvatar pic={project.poster.picture} className="mr-2" />
                                 {project.poster.pseudo}
                             </Link>
-                            <div>le {dateParser(project.createdAt)}</div>
+                            <div>Posté le {dateParser(project.createdAt)}</div>
                         </div>
                     </div>
                     <div className="col-12 col-lg-5 order-1">
@@ -68,24 +81,32 @@ const Header = ({ user, project }) => {
                         <div className="py-2">
                             <div className="flex items-center py-1">
                                 <Icon name="Position" className="mr-2 w-5 h-5" />
-                                <p><Link to="/" className="bold">{project.location.city} ({project.location.code_department})</Link></p>
+                                <Link to={`/search/?location=${project.location.city}`} className="bold">
+                                    {project.location.city} ({project.location.code_department})
+                                </Link>
                             </div>
+                            {project.day &&
+                                <div className="flex items-center py-1">
+                                    <Icon name="Calendar" className="mr-2 w-5 h-5" />
+                                    <p>Le <span className="font-medium">{dateParser(project.day)}</span></p>
+                                </div>
+                            }
                             {project.start && !project.end &&
                                 <div className="flex items-center py-1">
                                     <Icon name="Calendar" className="mr-2 w-5 h-5" />
-                                    <p>le <span className="bold">{dateParser(project.start)}</span></p>
+                                    <p>Commence le <span className="font-medium">{dateParser(project.start)}</span></p>
                                 </div>
                             }
                             {project.end && !project.start &&
                                 <div className="flex items-center py-1">
                                     <Icon name="Calendar" className="mr-2 w-5 h-5" />
-                                    <p>jusqu'au <span className="bold">{dateParser(project.end)}</span></p>
+                                    <p>Jusqu'au <span className="font-medium">{dateParser(project.end)}</span></p>
                                 </div>
                             }
                             {project.end && project.start &&
                                 <div className="flex items-center py-1">
                                     <Icon name="Calendar" className="mr-2 w-5 h-5" />
-                                    <p>du <span className="bold">{dateParser(project.start)}</span> au <span className="bold">{dateParser(project.end)}</span></p>
+                                    <p>Du <span className="font-medium">{dateParser(project.start)}</span> au <span className="font-medium">{dateParser(project.end)}</span></p>
                                 </div>
                             }
 
@@ -94,10 +115,14 @@ const Header = ({ user, project }) => {
                                     <MediumAvatar pic={project.poster.picture} className="mr-2" />
                                     {project.poster.pseudo}
                                 </Link>
-                                <div className='flex items-center'>le {dateParser(project.createdAt)}</div>
+                                <div className='flex items-center'>
+                                    Posté le {dateParser(project.createdAt)}
+                                </div>
                             </div>
                         </div>
-                        <div className="btn join-btn">Rejoindre le projet</div>
+                        <Button className="join-btn">
+                            Rejoindre le projet
+                        </Button>
                         <div className="project-tags">
                             {project.tags.map((tag, i) => {
                                 return <div className="tag" key={i}><span>#</span>{tag}</div>
@@ -105,38 +130,37 @@ const Header = ({ user, project }) => {
                         </div>
                         <div className="project-page_actions">
                             {user._id === null &&
-                                <button className="btn action-btn">
-                                    Soutenir <Icon name="Like" />
-                                </button>
+                                <Button className="action-btn like">
+                                    Soutenir <Icon name="Heart" />
+                                </Button>
                             }
-                            {user._id && !liked &&
-                                <button className="btn action-btn" onClick={like}>
-                                    Soutenir <Icon name="Like" />
-                                </button>
-                            }
-                            {user._id && liked &&
-                                <button className="btn action-btn" onClick={unlike}>
-                                    Ne plus soutenir <Icon name="Like" />
-                                </button>
-                            }
+                            {user._id && !liked ? (
+                                <Button className="action-btn like" onClick={like}>
+                                    Soutenir <Icon name="Heart" />
+                                </Button>
+                            ) : (
+                                <Button className="action-btn like" onClick={unlike}>
+                                    Ne plus soutenir <Icon name="Heart" />
+                                </Button>
+                            )}
                             {user._id === null &&
-                                <button className="btn action-btn">
+                                <Button className="action-btn follow">
                                     Suivre <Icon name="Bookmark" />
-                                </button>
+                                </Button>
                             }
-                            {user._id && !followed &&
-                                <button className="btn action-btn" onClick={follow}>
+                            {user._id && !followed ? (
+                                <Button className="action-btn follow" onClick={follow}>
                                     Suivre <Icon name="Bookmark" />
-                                </button>
-                            }
-                            {user._id && followed &&
-                                <button className="btn action-btn" onClick={unfollow}>
+                                </Button>
+                            ) : (
+                                <Button className="action-btn follow" onClick={unfollow}>
                                     Ne plus suivre <Icon name="Bookmark" />
-                                </button>}
+                                </Button>
+                            )}
 
-                            <button className="btn action-btn" onClick={() => setShare(!share)}>
+                            <Button className="action-btn share" onClick={() => setShare(!share)}>
                                 Partager <Icon name="Share" />
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>

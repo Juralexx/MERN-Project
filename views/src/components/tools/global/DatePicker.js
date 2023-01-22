@@ -12,9 +12,9 @@ export const DatePickerInput = (props) => {
     useClickOutside(ref, () => setOpen(false))
 
     const { inputProps, dayPickerProps } = useInput({
-        fromYear: 2020,
-        toYear: 2022,
-        format: 'dd/MM/yyyy',
+        fromYear: 2010,
+        toYear: 2030,
+        format: 'dd/mm/yyyy',
         required: true
     })
 
@@ -56,14 +56,15 @@ export const DatePickerInput = (props) => {
 }
 
 export const DatePicker = (props) => {
-    const { open, setOpen, selected, onDayClick } = props
+    const { open, setOpen, selected, onDayClick, fromDate } = props
     const ref = useRef()
     useClickOutside(ref, () => setOpen(prevSate => ({ ...prevSate, state: false })))
 
     const { dayPickerProps } = useInput({
         fromYear: 2010,
         toYear: 2030,
-        format: 'dd/MM/yyyy ',
+        fromDate: fromDate,
+        format: 'dd/mm/yyyy',
         required: true
     })
 
@@ -93,7 +94,7 @@ const DatePickerComponent = styled.div`
     background    : var(--input);
     border-radius : var(--rounded-sm);
     z-index       : 700;
-    box-shadow : var(--shadow-lg);
+    box-shadow : var(--shadow-lg), var(--shadow-relief);
 
     .rdp {
         .selected {

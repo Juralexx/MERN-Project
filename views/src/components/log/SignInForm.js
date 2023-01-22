@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button } from '../tools/global/Button'
 import { DynamicInput } from '../tools/global/Inputs';
-import { ErrorCard } from '../tools/global/Error';
+import { ErrorCard } from '../tools/global/ErrorCard';
 import Icon from '../tools/icons/Icon';
 import { addClass } from '../Utils';
 
@@ -48,13 +48,11 @@ const SignInForm = () => {
                     onChange={e => setEmail(e.target.value)}
                     defaultValue={email}
                 />
-                {error.element === "email" &&
-                    <ErrorCard
-                        display={error.element === "email"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
+                <ErrorCard
+                    display={error.element === "email"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
+                />
             </div>
             <div className="mb-4">
                 <DynamicInput
@@ -70,13 +68,11 @@ const SignInForm = () => {
                 <div className="forgot-password">
                     <Link to="/">Mot de passe oublié</Link>
                 </div>
-                {error.element === "password" &&
-                    <ErrorCard
-                        display={error.element === "password"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
+                <ErrorCard
+                    display={error.element === "password"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
+                />
             </div>
             <Button className="mt-6 w-full" type="submit">
                 Connexion

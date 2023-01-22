@@ -132,6 +132,7 @@ const Btn = styled.button`
         color         : white;
         background    : var(--primary);
         border-radius : var(--rounded-sm);
+        box-shadow    : var(--shadow-tiny);
 
         svg {
             height : 18px;

@@ -5,7 +5,7 @@ import Icon from '../icons/Icon';
 import styled from 'styled-components';
 
 export const ClassicInput = (props) => {
-    const { useRef, type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
+    const { useRef, type, value, defaultValue, onKeyPress, onKeyDown, onKeyUp, onFocus, onBlur, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, cross, onClean } = props
     return (
         <InputClassic className={`${className ? 'classic-input ' + className : 'classic-input'}`}>
             <input
@@ -23,6 +23,10 @@ export const ClassicInput = (props) => {
                 readOnly={readOnly}
                 disabled={disabled}
                 onKeyPress={onKeyPress}
+                onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 min={min}
                 max={max}
             />
@@ -104,7 +108,7 @@ const InputClassic = styled.div`
  */
 
 export const DropdownInput = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, onClean, cross } = props
+    const { type, value, defaultValue, onKeyPress, onKeyDown, onKeyUp, onFocus, onBlur, onChange, onInput, readOnly, disabled, name, id, className, inputClassName, placeholder, min, max, onClean, cross } = props
     const [open, setOpen] = useState(false)
     const ref = useRef()
     useClickOutside(ref, () => setOpen(false))
@@ -125,6 +129,10 @@ export const DropdownInput = (props) => {
                 readOnly={readOnly}
                 disabled={disabled}
                 onKeyPress={onKeyPress}
+                onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 min={min}
                 max={max}
             />
@@ -220,7 +228,7 @@ const InputDropdown = styled.div`
  */
 
 export const NumberInput = (props) => {
-    const { value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, max } = props
+    const { value, defaultValue, onKeyPress, onKeyDown, onKeyUp, onFocus, onBlur, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, max } = props
     return (
         <InputNumber
             className={`${className ? 'number-input ' + className : 'number-input'}`}
@@ -236,6 +244,10 @@ export const NumberInput = (props) => {
             readOnly={readOnly}
             disabled={disabled}
             onKeyPress={onKeyPress}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onFocus={onFocus}
+            onBlur={onBlur}
             min="1"
             max={max}
         />
@@ -273,7 +285,7 @@ const InputNumber = styled.input`
  */
 
 export const IconInput = (props) => {
-    const { useRef, type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, className, icon, endIcon, name, id, placeholder, cross, onClean, endIconClick } = props
+    const { useRef, type, value, defaultValue, onChange, onInput, onClick, readOnly, inputClassName, disabled, onKeyPress, onKeyDown, onKeyUp, onFocus, onBlur, min, max, className, icon, endIcon, name, id, placeholder, cross, onClean, endIconClick } = props
     return (
         <InputIcon className={`${className ? "icon-input " + className : "icon-input"}`}>
             <input
@@ -290,6 +302,13 @@ export const IconInput = (props) => {
                 onClick={onClick}
                 readOnly={readOnly}
                 disabled={disabled}
+                onKeyPress={onKeyPress}
+                onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                min={min}
+                max={max}
             />
             {icon &&
                 <div className="start_icon">
@@ -462,7 +481,8 @@ const InputIcon = styled.div`
  */
 
 export const Textarea = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max } = props
+    const { type, value, defaultValue, onKeyPress, onKeyDown, onKeyUp, onFocus, onBlur, onChange, onInput, onClick, readOnly, disabled, name, id, className, placeholder, min, max } = props
+
     return (
         <TextareaInput
             type={type}
@@ -477,6 +497,10 @@ export const Textarea = (props) => {
             readOnly={readOnly}
             disabled={disabled}
             onKeyPress={onKeyPress}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onFocus={onFocus}
+            onBlur={onBlur}
             min={min}
             max={max}
             className={`${className ? "textarea " + className : "textarea"}`}
@@ -484,7 +508,7 @@ export const Textarea = (props) => {
     )
 }
 
-const TextareaInput = styled.div`
+const TextareaInput = styled.textarea`
     display       : block;
     min-height    : 50px;
     height        : 100px;
@@ -544,7 +568,7 @@ const TextareaInput = styled.div`
  */
 
 export const DynamicInput = (props) => {
-    const { type, value, defaultValue, onKeyPress, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, text, startIcon, endIcon, endIconClick } = props
+    const { type, value, defaultValue, onKeyPress, onKeyDown, onKeyUp, onFocus, onBlur, min, max, onChange, onInput, onClick, readOnly, disabled, name, id, className, inputClassName, placeholder, text, startIcon, endIcon, endIconClick } = props
     return (
         <InputDynamic className={`${className ? 'dynamic-input ' + className : 'dynamic-input'}`}>
             <input
@@ -561,6 +585,12 @@ export const DynamicInput = (props) => {
                 readOnly={readOnly}
                 disabled={disabled}
                 onKeyPress={onKeyPress}
+                onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                min={min}
+                max={max}
             />
             <label>{text}</label>
             {startIcon &&

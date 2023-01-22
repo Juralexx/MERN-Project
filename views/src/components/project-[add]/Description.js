@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorCard } from '../tools/global/Error'
+import { ErrorCard } from '../tools/global/ErrorCard'
 import { ClassicInput, Textarea } from '../tools/global/Inputs'
 import Icon from '../tools/icons/Icon'
 import { addClass } from '../Utils'
@@ -46,14 +46,14 @@ const Description = ({ datas, setDatas, error, setError }) => {
         <div className="add-project-card">
             <h2>Courte description et tags</h2>
             <div className="row py-4">
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6">
                     <h4>Courte description du projet</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
+                <div className="col-12 col-lg-6 !mt-4 lg:!mt-0">
                     <p className="title full">Courte description <span>Champ requis</span></p>
                     <Textarea
                         className={`w-full ${addClass(error.element === "description", 'err')}`}
@@ -63,25 +63,23 @@ const Description = ({ datas, setDatas, error, setError }) => {
                         onChange={e => setDatas(data => ({ ...data, description: (e.target.value).substring(0, 300) }))}
                     />
                     <div className="field_infos full">{datas.description.length} / 300 caractères</div>
-                    {error.element === "description" &&
-                        <ErrorCard
-                            display={error.element === "description"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "description"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
             </div>
 
             <div className="row py-4">
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6">
                     <h4>Tags et référencement</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
+                <div className="col-12 col-lg-6 !mt-4 lg:!mt-0">
                     <p className="title full">Tags</p>
                     {datas.tags.length > 0 && (
                         <div className="tags-container">
@@ -102,13 +100,11 @@ const Description = ({ datas, setDatas, error, setError }) => {
                         onKeyPress={e => addTag(e, e.target.value)}
                     />
                     <div className="field_infos full">{datas.tags.length} / 12</div>
-                    {error.element === "tags" &&
-                        <ErrorCard
-                            display={error.element === "tags"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "tags"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
             </div>
         </div>

@@ -302,6 +302,32 @@ export const ISOtoNavigatorFormat = (date) => {
 }
 
 /**
+ * Return the difference between two dates in days, the number is always positive.
+ * @param {*} first 
+ * @param {*} second 
+ */
+
+export const diffBetweenDates = (first, second) => {
+    let date1 = new Date(first);
+    let date2 = new Date(second);
+    let diffTime = Math.abs(date2 - date1);
+    let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays
+}
+
+/**
+ * Return the difference between two dates in days, if second dates is before the first date, return a negative number.
+ * Ex: first: 23janv, second: 15janv = -8
+ * @param {*} first 
+ * @param {*} second 
+ */
+
+export const diffBetweenDatesNegativeIfLess = (first, second) => {
+    return Math.round((new Date(second) - new Date(first)) / (1000 * 60 * 60 * 24));
+}
+
+/**
  * Return hours only : hh:mm.
  * @param {*} date Date to convert
  */
@@ -322,6 +348,16 @@ export const getHoursDiff = (prev, current) => {
     let hourDiff = new Date(current.createdAt) - new Date(prev.createdAt)
     let prevTimeDiff = (hourDiff % 86400000) / 3600000
     return prevTimeDiff
+}
+
+/**
+ * Add one day to a date
+ * @param {*} date Date to incremente
+ */
+
+export function addOneDay(date) {
+    let newDate = new Date(date)
+    return new Date(newDate.setDate(newDate.getDate() + 1))
 }
 
 /**

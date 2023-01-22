@@ -72,7 +72,7 @@ export const UPDATE_PROJECT = "UPDATE_PROJECT"
  * @param {*} content 
  */
 
-export const updateProject = (projectId, title, url, subtitle, category, tags, state, location, description, end, works, content) => {
+export const updateProject = (projectId, title, url, subtitle, category, tags, state, location, description, end, works, content, networks) => {
      return async (dispatch) => {
           await axios({
                method: "put",
@@ -88,7 +88,8 @@ export const updateProject = (projectId, title, url, subtitle, category, tags, s
                     description,
                     end,
                     works,
-                    content
+                    content,
+                    networks
                }
           })
                .then(() => dispatch({
@@ -98,12 +99,14 @@ export const updateProject = (projectId, title, url, subtitle, category, tags, s
                          url,
                          subtitle,
                          category,
+                         tags,
                          state,
                          location,
                          description,
                          end,
                          works,
-                         content
+                         content,
+                         networks
                     }
                }))
                .catch(err => console.error(err))

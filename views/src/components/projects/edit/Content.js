@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import ReactQuill from "react-quill";
 import EditorToolbar, { modules, formats } from "../../tools/editor/EditorToolbar";
 
-const Content = ({ content, setDatas, contentChanged, setContentChanged }) => {
+const Content = ({ datas, setDatas, contentChanged, setContentChanged }) => {
     const [count, setCount] = useState(0)
     const quillRef = useRef()
 
@@ -31,7 +31,7 @@ const Content = ({ content, setDatas, contentChanged, setContentChanged }) => {
                 <ReactQuill
                     className='custom-srollbar'
                     ref={quillRef}
-                    defaultValue={content}
+                    value={datas.content[0]}
                     onChange={handleChange}
                     placeholder="Décrivez votre projet..."
                     modules={modules}

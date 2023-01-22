@@ -12,7 +12,7 @@ import ProfilCard from "../components/profil/ProfilCard";
 
 const Profil = ({ user, websocket }) => {
     const location = useLocation()
-    
+
     return (
         <>
             <div className="profil_container">
@@ -42,19 +42,29 @@ const Profil = ({ user, websocket }) => {
                         {!location.pathname.includes('edit') &&
                             <ProfilCard user={user} />
                         }
-                        {user &&
+                        {Object.keys(user).length > 0 &&
                             <Routes>
                                 <Route index element={
-                                    <Projects user={user} websocket={websocket} />
+                                    <Projects
+                                        user={user}
+                                        websocket={websocket}
+                                    />
                                 } />
                                 <Route path="about" element={
-                                    <About user={user} />
+                                    <About
+                                        user={user}
+                                    />
                                 } />
                                 <Route path="contacts" element={
-                                    <Contacts user={user} websocket={websocket} />
+                                    <Contacts
+                                        user={user}
+                                        websocket={websocket}
+                                    />
                                 } />
                                 <Route path="edit/*" element={
-                                    <Edit user={user} />
+                                    <Edit
+                                        user={user}
+                                    />
                                 } />
                             </Routes>
                         }

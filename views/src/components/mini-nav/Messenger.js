@@ -10,41 +10,43 @@ const MessengerMenu = ({ open, setOpen, user, websocket }) => {
 
     return (
         open && (
-            <div className="messages-menu">
-                <div className="messages-header">
-                    <div className="messages-header-inner">
-                        <div className="title">Messenger</div>
-                        <div className="menu">
-                            <div className="tools_btn">
-                                <Icon name="Write" />
-                            </div>
-                            <Link to={"/messenger"}>
-                                <div className="tools_btn" onClick={() => setOpen('')}>
-                                    <Icon name="Expand" />
-                                </div>
-                            </Link>
-                            <ToolsMenu>
-                                <div className="tools_choice">Tout marquer comme lu</div>
-                                <div className="tools_choice">Voir toutes les messages</div>
-                            </ToolsMenu>
+            <div className="notifications-menu messages-menu">
+                <div className="notifications-header">
+                    <h5>Messenger</h5>
+                    <div className="flex items-center">
+                        <div className="tools_btn">
+                            <Icon name="Edit" />
                         </div>
+                        <Link to={"/messenger"}>
+                            <div className="tools_btn" onClick={() => setOpen('')}>
+                                <Icon name="PositionSquare" />
+                            </div>
+                        </Link>
+                        <ToolsMenu>
+                            <div className="tools_choice">Tout marquer comme lu</div>
+                            <div className="tools_choice">Voir toutes les messages</div>
+                        </ToolsMenu>
                     </div>
-                    <div className="messages-navbar">
-                        <div className={`navlink ${addClass(!showUnread, "active")}`} onClick={() => setShowUnread(false)}>Tout</div>
-                        <div className={`navlink ${addClass(showUnread, "active")}`} onClick={() => setShowUnread(true)}>Non lu</div>
-                    </div>
-                    <IconInput
-                        className="is_start_icon"
-                        placeholder="Rechercher une conversation"
-                        icon={<Icon name="Search" />}
-                        cross
-                    />
                 </div>
+                <div className="notifications-navbar">
+                    <div className={addClass(!showUnread, "active")} onClick={() => setShowUnread(false)}>
+                        Tout
+                    </div>
+                    <div className={addClass(showUnread, "active")} onClick={() => setShowUnread(true)}>
+                        Non lu
+                    </div>
+                </div>
+                <IconInput
+                    className="is_start_icon"
+                    placeholder="Rechercher une conversation"
+                    icon={<Icon name="Search" />}
+                    cross
+                />
                 <div className="messenger-menu-content">
                     {!showUnread &&
-                        <div className="empty-messages">
-                            <Icon name="Notification" />
-                            <div>Vous n'avez pas de conversations en cours</div>
+                        <div className="empty-notifications">
+                            <Icon name="Chat" />
+                            <div>Vous n'avez pas de conversation en cours</div>
                         </div>
                     }
                 </div>

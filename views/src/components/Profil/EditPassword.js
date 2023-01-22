@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { ErrorCard } from '../tools/global/Error'
+import { ErrorCard } from '../tools/global/ErrorCard'
 import { IconInput } from '../tools/global/Inputs'
 import Icon from '../tools/icons/Icon'
+import { addClass } from '../Utils'
 
-const EditPassword = ({ password, setPassword, error, setError, checkErr }) => {
+const EditPassword = ({ password, setPassword, error, setError }) => {
     const [passwordShown, setPasswordShown] = useState([])
 
     const showPassword = (num) => {
@@ -17,55 +18,51 @@ const EditPassword = ({ password, setPassword, error, setError, checkErr }) => {
             <h3 className="txt-ter mb-5">Mot de passe</h3>
             <p className="txt-ter mb-1">Ancien mot de passe</p>
             <IconInput
-                className={`full mb-6 ${checkErr("password")}`}
+                className={`full mb-6 ${addClass(error.element === "password", 'err')}`}
                 type={passwordShown.includes(1) ? "text" : "password"}
                 placeholder="Ancien mot de passe..."
-                defaultValue={password.password}
+                value={password.password}
                 onChange={(e) => setPassword(datas => ({ ...datas, password: e.target.value }))}
                 endIcon={passwordShown.includes(1) ? <Icon name="Hidden" /> : <Icon name="Visible" />}
                 endIconClick={() => showPassword(1)}
             />
-            {error.element === "password" &&
-                <ErrorCard
-                    display={error.element === "password"}
-                    text={error.error}
-                    clean={() => setError({ element: "", error: "" })}
-                />
-            }
+            <ErrorCard
+                display={error.element === "password"}
+                text={error.error}
+                clean={() => setError({ element: "", error: "" })}
+            />
+
             <p className="txt-ter mb-1">Nouveau mot de passe</p>
             <IconInput
-                className={`full mb-6 ${checkErr("new-password")}`}
+                className={`full mb-6 ${addClass(error.element === "new-password", 'err')}`}
                 type={passwordShown.includes(2) ? "text" : "password"}
                 placeholder="Nouveau mot de passe..."
-                defaultValue={password.newPassword}
+                value={password.newPassword}
                 onChange={e => setPassword(datas => ({ ...datas, password: e.target.value }))}
                 endIcon={passwordShown.includes(2) ? <Icon name="Hidden" /> : <Icon name="Visible" />}
                 endIconClick={() => showPassword(2)}
             />
-            {error.element === "new-password" &&
-                <ErrorCard
-                    display={error.element === "new-password"}
-                    text={error.error}
-                    clean={() => setError({ element: "", error: "" })}
-                />
-            }
+            <ErrorCard
+                display={error.element === "new-password"}
+                text={error.error}
+                clean={() => setError({ element: "", error: "" })}
+            />
+
             <p className="txt-ter mb-1">Confirmation nouveau mot de passe</p>
             <IconInput
-                className={`full ${checkErr("confirmed-new-password")}`}
+                className={`full ${addClass(error.element === "confirmed-new-password", 'err')}`}
                 type={passwordShown.includes(3) ? "text" : "password"}
                 placeholder="Confirmation nouveau mot de passe..."
-                defaultValue={password.confirmedNewPassword}
+                value={password.confirmedNewPassword}
                 onChange={(e) => setPassword(datas => ({ ...datas, confirmedNewPassword: e.target.value }))}
                 endIcon={passwordShown.includes(3) ? <Icon name="Hidden" /> : <Icon name="Visible" />}
                 endIconClick={() => showPassword(3)}
             />
-            {error.element === "confirmed-new-password" &&
-                <ErrorCard
-                    display={error.element === "confirmed-new-password"}
-                    text={error.error}
-                    clean={() => setError({ element: "", error: "" })}
-                />
-            }
+            <ErrorCard
+                display={error.element === "confirmed-new-password"}
+                text={error.error}
+                clean={() => setError({ element: "", error: "" })}
+            />
         </div>
     )
 }

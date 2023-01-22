@@ -4,7 +4,7 @@
     color            : var(--text);
     background-color : var(--content-light);
     border-radius    : var(--rounded-sm);
-    border           : 1px solid var(--light-border);
+    box-shadow       : var(--shadow-tiny), var(--shadow-relief);
     cursor           : pointer;
 
     .card-img {
@@ -44,6 +44,7 @@
                 font-size          : 16px;
                 line-height        : 20px;
                 font-weight        : 400;
+                width              : 100%;
                 text-overflow      : ellipsis;
                 overflow           : hidden;
                 display            : -webkit-box;
@@ -130,7 +131,7 @@
                         -webkit-line-clamp : 1;
                         -webkit-box-orient : vertical;
                         a {
-                            font-weight : 500;
+                            font-weight : 400;
                             color       : var(--text);
                         }
                     }

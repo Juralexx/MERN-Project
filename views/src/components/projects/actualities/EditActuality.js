@@ -5,7 +5,7 @@ import Icon from '../../tools/icons/Icon'
 import ReactQuill from 'react-quill'
 import EditorToolbar, { formats, modules } from '../../tools/editor/EditorToolbar'
 import { Button, TextButton } from '../../tools/global/Button'
-import { ErrorCard } from '../../tools/global/Error'
+import { ErrorCard } from '../../tools/global/ErrorCard'
 import { ClassicInput } from '../../tools/global/Inputs'
 import { addClass, fullImage, removeAccents } from '../../Utils'
 
@@ -60,7 +60,7 @@ const EditActuality = ({ project, user, websocket }) => {
     }
 
     const getFiles = (filesArray) => {
-        setDatas(data => ({ 
+        setDatas(data => ({
             ...data,
             files: datas.files.concat(Array.from(filesArray)),
             newFiles: datas.newFiles.concat(Array.from(filesArray))
@@ -182,13 +182,11 @@ const EditActuality = ({ project, user, websocket }) => {
                 onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 100) }))}
             />
             <div className="field_infos full">{datas.title.length} / 100 caractères</div>
-            {error.element === "title" &&
-                <ErrorCard
-                    display={error.element === "title"}
-                    text={error.error}
-                    clean={() => setError({ element: "", error: "" })}
-                />
-            }
+            <ErrorCard
+                display={error.element === "title"}
+                text={error.error}
+                clean={() => setError({ element: "", error: "" })}
+            />
 
             <p className="title min-w-[100%]">Description de votre actualité <span>Champ requis</span></p>
             <EditorToolbar />

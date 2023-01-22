@@ -1,11 +1,11 @@
 import React from 'react'
-import { ErrorCard } from '../../tools/global/Error'
+import { ErrorCard } from '../../tools/global/ErrorCard'
 import { ClassicInput } from '../../tools/global/Inputs'
 import Icon from '../../tools/icons/Icon'
 import { addClass } from '../../Utils'
 
 const Tags = ({ tags, setDatas, error, setError }) => {
-    
+
     const addTag = (event, element) => {
         if (event.key === 'Enter') {
             if (element.length >= 3) {
@@ -58,13 +58,11 @@ const Tags = ({ tags, setDatas, error, setError }) => {
                     onKeyPress={e => addTag(e, e.target.value)}
                 />
                 <div className="field_infos full">{tags.length} / 12</div>
-                {error.element === "tags" &&
-                    <ErrorCard
-                        display={error.element === "tags"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
+                <ErrorCard
+                    display={error.element === "tags"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
+                />
             </div>
         </div>
     )

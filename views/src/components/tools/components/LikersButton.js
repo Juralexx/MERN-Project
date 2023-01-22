@@ -80,7 +80,7 @@ const LikersButton = ({ project, onClick }) => {
             {uid === null &&
                 <div className="action-btn like">
                     <Link to='/login'>
-                        <Icon name="Like" />
+                        <Icon name="Heart" />
                         <p>{text}</p>
                     </Link>
                 </div>
@@ -89,7 +89,7 @@ const LikersButton = ({ project, onClick }) => {
                 !liked &&
                 <div className="action-btn like">
                     <button onClick={like}>
-                        <Icon name="Like" />
+                        <Icon name="Heart" />
                     </button>
                     <p onClick={onClick}>{text}</p>
                 </div>
@@ -98,7 +98,7 @@ const LikersButton = ({ project, onClick }) => {
                 liked &&
                 <div className="action-btn like">
                     <button onClick={unlike}>
-                        <Icon name="Like" />
+                        <Icon name="Heart" />
                     </button>
                     <p onClick={onClick}>{text}</p>
                 </div>

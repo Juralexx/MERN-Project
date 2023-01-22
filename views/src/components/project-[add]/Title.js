@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { ClassicInput, IconInput, Textarea } from '../tools/global/Inputs';
 import { useClickOutside } from "../tools/hooks/useClickOutside";
 import CategoriesPicker from '../home/CategoriesPicker';
-import { ErrorCard } from '../tools/global/Error';
+import { ErrorCard } from '../tools/global/ErrorCard';
 import Icon from '../tools/icons/Icon';
 import { addClass } from '../Utils';
 
@@ -32,13 +32,11 @@ const Title = ({ datas, setDatas, error, setError }) => {
                         onChange={e => setDatas(data => ({ ...data, title: (e.target.value).substring(0, 60) }))}
                     />
                     <div className="field_infos full">{datas.title.length} / 60 caractères</div>
-                    {error.element === "title" &&
-                        <ErrorCard
-                            display={error.element === "title"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "title"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
             </div>
 
@@ -57,16 +55,14 @@ const Title = ({ datas, setDatas, error, setError }) => {
                         type="text"
                         placeholder="Sous-titre du projet"
                         value={datas.subtitle}
-                        onChange={e => setDatas(data => ({ ...data, subtitle: (e.target.value).substring(0, 100) }))}
+                        onChange={e => setDatas(data => ({ ...data, subtitle: (e.target.value).substring(0, 150) }))}
                     />
-                    <div className="field_infos full">{datas.subtitle.length} / 100 caractères</div>
-                    {error.element === "subtitle" &&
-                        <ErrorCard
-                            display={error.element === "subtitle"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <div className="field_infos full">{datas.subtitle.length} / 150 caractères</div>
+                    <ErrorCard
+                        display={error.element === "subtitle"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
             </div>
 
@@ -99,13 +95,11 @@ const Title = ({ datas, setDatas, error, setError }) => {
                             setCategory={setDatas}
                         />
                     </div>
-                    {error.element === "category" &&
-                        <ErrorCard
-                            display={error.element === "category"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "category"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
             </div>
         </div>

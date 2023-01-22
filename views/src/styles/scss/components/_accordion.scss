@@ -2,19 +2,33 @@
     width         : 100%;
     height        : auto;
     margin-bottom : 20px;
-    padding       : 10px 20px;
+    padding       : 8px 16px;
     border        : 1px solid var(--light-border);
+    border-radius : var(--rounded-sm);
     cursor        : pointer;
 
     &:hover {
         border : 1px solid var(--primary);
+        svg {
+            color : var(--primary);
+        }
+    }
+
+    &.open {
+        .accordion_body {
+            max-height : 1000px;
+            padding    : 10px 0;
+            visibility : visible;
+            opacity    : 1;
+            transition : .2s;
+        }
     }
 
     .accordion_top {
         display         : flex;
         align-items     : center;
         justify-content : space-between;
-        padding         : 10px 0;
+        padding         : 8px 0;
         font-size       : 16px;
         font-weight     : 500;
 
@@ -23,20 +37,24 @@
         }
 
         svg {
-            width  : 26px;
-            height : 26px;
+            width  : 22px;
+            height : 22px;
         }
     }
 
     .accordion_body {
-        padding    : 10px 0;
+        max-height : 0;
+        visibility : hidden;
+        opacity    : 0;
+        padding    : 0;
         color      : var(--text-secondary);
         text-align : justify;
+        transition : .2s;
     }
 }
 
 @media(max-width: 576px) {
     .accordion {
-        padding : 10px;
+        padding : 10px 15px;
     }
 }

@@ -3,7 +3,7 @@ import axios from "axios";
 import SignInForm from "./SignInForm";
 import { Button } from '../tools/global/Button'
 import { DynamicInput } from '../tools/global/Inputs';
-import { ErrorCard } from "../tools/global/Error";
+import { ErrorCard } from "../tools/global/ErrorCard";
 import { isEmailValid, onlyLettersNumbersAndDashes } from "../Utils";
 import { useClickOutside } from "../tools/hooks/useClickOutside";
 import Icon from "../tools/icons/Icon";
@@ -216,13 +216,11 @@ const SignUpForm = () => {
                         value={datas.pseudo}
                     />
                     {valid.includes("pseudo") && <Icon name="Check" className="validated" />}
-                    {error.element === "pseudo" &&
-                        <ErrorCard
-                            display={error.element === "pseudo"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "pseudo"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
 
                 <div className="relative mb-4">
@@ -237,13 +235,11 @@ const SignUpForm = () => {
                     {valid.includes("email") &&
                         <Icon name="Check" className="validated" />
                     }
-                    {error.element === "email" &&
-                        <ErrorCard
-                            display={error.element === "email"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "email"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
 
                 <div className="relative mb-4" ref={passwordRef}>
@@ -261,12 +257,11 @@ const SignUpForm = () => {
                     {valid.includes("password") &&
                         <Icon name="Check" className="validated" />
                     }
-                    {error.element === "password" &&
-                        <ErrorCard
-                            display={error.element === "password"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })} />
-                    }
+                    <ErrorCard
+                        display={error.element === "password"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                     {display &&
                         <div className="password-checker">
                             <div className="password-strength">
@@ -312,13 +307,11 @@ const SignUpForm = () => {
                     {valid.includes("confirmed-password") &&
                         <Icon name="Check" className="validated" />
                     }
-                    {error.element === "confirmed-password" &&
-                        <ErrorCard
-                            display={error.element === "confirmed-password"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
+                    <ErrorCard
+                        display={error.element === "confirmed-password"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
 
                 <div className="flex items-center mb-6 mt-6">
@@ -330,13 +323,11 @@ const SignUpForm = () => {
                         J'accepte les <a href="/" target="_blank" rel="noopener noreferrer">conditions générales</a>
                     </label>
                 </div>
-                {error.element === "terms" &&
-                    <ErrorCard
-                        display={error.element === "terms"}
-                        text={error.error}
-                        clean={() => setError({ element: "", error: "" })}
-                    />
-                }
+                <ErrorCard
+                    display={error.element === "terms"}
+                    text={error.error}
+                    clean={() => setError({ element: "", error: "" })}
+                />
 
                 <Button
                     type="submit"

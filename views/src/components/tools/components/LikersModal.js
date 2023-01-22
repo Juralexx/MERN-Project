@@ -99,7 +99,7 @@ const LikersModal = ({ project, user, websocket, open, setOpen }) => {
     return (
         <Modal open={open} setOpen={setOpen} className='users_modal'>
             <div className="users_modal-header">
-                <Icon name="Like" />
+                <Icon name="Heart" />
                 <p>Soutenu par {project.likers.length} personnes</p>
             </div>
             <div className="users_modal-body">

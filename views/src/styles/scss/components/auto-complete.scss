@@ -4,7 +4,7 @@
     width            : 100%;
     overflow         : auto;
     z-index          : 750;
-    border-radius    : var(--rounded-sm);
+    border-radius    : 0 0 var(--rounded-sm) var(--rounded-sm);
     box-shadow       : var(--shadow-two);
     background-color : var(--content-x-light);
     padding          : 5px 0;

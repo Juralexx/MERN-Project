@@ -5,7 +5,7 @@ import { TextButton } from '../tools/global/Button';
 import { ClassicInput } from '../tools/global/Inputs';
 import Icon from '../tools/icons/Icon';
 import isURL from 'validator/lib/isURL';
-import { ErrorCard } from '../tools/global/Error';
+import { ErrorCard } from '../tools/global/ErrorCard';
 
 const Networks = ({ datas, setDatas, error, setError }) => {
     const [network, setNetwork] = useState("")
@@ -37,38 +37,27 @@ const Networks = ({ datas, setDatas, error, setError }) => {
         <div className="add-project-card">
             <h2>Réseaux sociaux et site web</h2>
             <div className="row py-4">
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
+                <div className="col-12 col-lg-6">
                     <h4>Réseaux sociaux</h4>
                     <p>
                         Choisissez un titre et un sous-titre clair pour aider votre public à comprendre votre projet rapidement.
                         Ces deux éléments sont visibles sur vous page de pré-lancement et de projet.
                     </p>
                 </div>
-                <div className="col-12 col-lg-6 flex flex-col justify-center !mt-4 lg:!mt-0">
-                    <div className="flex">
+                <div className="col-12 col-lg-6 !mt-4 lg:!mt-0">
+                    <div className="flex mb-3">
                         <ClassicInput
                             className={`w-full !max-w-full ${addClass(error.element === "networks", 'err')}`}
                             inputClassName="w-full"
                             type="text"
                             placeholder="https://"
-                            value={datas.network}
+                            value={network}
                             onChange={e => setNetwork(e.target.value)}
                         />
                         <TextButton className="!h-[44px] ml-2" onClick={handleNetwork}>
                             Ajouter
                         </TextButton>
                     </div>
-                    {error.element === "networks" &&
-                        <ErrorCard
-                            display={error.element === "networks"}
-                            text={error.error}
-                            clean={() => setError({ element: "", error: "" })}
-                        />
-                    }
-                </div>
-            </div>
-            <div className="row py-4">
-                <div className="col-12 col-lg-6 flex flex-col justify-center">
                     {datas.networks.length > 0 &&
                         datas.networks.map((element, key) => {
                             return (
@@ -86,6 +75,11 @@ const Networks = ({ datas, setDatas, error, setError }) => {
                             )
                         })
                     }
+                    <ErrorCard
+                        display={error.element === "networks"}
+                        text={error.error}
+                        clean={() => setError({ element: "", error: "" })}
+                    />
                 </div>
             </div>
         </div>

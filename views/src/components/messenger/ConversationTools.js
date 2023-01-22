@@ -77,7 +77,7 @@ const ConversationTools = ({ onlineUsers, fetchedContacts, members, rightbar, se
                             onChange={oneLevelSearch}
                         />
                         {search.state && search.results.length === 0 &&
-                            <div className='pt-3 pb-1 text-center'>Aucun resultat</div>
+                            <div className='pt-3 pb-1 text-center'>Aucun résultat</div>
                         }
                     </div>
                     <div className="conversation-tools-inner">

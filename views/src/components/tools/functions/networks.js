@@ -8,23 +8,23 @@ import Icon from '../icons/Icon'
 export const returnNetworkSVG = (network) => {
     switch (network) {
         case "facebook":
-            return <Icon name="Facebook" className="bg-facebook" />
+            return <Icon name="Facebook" className="color-facebook" />
         case "instagram":
-            return <Icon name="Instagram" className="bg-instagram" />
+            return <Icon name="Instagram" className="color-instagram" />
         case "twitter":
-            return <Icon name="Twitter" className="bg-twitter" />
+            return <Icon name="Twitter" className="color-twitter" />
         case "snapchat":
-            return <Icon name="Snapchat" className="bg-snapchat" />
+            return <Icon name="Snapchat" className="color-snapchat" />
         case "youtube":
-            return <Icon name="Youtube" className="bg-youtube" />
+            return <Icon name="Youtube" className="color-youtube" />
         case "twitch":
-            return <Icon name="Twitch" className="bg-twitch" />
+            return <Icon name="Twitch" className="color-twitch" />
         case "pinterest":
-            return <Icon name="PinterestCircle" className="bg-pinterest" />
+            return <Icon name="PinterestCircle" className="color-pinterest" />
         case "linkedin":
-            return <Icon name="Linkedin" className="bg-linkedin" />
+            return <Icon name="Linkedin" className="color-linkedin" />
         default:
-            return <Icon name="Link" className="bg-website" />
+            return <Icon name="Link" className="color-website" />
     }
 }
 

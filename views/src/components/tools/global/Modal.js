@@ -67,7 +67,7 @@ const ModalWrapper = styled.div`
         color            : var(--text);
         background-color : var(--content-light);
         border-radius    : var(--rounded-sm);
-        box-shadow       : var(--shadow-xl);
+        box-shadow       : var(--shadow-xl), var(--shadow-relief);
         z-index          : 100000000000;
         overflow         : hidden;
     

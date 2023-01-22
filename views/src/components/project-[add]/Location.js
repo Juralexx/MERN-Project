@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
-import { addClass, geoJSONStructure, geolocToFloat, removeAccents, removeSpecialChars } from '../Utils'
 import { useClickOutside } from '../tools/hooks/useClickOutside';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import { ClassicInput } from '../tools/global/Inputs';
-import Icon from '../tools/icons/Icon';
 import Oval from '../tools/loaders/Oval'
-import { ErrorCard } from '../tools/global/Error';
+import { ErrorCard } from '../tools/global/ErrorCard';
+import { addClass, geoJSONStructure, geolocToFloat } from '../Utils'
 
 const Location = ({ datas, setDatas, setError, error }) => {
 
@@ -29,38 +28,45 @@ const Location = ({ datas, setDatas, setError, error }) => {
         }
     }, [datas.location.city])
 
-    const [search, setSearch] = useState({ query: "", results: [] })
-    const [isLoading, setLoading] = useState(false)
+    /**
+     * 
+     */
+
+    const [search, setSearch] = useState({
+        isSearching: false,
+        query: '',
+        results: [],
+        isLoading: false
+    })
 
     const wrapperRef = useRef()
-    const [display, setDisplay] = useState(false)
-    useClickOutside(wrapperRef, () => {
-        setDisplay(false)
-        setLoading(false)
-    })
+    useClickOutside(wrapperRef, () => setSearch(data => ({ ...data, isSearching: false, results: [], isLoading: false })))
 
     const searchLocation = async () => {
         if (!search.query || search.query.trim() === "") return
-        else {
-            const response = await axios
-                .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${search.query}`))
-                .catch(err => console.log("Error: ", err))
-            if (response) {
-                setSearch(data => ({ ...data, results: response.data }))
-                setLoading(true)
-                if (search.query.length > 2) {
-                    setDisplay(true)
-                    setLoading(true)
-                    if (search.results.length === 0) {
-                        setLoading(false)
-                    }
-                } else {
-                    setDisplay(false)
-                    setLoading(false)
-                }
-            }
+        if (search.query.length > 2) {
+            setSearch(data => ({ ...data, isSearching: true, isLoading: true }))
+
+            let timer
+            clearTimeout(timer)
+            timer = setTimeout(async () => {
+                const response = await axios
+                    .get(encodeURI(`${process.env.REACT_APP_API_URL}api/location/${search.query}`))
+                    .catch(err => console.log("Error: ", err))
+
+                if (response.data.length > 0)
+                    setSearch(data => ({ ...data, results: response.data, isLoading: false }))
+                else
+                    setSearch(data => ({ ...data, results: [], isLoading: false }))
+            }, 1000)
+        } else {
+            setSearch(data => ({ ...data, isSearching: false, isLoading: false }))
         }
     }
+
+    /**
+     * 
+     */
 
     return (
         <div className="add-project-card">
@@ -85,83 +91,60 @@ const Location = ({ datas, setDatas, setError, error }) => {
                             type="text"
                             placeholder="Rechercher une adresse..."
                             value={search.query}
-                            onInput={e => setSearch(data => ({ ...data, query: removeSpecialChars(removeAccents(e.target.value)) }))}
+                            onInput={e => setSearch(data => ({ ...data, query: e.target.value }))}
                             onChange={searchLocation}
                             cross
                             onClean={() => {
                                 setSearch(data => ({ ...data, query: '' }))
-                                setDatas(data => ({
-                                    ...data,
-                                    location: {
-                                        city: "",
-                                        department: "",
-                                        codeDepartment: "",
-                                        region: "",
-                                        codeRegion: "",
-                                        newRegion: "",
-                                        codeNewRegion: "",
-                                        geolocalisation: "",
-                                    }
-                                }))
+                                setDatas(data => ({ ...data, location: { city: "", department: "", codeDepartment: "", region: "", codeRegion: "", newRegion: "", codeNewRegion: "", geolocalisation: "" } }))
                             }}
                         />
-                        {error.element === "location" &&
-                            <ErrorCard
-                                display={error.element === "location"}
-                                text={error.error}
-                                clean={() => setError({ element: "", error: "" })}
-                            />
-                        }
+                        <ErrorCard
+                            display={error.element === "location"}
+                            text={error.error}
+                            clean={() => setError({ element: "", error: "" })}
+                        />
                         <div
                             ref={wrapperRef}
                             tabIndex="0"
                             className="auto-complete-container custom-scrollbar max-w-[636px]"
-                            style={{ display: search.query.length < 3 || !display ? "none" : "block" }}
+                            style={{ display: !search.isSearching ? "none" : "block" }}
                         >
                             {search.results.length > 0 &&
-                                display && (
-                                    search.results.map((element, key) => {
-                                        return (
-                                            <div
-                                                key={key}
-                                                className="auto-complete-item"
-                                                onClick={() => {
-                                                    setDatas(data => ({
-                                                        ...data,
-                                                        location: {
-                                                            city: element.COM_NOM,
-                                                            department: element.DEP_NOM,
-                                                            codeDepartment: element.DEP_CODE,
-                                                            region: element.REG_NOM_OLD,
-                                                            codeRegion: element.REG_CODE_OLD,
-                                                            newRegion: element.REG_NOM,
-                                                            codeNewRegion: element.REG_CODE,
-                                                            geolocalisation: element.geolocalisation,
-                                                        }
-                                                    }))
-                                                    setSearch(data => ({ ...data, query: `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}` }))
-                                                    setDisplay(false)
-                                                    setLoading(false)
-                                                }}
-                                            >
-                                                {`${element.COM_NOM} - `}<em>{element.DEP_NOM_NUM}, {element.REG_NOM_OLD}</em>
-                                            </div>
-                                        )
-                                    })
-                                )}
-                            {isLoading &&
-                                search.results.length === 0 && (
-                                    <Oval />
-                                )
+                                search.results.map((element, key) => {
+                                    return (
+                                        <div className="auto-complete-item"
+                                            key={key}
+                                            onClick={() => {
+                                                setSearch(data => ({ ...data, isSearching: false, query: `${element.COM_NOM} - ${element.DEP_NOM_NUM}, ${element.REG_NOM_OLD}`, isLoading: false }))
+                                                setDatas(data => ({
+                                                    ...data,
+                                                    location: {
+                                                        city: element.COM_NOM,
+                                                        department: element.DEP_NOM,
+                                                        codeDepartment: element.DEP_CODE,
+                                                        region: element.REG_NOM_OLD,
+                                                        codeRegion: element.REG_CODE_OLD,
+                                                        newRegion: element.REG_NOM,
+                                                        codeNewRegion: element.REG_CODE,
+                                                        geolocalisation: element.geolocalisation,
+                                                    }
+                                                }))
+                                            }}>
+                                            {`${element.COM_NOM} - `}<em>{element.DEP_NOM_NUM}, {element.REG_NOM_OLD}</em>
+                                        </div>
+                                    )
+                                })
                             }
-                            {search.query.length > 2 &&
-                                search.results.length === 0 &&
-                                !isLoading && (
-                                    <div className="no-result">
-                                        <Icon name="BoxEmpty" />
-                                        <div>Aucun resultat ne correspond à votre recherche...</div>
-                                    </div>
-                                )
+                            {search.isLoading && search.results.length === 0 &&
+                                <div className="py-4">
+                                    <Oval />
+                                </div>
+                            }
+                            {search.isSearching && search.results.length === 0 && !search.isLoading &&
+                                <div className="no-result">
+                                    <div>Aucun résultat ne correspond à votre recherche...</div>
+                                </div>
                             }
                         </div>
                     </div>

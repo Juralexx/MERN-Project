@@ -20,42 +20,30 @@ const State = ({ state, setDatas }) => {
                 >
                     {state === "worked on" &&
                         <>
-                            <div
-                                onClick={() => setDatas(data => ({ ...data, state: "in progress" }))}
-                            >
+                            <div onClick={() => setDatas(data => ({ ...data, state: "in progress" }))}>
                                 En cours
                             </div>
-                            <div
-                                onClick={() => setDatas(data => ({ ...data, state: "done" }))}
-                            >
+                            <div onClick={() => setDatas(data => ({ ...data, state: "done" }))}>
                                 Terminé
                             </div>
                         </>
                     }
                     {state === "in progress" &&
                         <>
-                            <div
-                                onClick={() => setDatas(data => ({ ...data, state: "worked on" }))}
-                            >
+                            <div onClick={() => setDatas(data => ({ ...data, state: "worked on" }))}>
                                 En préparation
                             </div>
-                            <div
-                                onClick={() => setDatas(data => ({ ...data, state: "done" }))}
-                            >
+                            <div onClick={() => setDatas(data => ({ ...data, state: "done" }))}>
                                 Terminé
                             </div>
                         </>
                     }
                     {state === "done" &&
                         <>
-                            <div
-                                onClick={() => setDatas(data => ({ ...data, state: "worked on" }))}
-                            >
+                            <div onClick={() => setDatas(data => ({ ...data, state: "worked on" }))}>
                                 En préparation
                             </div>
-                            <div
-                                onClick={() => setDatas(data => ({ ...data, state: "in progress" }))}
-                            >
+                            <div onClick={() => setDatas(data => ({ ...data, state: "in progress" }))}>
                                 En cours
                             </div>
                         </>

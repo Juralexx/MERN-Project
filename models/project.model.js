@@ -37,7 +37,7 @@ const ProjectModel = new mongoose.Schema(
             unique: false,
             trim: true,
             minlength: 10,
-            maxlength: 100,
+            maxlength: 150,
         },
 
         URL: {

@@ -126,7 +126,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                         )
                     })
                 }
-                {search.isLoading && search.results.length === 0 &&
+                {search.isLoading &&
                     <div className='py-4'>
                         <Oval />
                     </div>
@@ -134,7 +134,7 @@ const LocationsAutocomplete = ({ datas, setDatas }) => {
                 {search.state && search.results.length === 0 && !search.isLoading &&
                     <div className="no-result">
                         <Icon name="BoxEmpty" />
-                        <div>Aucun resultat ne correspond à votre recherche...</div>
+                        <div>Aucun résultat ne correspond à votre recherche...</div>
                     </div>
                 }
             </div>

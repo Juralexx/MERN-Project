@@ -74,12 +74,50 @@
 
         .join-btn {
             height           : 48px;
-            color            : white;
+            width            : 100%;
             font-weight      : 600;
             text-transform   : uppercase;
             font-size        : 14px;
             background-color : var(--primary);
             margin           : 10px 0;
+        }
+    }
+
+    .project-tags {
+        .tag {
+            padding      : 0 2px;
+            margin-right : 2px;
+        }
+    }
+
+    .action-btn {
+        min-width        : 31% !important;
+        max-width        : 100% !important;
+        background-color : var(--xx-light) !important;
+        color            : var(--text) !important;
+        font-weight      : 700;
+        margin           : 5px 7px 5px 0;
+    
+        svg {
+            width       : 16px;
+            height      : 16px;
+            margin-left : 10px;
+        }
+    
+        &.like {
+            svg {
+                color : var(--xred) !important;
+            }
+        }
+        &.follow {
+            svg {
+                color : var(--green) !important;
+            }
+        }
+        &.share {
+            svg {
+                color : var(--xblue) !important;
+            }
         }
     }
 }
@@ -100,21 +138,7 @@
 .project-page_actions {
     display   : flex;
     flex-wrap : wrap;
-    padding   : 20px 0;
-}
-
-.action-btn {
-    font-weight      : 700;
-    border-radius    : var(--rounded-sm);
-    color            : var(--text);
-    background-color : var(--xx-light);
-    margin           : 5px 7px 5px 0;
-
-    svg {
-        width       : 16px;
-        height      : 16px;
-        margin-left : 10px;
-    }
+    padding   : 10px 0;
 }
 
 @media(max-width: 992px) {

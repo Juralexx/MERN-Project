@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useClickOutside } from '../components/tools/hooks/useClickOutside'
 import { departments, regions } from '../api/regions'
 import Icon from '../components/tools/icons/Icon'
@@ -11,7 +11,7 @@ import Card from '../components/tools/components/Card'
 import CardLoading from '../components/tools/components/CardLoading'
 import { Button, IconToggle, TextButton } from '../components/tools/global/Button'
 import { DropdownInput, IconInput } from '../components/tools/global/Inputs'
-import { addClass, divideArrayIntoSizedParts } from '../components/Utils'
+import { addClass, divideArrayIntoSizedParts, reverseArray } from '../components/Utils'
 
 const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) => {
     const categoriesRef = useRef()
@@ -27,13 +27,16 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
 
     const [results, setResults] = useState({ all: [], paginatedResults: [], isLoading: true })
 
+    const { pathname } = useLocation()
     const [searchParams, setSearchParams] = useSearchParams()
 
     let currentPage = Number(searchParams.get('p')) || 1
 
     useEffect(() => {
-        if (currentPage > results.paginatedResults.length + 1)
-            window.location.href = `${window.location.origin}/`
+        if (currentPage !== 1) {
+            if (currentPage > results.paginatedResults.length + 1)
+                window.location.href = `${window.location.origin}/`
+        }
     }, [currentPage, results])
 
     /**
@@ -130,7 +133,44 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                 isLoading: false
             })
         }
-    }, [searchParams, departments, regions])
+
+        if (pathname) {
+            switch (pathname) {
+                case '/all':
+                    console.log('all')
+                    setResults({
+                        all: sortedProjects.randomized,
+                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.randomized, 20),
+                        isLoading: false
+                    })
+                    break;
+                case '/recents':
+                    console.log('recents')
+                    setResults({
+                        all: sortedProjects.byDates,
+                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.byDates, 20),
+                        isLoading: false
+                    })
+                    break;
+                case '/liked':
+                    setResults({
+                        all: sortedProjects.byLikes,
+                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.byLikes, 20),
+                        isLoading: false
+                    })
+                    break;
+                case '/followed':
+                    setResults({
+                        all: sortedProjects.byFollowings,
+                        paginatedResults: divideArrayIntoSizedParts(sortedProjects.byFollowings, 20),
+                        isLoading: false
+                    })
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, [searchParams, pathname, departments, regions])
 
     /**
      * 
@@ -325,9 +365,9 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
                                 </>
                             ) : (
                                 <div className="search-no-results">
-                                    <img src="/img/search.png" alt="Aucun resultat ne correspond à votre recherche" />
+                                    <img src="/img/search.png" alt="Aucun résultat ne correspond à votre recherche" />
                                     <div className='font-medium'>
-                                        Aucun resultat ne correspond à votre recherche.<br />
+                                        Aucun résultat ne correspond à votre recherche.<br />
                                         <span className='font-thin'>Nous vous invitons à modifier vos critères de recherche.</span>
                                     </div>
                                 </div>

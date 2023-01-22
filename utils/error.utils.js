@@ -83,7 +83,7 @@ export const projectErrors = (err) => {
         errors.title = "Veuillez saisir un titre valide, votre titre doit faire entre 10 et 60 caractères."
 
     if (err.message.includes("subtitle"))
-        errors.subtitle = "Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 100 caractères."
+        errors.subtitle = "Veuillez saisir un sous-titre valide, votre sous-titre doit faire entre 10 et 150 caractères."
 
     if (err.message.includes("category"))
         errors.category = "Veuillez sélectionner une catégorie."

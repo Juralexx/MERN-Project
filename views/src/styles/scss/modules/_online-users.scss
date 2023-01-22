@@ -6,13 +6,13 @@
     width      : 350px;
     padding    : 10px 0;
     background : var(--content);
-    box-shadow : var(--shadow-tiny-right);
+    box-shadow : var(--shadow-right);
     z-index    : 700;
     opacity    : 1;
     transition : .3s ease;
     overflow-y : auto;
     overflow-x : hidden;
-    
+
     &.open {
         right      : 0;
         transition : .3s ease;
@@ -31,7 +31,7 @@
     }
 
     .tools_btn {
-        background : var(--content);
+        background : transparent;
     }
 
     .online-title {
@@ -67,75 +67,37 @@
             height        : 36px;
             border-radius : 50%;
             margin-right  : 10px;
-
-            &.connected {
-                border : 3px solid var(--green);
-            }
         }
 
-        .online-user-name {
-            .online-user-pseudo {
-                line-height : 16px;
-                color       : var(--text);
-                font-weight : 500;
-            }
-
-            .online-user-status {
-                font-size  : 12px;
-                margin-top : 3px;
-                color      : var(--text-secondary)
-            }
+        .online-user-pseudo {
+            line-height : 16px;
+            color       : var(--text);
+            font-weight : 500;
         }
 
-        &.online {
-            .online-user-img {
-                border : 2px solid var(--green);
-            }
+        .online-user-status {
+            font-size  : 12px;
+            margin-top : 3px;
+            color      : var(--text-secondary)
         }
+    }
 
-        &.offline {
-            .online-user-img {
-                opacity : 0.3;
-            }
-            .online-user-name {
-                .online-user-pseudo,
-                .online-user-status {
-                    opacity : 0.3;
-                }
-            }
-            .tools_btn {
-                opacity : 0.3;
-            }
+    &.online {
+        .online-user-img {
+            border : 2px solid var(--green);
+        }
+    }
+
+    &.offline {
+        .online-user {
+            opacity : 0.5;
+        }
+        .tools_btn {
+            opacity : 0.5
         }
     }
 
     &:hover {
         background : var(--x-light);
-
-        .online-badge {
-            background-color : var(--content-light);
-        }
-    }
-
-    .online-user-menu {
-        position      : absolute;
-        left          : -155px;
-        top           : 0px;
-        background    : var(--content);
-        border-radius : var(--rounded-sm);
-        padding       : 10px 0;
-
-        ul {
-            margin  : 0;
-            padding : 0;
-
-            li {
-                padding : 5px 30px;
-
-                &:hover {
-                    background : var(--body);
-                }
-            }
-        }
     }
 }

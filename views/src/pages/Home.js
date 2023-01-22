@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 import Search from './Search';
 import Researches from './Researches';
 import ProjectPage from './Project';
+import { StringButton, TextButton } from '../components/tools/global/Button';
 
 const Home = ({ websocket, user }) => {
     const [isLoading, setLoading] = useState(true)
@@ -23,6 +24,7 @@ const Home = ({ websocket, user }) => {
                 .then(res => {
                     setProjects(res.data)
                     setSortedProjects(() => ({
+                        all: res.data,
                         randomized: res.data.sort(() => {
                             return Math.random() - 0.5
                         }),
@@ -130,7 +132,7 @@ const Home = ({ websocket, user }) => {
                     },
                 }
             })
-            .catch(err => console.log(err))
+                .catch(err => console.log(err))
         }
 
         navigate({
@@ -160,8 +162,8 @@ const Home = ({ websocket, user }) => {
                                 <div className="swiper-container">
                                     <div className="swiper-header">
                                         <h2>Les plus récent</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
+                                        <Link to="/recents">
+                                            Voir plus <Icon name="DoubleArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -176,8 +178,8 @@ const Home = ({ websocket, user }) => {
                                 <div className="swiper-container">
                                     <div className="swiper-header">
                                         <h2>Tous les projets</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
+                                        <Link to="/all">
+                                            Voir plus <Icon name="DoubleArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -192,8 +194,8 @@ const Home = ({ websocket, user }) => {
                                 <div className="swiper-container">
                                     <div className="swiper-header">
                                         <h2>Les plus aimés</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
+                                        <Link to="/liked">
+                                            Voir plus <Icon name="DoubleArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -208,8 +210,8 @@ const Home = ({ websocket, user }) => {
                                 <div className="swiper-container">
                                     <div className="swiper-header">
                                         <h2>Les plus suivis</h2>
-                                        <Link to="/">
-                                            Voir plus <Icon name="ArrowRight" />
+                                        <Link to="/followed">
+                                            Voir plus <Icon name="DoubleArrowRight" />
                                         </Link>
                                     </div>
                                     <div className="swiper-inner">
@@ -233,16 +235,20 @@ const Home = ({ websocket, user }) => {
                                     projects={projects}
                                 />
                             } />
-                            <Route path="search/*" element={
-                                <Search
-                                    user={user}
-                                    websocket={websocket}
-                                    search={search}
-                                    datas={datas}
-                                    setDatas={setDatas}
-                                    sortedProjects={sortedProjects}
-                                />
-                            } />
+                            {['search/*', '/all', '/recents', '/liked', '/followed']
+                                .map(path => (
+                                    <Route key="Home" path={path} element={
+                                        <Search
+                                            user={user}
+                                            websocket={websocket}
+                                            search={search}
+                                            datas={datas}
+                                            setDatas={setDatas}
+                                            sortedProjects={sortedProjects}
+                                        />
+                                    } />
+                                ))
+                            }
                             <Route path="researches/*" element={
                                 <Researches
                                     user={user}
