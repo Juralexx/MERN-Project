@@ -1,7 +1,7 @@
 .sign-container {
-    height     : calc(100vh - 60px);
+    min-height : 100vh;
     width      : 100%;
-    background : var(--content-light);
+    background : var(--content);
 
     .sign-container-inner {
         display         : flex;
@@ -9,7 +9,7 @@
         align-items     : center;
         justify-content : center;
         margin          : 0 auto;
-        height          : calc(100vh - 140px);
+        min-height      : calc(100vh - 140px);
         width           : 500px;
 
         .header-logo {
@@ -22,9 +22,10 @@
             position      : relative;
             width         : 100%;
             padding       : 30px;
-            box-shadow    : var(--shadow-two);
+            margin        : 30px auto;
+            background    : var(--content-light);
+            box-shadow    : var(--shadow-tiny);
             border-radius : var(--rounded-sm);
-            background    : var(--content-x-light);
 
             h1 {
                 margin-bottom : 20px;

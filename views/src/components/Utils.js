@@ -518,19 +518,32 @@ export const doesArrayIncludes = (array, elements) => {
 }
 
 /**
- * Check if all arrays in an array contain at least one value
- * @param {*} array Array of arrays
+ * Check if all arrays in an array or an object contain at least one value
+ * @param {*} element Element of typeof object or array than contain the arrays
  */
 
-export const doesAllArraysInArrayContainValues = (array) => {
+export const doesAllArraysInElementContainValues = (element) => {
     let state = false
-    for (let i = 0; i < array.length; i++) {
-        if (array[i].length === 0) {
-            state = false
-            break;
-        } else if (i === array.length - 1) {
-            state = true
-            break;
+    if (typeof element === 'object') {
+        for (let i = 0; i < Object.keys(element).length; i++) {
+            if (Object.values(element)[i].length === 0) {
+                state = false
+                break;
+            } else if (i === Object.keys(element).length - 1) {
+                state = true
+                break;
+            }
+        }
+    }
+    else if (typeof element === 'array') {
+        for (let i = 0; i < element.length; i++) {
+            if (element[i].length === 0) {
+                state = false
+                break;
+            } else if (i === element.length - 1) {
+                state = true
+                break;
+            }
         }
     }
     return state

@@ -8,14 +8,14 @@ const UserModel = new mongoose.Schema(
         pseudo: {
             type: String,
             required: true,
-            minlength: 4,
-            maxlength: 20,
             unique: true,
+            minlength: 3,
+            maxlength: 20,
+            trim: true,
             validate: {
                 validator: (val) => validator.isAlphanumeric(val, ['fr-FR'], { ignore: " -" }),
-                message: 'Votre pseudo ne peut contenir que des lettres, chiffre, tirets (-) et underscore (_) et faire entre 4 et 20 caractères.'
-            },
-            trim: true
+                message: 'Votre pseudo ne peut contenir que des lettres, chiffres, tirets (-) et underscores (_) et faire entre 3 et 20 caractères.'
+            }
         },
 
         email: {
@@ -27,8 +27,7 @@ const UserModel = new mongoose.Schema(
             validate: {
                 validator: isEmailValid,
                 message: "Veuillez saisir une adresse email valide."
-            },
-            match: [/^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i, "Veuillez saisir une adresse email valide"],
+            }
         },
 
         password: {
@@ -40,15 +39,21 @@ const UserModel = new mongoose.Schema(
 
         name: {
             type: String,
+            required: false,
+            minlength: 2,
+            maxlength: 60,
             trim: true,
             validate: {
                 validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
-                message: 'Veuillez saisir un nom valide.'
+                message: 'Veuillez saisir un prénom valide.'
             },
         },
 
         lastname: {
             type: String,
+            required: false,
+            minlength: 2,
+            maxlength: 60,
             trim: true,
             validate: {
                 validator: (val) => validator.isAlpha(val, ['fr-FR'], { ignore: " -" }),
@@ -72,6 +77,7 @@ const UserModel = new mongoose.Schema(
 
         phone: {
             type: String,
+            required: false,
             trim: true,
             validate: {
                 validator: validator.isMobilePhone,
@@ -208,13 +214,13 @@ UserModel.pre("save", async function (next) {
 UserModel.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
     if (user) {
-        const auth = await bcrypt.compare(password, user.password);
-        if (auth) {
+        const isSamePassword = await bcrypt.compare(password, user.password);
+        if (isSamePassword) {
             return user;
         }
-        throw Error('incorrect password');
+        throw Error('Mot de passe incorrect.');
     }
-    throw Error('incorrect email')
+    throw Error('Mot de passe incorrect.')
 };
 
 

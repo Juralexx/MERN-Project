@@ -10,7 +10,7 @@ export const signUpErrors = (err) => {
     }
 
     if (err.message.includes("pseudo"))
-        errors.pseudo = "Votre pseudo ne peut contenir que des lettres, chiffre, tirets (-) et underscores (_) et faire entre 4 et 20 caractères.";
+        errors.pseudo = "Votre pseudo ne peut contenir que des lettres, chiffres, tirets (-) et underscoress (_) et faire entre 3 et 20 caractères.";
 
     if (err.message.includes("email"))
         errors.email = "Veuillez saisir une adresse e-mail valide.";
@@ -38,12 +38,38 @@ export const signInErrors = (err) => {
     }
 
     if (err.message.includes("email"))
-        errors.email = "Cet email n\'existe pas"
+        errors.email = "Cet email n\'existe pas."
 
     if (err.message.includes("password"))
-        errors.password = "Mot de passe incorrect"
+        errors.password = "Mot de passe incorrect."
 
     return errors
+}
+
+/**
+ *  User update errors
+ */
+
+export const userErrors = (err) => {
+    let error = {
+        name: "",
+        phone: "",
+        work: ""
+    }
+
+    if (err.message.includes("name"))
+        error.name = "Veuillez saisir un prénom valide."
+
+    if (err.message.includes("lastname"))
+        error.lastname = "Veuillez saisir un prénom valide."
+
+    if (err.message.includes("phone"))
+        error.phone = "Veuillez saisir un numéro de téléphone valide."
+
+    if (err.message.includes("work"))
+        error.work = "Veuillez saisir un numéro de téléphone valide."
+
+    return error
 }
 
 /**

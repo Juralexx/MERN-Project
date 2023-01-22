@@ -11,7 +11,7 @@ import Card from '../components/tools/components/Card'
 import CardLoading from '../components/tools/components/CardLoading'
 import { Button, IconToggle, TextButton } from '../components/tools/global/Button'
 import { DropdownInput, IconInput } from '../components/tools/global/Inputs'
-import { addClass, divideArrayIntoSizedParts, doesAllArraysInArrayContainValues, doesStringIncludes } from '../components/Utils'
+import { addClass, divideArrayIntoSizedParts, doesAllArraysInElementContainValues, doesStringIncludes } from '../components/Utils'
 
 const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) => {
     const categoriesRef = useRef()
@@ -134,22 +134,36 @@ const Search = ({ websocket, user, search, datas, setDatas, sortedProjects }) =>
             })
         }
 
-        console.log(doesAllArraysInArrayContainValues(sortedProjects))
-
-        if (doesAllArraysInArrayContainValues(sortedProjects)) {
+        if (doesAllArraysInElementContainValues(sortedProjects)) {
             if (pathname) {
                 switch (pathname) {
                     case '/all':
-                        setResults({ all: sortedProjects.randomized, paginatedResults: divideArrayIntoSizedParts(sortedProjects.randomized, 20), isLoading: false })
+                        setResults({
+                            all: sortedProjects.randomized,
+                            paginatedResults: divideArrayIntoSizedParts(sortedProjects.randomized, 20),
+                            isLoading: false
+                        })
                         break;
                     case '/recents':
-                        setResults({ all: sortedProjects.byDates, paginatedResults: divideArrayIntoSizedParts(sortedProjects.byDates, 20), isLoading: false })
+                        setResults({
+                            all: sortedProjects.byDates,
+                            paginatedResults: divideArrayIntoSizedParts(sortedProjects.byDates, 20),
+                            isLoading: false
+                        })
                         break;
                     case '/liked':
-                        setResults({ all: sortedProjects.byLikes, paginatedResults: divideArrayIntoSizedParts(sortedProjects.byLikes, 20), isLoading: false })
+                        setResults({
+                            all: sortedProjects.byLikes,
+                            paginatedResults: divideArrayIntoSizedParts(sortedProjects.byLikes, 20),
+                            isLoading: false
+                        })
                         break;
                     case '/followed':
-                        setResults({ all: sortedProjects.byFollowings, paginatedResults: divideArrayIntoSizedParts(sortedProjects.byFollowings, 20), isLoading: false })
+                        setResults({
+                            all: sortedProjects.byFollowings,
+                            paginatedResults: divideArrayIntoSizedParts(sortedProjects.byFollowings, 20),
+                            isLoading: false
+                        })
                         break;
                     default:
                         break;

@@ -1,23 +1,24 @@
 .explore-more {
     position   : relative;
-    padding    : 20px 10px;
+    padding    : 20px 0 30px;
     margin-top : 60px;
     border-top : 1px solid var(--light-border);
 
     .explore-more-tags {
-        display     : flex;
-        align-items : center;
-        flex-wrap   : wrap;
-        padding-top : 20px;
+        display        : flex;
+        align-items    : center;
+        flex-wrap      : wrap;
+        padding-top    : 10px;
+        padding-bottom : 30px;
 
         .tag {
-            display       : flex;
-            align-items   : center;
-            padding       : 5px 10px;
-            margin-right  : 10px;
-            margin-top    : 10px;
-            border-radius : var(--rounded-sm);
-            color         : var(--text-secondary);
+            display          : flex;
+            align-items      : center;
+            padding          : 4px 15px;
+            margin-right     : 10px;
+            margin-top       : 10px;
+            background-color : var(--x-light);
+            border-radius    : var(--rounded-sm);
 
             span {
                 color        : var(--primary);

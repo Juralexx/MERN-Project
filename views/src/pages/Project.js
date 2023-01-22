@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from "react-redux";
-import { NavLink, useParams, Routes, Route, Navigate } from 'react-router-dom'
-import { getProject } from '../reducers/project.action';
+import { NavLink, useParams, Routes, Route, Navigate, Link } from 'react-router-dom'
 import { convertDeltaToHTML } from '../components/tools/editor/functions';
 import Header from '../components/project-[page]/Header';
 import Actualities from '../components/project-[page]/Actualities';
@@ -21,25 +19,25 @@ const ProjectPage = ({ user, projects }) => {
     const { URLID, URL } = useParams()
     const [project, setProject] = useState({})
     const [isLoading, setLoading] = useState(true)
-    const isActive = ({ isActive }) => (!isActive ? "" : "active")
-    const dispatch = useDispatch()
 
     useEffect(() => {
         if (Object.keys(project).length === 0) {
-            const current = projects.find(e => e.URLID === URLID && e.URL === URL)
-            setProject(current)
-            dispatch(getProject(current._id))
+            setProject(projects.find(element => element.URLID === URLID && element.URL === URL))
             setLoading(false)
         }
-    }, [URL, URLID, projects, project, setProject, dispatch])
+    }, [URL, URLID, projects, project])
+
+    /**
+     * 
+     */
 
     const getHeight = () => {
         let screenHeight = document.documentElement.clientHeight
         return screenHeight
     }
 
-    const [displayBtn, setDisplayBtn] = useState("none")
     const navRef = useRef()
+    const [displayBtn, setDisplayBtn] = useState("none")
 
     useEffect(() => {
         window.addEventListener('scroll', () => {
@@ -48,6 +46,10 @@ const ProjectPage = ({ user, projects }) => {
             } else setDisplayBtn("none")
         })
     }, [navRef])
+
+    /**
+     * 
+     */
 
     return (
         <div className="project-page">
@@ -61,34 +63,19 @@ const ProjectPage = ({ user, projects }) => {
                         <div className='content_nav-sticky' ref={navRef}>
                             <div className="container-lg">
                                 <div className="content_nav overflow-x-auto custom-scrollbar-x">
-                                    <NavLink
-                                        to={`/project/${project.URLID}/${project.URL}/`}
-                                        className={isActive}
-                                    >
+                                    <NavLink to={`/project/${project.URLID}/${project.URL}/`}>
                                         À propos
                                     </NavLink>
-                                    <NavLink
-                                        to={`/project/${project.URLID}/${project.URL}/researches`}
-                                        className={isActive}
-                                    >
+                                    <NavLink to={`/project/${project.URLID}/${project.URL}/researches`}>
                                         Recherches <span>{project.works.length}</span>
                                     </NavLink>
-                                    <NavLink
-                                        to={`/project/${project.URLID}/${project.URL}/gallery`}
-                                        className={isActive}
-                                    >
+                                    <NavLink to={`/project/${project.URLID}/${project.URL}/gallery`}>
                                         Galerie <span>{project.pictures.length}</span>
                                     </NavLink>
-                                    <NavLink
-                                        to={`/project/${project.URLID}/${project.URL}/actuality`}
-                                        className={isActive}
-                                    >
+                                    <NavLink to={`/project/${project.URLID}/${project.URL}/actuality`}>
                                         Actualités <span>{project.actualities.length}</span>
                                     </NavLink>
-                                    <NavLink
-                                        to={`/project/${project.URLID}/${project.URL}/qna`}
-                                        className={isActive}
-                                    >
+                                    <NavLink to={`/project/${project.URLID}/${project.URL}/qna`}>
                                         FAQ <span>{project.QNA.length}</span>
                                     </NavLink>
                                     <Button className="ml-auto" style={{ display: displayBtn }}>
@@ -100,59 +87,68 @@ const ProjectPage = ({ user, projects }) => {
                         <div className="container-lg">
                             <div className="row h-full py-10">
                                 <div className="col-lg-8 lg:pr-4">
-                                    {!isLoading &&
-                                        <Routes>
-                                            <Route index element={
-                                                <>
-                                                    <h2 className="text-[26px] bold mb-8">À propos du projet</h2>
-                                                    <div dangerouslySetInnerHTML={convertDeltaToHTML(project.content[0])}></div>
-                                                    {project.networks.length > 0 &&
-                                                        <Networks project={project} />
-                                                    }
-                                                </>
-                                            } />
-                                            <Route path="researches" element={
-                                                <Works user={user} project={project} />
-                                            } />
-                                            <Route path="gallery" element={
-                                                <Gallery user={user} project={project} />
-                                            } />
-                                            <Route path="actuality" element={
-                                                <Actualities user={user} project={project} />
-                                            } />
-                                            <Route path="actuality/:urlid/:url" element={
-                                                <Actuality user={user} project={project} />
-                                            } />
-                                            <Route path="qna" element={
-                                                <Qna user={user} project={project} />
-                                            } />
-                                            <Route path="*" element={
-                                                <Navigate replace to="/" />
-                                            } />
-                                        </Routes>
-                                    }
+                                    <Routes>
+                                        <Route index element={
+                                            <>
+                                                <h2 className="text-[26px] bold mb-8">À propos du projet</h2>
+                                                <div dangerouslySetInnerHTML={convertDeltaToHTML(project.content[0])}></div>
+                                                {project.networks.length > 0 &&
+                                                    <Networks project={project} />
+                                                }
+                                            </>
+                                        } />
+                                        <Route path="researches" element={
+                                            <Works
+                                                user={user}
+                                                project={project}
+                                            />
+                                        } />
+                                        <Route path="gallery" element={
+                                            <Gallery
+                                                user={user}
+                                                project={project}
+                                            />
+                                        } />
+                                        <Route path="actuality" element={
+                                            <Actualities
+                                                user={user}
+                                                project={project}
+                                            />
+                                        } />
+                                        <Route path="actuality/:urlid/:url" element={
+                                            <Actuality
+                                                user={user}
+                                                project={project}
+                                            />
+                                        } />
+                                        <Route path="qna" element={
+                                            <Qna
+                                                user={user}
+                                                project={project}
+                                            />
+                                        } />
+                                        <Route path="*" element={
+                                            <Navigate replace to="/" />
+                                        } />
+                                    </Routes>
                                 </div>
                                 <div className="content-cards col-lg-4 custom-scrollbar" style={{ maxHeight: getHeight() }}>
-                                    {!isLoading &&
-                                        <>
-                                            <MapCard
-                                                project={project}
-                                                user={user}
-                                            />
-                                            <ActualityCard
-                                                project={project}
-                                                user={user}
-                                            />
-                                            <QnaCard
-                                                project={project}
-                                                user={user}
-                                            />
-                                            <GalleryCard
-                                                project={project}
-                                                user={user}
-                                            />
-                                        </>
-                                    }
+                                    <MapCard
+                                        project={project}
+                                        user={user}
+                                    />
+                                    <ActualityCard
+                                        project={project}
+                                        user={user}
+                                    />
+                                    <QnaCard
+                                        project={project}
+                                        user={user}
+                                    />
+                                    <GalleryCard
+                                        project={project}
+                                        user={user}
+                                    />
                                 </div>
                             </div>
                             {project.tags.length > 0 &&
@@ -161,7 +157,9 @@ const ProjectPage = ({ user, projects }) => {
                                     <div className="explore-more-tags">
                                         {project.tags.map((element, key) => {
                                             return (
-                                                <div className="tag" key={key}><span>#</span>{element}</div>
+                                                <Link to={`/search/?tag=${element}`} className="tag" key={key}>
+                                                    <span>#</span>{element}
+                                                </Link>
                                             )
                                         })}
                                     </div>

@@ -20,18 +20,20 @@ body {
     overflow-x       : hidden;
     font-size        : 14px;
     font-weight      : 300;
+    scrollbar-width  : thin;
 
     a {
-        text-decoration : none !important;
+        text-decoration : none;
         color           : var(--text);
     }
-    
+
     p {
-        font-size   : 14px;
+        font-size : 14px;
     }
 
-    ul, li {
-        list-style-type: none;
+    ul,
+    li {
+        list-style-type : none;
     }
 
     ::selection {
@@ -57,9 +59,11 @@ body {
     &::-webkit-scrollbar {
         width : 12px;
     }
+
     &::-webkit-scrollbar-track {
         background : var(--content-light);
     }
+
     &::-webkit-scrollbar-thumb {
         background-color : var(--light-border);
         border           : 3px solid var(--content-light);
@@ -73,10 +77,6 @@ body {
     input[type="date"] {
         color : white;
 
-        &::placeholder {
-            color : white;
-        }
-
         &::-webkit-datetime-edit-text,
         &::-webkit-datetime-edit-month-field,
         &::-webkit-datetime-edit-day-field,
@@ -84,7 +84,7 @@ body {
             color : var(--placeholder);
         }
     }
-    
+
 }
 
 #main {
@@ -94,36 +94,65 @@ body {
 }
 
 h1 {
-    font-size: 26px
-}
-h2 {
-    font-size: 24px
-}
-h3 {
-    font-size: 20px
-}
-h4 {
-    font-size: 18px
-}
-h5 {
-    font-size: 16px
+    font-size : 26px
 }
 
-h1, h2, h3, h4, h5 {
+h2 {
+    font-size : 24px
+}
+
+h3 {
+    font-size : 20px
+}
+
+h4 {
+    font-size : 18px
+}
+
+h5 {
+    font-size : 16px
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
     font-weight : 500;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border                  : 1px solid green;
-  -webkit-text-fill-color : green;
-  -webkit-box-shadow      : 0 0 0px 1000px #000 inset;
-  transition              : background-color 5000s ease-in-out 0s;
+input {
+
+    &::-webkit-autofill,
+    &::-webkit-autofill:hover,
+    &::-webkit-autofill:focus {
+        border                  : none;
+        -webkit-text-fill-color : var(--primary);
+        -webkit-box-shadow      : 0 0 0px 1000px transparent inset;
+        transition              : background-color 5000s ease-in-out 0s;
+    }
+}
+
+textarea {
+
+    &::-webkit-autofill,
+    &::-webkit-autofill:hover,
+    &::-webkit-autofill:focus {
+        border                  : none;
+        -webkit-text-fill-color : var(--primary);
+        -webkit-box-shadow      : 0 0 0px 1000px transparent inset;
+        transition              : background-color 5000s ease-in-out 0s;
+    }
+}
+
+select {
+
+    &::-webkit-autofill,
+    &::-webkit-autofill:hover,
+    &::-webkit-autofill:focus {
+        border                  : none;
+        -webkit-text-fill-color : var(--primary);
+        -webkit-box-shadow      : 0 0 0px 1000px transparent inset;
+        transition              : background-color 5000s ease-in-out 0s;
+    }
 }

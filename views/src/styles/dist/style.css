@@ -260,15 +260,17 @@ body {
   overflow-x: hidden;
   font-size: 14px;
   font-weight: 300;
+  scrollbar-width: thin;
 }
 body a {
-  text-decoration: none !important;
+  text-decoration: none;
   color: var(--text);
 }
 body p {
   font-size: 14px;
 }
-body ul, body li {
+body ul,
+body li {
   list-style-type: none;
 }
 body ::-moz-selection {
@@ -308,21 +310,6 @@ body svg {
 body input[type=date] {
   color: white;
 }
-body input[type=date]::-webkit-input-placeholder {
-  color: white;
-}
-body input[type=date]::-moz-placeholder {
-  color: white;
-}
-body input[type=date]:-ms-input-placeholder {
-  color: white;
-}
-body input[type=date]::-ms-input-placeholder {
-  color: white;
-}
-body input[type=date]::placeholder {
-  color: white;
-}
 body input[type=date]::-webkit-datetime-edit-text, body input[type=date]::-webkit-datetime-edit-month-field, body input[type=date]::-webkit-datetime-edit-day-field, body input[type=date]::-webkit-datetime-edit-year-field {
   color: var(--placeholder);
 }
@@ -353,22 +340,34 @@ h5 {
   font-size: 16px;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-weight: 500;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border: 1px solid green;
-  -webkit-text-fill-color: green;
-  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+input::-webkit-autofill, input::-webkit-autofill:hover, input::-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: var(--primary);
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+textarea::-webkit-autofill, textarea::-webkit-autofill:hover, textarea::-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: var(--primary);
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+select::-webkit-autofill, select::-webkit-autofill:hover, select::-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: var(--primary);
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
   -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s;
 }
@@ -630,6 +629,10 @@ select:-webkit-autofill:focus {
   .map {
     width: 100%;
   }
+}
+.custom-scrollbar {
+  scrollbar-color: rgb(210, 210, 210) rgb(46, 54, 69) !important;
+  scrollbar-width: thin !important;
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 10px;
@@ -4084,12 +4087,18 @@ select:-webkit-autofill:focus {
 .password-checker .checker svg {
   width: 18px;
   height: 18px;
-  margin-right: 8px;
+  margin-right: 5px;
 }
-.password-checker .checker.is-valid {
+.password-checker .checker.valid {
   color: var(--green);
 }
-.password-checker .checker.not-valid {
+.password-checker .checker.valid svg {
+  color: var(--green);
+}
+.password-checker .checker.unvalid {
+  color: var(--danger);
+}
+.password-checker .checker.unvalid svg {
   color: var(--danger);
 }
 
@@ -4106,7 +4115,7 @@ select:-webkit-autofill:focus {
 .password-strength .strength-item {
   height: 8px;
   width: 24%;
-  background-color: var(--xx-light);
+  background-color: var(--x-light);
 }
 .password-strength .strength-item:nth-child(1) {
   border-radius: var(--rounded-sm) 0 0 var(--rounded-sm);
@@ -4155,9 +4164,9 @@ select:-webkit-autofill:focus {
 }
 
 .sign-container {
-  height: calc(100vh - 60px);
+  min-height: 100vh;
   width: 100%;
-  background: var(--content-light);
+  background: var(--content);
 }
 .sign-container .sign-container-inner {
   display: -webkit-box;
@@ -4174,7 +4183,7 @@ select:-webkit-autofill:focus {
       -ms-flex-pack: center;
           justify-content: center;
   margin: 0 auto;
-  height: calc(100vh - 140px);
+  min-height: calc(100vh - 140px);
   width: 500px;
 }
 .sign-container .sign-container-inner .header-logo {
@@ -4186,10 +4195,11 @@ select:-webkit-autofill:focus {
   position: relative;
   width: 100%;
   padding: 30px;
-  -webkit-box-shadow: var(--shadow-two);
-          box-shadow: var(--shadow-two);
+  margin: 30px auto;
+  background: var(--content-light);
+  -webkit-box-shadow: var(--shadow-tiny);
+          box-shadow: var(--shadow-tiny);
   border-radius: var(--rounded-sm);
-  background: var(--content-x-light);
 }
 .sign-container .sign-container-inner .sign-card h1 {
   margin-bottom: 20px;
@@ -5256,7 +5266,7 @@ select:-webkit-autofill:focus {
 }
 .explore-more {
   position: relative;
-  padding: 20px 10px;
+  padding: 20px 0 30px;
   margin-top: 60px;
   border-top: 1px solid var(--light-border);
 }
@@ -5269,7 +5279,8 @@ select:-webkit-autofill:focus {
           align-items: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  padding-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 30px;
 }
 .explore-more .explore-more-tags .tag {
   display: -webkit-box;
@@ -5278,11 +5289,11 @@ select:-webkit-autofill:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 5px 10px;
+  padding: 4px 15px;
   margin-right: 10px;
   margin-top: 10px;
+  background-color: var(--x-light);
   border-radius: var(--rounded-sm);
-  color: var(--text-secondary);
 }
 .explore-more .explore-more-tags .tag span {
   color: var(--primary);

@@ -20,7 +20,10 @@ const SignInForm = () => {
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/user/login`,
             withCredentials: true,
-            data: { email, password }
+            data: {
+                email,
+                password
+            }
         }).then(res => {
             if (res.data.errors) {
                 if (res.data.errors.email) {

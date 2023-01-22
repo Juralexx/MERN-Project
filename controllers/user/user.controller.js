@@ -1,5 +1,6 @@
 import UserModel from '../../models/user.model.js'
 import mongoose from 'mongoose'
+import { userErrors } from '../../utils/error.utils.js';
 const ObjectID = mongoose.Types.ObjectId
 
 /**
@@ -114,7 +115,8 @@ export const updateUser = async (req, res) => {
                 return res.status(500).send({ message: err })
             })
     } catch (err) {
-        return res.status(500).json({ message: err });
+        const errors = userErrors(err)
+        res.status(200).json({ errors })
     }
 };
 

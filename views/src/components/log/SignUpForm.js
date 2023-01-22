@@ -4,7 +4,7 @@ import SignInForm from "./SignInForm";
 import { Button } from '../tools/global/Button'
 import { DynamicInput } from '../tools/global/Inputs';
 import { ErrorCard } from "../tools/global/ErrorCard";
-import { isEmailValid, onlyLettersNumbersAndDashes } from "../Utils";
+import { addClass, isEmailValid, onlyLettersNumbersAndDashes } from "../Utils";
 import { useClickOutside } from "../tools/hooks/useClickOutside";
 import Icon from "../tools/icons/Icon";
 import Checkbox from "../tools/global/Checkbox";
@@ -21,13 +21,17 @@ const SignUpForm = () => {
     const [error, setError] = useState({ element: "", error: "" })
     const [submitted, setSubmitted] = useState(false)
 
+    /**
+     * 
+     */
+
     const handleRegister = async e => {
         e.preventDefault();
 
-        if (!onlyLettersNumbersAndDashes(datas.pseudo) || datas.pseudo.length < 4 || datas.pseudo.length > 20) {
+        if (!onlyLettersNumbersAndDashes(datas.pseudo) || datas.pseudo.length < 3 || datas.pseudo.length > 20) {
             setError({
                 element: "pseudo",
-                error: "Votre pseudo ne peut contenir que des lettres, chiffre, tirets (-) et underscore (_) et faire entre 4 et 20 caractères"
+                error: "Votre pseudo ne peut contenir que des lettres, chiffres, tirets (-) et underscores (_) et faire entre 3 et 20 caractères"
             })
         } else {
             if (!isEmailValid(datas.email)) {
@@ -88,9 +92,14 @@ const SignUpForm = () => {
         }
     }
 
+    /**
+     * 
+     */
+
     const passwordRef = useRef()
     const [display, setDisplay] = useState(false)
     useClickOutside(passwordRef, () => setDisplay(false))
+
     const [secured, setSecured] = useState({
         state: false,
         strength: 0,
@@ -135,10 +144,10 @@ const SignUpForm = () => {
         } else {
             setSecured(content => ({ ...content, state: false }))
         }
-    }, [datas.password, secured.isLength, secured.isUppercase, secured.isLowercase, secured.isNumeric, secured.isChars])
+    }, [datas, secured])
 
     useEffect(() => {
-        if (onlyLettersNumbersAndDashes(datas.pseudo) && datas.pseudo.length >= 4 && datas.pseudo.length <= 20) {
+        if (onlyLettersNumbersAndDashes(datas.pseudo) && datas.pseudo.length >= 3 && datas.pseudo.length <= 20) {
             setValid(arr => [...arr, "pseudo"])
         } else {
             setValid(arr => arr.filter(element => element !== "pseudo"))
@@ -158,7 +167,7 @@ const SignUpForm = () => {
         } else {
             setValid(arr => arr.filter(element => element !== "confirmed-password"))
         }
-    }, [datas.pseudo, datas.email, secured, datas.password, datas.confirmPassword])
+    }, [datas, secured])
 
     useEffect(() => {
         let count = []
@@ -167,21 +176,31 @@ const SignUpForm = () => {
         let uppercase = datas.password.match(/[A-Z]/g)
         let numeric = datas.password.match(/[0-9]/g)
 
-        if ((chars || []).length >= 1)
+        if ((chars || []).length >= 1) {
             count = [...count, "chars"]
-        else count = count.filter(e => e !== "chars")
+        } else {
+            count = count.filter(e => e !== "chars")
+        }
         if ((lowercase || []).length >= 3) {
             count = [...count, "lowercase"]
-        } else count = count.filter(e => e !== "lowercase")
+        } else {
+            count = count.filter(e => e !== "lowercase")
+        }
         if ((uppercase || []).length >= 1) {
             count = [...count, "uppercase"]
-        } else count = count.filter(e => e !== "uppercase")
+        } else {
+            count = count.filter(e => e !== "uppercase")
+        }
         if ((numeric || []).length >= 3) {
             count = [...count, "numeric"]
-        } else count = count.filter(e => e !== "numeric")
+        } else {
+            count = count.filter(e => e !== "numeric")
+        }
         if (datas.password.length >= 12) {
             count = [...count, "length"]
-        } else count = count.filter(e => e !== "length")
+        } else {
+            count = count.filter(e => e !== "length")
+        }
 
         setSecured(content => ({ ...content, strength: count.length }))
     }, [datas.password])
@@ -198,10 +217,9 @@ const SignUpForm = () => {
         else if (secured.strength === 5) return "Fort"
     }
 
-    const addErrorClass = name => { if (error.element === name) { return "err" } else { return "" } }
-    const validateParameter = value => { if (value) { return "is-valid" } else { return "not-valid" } }
-    const addSuccessClass = value => { if (valid.includes(value)) return "succes" }
-    const returnSVG = value => { if (value) { return <Icon name="CheckCircle" /> } else return <Icon name="CrossCircle" /> }
+    /**
+     * 
+     */
 
     return (
         !submitted ? (
@@ -211,7 +229,7 @@ const SignUpForm = () => {
                         type="text"
                         text="Pseudo"
                         placeholder=" "
-                        className={`${addErrorClass("pseudo")} ${addSuccessClass("pseudo")}`}
+                        className={`${addClass(error.element === "pseudo", 'err')} ${addClass(valid.includes('pseudo'), 'succes')}`}
                         onChange={e => setDatas(data => ({ ...data, pseudo: e.target.value }))}
                         value={datas.pseudo}
                     />
@@ -228,7 +246,7 @@ const SignUpForm = () => {
                         type="email"
                         text="Email"
                         placeholder=" "
-                        className={`${addErrorClass("email")} ${addSuccessClass("email")}`}
+                        className={`${addClass(error.element === "email", 'err')} ${addClass(valid.includes('email'), 'err')}`}
                         onChange={(e) => setDatas(data => ({ ...data, email: e.target.value }))}
                         value={datas.email}
                     />
@@ -246,7 +264,7 @@ const SignUpForm = () => {
                     <DynamicInput
                         type={passwordShown ? "text" : "password"}
                         text="Mot de passe"
-                        className={`${addErrorClass("password")} ${addSuccessClass("password")}`}
+                        className={`${addClass(error.element === "password", 'err')} ${addClass(valid.includes('password'), 'err')}`}
                         placeholder=" "
                         onClick={() => setDisplay(!display)}
                         onChange={(e) => setDatas(data => ({ ...data, password: e.target.value }))}
@@ -271,24 +289,24 @@ const SignUpForm = () => {
                                 <div className={`strength ${addPasswordStrength()}`}>{addPasswordStrengthText()}</div>
                             </div>
                             <div className="checker-header">Votre mot de passe doit inclure : </div>
-                            <div className={`checker ${validateParameter(secured.isLength)}`}>
-                                {returnSVG(secured.isLength)}
+                            <div className={`checker ${addClass(secured.isLength, 'valid')}`}>
+                                {secured.isLength ? <Icon name="CheckCircle" /> : <Icon name="CrossCircle" />}
                                 <p>8 à 20 caractères</p>
                             </div>
-                            <div className={`checker ${validateParameter(secured.isUppercase)}`}>
-                                {returnSVG(secured.isUppercase)}
+                            <div className={`checker ${addClass(secured.isUppercase, 'valid')}`}>
+                                {secured.isUppercase ? <Icon name="CheckCircle" /> : <Icon name="CrossCircle" />}
                                 <p>Au moins une lettre majuscule</p>
                             </div>
-                            <div className={`checker ${validateParameter(secured.isLowercase)}`}>
-                                {returnSVG(secured.isLowercase)}
+                            <div className={`checker ${addClass(secured.isLowercase, 'valid')}`}>
+                                {secured.isLowercase ? <Icon name="CheckCircle" /> : <Icon name="CrossCircle" />}
                                 <p>Au moins une lettre minuscule</p>
                             </div>
-                            <div className={`checker ${validateParameter(secured.isNumeric)}`}>
-                                {returnSVG(secured.isNumeric)}
+                            <div className={`checker ${addClass(secured.isNumeric, 'valid')}`}>
+                                {secured.isNumeric ? <Icon name="CheckCircle" /> : <Icon name="CrossCircle" />}
                                 <p>Au moins un chiffre</p>
                             </div>
-                            <div className={`checker ${validateParameter(secured.isChars)}`}>
-                                {returnSVG(secured.isChars)}
+                            <div className={`checker ${addClass(secured.isChars, 'valid')}`}>
+                                {secured.isChars ? <Icon name="CheckCircle" /> : <Icon name="CrossCircle" />}
                                 <p>Au moins un des caractère spéciaux suivant : !@#$%^&*</p>
                             </div>
                         </div>
@@ -299,7 +317,7 @@ const SignUpForm = () => {
                     <DynamicInput
                         type="password"
                         text="Confirmation mot de passe"
-                        className={`${addErrorClass("confirmed-password")} ${addSuccessClass("confirmed-password")}`}
+                        className={`${addClass(error.element === "confirmed-password", 'err')} ${addClass(valid.includes('confirmed-password'), 'err')}`}
                         placeholder=" "
                         onChange={e => setDatas(data => ({ ...data, confirmPassword: e.target.value }))}
                         value={datas.confirmPassword}
