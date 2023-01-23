@@ -37,10 +37,10 @@ export const signInErrors = (err) => {
         password: ""
     }
 
-    if (err.message.includes("email"))
+    if (err.name.includes("email"))
         errors.email = "Cet email n\'existe pas."
 
-    if (err.message.includes("password"))
+    if (err.name.includes("password"))
         errors.password = "Mot de passe incorrect."
 
     return errors

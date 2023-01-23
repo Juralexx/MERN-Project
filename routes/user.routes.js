@@ -6,6 +6,7 @@ import { uploadCoverPicture, uploadProfilPicture, deleteCoverPicture, deleteProf
 import { acceptContact, cancelContactRequest, refuseContact, sendContactRequest, deleteContact } from '../controllers/user/user.contact.js'
 import { addConversationToFavorite, removeConversationFromFavorite, setLastConversation, setLastMessageSeen } from '../controllers/user/user.messenger.controller.js'
 import { deleteNotification, resetNotifications, setNotificationToSeen } from '../controllers/user/user.notifications.controller.js'
+import { sendMemberRequest, cancelMemberRequest, acceptMemberRequest, refuseMemberRequest } from '../controllers/user/user.project.js'
 import multer from 'multer'
 const upload = multer()
 
@@ -28,6 +29,11 @@ userRoutes.put('/:id/contacts/request/send/', sendContactRequest)
 userRoutes.put('/:id/contacts/request/cancel/', cancelContactRequest)
 userRoutes.put('/:id/contacts/request/accept/', acceptContact)
 userRoutes.put('/:id/contacts/request/refuse/', refuseContact)
+
+userRoutes.put('/:id/project/:projectId/request/send/', sendMemberRequest)
+userRoutes.put('/:id/project/:projectId/request/cancel/:requestId/', cancelMemberRequest)
+userRoutes.put('/:id/project/:projectId/request/accept/:requestId/', acceptMemberRequest)
+userRoutes.put('/:id/project/:projectId/request/refuse/:requestId/', refuseMemberRequest)
 
 userRoutes.put('/:id/delete-contact/', deleteContact)
 

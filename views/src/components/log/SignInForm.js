@@ -5,7 +5,7 @@ import { Button } from '../tools/global/Button'
 import { DynamicInput } from '../tools/global/Inputs';
 import { ErrorCard } from '../tools/global/ErrorCard';
 import Icon from '../tools/icons/Icon';
-import { addClass } from '../Utils';
+import { addClass, isEmailValid } from '../Utils';
 
 const SignInForm = () => {
     const [email, setEmail] = useState("");
@@ -13,31 +13,35 @@ const SignInForm = () => {
     const [passwordShown, setPasswordShown] = useState(false)
     const [error, setError] = useState({ element: "", error: "" })
 
-    const handleLogin = async e => {
-        e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault()
 
-        await axios({
-            method: "post",
-            url: `${process.env.REACT_APP_API_URL}api/user/login`,
-            withCredentials: true,
-            data: {
-                email,
-                password
-            }
-        }).then(res => {
-            if (res.data.errors) {
-                if (res.data.errors.email) {
-                    setError({ element: "email", error: res.data.errors.email })
-                } else {
-                    if (res.data.errors.password) {
-                        setError({ element: "password", error: res.data.errors.password })
-                    }
+        if (!isEmailValid(email)) {
+            setError({ element: "email", error: 'Veuillez saisir une adresse email valide.' })
+        } else {
+            await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/user/login`,
+                withCredentials: true,
+                data: {
+                    email,
+                    password
                 }
-            } else {
-                localStorage.setItem("auth", true)
-                window.location = '/'
-            }
-        }).catch(err => console.log(err))
+            }).then(res => {
+                if (res.data.errors) {
+                    if (res.data.errors.email) {
+                        setError({ element: "email", error: res.data.errors.email })
+                    } else {
+                        if (res.data.errors.password) {
+                            setError({ element: "password", error: res.data.errors.password })
+                        }
+                    }
+                } else {
+                    localStorage.setItem("auth", true)
+                    window.location = '/'
+                }
+            }).catch(err => console.log(err))
+        }
     }
 
     return (
@@ -68,14 +72,14 @@ const SignInForm = () => {
                     endIcon={passwordShown ? <Icon name="Hidden" /> : <Icon name="Visible" />}
                     endIconClick={() => setPasswordShown(!passwordShown)}
                 />
-                <div className="forgot-password">
-                    <Link to="/">Mot de passe oublié</Link>
-                </div>
                 <ErrorCard
                     display={error.element === "password"}
                     text={error.error}
                     clean={() => setError({ element: "", error: "" })}
                 />
+                <div className="forgot-password">
+                    <Link to="/">Mot de passe oublié</Link>
+                </div>
             </div>
             <Button className="mt-6 w-full" type="submit">
                 Connexion

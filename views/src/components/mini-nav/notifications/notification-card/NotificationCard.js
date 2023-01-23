@@ -7,11 +7,9 @@ const NotificationCard = ({ notification, setSend, send, user, websocket }) => {
 
     useEffect(() => {
         let interval
-        if (send) {
+        if (send)
             interval = setInterval(() => { setSend(false) }, 5000)
-        } else {
-            clearInterval(interval)
-        }
+        else clearInterval(interval)
         return () => clearInterval(interval)
     }, [send, setSend])
 

@@ -143,41 +143,73 @@ io.on("connect", (socket) => {
     })
 
     /***********************************************************************************/
-    /**************************** PROJECT MEMBER REQUEST *******************************/
+    /************************* MEMBER REQUEST FROM PROJECT *****************************/
 
-    socket.on('memberRequest', ({ receiverId, notification }) => {
+    socket.on('sendMemberRequestFromProject', ({ receiverId, request, notification }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('memberRequest', {
+            return io.to(user.socketId).emit('sendMemberRequestFromProject', {
+                request,
                 notification
             })
         }
     })
 
-    socket.on('cancelMemberRequest', ({ notificationId, receiverId }) => {
+    socket.on('cancelMemberRequestFromProject', ({ receiverId, notificationId, requestId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('cancelMemberRequest', {
+            return io.to(user.socketId).emit('cancelMemberRequestFromProject', {
+                requestId,
                 notificationId
             })
         }
     })
 
-    socket.on('acceptMemberRequest', ({ receiverId, member, activity }) => {
+    socket.on('refuseMemberRequestFromProject', ({ receiverId, requestId }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('acceptMemberRequest', {
+            return io.to(user.socketId).emit('refuseMemberRequestFromProject', {
+                requestId
+            })
+        }
+    })
+
+    socket.on('acceptMemberRequestFromProject', ({ receiverId, member, activity }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('acceptMemberRequestFromProject', {
                 member,
                 activity
             })
         }
     })
 
-    socket.on('refuseMemberRequest', ({ receiverId, userId }) => {
+    /***********************************************************************************/
+    /*************************** MEMBER REQUEST FROM USER ******************************/
+
+    socket.on('sendMemberRequestFromUser', ({ receiverId, request }) => {
         const user = users.find(member => member.userId === receiverId)
         if (user) {
-            return io.to(user.socketId).emit('refuseMemberRequest', {
-                userId
+            return io.to(user.socketId).emit('sendMemberRequestFromUser', {
+                request
+            })
+        }
+    })
+
+    socket.on('cancelMemberRequestFromUser', ({ receiverId, requestId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('cancelMemberRequestFromUser', {
+                requestId
+            })
+        }
+    })
+
+    socket.on('refuseMemberRequestFromUser', ({ receiverId, requestId }) => {
+        const user = users.find(member => member.userId === receiverId)
+        if (user) {
+            return io.to(user.socketId).emit('refuseMemberRequestFromUser', {
+                requestId
             })
         }
     })

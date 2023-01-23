@@ -114,6 +114,15 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
+        manager: {
+            type: String,
+            required: true,
+        },
+
+        admins: {
+            type: [String],
+        },
+
         members: {
             type: [],
             member: {
@@ -126,24 +135,38 @@ const ProjectModel = new mongoose.Schema(
             }
         },
 
-        manager: {
-            type: String,
-            required: true,
-        },
-
-        admins: {
-            type: [String],
-        },
-
-        member_requests: {
+        member_request: {
             type: [],
             request: {
-                id: String,
-                pseudo: String,
-                picture: String,
-                requesterId: String,
-                requester: String,
-                date: Date
+                _id: String,
+                requester: {
+                    _id: String,
+                    pseudo: String,
+                    picture: String
+                },
+                projectId: String,
+                description: String,
+                works: Array,
+                requestedAt: Date,
+            }
+        },
+
+        member_request_sent: {
+            type: [],
+            request: {
+                _id: String,
+                requester: {
+                    _id: String,
+                    pseudo: String,
+                    picture: String
+                },
+                member: {
+                    _id: String,
+                    pseudo: String,
+                    picture: String
+                },
+                projectId: String,
+                requestedAt: Date,
             }
         },
 

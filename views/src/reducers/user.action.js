@@ -102,6 +102,10 @@ export const updateTheme = (userId, theme) => {
     }
 }
 
+/**
+ * Notifications
+ */
+
 export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS"
 
 /**
@@ -165,6 +169,87 @@ export const deleteNotification = (userId, notificationId) => {
             .catch(err => console.log(err))
     }
 }
+
+/**
+ * Project requests from a member not already in the project
+ */
+
+export const SEND_MEMBER_REQUEST_FROM_USER = "SEND_MEMBER_REQUEST_FROM_USER"
+
+export const sendMemberRequestFromUser = (userId, projectId, request) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/project/${projectId}/request/send/`,
+            data: { request }
+        })
+            .then(() => dispatch({ type: SEND_MEMBER_REQUEST_FROM_USER, payload: { userId, request } }))
+            .catch(err => console.error(err))
+    }
+}
+
+export const RECEIVE_MEMBER_REQUEST_FROM_USER = "RECEIVE_MEMBER_REQUEST_FROM_USER"
+
+export const receiveMemberRequestFromUser = (request) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_MEMBER_REQUEST_FROM_USER, payload: { request } })
+     }
+}
+
+export const CANCEL_MEMBER_REQUEST_FROM_USER = "CANCEL_MEMBER_REQUEST_FROM_USER"
+
+export const cancelMemberRequestFromUser = (userId, projectId, request) => {
+    return async (dispatch) => {
+        await axios({
+            method: "put",
+            url: `${process.env.REACT_APP_API_URL}api/user/${userId}/project/${projectId}/request/cancel/${request._id}`,
+        })
+            .then(() => dispatch({ type: CANCEL_MEMBER_REQUEST_FROM_USER, payload: { requestId: request._id } }))
+            .catch(err => console.error(err))
+    }
+}
+
+export const RECEIVE_CANCEL_MEMBER_REQUEST_FROM_USER = "RECEIVE_CANCEL_MEMBER_REQUEST_FROM_USER"
+
+export const receiveCancelMemberRequestFromUser = (requestId) => {
+     return async (dispatch) => {
+          dispatch({ type: RECEIVE_CANCEL_MEMBER_REQUEST_FROM_USER, payload: { requestId } })
+     }
+}
+
+export const REFUSE_MEMBER_REQUEST_FROM_USER = "REFUSE_MEMBER_REQUEST_FROM_USER"
+
+/**
+ * Cancel the member request sent from project member
+ * @param {*} request Request object
+ */
+
+export const refuseMemberRequestFromUser = (user, projectId, requestId, notificationId) => {
+    return async (dispatch) => {
+         await axios({
+              method: "put",
+              url: `${process.env.REACT_APP_API_URL}api/${projectId}/members/request/refuse/${requestId}`,
+              data: {
+                   userId: user._id,
+                   notificationId: notificationId
+              }
+         })
+              .then(() => dispatch({ type: REFUSE_MEMBER_REQUEST_FROM_USER, payload: { requestId, notificationId } }))
+              .catch(err => console.error(err))
+    }
+}
+
+export const RECEIVE_REFUSE_MEMBER_REQUEST_FROM_USER = "RECEIVE_REFUSE_MEMBER_REQUEST_FROM_USER"
+
+export const receiveRefuseMemberRequestFromUser = (requestId) => {
+    return async (dispatch) => {
+         dispatch({ type: RECEIVE_REFUSE_MEMBER_REQUEST_FROM_USER, payload: { requestId } })
+    }
+}
+
+/**
+ * Contacts
+ */
 
 export const SEND_CONTACT_REQUEST = "SEND_CONTACT_REQUEST"
 
@@ -290,7 +375,7 @@ export const refuseContactRequest = (request, userId) => {
             data: { requesterId: request.requesterId, type: request.type }
         })
             .then(() => {
-                dispatch({ type: REFUSE_CONTACT_REQUEST, payload: {notificationId: request._id } })
+                dispatch({ type: REFUSE_CONTACT_REQUEST, payload: { notificationId: request._id } })
             })
             .catch(err => console.log(err))
     }

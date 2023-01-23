@@ -1,7 +1,7 @@
-import { ACCEPT_CONTACT_REQUEST, DELETE_CONTACT, DELETE_NOTIFICATION, GET_USER, RECEIVE_ACCEPT_CONTACT_REQUEST, RECEIVE_CANCEL_CONTACT_REQUEST, RECEIVE_CONTACT_REQUEST, RECEIVE_REFUSE_CONTACT_REQUEST, REFUSE_CONTACT_REQUEST, RESET_NOTIFICATIONS, SET_NOTIFICATION_SEEN, UPDATE_EMAIL, UPDATE_THEME, UPDATE_USER } from "./user.action";
+import { ACCEPT_CONTACT_REQUEST, CANCEL_MEMBER_REQUEST_FROM_USER, DELETE_CONTACT, DELETE_NOTIFICATION, GET_USER, RECEIVE_ACCEPT_CONTACT_REQUEST, RECEIVE_CANCEL_CONTACT_REQUEST, RECEIVE_CONTACT_REQUEST, RECEIVE_REFUSE_CONTACT_REQUEST, REFUSE_CONTACT_REQUEST, REFUSE_MEMBER_REQUEST_FROM_USER, RESET_NOTIFICATIONS, SEND_MEMBER_REQUEST_FROM_USER, SET_NOTIFICATION_SEEN, UPDATE_EMAIL, UPDATE_THEME, UPDATE_USER } from "./user.action";
 import { DELETE_COVER_PICTURE, DELETE_UPLOADED_PICTURE, UPLOAD_COVER_PICTURE, UPLOAD_PICTURE } from "./user.action.upload";
 import { CANCEL_SENT_CONTACT_REQUEST, SEND_CONTACT_REQUEST } from "./user.action";
-import { ACCEPT_MEMBER_REQUEST, RECEIVE_CANCEL_MEMBER_REQUEST, RECEIVE_MEMBER_REQUEST, REFUSE_MEMBER_REQUEST, REMOVE_PROJECT_FROM_MEMBER } from "./project.action";
+import { RECEIVE_CANCEL_MEMBER_REQUEST_FROM_PROJECT, RECEIVE_MEMBER_REQUEST_FROM_PROJECT, RECEIVE_REFUSE_MEMBER_REQUEST_FROM_PROJECT, REMOVE_PROJECT_FROM_MEMBER } from "./project.action";
 import { ADD_FAVORITE_CONVERSATION, DELETE_CONVERSATION, RECEIVE_ADD_MEMBER_CONVERSATION, RECEIVE_CREATE_CONVERSATION, RECEIVE_REMOVE_MEMBER_CONVERSATION, REMOVE_FAVORITE_CONVERSATION, SET_LAST_CONVERSATION_SEEN, SET_LAST_MESSAGE_SEEN } from "./messenger.action";
 
 const initialState = {}
@@ -133,34 +133,56 @@ export default function userReducer(state = initialState, action) {
             }
 
         /**
-         * MEMBER REQUEST
+         * MEMBER REQUEST FROM PROJECT
          */
 
-        case RECEIVE_MEMBER_REQUEST:
+        case RECEIVE_MEMBER_REQUEST_FROM_PROJECT:
             return {
                 ...state,
+                member_request: [...state.member_request, action.payload.request],
                 notifications: [...state.notifications, action.payload.notification],
                 unseen_notifications: state.unseen_notifications + 1
             }
-        case RECEIVE_CANCEL_MEMBER_REQUEST:
+        case RECEIVE_CANCEL_MEMBER_REQUEST_FROM_PROJECT:
             return {
                 ...state,
-                notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
+                member_request: state.member_request.filter(request => request._id !== action.payload.requestId),
+                notifications: state.notifications.filter(notif => notif._id !== action.payload.notificationId),
                 unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0
             }
 
-        case ACCEPT_MEMBER_REQUEST:
+        case RECEIVE_REFUSE_MEMBER_REQUEST_FROM_PROJECT:
             return {
                 ...state,
-                unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0,
-                projects: [...state.projects, action.payload.projectId]
+                member_request_sent: state.member_request_sent.filter(request => request._id !== action.payload.requestId)
             }
-        case REFUSE_MEMBER_REQUEST:
+
+        /**
+         * MEMBER REQUEST FROM PROJECT
+         */
+
+        case SEND_MEMBER_REQUEST_FROM_USER:
             return {
                 ...state,
-                notifications: state.notifications.filter(element => element._id !== action.payload.notificationId),
+                member_request_sent: [action.payload.request, ...state.member_request_sent],
+            }
+        case CANCEL_MEMBER_REQUEST_FROM_USER:
+            return {
+                ...state,
+                member_request_sent: state.member_request_sent.filter(request => request._id !== action.payload.requestId)
+            }
+        case REFUSE_MEMBER_REQUEST_FROM_USER:
+            return {
+                ...state,
+                member_request: state.member_request.filter(request => request._id !== action.payload.requestId),
+                notifications: state.notifications.filter(notif => notif._id !== action.payload.notificationId),
                 unseen_notifications: state.unseen_notifications > 0 ? state.unseen_notifications - 1 : 0
             }
+
+        /**
+         * 
+         */
+
         case REMOVE_PROJECT_FROM_MEMBER:
             return {
                 ...state,

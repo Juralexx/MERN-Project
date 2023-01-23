@@ -677,9 +677,9 @@ const InputDynamic = styled.div`
 
     &.succes {
         input {
-            border-bottom : 2px solid var(--green);
+            border-bottom : 2px solid var(--success);
             + label {
-                color : var(--green);
+                color : var(--success);
             }
         }
 
@@ -689,9 +689,9 @@ const InputDynamic = styled.div`
     }
     &.err {
         input {
-            border-bottom : 2px solid var(--red);
+            border-bottom : 2px solid var(--danger);
             + label {
-                color : var(--red);
+                color : var(--danger);
             }
         }
 

@@ -110,6 +110,14 @@ const UserModel = new mongoose.Schema(
             }
         },
 
+        contact_request: {
+            type: [],
+            contact: {
+                type: String,
+                requestedAt: Date,
+            }
+        },
+
         contact_request_sent: {
             type: [],
             contact: {
@@ -118,10 +126,32 @@ const UserModel = new mongoose.Schema(
             }
         },
 
-        contact_request: {
+        member_request: {
             type: [],
-            contact: {
-                type: String,
+            request: {
+                _id: String,
+                requester: {
+                    _id: String,
+                    pseudo: String,
+                    picture: String
+                },
+                projectId: String,
+                requestedAt: Date,
+            }
+        },
+
+        member_request_sent: {
+            type: [],
+            request: {
+                _id: String,
+                requester: {
+                    _id: String,
+                    pseudo: String,
+                    picture: String
+                },
+                projectId: String,
+                description: String,
+                works: Array,
                 requestedAt: Date,
             }
         },
@@ -138,31 +168,20 @@ const UserModel = new mongoose.Schema(
             }
         },
 
-        conversations: {
-            type: [],
-            conversation: {
-                type: String,
-                id: String,
-                last_message_seen: String,
-                favorite: Boolean
-            }
-        },
-
-        last_conversation: {
-            type: String,
-        },
-
         notifications: {
             type: [],
             notification: {
                 _id: String,
                 type: String,
-                projectId: String,
-                projectTitle: String,
-                projectUrl: String,
-                requesterId: String,
-                requester: String,
-                requesterPicture: String,
+                project: {
+                    _id: String,
+                    title: String,
+                }, 
+                requester: {
+                    _id: String,
+                    pseudo: String,
+                    picture: String
+                },
                 date: Date,
                 seen: Boolean,
                 state: String,
@@ -195,6 +214,20 @@ const UserModel = new mongoose.Schema(
             type: [String]
         },
 
+        conversations: {
+            type: [],
+            conversation: {
+                type: String,
+                id: String,
+                last_message_seen: String,
+                favorite: Boolean
+            }
+        },
+
+        last_conversation: {
+            type: String,
+        },
+
         theme: {
             type: String,
             default: "dark"
@@ -217,10 +250,19 @@ UserModel.statics.login = async function (email, password) {
         const isSamePassword = await bcrypt.compare(password, user.password);
         if (isSamePassword) {
             return user;
+        } else {
+            throw {
+                name: 'password',
+                message: 'Mot de passe incorrect.'
+            };
         }
-        throw Error('Mot de passe incorrect.');
+    } else {
+        throw {
+            name: 'email',
+            message: 'Cet email n\'est rattachée à aucun compte.'
+        }
     }
-    throw Error('Mot de passe incorrect.')
+
 };
 
 

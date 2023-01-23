@@ -40,8 +40,8 @@ const NotificationsMenu = ({ open, user, websocket }) => {
                             <div key={key}>
                                 {element.type === "contact-request" &&
                                     <ContactRequest
-                                        key={key}
                                         notification={element}
+                                        key={key}
                                         user={user}
                                         websocket={websocket}
                                         onClick={() => setNotifSeen(user._id, element._id, dispatch)}

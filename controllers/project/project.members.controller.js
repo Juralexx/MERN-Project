@@ -1,17 +1,20 @@
 import ProjectModel from '../../models/project.model.js'
 import UserModel from '../../models/user.model.js'
 
-/************************************************************************************************/
-/**************************************** NOTIFICATIONS *****************************************/
+/**
+ * Send a member request
+ * @param {*} id Project ID
+ * @param {*} userId User ID to send request to
+ * @param {*} request Request object
+ */
 
 export const sendMemberRequest = async (req, res) => {
-    // const notification = Object.assign(req.body.notification, { _id: new ObjectID })
     try {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
                 $addToSet: {
-                    member_requests: req.body.request
+                    member_request_sent: req.body.request
                 }
             },
             {
@@ -23,9 +26,12 @@ export const sendMemberRequest = async (req, res) => {
             { _id: req.body.userId },
             {
                 $addToSet: {
+                    member_request: req.body.request,
                     notifications: req.body.notification
                 },
-                $inc: { unseen_notifications: 1 }
+                $inc: {
+                    unseen_notifications: 1
+                }
             },
             {
                 new: true
@@ -41,34 +47,46 @@ export const sendMemberRequest = async (req, res) => {
     }
 }
 
+/**
+ * Cancel a member request
+ * @param {*} id Project ID
+ * @param {*} userId User ID to cancel request from
+ * @param {*} requestId Request ID
+ */
+
 export const cancelMemberRequest = async (req, res) => {
     try {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
                 $pull: {
-                    member_requests: {
-                        memberId: req.body.userId
+                    member_request_sent: {
+                        _id: req.params.requestId
                     }
                 },
             },
             {
-                new: true,
-                upsert: true
+                new: true
             },
         )
-
         await UserModel.findByIdAndUpdate(
             { _id: req.body.userId },
             {
                 $pull: {
+                    member_request: {
+                        _id: req.params.requestId
+                    },
                     notifications: {
                         _id: req.body.notificationId
                     }
                 },
-                $inc: { unseen_notifications: -1 }
+                $inc: {
+                    unseen_notifications: -1
+                }
             },
-            { new: true, upsert: true, runValidators: true },
+            {
+                new: true
+            },
         )
             .then(docs => res.send(docs))
             .catch(err => {
@@ -80,8 +98,13 @@ export const cancelMemberRequest = async (req, res) => {
     }
 }
 
-/************************************************************************************************/
-/**************************** ACCEPTER / REFUSER DEMANDE D'ADHESION *****************************/
+/**
+ * Accept a member request
+ * @param {*} id Project ID
+ * @param {*} requestId Request ID
+ * @param {*} userId User ID that accepts request
+ * @param {*} member Member to add
+ */
 
 export const acceptMemberRequest = async (req, res) => {
     try {
@@ -93,17 +116,15 @@ export const acceptMemberRequest = async (req, res) => {
                     activity_feed: req.body.activity,
                 },
                 $pull: {
-                    member_requests: {
-                        memberId: req.body.userId
+                    member_request: {
+                        _id: req.params.requestId
                     }
                 },
             },
             {
-                new: true,
-                upsert: true
+                new: true
             },
         )
-
         await UserModel.findByIdAndUpdate(
             { _id: req.body.userId },
             {
@@ -111,13 +132,20 @@ export const acceptMemberRequest = async (req, res) => {
                     projects: req.params.id
                 },
                 $pull: {
+                    member_request_sent: {
+                        _id: req.params.requestId
+                    },
                     notifications: {
                         _id: req.body.notificationId
                     }
                 },
-                $inc: { unseen_notifications: -1 }
+                $inc: {
+                    unseen_notifications: -1
+                }
             },
-            { new: true, upsert: true, runValidators: true },
+            {
+                new: true
+            },
         )
             .then(docs => res.send(docs))
             .catch(err => {
@@ -129,41 +157,45 @@ export const acceptMemberRequest = async (req, res) => {
     }
 }
 
+/**
+ * Accept a member request
+ * @param {*} id Project ID
+ * @param {*} requestId Request ID
+ * @param {*} userId User ID that accepts request
+ */
+
 export const refuseMemberRequest = async (req, res) => {
     try {
         await ProjectModel.findByIdAndUpdate(
             { _id: req.params.id },
             {
                 $pull: {
-                    member_requests: {
-                        memberId: req.body.userId
+                    member_request: {
+                        _id: req.params.requestId
                     }
                 },
             },
             {
-                new: true,
-                upsert: true
+                new: true
             },
         )
-            .catch(err => {
-                return res.status(500).send({ message: err })
-            })
-
-        await UserModel.updateOne(
+        await UserModel.findByIdAndUpdate(
             { _id: req.body.userId },
             {
                 $pull: {
+                    member_request_sent: {
+                        _id: req.params.requestId
+                    },
                     notifications: {
                         _id: req.body.notificationId
                     }
                 },
-                $inc: { unseen_notifications: -1 }
+                $inc: {
+                    unseen_notifications: -1
+                }
             },
             {
-                new: true,
-                upsert: true,
-                runValidators: true,
-                setDefaultsOnInsert: true
+                new: true
             },
         )
             .then(docs => res.send(docs))

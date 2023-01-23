@@ -10,7 +10,6 @@ import Footer from '../components/Footer';
 import Search from './Search';
 import Researches from './Researches';
 import ProjectPage from './Project';
-import Oval from '../components/tools/loaders/Oval';
 
 const Home = ({ websocket, user }) => {
     const [isLoading, setLoading] = useState(true)
@@ -231,8 +230,9 @@ const Home = ({ websocket, user }) => {
                         <>
                             <Route path="project/:URLID/:URL/*" element={
                                 <ProjectPage
-                                    user={user}
                                     projects={projects}
+                                    user={user}
+                                    websocket={websocket}
                                 />
                             } />
                             {['search/*', '/all', '/recents', '/liked', '/followed']

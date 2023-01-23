@@ -27,7 +27,7 @@ const HomeMembers = ({ project, isManager, isAdmin, user, websocket }) => {
                                 <div className="tools_choice" onClick={() => setAddMembers(true)}>
                                     Ajouter des membres
                                 </div>
-                                {project.member_requests.length > 0 && <div className="tools_choice" onClick={() => setOpenRequests(true)}>
+                                {project.member_request.length > 0 && <div className="tools_choice" onClick={() => setOpenRequests(true)}>
                                     Voir les demandes en cours
                                 </div>}
                             </ToolsMenu>

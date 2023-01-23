@@ -66,13 +66,13 @@ const Members = ({ project, isManager, isAdmin, user, websocket }) => {
                         <h2>Membres <span>{project.members.length}</span></h2>
                         {(isAdmin || isManager) &&
                             <div className="dashboard-big-card-btn_container">
-                                {project.member_requests.length > 0 &&
+                                {(project.member_request_sent.length > 0 || project.member_request.length > 0) &&
                                     <TextButton className="btn_icon_start" onClick={() => setOpenRequests(true)}>
                                         Demandes en cours
                                     </TextButton>
                                 }
                                 <TextButton className="btn_icon_start" onClick={() => setAddMembers(true)}>
-                                    <Icon name="Plus" />Ajouter un membre
+                                    <Icon name="Plus" /> Ajouter un membre
                                 </TextButton>
                             </div>
                         }

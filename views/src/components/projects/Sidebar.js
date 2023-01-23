@@ -45,68 +45,74 @@ const Sidebar = ({ user, projects, isLoading }) => {
             </div>
             <div className="sidebar-inner custom-scrollbar">
                 {!isLoading ? (
-                    projects.map((element, key) => {
-                        return (
-                            <div
-                                key={key}
-                                className="sidebar-container"
-                                onMouseEnter={() => reduced && setHovered(true)}
-                                onMouseLeave={() => reduced && setHovered(false)}
-                            >
-                                <NavLink
-                                    to={`${element.URLID}/${element.URL}`}
-                                    className={isThisActive}
-                                    onClick={() => setReduced(true)}
+                    projects.length > 0 ? (
+                        projects.map((element, key) => {
+                            return (
+                                <div
+                                    key={key}
+                                    className="sidebar-container"
+                                    onMouseEnter={() => reduced && setHovered(true)}
+                                    onMouseLeave={() => reduced && setHovered(false)}
                                 >
-                                    <div
-                                        className="sidebar-title"
-                                        onClick={() => setSubmenu(key)}
-                                    >
-                                        <div className="sidebar-title-inner">
-                                            <div className="sidebar-img" style={fullImage(element.pictures[0])}></div>
-                                            <div className="sidebar-name one_line">
-                                                {element.title}
-                                            </div>
-                                        </div>
-                                        <div className={`${reduced && !hovered ? "hidden" : ""}`}>
-                                            {submenu === key ? <Icon name="CaretDown" /> : <Icon name="CaretRight" />}
-                                        </div>
-                                    </div>
-                                </NavLink>
-                                {submenu === key && (
-                                    <div
-                                        className="sidebar-submenu"
+                                    <NavLink
+                                        to={`${element.URLID}/${element.URL}`}
+                                        className={isThisActive}
                                         onClick={() => setReduced(true)}
                                     >
-                                        <NavLink to={`${element.URLID}/${element.URL}/about`} className={isThisActive}>
-                                            <Icon name="FilesMultiples" />
-                                            <div className="sidebar-submenu-text">
-                                                <p>À propos</p> <Icon name="CaretRight" />
+                                        <div
+                                            className="sidebar-title"
+                                            onClick={() => setSubmenu(key)}
+                                        >
+                                            <div className="sidebar-title-inner">
+                                                <div className="sidebar-img" style={fullImage(element.pictures[0])}></div>
+                                                <div className="sidebar-name one_line">
+                                                    {element.title}
+                                                </div>
                                             </div>
-                                        </NavLink>
-                                        <NavLink to={`${element.URLID}/${element.URL}/tasks`} className={isThisActive}>
-                                            <Icon name="Tasks" />
-                                            <div className="sidebar-submenu-text">
-                                                <p>Tâches <span>{element.tasks?.length}</span></p> <Icon name="CaretRight" />
+                                            <div className={`${reduced && !hovered ? "hidden" : ""}`}>
+                                                {submenu === key ? <Icon name="CaretDown" /> : <Icon name="CaretRight" />}
                                             </div>
-                                        </NavLink>
-                                        <NavLink to={`${element.URLID}/${element.URL}/messenger`} className={isThisActive}>
-                                            <Icon name="Chat" />
-                                            <div className="sidebar-submenu-text">
-                                                <p>Messenger</p> <Icon name="CaretRight" />
-                                            </div>
-                                        </NavLink>
-                                        <NavLink to={`${element.URLID}/${element.URL}/members`} className={isThisActive}>
-                                            <Icon name="Group" />
-                                            <div className="sidebar-submenu-text">
-                                                <p>Membres</p> <Icon name="CaretRight" />
-                                            </div>
-                                        </NavLink>
-                                    </div>
-                                )}
-                            </div>
-                        )
-                    })
+                                        </div>
+                                    </NavLink>
+                                    {submenu === key && (
+                                        <div
+                                            className="sidebar-submenu"
+                                            onClick={() => setReduced(true)}
+                                        >
+                                            <NavLink to={`${element.URLID}/${element.URL}/about`} className={isThisActive}>
+                                                <Icon name="FilesMultiples" />
+                                                <div className="sidebar-submenu-text">
+                                                    <p>À propos</p> <Icon name="CaretRight" />
+                                                </div>
+                                            </NavLink>
+                                            <NavLink to={`${element.URLID}/${element.URL}/tasks`} className={isThisActive}>
+                                                <Icon name="Tasks" />
+                                                <div className="sidebar-submenu-text">
+                                                    <p>Tâches <span>{element.tasks?.length}</span></p> <Icon name="CaretRight" />
+                                                </div>
+                                            </NavLink>
+                                            <NavLink to={`${element.URLID}/${element.URL}/messenger`} className={isThisActive}>
+                                                <Icon name="Chat" />
+                                                <div className="sidebar-submenu-text">
+                                                    <p>Messenger</p> <Icon name="CaretRight" />
+                                                </div>
+                                            </NavLink>
+                                            <NavLink to={`${element.URLID}/${element.URL}/members`} className={isThisActive}>
+                                                <Icon name="Group" />
+                                                <div className="sidebar-submenu-text">
+                                                    <p>Membres</p> <Icon name="CaretRight" />
+                                                </div>
+                                            </NavLink>
+                                        </div>
+                                    )}
+                                </div>
+                            )
+                        })
+                    ) : (
+                        <div className='p-2 text-center' style={{ display: reduced ? 'none' : 'block' }}>
+                            Vous n'avez pas encore<br />de projet en cours
+                        </div>
+                    )
                 ) : (
                     [...Array(5)].map((_, key) => {
                         return (

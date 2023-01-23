@@ -1,6 +1,11 @@
 import axios from "axios"
-import { acceptMemberRequest, cancelMemberRequest, refuseMemberRequest, removeMember, sendMemberRequest, setAdmin, unsetAdmin } from "../../../reducers/project.action"
-import { randomID } from "../../Utils"
+import { cancelMemberRequestFromProject, refuseMemberRequestFromProject, removeMember, sendMemberRequestFromProject, setAdmin, unsetAdmin } from "../../../reducers/project.action"
+import { cancelMemberRequestFromUser, refuseMemberRequestFromUser, sendMemberRequestFromUser } from "../../../reducers/user.action"
+import { randomNbLtID } from "../../Utils"
+
+/**
+ * MEMBER REQUESTS FROM PROJET
+ */
 
 /**
  * Send member request
@@ -12,36 +17,50 @@ import { randomID } from "../../Utils"
  */
 
 export const sendProjectMemberRequest = (membersArray, user, project, websocket, dispatch) => {
-    const randomid = randomID(24)
+    const randomId = randomNbLtID(24)
+    const requestId = randomNbLtID(24)
+
     if (membersArray.length > 0) {
-        membersArray.map(async (element) => {
+        membersArray.map(async member => {
             const request = {
-                memberId: element._id,
-                pseudo: element.pseudo,
-                picture: element.picture,
-                requesterId: user._id,
-                requester: user.pseudo,
-                date: new Date().toISOString(),
-                notificationId: randomid,
+                _id: requestId,
+                requester: {
+                    _id: user._id,
+                    pseudo: user.pseudo,
+                    picture: user.picture
+                },
+                member: {
+                    _id: member._id,
+                    pseudo: member.pseudo,
+                    picture: member.picture
+                },
+                projectId: project._id,
+                requestedAt: new Date().toISOString(),
+                notificationId: randomId,
             }
             const notification = {
-                _id: randomid,
+                _id: randomId,
                 type: "project-member-request",
-                projectId: project._id,
-                projectTitle: project.title,
-                projectUrl: project.URL,
-                requesterId: user._id,
-                requester: user.pseudo,
-                requesterPicture: user.picture,
+                project: {
+                    _id: project._id,
+                    title: project.title,
+                },
+                requester: {
+                    _id: user._id,
+                    pseudo: user.pseudo,
+                    picture: user.picture
+                },
                 date: new Date().toISOString(),
-                seen: false
+                seen: false,
+                requestId: requestId
             }
             return (
-                websocket.current.emit("memberRequest", {
-                    receiverId: element._id,
+                websocket.current.emit("sendMemberRequestFromProject", {
+                    receiverId: member._id,
+                    request: request,
                     notification: notification
                 }),
-                dispatch(sendMemberRequest(element._id, project._id, notification, request))
+                dispatch(sendMemberRequestFromProject(member._id, project._id, request, notification))
             )
         })
     }
@@ -50,17 +69,17 @@ export const sendProjectMemberRequest = (membersArray, user, project, websocket,
 /**
  * Cancel member request sent
  * @param {*} request Request object
- * @param {*} project Project of the request
  * @param {*} websocket Websocket
  * @param {*} dispatch Redux dispatch function
  */
 
-export const cancelProjectMemberRequest = (request, project, websocket, dispatch) => {
-    websocket.current.emit("cancelMemberRequest", {
+export const cancelProjectMemberRequest = (request, websocket, dispatch) => {
+    websocket.current.emit("cancelMemberRequestFromProject", {
+        requestId: request._id,
         notificationId: request.notificationId,
-        receiverId: request.memberId
+        receiverId: request.member._id
     })
-    dispatch(cancelMemberRequest(request.memberId, project._id, request.notificationId))
+    dispatch(cancelMemberRequestFromProject(request))
 }
 
 /**
@@ -72,8 +91,18 @@ export const cancelProjectMemberRequest = (request, project, websocket, dispatch
  */
 
 export const acceptProjectMemberRequest = async (notification, user, websocket, dispatch) => {
-    const activity = { type: "join-project", who: user.pseudo, date: new Date().toISOString() }
-    const member = { _id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
+    const activity = {
+        type: "join-project",
+        who: user.pseudo,
+        date: new Date().toISOString()
+    }
+    const member = {
+        _id: user._id,
+        pseudo: user.pseudo,
+        picture: user.picture,
+        role: "user",
+        since: new Date().toISOString()
+    }
     await axios.get(`${process.env.REACT_APP_API_URL}api/project/${notification.projectId}`)
         .then(res => {
             res.data.members.map(async element => {
@@ -85,24 +114,61 @@ export const acceptProjectMemberRequest = async (notification, user, websocket, 
             })
         })
     Object.assign(notification, { state: "accepted" })
-    dispatch(acceptMemberRequest(user._id, member, notification.projectId, notification.notificationId, activity))
+    //dispatch(acceptMemberRequest(user._id, member, notification.projectId, notification.notificationId, activity))
 }
 
 /**
  * Refuse member request
- * @param {*} notification Notification object
- * @param {*} user User that accept request
+ * @param {*} request Request object
  * @param {*} websocket Websocket
  * @param {*} dispatch Redux dispatch function
  */
 
-export const refuseProjectMemberRequest = (notification, user, websocket, dispatch) => {
-    websocket.current.emit("refuseMemberRequest", {
-        userId: user._id,
-        receiverId: notification.requesterId
+export const refuseProjectMemberRequest = (request, websocket, dispatch) => {
+    websocket.current.emit("refuseMemberRequestFromProject", {
+        receiverId: request.requester._id,
+        requestId: request._id
     })
-    dispatch(refuseMemberRequest(user._id, notification.projectId, notification._id))
+    dispatch(refuseMemberRequestFromProject(request))
 }
+
+/******************************************************************************************************************************/
+
+/**
+ * MEMBER REQUESTS FROM USER
+ */
+
+export const sendUserMemberRequest = (request, user, project, websocket, dispatch) => {
+    project.members.map(member => {
+        return websocket.current.emit("sendMemberRequestFromUser", {
+            receiverId: member._id,
+            request: request,
+        })
+    })
+    dispatch(sendMemberRequestFromUser(user._id, project._id, request))
+}
+
+export const cancelUserMemberRequest = (request, user, project, websocket, dispatch) => {
+    project.members.map(member => {
+        return websocket.current.emit("cancelMemberRequestFromUser", {
+            requestId: request._id,
+            receiverId: member._id
+        })
+    })
+    dispatch(cancelMemberRequestFromUser(user._id, project._id, request))
+}
+
+export const refuseUserMemberRequest = (request, project, websocket, dispatch) => {
+    project.members.map(member => {
+        websocket.current.emit("refuseMemberRequestFromUser", {
+            receiverId: member._id,
+            requestId: request._id
+        })
+    })
+    dispatch(refuseMemberRequestFromUser(request))
+}
+
+/******************************************************************************************************************************/
 
 /**
  * Exclude member from project

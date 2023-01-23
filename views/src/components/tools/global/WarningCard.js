@@ -26,7 +26,7 @@ const Warning = styled.div`
     position         : relative;
     display          : flex;
     align-items      : center;
-    padding          : 10px;
+    padding          : 5px 5px;
     max-width        : 100%;
     background-color : rgba(var(--warning-rgb), 0.3);
     border           : 1px solid var(--warning);
@@ -46,8 +46,8 @@ const Warning = styled.div`
     }
 
     .warning-icon {
-        min-height   : 24px;
-        min-width    : 24px;
+        min-height   : 22px;
+        min-width    : 22px;
         margin-right : 8px;
         color        : var(--orange);
     }

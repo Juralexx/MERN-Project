@@ -24,6 +24,8 @@ const Dashboard = ({ websocket, user }) => {
                 setProjects(res)
                 setLoading(false)
             })
+        } else {
+            setLoading(false)
         }
     }, [user, dispatch])
 

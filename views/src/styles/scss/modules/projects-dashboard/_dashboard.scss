@@ -86,6 +86,12 @@
             display : flex;
         }
     }
+    .dashboard-big-card-btn_container {
+        display : flex;
+        button {
+            margin-left : 5px;
+        }
+    }
 }
 
 @media(max-width:576px) {

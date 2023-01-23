@@ -496,6 +496,23 @@ export const addItemInArray = (array, item) => {
 }
 
 /**
+ * Add an item to an array
+ * @param {*} array Array to add item in or remove item from
+ * @param {*} item Item to add or remove
+ * @param {*} key Item key
+ */
+
+export const addOrRemoveItem = (array, item, key) => {
+    if (array.includes(item)) {
+        let arr = [...array]
+        arr.splice(key, 1)
+        return arr
+    } else {
+        return [...array, item]
+    }
+}
+
+/**
  * Remove choosen item from specified array
  * @param {*} array Array to remove from
  * @param {*} key Key of the element to remove
@@ -535,7 +552,7 @@ export const doesAllArraysInElementContainValues = (element) => {
             }
         }
     }
-    else if (typeof element === 'array') {
+    else if (Array.isArray(element)) {
         for (let i = 0; i < element.length; i++) {
             if (element[i].length === 0) {
                 state = false
@@ -766,55 +783,11 @@ export const isVideo = (file) => {
 
 export const isFile = (file) => {
     const types = [
-        '.7z',
-        '.ade',
-        '.mde',
-        '.adp',
-        '.apk',
-        '.appx',
-        '.appxbundle',
-        '.aspx',
-        '.bat',
-        '.com',
-        '.dll',
-        '.exe',
-        '.msi',
-        '.cab',
-        '.cmd',
-        '.cpl',
-        '.dmg',
-        '.gz',
-        '.hta',
-        '.ins',
-        '.ipa',
-        '.iso',
-        '.isp',
-        '.jar',
-        '.js',
-        '.jse',
-        '.jsp',
-        '.lib',
-        '.lnk',
-        '.msc',
-        '.msix',
-        '.msixbundle',
-        '.msp',
-        '.mst',
-        '.nsh',
-        '.pif',
-        '.ps1',
-        '.scr',
-        '.sct',
-        '.wsc',
-        '.shb',
-        '.sys',
-        '.vb',
-        '.vbe',
-        '.vbs',
-        '.vxd',
-        '.wsf',
-        '.wsh',
-        '.tar'
+        '.7z', '.ade', '.mde', '.adp', '.apk', '.appx', '.appxbundle', '.aspx', '.bat',
+        '.com', '.dll', '.exe', '.msi', '.cab', '.cmd', '.cpl', '.dmg', '.gz', '.hta',
+        '.ins', '.ipa', '.iso', '.isp', '.jar', '.js', '.jse', '.jsp', '.lib', '.lnk',
+        '.msc', '.msix', '.msixbundle', '.msp', '.mst', '.nsh', '.pif', '.ps1', '.scr',
+        '.sct', '.wsc', '.shb', '.sys', '.vb', '.vbe', '.vbs', '.vxd', '.wsf', '.wsh', '.tar'
     ]
     return !types.some(el => file.name.endsWith(el))
 }

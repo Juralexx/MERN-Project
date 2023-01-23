@@ -141,3 +141,71 @@
         }
     }
 }
+
+.mini-badge {
+    position         : absolute;
+    right            : 0;
+    top              : 0;
+    background-color : var(--primary);
+    color            : white;
+    border           : 2px solid var(--navbar);
+    font-size        : 11px;
+    line-height      : 11px;
+    border-radius    : var(--rounded-full);
+    height           : 20px;
+    width            : 20px;
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+}
+
+.notifications-menu-card {
+    display       : flex;
+    padding       : 10px 3px;
+    border-radius : var(--rounded-sm);
+    cursor        : pointer;
+
+    .notification-body {
+        .notification-title {
+            font-size          : 13px;
+            line-height        : 19px;
+            max-height         : 66px;
+            width              : 100%;
+            text-overflow      : ellipsis;
+            overflow           : hidden;
+            display            : -webkit-box;
+            -webkit-line-clamp : 3;
+            -webkit-box-orient : vertical;
+
+            a {
+                font-weight : 400;
+            }
+        }
+        .notification-date {
+            font-size : 12px;
+            color     : var(--text-secondary);
+        }
+        .notification-btn-container {
+            display         : flex;
+            justify-content : space-between;
+            margin-top      : 5px;
+            button {
+                width:49%;
+            }
+        }
+    }
+    .notification-bubble {
+        position  : relative;
+        min-width : 18px;
+        &:before {
+            content          : '';
+            position         : absolute;
+            top              : 5px;
+            right            : 0;
+            background-color : var(--primary);
+            width            : 12px;
+            height           : 12px;
+            border-radius    : var(--rounded-full);
+        }
+    }
+}

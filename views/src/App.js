@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { io } from 'socket.io-client'
 import Paths from './components/routes/routes';
 import { MediaContext, UidContext, UserContext } from "./components/AppContext"
-import { getUser, receiveAcceptContactRequest, receiveCancelContactRequest, receiveDeleteContact, receiveContactRequest, receiveRefuseContactRequest } from './reducers/user.action';
-import { receiveAcceptMemberRequest, receiveCancelMemberRequest, receiveMemberRequest, removeProjectFromMember, receiveRefuseMemberRequest, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveCreateQNA, receiveUpdateQNA, receiveDeleteQNA, receiveCreateActuality, receiveUpdateActuality, receiveDeleteActuality, receiveCommentTask } from './reducers/project.action';
+import { getUser, receiveAcceptContactRequest, receiveCancelContactRequest, receiveDeleteContact, receiveContactRequest, receiveRefuseContactRequest, receiveMemberRequestFromUser, receiveCancelMemberRequestFromUser, receiveRefuseMemberRequestFromUser } from './reducers/user.action';
+import { receiveCancelMemberRequestFromProject, receiveMemberRequestFromProject, removeProjectFromMember, removeMember, receiveCreateTask, receiveChangeTask, receiveDeleteTask, receiveChangeTaskState, receiveUnsetAdmin, receiveSetAdmin, receiveCreateQNA, receiveUpdateQNA, receiveDeleteQNA, receiveCreateActuality, receiveUpdateActuality, receiveDeleteActuality, receiveCommentTask, receiveRefuseMemberRequestFromProject, receiveAcceptMemberRequestFromProject } from './reducers/project.action';
 import { receiveAddMember, receiveCreateConversation, receiveDeleteConversation, receiveDeleteMessage, receiveNewMember, receiveRemovedMember, receiveRemoveMember, receiveNewMessage, receiveUpdateMessage, receiveAddEmoji, receiveRemoveEmoji, receiveRemoveFile, receiveCustomizeUserPseudo, receiveUpdateConversationInfos, receiveUploadConversationPicture, receiveRemoveConversationPicture } from './reducers/messenger.action';
 import NotificationCard from './components/mini-nav/notifications/notification-card/NotificationCard';
 import useMediaQuery from './components/tools/hooks/useMediaQuery';
@@ -129,19 +129,31 @@ function App() {
             dispatch(receiveDeleteContact(data.userId))
         })
 
-        websocket.current.on("memberRequest", data => {
-            dispatch(receiveMemberRequest(data.notification))
+        // Demande d'adhésion / Annulation des demandes via le projet
+        websocket.current.on("sendMemberRequestFromProject", data => {
+            dispatch(receiveMemberRequestFromProject(data.request, data.notification))
             setNotification(data.notification)
             setSend(true)
         })
-        websocket.current.on("cancelMemberRequest", data => {
-            dispatch(receiveCancelMemberRequest(data.notificationId))
+        websocket.current.on("cancelMemberRequestFromProject", data => {
+            dispatch(receiveCancelMemberRequestFromProject(data.requestId, data.notificationId))
         })
-        websocket.current.on("acceptMemberRequest", data => {
-            dispatch(receiveAcceptMemberRequest(data.member, data.activity))
+        websocket.current.on("acceptMemberRequestFromProject", data => {
+            dispatch(receiveAcceptMemberRequestFromProject(data.member, data.activity))
         })
-        websocket.current.on("refuseMemberRequest", data => {
-            dispatch(receiveRefuseMemberRequest(data.userId))
+        websocket.current.on("refuseMemberRequestFromProject", data => {
+            dispatch(receiveRefuseMemberRequestFromProject(data.requestId))
+        })
+
+        // Demande d'adhésion / Annulation des demandes via l'utilisateur ne participant pas encore au projet
+        websocket.current.on("sendMemberRequestFromUser", data => {
+            dispatch(receiveMemberRequestFromUser(data.request))
+        })
+        websocket.current.on("cancelMemberRequestFromUser", data => {
+            dispatch(receiveCancelMemberRequestFromUser(data.requestId))
+        })
+        websocket.current.on("refuseMemberRequestFromUser", data => {
+            dispatch(receiveRefuseMemberRequestFromUser(data.requestId))
         })
 
         websocket.current.on("nameAdmin", data => {
@@ -201,10 +213,14 @@ function App() {
 
             websocket.current.off("deleteContact")
 
-            websocket.current.off("memberRequest")
-            websocket.current.off("cancelMemberRequest")
-            websocket.current.off("acceptMemberRequest")
-            websocket.current.off("refuseMemberRequest")
+            websocket.current.off("sendMemberRequestFromProject")
+            websocket.current.off("cancelMemberRequestFromProject")
+            websocket.current.off("acceptMemberRequestFromProject")
+            websocket.current.off("refuseMemberRequestFromProject")
+
+            websocket.current.off("sendMemberRequestFromUser")
+            websocket.current.off("cancelMemberRequestFromUser")
+            websocket.current.off("refuseMemberRequestFromUser")
 
             websocket.current.off("nameAdmin")
             websocket.current.off("removeAdmin")

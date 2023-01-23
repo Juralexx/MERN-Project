@@ -1,19 +1,24 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { acceptMemberRequest, refuseMemberRequest } from '../../../../reducers/project.action'
 import { useDispatch } from 'react-redux'
+import Icon from '../../../tools/icons/Icon';
 import { Button } from '../../../tools/global/Button'
 import { fullImage } from '../../../Utils'
-import Icon from '../../../tools/icons/Icon';
+//import { acceptMemberRequest, refuseMemberRequest } from '../../../../reducers/project.action'
 
 const MemberRequestCard = ({ notification, websocket, user }) => {
-    const [accepted, setAccepted] = useState(false)
-    const [refused, setRefused] = useState(false)
+    const [action, setAction] = useState('')
     const dispatch = useDispatch()
 
     const acceptProjectMemberRequest = async () => {
-        const member = { id: user._id, pseudo: user.pseudo, picture: user.picture, role: "user", since: new Date().toISOString() }
-        await axios.get(`${process.env.REACT_APP_API_URL}api/project/${notification.projectId}`)
+        const member = {
+            _id: user._id,
+            pseudo: user.pseudo,
+            picture: user.picture,
+            role: "user",
+            since: new Date().toISOString()
+        }
+        await axios.get(`${process.env.REACT_APP_API_URL}api/project/${notification.project._id}`)
             .then(res => {
                 res.data.members.map(member => {
                     return websocket.current.emit("acceptMemberRequest", {
@@ -22,13 +27,13 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
                     })
                 })
             })
-        dispatch(acceptMemberRequest(user._id, member, notification.projectId, "project-member-request"))
-        setAccepted(true)
+        //dispatch(acceptMemberRequest(user._id, member, notification.project._id, "project-member-request"))
+        setAction('accepted')
     }
 
     const refuseProjectMemberRequest = () => {
-        dispatch(refuseMemberRequest(user._id, notification.projectId, "project-member-request"))
-        setRefused(true)
+        //dispatch(refuseMemberRequest(user._id, notification.project._id, "project-member-request"))
+        setAction('refused')
     }
 
     return (
@@ -38,46 +43,58 @@ const MemberRequestCard = ({ notification, websocket, user }) => {
                 <div className="subject">Demande d'adhésion</div>
                 <div className="date">À l'instant</div>
             </div>
-            {!accepted && !refused && (
+            {action === '' && (
                 <>
                     <div className="notification-content">
                         <div className="left">
-                            <div className="sender">{notification.requester}</div>
-                            <div className="content">{notification.requester} vous invite à rejoindre le project :<br />{notification.projectTitle}</div>
+                            <div className="sender">{notification.requester.pseudo}</div>
+                            <div className="content">
+                                {notification.requester.pseudo} vous invite à rejoindre le project :<br />{notification.project.title}
+                            </div>
                         </div>
-                        <div className="right" style={fullImage(notification.requesterPicture)}></div>
+                        <div className="right" style={fullImage(notification.requester.picture)}></div>
                     </div>
                     <div className="flex bottom">
                         <Button
                             className="btn btn-primary"
                             onClick={() => acceptProjectMemberRequest(notification)}
-                        >Accepter</Button>
+                        >
+                            Accepter
+                        </Button>
                         <Button
                             className="btn btn-primary"
                             onClick={() => refuseProjectMemberRequest(notification)}
-                        >Refuser</Button>
+                        >
+                            Refuser
+                        </Button>
                     </div>
                 </>
             )}
-            {accepted && (
+            {action === 'accepted' && (
                 <>
                     <div className="notification-content">
                         <div className="left">
-                            <div className="sender">{notification.requester}</div>
-                            <div className="content">Vous avez rejoint le project {notification.projectTitle} !</div>
+                            <div className="sender">
+                                {notification.requester}
+                            </div>
+                            <div className="content">
+                                Vous avez rejoint le project {notification.project.title} !
+                            </div>
                         </div>
-                        <div className="right" style={fullImage(notification.requesterPicture)}></div>
+                        <div className="right" style={fullImage(notification.requester.picture)}></div>
                     </div>
                 </>
             )}
-            {refused && (
+            {action === 'refused' && (
                 <>
                     <div className="notification-content">
                         <div className="left">
-                            <div className="sender">{notification.requester}</div>
-                            <div className="content">Vous avez refuser le demande d'invitation de {notification.requester}</div>
+                            <div className="sender">{notification.requester.pseudo}</div>
+                            <div className="content">
+                                Vous avez refuser le demande d'invitation de {notification.requester.pseudo}
+                            </div>
                         </div>
-                        <div className="right" style={fullImage(notification.requesterPicture)}></div>
+                        <div className="right" style={fullImage(notification.requester.picture)}></div>
                     </div>
                 </>
             )}

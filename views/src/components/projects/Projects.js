@@ -251,7 +251,10 @@ const Projects = ({ projects, user }) => {
                                 <div className="svg_container">
                                     <Icon name="Dashboard" />
                                 </div>
-                                <p>Vous n'avez pas encore déposé de projet.</p>
+                                <p>
+                                    Vous n'avez pas encore déposé ou participé à un projet.<br/>
+                                    Vos projets en cours s'afficherons ici.
+                                </p>
                                 <Button>
                                     <NavLink to={`/add-project`}>Déposer un projet</NavLink>
                                 </Button>

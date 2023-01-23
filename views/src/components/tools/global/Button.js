@@ -2,36 +2,60 @@ import React from "react";
 import styled from "styled-components";
 
 export const Button = (props) => {
-    const { children, onClick, className, disabled, onKeyDown, style } = props
+    const { children, onClick, className, disabled, onKeyDown, style, type } = props
     return (
-        <Btn onClick={onClick} className={`${className ? "btn btn_first " + className : "btn btn_first"}`} disabled={disabled} onKeyDown={onKeyDown} style={style}>
+        <Btn className={`${className ? "btn btn_first " + className : "btn btn_first"}`}
+            onClick={onClick}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            style={style}
+            type={type}
+        >
             {children}
         </Btn>
     )
 }
 
 export const OutlinedButton = (props) => {
-    const {children, onClick, className, disabled } = props
+    const { children, onClick, className, disabled, onKeyDown, style, type } = props
     return (
-        <Btn onClick={onClick} className={`${className ? "btn outlined_btn " + className : "btn outlined_btn"}`} disabled={disabled}>
+        <Btn className={`${className ? "btn outlined_btn " + className : "btn outlined_btn"}`}
+            onClick={onClick}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            style={style}
+            type={type}
+        >
             {children}
         </Btn>
     )
 }
 
 export const TextButton = (props) => {
-    const { children, onClick, className, disabled } = props
+    const { children, onClick, className, disabled, onKeyDown, style, type } = props
     return (
-        <Btn onClick={onClick} className={`${className ? "btn text_btn " + className : "btn text_btn"}`} disabled={disabled}>
+        <Btn className={`${className ? "btn text_btn " + className : "btn text_btn"}`}
+            onClick={onClick}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            style={style}
+            type={type}
+        >
             {children}
         </Btn>
     )
 }
 
 export const StringButton = (props) => {
-    const { children, onClick, className, disabled } = props
+    const { children, onClick, className, disabled, onKeyDown, style, type } = props
     return (
-        <Btn onClick={onClick} className={`${className ? "btn string_btn " + className : "btn string_btn"}`} disabled={disabled}>
+        <Btn className={`${className ? "btn string_btn " + className : "btn string_btn"}`}
+            onClick={onClick}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            style={style}
+            type={type}
+        >
             {children}
         </Btn>
     )

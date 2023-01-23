@@ -7,11 +7,11 @@ import { MediumAvatar } from '../tools/global/Avatars'
 import Share from './Share'
 import { dateParser, fullImage } from '../Utils'
 import { followProject, likeProject, unfollowProject, unlikeProject } from '../../reducers/project.action'
+import JoinModal from './JoinModal'
+import { cancelUserMemberRequest } from '../tools/functions/member'
 
-const Header = ({ user, project }) => {
-    const [liked, setLiked] = useState(false)
-    const [followed, setFollowed] = useState(false)
-    const [share, setShare] = useState(false)
+const Header = ({ project, user, websocket }) => {
+    const [actions, setActions] = useState({ liked: false, followed: false, share: false })
     const dispatch = useDispatch()
 
     /**
@@ -19,39 +19,102 @@ const Header = ({ user, project }) => {
      */
 
     useEffect(() => {
-        if (project.likers.includes(user._id))
-            setLiked(true)
-        else setLiked(false)
-    }, [project.likers, user._id])
+        if (user._id) {
+            if (project.likers.includes(user._id))
+                setActions(prevState => ({ ...prevState, liked: true }))
+            else setActions(prevState => ({ ...prevState, liked: false }))
+
+            if (project.followers.includes(user._id))
+                setActions(prevState => ({ ...prevState, followed: true }))
+            else setActions(prevState => ({ ...prevState, followed: false }))
+        }
+    }, [project, user._id])
+
+    /**
+     * 
+     */
 
     const like = () => {
         dispatch(likeProject(project._id, user._id))
-        setLiked(true)
+        setActions(prevState => ({ ...prevState, liked: true }))
     }
     const unlike = () => {
         dispatch(unlikeProject(project._id, user._id))
-        setLiked(false)
+        setActions(prevState => ({ ...prevState, liked: false }))
+    }
+
+    const follow = () => {
+        dispatch(followProject(project._id, user._id))
+        setActions(prevState => ({ ...prevState, followed: true }))
+    }
+    const unfollow = () => {
+        dispatch(unfollowProject(project._id, user._id))
+        setActions(prevState => ({ ...prevState, followed: false }))
     }
 
     /**
      * 
      */
 
-    useEffect(() => {
-        if (user._id)
-            if (project.followers.includes(user._id))
-                setFollowed(true)
-            else setFollowed(false)
-    }, [project.followers, user._id])
+    const [join, setJoin] = useState(false)
+    const [isAlreadyMember, setAlreadyMember] = useState({
+        state: false,
+        content: 'Rejoindre le projet',
+        request: {},
+        action: () => setJoin(true)
+    })
 
-    const follow = () => {
-        dispatch(followProject(project._id, user._id))
-        setFollowed(true)
-    }
-    const unfollow = () => {
-        dispatch(unfollowProject(project._id, user._id))
-        setFollowed(false)
-    }
+    useEffect(() => {
+        // L'utilisateur est le créateur du projet
+        if (project.poster._id === user._id) {
+            setAlreadyMember(prevState => ({
+                ...prevState,
+                state: true,
+                content: 'Vous êtes créateur du projet'
+            }))
+            // L'utilisateur a envoyé une demande d'adhésion
+        } else if (user.member_request_sent.some(request => request.projectId === project._id)) {
+            let request = user.member_request_sent.find(request => request.projectId === project._id)
+            setAlreadyMember(prevState => ({
+                ...prevState,
+                state: true,
+                content: 'Annuler ma demande',
+                request: request,
+                action: () => cancelUserMemberRequest(request, user, project, websocket, dispatch)
+            }))
+        } else {
+            // L'utilisateur participe déjà au projet
+            for (let i = 0; i < project.members.length; i++) {
+                if (project.members[i]._id === user._id) {
+                    setAlreadyMember(prevState => ({
+                        ...prevState,
+                        state: true,
+                        content: 'Vous participez déjà'
+                    }))
+                    break;
+                }
+            }
+            // Une demande d'adhésion a été envoyée a l'utilisateur
+            for (let i = 0; i < project.member_request_sent.length; i++) {
+                if (project.member_request_sent[i].member._id === user._id) {
+                    setAlreadyMember(prevState => ({
+                        ...prevState,
+                        state: true,
+                        content: 'Accepter la demande d\'adhésion',
+                        request: project.member_request_sent[i],
+                        action: () => { }
+                    }))
+                    break;
+                }
+            }
+            setAlreadyMember({
+                state: false,
+                content: 'Rejoindre le projet',
+                request: {},
+                action: () => setJoin(true)
+            })
+        }
+    }, [project, user])
 
     /**
      * 
@@ -120,8 +183,8 @@ const Header = ({ user, project }) => {
                                 </div>
                             </div>
                         </div>
-                        <Button className="join-btn">
-                            Rejoindre le projet
+                        <Button className="join-btn" onClick={isAlreadyMember.action}>
+                            {isAlreadyMember.content}
                         </Button>
                         <div className="project-tags">
                             {project.tags.map((tag, i) => {
@@ -134,7 +197,7 @@ const Header = ({ user, project }) => {
                                     Soutenir <Icon name="Heart" />
                                 </Button>
                             }
-                            {user._id && !liked ? (
+                            {user._id && !actions.liked ? (
                                 <Button className="action-btn like" onClick={like}>
                                     Soutenir <Icon name="Heart" />
                                 </Button>
@@ -148,7 +211,7 @@ const Header = ({ user, project }) => {
                                     Suivre <Icon name="Bookmark" />
                                 </Button>
                             }
-                            {user._id && !followed ? (
+                            {user._id && !actions.followed ? (
                                 <Button className="action-btn follow" onClick={follow}>
                                     Suivre <Icon name="Bookmark" />
                                 </Button>
@@ -158,14 +221,21 @@ const Header = ({ user, project }) => {
                                 </Button>
                             )}
 
-                            <Button className="action-btn share" onClick={() => setShare(!share)}>
+                            <Button className="action-btn share" onClick={() => setActions(prevState => ({ ...prevState, share: !actions.share }))}>
                                 Partager <Icon name="Share" />
                             </Button>
                         </div>
                     </div>
                 </div>
-                <Share share={share} />
+                <Share share={actions.share} />
             </div>
+            <JoinModal
+                project={project}
+                user={user}
+                websocket={websocket}
+                open={join}
+                setOpen={setJoin}
+            />
         </div>
     )
 }

@@ -25,9 +25,9 @@ projectRoutes.put('/:id/uploads/pictures/delete/', deletePictures)
 
 projectRoutes.put('/:id/members/remove/', leaveProject)
 projectRoutes.put('/:id/members/request/send/', sendMemberRequest)
-projectRoutes.put('/:id/members/request/cancel/', cancelMemberRequest)
-projectRoutes.put('/:id/members/request/accept/', acceptMemberRequest)
-projectRoutes.put('/:id/members/request/refuse/', refuseMemberRequest)
+projectRoutes.put('/:id/members/request/cancel/:requestId/', cancelMemberRequest)
+projectRoutes.put('/:id/members/request/accept/:requestId/', acceptMemberRequest)
+projectRoutes.put('/:id/members/request/refuse/:requestId/', refuseMemberRequest)
 
 projectRoutes.put('/:id/members/admins/add/', nameAdmin)
 projectRoutes.put('/:id/members/admins/remove/', removeAdmin)

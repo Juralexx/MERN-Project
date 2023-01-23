@@ -144,7 +144,7 @@ const SignUpForm = () => {
         } else {
             setSecured(content => ({ ...content, state: false }))
         }
-    }, [datas, secured])
+    }, [datas.password, secured.isLength, secured.isUppercase, secured.isLowercase, secured.isNumeric, secured.isChars])
 
     useEffect(() => {
         if (onlyLettersNumbersAndDashes(datas.pseudo) && datas.pseudo.length >= 3 && datas.pseudo.length <= 20) {
@@ -167,7 +167,7 @@ const SignUpForm = () => {
         } else {
             setValid(arr => arr.filter(element => element !== "confirmed-password"))
         }
-    }, [datas, secured])
+    }, [datas.pseudo, datas.email, datas.password, datas.confirmPassword, secured.state])
 
     useEffect(() => {
         let count = []
@@ -229,11 +229,14 @@ const SignUpForm = () => {
                         type="text"
                         text="Pseudo"
                         placeholder=" "
-                        className={`${addClass(error.element === "pseudo", 'err')} ${addClass(valid.includes('pseudo'), 'succes')}`}
+                        className={`${addClass(valid.includes('pseudo'), 'succes')} ${addClass(error.element === "pseudo", 'err')}`}
                         onChange={e => setDatas(data => ({ ...data, pseudo: e.target.value }))}
                         value={datas.pseudo}
                     />
-                    {valid.includes("pseudo") && <Icon name="Check" className="validated" />}
+                    {valid.includes("pseudo") &&
+                        error.element !== "pseudo" &&
+                        <Icon name="Check" className="validated" />
+                    }
                     <ErrorCard
                         display={error.element === "pseudo"}
                         text={error.error}
@@ -246,11 +249,12 @@ const SignUpForm = () => {
                         type="email"
                         text="Email"
                         placeholder=" "
-                        className={`${addClass(error.element === "email", 'err')} ${addClass(valid.includes('email'), 'err')}`}
+                        className={`${addClass(valid.includes('email'), 'succes')} ${addClass(error.element === "email", 'err')}`}
                         onChange={(e) => setDatas(data => ({ ...data, email: e.target.value }))}
                         value={datas.email}
                     />
                     {valid.includes("email") &&
+                        error.element !== "email" &&
                         <Icon name="Check" className="validated" />
                     }
                     <ErrorCard
@@ -264,7 +268,7 @@ const SignUpForm = () => {
                     <DynamicInput
                         type={passwordShown ? "text" : "password"}
                         text="Mot de passe"
-                        className={`${addClass(error.element === "password", 'err')} ${addClass(valid.includes('password'), 'err')}`}
+                        className={` ${addClass(valid.includes('password'), 'succes')} ${addClass(error.element === "password", 'err')}`}
                         placeholder=" "
                         onClick={() => setDisplay(!display)}
                         onChange={(e) => setDatas(data => ({ ...data, password: e.target.value }))}
@@ -273,6 +277,7 @@ const SignUpForm = () => {
                         endIconClick={() => setPasswordShown(!passwordShown)}
                     />
                     {valid.includes("password") &&
+                        error.element !== "password" &&
                         <Icon name="Check" className="validated" />
                     }
                     <ErrorCard
@@ -317,12 +322,13 @@ const SignUpForm = () => {
                     <DynamicInput
                         type="password"
                         text="Confirmation mot de passe"
-                        className={`${addClass(error.element === "confirmed-password", 'err')} ${addClass(valid.includes('confirmed-password'), 'err')}`}
+                        className={`${addClass(valid.includes('confirmed-password'), 'succes')} ${addClass(error.element === "confirmed-password", 'err')}`}
                         placeholder=" "
                         onChange={e => setDatas(data => ({ ...data, confirmPassword: e.target.value }))}
                         value={datas.confirmPassword}
                     />
                     {valid.includes("confirmed-password") &&
+                        error.element !== "confirmed-password" &&
                         <Icon name="Check" className="validated" />
                     }
                     <ErrorCard

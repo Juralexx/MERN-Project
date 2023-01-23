@@ -26,7 +26,7 @@ const Error = styled.div`
     position         : relative;
     display          : flex;
     align-items      : center;
-    padding          : 10px;
+    padding          : 5px 5px;
     max-width        : 100%;
     background-color : rgba(var(--danger-rgb), 0.3);
     border           : 1px solid var(--danger);
@@ -46,8 +46,8 @@ const Error = styled.div`
     }
 
     .error-icon {
-        min-height   : 28px;
-        min-width    : 28px;
+        min-height   : 22px;
+        min-width    : 22px;
         margin-right : 8px;
         color        : var(--danger);
     }

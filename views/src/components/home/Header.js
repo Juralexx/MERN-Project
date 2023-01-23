@@ -30,7 +30,6 @@ const Header = ({ user, search, datas, setDatas }) => {
         })
     }
 
-
     return (
         <div id="header">
             <div className="container py-8">
