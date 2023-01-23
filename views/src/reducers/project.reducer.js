@@ -1,11 +1,12 @@
 import {
-    CANCEL_MEMBER_REQUEST, FAVORITE, FOLLOW, GET_PROJECT, LIKE, RECEIVE_ACCEPT_MEMBER_REQUEST, RECEIVE_REFUSE_MEMBER_REQUEST,
-    REMOVE_MEMBER, SEND_MEMBER_REQUEST, UNFAVORITE, UNFOLLOW, UNLIKE, RECEIVE_CREATE_TASK, RECEIVE_UPDATE_TASK,
+    CANCEL_MEMBER_REQUEST_FROM_PROJECT, FAVORITE, FOLLOW, GET_PROJECT, LIKE,
+    REMOVE_MEMBER, SEND_MEMBER_REQUEST_FROM_PROJECT, UNFAVORITE, UNFOLLOW, UNLIKE, RECEIVE_CREATE_TASK, RECEIVE_UPDATE_TASK,
     RECEIVE_DELETE_TASK, RECEIVE_UPDATE_TASK_STATE, NAME_ADMIN, RECEIVE_NAME_ADMIN, UNNAME_ADMIN,
     RECEIVE_UNNAME_ADMIN, UPDATE_PICTURES, RECEIVE_UPDATE_PICTURES, DELETE_PICTURES,
     RECEIVE_DELETE_PICTURES, UPDATE_PROJECT, RECEIVE_CREATE_QNA, RECEIVE_UPDATE_QNA, RECEIVE_DELETE_QNA, RECEIVE_CREATE_ACTUALITY,
-    RECEIVE_UPDATE_ACTUALITY, RECEIVE_DELETE_ACTUALITY, RECEIVE_COMMENT_TASK
+    RECEIVE_UPDATE_ACTUALITY, RECEIVE_DELETE_ACTUALITY, RECEIVE_COMMENT_TASK, REFUSE_MEMBER_REQUEST_FROM_PROJECT
 } from "../reducers/project.action";
+import { RECEIVE_CANCEL_MEMBER_REQUEST_FROM_USER, RECEIVE_MEMBER_REQUEST_FROM_USER, RECEIVE_REFUSE_MEMBER_REQUEST_FROM_USER } from "./user.action";
 
 const initialState = {}
 
@@ -109,39 +110,55 @@ export default function projectReducer(state = initialState, action) {
                 favorites: state.favorites.filter(favorite => favorite !== action.payload.userId)
             }
 
-        /*******************************************************************************************************************************/
-        /****************************************************** LEAVE PROJECT **********************************************************/
+        /**
+         * Members requests from project
+         */
+
+        case SEND_MEMBER_REQUEST_FROM_PROJECT:
+            return {
+                ...state,
+                member_request_sent: [...state.member_request_sent, action.payload.request]
+            }
+        case CANCEL_MEMBER_REQUEST_FROM_PROJECT:
+            return {
+                ...state,
+                member_request_sent: state.member_request_sent.filter(request => request._id !== action.payload.requestId)
+            }
+        case REFUSE_MEMBER_REQUEST_FROM_PROJECT:
+            return {
+                ...state,
+                member_request: state.member_request.filter(request => request._id !== action.payload.requestId)
+            }
+
+        /**
+         * Members requests from user
+         */
+
+        case RECEIVE_MEMBER_REQUEST_FROM_USER:
+            return {
+                ...state,
+                member_request: [action.payload.request, ...state.member_request]
+            }
+        case RECEIVE_CANCEL_MEMBER_REQUEST_FROM_USER:
+            return {
+                ...state,
+                member_request: state.member_request.filter(request => request._id !== action.payload.requestId)
+            }
+        case RECEIVE_REFUSE_MEMBER_REQUEST_FROM_USER:
+            return {
+                ...state,
+                member_request_sent: state.member_request_sent.filter(request => request._id !== action.payload.requestId)
+            }
+
+        /**
+         * Remove member from project
+         */
 
         case REMOVE_MEMBER:
             return {
                 ...state,
                 members: state.members.filter(member => member._id !== action.payload.memberId),
                 activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-
-        /*******************************************************************************************************************************/
-        /****************************************************** MEMBER REQUEST *********************************************************/
-
-        case SEND_MEMBER_REQUEST:
-            return {
-                ...state,
-                member_requests: [...state.member_requests, action.payload.request]
-            }
-        case CANCEL_MEMBER_REQUEST:
-            return {
-                ...state,
-                member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId)
-            }
-        case RECEIVE_ACCEPT_MEMBER_REQUEST:
-            return {
-                ...state,
-                members: [...state.members, action.payload.member],
-                activity_feed: [...state.activity_feed, action.payload.activity]
-            }
-        case RECEIVE_REFUSE_MEMBER_REQUEST:
-            return {
-                ...state,
-                member_requests: state.member_requests.filter(element => element.memberId !== action.payload.userId)
             }
 
         /*******************************************************************************************************************************/
